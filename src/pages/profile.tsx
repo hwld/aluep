@@ -30,6 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
+// TODO: formのエラーハンドリングのためにreact-hook-formを導入する
 export default function Profile() {
   const session = useSession();
   const [name, setName] = useState(session.data?.user?.name || "");
