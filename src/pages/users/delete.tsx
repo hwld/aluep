@@ -38,11 +38,6 @@ const DeleteUser: NextPage = () => {
       return trpc.users.me.delete.mutate();
     },
     onSuccess: () => {
-      showNotification({
-        color: "green",
-        title: "ユーザー削除",
-        message: "ユーザーを削除できました。",
-      });
       router.reload();
     },
     onError: () => {

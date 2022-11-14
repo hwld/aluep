@@ -61,10 +61,11 @@ model VerificationToken {
 model AppTheme {
   id          String        @id @default(cuid())
   tags        AppThemeTag[]
-  theme       String
+  title       String
   description String
   userId      String
-  user        User          @relation(fields: [userId], references: [id], onDelete: NoAction)
+  // とりあえずお題も削除されるようにする
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 }

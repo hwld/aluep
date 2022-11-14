@@ -10,6 +10,7 @@ import { RouterInputs } from "../../server/trpc";
 import { authOptions } from "../api/auth/[...nextauth]";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  context.req;
   const session = await unstable_getServerSession(
     context.req,
     context.res,

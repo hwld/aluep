@@ -8,35 +8,71 @@ import {
   TextInput,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { useMutation } from "@tanstack/react-query";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import { unstable_getServerSession } from "next-auth/next";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { trpc } from "../../client/trpc";
+import { prisma } from "../../server/prismadb";
+import { RouterInputs } from "../../server/trpc";
+import { authOptions } from "../api/auth/[...nextauth]";
 
-export default function CreateTheme() {
+export const getServerSideProps = async ({
+  req,
+  res,
+}: GetServerSidePropsContext) => {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const allTags = await prisma.appThemeTag.findMany();
+
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+      allTags,
+    },
+  };
+};
+
+type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+export default function CreateTheme({ allTags }: PageProps) {
   const router = useRouter();
   const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
 
-  const handlePost = async () => {
-    const result = await fetch("/api/themes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, desc }),
-    });
-
-    if (!result.ok) {
-      showNotification({
-        color: "red",
-        title: "投稿",
-        message: "お題が投稿できませんでした。",
-      });
-    } else {
+  const createMutate = useMutation({
+    mutationFn: (data: RouterInputs["themes"]["create"]) => {
+      return trpc.themes.create.mutate(data);
+    },
+    onSuccess: () => {
       showNotification({
         color: "green",
         title: "投稿",
         message: "お題を投稿しました。",
       });
       router.replace("/");
-    }
+    },
+    onError: () => {
+      showNotification({
+        color: "red",
+        title: "投稿",
+        message: "お題が投稿できませんでした。",
+      });
+    },
+  });
+
+  const handleCreateTheme = () => {
+    createMutate.mutate({ title, description, tags });
   };
 
   return (
@@ -51,7 +87,8 @@ export default function CreateTheme() {
       />
       {/* TODO: タグの実装をどうする？ */}
       <MultiSelect
-        data={["Java", "Spring Boot", "Webアプリ", "スマートフォンアプリ"]}
+        data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
+        onChange={(values) => setTags(values)}
         label="タグ"
         searchable
         nothingFound="タグが見つかりませんでした"
@@ -61,10 +98,10 @@ export default function CreateTheme() {
         autosize
         minRows={10}
         mt={10}
-        value={desc}
-        onChange={({ target: { value } }) => setDesc(value)}
+        value={description}
+        onChange={({ target: { value } }) => setDescription(value)}
       />
-      <Button mt={10} onClick={handlePost}>
+      <Button mt={10} onClick={handleCreateTheme}>
         投稿
       </Button>
     </div>
