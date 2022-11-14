@@ -1,9 +1,11 @@
 import { Button, Text } from "@mantine/core";
 import { GetServerSideProps, NextPage } from "next";
 import { showNotification } from "@mantine/notifications";
-import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import { useRouter } from "next/router";
+import { authOptions } from "../api/auth/[...nextauth]";
+import { useMutation } from "@tanstack/react-query";
+import { trpc } from "../../client/trpc";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -31,25 +33,29 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const DeleteUser: NextPage = () => {
   const router = useRouter();
-
-  const handleDeleteUser = async () => {
-    const res = await fetch("/api/users/me", { method: "DELETE" });
-    if (!res.ok) {
-      showNotification({
-        color: "red",
-        title: "ユーザー削除",
-        message: "ユーザーを削除できませんでした。",
-      });
-      return;
-    } else {
+  const deleteMutation = useMutation({
+    mutationFn: () => {
+      return trpc.users.me.delete.mutate();
+    },
+    onSuccess: () => {
       showNotification({
         color: "green",
         title: "ユーザー削除",
         message: "ユーザーを削除できました。",
       });
       router.reload();
-      return;
-    }
+    },
+    onError: () => {
+      showNotification({
+        color: "red",
+        title: "ユーザー削除",
+        message: "ユーザーを削除できませんでした。",
+      });
+    },
+  });
+
+  const handleDeleteUser = async () => {
+    deleteMutation.mutate();
   };
 
   return (

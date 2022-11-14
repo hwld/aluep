@@ -1,29 +1,31 @@
-import { initTRPC, TRPCError } from "@trpc/server";
+import { inferRouterInputs, initTRPC, TRPCError } from "@trpc/server";
 import { Context } from "./contexts";
 import { prisma } from "./prismadb";
+import { AppRouter } from "./routers/_app";
 
 const t = initTRPC.context<Context>().create();
 
 export const router = t.router;
-const procedure = t.procedure;
-const middleware = t.middleware;
+export type RouterInputs = inferRouterInputs<AppRouter>;
 
 // middlewares
+const middleware = t.middleware;
 export const isLoggedIn = middleware(async ({ ctx, next }) => {
   if (!ctx.session?.user) {
     throw new TRPCError({ code: "FORBIDDEN" });
   }
 
-  const user = await prisma.user.findFirst({
+  const loggedInUser = await prisma.user.findFirst({
     where: { id: ctx.session.user.id },
   });
-  if (!user) {
+  if (!loggedInUser) {
     throw new TRPCError({ code: "FORBIDDEN" });
   }
 
-  return next({ ctx: { user, userId: ctx.session.user.id } });
+  return next({ ctx: { loggedInUser } });
 });
 
 // procedures
+const procedure = t.procedure;
 export const publicProcedure = procedure;
 export const requireLoggedInProcedure = procedure.use(isLoggedIn);

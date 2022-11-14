@@ -52,14 +52,14 @@ export default function Home() {
               <Button color="red" onClick={() => signOut()}>
                 ログアウト
               </Button>
-              <Button component={Link} href="/profile">
+              <Button component={Link} href="/users/profile">
                 プロフィール変更
               </Button>
               <Button
                 color="red"
                 variant="outline"
                 component={Link}
-                href="/delete-user"
+                href="/users/delete"
               >
                 アカウント削除
               </Button>
