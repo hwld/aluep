@@ -46,7 +46,9 @@ export const themesRoute = router({
         data: {
           title: input.title,
           description: input.description,
-          tags: { connect: input.tags.map((t) => ({ id: t })) },
+          tags: {
+            set: input.tags.map((t) => ({ id: t })),
+          },
         },
       });
     }),

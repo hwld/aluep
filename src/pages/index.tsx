@@ -145,13 +145,18 @@ export default function Home({ themes }: PageProps) {
               <Avatar src={theme.user.image} radius="xl" size="md" />
               <Text>{theme.user.name}</Text>
               <Text>{new Date(theme.createdAt).toLocaleString()}</Text>
-              <Button
-                onClick={() => {
-                  handleDeleteTheme(theme.id);
-                }}
-              >
-                削除
-              </Button>
+              <Flex gap={5}>
+                <Button component={Link} href={`/themes/${theme.id}/update`}>
+                  更新
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleDeleteTheme(theme.id);
+                  }}
+                >
+                  削除
+                </Button>
+              </Flex>
             </div>
           );
         })}
