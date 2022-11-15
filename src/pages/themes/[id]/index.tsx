@@ -1,12 +1,18 @@
-import { Avatar, Badge, Box, Flex, Text, Title } from "@mantine/core";
+import Link from "next/link";
+import { Avatar, Badge, Box, Button, Flex, Text, Title } from "@mantine/core";
 import {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
+import { unstable_getServerSession } from "next-auth/next";
+import { useSession } from "next-auth/react";
 import { prisma } from "../../../server/prismadb";
+import { authOptions } from "../../api/auth/[...nextauth]";
 
 export const getServerSideProps = async ({
+  req,
+  res,
   query,
 }: GetServerSidePropsContext) => {
   const { id: themeId } = query;
@@ -55,7 +61,10 @@ export const ThemeDetail: NextPage<PageProps> = ({ theme }) => {
           );
         })}
       </Flex>
-      <Text>{theme.description}</Text>
+      <Text sx={{ whiteSpace: "pre-wrap" }}>{theme.description}</Text>
+      <Button component={Link} href={`/themes/${theme.id}/join`}>
+        参加する
+      </Button>
     </Box>
   );
 };

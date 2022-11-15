@@ -113,7 +113,6 @@ const UpdateTheme: NextPage<PageProps> = ({ theme, allTags }) => {
       <MultiSelect
         data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
         onChange={(values) => {
-          console.log(values);
           setTags(values);
         }}
         value={tags}
