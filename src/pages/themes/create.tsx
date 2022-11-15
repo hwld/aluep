@@ -1,7 +1,6 @@
 import {
+  Box,
   Button,
-  Header,
-  Input,
   MultiSelect,
   Text,
   Textarea,
@@ -76,7 +75,7 @@ export default function CreateTheme({ allTags }: PageProps) {
   };
 
   return (
-    <div>
+    <Box p={30}>
       <Text fw={700} size={32} component="h1">
         お題の投稿
       </Text>
@@ -89,6 +88,7 @@ export default function CreateTheme({ allTags }: PageProps) {
       <MultiSelect
         data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
         onChange={(values) => setTags(values)}
+        value={tags}
         label="タグ"
         searchable
         nothingFound="タグが見つかりませんでした"
@@ -104,6 +104,6 @@ export default function CreateTheme({ allTags }: PageProps) {
       <Button mt={10} onClick={handleCreateTheme}>
         投稿
       </Button>
-    </div>
+    </Box>
   );
 }

@@ -4,10 +4,9 @@ import {
   Badge,
   Box,
   Button,
-  Center,
+  Card,
   Flex,
   Header,
-  Loader,
   Navbar,
   Stack,
   Text,
@@ -56,7 +55,7 @@ export const getServerSideProps = async ({
 type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function Home({ themes }: PageProps) {
-  const data = useSession();
+  const session = useSession();
   const router = useRouter();
 
   const deleteThemeMutation = useMutation({
@@ -84,20 +83,20 @@ export default function Home({ themes }: PageProps) {
       padding="md"
       navbar={
         <Navbar width={{ base: 300 }} p="xs">
-          {data.status === "unauthenticated" && (
+          {session.status === "unauthenticated" && (
             <div>
               <Button onClick={() => signIn("github")}>ログイン</Button>
             </div>
           )}
-          {data.status === "authenticated" && (
+          {session.status === "authenticated" && (
             <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <Avatar
-                src={data.data.user?.image}
+                src={session.data.user?.image}
                 size="xl"
                 sx={{ borderRadius: "100px" }}
               />
-              <Text>{data.data.user?.name}</Text>
-              <Text>{data.data.user?.email}</Text>
+              <Text>{session.data.user?.name}</Text>
+              <Text>{session.data.user?.email}</Text>
               <Button color="red" onClick={() => signOut()}>
                 ログアウト
               </Button>
@@ -133,31 +132,43 @@ export default function Home({ themes }: PageProps) {
       <Stack mt={30}>
         {themes.map((theme) => {
           return (
-            <div id={theme.id}>
+            <Card shadow="sm" withBorder id={theme.id} key={theme.id}>
               <Title>{theme.title}</Title>
               <Flex gap={5} wrap="wrap">
                 {theme.tags.map((tag) => {
                   return (
-                    <Badge sx={{ textTransform: "none" }}>{tag.name}</Badge>
+                    <Badge sx={{ textTransform: "none" }} key={tag.id}>
+                      {tag.name}
+                    </Badge>
                   );
                 })}
               </Flex>
               <Avatar src={theme.user.image} radius="xl" size="md" />
               <Text>{theme.user.name}</Text>
               <Text>{new Date(theme.createdAt).toLocaleString()}</Text>
+
               <Flex gap={5}>
-                <Button component={Link} href={`/themes/${theme.id}/update`}>
-                  更新
-                </Button>
-                <Button
-                  onClick={() => {
-                    handleDeleteTheme(theme.id);
-                  }}
-                >
-                  削除
-                </Button>
+                {session.data?.user.id === theme.user.id && (
+                  <>
+                    <Button
+                      component={Link}
+                      href={`/themes/${theme.id}/update`}
+                      variant="outline"
+                    >
+                      更新
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleDeleteTheme(theme.id);
+                      }}
+                      variant="outline"
+                    >
+                      削除
+                    </Button>
+                  </>
+                )}
               </Flex>
-            </div>
+            </Card>
           );
         })}
       </Stack>
