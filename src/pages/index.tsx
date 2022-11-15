@@ -148,6 +148,9 @@ export default function Home({ themes }: PageProps) {
               <Text>{new Date(theme.createdAt).toLocaleString()}</Text>
 
               <Flex gap={5}>
+                <Button component={Link} href={`/themes/${theme.id}`}>
+                  詳細
+                </Button>
                 {session.data?.user.id === theme.user.id && (
                   <>
                     <Button
