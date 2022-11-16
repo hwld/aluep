@@ -54,7 +54,7 @@ export const getServerSideProps = async ({
   const theme = {
     id: rawTheme.id,
     title: rawTheme.title,
-    tags: rawTheme.tags,
+    tags: rawTheme.tags.map(({ id, name }) => ({ id, name })),
     description: rawTheme.description,
     createdAt: rawTheme.createdAt.toUTCString(),
     updatedAt: rawTheme.updatedAt.toUTCString(),
