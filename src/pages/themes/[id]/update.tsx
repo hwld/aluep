@@ -65,7 +65,12 @@ export const getServerSideProps = async ({
   //　すべてのタグを取得する
   const allTags = await prisma.appThemeTag.findMany();
 
-  return { props: { theme, allTags } };
+  return {
+    props: {
+      theme,
+      allTags: allTags.map(({ id, name }) => ({ id, name })),
+    },
+  };
 };
 
 type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;

@@ -36,7 +36,7 @@ export const getServerSideProps = async ({
   return {
     props: {
       session,
-      allTags,
+      allTags: allTags.map(({ id, name }) => ({ id, name })),
     },
   };
 };

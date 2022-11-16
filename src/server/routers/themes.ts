@@ -66,4 +66,23 @@ export const themesRoute = router({
 
       await prisma.appTheme.delete({ where: { id: input.themeId } });
     }),
+
+  join: requireLoggedInProcedure
+    .input(
+      z.object({
+        themeId: z.string().min(1),
+        githubUrl: z.string().regex(/https:\/\/github.com\/[^\/]+\/[^\/]+/),
+        comment: z.string().min(1),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      await prisma.appThemeDeveloper.create({
+        data: {
+          appTheme: { connect: { id: input.themeId } },
+          user: { connect: { id: ctx.loggedInUser.id } },
+          githubUrl: input.githubUrl,
+          comment: input.comment,
+        },
+      });
+    }),
 });

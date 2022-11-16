@@ -5,10 +5,7 @@ import {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
-import { unstable_getServerSession } from "next-auth/next";
-import { useSession } from "next-auth/react";
 import { prisma } from "../../../server/prismadb";
-import { authOptions } from "../../api/auth/[...nextauth]";
 
 export const getServerSideProps = async ({
   req,
@@ -30,7 +27,7 @@ export const getServerSideProps = async ({
   const theme = {
     id: rawTheme.id,
     title: rawTheme.title,
-    tags: rawTheme.tags,
+    tags: rawTheme.tags.map(({ id, name }) => ({ id, name })),
     description: rawTheme.description,
     createdAt: rawTheme.createdAt.toUTCString(),
     updatedAt: rawTheme.updatedAt.toUTCString(),

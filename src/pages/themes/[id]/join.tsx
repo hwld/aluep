@@ -70,11 +70,13 @@ export const getServerSideProps = async ({
 
 type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
+// TODO: コンポーネント分割
 const JoinTheme: NextPage<PageProps> = ({ theme }) => {
   const [opened, setOpened] = useState(false);
   const [repoName, setRepoName] = useState("");
   const [repoDesc, setRepoDesc] = useState("");
   const [repoUrl, setRepoUrl] = useState("");
+  const [comment, setComment] = useState("");
 
   const createRepoMutation = useMutation({
     mutationFn: (data: RouterInputs["github"]["createRepo"]) => {
@@ -98,10 +100,38 @@ const JoinTheme: NextPage<PageProps> = ({ theme }) => {
     },
   });
 
+  const joinThemeMutation = useMutation({
+    mutationFn: (data: RouterInputs["themes"]["join"]) => {
+      return trpc.themes.join.mutate(data);
+    },
+    onSuccess: () => {
+      showNotification({
+        color: "green",
+        title: "お題に参加",
+        message: "お題に参加しました。",
+      });
+    },
+    onError: () => {
+      showNotification({
+        color: "red",
+        title: "お題に参加",
+        message: "お題に参加できませんでした。",
+      });
+    },
+  });
+
   const handleCreateRepo = () => {
     createRepoMutation.mutate({
       repoName: repoName,
       repoDescription: repoDesc,
+    });
+  };
+
+  const handleJoinTheme = () => {
+    joinThemeMutation.mutate({
+      themeId: theme.id,
+      githubUrl: repoUrl,
+      comment,
     });
   };
 
@@ -165,8 +195,15 @@ const JoinTheme: NextPage<PageProps> = ({ theme }) => {
             </Flex>
           </Modal>
         </Flex>
-        <Textarea label="コメント" minRows={5} />
-        <Button mt={16}>参加する</Button>
+        <Textarea
+          label="コメント"
+          minRows={5}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+        <Button mt={16} onClick={handleJoinTheme}>
+          参加する
+        </Button>
       </Box>
     </Box>
   );
