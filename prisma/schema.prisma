@@ -49,6 +49,7 @@ model User {
   sessions      Session[]
   appThemes     AppTheme[]
   developers    AppThemeDeveloper[]
+  likes         AppThemeLike[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -73,6 +74,8 @@ model AppTheme {
 
   developers AppThemeDeveloper[]
 
+  likes AppThemeLike[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -94,7 +97,19 @@ model AppThemeDeveloper {
   appTheme   AppTheme @relation(fields: [appThemeId], references: [id], onDelete: Cascade)
 
   githubUrl String
-  comment String
+  comment   String
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, appThemeId])
+}
+
+model AppThemeLike {
+  id         String   @id @default(cuid())
+  appThemeId String
+  appTheme   AppTheme @relation(fields: [appThemeId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 

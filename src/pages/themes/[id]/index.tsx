@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  ActionIcon,
   Avatar,
   Badge,
   Box,
@@ -16,6 +17,15 @@ import {
   NextPage,
 } from "next";
 import { prisma } from "../../../server/prismadb";
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { useMutation } from "@tanstack/react-query";
+import { RouterInputs } from "../../../server/trpc";
+import { trpc } from "../../../client/trpc";
+import { showNotification } from "@mantine/notifications";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "../../api/auth/[...nextauth]";
 
 export const getServerSideProps = async ({
   req,
@@ -30,7 +40,11 @@ export const getServerSideProps = async ({
   // 表示するテーマ
   const rawTheme = await prisma.appTheme.findUnique({
     where: { id: themeId },
-    include: { tags: true, user: true },
+    include: {
+      tags: true,
+      user: true,
+      likes: true,
+    },
   });
   if (!rawTheme) {
     return { notFound: true };
@@ -47,7 +61,14 @@ export const getServerSideProps = async ({
       name: rawTheme.user.name,
       image: rawTheme.user.image,
     },
+    likes: rawTheme.likes.length,
   };
+
+  // ログインユーザーが表示するテーマにいいねしているか
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const liked = rawTheme.likes.find((like) => like.userId === session?.user.id)
+    ? true
+    : false;
 
   // 表示するテーマの参加者
   const rawDevelopers = await prisma.appThemeDeveloper.findMany({
@@ -65,12 +86,39 @@ export const getServerSideProps = async ({
     })
   );
 
-  return { props: { theme, developers } };
+  return { props: { theme, developers, liked } };
 };
 
 type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-export const ThemeDetail: NextPage<PageProps> = ({ theme, developers }) => {
+export const ThemeDetail: NextPage<PageProps> = ({
+  theme,
+  developers,
+  liked,
+}) => {
+  const router = useRouter();
+
+  const likeMutation = useMutation({
+    mutationFn: (data: RouterInputs["themes"]["like"]) => {
+      return trpc.themes.like.mutate(data);
+    },
+    onSuccess: () => {
+      // TODO
+      router.reload();
+    },
+    onError: () => {
+      showNotification({
+        color: "red",
+        title: "お題へのいいね",
+        message: "お題にいいねできませんでした。",
+      });
+    },
+  });
+
+  const handleLike = () => {
+    likeMutation.mutate({ themeId: theme.id, like: !liked });
+  };
+
   return (
     <Box p={30}>
       <Title>{theme.title}</Title>
@@ -86,14 +134,31 @@ export const ThemeDetail: NextPage<PageProps> = ({ theme, developers }) => {
         })}
       </Flex>
       <Text sx={{ whiteSpace: "pre-wrap" }}>{theme.description}</Text>
-      <Button component={Link} href={`/themes/${theme.id}/join`}>
+
+      <ActionIcon
+        color={liked ? "pink" : undefined}
+        size={60}
+        radius="xl"
+        variant="outline"
+        sx={{ borderWidth: "2px" }}
+        onClick={handleLike}
+      >
+        {liked ? (
+          <MdOutlineFavorite size="70%" style={{ marginTop: "4px" }} />
+        ) : (
+          <MdOutlineFavoriteBorder size="70%" style={{ marginTop: "4px" }} />
+        )}
+      </ActionIcon>
+      <Text>{theme.likes}</Text>
+
+      <Button mt={30} component={Link} href={`/themes/${theme.id}/join`}>
         参加する
       </Button>
       <Title mt={30}>開発者</Title>
       <Stack mt={10}>
         {developers.map((developer) => {
           return (
-            <Card shadow="sm" withBorder>
+            <Card key={developer.userid} shadow="sm" withBorder>
               <Avatar src={developer.image} />
               <Text>{developer.name}</Text>
               <Text>{developer.comment}</Text>

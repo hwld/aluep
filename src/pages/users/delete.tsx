@@ -38,6 +38,7 @@ const DeleteUser: NextPage = () => {
       return trpc.users.me.delete.mutate();
     },
     onSuccess: () => {
+      // TODO
       router.reload();
     },
     onError: () => {

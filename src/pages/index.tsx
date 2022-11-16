@@ -63,6 +63,7 @@ export default function Home({ themes }: PageProps) {
       return trpc.themes.delete.mutate(data);
     },
     onSuccess: () => {
+      // TODO
       router.reload();
     },
     onError: () => {
