@@ -22,6 +22,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { isRegularExpressionLiteral } from "typescript";
+import { AppHeader } from "../client/components/AppHeader";
 import { trpc } from "../client/trpc";
 import { prisma } from "../server/prismadb";
 import { RouterInputs } from "../server/trpc";
@@ -122,15 +123,7 @@ export default function Home({ themes, allTags }: PageProps) {
           )}
         </Navbar>
       }
-      header={
-        <Header
-          height={60}
-          p="xs"
-          sx={{ display: "flex", alignItems: "center" }}
-        >
-          <Text fw={700}>AppThemePost</Text>
-        </Header>
-      }
+      header={<AppHeader user={session.data?.user} />}
     >
       <Text>アプリ開発のお題</Text>
       <Button

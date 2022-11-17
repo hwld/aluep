@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { MantineProvider } from "@mantine/core";
+import { Box, MantineProvider } from "@mantine/core";
 import { SessionProvider } from "next-auth/react";
 import { NotificationsProvider } from "@mantine/notifications";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -24,7 +24,7 @@ export default function App(props: AppProps) {
         />
         {/* TODO: next.jsのフォント最適化について調べる */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap"
           rel="stylesheet"
         />
       </Head>
@@ -33,7 +33,14 @@ export default function App(props: AppProps) {
         <SessionProvider session={session}>
           <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
             <NotificationsProvider>
-              <Component {...pageProps} />
+              <Box
+                sx={(theme) => ({
+                  backgroundColor: theme.colors.gray[2],
+                  minHeight: "100vh",
+                })}
+              >
+                <Component {...pageProps} />
+              </Box>
             </NotificationsProvider>
           </MantineProvider>
         </SessionProvider>
