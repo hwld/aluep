@@ -111,6 +111,15 @@ export const themesRoute = router({
         });
       } else {
         // いいね解除
+        await prisma.appThemeLike.delete({
+          where: {
+            userId_appThemeId: {
+              appThemeId: input.themeId,
+              userId: ctx.loggedInUser.id,
+            },
+          },
+          include: { appTheme: true, user: true },
+        });
       }
     }),
 });
