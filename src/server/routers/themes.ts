@@ -1,9 +1,54 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { prisma } from "../prismadb";
-import { requireLoggedInProcedure, router } from "../trpc";
+import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
 export const themesRoute = router({
+  search: publicProcedure
+    .input(
+      z.object({ keyword: z.string(), tagIds: z.array(z.string().min(1)) })
+    )
+    .query(async ({ input }) => {
+      // キーワード、タグがどちらも指定されていなければ空の配列を返す
+      if (input.keyword === "" && input.tagIds.length === 0) {
+        return [];
+      }
+
+      // タイトル、説明少なくとも一方にinput.keywordが含まれるお題を先に取得する。
+      const rawThemesContainsKeyword = await prisma.appTheme.findMany({
+        where: {
+          OR: [
+            { title: { contains: input.keyword } },
+            { description: { contains: input.keyword } },
+          ],
+        },
+        include: { tags: true, user: true },
+      });
+      console.log(rawThemesContainsKeyword);
+
+      // input.tagsをすべて持つお題に絞り込む。
+      // 一つのクエリで行いたかったがやる方法がない？
+      const rawThemes = rawThemesContainsKeyword.filter((theme) => {
+        // お題に含まれているすべてのタグId
+        const themeTagIds = theme.tags.map(({ id }) => id);
+
+        return input.tagIds.every((id) => themeTagIds.includes(id));
+      });
+
+      const themes = rawThemes.map(
+        ({ id, title, description, createdAt, updatedAt, tags, user }) => ({
+          id,
+          title,
+          description,
+          user: { id: user.id, name: user.name, image: user.image },
+          tags: tags.map(({ id, name }) => ({ id, name })),
+          createdAt: createdAt.toLocaleString(),
+          updatedAt: updatedAt.toLocaleString(),
+        })
+      );
+
+      return themes;
+    }),
   create: requireLoggedInProcedure
     .input(
       z.object({

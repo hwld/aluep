@@ -7,9 +7,11 @@ import {
   Card,
   Flex,
   Header,
+  MultiSelect,
   Navbar,
   Stack,
   Text,
+  TextInput,
   Title,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
@@ -44,17 +46,21 @@ export const getServerSideProps = async ({
     updatedAt: updatedAt.toUTCString(),
   }));
 
+  const rawTags = await prisma.appThemeTag.findMany();
+  const allTags = rawTags.map(({ id, name }) => ({ id, name }));
+
   return {
     props: {
       session,
       themes,
+      allTags,
     },
   };
 };
 
 type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-export default function Home({ themes }: PageProps) {
+export default function Home({ themes, allTags }: PageProps) {
   const session = useSession();
   const router = useRouter();
 
@@ -127,13 +133,26 @@ export default function Home({ themes }: PageProps) {
       }
     >
       <Text>アプリ開発のお題</Text>
-      <Button component={Link} href="/themes/create">
+      <Button
+        component={Link}
+        href="/themes/search"
+        mt={10}
+        sx={{ display: "block" }}
+      >
+        お題を検索する
+      </Button>
+      <Button
+        component={Link}
+        href="/themes/create"
+        mt={10}
+        sx={{ display: "block" }}
+      >
         新しいお題を投稿する
       </Button>
       <Stack mt={30}>
         {themes.map((theme) => {
           return (
-            <Card shadow="sm" withBorder id={theme.id} key={theme.id}>
+            <Card shadow="sm" withBorder key={theme.id}>
               <Title>{theme.title}</Title>
               <Flex gap={5} wrap="wrap">
                 {theme.tags.map((tag) => {
