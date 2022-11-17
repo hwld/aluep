@@ -78,7 +78,6 @@ const SearchTheme: NextPage<PageProps> = ({ allTags }) => {
               onChange={setTags}
             />
           </Stack>
-          <Button mt={10}>検索</Button>
           <Text size="sm" mt={10}>
             ※指定されたタグをすべて含み、指定されたキーワードがお題のタイトル、説明の少なくとも一方に含まれるお題を検索
           </Text>
