@@ -73,15 +73,21 @@ export const getServerSideProps = async ({
   // 表示するテーマの参加者
   const rawDevelopers = await prisma.appThemeDeveloper.findMany({
     where: { appThemeId: themeId },
-    include: { user: true },
+    include: { user: true, likes: true },
   });
   const developers = rawDevelopers.map(
-    ({ user, githubUrl, comment, createdAt }) => ({
+    ({ id, user, githubUrl, comment, createdAt, likes }) => ({
+      id,
       userid: user.id,
       name: user.name,
       image: user.image,
       githubUrl,
       comment,
+      likes: likes.length,
+      // ログインユーザーがいいねしているか
+      liked: likes.find((like) => like.userId === session?.user.id)
+        ? true
+        : false,
       createdAt: createdAt.toUTCString(),
     })
   );
@@ -98,7 +104,7 @@ export const ThemeDetail: NextPage<PageProps> = ({
 }) => {
   const router = useRouter();
 
-  const likeMutation = useMutation({
+  const likeThemeMutation = useMutation({
     mutationFn: (data: RouterInputs["themes"]["like"]) => {
       return trpc.themes.like.mutate(data);
     },
@@ -115,8 +121,29 @@ export const ThemeDetail: NextPage<PageProps> = ({
     },
   });
 
-  const handleLike = () => {
-    likeMutation.mutate({ themeId: theme.id, like: !liked });
+  const likeDeveloperMutation = useMutation({
+    mutationFn: (data: RouterInputs["developers"]["like"]) => {
+      return trpc.developers.like.mutate(data);
+    },
+    onSuccess: () => {
+      // TODo
+      router.reload();
+    },
+    onError: () => {
+      showNotification({
+        color: "red",
+        title: "開発者へのいいね",
+        message: "開発者にいいねできませんでした。",
+      });
+    },
+  });
+
+  const handleLikeTheme = () => {
+    likeThemeMutation.mutate({ themeId: theme.id, like: !liked });
+  };
+
+  const handleLikeDeveloper = (developerId: string, like: boolean) => {
+    likeDeveloperMutation.mutate({ developerId, like });
   };
 
   return (
@@ -141,7 +168,7 @@ export const ThemeDetail: NextPage<PageProps> = ({
         radius="xl"
         variant="outline"
         sx={{ borderWidth: "2px" }}
-        onClick={handleLike}
+        onClick={handleLikeTheme}
       >
         {liked ? (
           <MdOutlineFavorite size="70%" style={{ marginTop: "4px" }} />
@@ -170,6 +197,31 @@ export const ThemeDetail: NextPage<PageProps> = ({
               >
                 コードを見に行く
               </Button>
+              <Box>
+                <ActionIcon
+                  mt={10}
+                  color={developer.liked ? "pink" : undefined}
+                  size={30}
+                  radius="xl"
+                  variant="outline"
+                  onClick={() => {
+                    handleLikeDeveloper(developer.id, !developer.liked);
+                  }}
+                >
+                  {developer.liked ? (
+                    <MdOutlineFavorite
+                      size="70%"
+                      style={{ marginTop: "4px" }}
+                    />
+                  ) : (
+                    <MdOutlineFavoriteBorder
+                      size="70%"
+                      style={{ marginTop: "1px" }}
+                    />
+                  )}
+                </ActionIcon>
+                <Text>{developer.likes}</Text>
+              </Box>
             </Card>
           );
         })}

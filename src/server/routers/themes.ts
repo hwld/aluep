@@ -92,6 +92,7 @@ export const themesRoute = router({
       const theme = await prisma.appTheme.findUnique({
         where: { id: input.themeId },
       });
+      // 指定されたthemeが存在しない場合
       if (!theme) {
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
@@ -118,7 +119,6 @@ export const themesRoute = router({
               userId: ctx.loggedInUser.id,
             },
           },
-          include: { appTheme: true, user: true },
         });
       }
     }),
