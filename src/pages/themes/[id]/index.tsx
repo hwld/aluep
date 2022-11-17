@@ -163,6 +163,13 @@ export const ThemeDetail: NextPage<PageProps> = ({
               <Text>{developer.name}</Text>
               <Text>{developer.comment}</Text>
               <Text>{new Date(developer.createdAt).toLocaleString()}</Text>
+              <Button
+                component={Link}
+                href={developer.githubUrl}
+                target="_blank"
+              >
+                コードを見に行く
+              </Button>
             </Card>
           );
         })}
