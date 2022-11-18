@@ -5,6 +5,8 @@ export const theme: MantineThemeOverride = {
   headings: {
     fontFamily: `'Noto Sans JP', sans-serif`,
   },
+  primaryColor: "red",
+  primaryShade: 7,
   colors: {
     // tailwindのSlate
     dark: [

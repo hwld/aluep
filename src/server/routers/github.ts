@@ -4,6 +4,9 @@ import { prisma } from "../prismadb";
 import { requireLoggedInProcedure, router } from "../trpc";
 
 export const githubRoute = router({
+  // リポジトリの作成に失敗することがある。
+  // 多分、DBに保存されてるアクセストークンの期限が切れてるからだと思うんだけど、refresh_tokenとかがないからプログラムで更新することができない？
+  // 例えばログインしなおしたらアクセストークンが更新されるなら、リポジトリの作成の前に再ログインさせるみたいなのも良いと思った。
   createRepo: requireLoggedInProcedure
     .input(
       z.object({ repoName: z.string().min(1), repoDescription: z.string() })
@@ -31,6 +34,7 @@ export const githubRoute = router({
         }),
       });
       const json = await result.json();
+      console.log(json);
 
       return { repoUrl: json.html_url as string };
     }),

@@ -25,7 +25,7 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
         backgroundColor: theme.colors.red[7],
       })}
     >
-      <Text fw={700} color="gray.1" size={22}>
+      <Text fw={700} color="gray.1" size={22} component={Link} href="/">
         AppThemePost
       </Text>
       {user ? (
@@ -35,7 +35,6 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
             href="/themes/create"
             leftIcon={<MdPostAdd size={25} />}
             variant="white"
-            color="red.7"
             sx={{ borderWidth: "2px" }}
           >
             お題を投稿する
@@ -43,7 +42,7 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
           <UserMenuButton user={user} />
         </Flex>
       ) : (
-        <Button variant="white" color="red.7" onClick={handleLogIn}>
+        <Button variant="white" onClick={handleLogIn}>
           ログイン
         </Button>
       )}
