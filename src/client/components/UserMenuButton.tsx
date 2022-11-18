@@ -1,4 +1,11 @@
-import { ActionIcon, Avatar, Divider, Menu, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Avatar,
+  Divider,
+  Menu,
+  Text,
+  UnstyledButton,
+} from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
@@ -14,13 +21,13 @@ export const UserMenuButton: React.FC<Props> = ({ user }) => {
   return (
     <Menu position="bottom-end">
       <Menu.Target>
-        <ActionIcon>
+        <UnstyledButton>
           <Avatar src={user.image} radius="xl" />
-        </ActionIcon>
+        </UnstyledButton>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>ユーザー設定</Menu.Label>
-        <Divider />
+        <Divider color="gray.3" />
         <Menu.Item
           icon={<MdOutlineEdit size={20} />}
           component={Link}

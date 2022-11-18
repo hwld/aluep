@@ -12,7 +12,7 @@ import {
   Title,
 } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
-import { useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
@@ -20,25 +20,34 @@ import {
 } from "next";
 import Link from "next/link";
 import { useState } from "react";
+import {
+  allTagsQueryKey,
+  useAllTagsQuery,
+} from "../../client/hooks/useAllTagsQuery";
 import { trpc } from "../../client/trpc";
+import { GetServerSidePropsWithReactQuery } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { prisma } from "../../server/prismadb";
+import { appRouter } from "../../server/routers/_app";
 
-export const getServerSideProps = async ({
-  req,
-  res,
-}: GetServerSidePropsContext) => {
-  const allTags = await prisma.appThemeTag.findMany();
+export const getServerSideProps: GetServerSidePropsWithReactQuery =
+  async () => {
+    const caller = appRouter.createCaller({ session: null });
+    const allTags = caller.themes.getAllTags();
 
-  return {
-    props: {
-      allTags: allTags.map(({ id, name }) => ({ id, name })),
-    },
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(allTagsQueryKey, () => allTags);
+    const dehydratedState = dehydrate(queryClient);
+
+    return {
+      props: {
+        dehydratedState,
+      },
+    };
   };
-};
 
-type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
+const SearchTheme: NextPage = () => {
+  const { allTags } = useAllTagsQuery();
 
-const SearchTheme: NextPage<PageProps> = ({ allTags }) => {
   const [keyword, setKeyword] = useState("");
   // keywordが変更されてから500ms後に変更される
   const [debouncedKeyword] = useDebouncedValue(keyword, 500);

@@ -20,89 +20,85 @@ import { prisma } from "../../../server/prismadb";
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useMutation } from "@tanstack/react-query";
+import {
+  dehydrate,
+  QueryClient,
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
 import { RouterInputs } from "../../../server/trpc";
 import { trpc } from "../../../client/trpc";
 import { showNotification } from "@mantine/notifications";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../../api/auth/[...nextauth]";
+import { GetServerSidePropsWithReactQuery } from "../../../server/lib/GetServerSidePropsWithReactQuery";
+import { appRouter } from "../../../server/routers/_app";
+import { useSessionQuery } from "../../../client/hooks/useSessionQuery";
+import {
+  themeQueryKey,
+  useThemeQuery,
+} from "../../../client/hooks/useThemeQuery";
 
-export const getServerSideProps = async ({
+export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   req,
   res,
   query,
-}: GetServerSidePropsContext) => {
+}) => {
   const { id: themeId } = query;
   if (typeof themeId !== "string") {
     return { notFound: true };
   }
 
-  // 表示するテーマ
-  const rawTheme = await prisma.appTheme.findUnique({
-    where: { id: themeId },
-    include: {
-      tags: true,
-      user: true,
-      likes: true,
-    },
-  });
-  if (!rawTheme) {
-    return { notFound: true };
-  }
-  const theme = {
-    id: rawTheme.id,
-    title: rawTheme.title,
-    tags: rawTheme.tags.map(({ id, name }) => ({ id, name })),
-    description: rawTheme.description,
-    createdAt: rawTheme.createdAt.toUTCString(),
-    updatedAt: rawTheme.updatedAt.toUTCString(),
-    user: {
-      id: rawTheme.user.id,
-      name: rawTheme.user.name,
-      image: rawTheme.user.image,
-    },
-    likes: rawTheme.likes.length,
-  };
-
-  // ログインユーザーが表示するテーマにいいねしているか
+  // セッションを取得する
   const session = await unstable_getServerSession(req, res, authOptions);
-  const liked = rawTheme.likes.find((like) => like.userId === session?.user.id)
-    ? true
-    : false;
+  const caller = appRouter.createCaller({ session });
 
+  // 表示するテーマ
+  // TODO prefecthQueryの仕様を調べて、awaitが必要か考える
+  const theme = await caller.themes.get({ themeId });
+  // ログインユーザーが表示するテーマにいいねしているか
+  const liked = await caller.themes.liked({ themeId });
   // 表示するテーマの参加者
-  const rawDevelopers = await prisma.appThemeDeveloper.findMany({
-    where: { appThemeId: themeId },
-    include: { user: true, likes: true },
-  });
-  const developers = rawDevelopers.map(
-    ({ id, user, githubUrl, comment, createdAt, likes }) => ({
-      id,
-      userid: user.id,
-      name: user.name,
-      image: user.image,
-      githubUrl,
-      comment,
-      likes: likes.length,
-      // ログインユーザーがいいねしているか
-      liked: likes.find((like) => like.userId === session?.user.id)
-        ? true
-        : false,
-      createdAt: createdAt.toUTCString(),
-    })
+  const developers = await caller.themes.getAllDevelopers({ themeId });
+
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery([`theme-${themeId}`], () => theme);
+  await queryClient.prefetchQuery(
+    [`theme-${themeId}-liked-${session?.user.id}`],
+    () => liked
+  );
+  await queryClient.prefetchQuery(
+    [`theme-${themeId}-developers`],
+    () => developers
   );
 
-  return { props: { theme, developers, liked } };
+  const dehydratedState = dehydrate(queryClient);
+
+  return { props: { dehydratedState } };
 };
 
-type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
-
-export const ThemeDetail: NextPage<PageProps> = ({
-  theme,
-  developers,
-  liked,
-}) => {
+export const ThemeDetail = () => {
+  const { session } = useSessionQuery();
   const router = useRouter();
+  // TODO
+  const themeId = router.query.id as string;
+
+  const { theme } = useThemeQuery(themeId);
+
+  const { data: liked } = useQuery(
+    [`theme-${themeId}-liked-${session?.user.id}`],
+    () => {
+      return trpc.themes.liked.query({ themeId });
+    }
+  );
+
+  const { data: developers } = useQuery(
+    [`theme-${themeId}-developers`],
+    () => {
+      return trpc.themes.getAllDevelopers.query({ themeId });
+    },
+    { initialData: [] }
+  );
 
   const likeThemeMutation = useMutation({
     mutationFn: (data: RouterInputs["themes"]["like"]) => {
@@ -139,7 +135,8 @@ export const ThemeDetail: NextPage<PageProps> = ({
   });
 
   const handleLikeTheme = () => {
-    likeThemeMutation.mutate({ themeId: theme.id, like: !liked });
+    if (!theme) return;
+    likeThemeMutation.mutate({ themeId: theme?.id, like: !liked });
   };
 
   const handleLikeDeveloper = (developerId: string, like: boolean) => {
@@ -148,11 +145,11 @@ export const ThemeDetail: NextPage<PageProps> = ({
 
   return (
     <Box p={30}>
-      <Title>{theme.title}</Title>
-      <Avatar src={theme.user.image} size="xl" radius={100} />
-      <Text>{theme.user.name}</Text>
+      <Title>{theme?.title}</Title>
+      <Avatar src={theme?.user.image} size="xl" radius={100} />
+      <Text>{theme?.user.name}</Text>
       <Flex gap={10}>
-        {theme.tags.map((tag) => {
+        {theme?.tags.map((tag) => {
           return (
             <Badge key={tag.id} sx={{ textTransform: "none" }}>
               {tag.name}
@@ -160,7 +157,7 @@ export const ThemeDetail: NextPage<PageProps> = ({
           );
         })}
       </Flex>
-      <Text sx={{ whiteSpace: "pre-wrap" }}>{theme.description}</Text>
+      <Text sx={{ whiteSpace: "pre-wrap" }}>{theme?.description}</Text>
 
       <ActionIcon
         color={liked ? "pink" : undefined}
@@ -176,9 +173,9 @@ export const ThemeDetail: NextPage<PageProps> = ({
           <MdOutlineFavoriteBorder size="70%" style={{ marginTop: "4px" }} />
         )}
       </ActionIcon>
-      <Text>{theme.likes}</Text>
+      <Text>{theme?.likes}</Text>
 
-      <Button mt={30} component={Link} href={`/themes/${theme.id}/join`}>
+      <Button mt={30} component={Link} href={`/themes/${theme?.id}/join`}>
         参加する
       </Button>
       <Title mt={30}>開発者</Title>

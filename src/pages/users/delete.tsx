@@ -4,15 +4,16 @@ import { showNotification } from "@mantine/notifications";
 import { unstable_getServerSession } from "next-auth/next";
 import { useRouter } from "next/router";
 import { authOptions } from "../api/auth/[...nextauth]";
-import { useMutation } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useMutation } from "@tanstack/react-query";
 import { trpc } from "../../client/trpc";
+import { GetServerSidePropsWithReactQuery } from "../../server/lib/GetServerSidePropsWithReactQuery";
+import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
+export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
+  req,
+  res,
+}) => {
+  const session = await unstable_getServerSession(req, res, authOptions);
 
   // セッションがないときはホームにリダイレクトする
   if (!session) {
@@ -24,9 +25,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(sessionQuerykey, () => session);
+  const dehydratedState = dehydrate(queryClient);
+
   return {
     props: {
-      session,
+      dehydratedState,
     },
   };
 };

@@ -21,7 +21,7 @@ export const developersRoute = router({
       }
 
       // 開発者自身が自分にいいねすることはできない
-      if (developer.userId == ctx.loggedInUser.id) {
+      if (developer.userId == ctx.session.user.id) {
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
 
@@ -30,7 +30,7 @@ export const developersRoute = router({
         await prisma.appThemeDeveloperLike.create({
           data: {
             developer: { connect: { id: developer.id } },
-            user: { connect: { id: ctx.loggedInUser.id } },
+            user: { connect: { id: ctx.session.user.id } },
           },
         });
       } else {
@@ -39,7 +39,7 @@ export const developersRoute = router({
           where: {
             userId_developerId: {
               developerId: input.developerId,
-              userId: ctx.loggedInUser.id,
+              userId: ctx.session.user.id,
             },
           },
         });

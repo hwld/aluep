@@ -7,24 +7,36 @@ import {
   TextInput,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useMutation } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useMutation } from "@tanstack/react-query";
 import {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
 import { unstable_getServerSession } from "next-auth/next";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import {
+  allTagsQueryKey,
+  useAllTagsQuery,
+} from "../../../client/hooks/useAllTagsQuery";
+import { sessionQuerykey } from "../../../client/hooks/useSessionQuery";
+import {
+  themeQueryKey,
+  useThemeQuery,
+} from "../../../client/hooks/useThemeQuery";
 import { trpc } from "../../../client/trpc";
+import { GetServerSidePropsWithReactQuery } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { prisma } from "../../../server/prismadb";
+import { appRouter } from "../../../server/routers/_app";
 import { RouterInputs } from "../../../server/trpc";
 import { authOptions } from "../../api/auth/[...nextauth]";
 
-export const getServerSideProps = async ({
+export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   req,
   res,
   query,
-}: GetServerSidePropsContext) => {
+}) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
   if (!session) {
@@ -41,44 +53,37 @@ export const getServerSideProps = async ({
     return { notFound: true };
   }
 
-  // 指定されたお題を取得する
-  const rawTheme = await prisma.appTheme.findUnique({
-    where: { id: themeId },
-    include: { tags: true },
-  });
-  if (!rawTheme) {
+  const caller = appRouter.createCaller({ session });
+  const theme = await caller.themes.get({ themeId });
+  const allTags = await caller.themes.getAllTags();
+
+  //　お題の作成者とログインユーザーが異なれば404にする
+  if (theme.user.id !== session.user.id) {
     return { notFound: true };
   }
 
-  //　お題の作成者がログインユーザーかチェックする
-  if (rawTheme.userId !== session.user.id) {
-    return { notFound: true };
-  }
-
-  const theme = {
-    id: rawTheme.id,
-    title: rawTheme.title,
-    description: rawTheme.description,
-    tagIds: rawTheme.tags.map((t) => t.id),
-  };
-
-  //　すべてのタグを取得する
-  const allTags = await prisma.appThemeTag.findMany();
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(themeQueryKey(themeId), () => theme);
+  await queryClient.prefetchQuery(allTagsQueryKey, () => allTags);
+  const dehydratedState = dehydrate(queryClient);
 
   return {
     props: {
-      theme,
-      allTags: allTags.map(({ id, name }) => ({ id, name })),
+      dehydratedState,
     },
   };
 };
 
-type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
+const UpdateTheme: NextPage = () => {
+  const router = useRouter();
+  // TODO
+  const themeId = router.query.id as string;
+  const { theme } = useThemeQuery(themeId);
+  const { allTags } = useAllTagsQuery();
 
-const UpdateTheme: NextPage<PageProps> = ({ theme, allTags }) => {
-  const [title, setTitle] = useState(theme.title);
-  const [description, setDescription] = useState(theme.description);
-  const [tags, setTags] = useState(theme.tagIds);
+  const [title, setTitle] = useState(theme?.title ?? "");
+  const [description, setDescription] = useState(theme?.description ?? "");
+  const [tags, setTags] = useState(theme?.tags.map(({ id }) => id) ?? []);
 
   const updateMutation = useMutation({
     mutationFn: (data: RouterInputs["themes"]["update"]) => {
@@ -101,6 +106,9 @@ const UpdateTheme: NextPage<PageProps> = ({ theme, allTags }) => {
   });
 
   const handleUpdateTheme = () => {
+    if (!theme) {
+      return;
+    }
     updateMutation.mutate({ themeId: theme.id, title, description, tags });
   };
 

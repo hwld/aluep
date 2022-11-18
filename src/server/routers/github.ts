@@ -11,7 +11,7 @@ export const githubRoute = router({
     .mutation(async ({ input, ctx }) => {
       // 認証済みユーザーのアカウント情報からアクセストークンを取得する、
       const account = await prisma.account.findFirst({
-        where: { userId: ctx.loggedInUser.id, provider: "github" },
+        where: { userId: ctx.session.user.id, provider: "github" },
       });
       if (!account) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });

@@ -11,16 +11,27 @@ import {
   Title,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useMutation } from "@tanstack/react-query";
+import {
+  dehydrate,
+  QueryClient,
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
 import {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
 import { unstable_getServerSession } from "next-auth/next";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import {
+  themeQueryKey,
+  useThemeQuery,
+} from "../../../client/hooks/useThemeQuery";
 import { trpc } from "../../../client/trpc";
 import { prisma } from "../../../server/prismadb";
+import { appRouter } from "../../../server/routers/_app";
 import { RouterInputs } from "../../../server/trpc";
 import { authOptions } from "../../api/auth/[...nextauth]";
 
@@ -44,34 +55,25 @@ export const getServerSideProps = async ({
     return { notFound: true };
   }
 
-  const rawTheme = await prisma.appTheme.findUnique({
-    where: { id: themeId },
-    include: { tags: true, user: true },
-  });
-  if (!rawTheme) {
-    return { notFound: true };
-  }
-  const theme = {
-    id: rawTheme.id,
-    title: rawTheme.title,
-    tags: rawTheme.tags.map(({ id, name }) => ({ id, name })),
-    description: rawTheme.description,
-    createdAt: rawTheme.createdAt.toUTCString(),
-    updatedAt: rawTheme.updatedAt.toUTCString(),
-    user: {
-      id: rawTheme.user.id,
-      name: rawTheme.user.name,
-      image: rawTheme.user.image,
-    },
-  };
+  const caller = appRouter.createCaller({ session });
+  const theme = await caller.themes.get({ themeId });
 
-  return { props: { theme } };
+  const queryClient = new QueryClient();
+  // TODO hook化
+  queryClient.prefetchQuery(themeQueryKey(themeId), () => theme);
+  const dehydratedState = dehydrate(queryClient);
+
+  return { props: { dehydratedState } };
 };
 
-type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
-
 // TODO: コンポーネント分割
-const JoinTheme: NextPage<PageProps> = ({ theme }) => {
+const JoinTheme: NextPage = () => {
+  const router = useRouter();
+  //TODO
+  const themeId = router.query.id as string;
+
+  const { theme } = useThemeQuery(themeId);
+
   const [opened, setOpened] = useState(false);
   const [repoName, setRepoName] = useState("");
   const [repoDesc, setRepoDesc] = useState("");
@@ -128,6 +130,7 @@ const JoinTheme: NextPage<PageProps> = ({ theme }) => {
   };
 
   const handleJoinTheme = () => {
+    if (!theme) return;
     joinThemeMutation.mutate({
       themeId: theme.id,
       githubUrl: repoUrl,
@@ -138,11 +141,11 @@ const JoinTheme: NextPage<PageProps> = ({ theme }) => {
   return (
     <Box p={30}>
       <Box>
-        <Title>{theme.title}</Title>
-        <Avatar src={theme.user.image} size="xl" radius={100} />
-        <Text>{theme.user.name}</Text>
+        <Title>{theme?.title}</Title>
+        <Avatar src={theme?.user.image} size="xl" radius={100} />
+        <Text>{theme?.user.name}</Text>
         <Flex gap={10}>
-          {theme.tags.map((tag) => {
+          {theme?.tags.map((tag) => {
             return (
               <Badge key={tag.id} sx={{ textTransform: "none" }}>
                 {tag.name}

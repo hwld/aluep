@@ -1,8 +1,11 @@
-import { ActionIcon, Avatar, Button, Header, Text } from "@mantine/core";
+import { Button, Flex, Header, Text } from "@mantine/core";
 import { Session } from "next-auth";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { MdPostAdd } from "react-icons/md";
 import { UserMenuButton } from "./UserMenuButton";
 
+// TODO
 type Props = { user?: Session["user"] };
 
 export const AppHeader: React.FC<Props> = ({ user }) => {
@@ -26,7 +29,19 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
         AppThemePost
       </Text>
       {user ? (
-        <UserMenuButton user={user} />
+        <Flex gap={10} align="center">
+          <Button
+            component={Link}
+            href="/themes/create"
+            leftIcon={<MdPostAdd size={25} />}
+            variant="white"
+            color="red.7"
+            sx={{ borderWidth: "2px" }}
+          >
+            お題を投稿する
+          </Button>
+          <UserMenuButton user={user} />
+        </Flex>
       ) : (
         <Button variant="white" color="red.7" onClick={handleLogIn}>
           ログイン

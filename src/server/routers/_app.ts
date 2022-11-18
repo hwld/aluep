@@ -1,4 +1,4 @@
-import { router } from "../trpc";
+import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 import { developersRoute } from "./developers";
 import { githubRoute } from "./github";
 import { themesRoute } from "./themes";
@@ -9,6 +9,9 @@ export const appRouter = router({
   themes: themesRoute,
   developers: developersRoute,
   github: githubRoute,
+  session: publicProcedure.query(async ({ ctx }) => {
+    return ctx.session;
+  }),
 });
 
 export type AppRouter = typeof appRouter;

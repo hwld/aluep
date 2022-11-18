@@ -1,9 +1,74 @@
+import { Input, ThemeIcon } from "@mantine/core";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
 export const themesRoute = router({
+  // すべてのお題を取得する
+  getAll: publicProcedure.query(async () => {
+    const rawThemes = await prisma.appTheme.findMany({
+      include: { tags: true, user: true },
+    });
+    const themes = rawThemes.map(
+      ({ id, title, description, tags, createdAt, updatedAt, user }) => ({
+        id,
+        title,
+        description,
+        tags: tags.map(({ id, name }) => ({ id, name })),
+        user: { id: user.id, image: user.image, name: user.name },
+        createdAt: createdAt.toUTCString(),
+        updatedAt: updatedAt.toUTCString(),
+      })
+    );
+
+    return themes;
+  }),
+
+  // すべてのタグを取得する
+  getAllTags: publicProcedure.query(async () => {
+    const rawTags = await prisma.appThemeTag.findMany();
+    const allTags = rawTags.map(({ id, name }) => ({ id, name }));
+
+    return allTags;
+  }),
+
+  // idを指定してタグを取得する
+  get: publicProcedure
+    .input(z.object({ themeId: z.string() }))
+    .query(async ({ input }) => {
+      const rawTheme = await prisma.appTheme.findUnique({
+        where: { id: input.themeId },
+        include: {
+          tags: true,
+          user: true,
+          likes: true,
+        },
+      });
+
+      if (!rawTheme) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      const theme = {
+        id: rawTheme.id,
+        title: rawTheme.title,
+        tags: rawTheme.tags.map(({ id, name }) => ({ id, name })),
+        description: rawTheme.description,
+        createdAt: rawTheme.createdAt.toUTCString(),
+        updatedAt: rawTheme.updatedAt.toUTCString(),
+        user: {
+          id: rawTheme.user.id,
+          name: rawTheme.user.name,
+          image: rawTheme.user.image,
+        },
+        likes: rawTheme.likes.length,
+      };
+
+      return theme;
+    }),
+
+  // お題を検索する
   search: publicProcedure
     .input(
       z.object({ keyword: z.string(), tagIds: z.array(z.string().min(1)) })
@@ -49,6 +114,8 @@ export const themesRoute = router({
 
       return themes;
     }),
+
+  // お題を作成する
   create: requireLoggedInProcedure
     .input(
       z.object({
@@ -63,11 +130,12 @@ export const themesRoute = router({
           title: input.title,
           description: input.description,
           tags: { connect: input.tags.map((tag) => ({ id: tag })) },
-          userId: ctx.loggedInUser.id,
+          userId: ctx.session.user.id,
         },
       });
     }),
 
+  // お題を更新する
   update: requireLoggedInProcedure
     .input(
       z.object({
@@ -80,7 +148,7 @@ export const themesRoute = router({
     .mutation(async ({ input, ctx }) => {
       // ログインユーザーが投稿したお題が存在するか確認する
       const existingTheme = await prisma.appTheme.findFirst({
-        where: { id: input.themeId, userId: ctx.loggedInUser.id },
+        where: { id: input.themeId, userId: ctx.session.user.id },
       });
       if (!existingTheme) {
         throw new TRPCError({ code: "BAD_REQUEST" });
@@ -98,6 +166,7 @@ export const themesRoute = router({
       });
     }),
 
+  // お題を削除する
   delete: requireLoggedInProcedure
     .input(z.object({ themeId: z.string().min(1) }))
     .mutation(async ({ input, ctx }) => {
@@ -105,13 +174,14 @@ export const themesRoute = router({
       const theme = await prisma.appTheme.findUnique({
         where: { id: input.themeId },
       });
-      if (ctx.loggedInUser.id !== theme?.userId) {
+      if (ctx.session.user.id !== theme?.userId) {
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
 
       await prisma.appTheme.delete({ where: { id: input.themeId } });
     }),
 
+  // お題に参加する
   join: requireLoggedInProcedure
     .input(
       z.object({
@@ -124,13 +194,14 @@ export const themesRoute = router({
       await prisma.appThemeDeveloper.create({
         data: {
           appTheme: { connect: { id: input.themeId } },
-          user: { connect: { id: ctx.loggedInUser.id } },
+          user: { connect: { id: ctx.session.user.id } },
           githubUrl: input.githubUrl,
           comment: input.comment,
         },
       });
     }),
 
+  // お題にいいねする
   like: requireLoggedInProcedure
     .input(z.object({ themeId: z.string().min(1), like: z.boolean() }))
     .mutation(async ({ input, ctx }) => {
@@ -143,7 +214,7 @@ export const themesRoute = router({
       }
 
       // 投稿者が自分のお題にいいねすることはできない
-      if (theme.userId == ctx.loggedInUser.id) {
+      if (theme.userId == ctx.session.user.id) {
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
 
@@ -152,7 +223,7 @@ export const themesRoute = router({
         await prisma.appThemeLike.create({
           data: {
             appTheme: { connect: { id: theme.id } },
-            user: { connect: { id: ctx.loggedInUser.id } },
+            user: { connect: { id: ctx.session.user.id } },
           },
         });
       } else {
@@ -161,10 +232,60 @@ export const themesRoute = router({
           where: {
             userId_appThemeId: {
               appThemeId: input.themeId,
-              userId: ctx.loggedInUser.id,
+              userId: ctx.session.user.id,
             },
           },
         });
       }
+    }),
+
+  // ログインユーザーが指定されたidのお題をいいねしているか
+  liked: publicProcedure
+    .input(z.object({ themeId: z.string().min(1) }))
+    .query(async ({ input, ctx }) => {
+      const loggedInUser = ctx.session?.user;
+      if (!loggedInUser) {
+        return false;
+      }
+
+      const like = await prisma.appThemeLike.findUnique({
+        where: {
+          userId_appThemeId: {
+            appThemeId: input.themeId,
+            userId: loggedInUser.id,
+          },
+        },
+      });
+
+      return Boolean(like);
+    }),
+
+  // 指定されたお題の参加者を取得する
+  getAllDevelopers: publicProcedure
+    .input(z.object({ themeId: z.string().min(1) }))
+    .query(async ({ input, ctx }) => {
+      const rawDevelopers = await prisma.appThemeDeveloper.findMany({
+        where: { appThemeId: input.themeId },
+        include: { user: true, likes: true },
+      });
+
+      const developers = rawDevelopers.map(
+        ({ id, user, githubUrl, comment, createdAt, likes }) => ({
+          id,
+          userid: user.id,
+          name: user.name,
+          image: user.image,
+          githubUrl,
+          comment,
+          likes: likes.length,
+          // ログインユーザーがいいねしているか
+          liked: likes.find((like) => like.userId === ctx.session?.user.id)
+            ? true
+            : false,
+          createdAt: createdAt.toUTCString(),
+        })
+      );
+
+      return developers;
     }),
 });

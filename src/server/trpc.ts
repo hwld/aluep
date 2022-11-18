@@ -9,9 +9,14 @@ export const router = t.router;
 export type RouterInputs = inferRouterInputs<AppRouter>;
 
 // middlewares
+// TODO publicProcedure,requireLoggedInProcedureどちらも
+// 同じプロパティを参照して、publicはnull|undefined,
+// requiredはSessionが入るようにする。
+//
 const middleware = t.middleware;
 export const isLoggedIn = middleware(async ({ ctx, next }) => {
   if (!ctx.session?.user) {
+    console.log("1");
     throw new TRPCError({ code: "FORBIDDEN" });
   }
 
@@ -19,10 +24,11 @@ export const isLoggedIn = middleware(async ({ ctx, next }) => {
     where: { id: ctx.session.user.id },
   });
   if (!loggedInUser) {
+    console.log("2");
     throw new TRPCError({ code: "FORBIDDEN" });
   }
 
-  return next({ ctx: { loggedInUser } });
+  return next({ ctx: { session: { user: loggedInUser } } });
 });
 
 // procedures

@@ -7,23 +7,35 @@ import {
   TextInput,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useMutation } from "@tanstack/react-query";
+import {
+  dehydrate,
+  QueryClient,
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { unstable_getServerSession } from "next-auth/next";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import {
+  allTagsQueryKey,
+  useAllTagsQuery,
+} from "../../client/hooks/useAllTagsQuery";
+import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
 import { trpc } from "../../client/trpc";
+import { GetServerSidePropsWithReactQuery } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { prisma } from "../../server/prismadb";
+import { appRouter } from "../../server/routers/_app";
 import { RouterInputs } from "../../server/trpc";
 import { authOptions } from "../api/auth/[...nextauth]";
 
-export const getServerSideProps = async ({
+export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   req,
   res,
-}: GetServerSidePropsContext) => {
-  const session = await unstable_getServerSession(req, res, authOptions);
-  const allTags = await prisma.appThemeTag.findMany();
+}) => {
+  const caller = appRouter.createCaller({ session: null });
 
+  const session = await unstable_getServerSession(req, res, authOptions);
   if (!session) {
     return {
       redirect: {
@@ -33,17 +45,23 @@ export const getServerSideProps = async ({
     };
   }
 
+  const allTags = caller.themes.getAllTags();
+
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(sessionQuerykey, () => session);
+  await queryClient.prefetchQuery(allTagsQueryKey, () => allTags);
+  const dehydratedState = dehydrate(queryClient);
+
   return {
     props: {
-      session,
-      allTags: allTags.map(({ id, name }) => ({ id, name })),
+      dehydratedState,
     },
   };
 };
 
-type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
+export default function CreateTheme() {
+  const { allTags } = useAllTagsQuery();
 
-export default function CreateTheme({ allTags }: PageProps) {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");

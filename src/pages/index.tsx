@@ -1,76 +1,73 @@
 import {
-  AppShell,
   Avatar,
   Badge,
-  Box,
   Button,
   Card,
   Flex,
-  Header,
-  MultiSelect,
-  Navbar,
   Stack,
   Text,
-  TextInput,
   Title,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useMutation } from "@tanstack/react-query";
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import {
+  dehydrate,
+  QueryClient,
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
+import { GetServerSidePropsContext } from "next";
 import { unstable_getServerSession } from "next-auth/next";
-import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { isRegularExpressionLiteral } from "typescript";
-import { AppHeader } from "../client/components/AppHeader";
+import {
+  sessionQuerykey,
+  useSessionQuery,
+} from "../client/hooks/useSessionQuery";
 import { trpc } from "../client/trpc";
-import { prisma } from "../server/prismadb";
+import { GetServerSidePropsWithReactQuery } from "../server/lib/GetServerSidePropsWithReactQuery";
+import { appRouter } from "../server/routers/_app";
 import { RouterInputs } from "../server/trpc";
 import { authOptions } from "./api/auth/[...nextauth]";
 
-export const getServerSideProps = async ({
+export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   req,
   res,
-}: GetServerSidePropsContext) => {
-  const session = await unstable_getServerSession(req, res, authOptions);
-  const themes = (
-    await prisma.appTheme.findMany({
-      include: { tags: true, user: true },
-    })
-  ).map(({ id, title, description, tags, createdAt, updatedAt, user }) => ({
-    id,
-    title,
-    description,
-    tags: tags.map(({ id, name }) => ({ id, name })),
-    user: { id: user.id, image: user.image, name: user.name },
-    createdAt: createdAt.toUTCString(),
-    updatedAt: updatedAt.toUTCString(),
-  }));
+}) => {
+  // trpcのapiをサーバー側から呼び出すために、コンテキストを指定してcallerを作る
+  const caller = appRouter.createCaller({ session: null });
 
-  const rawTags = await prisma.appThemeTag.findMany();
-  const allTags = rawTags.map(({ id, name }) => ({ id, name }));
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const themes = caller.themes.getAll();
+
+  // react-queryを使用してデータを渡し、dehydrateしてクライアントに送る
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(sessionQuerykey, () => session);
+  await queryClient.prefetchQuery(["themes"], () => themes);
+  const dehydratedState = dehydrate(queryClient);
 
   return {
     props: {
-      session,
-      themes,
-      allTags,
+      dehydratedState,
     },
   };
 };
 
-type PageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
-
-export default function Home({ themes, allTags }: PageProps) {
-  const session = useSession();
+export default function Home() {
   const router = useRouter();
+  const { session } = useSessionQuery();
+  const { data: themes } = useQuery({
+    queryKey: ["themes"],
+    queryFn: () => {
+      return trpc.themes.getAll.query();
+    },
+    initialData: [],
+  });
 
   const deleteThemeMutation = useMutation({
     mutationFn: (data: RouterInputs["themes"]["delete"]) => {
       return trpc.themes.delete.mutate(data);
     },
     onSuccess: () => {
-      // TODO
       router.reload();
     },
     onError: () => {
@@ -87,44 +84,7 @@ export default function Home({ themes, allTags }: PageProps) {
   };
 
   return (
-    <AppShell
-      padding="md"
-      navbar={
-        <Navbar width={{ base: 300 }} p="xs">
-          {session.status === "unauthenticated" && (
-            <div>
-              <Button onClick={() => signIn("github")}>ログイン</Button>
-            </div>
-          )}
-          {session.status === "authenticated" && (
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <Avatar
-                src={session.data.user?.image}
-                size="xl"
-                sx={{ borderRadius: "100px" }}
-              />
-              <Text>{session.data.user?.name}</Text>
-              <Text>{session.data.user?.email}</Text>
-              <Button color="red" onClick={() => signOut()}>
-                ログアウト
-              </Button>
-              <Button component={Link} href="/users/profile">
-                プロフィール変更
-              </Button>
-              <Button
-                color="red"
-                variant="outline"
-                component={Link}
-                href="/users/delete"
-              >
-                アカウント削除
-              </Button>
-            </Box>
-          )}
-        </Navbar>
-      }
-      header={<AppHeader user={session.data?.user} />}
-    >
+    <div>
       <Text>アプリ開発のお題</Text>
       <Button
         component={Link}
@@ -164,7 +124,7 @@ export default function Home({ themes, allTags }: PageProps) {
                 <Button component={Link} href={`/themes/${theme.id}`}>
                   詳細
                 </Button>
-                {session.data?.user.id === theme.user.id && (
+                {session?.user.id === theme.user.id && (
                   <>
                     <Button
                       component={Link}
@@ -188,6 +148,6 @@ export default function Home({ themes, allTags }: PageProps) {
           );
         })}
       </Stack>
-    </AppShell>
+    </div>
   );
 }
