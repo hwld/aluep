@@ -1,33 +1,10 @@
-import {
-  Avatar,
-  Badge,
-  Button,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
-import {
-  dehydrate,
-  QueryClient,
-  useMutation,
-  useQuery,
-} from "@tanstack/react-query";
-import { GetServerSidePropsContext } from "next";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { NextPage } from "next";
 import { unstable_getServerSession } from "next-auth/next";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { HomePage } from "../client/components/HomePage";
-import {
-  sessionQuerykey,
-  useSessionQuery,
-} from "../client/hooks/useSessionQuery";
-import { trpc } from "../client/trpc";
+import { sessionQuerykey } from "../client/hooks/useSessionQuery";
 import { GetServerSidePropsWithReactQuery } from "../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../server/routers/_app";
-import { RouterInputs } from "../server/trpc";
 import { authOptions } from "./api/auth/[...nextauth]";
 
 export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
@@ -53,6 +30,7 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   };
 };
 
-export default function Home() {
+const Home: NextPage = () => {
   return <HomePage />;
-}
+};
+export default Home;
