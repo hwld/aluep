@@ -1,29 +1,40 @@
-import { Input, ThemeIcon } from "@mantine/core";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
+export type AppThemeWithUserWithTags = {
+  id: string;
+  title: string;
+  description: string;
+  tags: { id: string; name: string }[];
+  user: { id: string; image: string | null; name: string | null };
+  createdAt: string;
+  updatedAt: string;
+};
+
 export const themesRoute = router({
   // すべてのお題を取得する
-  getAll: publicProcedure.query(async () => {
-    const rawThemes = await prisma.appTheme.findMany({
-      include: { tags: true, user: true },
-    });
-    const themes = rawThemes.map(
-      ({ id, title, description, tags, createdAt, updatedAt, user }) => ({
-        id,
-        title,
-        description,
-        tags: tags.map(({ id, name }) => ({ id, name })),
-        user: { id: user.id, image: user.image, name: user.name },
-        createdAt: createdAt.toUTCString(),
-        updatedAt: updatedAt.toUTCString(),
-      })
-    );
+  getAll: publicProcedure.query(
+    async (): Promise<AppThemeWithUserWithTags[]> => {
+      const rawThemes = await prisma.appTheme.findMany({
+        include: { tags: true, user: true },
+      });
+      const themes = rawThemes.map(
+        ({ id, title, description, tags, createdAt, updatedAt, user }) => ({
+          id,
+          title,
+          description,
+          tags: tags.map(({ id, name }) => ({ id, name })),
+          user: { id: user.id, image: user.image, name: user.name },
+          createdAt: createdAt.toUTCString(),
+          updatedAt: updatedAt.toUTCString(),
+        })
+      );
 
-    return themes;
-  }),
+      return themes;
+    }
+  ),
 
   // すべてのタグを取得する
   getAllTags: publicProcedure.query(async () => {
