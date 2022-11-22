@@ -34,7 +34,6 @@ export const githubRoute = router({
         }),
       });
       const json = await result.json();
-      console.log(json);
 
       return { repoUrl: json.html_url as string };
     }),

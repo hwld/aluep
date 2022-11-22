@@ -1,8 +1,6 @@
-import { AppShell, Box } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
+import { AppShell } from "@mantine/core";
 import { ReactNode } from "react";
 import { useSessionQuery } from "../hooks/useSessionQuery";
-import { trpc } from "../trpc";
 import { AppHeader } from "./AppHeader";
 
 type Props = { children: ReactNode };
@@ -12,7 +10,11 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
   const { session } = useSessionQuery();
 
   return (
-    <AppShell padding="md" header={<AppHeader user={session?.user} />}>
+    <AppShell
+      padding="md"
+      header={<AppHeader user={session?.user} />}
+      sx={(theme) => ({ backgroundColor: theme.colors.gray[2] })}
+    >
       {children}
     </AppShell>
   );

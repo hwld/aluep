@@ -16,7 +16,6 @@ export type RouterInputs = inferRouterInputs<AppRouter>;
 const middleware = t.middleware;
 export const isLoggedIn = middleware(async ({ ctx, next }) => {
   if (!ctx.session?.user) {
-    console.log("1");
     throw new TRPCError({ code: "FORBIDDEN" });
   }
 
@@ -24,7 +23,6 @@ export const isLoggedIn = middleware(async ({ ctx, next }) => {
     where: { id: ctx.session.user.id },
   });
   if (!loggedInUser) {
-    console.log("2");
     throw new TRPCError({ code: "FORBIDDEN" });
   }
 

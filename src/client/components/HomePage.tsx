@@ -1,4 +1,4 @@
-import { Button, Stack, Title } from "@mantine/core";
+import { Button, Flex, Title } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
@@ -22,15 +22,16 @@ export const HomePage: React.FC = () => {
         component={Link}
         href="/themes/search"
         mt={10}
+        sx={(theme) => ({ boxShadow: theme.shadows.lg })}
       >
         お題を検索する
       </Button>
 
-      <Stack mt={30}>
+      <Flex mt={30} gap={15} wrap="wrap">
         {themes.map((theme) => {
           return <AppThemeCard key={theme.id} theme={theme} />;
         })}
-      </Stack>
+      </Flex>
     </main>
   );
 };

@@ -1,15 +1,10 @@
-import {
-  ActionIcon,
-  Avatar,
-  Divider,
-  Menu,
-  Text,
-  UnstyledButton,
-} from "@mantine/core";
+import { Avatar, Divider, Menu, UnstyledButton } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { MdLogout, MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
+import { FaTrash } from "react-icons/fa";
+import { MdLogout } from "react-icons/md";
+import { RiEdit2Fill } from "react-icons/ri";
 
 type Props = { user: Session["user"] };
 
@@ -29,7 +24,7 @@ export const UserMenuButton: React.FC<Props> = ({ user }) => {
         <Menu.Label>ユーザー設定</Menu.Label>
         <Divider color="gray.3" />
         <Menu.Item
-          icon={<MdOutlineEdit size={20} />}
+          icon={<RiEdit2Fill size={20} />}
           component={Link}
           href="/users/profile"
         >
@@ -39,7 +34,7 @@ export const UserMenuButton: React.FC<Props> = ({ user }) => {
           ログアウト
         </Menu.Item>
         <Menu.Item
-          icon={<MdOutlineDelete size={20} />}
+          icon={<FaTrash size={16} />}
           color="red"
           component={Link}
           href="/users/delete"
