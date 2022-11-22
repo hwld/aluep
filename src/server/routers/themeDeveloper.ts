@@ -3,7 +3,8 @@ import { z } from "zod";
 import { prisma } from "../prismadb";
 import { requireLoggedInProcedure, router } from "../trpc";
 
-export const developersRoute = router({
+export const themeDeveloperRoute = router({
+  // 開発者にいいねする
   like: requireLoggedInProcedure
     .input(
       z.object({

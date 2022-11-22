@@ -31,21 +31,21 @@ export const ThemeDetailPage: React.FC = () => {
   const { data: liked } = useQuery(
     [`theme-${themeId}-liked-${session?.user.id}`],
     () => {
-      return trpc.themes.liked.query({ themeId });
+      return trpc.theme.liked.query({ themeId });
     }
   );
 
   const { data: developers } = useQuery(
     [`theme-${themeId}-developers`],
     () => {
-      return trpc.themes.getAllDevelopers.query({ themeId });
+      return trpc.theme.getAllDevelopers.query({ themeId });
     },
     { initialData: [] }
   );
 
   const likeThemeMutation = useMutation({
-    mutationFn: (data: RouterInputs["themes"]["like"]) => {
-      return trpc.themes.like.mutate(data);
+    mutationFn: (data: RouterInputs["theme"]["like"]) => {
+      return trpc.theme.like.mutate(data);
     },
     onSuccess: () => {
       // TODO
@@ -61,8 +61,8 @@ export const ThemeDetailPage: React.FC = () => {
   });
 
   const likeDeveloperMutation = useMutation({
-    mutationFn: (data: RouterInputs["developers"]["like"]) => {
-      return trpc.developers.like.mutate(data);
+    mutationFn: (data: RouterInputs["themeDeveloper"]["like"]) => {
+      return trpc.themeDeveloper.like.mutate(data);
     },
     onSuccess: () => {
       // TODo
@@ -125,7 +125,7 @@ export const ThemeDetailPage: React.FC = () => {
       <Stack mt={10}>
         {developers.map((developer) => {
           return (
-            <Card key={developer.userid} shadow="sm" withBorder>
+            <Card key={developer.userId} shadow="sm" withBorder>
               <Avatar src={developer.image} />
               <Text>{developer.name}</Text>
               <Text>{developer.comment}</Text>
@@ -140,15 +140,18 @@ export const ThemeDetailPage: React.FC = () => {
               <Box>
                 <ActionIcon
                   mt={10}
-                  color={developer.liked ? "pink" : undefined}
+                  color={developer.likedByLoggedInUser ? "pink" : undefined}
                   size={30}
                   radius="xl"
                   variant="outline"
                   onClick={() => {
-                    handleLikeDeveloper(developer.id, !developer.liked);
+                    handleLikeDeveloper(
+                      developer.id,
+                      !developer.likedByLoggedInUser
+                    );
                   }}
                 >
-                  {developer.liked ? (
+                  {developer.likedByLoggedInUser ? (
                     <MdOutlineFavorite
                       size="70%"
                       style={{ marginTop: "4px" }}

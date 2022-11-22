@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
     };
   }
 
-  const allTags = caller.themes.getAllTags();
+  const allTags = caller.theme.getAllTags();
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(sessionQuerykey, () => session);

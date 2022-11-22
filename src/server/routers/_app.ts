@@ -1,13 +1,13 @@
-import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
-import { developersRoute } from "./developers";
+import { publicProcedure, router } from "../trpc";
 import { githubRoute } from "./github";
-import { themesRoute } from "./themes";
-import { meRoute } from "./users/me";
+import { meRoute } from "./me";
+import { themeRoute } from "./theme";
+import { themeDeveloperRoute } from "./themeDeveloper";
 
 export const appRouter = router({
-  users: router({ me: meRoute }),
-  themes: themesRoute,
-  developers: developersRoute,
+  me: meRoute,
+  theme: themeRoute,
+  themeDeveloper: themeDeveloperRoute,
   github: githubRoute,
   session: publicProcedure.query(async ({ ctx }) => {
     return ctx.session;

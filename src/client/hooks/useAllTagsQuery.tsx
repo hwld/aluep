@@ -8,7 +8,7 @@ export const useAllTagsQuery = () => {
   const { data: allTags, ...others } = useQuery(
     ["allTags"],
     () => {
-      return trpc.themes.getAllTags.query();
+      return trpc.theme.getAllTags.query();
     },
     { initialData: [] }
   );

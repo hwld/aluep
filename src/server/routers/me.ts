@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { prisma } from "../../prismadb";
-import { requireLoggedInProcedure, router } from "../../trpc";
+import { prisma } from "../prismadb";
+import { requireLoggedInProcedure, router } from "../trpc";
 
 export const meRoute = router({
   update: requireLoggedInProcedure

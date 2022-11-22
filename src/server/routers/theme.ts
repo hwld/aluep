@@ -1,80 +1,38 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import {
+  findManyThemes,
+  findTheme,
+  searchThemes,
+  Theme,
+} from "../models/theme";
+import { findThemeDevelopers, ThemeDeveloper } from "../models/themeDeveloper";
+import { findAllThemeTags, ThemeTag } from "../models/themeTag";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
-export type AppThemeWithUserWithTags = {
-  id: string;
-  title: string;
-  description: string;
-  tags: { id: string; name: string }[];
-  user: { id: string; image: string | null; name: string | null };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export const themesRoute = router({
+export const themeRoute = router({
   // すべてのお題を取得する
-  getAll: publicProcedure.query(
-    async (): Promise<AppThemeWithUserWithTags[]> => {
-      const rawThemes = await prisma.appTheme.findMany({
-        include: { tags: true, user: true },
-      });
-      const themes = rawThemes.map(
-        ({ id, title, description, tags, createdAt, updatedAt, user }) => ({
-          id,
-          title,
-          description,
-          tags: tags.map(({ id, name }) => ({ id, name })),
-          user: { id: user.id, image: user.image, name: user.name },
-          createdAt: createdAt.toUTCString(),
-          updatedAt: updatedAt.toUTCString(),
-        })
-      );
-
-      return themes;
-    }
-  ),
+  getAll: publicProcedure.query(async (): Promise<Theme[]> => {
+    const allThemes = await findManyThemes();
+    return allThemes;
+  }),
 
   // すべてのタグを取得する
-  getAllTags: publicProcedure.query(async () => {
-    const rawTags = await prisma.appThemeTag.findMany();
-    const allTags = rawTags.map(({ id, name }) => ({ id, name }));
-
+  getAllTags: publicProcedure.query(async (): Promise<ThemeTag[]> => {
+    const allTags = await findAllThemeTags();
     return allTags;
   }),
 
   // idを指定してタグを取得する
   get: publicProcedure
     .input(z.object({ themeId: z.string() }))
-    .query(async ({ input }) => {
-      const rawTheme = await prisma.appTheme.findUnique({
-        where: { id: input.themeId },
-        include: {
-          tags: true,
-          user: true,
-          likes: true,
-        },
-      });
+    .query(async ({ input }): Promise<Theme> => {
+      const theme = await findTheme({ id: input.themeId });
 
-      if (!rawTheme) {
+      if (!theme) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
-
-      const theme = {
-        id: rawTheme.id,
-        title: rawTheme.title,
-        tags: rawTheme.tags.map(({ id, name }) => ({ id, name })),
-        description: rawTheme.description,
-        createdAt: rawTheme.createdAt.toUTCString(),
-        updatedAt: rawTheme.updatedAt.toUTCString(),
-        user: {
-          id: rawTheme.user.id,
-          name: rawTheme.user.name,
-          image: rawTheme.user.image,
-        },
-        likes: rawTheme.likes.length,
-      };
 
       return theme;
     }),
@@ -82,46 +40,16 @@ export const themesRoute = router({
   // お題を検索する
   search: publicProcedure
     .input(
-      z.object({ keyword: z.string(), tagIds: z.array(z.string().min(1)) })
+      z.object({
+        keyword: z.string(),
+        tagIds: z.array(z.string().min(1)),
+      })
     )
-    .query(async ({ input }) => {
-      // キーワード、タグがどちらも指定されていなければ空の配列を返す
-      if (input.keyword === "" && input.tagIds.length === 0) {
-        return [];
-      }
-
-      // タイトル、説明少なくとも一方にinput.keywordが含まれるお題を先に取得する。
-      const rawThemesContainsKeyword = await prisma.appTheme.findMany({
-        where: {
-          OR: [
-            { title: { contains: input.keyword } },
-            { description: { contains: input.keyword } },
-          ],
-        },
-        include: { tags: true, user: true },
+    .query(async ({ input }): Promise<Theme[]> => {
+      const themes = await searchThemes({
+        keyword: input.keyword,
+        tagIds: input.tagIds,
       });
-      console.log(rawThemesContainsKeyword);
-
-      // input.tagsをすべて持つお題に絞り込む。
-      // 一つのクエリで行いたかったがやる方法がない？
-      const rawThemes = rawThemesContainsKeyword.filter((theme) => {
-        // お題に含まれているすべてのタグId
-        const themeTagIds = theme.tags.map(({ id }) => id);
-
-        return input.tagIds.every((id) => themeTagIds.includes(id));
-      });
-
-      const themes = rawThemes.map(
-        ({ id, title, description, createdAt, updatedAt, tags, user }) => ({
-          id,
-          title,
-          description,
-          user: { id: user.id, name: user.name, image: user.image },
-          tags: tags.map(({ id, name }) => ({ id, name })),
-          createdAt: createdAt.toLocaleString(),
-          updatedAt: updatedAt.toLocaleString(),
-        })
-      );
 
       return themes;
     }),
@@ -253,7 +181,7 @@ export const themesRoute = router({
   // ログインユーザーが指定されたidのお題をいいねしているか
   liked: publicProcedure
     .input(z.object({ themeId: z.string().min(1) }))
-    .query(async ({ input, ctx }) => {
+    .query(async ({ input, ctx }): Promise<boolean> => {
       const loggedInUser = ctx.session?.user;
       if (!loggedInUser) {
         return false;
@@ -274,29 +202,11 @@ export const themesRoute = router({
   // 指定されたお題の参加者を取得する
   getAllDevelopers: publicProcedure
     .input(z.object({ themeId: z.string().min(1) }))
-    .query(async ({ input, ctx }) => {
-      const rawDevelopers = await prisma.appThemeDeveloper.findMany({
+    .query(async ({ input, ctx }): Promise<ThemeDeveloper[]> => {
+      const developers = findThemeDevelopers({
         where: { appThemeId: input.themeId },
-        include: { user: true, likes: true },
+        loggedInUserId: ctx.session?.user.id,
       });
-
-      const developers = rawDevelopers.map(
-        ({ id, user, githubUrl, comment, createdAt, likes }) => ({
-          id,
-          userid: user.id,
-          name: user.name,
-          image: user.image,
-          githubUrl,
-          comment,
-          likes: likes.length,
-          // ログインユーザーがいいねしているか
-          liked: likes.find((like) => like.userId === ctx.session?.user.id)
-            ? true
-            : false,
-          createdAt: createdAt.toUTCString(),
-        })
-      );
-
       return developers;
     }),
 });

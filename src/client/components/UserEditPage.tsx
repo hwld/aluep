@@ -11,8 +11,8 @@ export const UserEditPage: React.FC = () => {
   const [name, setName] = useState(session?.user?.name || "");
 
   const updateMutation = useMutation({
-    mutationFn: (data: RouterInputs["users"]["me"]["update"]) => {
-      return trpc.users.me.update.mutate(data);
+    mutationFn: (data: RouterInputs["me"]["update"]) => {
+      return trpc.me.update.mutate(data);
     },
     onSuccess: () => {
       showNotification({

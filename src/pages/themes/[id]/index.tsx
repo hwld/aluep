@@ -1,9 +1,9 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { unstable_getServerSession } from "next-auth";
-import { authOptions } from "../../api/auth/[...nextauth]";
+import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
 import { GetServerSidePropsWithReactQuery } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
-import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
+import { authOptions } from "../../api/auth/[...nextauth]";
 
 export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   req,
@@ -21,11 +21,11 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
 
   // 表示するテーマ
   // TODO prefecthQueryの仕様を調べて、awaitが必要か考える
-  const theme = await caller.themes.get({ themeId });
+  const theme = await caller.theme.get({ themeId });
   // ログインユーザーが表示するテーマにいいねしているか
-  const liked = await caller.themes.liked({ themeId });
+  const liked = await caller.theme.liked({ themeId });
   // 表示するテーマの参加者
-  const developers = await caller.themes.getAllDevelopers({ themeId });
+  const developers = await caller.theme.getAllDevelopers({ themeId });
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery([`theme-${themeId}`], () => theme);

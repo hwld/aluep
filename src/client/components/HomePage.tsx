@@ -9,7 +9,7 @@ export const HomePage: React.FC = () => {
   const { data: themes } = useQuery({
     queryKey: ["themes"],
     queryFn: () => {
-      return trpc.themes.getAll.query();
+      return trpc.theme.getAll.query();
     },
     initialData: [],
   });
@@ -28,7 +28,7 @@ export const HomePage: React.FC = () => {
 
       <Stack mt={30}>
         {themes.map((theme) => {
-          return <AppThemeCard theme={theme} />;
+          return <AppThemeCard key={theme.id} theme={theme} />;
         })}
       </Stack>
     </main>

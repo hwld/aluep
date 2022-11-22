@@ -27,7 +27,7 @@ export const getServerSideProps = async ({
   }
 
   const caller = appRouter.createCaller({ session });
-  const theme = await caller.themes.get({ themeId });
+  const theme = await caller.theme.get({ themeId });
 
   const queryClient = new QueryClient();
   // TODO hook化

@@ -5,7 +5,7 @@ export const themeQueryKey = (themeId: string) => [`theme-${themeId}`];
 
 export const useThemeQuery = (themeId: string) => {
   const { data: theme, ...others } = useQuery(themeQueryKey(themeId), () => {
-    return trpc.themes.get.query({ themeId });
+    return trpc.theme.get.query({ themeId });
   });
 
   return { theme, ...others };

@@ -54,8 +54,8 @@ export const ThemeJoinPage: React.FC = () => {
   });
 
   const joinThemeMutation = useMutation({
-    mutationFn: (data: RouterInputs["themes"]["join"]) => {
-      return trpc.themes.join.mutate(data);
+    mutationFn: (data: RouterInputs["theme"]["join"]) => {
+      return trpc.theme.join.mutate(data);
     },
     onSuccess: () => {
       showNotification({

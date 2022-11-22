@@ -23,8 +23,8 @@ export const ThemeCreatePage: React.FC = () => {
   const [tags, setTags] = useState<string[]>([]);
 
   const createMutate = useMutation({
-    mutationFn: (data: RouterInputs["themes"]["create"]) => {
-      return trpc.themes.create.mutate(data);
+    mutationFn: (data: RouterInputs["theme"]["create"]) => {
+      return trpc.theme.create.mutate(data);
     },
     onSuccess: () => {
       showNotification({

@@ -27,8 +27,8 @@ export const ThemeEditPage: React.FC = () => {
   const [tags, setTags] = useState(theme?.tags.map(({ id }) => id) ?? []);
 
   const updateMutation = useMutation({
-    mutationFn: (data: RouterInputs["themes"]["update"]) => {
-      return trpc.themes.update.mutate(data);
+    mutationFn: (data: RouterInputs["theme"]["update"]) => {
+      return trpc.theme.update.mutate(data);
     },
     onSuccess: () => {
       showNotification({

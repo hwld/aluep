@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   const caller = appRouter.createCaller({ session: null });
 
   const session = await unstable_getServerSession(req, res, authOptions);
-  const themes = caller.themes.getAll();
+  const themes = caller.theme.getAll();
 
   // react-queryを使用してデータを渡し、dehydrateしてクライアントに送る
   const queryClient = new QueryClient();

@@ -31,7 +31,7 @@ export const ThemeSearchPage: React.FC = () => {
     queryKey: ["themes", { debouncedKeyword, tags }] as const,
     queryFn: ({ queryKey }) => {
       const { debouncedKeyword, tags } = queryKey[1];
-      return trpc.themes.search.query({
+      return trpc.theme.search.query({
         keyword: debouncedKeyword,
         tagIds: tags,
       });

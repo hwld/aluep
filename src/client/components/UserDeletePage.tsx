@@ -8,7 +8,7 @@ export const UserDeletepage: React.FC = () => {
   const router = useRouter();
   const deleteMutation = useMutation({
     mutationFn: () => {
-      return trpc.users.me.delete.mutate();
+      return trpc.me.delete.mutate();
     },
     onSuccess: () => {
       // TODO

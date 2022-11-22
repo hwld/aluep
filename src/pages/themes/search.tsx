@@ -8,7 +8,7 @@ import { appRouter } from "../../server/routers/_app";
 export const getServerSideProps: GetServerSidePropsWithReactQuery =
   async () => {
     const caller = appRouter.createCaller({ session: null });
-    const allTags = caller.themes.getAllTags();
+    const allTags = caller.theme.getAllTags();
 
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery(allTagsQueryKey, () => allTags);
