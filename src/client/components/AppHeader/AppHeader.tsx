@@ -1,14 +1,21 @@
-import { Button, Flex, Header, Text } from "@mantine/core";
+import { Flex, Header, Text } from "@mantine/core";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { MdPostAdd } from "react-icons/md";
+import { useRouter } from "next/router";
+import { AppHeaderButton } from "./AppHeaderButton";
 import { UserMenuButton } from "./UserMenuButton";
 
 // TODO
 type Props = { user?: Session["user"] };
 
 export const AppHeader: React.FC<Props> = ({ user }) => {
+  const router = useRouter();
+
+  const handleCreateTheme = () => {
+    router.push("/themes/create");
+  };
+
   const handleLogIn = () => {
     signIn("github");
   };
@@ -30,21 +37,13 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
       </Text>
       {user ? (
         <Flex gap={10} align="center">
-          <Button
-            component={Link}
-            href="/themes/create"
-            leftIcon={<MdPostAdd size={25} />}
-            variant="white"
-            sx={{ borderWidth: "2px" }}
-          >
+          <AppHeaderButton onClick={handleCreateTheme}>
             お題を投稿する
-          </Button>
+          </AppHeaderButton>
           <UserMenuButton user={user} />
         </Flex>
       ) : (
-        <Button variant="white" onClick={handleLogIn}>
-          ログイン
-        </Button>
+        <AppHeaderButton onClick={handleLogIn}>ログイン</AppHeaderButton>
       )}
     </Header>
   );

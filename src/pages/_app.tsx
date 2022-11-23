@@ -33,11 +33,6 @@ export default function App(props: AppProps) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
-        {/* TODO: next.jsのフォント最適化について調べる */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap"
-          rel="stylesheet"
-        />
       </Head>
 
       <QueryClientProvider client={queryClient}>

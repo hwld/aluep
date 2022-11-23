@@ -1,10 +1,10 @@
 import { Avatar, Badge, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
-import { Theme } from "../../server/models/theme";
-import { AppThemeActionButton } from "./AppThemeActionButton";
+import { Theme } from "../../../server/models/theme";
+import { ThemeMenuButton } from "./ThemeMenuButton";
 
 type Props = { theme: Theme };
-export const AppThemeCard: React.FC<Props> = ({ theme }) => {
+export const ThemeCard: React.FC<Props> = ({ theme }) => {
   const router = useRouter();
 
   const handleGoDetail = () => {
@@ -18,8 +18,9 @@ export const AppThemeCard: React.FC<Props> = ({ theme }) => {
       key={theme.id}
       bg="gray.01"
       w={480}
-      sx={(theme) => ({
+      sx={() => ({
         cursor: "pointer",
+        position: "static",
       })}
       onClick={handleGoDetail}
     >
@@ -29,7 +30,7 @@ export const AppThemeCard: React.FC<Props> = ({ theme }) => {
           <Title order={3} color="red.7" sx={{ lineHeight: 1.2 }}>
             {theme.title}
           </Title>
-          <AppThemeActionButton theme={theme} />
+          <ThemeMenuButton theme={theme} />
         </Flex>
 
         {/* ユーザー情報 */}

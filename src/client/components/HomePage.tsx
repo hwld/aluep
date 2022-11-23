@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
 import { trpc } from "../trpc";
-import { AppThemeCard } from "./AppThemeCard";
+import { ThemeCard } from "./ThemeCard/ThemeCard";
 
 export const HomePage: React.FC = () => {
   const { data: themes } = useQuery({
@@ -29,7 +29,7 @@ export const HomePage: React.FC = () => {
 
       <Flex mt={30} gap={15} wrap="wrap">
         {themes.map((theme) => {
-          return <AppThemeCard key={theme.id} theme={theme} />;
+          return <ThemeCard key={theme.id} theme={theme} />;
         })}
       </Flex>
     </main>

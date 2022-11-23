@@ -56,5 +56,7 @@ export const theme: MantineThemeOverride = {
   },
   components: {
     Text: { defaultProps: { color: "gray.7" } },
+    Menu: {},
+    MenuItem: {},
   },
 };

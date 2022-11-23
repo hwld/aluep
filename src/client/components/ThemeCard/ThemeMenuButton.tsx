@@ -1,18 +1,21 @@
 import { ActionIcon, Menu } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
 import { SyntheticEvent } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
-import { Theme } from "../../server/models/theme";
-import { RouterInputs } from "../../server/trpc";
-import { useSessionQuery } from "../hooks/useSessionQuery";
-import { trpc } from "../trpc";
+import { Theme } from "../../../server/models/theme";
+import { RouterInputs } from "../../../server/trpc";
+import { useSessionQuery } from "../../hooks/useSessionQuery";
+import { trpc } from "../../trpc";
+import { AppMenu } from "../AppMenu/AppMenu";
+import { MenuDropdown } from "../AppMenu/MenuDropdown";
+import { MenuItem } from "../AppMenu/MenuItem";
+import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
 
 type Props = { theme: Theme };
-export const AppThemeActionButton: React.FC<Props> = ({ theme }) => {
+export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
   const { session } = useSessionQuery();
 
   const queryClient = useQueryClient();
@@ -43,44 +46,44 @@ export const AppThemeActionButton: React.FC<Props> = ({ theme }) => {
   };
 
   return (
-    <Menu width={100}>
+    <AppMenu>
       <Menu.Target>
         <ActionIcon
-          size={40}
-          color="gray.0"
-          radius="xl"
+          size={30}
+          color="red.7"
           sx={(theme) => ({
-            color: theme.colors.gray[0],
-            backgroundColor: theme.colors.red[7],
-            boxShadow: theme.shadows.md,
             transition: "all 150ms",
             "&:hover": {
-              color: theme.colors.gray[1],
-              backgroundColor: theme.colors.red[8],
+              backgroundColor: theme.fn.rgba(theme.colors.red[7], 0.1),
             },
           })}
           onClick={stopPropagation}
         >
-          <BsThreeDots size="60%" />
+          <BsThreeDots size="70%" />
         </ActionIcon>
       </Menu.Target>
-      <Menu.Dropdown>
-        {session?.user.id === theme.user.id && (
-          <div>
-            <Menu.Item
+
+      <MenuDropdown>
+        {session?.user.id === theme.user.id ? (
+          <>
+            <MenuLinkItem
               icon={<RiEdit2Fill size={20} />}
-              onClick={stopPropagation}
-              component={Link}
               href={`/themes/${theme.id}/update`}
             >
-              更新
-            </Menu.Item>
-            <Menu.Item icon={<FaTrash size={18} />} onClick={handleDeleteTheme}>
-              削除
-            </Menu.Item>
-          </div>
+              お題を更新する
+            </MenuLinkItem>
+            <MenuItem
+              icon={<FaTrash size={18} />}
+              onClick={handleDeleteTheme}
+              red
+            >
+              お題を削除する
+            </MenuItem>
+          </>
+        ) : (
+          <Menu.Label>選択できる項目がありません。</Menu.Label>
         )}
-      </Menu.Dropdown>
-    </Menu>
+      </MenuDropdown>
+    </AppMenu>
   );
 };
