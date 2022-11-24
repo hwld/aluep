@@ -30,7 +30,6 @@ export const getServerSideProps = async ({
   const theme = await caller.theme.get({ themeId });
 
   const queryClient = new QueryClient();
-  // TODO hook化
   queryClient.prefetchQuery(themeQueryKey(themeId), () => theme);
   const dehydratedState = dehydrate(queryClient);
 

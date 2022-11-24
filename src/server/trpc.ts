@@ -9,10 +9,6 @@ export const router = t.router;
 export type RouterInputs = inferRouterInputs<AppRouter>;
 
 // middlewares
-// TODO publicProcedure,requireLoggedInProcedureどちらも
-// 同じプロパティを参照して、publicはnull|undefined,
-// requiredはSessionが入るようにする。
-//
 const middleware = t.middleware;
 export const isLoggedIn = middleware(async ({ ctx, next }) => {
   if (!ctx.session?.user) {

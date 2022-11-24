@@ -6,7 +6,6 @@ import { AppHeader } from "./AppHeader/AppHeader";
 type Props = { children: ReactNode };
 
 export const AppLayout: React.FC<Props> = ({ children }) => {
-  // TODO react-queryをつかってsession情報を取得する。
   const { session } = useSessionQuery();
 
   return (

@@ -63,7 +63,6 @@ export const ThemeEditPage: React.FC = () => {
         value={title}
         onChange={({ target: { value } }) => setTitle(value)}
       />
-      {/* TODO: タグの実装をどうする？ */}
       <MultiSelect
         data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
         onChange={(values) => {

@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { AppHeaderButton } from "./AppHeaderButton";
 import { UserMenuButton } from "./UserMenuButton";
 
-// TODO
 type Props = { user?: Session["user"] };
 
 export const AppHeader: React.FC<Props> = ({ user }) => {
