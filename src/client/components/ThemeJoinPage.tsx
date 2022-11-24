@@ -93,7 +93,17 @@ export const ThemeJoinPage: React.FC = () => {
     <Box p={30}>
       <Box>
         <Title>{theme?.title}</Title>
-        <Avatar src={theme?.user.image} size="xl" radius={100} />
+        <Avatar
+          src={theme?.user.image}
+          size="xl"
+          radius={100}
+          sx={(theme) => ({
+            borderWidth: "2px",
+            borderColor: theme.colors.gray[2],
+            borderStyle: "solid",
+            borderRadius: "100%",
+          })}
+        />
         <Text>{theme?.user.name}</Text>
         <Flex gap={10}>
           {theme?.tags.map((tag) => {

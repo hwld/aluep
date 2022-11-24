@@ -50,11 +50,11 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
       <Menu.Target>
         <ActionIcon
           size={30}
-          color="red.7"
+          color="gray"
           sx={(theme) => ({
             transition: "all 150ms",
             "&:hover": {
-              backgroundColor: theme.fn.rgba(theme.colors.red[7], 0.1),
+              backgroundColor: theme.fn.rgba(theme.colors.gray[5], 0.1),
             },
           })}
           onClick={stopPropagation}

@@ -80,7 +80,17 @@ export const ThemeSearchPage: React.FC = () => {
                       );
                     })}
                   </Flex>
-                  <Avatar src={theme.user.image} radius="xl" size="md" />
+                  <Avatar
+                    src={theme.user.image}
+                    radius="xl"
+                    size="md"
+                    sx={(theme) => ({
+                      borderWidth: "2px",
+                      borderColor: theme.colors.gray[2],
+                      borderStyle: "solid",
+                      borderRadius: "100%",
+                    })}
+                  />
                   <Text>{theme.user.name}</Text>
                   <Text>{new Date(theme.createdAt).toLocaleString()}</Text>
                   <Button component={Link} href={`/themes/${theme.id}`}>

@@ -1,6 +1,7 @@
-import { Avatar, Badge, Card, Flex, Stack, Text, Title } from "@mantine/core";
+import { Avatar, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { Theme } from "../../../server/models/theme";
+import { ThemeTagBadge } from "../ThemeTagBadge";
 import { ThemeMenuButton } from "./ThemeMenuButton";
 
 type Props = { theme: Theme };
@@ -13,10 +14,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
 
   return (
     <Card
-      radius="md"
-      shadow="md"
       key={theme.id}
-      bg="gray.01"
       w={480}
       sx={() => ({
         cursor: "pointer",
@@ -36,7 +34,17 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         {/* ユーザー情報 */}
         <Flex align="center" justify="space-between">
           <Flex gap={10} align="flex-start">
-            <Avatar src={theme.user.image} radius="xl" size="md" />
+            <Avatar
+              src={theme.user.image}
+              radius="xl"
+              size="md"
+              sx={(theme) => ({
+                borderWidth: "2px",
+                borderColor: theme.colors.gray[2],
+                borderStyle: "solid",
+                borderRadius: "100%",
+              })}
+            />
             <Text>{theme.user.name}</Text>
           </Flex>
           <Text color="gray.5">
@@ -48,17 +56,9 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         <Flex gap={5} wrap="wrap">
           {theme.tags.map((tag) => {
             return (
-              <Badge
-                size="lg"
-                sx={(theme) => ({
-                  textTransform: "none",
-                  backgroundColor: theme.fn.rgba(theme.colors.red[7], 0.1),
-                  color: theme.colors.red[7],
-                })}
-                key={tag.id}
-              >
+              <ThemeTagBadge size="lg" key={tag.id}>
                 {tag.name}
-              </Badge>
+              </ThemeTagBadge>
             );
           })}
         </Flex>
