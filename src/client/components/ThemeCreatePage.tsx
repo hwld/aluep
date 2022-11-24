@@ -48,43 +48,39 @@ export const ThemeCreatePage: React.FC = () => {
   };
 
   return (
-    <Box>
-      <Box w={800} m="auto">
-        <Title>お題の投稿</Title>
-        <Card mt={15}>
-          <Stack spacing="md">
-            <AppTextInput
-              label="タイトル"
-              value={title}
-              onChange={({ target: { value } }) => setTitle(value)}
-            />
-            {/* TODO: タグの実装をどうする？ */}
-            <AppMultiSelect
-              data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
-              onChange={(values) => setTags(values)}
-              value={tags}
-              label="タグ"
-              searchable
-              nothingFound="タグが見つかりませんでした"
-            />
-            <AppTextarea
-              label="説明"
-              autosize
-              minRows={10}
-              value={description}
-              onChange={({ target: { value } }) => setDescription(value)}
-            />
-          </Stack>
-          <Flex gap={10}>
-            <Button mt="lg" onClick={handleCreateTheme}>
-              投稿
-            </Button>
-            <Button mt="lg" variant="outline" onClick={handleBack}>
-              キャンセル
-            </Button>
-          </Flex>
-        </Card>
-      </Box>
+    <Box w={800} m="auto">
+      <Title>お題の投稿</Title>
+      <Card mt="xl">
+        <Stack spacing="md">
+          <AppTextInput
+            label="タイトル"
+            value={title}
+            onChange={({ target: { value } }) => setTitle(value)}
+          />
+          {/* TODO: タグの実装をどうする？ */}
+          <AppMultiSelect
+            data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
+            onChange={(values) => setTags(values)}
+            value={tags}
+            label="タグ"
+            searchable
+            nothingFound="タグが見つかりませんでした"
+          />
+          <AppTextarea
+            label="説明"
+            autosize
+            minRows={10}
+            value={description}
+            onChange={({ target: { value } }) => setDescription(value)}
+          />
+        </Stack>
+        <Flex gap={10} mt="lg">
+          <Button onClick={handleCreateTheme}>投稿する</Button>
+          <Button variant="outline" onClick={handleBack}>
+            キャンセル
+          </Button>
+        </Flex>
+      </Card>
     </Box>
   );
 };

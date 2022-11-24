@@ -15,7 +15,7 @@ export const HomePage: React.FC = () => {
   });
 
   return (
-    <Flex gap={30}>
+    <Flex gap={30} justify="space-between">
       <Box>
         <Title>アプリ開発のお題</Title>
         <Button

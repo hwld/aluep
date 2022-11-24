@@ -1,12 +1,16 @@
-import { Button, TextInput } from "@mantine/core";
+import { Box, Button, Card, Flex, Stack, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { RouterInputs } from "../../server/trpc";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { trpc } from "../trpc";
+import { AppTextInput } from "./AppTextInput";
 
 export const UserEditPage: React.FC = () => {
+  const router = useRouter();
+
   const { session } = useSessionQuery();
   const [name, setName] = useState(session?.user?.name || "");
 
@@ -34,16 +38,30 @@ export const UserEditPage: React.FC = () => {
     updateMutation.mutate({ name });
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
-    <div>
-      <TextInput
-        label="表示名"
-        value={name}
-        onChange={({ target: { value } }) => {
-          setName(value);
-        }}
-      ></TextInput>
-      <Button onClick={handleUpdateUser}>更新する</Button>
-    </div>
+    <Box w={800} m="auto">
+      <Title>プロフィールの更新</Title>
+      <Card mt="xl">
+        <Stack spacing="md">
+          <AppTextInput
+            label="ユーザー名"
+            value={name}
+            onChange={({ target: { value } }) => {
+              setName(value);
+            }}
+          />
+        </Stack>
+        <Flex gap={10} mt="lg">
+          <Button onClick={handleUpdateUser}>更新する</Button>
+          <Button variant="outline" onClick={handleBack}>
+            キャンセル
+          </Button>
+        </Flex>
+      </Card>
+    </Box>
   );
 };
