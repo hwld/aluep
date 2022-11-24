@@ -1,6 +1,8 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { unstable_getServerSession } from "next-auth";
 import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
+import { themeLikedQueryKey } from "../../../client/hooks/useThemeLike";
+import { themeQueryKey } from "../../../client/hooks/useThemeQuery";
 import { GetServerSidePropsWithReactQuery } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
 import { authOptions } from "../../api/auth/[...nextauth]";
@@ -28,9 +30,9 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   const developers = await caller.theme.getAllDevelopers({ themeId });
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery([`theme-${themeId}`], () => theme);
+  await queryClient.prefetchQuery(themeQueryKey(themeId), () => theme);
   await queryClient.prefetchQuery(
-    [`theme-${themeId}-liked-${session?.user.id}`],
+    themeLikedQueryKey(themeId, session?.user.id),
     () => liked
   );
   await queryClient.prefetchQuery(

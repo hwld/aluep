@@ -18,6 +18,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 import { RouterInputs } from "../../server/trpc";
 import { useSessionQuery } from "../hooks/useSessionQuery";
+import { useThemeLike } from "../hooks/useThemeLike";
 import { useThemeQuery } from "../hooks/useThemeQuery";
 import { trpc } from "../trpc";
 import { ThemeDeveloperCard } from "./ThemeDeveloperCard";
@@ -28,15 +29,9 @@ export const ThemeDetailPage: React.FC = () => {
   const router = useRouter();
   // TODO
   const themeId = router.query.id as string;
-
   const { theme } = useThemeQuery(themeId);
 
-  const { data: liked } = useQuery(
-    [`theme-${themeId}-liked-${session?.user.id}`],
-    () => {
-      return trpc.theme.liked.query({ themeId });
-    }
-  );
+  const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(themeId);
 
   const { data: developers } = useQuery(
     [`theme-${themeId}-developers`],
@@ -45,23 +40,6 @@ export const ThemeDetailPage: React.FC = () => {
     },
     { initialData: [] }
   );
-
-  const likeThemeMutation = useMutation({
-    mutationFn: (data: RouterInputs["theme"]["like"]) => {
-      return trpc.theme.like.mutate(data);
-    },
-    onSuccess: () => {
-      // TODO
-      router.reload();
-    },
-    onError: () => {
-      showNotification({
-        color: "red",
-        title: "お題へのいいね",
-        message: "お題にいいねできませんでした。",
-      });
-    },
-  });
 
   const likeDeveloperMutation = useMutation({
     mutationFn: (data: RouterInputs["themeDeveloper"]["like"]) => {
@@ -82,7 +60,10 @@ export const ThemeDetailPage: React.FC = () => {
 
   const handleLikeTheme = () => {
     if (!theme) return;
-    likeThemeMutation.mutate({ themeId: theme?.id, like: !liked });
+    likeThemeMutation.mutate({
+      themeId: theme?.id,
+      like: !likedByLoggedInUser,
+    });
   };
 
   const mantineTheme = useMantineTheme();
@@ -93,14 +74,14 @@ export const ThemeDetailPage: React.FC = () => {
       <Flex mt={30} gap={30} w="100%">
         <Flex direction="column" align="center">
           <ActionIcon
-            color={liked ? "pink" : undefined}
+            color={likedByLoggedInUser ? "pink" : undefined}
             size={60}
             radius="xl"
             variant="outline"
             sx={{ borderWidth: "2px" }}
             onClick={handleLikeTheme}
           >
-            {liked ? (
+            {likedByLoggedInUser ? (
               <MdOutlineFavorite size="70%" style={{ marginTop: "4px" }} />
             ) : (
               <MdOutlineFavoriteBorder
