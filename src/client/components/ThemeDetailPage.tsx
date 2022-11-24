@@ -142,7 +142,10 @@ export const ThemeDetailPage: React.FC = () => {
           </Stack>
         </Box>
         {/* ユーザー情報 */}
-        <Card sx={{ flexShrink: 0, height: "min-content" }} miw={300} maw={300}>
+        <Card
+          sx={{ flexShrink: 0, flexGrow: 0, height: "min-content" }}
+          w={250}
+        >
           <Flex gap={3} align="center">
             <FaUserAlt size={15} fill={mantineTheme.colors.gray[5]} />
             <Text color="gray.5" size="sm">

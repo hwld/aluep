@@ -15,6 +15,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
         padding="md"
         header={<AppHeader user={session?.user} />}
         sx={(theme) => ({ backgroundColor: theme.colors.gray[2] })}
+        styles={() => ({ body: { maxWidth: 1500, margin: "auto" } })}
       >
         {children}
       </AppShell>

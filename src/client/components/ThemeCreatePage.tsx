@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  MultiSelect,
-  Text,
-  Textarea,
-  TextInput,
-} from "@mantine/core";
+import { Box, Button, Card, Flex, Stack, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
@@ -13,6 +6,9 @@ import { useState } from "react";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
 import { trpc } from "../../client/trpc";
 import { RouterInputs } from "../../server/trpc";
+import { AppMultiSelect } from "./AppMultiSelect";
+import { AppTextarea } from "./AppTextarea";
+import { AppTextInput } from "./AppTextInput";
 
 export const ThemeCreatePage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
@@ -47,36 +43,48 @@ export const ThemeCreatePage: React.FC = () => {
     createMutate.mutate({ title, description, tags });
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
-    <Box p={30}>
-      <Text fw={700} size={32} component="h1">
-        お題の投稿
-      </Text>
-      <TextInput
-        label="タイトル"
-        value={title}
-        onChange={({ target: { value } }) => setTitle(value)}
-      />
-      {/* TODO: タグの実装をどうする？ */}
-      <MultiSelect
-        data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
-        onChange={(values) => setTags(values)}
-        value={tags}
-        label="タグ"
-        searchable
-        nothingFound="タグが見つかりませんでした"
-      />
-      <Textarea
-        label="説明"
-        autosize
-        minRows={10}
-        mt={10}
-        value={description}
-        onChange={({ target: { value } }) => setDescription(value)}
-      />
-      <Button mt={10} onClick={handleCreateTheme}>
-        投稿
-      </Button>
+    <Box>
+      <Box w={800} m="auto">
+        <Title>お題の投稿</Title>
+        <Card mt={15}>
+          <Stack spacing="md">
+            <AppTextInput
+              label="タイトル"
+              value={title}
+              onChange={({ target: { value } }) => setTitle(value)}
+            />
+            {/* TODO: タグの実装をどうする？ */}
+            <AppMultiSelect
+              data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
+              onChange={(values) => setTags(values)}
+              value={tags}
+              label="タグ"
+              searchable
+              nothingFound="タグが見つかりませんでした"
+            />
+            <AppTextarea
+              label="説明"
+              autosize
+              minRows={10}
+              value={description}
+              onChange={({ target: { value } }) => setDescription(value)}
+            />
+          </Stack>
+          <Flex gap={10}>
+            <Button mt="lg" onClick={handleCreateTheme}>
+              投稿
+            </Button>
+            <Button mt="lg" variant="outline" onClick={handleBack}>
+              キャンセル
+            </Button>
+          </Flex>
+        </Card>
+      </Box>
     </Box>
   );
 };

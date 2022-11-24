@@ -15,7 +15,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
   return (
     <Card
       key={theme.id}
-      w={480}
+      w={560}
       sx={() => ({
         cursor: "pointer",
         position: "static",
