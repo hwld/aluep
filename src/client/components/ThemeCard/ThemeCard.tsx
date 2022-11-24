@@ -56,7 +56,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         <Flex gap={5} wrap="wrap">
           {theme.tags.map((tag) => {
             return (
-              <ThemeTagBadge size="lg" key={tag.id}>
+              <ThemeTagBadge size="md" key={tag.id}>
                 {tag.name}
               </ThemeTagBadge>
             );

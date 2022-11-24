@@ -1,22 +1,12 @@
-import {
-  Avatar,
-  Badge,
-  Box,
-  Button,
-  Card,
-  Flex,
-  MultiSelect,
-  Stack,
-  Text,
-  TextInput,
-  Title,
-} from "@mantine/core";
+import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import { useState } from "react";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
 import { trpc } from "../../client/trpc";
+import { AppMultiSelect } from "./AppMultiSelect";
+import { AppTextInput } from "./AppTextInput";
+import { ThemeCard } from "./ThemeCard/ThemeCard";
 
 export const ThemeSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
@@ -42,18 +32,20 @@ export const ThemeSearchPage: React.FC = () => {
     <Box p={30}>
       <Flex w="100%" direction="column">
         <Card
-          shadow="sm"
-          withBorder
-          sx={{ position: "static", maxWidth: "756px", width: "100%" }}
+          maw="756px"
+          sx={() => ({
+            position: "static",
+          })}
         >
           <Stack spacing="sm">
             <Title order={2}>検索</Title>
-            <TextInput
+            <AppTextInput
               label="キーワード"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
             />
-            <MultiSelect
+
+            <AppMultiSelect
               label="タグ"
               data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
               value={tags}
@@ -61,45 +53,16 @@ export const ThemeSearchPage: React.FC = () => {
             />
           </Stack>
           <Text size="sm" mt={10}>
-            ※指定されたタグをすべて含み、指定されたキーワードがお題のタイトル、説明の少なくとも一方に含まれるお題を検索
+            ※指定されたタグをすべて含み、指定されたキーワードがお題のタイトルに含まれるお題を検索する。
           </Text>
         </Card>
         <Box mt={30}>
           <Title order={2}>検索結果</Title>
-          <Stack mt={10}>
+          <Flex mt={10} gap="md" wrap="wrap">
             {result.data?.map((theme) => {
-              return (
-                <Card shadow="sm" withBorder key={theme.id}>
-                  <Title>{theme.title}</Title>
-                  <Flex gap={5} wrap="wrap">
-                    {theme.tags.map((tag) => {
-                      return (
-                        <Badge sx={{ textTransform: "none" }} key={tag.id}>
-                          {tag.name}
-                        </Badge>
-                      );
-                    })}
-                  </Flex>
-                  <Avatar
-                    src={theme.user.image}
-                    radius="xl"
-                    size="md"
-                    sx={(theme) => ({
-                      borderWidth: "2px",
-                      borderColor: theme.colors.gray[2],
-                      borderStyle: "solid",
-                      borderRadius: "100%",
-                    })}
-                  />
-                  <Text>{theme.user.name}</Text>
-                  <Text>{new Date(theme.createdAt).toLocaleString()}</Text>
-                  <Button component={Link} href={`/themes/${theme.id}`}>
-                    詳細
-                  </Button>
-                </Card>
-              );
+              return <ThemeCard key={theme.id} theme={theme} />;
             })}
-          </Stack>
+          </Flex>
         </Box>
       </Flex>
     </Box>
