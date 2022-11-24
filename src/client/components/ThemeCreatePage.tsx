@@ -74,7 +74,7 @@ export const ThemeCreatePage: React.FC = () => {
             onChange={({ target: { value } }) => setDescription(value)}
           />
         </Stack>
-        <Flex gap={10} mt="lg">
+        <Flex gap="sm" mt="lg">
           <Button onClick={handleCreateTheme}>投稿する</Button>
           <Button variant="outline" onClick={handleBack}>
             キャンセル

@@ -55,7 +55,7 @@ export const UserEditPage: React.FC = () => {
             }}
           />
         </Stack>
-        <Flex gap={10} mt="lg">
+        <Flex gap="sm" mt="lg">
           <Button onClick={handleUpdateUser}>更新する</Button>
           <Button variant="outline" onClick={handleBack}>
             キャンセル
