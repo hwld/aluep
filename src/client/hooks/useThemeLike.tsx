@@ -9,7 +9,7 @@ import { themeQueryKey } from "./useThemeQuery";
 export const themeLikedQueryKey = (
   themeId: string,
   loggedInUserId: string | undefined
-) => [...themeQueryKey(themeId), "user", loggedInUserId, "liked"];
+) => [...themeQueryKey(themeId), "user", loggedInUserId ?? "", "liked"];
 
 // ログインユーザーと指定されたお題とのいいね状況
 export const useThemeLike = (themeId: string) => {
