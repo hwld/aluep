@@ -58,5 +58,13 @@ export const theme: MantineThemeOverride = {
     Text: { defaultProps: { color: "gray.7" } },
     Card: { defaultProps: { bg: "gray.1", radius: "md", shadow: "md" } },
     Divider: { defaultProps: { color: "gray.3" } },
+    Input: {
+      styles: (theme) => ({
+        invalid: {
+          borderColor: theme.colors.red[7],
+          borderWidth: "2px",
+        },
+      }),
+    },
   },
 };

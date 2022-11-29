@@ -1,6 +1,10 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
+  themeCreateInputSchema,
+  themeUpdateInputSchema,
+} from "../../share/schema";
+import {
   findManyThemes,
   findTheme,
   searchThemes,
@@ -10,15 +14,6 @@ import { findThemeDevelopers, ThemeDeveloper } from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
-
-export const themeCreateInputSchema = z.object({
-  title: z.string().min(1).max(50),
-  description: z.string().min(1).max(5000),
-  tags: z.array(z.string().min(1)).max(50),
-});
-export const themeUpdateInputSchema = z
-  .object({ themeId: z.string() })
-  .and(themeCreateInputSchema);
 
 export const themeRoute = router({
   // すべてのお題を取得する
