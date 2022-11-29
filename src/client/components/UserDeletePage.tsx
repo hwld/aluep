@@ -52,7 +52,7 @@ export const UserDeletepage: React.FC = () => {
           </Mark>
         </Text>
         <Box
-          mt="xl"
+          mt={100}
           w="100%"
           h={120}
           sx={(theme) => ({
