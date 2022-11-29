@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { unstable_getServerSession } from "next-auth/next";
 import { HomePage } from "../client/components/HomePage";
 import { sessionQuerykey } from "../client/hooks/useSessionQuery";
+import { themesQueryKey } from "../client/hooks/useThemesQuery";
 import { GetServerSidePropsWithReactQuery } from "../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../server/routers/_app";
 import { authOptions } from "./api/auth/[...nextauth]";
@@ -21,7 +22,7 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   const queryClient = new QueryClient();
   queryClient.setQueryData(sessionQuerykey, session);
   // TODO: ページング
-  queryClient.setQueryData(["themes"], themes);
+  queryClient.setQueryData(themesQueryKey, themes);
   const dehydratedState = dehydrate(queryClient);
 
   return {

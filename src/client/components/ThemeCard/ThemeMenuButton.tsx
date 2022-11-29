@@ -8,6 +8,7 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { Theme } from "../../../server/models/theme";
 import { RouterInputs } from "../../../server/trpc";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
+import { themesQueryKey } from "../../hooks/useThemesQuery";
 import { trpc } from "../../trpc";
 import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
@@ -25,7 +26,7 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
       return trpc.theme.delete.mutate(data);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["themes"]);
+      queryClient.invalidateQueries(themesQueryKey);
     },
     onError: () => {
       showNotification({

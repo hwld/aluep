@@ -1,18 +1,11 @@
 import { Box, Button, Card, Flex, Text, Title } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
-import { trpc } from "../trpc";
+import { useThemesQuery } from "../hooks/useThemesQuery";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 
 export const HomePage: React.FC = () => {
-  const { data: themes } = useQuery({
-    queryKey: ["themes"],
-    queryFn: () => {
-      return trpc.theme.getAll.query();
-    },
-    initialData: [],
-  });
+  const { themes } = useThemesQuery();
 
   return (
     <Flex gap={30} justify="space-between">
