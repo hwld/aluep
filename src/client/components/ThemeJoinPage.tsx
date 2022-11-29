@@ -38,6 +38,7 @@ export const ThemeJoinPage: React.FC = () => {
         title: "お題に参加",
         message: "お題に参加しました。",
       });
+      router.back();
     },
     onError: () => {
       showNotification({

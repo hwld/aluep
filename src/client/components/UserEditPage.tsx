@@ -24,6 +24,7 @@ export const UserEditPage: React.FC = () => {
         message: "プロフィールを更新しました。",
         color: "green",
       });
+      router.back();
     },
     onError: () => {
       showNotification({

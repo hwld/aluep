@@ -30,7 +30,7 @@ export const getServerSideProps = async ({
   const theme = await caller.theme.get({ themeId });
 
   const queryClient = new QueryClient();
-  queryClient.prefetchQuery(themeQueryKey(themeId), () => theme);
+  await queryClient.prefetchQuery(themeQueryKey(themeId), () => theme);
   const dehydratedState = dehydrate(queryClient);
 
   return { props: { dehydratedState } };

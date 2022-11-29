@@ -11,8 +11,7 @@ export const UserDeletepage: React.FC = () => {
       return trpc.me.delete.mutate();
     },
     onSuccess: () => {
-      // TODO
-      router.reload();
+      router.replace("/");
     },
     onError: () => {
       showNotification({
