@@ -22,7 +22,6 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   const caller = appRouter.createCaller({ session });
 
   // 表示するテーマ
-  // TODO prefecthQueryの仕様を調べて、awaitが必要か考える
   const theme = await caller.theme.get({ themeId });
   // ログインユーザーが表示するテーマにいいねしているか
   const liked = await caller.theme.liked({ themeId });
@@ -30,15 +29,12 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   const developers = await caller.theme.getAllDevelopers({ themeId });
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(themeQueryKey(themeId), () => theme);
-  await queryClient.prefetchQuery(
+  queryClient.setQueryData(themeQueryKey(themeId), theme);
+  queryClient.setQueryData(
     themeLikedQueryKey(themeId, session?.user.id),
-    () => liked
+    liked
   );
-  await queryClient.prefetchQuery(
-    [`theme-${themeId}-developers`],
-    () => developers
-  );
+  queryClient.setQueryData([`theme-${themeId}-developers`], developers);
 
   const dehydratedState = dehydrate(queryClient);
 

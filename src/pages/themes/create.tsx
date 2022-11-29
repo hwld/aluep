@@ -23,11 +23,11 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
     };
   }
 
-  const allTags = caller.theme.getAllTags();
+  const allTags = await caller.theme.getAllTags();
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(sessionQuerykey, () => session);
-  await queryClient.prefetchQuery(allTagsQueryKey, () => allTags);
+  queryClient.setQueryData(sessionQuerykey, session);
+  queryClient.setQueryData(allTagsQueryKey, allTags);
   const dehydratedState = dehydrate(queryClient);
 
   return {

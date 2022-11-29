@@ -1,10 +1,10 @@
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { NextPage } from "next";
 import { unstable_getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
-import { GetServerSidePropsWithReactQuery } from "../../server/lib/GetServerSidePropsWithReactQuery";
-import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
 import { UserDeletepage } from "../../client/components/UserDeletePage";
+import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
+import { GetServerSidePropsWithReactQuery } from "../../server/lib/GetServerSidePropsWithReactQuery";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   req,
@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   }
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(sessionQuerykey, () => session);
+  queryClient.setQueryData(sessionQuerykey, session);
   const dehydratedState = dehydrate(queryClient);
 
   return {

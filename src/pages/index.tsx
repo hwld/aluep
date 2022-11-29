@@ -15,12 +15,13 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   const caller = appRouter.createCaller({ session: null });
 
   const session = await unstable_getServerSession(req, res, authOptions);
-  const themes = caller.theme.getAll();
+  const themes = await caller.theme.getAll();
 
   // react-queryを使用してデータを渡し、dehydrateしてクライアントに送る
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(sessionQuerykey, () => session);
-  await queryClient.prefetchQuery(["themes"], () => themes);
+  queryClient.setQueryData(sessionQuerykey, session);
+  // TODO: ページング
+  queryClient.setQueryData(["themes"], themes);
   const dehydratedState = dehydrate(queryClient);
 
   return {

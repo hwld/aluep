@@ -8,10 +8,10 @@ import { appRouter } from "../../server/routers/_app";
 export const getServerSideProps: GetServerSidePropsWithReactQuery =
   async () => {
     const caller = appRouter.createCaller({ session: null });
-    const allTags = caller.theme.getAllTags();
+    const allTags = await caller.theme.getAllTags();
 
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery(allTagsQueryKey, () => allTags);
+    queryClient.setQueryData(allTagsQueryKey, allTags);
     const dehydratedState = dehydrate(queryClient);
 
     return {
