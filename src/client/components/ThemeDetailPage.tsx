@@ -10,22 +10,17 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FaUserAlt } from "react-icons/fa";
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
-import { RouterInputs } from "../../server/trpc";
-import { useSessionQuery } from "../hooks/useSessionQuery";
+import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { useThemeQuery } from "../hooks/useThemeQuery";
-import { trpc } from "../trpc";
 import { ThemeDeveloperCard } from "./ThemeDeveloperCard";
 import { ThemeTagBadge } from "./ThemeTagBadge";
 
 export const ThemeDetailPage: React.FC = () => {
-  const { session } = useSessionQuery();
   const router = useRouter();
   // TODO
   const themeId = router.query.id as string;
@@ -33,30 +28,8 @@ export const ThemeDetailPage: React.FC = () => {
 
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(themeId);
 
-  const { data: developers } = useQuery(
-    [`theme-${themeId}-developers`],
-    () => {
-      return trpc.theme.getAllDevelopers.query({ themeId });
-    },
-    { initialData: [] }
-  );
-
-  const likeDeveloperMutation = useMutation({
-    mutationFn: (data: RouterInputs["themeDeveloper"]["like"]) => {
-      return trpc.themeDeveloper.like.mutate(data);
-    },
-    onSuccess: () => {
-      // TODo
-      router.reload();
-    },
-    onError: () => {
-      showNotification({
-        color: "red",
-        title: "開発者へのいいね",
-        message: "開発者にいいねできませんでした。",
-      });
-    },
-  });
+  const { developers, likeDeveloperMutation } =
+    useThemeDevelopersQuery(themeId);
 
   const handleLikeTheme = () => {
     if (!theme) return;

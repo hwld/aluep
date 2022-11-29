@@ -1,6 +1,7 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { unstable_getServerSession } from "next-auth";
 import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
+import { themeDevelopersQueryKey } from "../../../client/hooks/useThemeDevelopersQuery";
 import { themeLikedQueryKey } from "../../../client/hooks/useThemeLike";
 import { themeQueryKey } from "../../../client/hooks/useThemeQuery";
 import { GetServerSidePropsWithReactQuery } from "../../../server/lib/GetServerSidePropsWithReactQuery";
@@ -34,7 +35,7 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
     themeLikedQueryKey(themeId, session?.user.id),
     liked
   );
-  queryClient.setQueryData([`theme-${themeId}-developers`], developers);
+  queryClient.setQueryData(themeDevelopersQueryKey(themeId), developers);
 
   const dehydratedState = dehydrate(queryClient);
 
