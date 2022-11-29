@@ -16,7 +16,11 @@ export const AppMultiSelect: React.FC<Props> = ({ ...props }) => {
           color: theme.colors.gray[7],
         },
 
-        dropdown: { backgroundColor: theme.colors.gray[1] },
+        dropdown: {
+          backgroundColor: theme.colors.gray[0],
+          border: "1px solid",
+          borderColor: theme.colors.red[7],
+        },
       })}
       {...props}
     />

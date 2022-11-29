@@ -11,6 +11,15 @@ import { findAllThemeTags, ThemeTag } from "../models/themeTag";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
+export const themeCreateInputSchema = z.object({
+  title: z.string().min(1).max(50),
+  description: z.string().min(1).max(5000),
+  tags: z.array(z.string().min(1)).max(50),
+});
+export const themeUpdateInputSchema = z
+  .object({ themeId: z.string() })
+  .and(themeCreateInputSchema);
+
 export const themeRoute = router({
   // すべてのお題を取得する
   getAll: publicProcedure.query(async (): Promise<Theme[]> => {
@@ -56,13 +65,7 @@ export const themeRoute = router({
 
   // お題を作成する
   create: requireLoggedInProcedure
-    .input(
-      z.object({
-        title: z.string().min(1),
-        description: z.string().min(1),
-        tags: z.array(z.string().min(1)),
-      })
-    )
+    .input(themeCreateInputSchema)
     .mutation(async ({ input, ctx }) => {
       await prisma.appTheme.create({
         data: {
@@ -76,14 +79,7 @@ export const themeRoute = router({
 
   // お題を更新する
   update: requireLoggedInProcedure
-    .input(
-      z.object({
-        themeId: z.string().min(1),
-        title: z.string().min(1),
-        description: z.string().min(1),
-        tags: z.array(z.string().min(1)),
-      })
-    )
+    .input(themeUpdateInputSchema)
     .mutation(async ({ input, ctx }) => {
       // ログインユーザーが投稿したお題が存在するか確認する
       const existingTheme = await prisma.appTheme.findFirst({
