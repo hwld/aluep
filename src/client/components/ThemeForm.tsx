@@ -14,6 +14,7 @@ type Props = {
   formSchema: ZodSchema;
   onSubmit: (data: ThemeFormData) => void;
   actionText: string;
+  defaultValues?: ThemeFormData;
 };
 
 // お題の作成と更新のためのForm
@@ -22,6 +23,7 @@ export const ThemeForm: React.FC<Props> = ({
   formSchema,
   onSubmit,
   actionText,
+  defaultValues = { title: "", description: "", tags: [] },
 }) => {
   const router = useRouter();
 
@@ -30,7 +32,7 @@ export const ThemeForm: React.FC<Props> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<ThemeFormData>({
-    defaultValues: { title: "", description: "", tags: [] },
+    defaultValues,
     resolver: zodResolver(formSchema),
   });
 

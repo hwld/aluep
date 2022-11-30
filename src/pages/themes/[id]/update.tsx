@@ -1,9 +1,13 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { NextPage } from "next";
 import { unstable_getServerSession } from "next-auth/next";
+import { useRouter } from "next/router";
 import { ThemeEditPage } from "../../../client/components/ThemeEditPage";
 import { allTagsQueryKey } from "../../../client/hooks/useAllTagsQuery";
-import { themeQueryKey } from "../../../client/hooks/useThemeQuery";
+import {
+  themeQueryKey,
+  useThemeQuery,
+} from "../../../client/hooks/useThemeQuery";
 import { GetServerSidePropsWithReactQuery } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
 import { authOptions } from "../../api/auth/[...nextauth]";
@@ -51,7 +55,17 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
 };
 
 const UpdateTheme: NextPage = () => {
-  return <ThemeEditPage />;
+  const router = useRouter();
+  const themeId = router.query.id as string;
+  const { theme } = useThemeQuery(themeId);
+
+  if (!theme) {
+    // テーマが取得できないときはサーバー側でエラーが出るから、
+    // ここには到達しない？
+    return <div>Error</div>;
+  }
+
+  return <ThemeEditPage theme={theme} />;
 };
 
 export default UpdateTheme;
