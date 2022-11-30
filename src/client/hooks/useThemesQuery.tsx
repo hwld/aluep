@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../trpc";
 
 export const themesQueryKey = ["themes"];
+
 export const useThemesQuery = () => {
   const { data: themes, ...others } = useQuery({
     queryKey: themesQueryKey,
