@@ -1,9 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import {
-  themeCreateInputSchema,
-  themeUpdateInputSchema,
-} from "../../share/schema";
+import { themeFormSchema, themeUpdateFormSchema } from "../../share/schema";
 import {
   findManyThemes,
   findTheme,
@@ -60,7 +57,7 @@ export const themeRoute = router({
 
   // お題を作成する
   create: requireLoggedInProcedure
-    .input(themeCreateInputSchema)
+    .input(themeFormSchema)
     .mutation(async ({ input, ctx }) => {
       await prisma.appTheme.create({
         data: {
@@ -74,7 +71,7 @@ export const themeRoute = router({
 
   // お題を更新する
   update: requireLoggedInProcedure
-    .input(themeUpdateInputSchema)
+    .input(themeUpdateFormSchema)
     .mutation(async ({ input, ctx }) => {
       // ログインユーザーが投稿したお題が存在するか確認する
       const existingTheme = await prisma.appTheme.findFirst({
