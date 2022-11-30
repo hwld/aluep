@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
 import { trpc } from "../../client/trpc";
-import { ThemeFormData, themeFormSchema } from "../../share/schema";
+import { ThemeFormData } from "../../share/schema";
 import { ThemeForm } from "./ThemeForm";
 
 export const ThemeCreatePage: React.FC = () => {
@@ -36,6 +36,10 @@ export const ThemeCreatePage: React.FC = () => {
     createMutate.mutate(data);
   };
 
+  const handleCancel = () => {
+    router.back();
+  };
+
   return (
     <Box w={800} m="auto">
       <Title>お題の投稿</Title>
@@ -43,8 +47,8 @@ export const ThemeCreatePage: React.FC = () => {
         <ThemeForm
           actionText="投稿する"
           onSubmit={handleCreateTheme}
+          onCancel={handleCancel}
           allTags={allTags}
-          formSchema={themeFormSchema}
         />
       </Card>
     </Box>

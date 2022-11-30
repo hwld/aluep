@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { Theme } from "../../server/models/theme";
 import { RouterInputs } from "../../server/trpc";
-import { ThemeFormData, themeFormSchema } from "../../share/schema";
+import { ThemeFormData } from "../../share/schema";
 import { useAllTagsQuery } from "../hooks/useAllTagsQuery";
 import { trpc } from "../trpc";
 import { ThemeForm } from "./ThemeForm";
@@ -39,6 +39,10 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
     updateMutation.mutate({ ...data, themeId: theme.id });
   };
 
+  const handleCancel = () => {
+    router.back();
+  };
+
   return (
     <Box w={800} m="auto">
       <Title>お題の投稿</Title>
@@ -46,8 +50,8 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
         <ThemeForm
           actionText="更新する"
           allTags={allTags}
-          formSchema={themeFormSchema}
           onSubmit={handleUpdateTheme}
+          onCancel={handleCancel}
           defaultValues={{ ...theme, tags: theme?.tags.map((t) => t.id) ?? [] }}
         />
       </Card>

@@ -1,7 +1,10 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { unstable_getServerSession } from "next-auth";
 import { UserEditPage } from "../../client/components/UserEditPage";
-import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
+import {
+  sessionQuerykey,
+  useSessionQuery,
+} from "../../client/hooks/useSessionQuery";
 import { GetServerSidePropsWithReactQuery } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { authOptions } from "../api/auth/[...nextauth]";
 
@@ -32,7 +35,13 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   };
 };
 
-// TODO: formのエラーハンドリングのためにreact-hook-formを導入する
 export default function Profile() {
-  return <UserEditPage />;
+  const { session } = useSessionQuery();
+
+  if (!session?.user) {
+    // ユーザーがいないときはリダイレクトされるからここに到達することはない？
+    return <div>error</div>;
+  }
+
+  return <UserEditPage user={session.user} />;
 }

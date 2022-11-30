@@ -1,18 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Stack } from "@mantine/core";
-import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
-import { ZodSchema } from "zod";
 import { ThemeTag } from "../../server/models/themeTag";
-import { ThemeFormData } from "../../share/schema";
+import { ThemeFormData, themeFormSchema } from "../../share/schema";
 import { AppMultiSelect } from "./AppMultiSelect";
 import { AppTextarea } from "./AppTextarea";
 import { AppTextInput } from "./AppTextInput";
 
 type Props = {
   allTags: ThemeTag[];
-  formSchema: ZodSchema;
   onSubmit: (data: ThemeFormData) => void;
+  onCancel: () => void;
   actionText: string;
   defaultValues?: ThemeFormData;
 };
@@ -20,25 +18,19 @@ type Props = {
 // お題の作成と更新のためのForm
 export const ThemeForm: React.FC<Props> = ({
   allTags,
-  formSchema,
   onSubmit,
+  onCancel,
   actionText,
   defaultValues = { title: "", description: "", tags: [] },
 }) => {
-  const router = useRouter();
-
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<ThemeFormData>({
     defaultValues,
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(themeFormSchema),
   });
-
-  const handleGoBack = () => {
-    router.back();
-  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -93,7 +85,7 @@ export const ThemeForm: React.FC<Props> = ({
       </Stack>
       <Flex gap="sm" mt="lg">
         <Button type="submit">{actionText}</Button>
-        <Button variant="outline" onClick={handleGoBack}>
+        <Button variant="outline" onClick={onCancel}>
           キャンセル
         </Button>
       </Flex>
