@@ -85,7 +85,7 @@ export const themeRoute = router({
         data: {
           title: input.title,
           description: input.description,
-          tags: { connect: input.tags.map((tag) => ({ id: tag })) },
+          tags: { create: input.tags.map((id) => ({ tagId: id })) },
           userId: ctx.session.user.id,
         },
       });
@@ -103,16 +103,23 @@ export const themeRoute = router({
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
 
-      await prisma.appTheme.update({
+      // 更新前のタグを全部外す
+      const deleteAllTags = prisma.appThemeTagOnAppTheme.deleteMany({
+        where: { themeId: input.themeId },
+      });
+
+      // 入力されたタグを全て付ける
+      const attachTags = prisma.appTheme.update({
         where: { id: input.themeId },
         data: {
           title: input.title,
           description: input.description,
-          tags: {
-            set: input.tags.map((t) => ({ id: t })),
-          },
+          tags: { create: input.tags.map((tagId) => ({ tagId })) },
         },
       });
+
+      // トランザクションを使用する
+      await prisma.$transaction([deleteAllTags, attachTags]);
     }),
 
   // お題を削除する

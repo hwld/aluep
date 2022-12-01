@@ -66,7 +66,7 @@ model VerificationToken {
 
 model AppTheme {
   id          String        @id @default(cuid())
-  tags        AppThemeTag[]
+  tags        AppThemeTagOnAppTheme[]
   title       String
   description String
   userId      String
@@ -84,10 +84,19 @@ model AppTheme {
 model AppThemeTag {
   id        String     @id @default(cuid())
   name      String     @unique
-  appThemes AppTheme[]
+  appThemes AppThemeTagOnAppTheme[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model AppThemeTagOnAppTheme {
+  themeId String
+  theme AppTheme @relation(fields: [themeId], references: [id], onDelete: Cascade)
+  tagId String
+  tag AppThemeTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([themeId, tagId])
 }
 
 model AppThemeLike {

@@ -19,20 +19,21 @@ export const themeSchema = z.object({
 });
 export type Theme = z.infer<typeof themeSchema>;
 
-const themeArgs = Prisma.validator<Prisma.AppThemeArgs>()({
+const themeArgs = {
   include: {
-    tags: true,
+    tags: { include: { tag: true, theme: true } },
     user: true,
     likes: true,
   },
-});
+} satisfies Prisma.AppThemeArgs;
+
 const convertTheme = (
   rawTheme: Prisma.AppThemeGetPayload<typeof themeArgs>
 ): Theme => {
   const theme = {
     id: rawTheme.id,
     title: rawTheme.title,
-    tags: rawTheme.tags.map(({ id, name }) => ({ id, name })),
+    tags: rawTheme.tags.map(({ tag: { id, name } }) => ({ id, name })),
     description: rawTheme.description,
     createdAt: rawTheme.createdAt.toUTCString(),
     updatedAt: rawTheme.updatedAt.toUTCString(),
