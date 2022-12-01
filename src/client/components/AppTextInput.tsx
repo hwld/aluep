@@ -7,7 +7,7 @@ export const AppTextInput = forwardRef<HTMLInputElement, Props>(
     return (
       <TextInput
         ref={ref}
-        styles={(theme, params) => ({
+        styles={(theme) => ({
           input: {
             backgroundColor: theme.colors.gray[0],
             color: theme.colors.gray[7],
@@ -20,3 +20,4 @@ export const AppTextInput = forwardRef<HTMLInputElement, Props>(
     );
   }
 );
+AppTextInput.displayName = "AppTextInput";
