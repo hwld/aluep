@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { BsGithub } from "react-icons/bs";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
+import { useSessionQuery } from "../hooks/useSessionQuery";
 import { DeveloperLikeButton } from "./DeveloperLikeButton";
 
 type Props = {
@@ -22,16 +23,18 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
   onLikeDeveloper: onLike,
 }) => {
   const mantineTheme = useMantineTheme();
-
+  const { session } = useSessionQuery();
   const handleLikeDeveloper = () => {
     onLike(developer.id, !developer.likedByLoggedInUser);
   };
+
+  // ログインしていて、開発者自身でなければいいねできる
+  const canLike = Boolean(session && developer.userId !== session.user.id);
 
   return (
     <Card
       key={developer.userId}
       sx={() => ({
-        cursor: "pointer",
         position: "static",
       })}
     >
@@ -84,6 +87,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
             likes={developer.likes}
             likedByLoggedInUser={developer.likedByLoggedInUser}
             onClick={handleLikeDeveloper}
+            disabled={!canLike}
           />
         </Box>
       </Flex>

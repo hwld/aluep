@@ -5,15 +5,18 @@ type Props = {
   likes: number;
   likedByLoggedInUser: boolean;
   onClick: () => void;
+  disabled?: boolean;
 };
 export const ThemeLikeButton: React.FC<Props> = ({
   likes,
   likedByLoggedInUser,
   onClick,
+  disabled,
 }) => {
   return (
     <Flex direction="column" align="center">
       <ActionIcon
+        disabled={disabled}
         color={likedByLoggedInUser ? "pink" : undefined}
         size={60}
         radius="xl"

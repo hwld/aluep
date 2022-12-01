@@ -5,15 +5,18 @@ type Props = {
   likes: number;
   likedByLoggedInUser: boolean;
   onClick: () => void;
+  disabled?: boolean;
 };
 export const DeveloperLikeButton: React.FC<Props> = ({
   likes,
   likedByLoggedInUser,
   onClick,
+  disabled,
 }) => {
   return (
     <Flex align="center">
       <ActionIcon
+        disabled={disabled}
         color={likedByLoggedInUser ? "pink" : undefined}
         size={30}
         radius="xl"

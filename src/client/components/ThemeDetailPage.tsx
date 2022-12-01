@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
+import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { ThemeDeveloperCard } from "./ThemeDeveloperCard";
@@ -21,6 +22,7 @@ import { ThemeTagBadge } from "./ThemeTagBadge";
 type Props = { theme: Theme };
 export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const mantineTheme = useMantineTheme();
+  const { session } = useSessionQuery();
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(theme.id);
   const { developers, likeDeveloperMutation } = useThemeDevelopersQuery(
     theme.id
@@ -33,6 +35,9 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
     });
   };
 
+  // ログインしていて、テーマの投稿者と異なればいいねができる
+  const canLike = Boolean(session && theme.user.id !== session.user.id);
+
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Title>{theme.title}</Title>
@@ -42,6 +47,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           likes={theme.likes}
           likedByLoggedInUser={likedByLoggedInUser}
           onClick={handleLikeTheme}
+          disabled={!canLike}
         />
         {/* 説明 */}
         <Box sx={{ flexGrow: 1 }}>
