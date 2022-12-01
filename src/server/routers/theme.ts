@@ -1,6 +1,10 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { themeFormSchema, themeUpdateFormSchema } from "../../share/schema";
+import {
+  themeFormSchema,
+  themeJoinFormSchema,
+  themeUpdateFormSchema,
+} from "../../share/schema";
 import { paginate } from "../lib/paginate";
 import {
   findManyThemes,
@@ -143,20 +147,14 @@ export const themeRoute = router({
 
   // お題に参加する
   join: requireLoggedInProcedure
-    .input(
-      z.object({
-        themeId: z.string().min(1),
-        githubUrl: z.string().regex(/https:\/\/github.com\/[^\/]+\/[^\/]+/),
-        comment: z.string().min(1),
-      })
-    )
+    .input(themeJoinFormSchema)
     .mutation(async ({ input, ctx }) => {
       await prisma.appThemeDeveloper.create({
         data: {
           appTheme: { connect: { id: input.themeId } },
           user: { connect: { id: ctx.session.user.id } },
           githubUrl: input.githubUrl,
-          comment: input.comment,
+          comment: input.comment ?? "",
         },
       });
     }),

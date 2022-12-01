@@ -9,9 +9,11 @@ import { AppTextInput } from "./AppTextInput";
 
 type Props = {
   onSetRepositoryUrl: (value: string) => void;
+  width?: number;
 };
 export const RepoCreateModalButton: React.FC<Props> = ({
   onSetRepositoryUrl,
+  width,
 }) => {
   const [repoName, setRepoName] = useState("");
   const [repoDescription, setRepoDescription] = useState("");
@@ -46,6 +48,7 @@ export const RepoCreateModalButton: React.FC<Props> = ({
   return (
     <>
       <Button
+        w={width}
         onClick={() => {
           setRepoName("");
           setRepoDescription("");

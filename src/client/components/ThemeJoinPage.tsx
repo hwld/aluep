@@ -1,32 +1,18 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Avatar, Box, Card, Flex, Text, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { RouterInputs } from "../../server/trpc";
+import { ThemeJoinFormData } from "../../share/schema";
 import { useThemeQuery } from "../hooks/useThemeQuery";
 import { trpc } from "../trpc";
-import { AppTextarea } from "./AppTextarea";
-import { AppTextInput } from "./AppTextInput";
-import { RepoCreateModalButton } from "./RepoCreateModalButton";
+import { ThemeJoinForm } from "./ThemeJoinForm";
 import { ThemeTagBadge } from "./ThemeTagBadge";
 
 export const ThemeJoinPage: React.FC = () => {
   const router = useRouter();
   const themeId = router.query.id as string;
   const { theme } = useThemeQuery(themeId);
-
-  const [repoUrl, setRepoUrl] = useState("");
-  const [comment, setComment] = useState("");
 
   const joinThemeMutation = useMutation({
     mutationFn: (data: RouterInputs["theme"]["join"]) => {
@@ -49,13 +35,8 @@ export const ThemeJoinPage: React.FC = () => {
     },
   });
 
-  const handleJoinTheme = () => {
-    if (!theme) return;
-    joinThemeMutation.mutate({
-      themeId: theme.id,
-      githubUrl: repoUrl,
-      comment,
-    });
+  const handleJoinTheme = (data: ThemeJoinFormData) => {
+    joinThemeMutation.mutate(data);
   };
 
   const handleBack = () => {
@@ -87,32 +68,11 @@ export const ThemeJoinPage: React.FC = () => {
         </Flex>
       </Card>
       <Card mt="xl">
-        <Stack>
-          <Flex align="end" gap={5}>
-            <Box sx={{ flexGrow: 1 }}>
-              <AppTextInput
-                label="GitHubリポジトリ"
-                value={repoUrl}
-                onChange={(e) => {
-                  setRepoUrl(e.target.value);
-                }}
-              />
-            </Box>
-            <RepoCreateModalButton onSetRepositoryUrl={setRepoUrl} />
-          </Flex>
-          <AppTextarea
-            label="コメント"
-            minRows={5}
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-        </Stack>
-        <Flex gap="sm" mt="lg">
-          <Button onClick={handleJoinTheme}>参加する</Button>
-          <Button variant="outline" onClick={handleBack}>
-            キャンセル
-          </Button>
-        </Flex>
+        <ThemeJoinForm
+          onSubmit={handleJoinTheme}
+          onCancel={handleBack}
+          themeId={themeId}
+        />
       </Card>
     </Box>
   );
