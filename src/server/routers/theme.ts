@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { themeFormSchema, themeUpdateFormSchema } from "../../share/schema";
+import { paginate } from "../lib/paginate";
 import {
   findManyThemes,
   findTheme,
@@ -13,11 +14,32 @@ import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
 export const themeRoute = router({
-  // すべてのお題を取得する
-  getAll: publicProcedure.query(async (): Promise<Theme[]> => {
-    const allThemes = await findManyThemes({});
-    return allThemes;
-  }),
+  // ページを指定して、お題を取得する
+  getMany: publicProcedure
+    .input(
+      z.object({
+        page: z
+          .string()
+          .optional()
+          .transform((page) => {
+            const p = Number(page);
+            if (isNaN(p)) {
+              return 1;
+            }
+            return p;
+          }),
+      })
+    )
+    .query(async ({ input: { page } }) => {
+      const { data: themes, allPages } = await paginate({
+        finderInput: undefined,
+        finder: findManyThemes,
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 6 },
+      });
+
+      return { themes, allPages };
+    }),
 
   // すべてのタグを取得する
   getAllTags: publicProcedure.query(async (): Promise<ThemeTag[]> => {

@@ -63,10 +63,15 @@ export const findTheme = async (
   return theme;
 };
 
-export const findManyThemes = async (
-  args: OmitStrict<Prisma.AppThemeFindManyArgs, "include" | "select">
-) => {
-  const rawThemes = await prisma.appTheme.findMany({ ...args, ...themeArgs });
+export const findManyThemes = async ({
+  orderBy,
+  ...args
+}: OmitStrict<Prisma.AppThemeFindManyArgs, "include" | "select">) => {
+  const rawThemes = await prisma.appTheme.findMany({
+    orderBy: { createdAt: "desc", ...orderBy },
+    ...args,
+    ...themeArgs,
+  });
   const themes = rawThemes.map(convertTheme);
   return themes;
 };
