@@ -40,7 +40,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
-      <Title sx={{ wordBreak: "break-all" }}>{theme.title}</Title>
+      <Title align="center">{theme.title}</Title>
       <Flex mt={30} gap={30} w="100%">
         {/* いいねボタン */}
         <ThemeLikeButton
@@ -57,9 +57,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
                 <ThemeTagBadge key={tag.id}>{tag.name}</ThemeTagBadge>
               ))}
             </Flex>
-            <Text sx={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
-              {theme.description}
-            </Text>
+            <Text>{theme.description}</Text>
           </Card>
           <Button mt={15} component={Link} href={`/themes/${theme.id}/join`}>
             参加する

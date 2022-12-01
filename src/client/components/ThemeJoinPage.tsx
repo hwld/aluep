@@ -61,7 +61,7 @@ export const ThemeJoinPage: React.FC = () => {
           />
           <Text>{theme?.user.name}</Text>
         </Flex>
-        <Flex gap={10} mt="sm">
+        <Flex gap={10} mt="sm" wrap="wrap">
           {theme?.tags.map((tag) => {
             return <ThemeTagBadge key={tag.id}>{tag.name}</ThemeTagBadge>;
           })}

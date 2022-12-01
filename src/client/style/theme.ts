@@ -1,6 +1,10 @@
 import { MantineThemeOverride } from "@mantine/core";
 
 export const theme: MantineThemeOverride = {
+  globalStyles: (theme) => ({
+    div: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
+    "h1,h2,h3,h4,h5,h6": { wordBreak: "break-all", whiteSpace: "pre-wrap" },
+  }),
   fontFamily: `'Noto Sans JP', sans-serif`,
   headings: {
     fontFamily: `'Noto Sans JP', sans-serif`,
