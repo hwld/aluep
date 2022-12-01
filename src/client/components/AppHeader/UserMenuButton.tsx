@@ -4,6 +4,7 @@ import { signOut } from "next-auth/react";
 import { FaTrash } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
+import { VscAccount } from "react-icons/vsc";
 import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
 import { MenuItem } from "../AppMenu/MenuItem";
@@ -26,6 +27,9 @@ export const UserMenuButton: React.FC<Props> = ({ user }) => {
       <MenuDropdown>
         <Menu.Label>ユーザー設定</Menu.Label>
         <Divider color="gray.3" />
+        <MenuLinkItem icon={<VscAccount size={20} />} href="/users/detail">
+          プロフィール
+        </MenuLinkItem>
         <MenuLinkItem icon={<RiEdit2Fill size={20} />} href="/users/profile">
           プロフィール変更
         </MenuLinkItem>
