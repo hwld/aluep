@@ -55,7 +55,9 @@ export const theme: MantineThemeOverride = {
     ],
   },
   components: {
-    Text: { defaultProps: { color: "gray.7" } },
+    Text: {
+      defaultProps: { color: "gray.7" },
+    },
     Card: { defaultProps: { bg: "gray.1", radius: "md", shadow: "md" } },
     Divider: { defaultProps: { color: "gray.3" } },
     Input: {
