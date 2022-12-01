@@ -30,7 +30,7 @@ export const useStateAndUrlParamString = ({
     } else {
       url.searchParams.set(paramName, value);
     }
-    router.push(url, undefined, { shallow: true });
+    router.replace(url, undefined, { shallow: true });
 
     setState(value);
   };
