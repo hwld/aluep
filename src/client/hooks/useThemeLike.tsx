@@ -41,5 +41,8 @@ export const useThemeLike = (themeId: string) => {
     },
   });
 
-  return { likedByLoggedInUser, likeThemeMutation };
+  return {
+    likedByLoggedInUser: likedByLoggedInUser ?? false,
+    likeThemeMutation,
+  };
 };

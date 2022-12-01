@@ -10,8 +10,8 @@ import {
 } from "@mantine/core";
 import Link from "next/link";
 import { BsGithub } from "react-icons/bs";
-import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
+import { DeveloperLikeButton } from "./DeveloperLikeButton";
 
 type Props = {
   developer: ThemeDeveloper;
@@ -80,32 +80,11 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
           参加日: {new Date(developer.createdAt).toLocaleString()}
         </Text>
         <Box>
-          <Flex align="center">
-            <ActionIcon
-              color={developer.likedByLoggedInUser ? "pink" : undefined}
-              size={30}
-              radius="xl"
-              onClick={handleLikeDeveloper}
-              sx={(theme) => ({
-                transition: "all 200ms",
-                "&:hover": {
-                  backgroundColor: developer.likedByLoggedInUser
-                    ? theme.fn.rgba(theme.colors.gray[5], 0.2)
-                    : theme.fn.rgba(theme.colors.pink[5], 0.2),
-                },
-              })}
-            >
-              {developer.likedByLoggedInUser ? (
-                <MdOutlineFavorite size="70%" style={{ marginTop: "1px" }} />
-              ) : (
-                <MdOutlineFavoriteBorder
-                  size="70%"
-                  style={{ marginTop: "1px" }}
-                />
-              )}
-            </ActionIcon>
-            <Text>{developer.likes}</Text>
-          </Flex>
+          <DeveloperLikeButton
+            likes={developer.likes}
+            likedByLoggedInUser={developer.likedByLoggedInUser}
+            onClick={handleLikeDeveloper}
+          />
         </Box>
       </Flex>
     </Card>

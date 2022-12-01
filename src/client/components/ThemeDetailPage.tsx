@@ -1,5 +1,4 @@
 import {
-  ActionIcon,
   Avatar,
   Box,
   Button,
@@ -11,71 +10,50 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { FaUserAlt } from "react-icons/fa";
-import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
+import { Theme } from "../../server/models/theme";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeLike } from "../hooks/useThemeLike";
-import { useThemeQuery } from "../hooks/useThemeQuery";
 import { ThemeDeveloperCard } from "./ThemeDeveloperCard";
+import { ThemeLikeButton } from "./ThemeLikeButton";
 import { ThemeTagBadge } from "./ThemeTagBadge";
 
-export const ThemeDetailPage: React.FC = () => {
-  const router = useRouter();
-  // TODO
-  const themeId = router.query.id as string;
-  const { theme } = useThemeQuery(themeId);
-
-  const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(themeId);
-
-  const { developers, likeDeveloperMutation } =
-    useThemeDevelopersQuery(themeId);
+type Props = { theme: Theme };
+export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
+  const mantineTheme = useMantineTheme();
+  const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(theme.id);
+  const { developers, likeDeveloperMutation } = useThemeDevelopersQuery(
+    theme.id
+  );
 
   const handleLikeTheme = () => {
-    if (!theme) return;
     likeThemeMutation.mutate({
-      themeId: theme?.id,
+      themeId: theme.id,
       like: !likedByLoggedInUser,
     });
   };
 
-  const mantineTheme = useMantineTheme();
-
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
-      <Title>{theme?.title}</Title>
+      <Title>{theme.title}</Title>
       <Flex mt={30} gap={30} w="100%">
-        <Flex direction="column" align="center">
-          <ActionIcon
-            color={likedByLoggedInUser ? "pink" : undefined}
-            size={60}
-            radius="xl"
-            variant="outline"
-            sx={{ borderWidth: "2px" }}
-            onClick={handleLikeTheme}
-          >
-            {likedByLoggedInUser ? (
-              <MdOutlineFavorite size="70%" style={{ marginTop: "4px" }} />
-            ) : (
-              <MdOutlineFavoriteBorder
-                size="70%"
-                style={{ marginTop: "4px" }}
-              />
-            )}
-          </ActionIcon>
-          <Text>{theme?.likes}</Text>
-        </Flex>
+        {/* いいねボタン */}
+        <ThemeLikeButton
+          likes={theme.likes}
+          likedByLoggedInUser={likedByLoggedInUser}
+          onClick={handleLikeTheme}
+        />
         {/* 説明 */}
         <Box sx={{ flexGrow: 1 }}>
           <Card mih={300}>
             <Flex gap={10} mb={10} wrap="wrap">
-              {theme?.tags.map((tag) => (
+              {theme.tags.map((tag) => (
                 <ThemeTagBadge key={tag.id}>{tag.name}</ThemeTagBadge>
               ))}
             </Flex>
-            <Text sx={{ whiteSpace: "pre-wrap" }}>{theme?.description}</Text>
+            <Text sx={{ whiteSpace: "pre-wrap" }}>{theme.description}</Text>
           </Card>
-          <Button mt={15} component={Link} href={`/themes/${theme?.id}/join`}>
+          <Button mt={15} component={Link} href={`/themes/${theme.id}/join`}>
             参加する
           </Button>
           <Title mt={30} order={2}>
@@ -108,7 +86,7 @@ export const ThemeDetailPage: React.FC = () => {
           </Flex>
           <Flex gap={5} mt={5}>
             <Avatar
-              src={theme?.user.image}
+              src={theme.user.image}
               size="md"
               sx={(theme) => ({
                 borderWidth: "2px",
@@ -117,7 +95,7 @@ export const ThemeDetailPage: React.FC = () => {
                 borderRadius: "100%",
               })}
             />
-            <Text size={13}>{theme?.user.name}</Text>
+            <Text size={13}>{theme.user.name}</Text>
           </Flex>
         </Card>
       </Flex>
