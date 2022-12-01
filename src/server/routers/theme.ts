@@ -15,7 +15,7 @@ import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 export const themeRoute = router({
   // すべてのお題を取得する
   getAll: publicProcedure.query(async (): Promise<Theme[]> => {
-    const allThemes = await findManyThemes();
+    const allThemes = await findManyThemes({});
     return allThemes;
   }),
 
