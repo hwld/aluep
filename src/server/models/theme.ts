@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
+import { OmitStrict } from "../../types/OmitStrict";
 import { prisma } from "../prismadb";
 
 export const themeSchema = z.object({
@@ -18,20 +19,21 @@ export const themeSchema = z.object({
 });
 export type Theme = z.infer<typeof themeSchema>;
 
-const themeArgs = Prisma.validator<Prisma.AppThemeArgs>()({
+const themeArgs = {
   include: {
-    tags: true,
+    tags: { include: { tag: true, theme: true } },
     user: true,
     likes: true,
   },
-});
+} satisfies Prisma.AppThemeArgs;
+
 const convertTheme = (
   rawTheme: Prisma.AppThemeGetPayload<typeof themeArgs>
 ): Theme => {
   const theme = {
     id: rawTheme.id,
     title: rawTheme.title,
-    tags: rawTheme.tags.map(({ id, name }) => ({ id, name })),
+    tags: rawTheme.tags.map(({ tag: { id, name } }) => ({ id, name })),
     description: rawTheme.description,
     createdAt: rawTheme.createdAt.toUTCString(),
     updatedAt: rawTheme.updatedAt.toUTCString(),
@@ -62,23 +64,35 @@ export const findTheme = async (
   return theme;
 };
 
-export const findManyThemes = async (where?: Prisma.AppThemeWhereInput) => {
-  const rawThemes = await prisma.appTheme.findMany({ where, ...themeArgs });
+export const findManyThemes = async ({
+  orderBy,
+  ...args
+}: OmitStrict<Prisma.AppThemeFindManyArgs, "include" | "select">) => {
+  const rawThemes = await prisma.appTheme.findMany({
+    orderBy: { createdAt: "desc", ...orderBy },
+    ...args,
+    ...themeArgs,
+  });
   const themes = rawThemes.map(convertTheme);
   return themes;
 };
 
 type SearchThemesArgs = { keyword: string; tagIds: string[] };
 export const searchThemes = async ({ keyword, tagIds }: SearchThemesArgs) => {
+  // TODO: ページングができるように、一つのクエリで実行する。
+  // queryRawを使用してidのリストを取得してから、inでお題を取得する。
+
   if (keyword === "" && tagIds.length === 0) {
     return [];
   }
 
   const themesContainsKeyword = await findManyThemes({
-    OR: [
-      { title: { contains: keyword } },
-      { description: { contains: keyword } },
-    ],
+    where: {
+      OR: [
+        { title: { contains: keyword } },
+        { description: { contains: keyword } },
+      ],
+    },
   });
 
   // tagsをすべて持つお題に絞り込む。

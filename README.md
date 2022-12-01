@@ -11,6 +11,7 @@
 - [Mantine](https://mantine.dev/)
 - [NextAuth](https://next-auth.js.org/)
 - [Prisma](https://www.prisma.io/)
+- [Zod](https://zod.dev/)
 
 ### インフラ(予定)
 

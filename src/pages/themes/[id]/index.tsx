@@ -1,9 +1,13 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { unstable_getServerSession } from "next-auth";
+import { useRouter } from "next/router";
 import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
 import { themeDevelopersQueryKey } from "../../../client/hooks/useThemeDevelopersQuery";
 import { themeLikedQueryKey } from "../../../client/hooks/useThemeLike";
-import { themeQueryKey } from "../../../client/hooks/useThemeQuery";
+import {
+  themeQueryKey,
+  useThemeQuery,
+} from "../../../client/hooks/useThemeQuery";
 import { GetServerSidePropsWithReactQuery } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
 import { authOptions } from "../../api/auth/[...nextauth]";
@@ -43,6 +47,14 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
 };
 
 export const ThemeDetail = () => {
-  return <ThemeDetailPage />;
+  const router = useRouter();
+  const themeId = router.query.id as string;
+  const { theme } = useThemeQuery(themeId);
+
+  if (!theme) {
+    return <div>Error</div>;
+  }
+
+  return <ThemeDetailPage theme={theme} />;
 };
 export default ThemeDetail;

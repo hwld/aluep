@@ -32,3 +32,4 @@ export const AppMultiSelect = forwardRef<HTMLInputElement, Props>(
     );
   }
 );
+AppMultiSelect.displayName = "AppMultiSelect";

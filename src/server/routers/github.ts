@@ -4,6 +4,7 @@ import { prisma } from "../prismadb";
 import { requireLoggedInProcedure, router } from "../trpc";
 
 export const githubRoute = router({
+  // TODO
   // リポジトリの作成に失敗することがある。
   // 多分、DBに保存されてるアクセストークンの期限が切れてるからだと思うんだけど、refresh_tokenとかがないからプログラムで更新することができない？
   // 例えばログインしなおしたらアクセストークンが更新されるなら、リポジトリの作成の前に再ログインさせるみたいなのも良いと思った。

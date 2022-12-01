@@ -1,11 +1,22 @@
-import { Box, Button, Card, Flex, Text, Title } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Card,
+  Flex,
+  Pagination,
+  Text,
+  Title,
+} from "@mantine/core";
+
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
-import { useThemesQuery } from "../hooks/useThemesQuery";
+import { usePaginatedThemesQuery } from "../hooks/usePaginatedThemesQuery";
+import { usePaginationState } from "../hooks/usePaginationState";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 
 export const HomePage: React.FC = () => {
-  const { themes } = useThemesQuery();
+  const [page, setPage] = usePaginationState();
+  const { data } = usePaginatedThemesQuery(page);
 
   return (
     <Flex gap={30} justify="space-between">
@@ -22,10 +33,16 @@ export const HomePage: React.FC = () => {
         </Button>
 
         <Flex mt={30} gap={15} wrap="wrap">
-          {themes.map((theme) => {
+          {data?.themes.map((theme) => {
             return <ThemeCard key={theme.id} theme={theme} />;
           })}
         </Flex>
+        <Pagination
+          mt="md"
+          page={page}
+          onChange={setPage}
+          total={data?.allPages ?? 0}
+        />
       </Box>
       <Flex direction="column" gap={30}>
         <Box>

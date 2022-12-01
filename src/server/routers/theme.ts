@@ -1,9 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import {
-  themeCreateInputSchema,
-  themeUpdateInputSchema,
-} from "../../share/schema";
+import { themeFormSchema, themeUpdateFormSchema } from "../../share/schema";
+import { paginate } from "../lib/paginate";
 import {
   findManyThemes,
   findTheme,
@@ -16,11 +14,32 @@ import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
 export const themeRoute = router({
-  // すべてのお題を取得する
-  getAll: publicProcedure.query(async (): Promise<Theme[]> => {
-    const allThemes = await findManyThemes();
-    return allThemes;
-  }),
+  // ページを指定して、お題を取得する
+  getMany: publicProcedure
+    .input(
+      z.object({
+        page: z
+          .string()
+          .optional()
+          .transform((page) => {
+            const p = Number(page);
+            if (isNaN(p)) {
+              return 1;
+            }
+            return p;
+          }),
+      })
+    )
+    .query(async ({ input: { page } }) => {
+      const { data: themes, allPages } = await paginate({
+        finderInput: undefined,
+        finder: findManyThemes,
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 6 },
+      });
+
+      return { themes, allPages };
+    }),
 
   // すべてのタグを取得する
   getAllTags: publicProcedure.query(async (): Promise<ThemeTag[]> => {
@@ -60,13 +79,13 @@ export const themeRoute = router({
 
   // お題を作成する
   create: requireLoggedInProcedure
-    .input(themeCreateInputSchema)
+    .input(themeFormSchema)
     .mutation(async ({ input, ctx }) => {
       await prisma.appTheme.create({
         data: {
           title: input.title,
           description: input.description,
-          tags: { connect: input.tags.map((tag) => ({ id: tag })) },
+          tags: { create: input.tags.map((id) => ({ tagId: id })) },
           userId: ctx.session.user.id,
         },
       });
@@ -74,7 +93,7 @@ export const themeRoute = router({
 
   // お題を更新する
   update: requireLoggedInProcedure
-    .input(themeUpdateInputSchema)
+    .input(themeUpdateFormSchema)
     .mutation(async ({ input, ctx }) => {
       // ログインユーザーが投稿したお題が存在するか確認する
       const existingTheme = await prisma.appTheme.findFirst({
@@ -84,16 +103,23 @@ export const themeRoute = router({
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
 
-      await prisma.appTheme.update({
+      // 更新前のタグを全部外す
+      const deleteAllTags = prisma.appThemeTagOnAppTheme.deleteMany({
+        where: { themeId: input.themeId },
+      });
+
+      // 入力されたタグを全て付ける
+      const attachTags = prisma.appTheme.update({
         where: { id: input.themeId },
         data: {
           title: input.title,
           description: input.description,
-          tags: {
-            set: input.tags.map((t) => ({ id: t })),
-          },
+          tags: { create: input.tags.map((tagId) => ({ tagId })) },
         },
       });
+
+      // トランザクションを使用する
+      await prisma.$transaction([deleteAllTags, attachTags]);
     }),
 
   // お題を削除する
