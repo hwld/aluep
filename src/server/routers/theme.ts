@@ -14,6 +14,10 @@ import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
 export const themeRoute = router({
+  getAll: publicProcedure.query(async () => {
+    const allThemes = await findManyThemes({});
+    return allThemes;
+  }),
   // ページを指定して、お題を取得する
   getMany: publicProcedure
     .input(

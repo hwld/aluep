@@ -11,11 +11,11 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { GoMarkGithub } from "react-icons/go";
 import { MdOutlineFavorite } from "react-icons/md";
+import { useAllThemesQuery } from "../hooks/useAllThemesQuery";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { useThemeQuery } from "../hooks/useThemeQuery";
-import { useThemesQuery } from "../hooks/useThemesQuery";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 
 type Props = { user: Session["user"] };
@@ -26,7 +26,7 @@ export const UserDetailPage: React.FC = () => {
   // TODO
   const themeId = router.query.id as string;
   const { theme } = useThemeQuery(themeId);
-  const { themes } = useThemesQuery();
+  const { allThemes } = useAllThemesQuery();
 
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(themeId);
 
@@ -173,7 +173,7 @@ export const UserDetailPage: React.FC = () => {
       {isPostTheme && (
         <div>
           <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {themes.map((theme) => {
+            {allThemes?.map((theme) => {
               if (theme.user.id === session?.user.id) {
                 return <ThemeCard key={theme.id} theme={theme} />;
               }

@@ -6,8 +6,9 @@ export const userRoute = router({
   getPostTheme: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
-      const allThemes = await findManyThemes({ userId: input.userId });
-
+      const allThemes = await findManyThemes({
+        where: { userId: input.userId },
+      });
       return allThemes;
     }),
 });
