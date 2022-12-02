@@ -22,7 +22,7 @@ export const UserDeletepage: React.FC = () => {
     },
   });
 
-  const handleDeleteUser = async () => {
+  const handleDeleteUser = () => {
     deleteMutation.mutate();
   };
 

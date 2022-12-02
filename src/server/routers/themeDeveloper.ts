@@ -17,6 +17,23 @@ export const themeDeveloperRoute = router({
       return developer;
     }),
 
+  // 開発者を削除する
+  delete: requireLoggedInProcedure
+    .input(z.object({ developerId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      // ログインユーザーが開発者か確認する
+      const developer = await prisma.appThemeDeveloper.findFirst({
+        where: { id: input.developerId, userId: ctx.session.user.id },
+      });
+      if (!developer) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
+
+      await prisma.appThemeDeveloper.delete({
+        where: { id: input.developerId },
+      });
+    }),
+
   // 開発者を更新する
   update: requireLoggedInProcedure
     .input(themeJoinFormSchema)

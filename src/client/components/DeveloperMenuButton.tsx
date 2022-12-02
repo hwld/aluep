@@ -1,10 +1,14 @@
 import { ActionIcon, Menu } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SyntheticEvent } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { useSessionQuery } from "../hooks/useSessionQuery";
+import { themeDevelopersQueryKey } from "../hooks/useThemeDevelopersQuery";
+import { trpc } from "../trpc";
 import { AppMenu } from "./AppMenu/AppMenu";
 import { MenuDropdown } from "./AppMenu/MenuDropdown";
 import { MenuItem } from "./AppMenu/MenuItem";
@@ -12,14 +16,32 @@ import { MenuLinkItem } from "./AppMenu/MenuLinkItem";
 
 type Props = { developer: ThemeDeveloper };
 export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
+  const queryClient = useQueryClient();
   const { session } = useSessionQuery();
 
   const stopPropagation = (e: SyntheticEvent) => {
     e.stopPropagation();
   };
 
-  // TODO
-  const handleDeleteDeveloper = () => {};
+  const deleteMutation = useMutation({
+    mutationFn: () => {
+      return trpc.themeDeveloper.delete.mutate({ developerId: developer.id });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(themeDevelopersQueryKey(developer.themeId));
+    },
+    onError: () => {
+      showNotification({
+        color: "red",
+        title: "開発者の削除",
+        message: "開発者を削除できませんでした。",
+      });
+    },
+  });
+
+  const handleDeleteDeveloper = () => {
+    deleteMutation.mutate();
+  };
 
   return (
     <AppMenu>
