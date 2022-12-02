@@ -2,17 +2,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Flex, Stack } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { ThemeJoinFormData, themeJoinFormSchema } from "../../share/schema";
+import { OmitStrict } from "../../types/OmitStrict";
 import { AppTextarea } from "./AppTextarea";
 import { AppTextInput } from "./AppTextInput";
 import { RepoCreateModalButton } from "./RepoCreateModalButton";
 
 type Props = {
+  defaultValues?: OmitStrict<ThemeJoinFormData, "themeId">;
   themeId: string;
   onSubmit: (data: ThemeJoinFormData) => void;
   onCancel: () => void;
 };
 export const ThemeJoinForm: React.FC<Props> = ({
   themeId,
+  defaultValues = { comment: "", githubUrl: "" },
   onSubmit,
   onCancel,
 }) => {
@@ -21,7 +24,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
     formState: { errors },
     handleSubmit,
   } = useForm<ThemeJoinFormData>({
-    defaultValues: { comment: "", githubUrl: "", themeId },
+    defaultValues: { ...defaultValues, themeId },
     resolver: zodResolver(themeJoinFormSchema),
   });
 

@@ -13,6 +13,7 @@ import { BsGithub } from "react-icons/bs";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { DeveloperLikeButton } from "./DeveloperLikeButton";
+import { DeveloperMenuButton } from "./DeveloperMenuButton";
 
 type Props = {
   developer: ThemeDeveloper;
@@ -53,7 +54,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
             {developer.name}
           </Text>
         </Flex>
-        <Box>
+        <Flex>
           <Tooltip
             label="コードを見に行く"
             color="gray.5"
@@ -62,7 +63,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
             transition="pop"
           >
             <ActionIcon
-              size={50}
+              size={30}
               component={Link}
               href={developer.githubUrl}
               target="_blank"
@@ -76,7 +77,8 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
               <BsGithub size="80%" fill={mantineTheme.colors.gray[7]} />
             </ActionIcon>
           </Tooltip>
-        </Box>
+          <DeveloperMenuButton developer={developer} />
+        </Flex>
       </Flex>
       <Flex align="center" justify="space-between" mt={10}>
         <Text size="sm" color="gray.5">
