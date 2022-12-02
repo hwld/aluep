@@ -1,6 +1,9 @@
 import {
+  Avatar,
   Box,
+  Card,
   Flex,
+  Text,
   Title, useMantineTheme
 } from "@mantine/core";
 import { useRouter } from "next/router";
@@ -44,6 +47,24 @@ export const ThemeLikelistPage: React.FC = () => {
         </Flex>
         <Title mt={30} order={3}>いいねした人</Title>
       </Box>
+      <Card
+          sx={{ flexShrink: 0, flexGrow: 0, height: "min-content" }}
+          w={250}
+        >
+      <Flex gap={5} mt={5}>
+            <Avatar
+              src={theme?.user.image}
+              size="md"
+              sx={(theme) => ({
+                borderWidth: "2px",
+                borderColor: theme.colors.gray[2],
+                borderStyle: "solid",
+                borderRadius: "100%",
+              })}
+            />
+            <Text size={13}>{theme?.user.name}</Text>
+          </Flex>
+      </Card>
     </Flex>
   );
 };
