@@ -8,7 +8,7 @@ import {
   Stack,
   Text,
   Title,
-  useMantineTheme,
+  useMantineTheme
 } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -19,6 +19,7 @@ import { useThemeLike } from "../hooks/useThemeLike";
 import { useThemeQuery } from "../hooks/useThemeQuery";
 import { ThemeDeveloperCard } from "./ThemeDeveloperCard";
 import { ThemeTagBadge } from "./ThemeTagBadge";
+
 
 export const ThemeDetailPage: React.FC = () => {
   const router = useRouter();
@@ -64,6 +65,14 @@ export const ThemeDetailPage: React.FC = () => {
             )}
           </ActionIcon>
           <Text>{theme?.likes}</Text>
+          <Button
+            component={Link}
+            href={`/themes/${theme?.id}/likelist`}
+            mt={10}
+            sx={(theme) => ({ boxShadow: theme.shadows.lg })}
+          >
+            いいね一覧
+          </Button>
         </Flex>
         {/* 説明 */}
         <Box sx={{ flexGrow: 1 }}>

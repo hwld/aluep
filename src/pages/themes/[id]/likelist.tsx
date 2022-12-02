@@ -1,6 +1,7 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { NextPage } from "next";
 import { unstable_getServerSession } from "next-auth";
-import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
+import { ThemeLikelistPage } from "../../../client/components/ThemeLikelistPage";
 import { themeLikedQueryKey } from "../../../client/hooks/useThemeLike";
 import { themeQueryKey } from "../../../client/hooks/useThemeQuery";
 import { GetServerSidePropsWithReactQuery } from "../../../server/lib/GetServerSidePropsWithReactQuery";
@@ -45,7 +46,7 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   return { props: { dehydratedState } };
 };
 
-export const ThemeDetail = () => {
-  return <ThemeDetailPage />;
+const ThemeLikelist: NextPage = () => {
+  return <ThemeLikelistPage />;
 };
-export default ThemeDetail;
+export default ThemeLikelist;
