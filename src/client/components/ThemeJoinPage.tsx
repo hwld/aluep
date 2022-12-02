@@ -72,6 +72,7 @@ export const ThemeJoinPage: React.FC = () => {
           onSubmit={handleJoinTheme}
           onCancel={handleBack}
           themeId={themeId}
+          actionText="参加する"
         />
       </Card>
     </Box>

@@ -75,6 +75,7 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
           onCancel={handleBack}
           themeId={theme.id}
           defaultValues={developer}
+          actionText="更新する"
         />
       </Card>
     </Box>

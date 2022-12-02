@@ -12,12 +12,14 @@ type Props = {
   themeId: string;
   onSubmit: (data: ThemeJoinFormData) => void;
   onCancel: () => void;
+  actionText: string;
 };
 export const ThemeJoinForm: React.FC<Props> = ({
   themeId,
   defaultValues = { comment: "", githubUrl: "" },
   onSubmit,
   onCancel,
+  actionText,
 }) => {
   const {
     control,
@@ -70,7 +72,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
         />
       </Stack>
       <Flex gap="sm" mt="lg">
-        <Button type="submit">参加する</Button>
+        <Button type="submit">{actionText}</Button>
         <Button variant="outline" onClick={onCancel}>
           キャンセル
         </Button>
