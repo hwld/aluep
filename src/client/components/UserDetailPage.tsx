@@ -1,47 +1,47 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  Flex,
-  Textarea,
-  useMantineTheme,
-} from "@mantine/core";
+import { Avatar, Button, Card, Flex, Textarea } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
 import { Session } from "next-auth";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { AiOutlineUser } from "react-icons/ai";
+import { BsFillFilePostFill } from "react-icons/bs";
 import { GoMarkGithub } from "react-icons/go";
-import { MdOutlineFavorite } from "react-icons/md";
-import { useAllThemesQuery } from "../hooks/useAllThemesQuery";
 import { useSessionQuery } from "../hooks/useSessionQuery";
-import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
-import { useThemeLike } from "../hooks/useThemeLike";
-import { useThemeQuery } from "../hooks/useThemeQuery";
+import { trpc } from "../trpc";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 
 type Props = { user: Session["user"] };
 
-export const UserDetailPage: React.FC = () => {
+export const UserDetailPage: React.FC<Props> = ({ user }) => {
   const { session } = useSessionQuery();
-  const router = useRouter();
-  // TODO
-  const themeId = router.query.id as string;
-  const { theme } = useThemeQuery(themeId);
-  const { allThemes } = useAllThemesQuery();
+  //投稿しているお題の表示
+  const { data: postThemes } = useQuery({
+    queryKey: ["postThemes"],
+    queryFn: () => {
+      return trpc.user.getPostTheme.query({ userId: user.id });
+    },
+  });
+  //参加しているお題の表示
+  const { data: joinThemes } = useQuery({
+    queryKey: ["joinThemes"],
+    queryFn: () => {
+      return trpc.user.getJoinTheme.query({ userId: user.id });
+    },
+  });
 
-  const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(themeId);
-
-  const { developers, likeDeveloperMutation } =
-    useThemeDevelopersQuery(themeId);
-
-  const handleLikeTheme = () => {
-    if (!theme) return;
-    likeThemeMutation.mutate({
-      themeId: theme?.id,
-      like: !likedByLoggedInUser,
-    });
-  };
-
-  const mantineTheme = useMantineTheme();
+  //お題のいいねの合計
+  const { data: themeLikes } = useQuery({
+    queryKey: ["themeLikes"],
+    queryFn: () => {
+      return trpc.user.getThemeLike.query({ userId: user.id });
+    },
+  });
+  //参加しているお題のいいねの合計
+  const { data: themeDeveloperLikes } = useQuery({
+    queryKey: ["themeDeveloperLikes"],
+    queryFn: () => {
+      return trpc.user.getThemeDeveloperLike.query({ userId: user.id });
+    },
+  });
 
   const [isPostTheme, setIsPostTheme] = useState(true);
   const [isJoinTheme, setIsJoinTheme] = useState(false);
@@ -103,15 +103,14 @@ export const UserDetailPage: React.FC = () => {
             </Flex>
           </Card.Section>
 
-          <Flex gap={70} mt={10} wrap="wrap" justify={"center"}>
+          <Flex gap={40} mt={10} wrap="wrap" justify={"center"}>
             <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
-              <MdOutlineFavorite size="30" style={{ marginTop: "4px" }} />
-
-              {/* {themes.map((theme) => {
-              if (theme.user.id === session?.user.id) {
-                return <ThemeCard key={theme.id} theme={theme} />;
-              }
-            })} */}
+              <BsFillFilePostFill size="30" style={{ marginTop: "4px" }} />
+              {themeLikes}
+            </Flex>
+            <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
+              <AiOutlineUser size="30" style={{ marginTop: "4px" }} />
+              {themeDeveloperLikes}
             </Flex>
             <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
               <GoMarkGithub size="30" style={{ marginTop: "4px" }} />
@@ -173,18 +172,18 @@ export const UserDetailPage: React.FC = () => {
       {isPostTheme && (
         <div>
           <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {allThemes?.map((theme) => {
-              if (theme.user.id === session?.user.id) {
-                return <ThemeCard key={theme.id} theme={theme} />;
-              }
+            {postThemes?.map((theme) => {
+              return <ThemeCard key={theme.id} theme={theme} />;
             })}
           </Flex>
         </div>
       )}
       {isJoinTheme && (
         <div>
-          <Flex mt={30} gap={15} wrap="wrap">
-            参加しているお題を表示
+          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
+            {joinThemes?.map((theme) => {
+              return <ThemeCard key={theme.id} theme={theme} />;
+            })}
           </Flex>
         </div>
       )}

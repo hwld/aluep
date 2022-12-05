@@ -1,8 +1,12 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { unstable_getServerSession } from "next-auth";
 import { UserDetailPage } from "../../client/components/UserDetailPage";
-import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
+import {
+  sessionQuerykey,
+  useSessionQuery,
+} from "../../client/hooks/useSessionQuery";
 import { GetServerSidePropsWithReactQuery } from "../../server/lib/GetServerSidePropsWithReactQuery";
+import { appRouter } from "../../server/routers/_app";
 import { authOptions } from "../api/auth/[...nextauth]";
 
 export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
@@ -11,6 +15,8 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
 }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
+  const caller = appRouter.createCaller({ session });
+  //const theme = await caller.user.getPostTheme({  });
   // セッションがないときはホームにリダイレクトする
   if (!session) {
     return {
@@ -34,5 +40,11 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
 
 // TODO: formのエラーハンドリングのためにreact-hook-formを導入する
 export default function Detail() {
-  return <UserDetailPage />;
+  const { session } = useSessionQuery();
+
+  if (session?.user.id === undefined) {
+    return <div>error</div>;
+  }
+
+  return <UserDetailPage user={session.user} />;
 }
