@@ -10,5 +10,8 @@ declare module "next-auth" {
     user: DefaultUser & {
       id: string;
     };
+    developer: DefaultDepeloper & {
+      id: string;
+    };
   }
 }
