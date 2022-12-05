@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
+  pageSchema,
   themeFormSchema,
   themeJoinFormSchema,
   themeUpdateFormSchema,
@@ -24,20 +25,7 @@ export const themeRoute = router({
   }),
   // ページを指定して、お題を取得する
   getMany: publicProcedure
-    .input(
-      z.object({
-        page: z
-          .string()
-          .optional()
-          .transform((page) => {
-            const p = Number(page);
-            if (isNaN(p)) {
-              return 1;
-            }
-            return p;
-          }),
-      })
-    )
+    .input(z.object({ page: pageSchema }))
     .query(async ({ input: { page } }) => {
       const { data: themes, allPages } = await paginate({
         finderInput: undefined,
@@ -74,16 +62,22 @@ export const themeRoute = router({
       z.object({
         keyword: z.string(),
         tagIds: z.array(z.string().min(1)),
+        page: pageSchema,
       })
     )
-    .query(async ({ input }): Promise<Theme[]> => {
-      const themes = await searchThemes({
-        keyword: input.keyword,
-        tagIds: input.tagIds,
-      });
+    .query(
+      async ({ input }): Promise<{ themes: Theme[]; allPages: number }> => {
+        const paginatedThemes = await searchThemes(
+          {
+            keyword: input.keyword,
+            tagIds: input.tagIds,
+          },
+          { page: input.page, limit: 6 }
+        );
 
-      return themes;
-    }),
+        return paginatedThemes;
+      }
+    ),
 
   // お題を作成する
   create: requireLoggedInProcedure

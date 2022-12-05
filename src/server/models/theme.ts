@@ -64,11 +64,16 @@ export const findTheme = async (
   return theme;
 };
 
-export const findManyThemes = async ({
-  orderBy,
-  ...args
-}: OmitStrict<Prisma.AppThemeFindManyArgs, "include" | "select">) => {
-  const rawThemes = await prisma.appTheme.findMany({
+export const findManyThemes = async (
+  {
+    orderBy,
+    ...args
+  }: OmitStrict<Prisma.AppThemeFindManyArgs, "include" | "select">,
+  transactionClient?: Prisma.TransactionClient
+) => {
+  const client = transactionClient ?? prisma;
+
+  const rawThemes = await client.appTheme.findMany({
     orderBy: { createdAt: "desc", ...orderBy },
     ...args,
     ...themeArgs,
@@ -78,30 +83,75 @@ export const findManyThemes = async ({
 };
 
 type SearchThemesArgs = { keyword: string; tagIds: string[] };
-export const searchThemes = async ({ keyword, tagIds }: SearchThemesArgs) => {
-  // TODO: ページングができるように、一つのクエリで実行する。
-  // queryRawを使用してidのリストを取得してから、inでお題を取得する。
-
+export const searchThemes = async (
+  { keyword, tagIds }: SearchThemesArgs,
+  pagingData: { page: number; limit: number }
+): Promise<{ themes: Theme[]; allPages: number }> => {
   if (keyword === "" && tagIds.length === 0) {
-    return [];
+    return { themes: [], allPages: 0 };
   }
 
-  const themesContainsKeyword = await findManyThemes({
-    where: {
-      OR: [
-        { title: { contains: keyword } },
-        { description: { contains: keyword } },
-      ],
-    },
+  // トランザクションを使用する
+  const paginatedThemes = await prisma.$transaction(async (tx) => {
+    const master = Prisma.sql`
+      WITH master AS (
+        SELECT
+          AppTheme.id as themeId
+        FROM
+          AppTheme
+          LEFT OUTER JOIN AppThemeTagOnAppTheme
+            ON (AppTheme.id = AppThemeTagOnAppTheme.themeId)
+        WHERE
+          AppTheme.title LIKE ${"%" + keyword + "%"}
+          ${
+            tagIds.length > 0
+              ? Prisma.sql`
+          AND tagId IN (${Prisma.join(tagIds)})`
+              : Prisma.empty
+          }
+        GROUP BY
+          AppTheme.id
+        ${
+          tagIds.length > 0
+            ? Prisma.sql`
+        HAVING
+          COUNT(themeId) = ${tagIds.length}`
+            : Prisma.empty
+        }
+      )
+    `;
+
+    // お題のidのリストを求める
+    type SearchedThemeIds = { themeId: string }[];
+    const themeIdObjs = await tx.$queryRaw<SearchedThemeIds>`
+      ${master}
+      SELECT 
+        * 
+      FROM
+        master
+      LIMIT 
+        ${pagingData.limit}
+      OFFSET
+        ${(pagingData.page - 1) * pagingData.limit}
+    `;
+    const searchedThemeIds = themeIdObjs.map(({ themeId }) => themeId);
+
+    // 検索結果の合計数を求める
+    const allItemsArray = await tx.$queryRaw<[{ allItems: BigInt }]>`
+      ${master}
+      SELECT
+        COUNT(*) as allItems
+      FROM master
+    `;
+    const allItems = Number(allItemsArray[0].allItems);
+    const allPages = Math.ceil(allItems / pagingData?.limit);
+
+    const themes = await findManyThemes(
+      { where: { id: { in: searchedThemeIds } } },
+      tx
+    );
+    return { themes, allPages };
   });
 
-  // tagsをすべて持つお題に絞り込む。
-  // prismaでやる方法がある？
-  const themes = themesContainsKeyword.filter((theme) => {
-    // お題に含まれているすべてのタグId
-    const themeTagIds = theme.tags.map(({ id }) => id);
-    return tagIds.every((id) => themeTagIds.includes(id));
-  });
-
-  return themes;
+  return paginatedThemes;
 };

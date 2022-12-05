@@ -46,3 +46,14 @@ export const profileFormSchema = z.object({
     .max(50, "ユーザー名は50文字以内で入力してください。"),
 });
 export type ProfileFormData = z.infer<typeof profileFormSchema>;
+
+export const pageSchema = z
+  .string()
+  .optional()
+  .transform((page) => {
+    const p = Number(page);
+    if (isNaN(p)) {
+      return 1;
+    }
+    return p;
+  });

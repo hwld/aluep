@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useStateAndUrlParamString } from "./useStateAndUrlParamString";
 
 // ページの情報を管理する。
@@ -17,9 +17,12 @@ export const usePaginationState = (initialPage: number = 1) => {
     return p;
   }, [stringPage]);
 
-  const setPage = (page: number) => {
-    setStringPage(page.toString());
-  };
+  const setPage = useCallback(
+    (page: number) => {
+      setStringPage(page.toString());
+    },
+    [setStringPage]
+  );
 
   return [page, setPage] as const;
 };
