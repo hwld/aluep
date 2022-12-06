@@ -65,7 +65,11 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
             <ActionIcon
               size={30}
               component={Link}
-              href={developer.githubUrl}
+              // githubのURLをgithub1sに変換
+              href={developer.githubUrl.replace(
+                /^(https:\/\/github)(.com)/,
+                "$11s$2"
+              )}
               target="_blank"
               sx={(theme) => ({
                 transition: "all 200ms",

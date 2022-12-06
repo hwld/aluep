@@ -14,6 +14,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
+import { useThemeJoinQuery } from "../hooks/useThemeJoinedQuery";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { ThemeDeveloperCard } from "./ThemeDeveloperCard";
 import { ThemeLikeButton } from "./ThemeLikeButton";
@@ -24,6 +25,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const mantineTheme = useMantineTheme();
   const { session } = useSessionQuery();
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(theme.id);
+  const { joined } = useThemeJoinQuery(theme.id);
   const { developers, likeDeveloperMutation } = useThemeDevelopersQuery(
     theme.id
   );
@@ -59,8 +61,19 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             </Flex>
             <Text>{theme.description}</Text>
           </Card>
-          <Button mt={15} component={Link} href={`/themes/${theme.id}/join`}>
-            参加する
+          <Button
+            mt={15}
+            component={Link}
+            href={`/themes/${theme.id}/join`}
+            disabled={joined}
+            sx={(theme) => ({
+              "&[data-disabled]": {
+                backgroundColor: theme.colors.gray[3],
+                color: theme.colors.gray[7],
+              },
+            })}
+          >
+            {joined ? "参加しています" : "参加する"}
           </Button>
           <Title mt={30} order={2}>
             参加している開発者

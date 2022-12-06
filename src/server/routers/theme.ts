@@ -153,6 +153,28 @@ export const themeRoute = router({
       });
     }),
 
+  // ログインユーザーが指定されたお題に参加しているか
+  joined: publicProcedure
+    .input(z.object({ themeId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const loggedInUser = ctx.session?.user;
+      if (!loggedInUser) {
+        return false;
+      }
+
+      const developer = await prisma.appThemeDeveloper.findUnique({
+        where: {
+          userId_appThemeId: {
+            userId: loggedInUser.id,
+            appThemeId: input.themeId,
+          },
+        },
+        select: { id: true },
+      });
+
+      return Boolean(developer);
+    }),
+
   // お題にいいねする
   like: requireLoggedInProcedure
     .input(z.object({ themeId: z.string().min(1), like: z.boolean() }))
