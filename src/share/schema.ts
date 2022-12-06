@@ -57,3 +57,12 @@ export const pageSchema = z
     }
     return p;
   });
+
+export const repositoryFormSchema = z.object({
+  repoName: z
+    .string()
+    .min(1, "リポジトリ名を入力して下さい。")
+    .max(30, "リポジトリ名は30文字以下で入力してください。"),
+  repoDescription: z.string().max(200, "説明は200文字以下で入力してください。"),
+});
+export type RepositoryFormData = z.infer<typeof repositoryFormSchema>;

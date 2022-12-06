@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Flex, Stack } from "@mantine/core";
+import { useId } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ThemeJoinFormData, themeJoinFormSchema } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
@@ -21,6 +22,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
   onCancel,
   actionText,
 }) => {
+  const formId = useId();
   const {
     control,
     formState: { errors },
@@ -31,7 +33,9 @@ export const ThemeJoinForm: React.FC<Props> = ({
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <>
+      {/* formがネストしないようにidで紐づける */}
+      <form id={formId} onSubmit={handleSubmit(onSubmit)} noValidate />
       <Stack>
         <Flex align="end" gap={5}>
           <Box sx={{ flexGrow: 1 }}>
@@ -72,11 +76,13 @@ export const ThemeJoinForm: React.FC<Props> = ({
         />
       </Stack>
       <Flex gap="sm" mt="lg">
-        <Button type="submit">{actionText}</Button>
+        <Button type="submit" form={formId}>
+          {actionText}
+        </Button>
         <Button variant="outline" onClick={onCancel}>
           キャンセル
         </Button>
       </Flex>
-    </form>
+    </>
   );
 };

@@ -1,26 +1,23 @@
-import { Button, Flex, Modal, Stack } from "@mantine/core";
+import { Button, Modal } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { RouterInputs } from "../../server/trpc";
+import { RepositoryFormData } from "../../share/schema";
 import { trpc } from "../trpc";
-import { AppTextarea } from "./AppTextarea";
-import { AppTextInput } from "./AppTextInput";
+import { RepositoryForm } from "./RepositoryForm";
 
 type Props = {
-  onSetRepositoryUrl: (value: string) => void;
+  onSetRepositoryUrl: (url: string) => void;
   width?: number;
 };
 export const RepoCreateModalButton: React.FC<Props> = ({
   onSetRepositoryUrl,
   width,
 }) => {
-  const [repoName, setRepoName] = useState("");
-  const [repoDescription, setRepoDescription] = useState("");
   const [opened, setOpened] = useState(false);
 
-  const createRepoMutation = useMutation({
-    mutationFn: (data: RouterInputs["github"]["createRepo"]) => {
+  const createRepositoryMutation = useMutation({
+    mutationFn: (data: RepositoryFormData) => {
       return trpc.github.createRepo.mutate(data);
     },
     onSuccess: (data) => {
@@ -42,8 +39,8 @@ export const RepoCreateModalButton: React.FC<Props> = ({
     },
   });
 
-  const handleClickCreateRepo = () => {
-    createRepoMutation.mutate({ repoName, repoDescription });
+  const handleCreateRepository = (data: RepositoryFormData) => {
+    createRepositoryMutation.mutate(data);
   };
 
   return (
@@ -51,8 +48,6 @@ export const RepoCreateModalButton: React.FC<Props> = ({
       <Button
         w={width}
         onClick={() => {
-          setRepoName("");
-          setRepoDescription("");
           setOpened(true);
         }}
       >
@@ -69,25 +64,10 @@ export const RepoCreateModalButton: React.FC<Props> = ({
           body: { backgroundColor: theme.colors.gray[1] },
         })}
       >
-        <Stack spacing="md">
-          <AppTextInput
-            label="リポジトリ名"
-            value={repoName}
-            onChange={(e) => setRepoName(e.target.value)}
-          />
-          <AppTextarea
-            label="説明"
-            value={repoDescription}
-            onChange={(e) => setRepoDescription(e.target.value)}
-            minRows={3}
-          />
-        </Stack>
-        <Flex gap="sm" mt="lg">
-          <Button onClick={handleClickCreateRepo}>リポジトリを作成する</Button>
-          <Button variant="outline" onClick={() => setOpened(false)}>
-            キャンセル
-          </Button>
-        </Flex>
+        <RepositoryForm
+          onSubmit={handleCreateRepository}
+          onCancel={() => setOpened(false)}
+        />
       </Modal>
     </>
   );
