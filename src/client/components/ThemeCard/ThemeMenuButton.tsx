@@ -65,7 +65,7 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
       </Menu.Target>
 
       <MenuDropdown>
-        {session?.user.id === theme.user.id ? (
+        {session?.user.id === theme?.user.id ? (
           <>
             <MenuLinkItem
               icon={<RiEdit2Fill size={20} />}

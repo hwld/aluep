@@ -35,7 +35,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         <Flex align="center" justify="space-between">
           <Flex gap={10} align="flex-start">
             <Avatar
-              src={theme.user.image}
+              src={theme?.user.image}
               radius="xl"
               size="md"
               sx={(theme) => ({
@@ -45,7 +45,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
                 borderRadius: "100%",
               })}
             />
-            <Text>{theme.user.name}</Text>
+            <Text>{theme?.user.name}</Text>
           </Flex>
           <Text color="gray.5">
             {new Date(theme.createdAt).toLocaleString()}

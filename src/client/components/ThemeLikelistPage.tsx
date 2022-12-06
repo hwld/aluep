@@ -1,13 +1,10 @@
 import {
-  Avatar,
-  Box,
-  Card,
+  Avatar, Card,
   Flex,
   Text,
   Title, useMantineTheme
 } from "@mantine/core";
 import { useRouter } from "next/router";
-import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { useThemeQuery } from "../hooks/useThemeQuery";
 import { useThemesQuery } from "../hooks/useThemesQuery";
@@ -22,8 +19,8 @@ export const ThemeLikelistPage: React.FC = () => {
 
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(themeId);
 
-  const { developers, likeDeveloperMutation } =
-    useThemeDevelopersQuery(themeId);
+  //const { developers, likeDeveloperMutation } =
+    //useThemeDevelopersQuery(themeId);
 
   const handleLikeTheme = () => {
     if (!theme) return;
@@ -39,16 +36,20 @@ export const ThemeLikelistPage: React.FC = () => {
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
-      <Box>
-        <Flex mt={30} gap={15} wrap="wrap">
+      <Flex mt={30} gap={15} wrap="wrap">
           {themes.map((theme) => {
-            return <ThemeCard key={theme.id} theme={theme} />;
+            if (themeId === theme.id){
+              return ( 
+                <ThemeCard key={theme.id} theme={theme} />
+              );
+            }
           })}
-        </Flex>
-        <Title mt={30} order={3}>いいねした人</Title>
-      </Box>
+      </Flex>
+      <Title mt={30} order={3}>いいねした人</Title>
+      
       <Card
           sx={{ flexShrink: 0, flexGrow: 0, height: "min-content" }}
+          mt={30}
           w={250}
         >
       <Flex gap={5} mt={5}>
