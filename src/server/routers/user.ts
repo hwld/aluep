@@ -29,6 +29,21 @@ export const userRoute = router({
       return joinPostedTheme;
     }),
 
+  getLikeTheme: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input }) => {
+      //お題にいいねしてあるモデルの中から自分のIDを取得
+      const likeThemeIds = await prisma.appThemeLike.findMany({
+        select: { appThemeId: true },
+        where: { userId: input.userId },
+      });
+      const likeThemeList = likeThemeIds.map((like) => like.appThemeId);
+      const likePostedTheme = await findManyThemes({
+        where: { id: { in: likeThemeList } },
+      });
+      return likePostedTheme;
+    }),
+
   getThemeLike: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
@@ -48,13 +63,23 @@ export const userRoute = router({
     .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
       const postThemeIds = await prisma.appThemeDeveloper.findMany({
-        select: { userId: true },
+        select: { id: true },
         where: { userId: input.userId },
       });
-      const ids = postThemeIds.map((like) => like.userId);
+      const ids = postThemeIds.map((like) => like.id);
       const likes = await prisma.appThemeDeveloperLike.count({
         where: { developerId: { in: ids } },
       });
       return likes;
+    }),
+
+  getGithub: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input }) => {
+      const githuburl = await prisma.appThemeDeveloper.findFirst({
+        select: { githubUrl: true },
+        where: { userId: input.userId },
+      });
+      return githuburl;
     }),
 });

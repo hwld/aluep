@@ -27,6 +27,13 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
       return trpc.user.getJoinTheme.query({ userId: user.id });
     },
   });
+  //いいねしたお題の表示
+  const { data: likeThemes } = useQuery({
+    queryKey: ["likeThemes"],
+    queryFn: () => {
+      return trpc.user.getLikeTheme.query({ userId: user.id });
+    },
+  });
 
   //お題のいいねの合計
   const { data: themeLikes } = useQuery({
@@ -40,6 +47,13 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
     queryKey: ["themeDeveloperLikes"],
     queryFn: () => {
       return trpc.user.getThemeDeveloperLike.query({ userId: user.id });
+    },
+  });
+
+  const { data: githuburl } = useQuery({
+    queryKey: ["githuburl"],
+    queryFn: () => {
+      return trpc.user.getGithub.query({ userId: user.id });
     },
   });
 
@@ -114,7 +128,9 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
             </Flex>
             <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
               <GoMarkGithub size="30" style={{ marginTop: "4px" }} />
-              <div>GitHub</div>
+              <a href={githuburl}>
+                <div>GitHub</div>
+              </a>
             </Flex>
           </Flex>
         </Card>
@@ -190,7 +206,9 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
       {isLike && (
         <div>
           <Flex mt={30} gap={15} wrap="wrap">
-            いいねを表示
+            {likeThemes?.map((theme) => {
+              return <ThemeCard key={theme.id} theme={theme} />;
+            })}
           </Flex>
         </div>
       )}
