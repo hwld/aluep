@@ -34,8 +34,12 @@ export const githubRoute = router({
           private: false,
         }),
       });
-      const json = await result.json();
 
+      if (result.status !== 201) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+
+      const json = await result.json();
       return { repoUrl: json.html_url as string };
     }),
 });

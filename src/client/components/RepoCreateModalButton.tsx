@@ -36,7 +36,8 @@ export const RepoCreateModalButton: React.FC<Props> = ({
       showNotification({
         color: "red",
         title: "リポジトリ作成",
-        message: "リポジトリを作成できませんでした。",
+        message:
+          "リポジトリを作成できませんでした。\n再ログインしてもう一度試してください。",
       });
     },
   });
