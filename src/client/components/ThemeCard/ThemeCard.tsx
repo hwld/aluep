@@ -1,4 +1,5 @@
-import { Avatar, Card, Flex, Stack, Text, Title } from "@mantine/core";
+import { Avatar, Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
+import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { Theme } from "../../../server/models/theme";
 import { ThemeTagBadge } from "../ThemeTagBadge";
@@ -15,10 +16,16 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
   return (
     <Card
       key={theme.id}
-      w={560}
-      sx={() => ({
+      miw={themeCardMinWidthPx}
+      w="100%"
+      h="100%"
+      sx={(theme) => ({
         cursor: "pointer",
         position: "static",
+        transition: "all 150ms",
+        "&:hover": {
+          boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
+        },
       })}
       onClick={handleGoDetail}
     >
@@ -32,8 +39,10 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         </Flex>
 
         {/* ユーザー情報 */}
-        <Flex align="center" justify="space-between">
-          <Flex gap={10} align="flex-start">
+        <Flex gap={5} direction="column">
+          <Box
+            sx={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 10 }}
+          >
             <Avatar
               src={theme.user.image}
               radius="xl"
@@ -43,13 +52,26 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
                 borderColor: theme.colors.gray[2],
                 borderStyle: "solid",
                 borderRadius: "100%",
+                flexShrink: 0,
               })}
             />
-            <Text>{theme.user.name}</Text>
-          </Flex>
-          <Text color="gray.5">
-            {new Date(theme.createdAt).toLocaleString()}
-          </Text>
+            <Flex direction="column">
+              <Text
+                size="sm"
+                sx={{
+                  flexShrink: 1,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {theme.user.name}
+              </Text>
+              <Text color="gray.5" size="sm" sx={{ whiteSpace: "nowrap" }}>
+                {format(new Date(theme.createdAt), "yyyy年M月d日")}
+              </Text>
+            </Flex>
+          </Box>
         </Flex>
 
         {/* タグ */}
@@ -66,3 +88,5 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
     </Card>
   );
 };
+
+export const themeCardMinWidthPx = 560;
