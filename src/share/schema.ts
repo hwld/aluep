@@ -26,8 +26,8 @@ export const themeJoinFormSchema = z.object({
   themeId: z.string().min(1).max(100),
   githubUrl: z
     .string()
-    .min(1, "リポジトリ名を入力してください。")
-    .max(120, "リポジトリ名は120文字以下で入力してください。")
+    .min(1, "リポジトリのURLを入力してください。")
+    .max(120, "リポジトリのURLは120文字以下で入力してください。")
     .regex(
       /^https:\/\/github.com\/[^\/]+\/[^\/\?&]+$/,
       "https://から始まる有効なGitHubリポジトリのURLを入力してください。"
