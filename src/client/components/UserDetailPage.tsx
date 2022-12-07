@@ -1,13 +1,11 @@
-import { Avatar, Button, Card, Flex, Textarea } from "@mantine/core";
+import { Button, Card, Flex, Textarea } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import React, { useState } from "react";
-import { AiOutlineUser } from "react-icons/ai";
-import { BsFillFilePostFill } from "react-icons/bs";
-import { GoMarkGithub } from "react-icons/go";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { trpc } from "../trpc";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
+import UserDetailCard from "./UserDetailCard";
 
 type Props = { user: Session["user"] };
 
@@ -50,90 +48,69 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
     },
   });
 
-  const { data: githuburl } = useQuery({
-    queryKey: ["githuburl"],
-    queryFn: () => {
-      return trpc.user.getGithub.query({ userId: user.id });
-    },
-  });
+  // const { data: githuburl } = useQuery({
+  //   queryKey: ["githuburl"],
+  //   queryFn: () => {
+  //     return trpc.user.getGithub.query({ userId: user.id });
+  //   },
+  // });
+  const githubUrl: string = "/";
 
-  const [isPostTheme, setIsPostTheme] = useState(true);
-  const [isJoinTheme, setIsJoinTheme] = useState(false);
-  const [isLike, setIsLike] = useState(false);
-
-  const handlePostTheme = () => {
-    if (!isPostTheme) {
-      setIsPostTheme(!isPostTheme);
-    }
-    if (isJoinTheme) {
-      setIsJoinTheme(false);
-    }
-    if (isLike) {
-      setIsLike(false);
-    }
+  const [state, setState] = useState<"post" | "join" | "like">("post");
+  const handleSwitchPost = () => {
+    setState("post");
+  };
+  const handleSwitchJoin = () => {
+    setState("join");
+  };
+  const handleSwitchLike = () => {
+    setState("like");
   };
 
-  const handleJoinTheme = () => {
-    if (!isJoinTheme) {
-      setIsJoinTheme(!isJoinTheme);
-    }
-    if (isPostTheme) {
-      setIsPostTheme(false);
-    }
-    if (isLike) {
-      setIsLike(false);
-    }
-  };
-
-  const handleLike = () => {
-    if (!isLike) {
-      setIsLike(!isLike);
-    }
-    if (isPostTheme) {
-      setIsPostTheme(false);
-    }
-    if (isJoinTheme) {
-      setIsJoinTheme(false);
+  const panel = () => {
+    if (state === "post") {
+      return (
+        <div>
+          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
+            {postThemes?.map((theme) => {
+              return <ThemeCard key={theme.id} theme={theme} />;
+            })}
+          </Flex>
+        </div>
+      );
+    } else if (state === "join") {
+      return (
+        <div>
+          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
+            {joinThemes?.map((theme) => {
+              return <ThemeCard key={theme.id} theme={theme} />;
+            })}
+          </Flex>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
+            {likeThemes?.map((theme) => {
+              return <ThemeCard key={theme.id} theme={theme} />;
+            })}
+          </Flex>
+        </div>
+      );
     }
   };
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Flex maw={1000} mih={300} direction="row" gap={10} mt={60}>
-        <Card h={300} w={250}>
-          <Card.Section py="xl">
-            <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
-              <Avatar
-                src={session?.user.image}
-                size="xl"
-                sx={(theme) => ({
-                  borderWidth: "2px",
-                  borderColor: theme.colors.gray[2],
-                  borderStyle: "solid",
-                  borderRadius: "100%",
-                })}
-              />
-              {session?.user.name}
-            </Flex>
-          </Card.Section>
-
-          <Flex gap={40} mt={10} wrap="wrap" justify={"center"}>
-            <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
-              <BsFillFilePostFill size="30" style={{ marginTop: "4px" }} />
-              {themeLikes}
-            </Flex>
-            <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
-              <AiOutlineUser size="30" style={{ marginTop: "4px" }} />
-              {themeDeveloperLikes}
-            </Flex>
-            <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
-              <GoMarkGithub size="30" style={{ marginTop: "4px" }} />
-              <a href={githuburl}>
-                <div>GitHub</div>
-              </a>
-            </Flex>
-          </Flex>
-        </Card>
+        <UserDetailCard
+          userImage={user.image}
+          userName={user.name}
+          themeLikes={themeLikes}
+          themeDeveloperLikes={themeDeveloperLikes}
+          githuburl={githubUrl}
+        />
 
         <Card mih={20} w={500}>
           <Card.Section withBorder inheritPadding py="md">
@@ -149,9 +126,9 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
         <Button.Group>
           <Button
             variant="light"
-            w={130}
-            onClick={handlePostTheme}
-            bg={isPostTheme ? "gray.0" : "gray.3"}
+            w={140}
+            onClick={handleSwitchPost}
+            bg={state === "post" ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
               return { "&:hover": { backgroundColor: theme.colors.gray[4] } };
@@ -161,9 +138,9 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
           </Button>
           <Button
             variant="light"
-            w={130}
-            onClick={handleJoinTheme}
-            bg={isJoinTheme ? "gray.0" : "gray.3"}
+            w={140}
+            onClick={handleSwitchJoin}
+            bg={state === "join" ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
               return { "&:hover": { backgroundColor: theme.colors.gray[4] } };
@@ -173,45 +150,19 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
           </Button>
           <Button
             variant="light"
-            w={130}
-            onClick={handleLike}
-            bg={isLike ? "gray.0" : "gray.3"}
+            w={140}
+            onClick={handleSwitchLike}
+            bg={state === "like" ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
               return { "&:hover": { backgroundColor: theme.colors.gray[4] } };
             }}
           >
-            いいね
+            いいねしたお題
           </Button>
         </Button.Group>
       </Flex>
-      {isPostTheme && (
-        <div>
-          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {postThemes?.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Flex>
-        </div>
-      )}
-      {isJoinTheme && (
-        <div>
-          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {joinThemes?.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Flex>
-        </div>
-      )}
-      {isLike && (
-        <div>
-          <Flex mt={30} gap={15} wrap="wrap">
-            {likeThemes?.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Flex>
-        </div>
-      )}
+      {panel()}
     </Flex>
   );
 };

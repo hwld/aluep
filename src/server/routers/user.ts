@@ -80,6 +80,9 @@ export const userRoute = router({
         select: { githubUrl: true },
         where: { userId: input.userId },
       });
+      if (githuburl === null) {
+        return "/";
+      }
       return githuburl;
     }),
 });
