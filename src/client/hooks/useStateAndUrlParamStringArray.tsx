@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { urlParamToStringArray } from "../../server/lib/urlParam";
 
 type UseStateAndUrlParamStringArrayArgs = {
   paramName: string;
@@ -13,11 +14,7 @@ export const useStateAndUrlParamStringArray = ({
   const urlParam = router.query[paramName];
 
   const [state, setState] = useState(
-    typeof urlParam === "string"
-      ? [urlParam]
-      : typeof urlParam === "object"
-      ? urlParam
-      : initialData
+    urlParamToStringArray(urlParam, initialData)
   );
 
   const setStateAndUrlParam = (values: string[]) => {
