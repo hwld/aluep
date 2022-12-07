@@ -200,4 +200,15 @@ export const themeRoute = router({
       });
       return developers;
     }),
+
+  // 指定されたお題をいいねしたユーザーを取得する
+  getLikedUsers: publicProcedure
+    .input(z.object({ themeId: z.string() }))
+    .query(async ({ input }) => {
+      const users = await prisma.user.findMany({
+        where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+      });
+
+      return users;
+    }),
 });
