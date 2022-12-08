@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ts-node": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"}",
+    "create:dummy": "npm run ts-node -- prisma/seedDummy.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -42,6 +44,7 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "ts-node": "^10.9.1"
   }
 }
