@@ -5,7 +5,9 @@ import {
   Title, useMantineTheme
 } from "@mantine/core";
 import { useRouter } from "next/router";
+import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeLike } from "../hooks/useThemeLike";
+import { useThemeLikesQuery } from "../hooks/useThemeLikesQuery";
 import { useThemeQuery } from "../hooks/useThemeQuery";
 import { useThemesQuery } from "../hooks/useThemesQuery";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
@@ -19,8 +21,8 @@ export const ThemeLikelistPage: React.FC = () => {
 
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(themeId);
 
-  //const { developers, likeDeveloperMutation } =
-    //useThemeDevelopersQuery(themeId);
+  const { developers, likeDeveloperMutation } =
+    useThemeDevelopersQuery(themeId);
 
   const handleLikeTheme = () => {
     if (!theme) return;
@@ -32,7 +34,7 @@ export const ThemeLikelistPage: React.FC = () => {
 
   const mantineTheme = useMantineTheme();
   const { themes } = useThemesQuery();
-
+  const { users } = useThemeLikesQuery(themeId);
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
@@ -46,7 +48,6 @@ export const ThemeLikelistPage: React.FC = () => {
           })}
       </Flex>
       <Title mt={30} order={3}>いいねした人</Title>
-      
       <Card
           sx={{ flexShrink: 0, flexGrow: 0, height: "min-content" }}
           mt={30}

@@ -39,6 +39,7 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
     [`theme-${themeId}-developers`],
     () => developers
   );
+  
 
   const dehydratedState = dehydrate(queryClient);
 
