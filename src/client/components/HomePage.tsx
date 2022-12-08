@@ -18,6 +18,8 @@ import {
   useTop10LikesPostersInThisMonth,
   useTop10LikesThemesInThisMonth,
 } from "../hooks/useRankingQuery";
+import { PopularThemeCarousel } from "./PopularThemeCarousel/PopularThemeCarousel";
+
 import { ThemeCard, themeCardMinWidthPx } from "./ThemeCard/ThemeCard";
 
 export const HomePage: React.FC = () => {
@@ -31,7 +33,7 @@ export const HomePage: React.FC = () => {
   return (
     <Flex gap={30} justify="space-between">
       <Flex direction="column" w="100%" gap="md">
-        <Title>アプリ開発のお題</Title>
+        <Title order={3}>アプリ開発のお題</Title>
         <Button
           leftIcon={<FaSearch />}
           component={Link}
@@ -43,23 +45,16 @@ export const HomePage: React.FC = () => {
           お題を検索する
         </Button>
 
-        <Stack>
-          <Title>人気のお題</Title>
-          <Box
-            sx={(theme) => ({
-              display: "grid",
-              gridTemplateColumns: `repeat(auto-fit, minmax(${themeCardMinWidthPx}px, 1fr))`,
-              gap: theme.spacing.md,
-            })}
-          >
-            {top10LikesThemesInThisMonth?.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Box>
-        </Stack>
+        {top10LikesThemesInThisMonth &&
+          top10LikesThemesInThisMonth.length > 0 && (
+            <Stack spacing="sm">
+              <Title order={4}>人気のお題</Title>
+              <PopularThemeCarousel themes={top10LikesThemesInThisMonth} />
+            </Stack>
+          )}
 
         <Stack>
-          <Title>最新のお題</Title>
+          <Title order={4}>全てのお題</Title>
           <Box
             sx={(theme) => ({
               display: "grid",

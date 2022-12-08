@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { unstable_getServerSession } from "next-auth/next";
 import { HomePage } from "../client/components/HomePage";
 import { paginatedThemesQueryKey } from "../client/hooks/usePaginatedThemesQuery";
+import { top10LikesThemesInThisMonthQueryKey } from "../client/hooks/useRankingQuery";
 import { sessionQuerykey } from "../client/hooks/useSessionQuery";
 import { GetServerSidePropsWithReactQuery } from "../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../server/routers/_app";
@@ -25,11 +26,16 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
 
   const session = await unstable_getServerSession(req, res, authOptions);
   const themes = await caller.theme.getMany({ page });
+  const top10LikesThemes = await caller.theme.getTop10LikesThemesInThisMonth();
 
   // react-queryを使用してデータを渡し、dehydrateしてクライアントに送る
   const queryClient = new QueryClient();
   queryClient.setQueryData(sessionQuerykey, session);
   queryClient.setQueryData(paginatedThemesQueryKey(Number(page)), themes);
+  queryClient.setQueryData(
+    top10LikesThemesInThisMonthQueryKey,
+    top10LikesThemes
+  );
   const dehydratedState = dehydrate(queryClient);
 
   return {

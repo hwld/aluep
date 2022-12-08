@@ -31,7 +31,7 @@ export const themeRoute = router({
         finderInput: undefined,
         finder: findManyThemes,
         counter: prisma.appTheme.count,
-        pagingData: { page, limit: 6 },
+        pagingData: { page, limit: 12 },
       });
 
       return { themes, allPages };
