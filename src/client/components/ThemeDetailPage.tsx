@@ -22,6 +22,7 @@ import { ThemeTagBadge } from "./ThemeTagBadge";
 type Props = { theme: Theme };
 export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const mantineTheme = useMantineTheme();
+
   const { session } = useSessionQuery();
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(theme.id);
   const { developers, likeDeveloperMutation } = useThemeDevelopersQuery(
@@ -70,6 +71,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
               return (
                 <ThemeDeveloperCard
                   key={developer.id}
+                  theme={theme}
                   developer={developer}
                   onLikeDeveloper={(developerId, like) => {
                     likeDeveloperMutation.mutate({ developerId, like });

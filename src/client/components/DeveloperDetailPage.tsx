@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   Avatar,
   Button,
   Card,
@@ -6,30 +7,31 @@ import {
   Textarea,
   useMantineTheme,
 } from "@mantine/core";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
-import { GoMarkGithub } from "react-icons/go";
+import React, { useState } from "react";
+import { BsGithub } from "react-icons/bs";
 import { MdOutlineFavorite } from "react-icons/md";
+import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { useAllThemesQuery } from "../hooks/useAllThemesQuery";
-import { useDeveloperQuery } from "../hooks/useDeveloperQuery";
+import { usePaginatedThemesQuery } from "../hooks/usePaginatedThemesQuery";
+import { usePaginationState } from "../hooks/usePaginationState";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeLike } from "../hooks/useThemeLike";
-import { useThemeQuery } from "../hooks/useThemeQuery";
-import { developerontext } from "./DeveloperDetailLinkButton";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 
-type Props = { developer: ThemeDeveloper };
+type Props = { developer: ThemeDeveloper; theme: Theme };
 
-export const DeveloperDetailPage: React.FC = () => {
+export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
   const router = useRouter();
-  const developerId = useContext(developerontext);
   const themeId = router.query.id as string;
-  const { developer } = useDeveloperQuery(developerId);
-  const { theme } = useThemeQuery(themeId);
+  const developerId = router.query.id as string;
   const { session } = useSessionQuery();
   const { allThemes } = useAllThemesQuery();
+  const [page, setPage] = usePaginationState();
+  const { data } = usePaginatedThemesQuery(page);
 
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(themeId);
 
@@ -50,11 +52,47 @@ export const DeveloperDetailPage: React.FC = () => {
   const [isJoinTheme, setIsJoinTheme] = useState(false);
   const [isLike, setIsLike] = useState(false);
 
+  const handlePostTheme = () => {
+    if (!isPostTheme) {
+      setIsPostTheme(!isPostTheme);
+    }
+    if (isJoinTheme) {
+      setIsJoinTheme(false);
+    }
+    if (isLike) {
+      setIsLike(false);
+    }
+  };
+
+  const handleJoinTheme = () => {
+    if (!isJoinTheme) {
+      setIsJoinTheme(!isJoinTheme);
+    }
+    if (isPostTheme) {
+      setIsPostTheme(false);
+    }
+    if (isLike) {
+      setIsLike(false);
+    }
+  };
+
+  const handleLike = () => {
+    if (!isLike) {
+      setIsLike(!isLike);
+    }
+    if (isPostTheme) {
+      setIsPostTheme(false);
+    }
+    if (isJoinTheme) {
+      setIsJoinTheme(false);
+    }
+  };
+
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Flex maw={1000} mih={300} direction="row" gap={10} mt={60}>
         <Card h={300} w={250}>
-          <Card key={developer?.userId}>
+          <Card.Section py="xl">
             <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
               <Avatar
                 src={developer?.image}
@@ -68,7 +106,7 @@ export const DeveloperDetailPage: React.FC = () => {
               />
               {developer?.name}
             </Flex>
-          </Card>
+          </Card.Section>
 
           <Flex gap={70} mt={10} wrap="wrap" justify={"center"}>
             <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
@@ -81,7 +119,21 @@ export const DeveloperDetailPage: React.FC = () => {
             })} */}
             </Flex>
             <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
-              <GoMarkGithub size="30" style={{ marginTop: "4px" }} />
+              <ActionIcon
+                size={30}
+                component={Link}
+                href={developer.githubUrl}
+                target="_blank"
+                sx={(theme) => ({
+                  transition: "all 200ms",
+                  "&:hover": {
+                    backgroundColor: theme.fn.rgba(theme.colors.gray[7], 0.1),
+                  },
+                })}
+              >
+                <BsGithub size="80%" fill={mantineTheme.colors.gray[7]} />
+              </ActionIcon>
+
               <div>GitHub</div>
             </Flex>
           </Flex>
@@ -102,7 +154,7 @@ export const DeveloperDetailPage: React.FC = () => {
           <Button
             variant="light"
             w={130}
-            // onClick={handlePostTheme}
+            onClick={handlePostTheme}
             bg={isPostTheme ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
@@ -114,7 +166,7 @@ export const DeveloperDetailPage: React.FC = () => {
           <Button
             variant="light"
             w={130}
-            // onClick={handleJoinTheme}
+            onClick={handleJoinTheme}
             bg={isJoinTheme ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
@@ -126,7 +178,7 @@ export const DeveloperDetailPage: React.FC = () => {
           <Button
             variant="light"
             w={130}
-            // onClick={handleLike}
+            onClick={handleLike}
             bg={isLike ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
@@ -140,8 +192,11 @@ export const DeveloperDetailPage: React.FC = () => {
       {isPostTheme && (
         <div>
           <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
+            投稿したお題を表示
+            {theme.user.id}_____
+            {developer.id}
             {allThemes?.map((theme) => {
-              if (theme.user.id === session?.user.id) {
+              if (theme.user.id === developer.id) {
                 return <ThemeCard key={theme.id} theme={theme} />;
               }
             })}
@@ -151,7 +206,11 @@ export const DeveloperDetailPage: React.FC = () => {
       {isJoinTheme && (
         <div>
           <Flex mt={30} gap={15} wrap="wrap">
-            参加しているお題を表示
+            {allThemes?.map((theme) => {
+              if (theme.id === developer.themeId) {
+                return <ThemeCard key={theme.id} theme={theme} />;
+              }
+            })}
           </Flex>
         </div>
       )}
