@@ -5,8 +5,12 @@ export const themelikesQueryKey = (themeId: string) => ["users", themeId];
 
 export const useThemeLikesQuery = (themeId: string) => {
   const queryClient = useQueryClient();
-  const { data: users, ...others } = useQuery(themelikesQueryKey(themeId), () => {
-    return trpc.theme.getLikedUsers.query({ themeId });
+  const { data: users, ...others } = useQuery({
+    queryKey: themelikesQueryKey(themeId),
+    queryFn: () => {
+      return trpc.theme.getLikedUsers.query({ themeId });
+    },
+    initialData: [],
   });
 
   return { users, ...others };

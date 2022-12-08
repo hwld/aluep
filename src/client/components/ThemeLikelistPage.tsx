@@ -48,6 +48,15 @@ export const ThemeLikelistPage: React.FC = () => {
           })}
       </Flex>
       <Title mt={30} order={3}>いいねした人</Title>
+      <Flex mt={30} gap={15} wrap="wrap">
+          {users.map((user) => {
+            if (themeId !== user.id){
+              return ( 
+                <Text size={13}>{user.id}</Text>
+              );
+            }
+          })}
+      </Flex>
       <Card
           sx={{ flexShrink: 0, flexGrow: 0, height: "min-content" }}
           mt={30}
