@@ -8,7 +8,7 @@ export const meRoute = router({
     .mutation(async ({ input, ctx }) => {
       await prisma.user.update({
         where: { id: ctx.session.user.id },
-        data: { name: input.name },
+        data: { name: input.name, profile: input.profile },
       });
     }),
   delete: requireLoggedInProcedure.mutation(async ({ ctx }) => {
