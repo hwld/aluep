@@ -6,26 +6,29 @@ import {
   Textarea,
   useMantineTheme,
 } from "@mantine/core";
-import { Session } from "next-auth";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { GoMarkGithub } from "react-icons/go";
 import { MdOutlineFavorite } from "react-icons/md";
+import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { useAllThemesQuery } from "../hooks/useAllThemesQuery";
+import { useDeveloperQuery } from "../hooks/useDeveloperQuery";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { useThemeQuery } from "../hooks/useThemeQuery";
+import { developerontext } from "./DeveloperDetailLinkButton";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 
-type Props = { developer: Session["user"] };
+type Props = { developer: ThemeDeveloper };
 
-export const DeveloperDetailPage: React.FC<Props> = ({ developer }) => {
-  const { session } = useSessionQuery();
+export const DeveloperDetailPage: React.FC = () => {
   const router = useRouter();
-  // TODO
+  const developerId = useContext(developerontext);
   const themeId = router.query.id as string;
+  const { developer } = useDeveloperQuery(developerId);
   const { theme } = useThemeQuery(themeId);
+  const { session } = useSessionQuery();
   const { allThemes } = useAllThemesQuery();
 
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(themeId);
@@ -47,50 +50,14 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer }) => {
   const [isJoinTheme, setIsJoinTheme] = useState(false);
   const [isLike, setIsLike] = useState(false);
 
-  const handlePostTheme = () => {
-    if (!isPostTheme) {
-      setIsPostTheme(!isPostTheme);
-    }
-    if (isJoinTheme) {
-      setIsJoinTheme(false);
-    }
-    if (isLike) {
-      setIsLike(false);
-    }
-  };
-
-  const handleJoinTheme = () => {
-    if (!isJoinTheme) {
-      setIsJoinTheme(!isJoinTheme);
-    }
-    if (isPostTheme) {
-      setIsPostTheme(false);
-    }
-    if (isLike) {
-      setIsLike(false);
-    }
-  };
-
-  const handleLike = () => {
-    if (!isLike) {
-      setIsLike(!isLike);
-    }
-    if (isPostTheme) {
-      setIsPostTheme(false);
-    }
-    if (isJoinTheme) {
-      setIsJoinTheme(false);
-    }
-  };
-
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Flex maw={1000} mih={300} direction="row" gap={10} mt={60}>
         <Card h={300} w={250}>
-          <Card>
+          <Card key={developer?.userId}>
             <Flex align={"center"} gap={15} wrap="wrap" direction={"column"}>
               <Avatar
-                src={session?.user.image}
+                src={developer?.image}
                 size="xl"
                 sx={(theme) => ({
                   borderWidth: "2px",
@@ -99,7 +66,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer }) => {
                   borderRadius: "100%",
                 })}
               />
-              {session?.user.name}
+              {developer?.name}
             </Flex>
           </Card>
 
@@ -135,7 +102,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer }) => {
           <Button
             variant="light"
             w={130}
-            onClick={handlePostTheme}
+            // onClick={handlePostTheme}
             bg={isPostTheme ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
@@ -147,7 +114,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer }) => {
           <Button
             variant="light"
             w={130}
-            onClick={handleJoinTheme}
+            // onClick={handleJoinTheme}
             bg={isJoinTheme ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
@@ -159,7 +126,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer }) => {
           <Button
             variant="light"
             w={130}
-            onClick={handleLike}
+            // onClick={handleLike}
             bg={isLike ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {

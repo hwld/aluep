@@ -1,6 +1,9 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { unstable_getServerSession } from "next-auth";
+import { useContext } from "react";
+import { developerontext } from "../../client/components/DeveloperDetailLinkButton";
 import { DeveloperDetailPage } from "../../client/components/DeveloperDetailPage";
+import { useDeveloperQuery } from "../../client/hooks/useDeveloperQuery";
 import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
 import { GetServerSidePropsWithReactQuery } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { authOptions } from "../api/auth/[...nextauth]";
@@ -34,5 +37,12 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
 
 // TODO: formのエラーハンドリングのためにreact-hook-formを導入する
 export default function Detail() {
+  const developerId = useContext(developerontext);
+  const { developer } = useDeveloperQuery(developerId);
+
+  // if (!developer?.id) {
+  //   // ユーザーがいないときはリダイレクトされるからここに到達することはない？
+  //   return <div>error</div>;
+  // }
   return <DeveloperDetailPage />;
 }
