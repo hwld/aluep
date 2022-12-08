@@ -245,7 +245,48 @@ export const themeRoute = router({
       return developers;
     }),
 
-  // 1カ月中にいいねが多かった開発者ユーザーTop10を取得する
+  // 1カ月間でいいねが多かった投稿を取得する
+  getTop10LikesThemesInThisMonth: publicProcedure.query(async () => {
+    const themes = await prisma.$transaction(async (tx) => {
+      // お題のidのリストを取得する
+      type ThemeIdObjs = { themeId: string }[];
+      const themeIdObjs = await tx.$queryRaw<ThemeIdObjs>`
+        SELECT
+          Theme.id as themeId
+          , COUNT(ThemeLike.id) as likeCount
+        FROM
+          AppThemeLike as ThemeLike
+          LEFT JOIN AppTheme as Theme
+            ON (ThemeLike.appThemeId = Theme.id)
+        WHERE
+          Theme.createdAt > (NOW() - INTERVAL 1 MONTh)
+        GROUP BY
+          Theme.id
+        ORDER BY
+          likeCount DESC
+          , Theme.createdAt DESC
+        LIMIT
+          10
+      `;
+      const themeIds = themeIdObjs.map(({ themeId }) => themeId);
+
+      const themes = await findManyThemes(
+        { where: { id: { in: themeIds } } },
+        tx
+      );
+
+      // themeIdsに並び順を合わせる
+      const sortedThemes = themes.sort((a, b) => {
+        return themeIds.indexOf(a.id) - themeIds.indexOf(b.id);
+      });
+
+      return sortedThemes;
+    });
+
+    return themes;
+  }),
+
+  // 1カ月間でいいねが多かった開発者ユーザーTop10を取得する
   getTop10LikesDevelopersInThisMonth: publicProcedure.query(async () => {
     const developerUsers = await prisma.$transaction(async (tx) => {
       // ユーザーidのリストを取得する
@@ -289,7 +330,7 @@ export const themeRoute = router({
     return developerUsers;
   }),
 
-  // 1カ月中にいいねが多かった投稿者Top10を取得する
+  // 1カ月間でいいねが多かった投稿者Top10を取得する
   getTop10LikesPostersInThisMonth: publicProcedure.query(async () => {
     const posterUsers = await prisma.$transaction(async (tx) => {
       type PosterUserIdObjs = { userId: string }[];

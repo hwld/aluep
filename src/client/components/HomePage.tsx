@@ -4,6 +4,7 @@ import {
   Card,
   Flex,
   Pagination,
+  Stack,
   Text,
   Title,
 } from "@mantine/core";
@@ -15,12 +16,14 @@ import { usePaginationState } from "../hooks/usePaginationState";
 import {
   useTop10LikesDeveloperInThisMonth,
   useTop10LikesPostersInThisMonth,
+  useTop10LikesThemesInThisMonth,
 } from "../hooks/useRankingQuery";
 import { ThemeCard, themeCardMinWidthPx } from "./ThemeCard/ThemeCard";
 
 export const HomePage: React.FC = () => {
   const [page, setPage] = usePaginationState();
   const { data } = usePaginatedThemesQuery(page);
+  const { top10LikesThemesInThisMonth } = useTop10LikesThemesInThisMonth();
   const { top10LikesDevelopersInThisMonth } =
     useTop10LikesDeveloperInThisMonth();
   const { top10LikesPostersInThisMonth } = useTop10LikesPostersInThisMonth();
@@ -40,22 +43,40 @@ export const HomePage: React.FC = () => {
           お題を検索する
         </Button>
 
-        <Box
-          sx={(theme) => ({
-            display: "grid",
-            gridTemplateColumns: `repeat(auto-fit, minmax(${themeCardMinWidthPx}px, 1fr))`,
-            gap: theme.spacing.md,
-          })}
-        >
-          {data?.themes.map((theme) => {
-            return <ThemeCard key={theme.id} theme={theme} />;
-          })}
-        </Box>
-        <Pagination
-          page={page}
-          onChange={setPage}
-          total={data?.allPages ?? 0}
-        />
+        <Stack>
+          <Title>人気のお題</Title>
+          <Box
+            sx={(theme) => ({
+              display: "grid",
+              gridTemplateColumns: `repeat(auto-fit, minmax(${themeCardMinWidthPx}px, 1fr))`,
+              gap: theme.spacing.md,
+            })}
+          >
+            {top10LikesThemesInThisMonth?.map((theme) => {
+              return <ThemeCard key={theme.id} theme={theme} />;
+            })}
+          </Box>
+        </Stack>
+
+        <Stack>
+          <Title>最新のお題</Title>
+          <Box
+            sx={(theme) => ({
+              display: "grid",
+              gridTemplateColumns: `repeat(auto-fit, minmax(${themeCardMinWidthPx}px, 1fr))`,
+              gap: theme.spacing.md,
+            })}
+          >
+            {data?.themes.map((theme) => {
+              return <ThemeCard key={theme.id} theme={theme} />;
+            })}
+          </Box>
+          <Pagination
+            page={page}
+            onChange={setPage}
+            total={data?.allPages ?? 0}
+          />
+        </Stack>
       </Flex>
       <Flex direction="column" gap={30}>
         <Box>
