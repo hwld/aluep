@@ -244,4 +244,91 @@ export const themeRoute = router({
       });
       return developers;
     }),
+
+  // 1カ月中にいいねが多かった開発者ユーザーTop10を取得する
+  getTop10LikesDevelopersInThisMonth: publicProcedure.query(async () => {
+    const developerUsers = await prisma.$transaction(async (tx) => {
+      // ユーザーidのリストを取得する
+      type DeveloperUserIdObjs = { userId: string }[];
+      const developerUserIdObjs = await tx.$queryRaw<DeveloperUserIdObjs>`
+        SELECT
+          User.id as userId
+          , COUNT(DevLike.id) as likeCount
+        FROM
+          AppThemeDeveloperLike as DevLike
+          LEFT JOIN AppThemeDeveloper as Developer
+            ON (DevLike.developerId = Developer.id)
+          LEFT JOIN User
+            ON (Developer.userId = User.id)
+        WHERE
+          DevLike.createdAt > (NOW() - INTERVAL 1 MONTH)
+        GROUP BY
+          User.id
+        ORDER BY
+          likeCount DESC
+          , Developer.createdAt DESC
+        LIMIT
+          10
+      `;
+      const developerUserIds = developerUserIdObjs.map(({ userId }) => userId);
+
+      // ユーザーを取得する
+      const users = await tx.user.findMany({
+        where: { id: { in: developerUserIds } },
+      });
+
+      // developerUserIdsはランキング順どおりになっているが、prismaでinを通すと順番が不定になるので、
+      // developeruserIdsの順に並び変える
+      const sortedUsers = users.sort((a, b) => {
+        return developerUserIds.indexOf(a.id) - developerUserIds.indexOf(b.id);
+      });
+
+      return sortedUsers;
+    });
+
+    return developerUsers;
+  }),
+
+  // 1カ月中にいいねが多かった投稿者Top10を取得する
+  getTop10LikesPostersInThisMonth: publicProcedure.query(async () => {
+    const posterUsers = await prisma.$transaction(async (tx) => {
+      type PosterUserIdObjs = { userId: string }[];
+      const posterUserIdObjs = await tx.$queryRaw<PosterUserIdObjs>`
+        SELECT
+          User.id as userId
+          , COUNT(AppThemeLike.id) as likeCount
+        FROM
+          AppThemeLike
+          LEFT JOIN AppTheme
+            ON (AppThemeLike.appThemeId = AppTheme.id)
+          LEFT JOIN User
+            ON (AppTheme.userId = User.id)
+        WHERE
+          AppThemeLike.createdAt > (NOW() - INTERVAL 1 MONTH)
+        GROUP BY
+          User.id
+        ORDER BY
+          likeCount DESC
+          , AppTheme.createdAt DESC
+        LIMIT
+          10
+      `;
+      const posterUserIds = posterUserIdObjs.map(({ userId }) => userId);
+
+      // ユーザーを取得する
+      const users = await tx.user.findMany({
+        where: { id: { in: posterUserIds } },
+      });
+
+      // posterUserIdsはランキング順通りになっているが、prismaでinを通すと順番が不定になるので
+      // posterUseridsの順に並び変える
+      const sortedUsers = users.sort((a, b) => {
+        return posterUserIds.indexOf(a.id) - posterUserIds.indexOf(b.id);
+      });
+
+      return sortedUsers;
+    });
+
+    return posterUsers;
+  }),
 });
