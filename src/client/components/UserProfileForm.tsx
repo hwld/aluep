@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Flex, Stack } from "@mantine/core";
+import { Button, Flex, Stack, Textarea } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { ProfileFormData, profileFormSchema } from "../../share/schema";
 import { AppTextInput } from "./AppTextInput";
@@ -46,9 +46,16 @@ export const UserProfileForm: React.FC<Props> = ({
           control={control}
           name="profile"
           render={({ field }) => (
-            <AppTextInput
+            // <AppTextInput
+            //   label="自己紹介"
+            //   error={errors.profile?.message}
+            //   {...field}
+            // />
+            <Textarea
               label="自己紹介"
               error={errors.profile?.message}
+              autosize
+              minRows={4}
               {...field}
             />
           )}
