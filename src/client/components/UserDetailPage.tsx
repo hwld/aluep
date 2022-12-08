@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Textarea } from "@mantine/core";
+import { Button, Card, Flex, Text } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import React, { useState } from "react";
@@ -54,8 +54,8 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
   //     return trpc.user.getGithub.query({ userId: user.id });
   //   },
   // });
-  const githubUrl: string = "/";
-
+  let githubUrl: string = "https://github.com/";
+  githubUrl += user.name;
   const [state, setState] = useState<"post" | "join" | "like">("post");
   const handleSwitchPost = () => {
     setState("post");
@@ -118,7 +118,14 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
           </Card.Section>
 
           <Card.Section inheritPadding mt="sm" pb="md">
-            <Textarea placeholder="自己紹介..." withAsterisk />
+            <Text
+              mah={200}
+              sx={() => {
+                return { overflow: "auto" };
+              }}
+            >
+              {user.profile}
+            </Text>
           </Card.Section>
         </Card>
       </Flex>

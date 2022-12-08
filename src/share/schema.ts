@@ -44,7 +44,9 @@ export const profileFormSchema = z.object({
     .string()
     .min(1, "ユーザー名を入力してください。")
     .max(50, "ユーザー名は50文字以内で入力してください。"),
+  profile: z.string().max(200, "自己紹介文は200文字以内で入力してください。"),
 });
+
 export type ProfileFormData = z.infer<typeof profileFormSchema>;
 
 export const pageSchema = z

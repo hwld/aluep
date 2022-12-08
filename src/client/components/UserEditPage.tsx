@@ -33,14 +33,13 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
     },
   });
 
-  const handleUpdateUser = ({ name }: ProfileFormData) => {
-    updateMutation.mutate({ name });
+  const handleUpdateUser = ({ name, profile }: ProfileFormData) => {
+    updateMutation.mutate({ name, profile });
   };
 
   const handleCancel = () => {
     router.back();
   };
-
   return (
     <Box w={800} m="auto">
       <Title>プロフィールの更新</Title>
@@ -49,7 +48,10 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
           actoinText="更新する"
           onSubmit={handleUpdateUser}
           onCancel={handleCancel}
-          defaultValues={{ name: user.name ?? "" }}
+          defaultValues={{
+            name: user.name ?? "",
+            profile: user.profile ?? "",
+          }}
         />
       </Card>
     </Box>

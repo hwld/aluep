@@ -15,6 +15,8 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session: async ({ session, user }) => {
       session.user.id = user.id;
+      // TODO
+      session.user.profile = (user as any)?.profile;
       return session;
     },
     signIn: async ({ account }) => {
