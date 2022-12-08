@@ -14,7 +14,6 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
       <Card
         key={theme.id}
         miw={popularThemeCardWidthPx}
-        w="100%"
         h="100%"
         sx={(theme) => ({
           cursor: "pointer",
@@ -27,56 +26,50 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
       >
         <Stack spacing={10} justify="space-between" h="100%">
           {/* ヘッダ */}
-          <Flex justify="space-between" align="flex-start" gap={10}>
-            <Title
-              order={4}
-              color="red.7"
-              sx={{
-                lineHeight: 1.2,
-              }}
-            >
-              {theme.title}
-            </Title>
-          </Flex>
+          <Title
+            order={4}
+            color="red.7"
+            sx={{
+              lineHeight: 1.2,
+            }}
+          >
+            {theme.title}
+          </Title>
 
           {/* ユーザー情報 */}
-          <Flex gap={5} direction="column">
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: "auto 1fr",
-                gap: 10,
-              }}
-            >
-              <Avatar
-                src={theme.user.image}
-                radius="xl"
-                size="sm"
-                sx={(theme) => ({
-                  borderWidth: "2px",
-                  borderColor: theme.colors.gray[2],
-                  borderStyle: "solid",
-                  borderRadius: "100%",
-                  flexShrink: 0,
-                })}
-              />
-              <Flex direction="column">
-                <Text
-                  size="xs"
-                  sx={{
-                    flexShrink: 1,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {theme.user.name}
-                </Text>
-                <Text color="gray.5" size="xs" sx={{ whiteSpace: "nowrap" }}>
-                  {format(new Date(theme.createdAt), "yyyy年M月d日")}
-                </Text>
-              </Flex>
-            </Box>
+          <Flex gap={5}>
+            <Avatar
+              src={theme.user.image}
+              radius="xl"
+              size="sm"
+              sx={(theme) => ({
+                borderWidth: "2px",
+                borderColor: theme.colors.gray[2],
+                borderStyle: "solid",
+                borderRadius: "100%",
+              })}
+            />
+            <Flex direction="column" miw={0} sx={{ flexShrink: 1 }}>
+              <Text
+                size="xs"
+                sx={{
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                }}
+              >
+                {theme.user.name}
+              </Text>
+              <Text
+                color="gray.5"
+                size="xs"
+                sx={{
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {format(new Date(theme.createdAt), "yyyy年M月d日")}
+              </Text>
+            </Flex>
           </Flex>
         </Stack>
       </Card>

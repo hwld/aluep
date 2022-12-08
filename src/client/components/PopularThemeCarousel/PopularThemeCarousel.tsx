@@ -13,18 +13,21 @@ export const PopularThemeCarousel: React.FC<Props> = ({ themes }) => {
       slideGap="md"
       bg="red.7"
       maw="1200px"
+      withIndicators
+      height={250}
+      dragFree
+      styles={{
+        indicators: { bottom: "10px" },
+      }}
       sx={(theme) => ({
         borderRadius: theme.radius.lg,
         boxShadow: `inset ${theme.shadows.lg}`,
       })}
-      withIndicators
-      height={200}
-      dragFree
     >
       {themes.map((theme) => (
         <Carousel.Slide key={theme.id}>
-          <Flex h="100%" w="100%" align="center">
-            <Box w="100%" h="75%">
+          <Flex h="100%" w={`${popularThemeCardWidthPx}px`} align="center">
+            <Box w="100%" h="80%">
               <PopularThemeCard theme={theme} />
             </Box>
           </Flex>

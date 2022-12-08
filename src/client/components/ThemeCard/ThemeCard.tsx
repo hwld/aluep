@@ -55,7 +55,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
                 flexShrink: 0,
               })}
             />
-            <Flex direction="column">
+            <Flex direction="column" sx={{ overflow: "hidden" }}>
               <Text
                 size="sm"
                 sx={{
