@@ -45,7 +45,7 @@ model User {
   email          String?                 @unique
   emailVerified  DateTime?
   image          String?
-  profile        String?
+  profile        String?                 @db.Text
   accounts       Account[]
   sessions       Session[]
   appThemes      AppTheme[]
