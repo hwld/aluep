@@ -1,10 +1,16 @@
 import { useCallback, useMemo } from "react";
-import { useStateAndUrlParamString } from "./useStateAndUrlParamString";
+import { useUrlParamString } from "./useUrlParamString";
+
+type UsePaginationStateArgs = {
+  initialPage?: number;
+};
 
 // ページの情報を管理する。
 // React StateとURLパラメータに保存する。
-export const usePaginationState = (initialPage: number = 1) => {
-  const [stringPage, setStringPage] = useStateAndUrlParamString({
+export const usePaginationState = ({
+  initialPage = 1,
+}: UsePaginationStateArgs) => {
+  const [stringPage, setStringPage] = useUrlParamString({
     paramName: "page",
     initialData: initialPage.toString(),
   });

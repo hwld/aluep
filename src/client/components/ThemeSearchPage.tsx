@@ -13,7 +13,7 @@ import { ThemeCard } from "./ThemeCard/ThemeCard";
 export const ThemeSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
 
-  const [page, setPage] = usePaginationState();
+  const [page, setPage] = usePaginationState({});
 
   const [keyword, setKeyword] = useStateAndUrlParamString({
     paramName: "keyword",

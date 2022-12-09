@@ -1,6 +1,5 @@
-import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import { urlParamToString } from "../../server/lib/urlParam";
+import { useUrlParamString } from "./useUrlParamString";
 
 // React Stateと併せてURLパラメータに文字列を保存する。
 // 初回レンダリングではURLパラメータが存在すればそれを初期値に設定する
@@ -13,24 +12,19 @@ export const useStateAndUrlParamString = ({
   paramName,
   initialData,
 }: UseStateAndUrlParamStringArgs) => {
-  const router = useRouter();
-  const urlParam = router.query[paramName];
-
-  const [state, setState] = useState(urlParamToString(urlParam, initialData));
+  const [stateFromUrlParam, setStateFromUrlParam] = useUrlParamString({
+    paramName,
+    initialData,
+    transitionOptions: { shallow: true },
+  });
+  const [state, setState] = useState(stateFromUrlParam);
 
   const setStateAndUrlParam = useCallback(
     (value: string) => {
-      const url = new URL(window.location.href);
-      if (value === "") {
-        url.searchParams.delete(paramName);
-      } else {
-        url.searchParams.set(paramName, value);
-      }
-      router.replace(url, undefined, { shallow: true });
-
+      setStateFromUrlParam(value);
       setState(value);
     },
-    [paramName, router]
+    [setStateFromUrlParam]
   );
 
   return [state, setStateAndUrlParam] as const;

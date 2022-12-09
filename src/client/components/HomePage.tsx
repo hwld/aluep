@@ -16,7 +16,7 @@ import { ThemeCard, themeCardMinWidthPx } from "./ThemeCard/ThemeCard";
 import { UserLikeRankingItem } from "./UserLikeRankingItem";
 
 export const HomePage: React.FC = () => {
-  const [page, setPage] = usePaginationState();
+  const [page, setPage] = usePaginationState({});
   const { data } = usePaginatedThemesQuery(page);
   const { top10LikesThemesInThisMonth } = useTop10LikesThemesInThisMonth();
   const { top10LikesDevelopersInThisMonth } =
