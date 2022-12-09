@@ -15,9 +15,6 @@ import { MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { useAllThemesQuery } from "../hooks/useAllThemesQuery";
-import { usePaginatedThemesQuery } from "../hooks/usePaginatedThemesQuery";
-import { usePaginationState } from "../hooks/usePaginationState";
-import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
@@ -27,11 +24,8 @@ type Props = { developer: ThemeDeveloper; theme: Theme };
 export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
   const router = useRouter();
   const themeId = router.query.id as string;
-  const developerId = router.query.id as string;
-  const { session } = useSessionQuery();
+
   const { allThemes } = useAllThemesQuery();
-  const [page, setPage] = usePaginationState();
-  const { data } = usePaginatedThemesQuery(page);
 
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(themeId);
 

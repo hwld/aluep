@@ -8,11 +8,8 @@ import {
 } from "../../../../../client/hooks/useDeveloperQuery";
 import { useThemeQuery } from "../../../../../client/hooks/useThemeQuery";
 import { GetServerSidePropsWithReactQuery } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
-import { ThemeDeveloper } from "../../../../../server/models/themeDeveloper";
-import { appRouter } from "../../../../../server/routers/_app";
 import { authOptions } from "../../../../api/auth/[...nextauth]";
 
-type Props = { developer: ThemeDeveloper };
 export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
   req,
   res,
@@ -25,7 +22,6 @@ export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
 
   // セッションを取得する
   const session = await unstable_getServerSession(req, res, authOptions);
-  const caller = appRouter.createCaller({ session });
   const queryClient = new QueryClient();
   queryClient.setQueryData(developerQuerykey(developerId), "developer");
 
@@ -41,7 +37,7 @@ export const DeveloperDetail = () => {
   const { developer } = useDeveloperQuery(developerId);
   const { theme } = useThemeQuery(themeId);
 
-  if (!developer) {
+  if (!developer || !theme) {
     return <div>Error</div>;
   }
 
