@@ -30,7 +30,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
       >
         <Box
           component="main"
-          bg="blue"
+          p="sm"
           sx={(theme) => ({ maxWidth: "1500px", margin: "0 auto" })}
         >
           {children}

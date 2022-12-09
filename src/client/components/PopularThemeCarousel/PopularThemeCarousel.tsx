@@ -3,18 +3,17 @@ import { Box, Flex } from "@mantine/core";
 import { Theme } from "../../../server/models/theme";
 import { PopularThemeCard, popularThemeCardWidthPx } from "./PopularThemeCard";
 
-type Props = { themes: Theme[] };
-export const PopularThemeCarousel: React.FC<Props> = ({ themes }) => {
+type Props = { themes: Theme[]; miw?: string };
+export const PopularThemeCarousel: React.FC<Props> = ({ themes, miw }) => {
   // TDOO: カルーセルが自動で縮小してくれない
   return (
     <Carousel
       align="center"
       loop
       slideSize={`${popularThemeCardWidthPx}px`}
+      miw={miw}
       slideGap="md"
       bg="red.7"
-      // miw={`${popularThemeCardWidthPx * 2}px`}
-      maw={`${popularThemeCardWidthPx * 3}px`}
       withIndicators
       height={250}
       dragFree

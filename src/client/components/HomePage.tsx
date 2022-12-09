@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Pagination, Stack, Title } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Flex,
+  MediaQuery,
+  Pagination,
+  Stack,
+  Title,
+} from "@mantine/core";
 
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
@@ -38,12 +46,15 @@ export const HomePage: React.FC = () => {
           お題を検索する
         </Button>
         <Flex justify="space-between" gap="lg">
-          <Stack>
+          <Stack miw={0}>
             {top10LikesThemesInThisMonth &&
               top10LikesThemesInThisMonth.length > 0 && (
                 <Stack spacing="sm" w="100%">
                   <Title order={4}>人気のお題</Title>
-                  <PopularThemeCarousel themes={top10LikesThemesInThisMonth} />
+                  <PopularThemeCarousel
+                    themes={top10LikesThemesInThisMonth}
+                    miw={`${themeCardMinWidthPx}px`}
+                  />
                 </Stack>
               )}
 
@@ -67,50 +78,52 @@ export const HomePage: React.FC = () => {
               />
             </Stack>
           </Stack>
-          <Flex direction="column" gap={30}>
-            <Box>
-              <RankingCard title="今月のいいねが多かった開発者">
-                {top10LikesDevelopersInThisMonth?.map((developer, i) => (
-                  <UserLikeRankingItem
-                    ranking={i + 1}
-                    key={developer.id}
-                    // TODO
-                    user={{
-                      ...developer,
-                      createdAt: new Date(developer.createdAt),
-                      updatedAt: new Date(developer.updatedAt),
-                      emailVerified:
-                        developer.emailVerified === null
-                          ? null
-                          : new Date(developer.emailVerified),
-                    }}
-                    likeCount={developer.developerLikes}
-                  />
-                ))}
-              </RankingCard>
-            </Box>
-            <Box>
-              <RankingCard title="今月のいいねが多かった投稿者">
-                {top10LikesPostersInThisMonth?.map((poster, i) => (
-                  <UserLikeRankingItem
-                    ranking={i + 1}
-                    key={poster.id}
-                    // TODO
-                    user={{
-                      ...poster,
-                      createdAt: new Date(poster.createdAt),
-                      updatedAt: new Date(poster.updatedAt),
-                      emailVerified:
-                        poster.emailVerified === null
-                          ? null
-                          : new Date(poster.emailVerified),
-                    }}
-                    likeCount={poster.themeLikes}
-                  />
-                ))}
-              </RankingCard>
-            </Box>
-          </Flex>
+          <MediaQuery smallerThan={"md"} styles={{ display: "none" }}>
+            <Flex direction="column" gap={30}>
+              <Box>
+                <RankingCard title="今月のいいねが多かった開発者">
+                  {top10LikesDevelopersInThisMonth?.map((developer, i) => (
+                    <UserLikeRankingItem
+                      ranking={i + 1}
+                      key={developer.id}
+                      // TODO
+                      user={{
+                        ...developer,
+                        createdAt: new Date(developer.createdAt),
+                        updatedAt: new Date(developer.updatedAt),
+                        emailVerified:
+                          developer.emailVerified === null
+                            ? null
+                            : new Date(developer.emailVerified),
+                      }}
+                      likeCount={developer.developerLikes}
+                    />
+                  ))}
+                </RankingCard>
+              </Box>
+              <Box>
+                <RankingCard title="今月のいいねが多かった投稿者">
+                  {top10LikesPostersInThisMonth?.map((poster, i) => (
+                    <UserLikeRankingItem
+                      ranking={i + 1}
+                      key={poster.id}
+                      // TODO
+                      user={{
+                        ...poster,
+                        createdAt: new Date(poster.createdAt),
+                        updatedAt: new Date(poster.updatedAt),
+                        emailVerified:
+                          poster.emailVerified === null
+                            ? null
+                            : new Date(poster.emailVerified),
+                      }}
+                      likeCount={poster.themeLikes}
+                    />
+                  ))}
+                </RankingCard>
+              </Box>
+            </Flex>
+          </MediaQuery>
         </Flex>
       </Flex>
     </Flex>
