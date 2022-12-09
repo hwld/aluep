@@ -3,6 +3,7 @@ import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { MdLogin, MdPostAdd } from "react-icons/md";
 import { AppHeaderButton } from "./AppHeaderButton";
 import { UserMenuButton } from "./UserMenuButton";
 
@@ -36,13 +37,18 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
       </Text>
       {user ? (
         <Flex gap={10} align="center">
-          <AppHeaderButton onClick={handleCreateTheme}>
+          <AppHeaderButton
+            leftIcon={<MdPostAdd size={25} />}
+            onClick={handleCreateTheme}
+          >
             お題を投稿する
           </AppHeaderButton>
           <UserMenuButton user={user} />
         </Flex>
       ) : (
-        <AppHeaderButton onClick={handleLogIn}>ログイン</AppHeaderButton>
+        <AppHeaderButton leftIcon={<MdLogin size={25} />} onClick={handleLogIn}>
+          ログイン
+        </AppHeaderButton>
       )}
     </Header>
   );

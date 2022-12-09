@@ -15,6 +15,7 @@ import {
 } from "../models/theme";
 import { findThemeDevelopers, ThemeDeveloper } from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
+import { UserAndDeveloperLikes, UserAndThemeLikes } from "../models/user";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
@@ -288,10 +289,11 @@ export const themeRoute = router({
 
   // 1カ月間でいいねが多かった開発者ユーザーTop10を取得する
   getTop10LikesDevelopersInThisMonth: publicProcedure.query(async () => {
-    const developerUsers = await prisma.$transaction(async (tx) => {
-      // ユーザーidのリストを取得する
-      type DeveloperUserIdObjs = { userId: string }[];
-      const developerUserIdObjs = await tx.$queryRaw<DeveloperUserIdObjs>`
+    const developerUsers: UserAndDeveloperLikes[] = await prisma.$transaction(
+      async (tx) => {
+        // ユーザーidのリストを取得する
+        type RawDeveloperUser = { userId: string; likeCount: BigInt }[];
+        const rawDeveloperUser = await tx.$queryRaw<RawDeveloperUser>`
         SELECT
           User.id as userId
           , COUNT(DevLike.id) as likeCount
@@ -311,30 +313,42 @@ export const themeRoute = router({
         LIMIT
           10
       `;
-      const developerUserIds = developerUserIdObjs.map(({ userId }) => userId);
+        const developerUserIds = rawDeveloperUser.map(({ userId }) => userId);
 
-      // ユーザーを取得する
-      const users = await tx.user.findMany({
-        where: { id: { in: developerUserIds } },
-      });
+        // ユーザーを取得する
+        const users = await tx.user.findMany({
+          where: { id: { in: developerUserIds } },
+        });
 
-      // developerUserIdsはランキング順どおりになっているが、prismaでinを通すと順番が不定になるので、
-      // developeruserIdsの順に並び変える
-      const sortedUsers = users.sort((a, b) => {
-        return developerUserIds.indexOf(a.id) - developerUserIds.indexOf(b.id);
-      });
+        // developerUserIdsはランキング順どおりになっているが、prismaでinを通すと順番が不定になるので、
+        // developeruserIdsの順に並び変える
+        const sortedUsers = users.sort((a, b) => {
+          return (
+            developerUserIds.indexOf(a.id) - developerUserIds.indexOf(b.id)
+          );
+        });
 
-      return sortedUsers;
-    });
+        // sortedUsersにlikeCountをつける
+        const usersAndDeveloperLikes = sortedUsers.map(
+          (user, i): UserAndDeveloperLikes => ({
+            ...user,
+            developerLikes: Number(rawDeveloperUser[i]?.likeCount) ?? 0,
+          })
+        );
+
+        return usersAndDeveloperLikes;
+      }
+    );
 
     return developerUsers;
   }),
 
   // 1カ月間でいいねが多かった投稿者Top10を取得する
   getTop10LikesPostersInThisMonth: publicProcedure.query(async () => {
-    const posterUsers = await prisma.$transaction(async (tx) => {
-      type PosterUserIdObjs = { userId: string }[];
-      const posterUserIdObjs = await tx.$queryRaw<PosterUserIdObjs>`
+    const posterUsers: UserAndThemeLikes[] = await prisma.$transaction(
+      async (tx) => {
+        type RawPosterUser = { userId: string; likeCount: BigInt }[];
+        const rawPosterUser = await tx.$queryRaw<RawPosterUser>`
         SELECT
           User.id as userId
           , COUNT(AppThemeLike.id) as likeCount
@@ -354,21 +368,29 @@ export const themeRoute = router({
         LIMIT
           10
       `;
-      const posterUserIds = posterUserIdObjs.map(({ userId }) => userId);
+        const posterUserIds = rawPosterUser.map(({ userId }) => userId);
 
-      // ユーザーを取得する
-      const users = await tx.user.findMany({
-        where: { id: { in: posterUserIds } },
-      });
+        // ユーザーを取得する
+        const users = await tx.user.findMany({
+          where: { id: { in: posterUserIds } },
+        });
 
-      // posterUserIdsはランキング順通りになっているが、prismaでinを通すと順番が不定になるので
-      // posterUseridsの順に並び変える
-      const sortedUsers = users.sort((a, b) => {
-        return posterUserIds.indexOf(a.id) - posterUserIds.indexOf(b.id);
-      });
+        // posterUserIdsはランキング順通りになっているが、prismaでinを通すと順番が不定になるので
+        // posterUseridsの順に並び変える
+        const sortedUsers = users.sort((a, b) => {
+          return posterUserIds.indexOf(a.id) - posterUserIds.indexOf(b.id);
+        });
 
-      return sortedUsers;
-    });
+        const usersAndThemeLikes = sortedUsers.map(
+          (user, i): UserAndThemeLikes => ({
+            ...user,
+            themeLikes: Number(rawPosterUser[i]?.likeCount) ?? 0,
+          })
+        );
+
+        return usersAndThemeLikes;
+      }
+    );
 
     return posterUsers;
   }),

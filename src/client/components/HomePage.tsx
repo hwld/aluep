@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Card,
-  Flex,
-  Pagination,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Box, Button, Flex, Pagination, Stack, Title } from "@mantine/core";
 
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
@@ -19,8 +10,10 @@ import {
   useTop10LikesThemesInThisMonth,
 } from "../hooks/useRankingQuery";
 import { PopularThemeCarousel } from "./PopularThemeCarousel/PopularThemeCarousel";
+import { RankingCard } from "./RankingCard";
 
 import { ThemeCard, themeCardMinWidthPx } from "./ThemeCard/ThemeCard";
+import { UserLikeRankingItem } from "./UserLikeRankingItem";
 
 export const HomePage: React.FC = () => {
   const [page, setPage] = usePaginationState();
@@ -75,20 +68,48 @@ export const HomePage: React.FC = () => {
       </Flex>
       <Flex direction="column" gap={30}>
         <Box>
-          <Text fw="bold">いいねが多かった開発者</Text>
-          <Card mt={10} w={300} h={500} sx={{ flexShrink: 0 }}>
-            {top10LikesDevelopersInThisMonth?.map((developer) => (
-              <Text key={developer.id}>{developer.name}</Text>
-            ))}
-          </Card>
+          <RankingCard title="今月のいいねが多かった開発者">
+            <Stack spacing={5}>
+              {top10LikesDevelopersInThisMonth?.map((developer, i) => (
+                <UserLikeRankingItem
+                  ranking={i + 1}
+                  key={developer.id}
+                  // TODO
+                  user={{
+                    ...developer,
+                    createdAt: new Date(developer.createdAt),
+                    updatedAt: new Date(developer.updatedAt),
+                    emailVerified:
+                      developer.emailVerified === null
+                        ? null
+                        : new Date(developer.emailVerified),
+                  }}
+                  likeCount={developer.developerLikes}
+                />
+              ))}
+            </Stack>
+          </RankingCard>
         </Box>
         <Box>
-          <Text fw="bold">いいねが多かった投稿者</Text>
-          <Card mt={10} w={300} h={500} sx={{ flexShrink: 0 }}>
-            {top10LikesPostersInThisMonth?.map((poster) => (
-              <Text key={poster.id}>{poster.name}</Text>
+          <RankingCard title="今月のいいねが多かった投稿者">
+            {top10LikesPostersInThisMonth?.map((poster, i) => (
+              <UserLikeRankingItem
+                ranking={i + 1}
+                key={poster.id}
+                // TODO
+                user={{
+                  ...poster,
+                  createdAt: new Date(poster.createdAt),
+                  updatedAt: new Date(poster.updatedAt),
+                  emailVerified:
+                    poster.emailVerified === null
+                      ? null
+                      : new Date(poster.emailVerified),
+                }}
+                likeCount={poster.themeLikes}
+              />
             ))}
-          </Card>
+          </RankingCard>
         </Box>
       </Flex>
     </Flex>
