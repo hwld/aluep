@@ -1,6 +1,5 @@
 import {
   ActionIcon,
-  Avatar,
   Box,
   Card,
   Flex,
@@ -10,16 +9,20 @@ import {
 } from "@mantine/core";
 import Link from "next/link";
 import { BsGithub } from "react-icons/bs";
+import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { useSessionQuery } from "../hooks/useSessionQuery";
+import { DeveloperDetailLinkButton } from "./DeveloperDetailLinkButton";
 import { DeveloperLikeButton } from "./DeveloperLikeButton";
 import { DeveloperMenuButton } from "./DeveloperMenuButton";
 
 type Props = {
+  theme: Theme;
   developer: ThemeDeveloper;
   onLikeDeveloper: (developerId: string, like: boolean) => void;
 };
 export const ThemeDeveloperCard: React.FC<Props> = ({
+  theme,
   developer,
   onLikeDeveloper: onLike,
 }) => {
@@ -41,7 +44,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
     >
       <Flex justify="space-between">
         <Flex gap={10}>
-          <Avatar
+          {/* <Avatar
             src={developer.image}
             size="lg"
             radius="xl"
@@ -49,7 +52,8 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
               border: "2px solid",
               borderColor: theme.colors.gray[2],
             })}
-          />
+          /> */}
+          <DeveloperDetailLinkButton theme={theme} developer={developer} />
           <Text fw="bold" size="lg">
             {developer.name}
           </Text>

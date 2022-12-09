@@ -11,5 +11,8 @@ declare module "next-auth" {
       id: string;
       profile?: string | null;
     };
+    developer: DefaultDepeloper & {
+      id: string;
+    };
   }
 }
