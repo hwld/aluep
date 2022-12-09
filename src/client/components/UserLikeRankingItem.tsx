@@ -62,7 +62,7 @@ export const UserLikeRankingItem: React.FC<Props> = ({
                 size="15px"
                 color={mantineTheme.colors.red[7]}
               />
-              <Text size="xs" c="gray.5">
+              <Text size="xs" c="red.7">
                 {likeCount}
               </Text>
             </Flex>
