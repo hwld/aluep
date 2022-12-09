@@ -5,6 +5,8 @@ import { Theme } from "../../../server/models/theme";
 import { ThemeTagBadge } from "../ThemeTagBadge";
 import { ThemeMenuButton } from "./ThemeMenuButton";
 
+export const themeCardMinWidthPx = 450;
+
 type Props = { theme: Theme };
 export const ThemeCard: React.FC<Props> = ({ theme }) => {
   const router = useRouter();
@@ -29,9 +31,9 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
       })}
       onClick={handleGoDetail}
     >
-      <Stack spacing={10}>
+      <Stack spacing={10} miw={0}>
         {/* ヘッダ */}
-        <Flex justify="space-between" align="flex-start" gap={10}>
+        <Flex justify="space-between" align="flex-start" gap={10} miw={0}>
           <Title order={3} color="red.7" sx={{ lineHeight: 1.2 }}>
             {theme.title}
           </Title>
@@ -39,7 +41,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         </Flex>
 
         {/* ユーザー情報 */}
-        <Flex gap={5} direction="column">
+        <Flex gap={5} direction="column" miw={0}>
           <Box
             sx={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 10 }}
           >
@@ -55,7 +57,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
                 flexShrink: 0,
               })}
             />
-            <Flex direction="column" sx={{ overflow: "hidden" }}>
+            <Flex direction="column" sx={{ overflow: "hidden" }} miw={0}>
               <Text
                 size="sm"
                 sx={{
@@ -75,7 +77,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         </Flex>
 
         {/* タグ */}
-        <Flex gap={5} wrap="wrap">
+        <Flex gap={5} wrap="wrap" miw={0}>
           {theme.tags.map((tag) => {
             return (
               <ThemeTagBadge size="md" key={tag.id}>
@@ -88,5 +90,3 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
     </Card>
   );
 };
-
-export const themeCardMinWidthPx = 560;

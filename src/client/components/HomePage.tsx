@@ -37,80 +37,81 @@ export const HomePage: React.FC = () => {
         >
           お題を検索する
         </Button>
+        <Flex justify="space-between" gap="lg">
+          <Stack>
+            {top10LikesThemesInThisMonth &&
+              top10LikesThemesInThisMonth.length > 0 && (
+                <Stack spacing="sm" w="100%">
+                  <Title order={4}>人気のお題</Title>
+                  <PopularThemeCarousel themes={top10LikesThemesInThisMonth} />
+                </Stack>
+              )}
 
-        {top10LikesThemesInThisMonth &&
-          top10LikesThemesInThisMonth.length > 0 && (
-            <Stack spacing="sm">
-              <Title order={4}>人気のお題</Title>
-              <PopularThemeCarousel themes={top10LikesThemesInThisMonth} />
-            </Stack>
-          )}
-
-        <Stack>
-          <Title order={4}>全てのお題</Title>
-          <Box
-            sx={(theme) => ({
-              display: "grid",
-              gridTemplateColumns: `repeat(auto-fit, minmax(${themeCardMinWidthPx}px, 1fr))`,
-              gap: theme.spacing.md,
-            })}
-          >
-            {data?.themes.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Box>
-          <Pagination
-            page={page}
-            onChange={setPage}
-            total={data?.allPages ?? 0}
-          />
-        </Stack>
-      </Flex>
-      <Flex direction="column" gap={30}>
-        <Box>
-          <RankingCard title="今月のいいねが多かった開発者">
-            <Stack spacing={5}>
-              {top10LikesDevelopersInThisMonth?.map((developer, i) => (
-                <UserLikeRankingItem
-                  ranking={i + 1}
-                  key={developer.id}
-                  // TODO
-                  user={{
-                    ...developer,
-                    createdAt: new Date(developer.createdAt),
-                    updatedAt: new Date(developer.updatedAt),
-                    emailVerified:
-                      developer.emailVerified === null
-                        ? null
-                        : new Date(developer.emailVerified),
-                  }}
-                  likeCount={developer.developerLikes}
-                />
-              ))}
-            </Stack>
-          </RankingCard>
-        </Box>
-        <Box>
-          <RankingCard title="今月のいいねが多かった投稿者">
-            {top10LikesPostersInThisMonth?.map((poster, i) => (
-              <UserLikeRankingItem
-                ranking={i + 1}
-                key={poster.id}
-                // TODO
-                user={{
-                  ...poster,
-                  createdAt: new Date(poster.createdAt),
-                  updatedAt: new Date(poster.updatedAt),
-                  emailVerified:
-                    poster.emailVerified === null
-                      ? null
-                      : new Date(poster.emailVerified),
-                }}
-                likeCount={poster.themeLikes}
+            <Stack>
+              <Title order={4}>全てのお題</Title>
+              <Box
+                sx={(theme) => ({
+                  display: "grid",
+                  gridTemplateColumns: `repeat(auto-fit, minmax(${themeCardMinWidthPx}px, 1fr))`,
+                  gap: theme.spacing.md,
+                })}
+              >
+                {data?.themes.map((theme) => {
+                  return <ThemeCard key={theme.id} theme={theme} />;
+                })}
+              </Box>
+              <Pagination
+                page={page}
+                onChange={setPage}
+                total={data?.allPages ?? 0}
               />
-            ))}
-          </RankingCard>
-        </Box>
+            </Stack>
+          </Stack>
+          <Flex direction="column" gap={30}>
+            <Box>
+              <RankingCard title="今月のいいねが多かった開発者">
+                {top10LikesDevelopersInThisMonth?.map((developer, i) => (
+                  <UserLikeRankingItem
+                    ranking={i + 1}
+                    key={developer.id}
+                    // TODO
+                    user={{
+                      ...developer,
+                      createdAt: new Date(developer.createdAt),
+                      updatedAt: new Date(developer.updatedAt),
+                      emailVerified:
+                        developer.emailVerified === null
+                          ? null
+                          : new Date(developer.emailVerified),
+                    }}
+                    likeCount={developer.developerLikes}
+                  />
+                ))}
+              </RankingCard>
+            </Box>
+            <Box>
+              <RankingCard title="今月のいいねが多かった投稿者">
+                {top10LikesPostersInThisMonth?.map((poster, i) => (
+                  <UserLikeRankingItem
+                    ranking={i + 1}
+                    key={poster.id}
+                    // TODO
+                    user={{
+                      ...poster,
+                      createdAt: new Date(poster.createdAt),
+                      updatedAt: new Date(poster.updatedAt),
+                      emailVerified:
+                        poster.emailVerified === null
+                          ? null
+                          : new Date(poster.emailVerified),
+                    }}
+                    likeCount={poster.themeLikes}
+                  />
+                ))}
+              </RankingCard>
+            </Box>
+          </Flex>
+        </Flex>
       </Flex>
     </Flex>
   );

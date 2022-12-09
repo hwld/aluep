@@ -30,18 +30,44 @@ export const UserLikeRankingItem: React.FC<Props> = ({
 
   return (
     <Flex align="center" justify="space-between">
-      <Flex align="center">
-        <Flex w="30px" justify="center">
+      <Flex align="center" miw={0}>
+        <Flex w="30px" justify="center" sx={{ alignSelf: "flex-start" }}>
           {rank}
         </Flex>
-        <Flex align="center" gap="sm">
-          <Avatar src={user.image} radius="xl" />
-          <Text size="sm">{user.name}</Text>
+        <Flex align="center" gap="xs" miw={0}>
+          <Avatar
+            size="md"
+            src={user.image}
+            radius="xl"
+            sx={(theme) => ({
+              borderWidth: "2px",
+              borderColor: theme.colors.gray[2],
+              borderStyle: "solid",
+              flexShrink: 0,
+            })}
+          />
+          <Flex miw={0} direction="column">
+            <Text
+              size="xs"
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {user.name}
+            </Text>
+            <Flex align="center" gap={5}>
+              <MdOutlineFavorite
+                size="15px"
+                color={mantineTheme.colors.red[7]}
+              />
+              <Text size="xs" c="gray.5">
+                {likeCount}
+              </Text>
+            </Flex>
+          </Flex>
         </Flex>
-      </Flex>
-      <Flex align="center" gap={5}>
-        <MdOutlineFavorite size="20px" color={mantineTheme.colors.red[7]} />
-        <Text color="gray.5">{likeCount}</Text>
       </Flex>
     </Flex>
   );
