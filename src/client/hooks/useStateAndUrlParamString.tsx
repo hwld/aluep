@@ -16,6 +16,7 @@ export const useStateAndUrlParamString = ({
     paramName,
     initialData,
     transitionOptions: { shallow: true },
+    replace: true,
   });
   const [state, setState] = useState(stateFromUrlParam);
 

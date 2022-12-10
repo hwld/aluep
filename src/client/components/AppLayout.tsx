@@ -14,17 +14,15 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
         display: "grid",
         gridTemplateRows: "auto 1fr",
         backgroundColor: theme.colors.gray[2],
-        height: "100%",
-        overflow: "hidden",
+        minHeight: "100vh",
       })}
     >
       <AppHeader user={session?.user} />
       <Box
         sx={{
-          overflow: "auto",
-          scrollbarGutter: "stable both-edges",
-          minHeight: "100%",
           width: "100%",
+
+          overflow: "auto",
         }}
         pt="lg"
       >

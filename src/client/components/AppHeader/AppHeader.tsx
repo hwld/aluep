@@ -26,6 +26,7 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
       p="xs"
       px={30}
       sx={(theme) => ({
+        position: "sticky",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",

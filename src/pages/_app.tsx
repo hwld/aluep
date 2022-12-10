@@ -11,7 +11,6 @@ import { useState } from "react";
 import { AppLayout } from "../client/components/AppLayout";
 import "../client/style/global.css";
 import { theme } from "../client/style/theme";
-
 export default function App(props: AppProps) {
   const {
     Component,

@@ -6,12 +6,14 @@ type UseUrlParamStringArgs = {
   paramName: string;
   initialData: string;
   transitionOptions?: { shallow?: boolean; scroll?: boolean };
+  replace?: boolean;
 };
 
 export const useUrlParamString = ({
   paramName,
   initialData,
-  transitionOptions,
+  transitionOptions = { shallow: false, scroll: true },
+  replace = false,
 }: UseUrlParamStringArgs) => {
   const router = useRouter();
   const rawUrlParma = router.query[paramName];
@@ -28,7 +30,13 @@ export const useUrlParamString = ({
       url.searchParams.set(paramName, value);
     }
 
-    router.replace(url, undefined, transitionOptions);
+    let method;
+    if (replace) {
+      method = router.replace;
+    } else {
+      method = router.push;
+    }
+    method(url, undefined, transitionOptions);
   };
 
   return [urlParam, setUrlParam] as const;
