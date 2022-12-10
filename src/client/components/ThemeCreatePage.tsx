@@ -42,8 +42,8 @@ export const ThemeCreatePage: React.FC = () => {
 
   return (
     <Box w={800} m="auto">
-      <Title>お題の投稿</Title>
-      <Card mt="xl">
+      <Title order={3}>お題の投稿</Title>
+      <Card mt="md">
         <ThemeForm
           actionText="投稿する"
           onSubmit={handleCreateTheme}

@@ -45,8 +45,8 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
 
   return (
     <Box w={800} m="auto">
-      <Title>お題の投稿</Title>
-      <Card mt="xl">
+      <Title order={3}>お題の更新</Title>
+      <Card mt="md">
         <ThemeForm
           actionText="更新する"
           allTags={allTags}

@@ -41,7 +41,6 @@ export const HomePage: React.FC = () => {
           href="/themes/search"
           w="min-content"
           mt={10}
-          sx={(theme) => ({ boxShadow: theme.shadows.lg })}
         >
           お題を検索する
         </Button>
