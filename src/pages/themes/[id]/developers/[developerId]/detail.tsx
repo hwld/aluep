@@ -1,34 +1,33 @@
-import { dehydrate, QueryClient } from "@tanstack/react-query";
-import { unstable_getServerSession } from "next-auth";
 import { useRouter } from "next/router";
 import { DeveloperDetailPage } from "../../../../../client/components/DeveloperDetailPage";
 import {
   developerQuerykey,
   useDeveloperQuery,
 } from "../../../../../client/hooks/useDeveloperQuery";
-import { useThemeQuery } from "../../../../../client/hooks/useThemeQuery";
-import { GetServerSidePropsWithReactQuery } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
-import { authOptions } from "../../../../api/auth/[...nextauth]";
+import {
+  themeQueryKey,
+  useThemeQuery,
+} from "../../../../../client/hooks/useThemeQuery";
+import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
+import { appRouter } from "../../../../../server/routers/_app";
 
-export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
-  req,
-  res,
-  query,
-}) => {
-  const { id: developerId } = query;
-  if (typeof developerId !== "string") {
-    return { notFound: true };
+export const getServerSideProps = withReactQueryGetServerSideProps(
+  async ({ params: { query }, queryClient, session }) => {
+    const { id: themeId, developerId } = query;
+    if (typeof themeId !== "string" || typeof developerId !== "string") {
+      return { notFound: true };
+    }
+
+    const caller = appRouter.createCaller({ session });
+
+    await queryClient.prefetchQuery(themeQueryKey(themeId), () =>
+      caller.theme.get({ themeId })
+    );
+    await queryClient.prefetchQuery(developerQuerykey(developerId), () =>
+      caller.themeDeveloper.get({ developerId })
+    );
   }
-
-  // セッションを取得する
-  const session = await unstable_getServerSession(req, res, authOptions);
-  const queryClient = new QueryClient();
-  queryClient.setQueryData(developerQuerykey(developerId), "developer");
-
-  const dehydratedState = dehydrate(queryClient);
-
-  return { props: { dehydratedState } };
-};
+);
 
 export const DeveloperDetail = () => {
   const router = useRouter();

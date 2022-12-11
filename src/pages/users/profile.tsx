@@ -1,39 +1,14 @@
-import { dehydrate, QueryClient } from "@tanstack/react-query";
-import { unstable_getServerSession } from "next-auth";
 import { UserEditPage } from "../../client/components/UserEditPage";
-import {
-  sessionQuerykey,
-  useSessionQuery,
-} from "../../client/hooks/useSessionQuery";
-import { GetServerSidePropsWithReactQuery } from "../../server/lib/GetServerSidePropsWithReactQuery";
-import { authOptions } from "../api/auth/[...nextauth]";
+import { useSessionQuery } from "../../client/hooks/useSessionQuery";
+import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 
-export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
-  req,
-  res,
-}) => {
-  const session = await unstable_getServerSession(req, res, authOptions);
-
-  // セッションがないときはホームにリダイレクトする
-  if (!session) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/",
-      },
-    };
+export const getServerSideProps = withReactQueryGetServerSideProps(
+  async ({ session }) => {
+    if (!session) {
+      return { redirect: { destination: "/", permanent: false } };
+    }
   }
-
-  const queryClient = new QueryClient();
-  queryClient.setQueryData(sessionQuerykey, session);
-  const dehydratedState = dehydrate(queryClient);
-
-  return {
-    props: {
-      dehydratedState,
-    },
-  };
-};
+);
 
 export default function Profile() {
   const { session } = useSessionQuery();

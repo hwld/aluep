@@ -1,49 +1,38 @@
-import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { NextPage } from "next";
-import { unstable_getServerSession } from "next-auth/next";
 import { HomePage } from "../client/components/HomePage";
 import { paginatedThemesQueryKey } from "../client/hooks/usePaginatedThemesQuery";
-import { top10LikesThemesInThisMonthQueryKey } from "../client/hooks/useRankingQuery";
-import { sessionQuerykey } from "../client/hooks/useSessionQuery";
-import { GetServerSidePropsWithReactQuery } from "../server/lib/GetServerSidePropsWithReactQuery";
+import {
+  top10LikesDevelopersInThisMonthQueryKey,
+  top10LikesPostersInThisMonthQueryKey,
+  top10LikesThemesInThisMonthQueryKey,
+} from "../client/hooks/useRankingQuery";
+import { withReactQueryGetServerSideProps } from "../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../server/routers/_app";
-import { authOptions } from "./api/auth/[...nextauth]";
 
-export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
-  req,
-  res,
-  query,
-}) => {
-  // trpcのapiをサーバー側から呼び出すために、コンテキストを指定してcallerを作る
-  const caller = appRouter.createCaller({ session: null });
+export const getServerSideProps = withReactQueryGetServerSideProps(
+  async ({ params: { query }, queryClient, session }) => {
+    const caller = appRouter.createCaller({ session });
 
-  // URLパラメータからpageを取得する。
-  // pageが配列の時にエラーを出す
-  const { page } = query;
-  if (typeof page === "object") {
-    throw new Error();
+    const { page } = query;
+    if (typeof page === "object") {
+      throw new Error();
+    }
+
+    await queryClient.prefetchQuery(paginatedThemesQueryKey(Number(page)), () =>
+      caller.theme.getMany({ page })
+    );
+    await queryClient.prefetchQuery(top10LikesThemesInThisMonthQueryKey, () =>
+      caller.theme.getTop10LikesThemesInThisMonth()
+    );
+    await queryClient.prefetchQuery(
+      top10LikesDevelopersInThisMonthQueryKey,
+      () => caller.theme.getTop10LikesDevelopersInThisMonth()
+    );
+    await queryClient.prefetchQuery(top10LikesPostersInThisMonthQueryKey, () =>
+      caller.theme.getTop10LikesPostersInThisMonth()
+    );
   }
-
-  const session = await unstable_getServerSession(req, res, authOptions);
-  const themes = await caller.theme.getMany({ page });
-  const top10LikesThemes = await caller.theme.getTop10LikesThemesInThisMonth();
-
-  // react-queryを使用してデータを渡し、dehydrateしてクライアントに送る
-  const queryClient = new QueryClient();
-  queryClient.setQueryData(sessionQuerykey, session);
-  queryClient.setQueryData(paginatedThemesQueryKey(Number(page)), themes);
-  queryClient.setQueryData(
-    top10LikesThemesInThisMonthQueryKey,
-    top10LikesThemes
-  );
-  const dehydratedState = dehydrate(queryClient);
-
-  return {
-    props: {
-      dehydratedState,
-    },
-  };
-};
+);
 
 const Home: NextPage = () => {
   return <HomePage />;
