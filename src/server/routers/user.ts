@@ -76,13 +76,11 @@ export const userRoute = router({
   getGithub: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
-      const githuburl = await prisma.appThemeDeveloper.findFirst({
-        select: { githubUrl: true },
-        where: { userId: input.userId },
+      const githubName = await prisma.user.findFirst({
+        select: { githubname: true },
+        where: { id: input.userId },
       });
-      if (githuburl === null) {
-        return "/";
-      }
-      return githuburl;
+
+      return githubName;
     }),
 });

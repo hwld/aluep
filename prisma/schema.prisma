@@ -46,6 +46,7 @@ model User {
   emailVerified  DateTime?
   image          String?
   profile        String?                 @db.Text
+  githubname     String?                 
   accounts       Account[]
   sessions       Session[]
   appThemes      AppTheme[]
