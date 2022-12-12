@@ -72,15 +72,4 @@ export const userRoute = router({
       });
       return likes;
     }),
-
-  getGithub: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ input }) => {
-      const githubName = await prisma.user.findFirst({
-        select: { githubname: true },
-        where: { id: input.userId },
-      });
-
-      return githubName;
-    }),
 });
