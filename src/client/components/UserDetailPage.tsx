@@ -18,6 +18,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
       return trpc.user.getPostTheme.query({ userId: user.id });
     },
   });
+
   //参加しているお題の表示
   const { data: joinThemes } = useQuery({
     queryKey: ["joinThemes"],
