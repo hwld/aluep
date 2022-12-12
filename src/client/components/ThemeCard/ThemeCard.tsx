@@ -15,6 +15,11 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
     router.push(`/themes/${theme.id}`);
   };
 
+  const handleGoDeveloperDetail = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    router.push(`/users/${theme.id}`);
+  };
+
   return (
     <Card
       key={theme.id}
@@ -56,6 +61,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
                 borderRadius: "100%",
                 flexShrink: 0,
               })}
+              onClick={handleGoDeveloperDetail}
             />
             <Flex direction="column" sx={{ overflow: "hidden" }} miw={0}>
               <Text
