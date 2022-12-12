@@ -1,4 +1,4 @@
-import { Avatar, Divider, Menu, UnstyledButton } from "@mantine/core";
+import { Avatar, Divider, Menu, Text, UnstyledButton } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { FaTrash } from "react-icons/fa";
@@ -24,8 +24,21 @@ export const UserMenuButton: React.FC<Props> = ({ user }) => {
           <Avatar src={user.image} radius="xl" />
         </UnstyledButton>
       </Menu.Target>
-      <MenuDropdown>
-        <Menu.Label>ユーザー設定</Menu.Label>
+      <MenuDropdown maw={180}>
+        <Menu.Label>
+          <Text
+            align="center"
+            sx={() => {
+              return {
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              };
+            }}
+          >
+            {user.name}
+          </Text>
+        </Menu.Label>
         <Divider color="gray.3" />
         <MenuLinkItem icon={<VscAccount size={20} />} href="/users/detail">
           プロフィール

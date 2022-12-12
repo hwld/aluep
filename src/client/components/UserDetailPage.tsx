@@ -48,15 +48,11 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
     },
   });
 
-  // const { data: githuburl } = useQuery({
-  //   queryKey: ["githuburl"],
-  //   queryFn: () => {
-  //     return trpc.user.getGithub.query({ userId: user.id });
-  //   },
-  // });
   let githubUrl: string = "https://github.com/";
   githubUrl += user.name;
+
   const [state, setState] = useState<"post" | "join" | "like">("post");
+
   const handleSwitchPost = () => {
     setState("post");
   };

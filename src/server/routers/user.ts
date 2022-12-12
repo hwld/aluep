@@ -72,17 +72,4 @@ export const userRoute = router({
       });
       return likes;
     }),
-
-  getGithub: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ input }) => {
-      const githuburl = await prisma.appThemeDeveloper.findFirst({
-        select: { githubUrl: true },
-        where: { userId: input.userId },
-      });
-      if (githuburl === null) {
-        return "/";
-      }
-      return githuburl;
-    }),
 });
