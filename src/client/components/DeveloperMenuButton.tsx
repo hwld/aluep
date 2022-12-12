@@ -1,4 +1,5 @@
-import { ActionIcon, Menu } from "@mantine/core";
+import { ActionIcon, Menu, Text } from "@mantine/core";
+import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SyntheticEvent } from "react";
@@ -39,8 +40,18 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
     },
   });
 
-  const handleDeleteDeveloper = () => {
-    deleteMutation.mutate();
+  const openDeleteModal = () => {
+    openConfirmModal({
+      title: "開発情報の削除",
+      children: (
+        <Text size="sm">
+          開発情報を削除すると、貰った「いいね」がすべて削除されます。開発情報を削除しますか?
+        </Text>
+      ),
+      labels: { confirm: "削除する", cancel: "キャンセル" },
+      onConfirm: () => deleteMutation.mutate(),
+      cancelProps: { variant: "outline" },
+    });
   };
 
   return (
@@ -72,7 +83,7 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
             </MenuLinkItem>
             <MenuItem
               icon={<FaTrash size={18} />}
-              onClick={handleDeleteDeveloper}
+              onClick={openDeleteModal}
               red
             >
               参加情報を削除する

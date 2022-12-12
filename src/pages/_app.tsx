@@ -1,4 +1,5 @@
 import { MantineProvider } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
 import { NotificationsProvider } from "@mantine/notifications";
 import {
   Hydrate,
@@ -42,9 +43,11 @@ export default function App(props: AppProps<PageProps>) {
         <Hydrate state={superjson.parse(stringifiedDehydratedState || "{}")}>
           <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
             <NotificationsProvider>
-              <AppLayout>
-                <Component {...pageProps} />
-              </AppLayout>
+              <ModalsProvider>
+                <AppLayout>
+                  <Component {...pageProps} />
+                </AppLayout>
+              </ModalsProvider>
             </NotificationsProvider>
           </MantineProvider>
         </Hydrate>

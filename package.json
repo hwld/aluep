@@ -20,6 +20,7 @@
     "@mantine/carousel": "^5.8.2",
     "@mantine/core": "^5.8.2",
     "@mantine/hooks": "^5.8.2",
+    "@mantine/modals": "^5.8.2",
     "@mantine/next": "^5.8.2",
     "@mantine/notifications": "^5.8.2",
     "@mantine/utils": "^5.8.2",

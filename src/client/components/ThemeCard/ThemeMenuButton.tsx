@@ -1,4 +1,5 @@
-import { ActionIcon, Menu } from "@mantine/core";
+import { ActionIcon, Menu, Text } from "@mantine/core";
+import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SyntheticEvent } from "react";
@@ -6,7 +7,6 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
 import { Theme } from "../../../server/models/theme";
-import { RouterInputs } from "../../../server/trpc";
 import { themesQueryKey } from "../../hooks/usePaginatedThemesQuery";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
 import { trpc } from "../../trpc";
@@ -18,12 +18,11 @@ import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
 type Props = { theme: Theme };
 export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
   const { session } = useSessionQuery();
-
   const queryClient = useQueryClient();
 
   const deleteThemeMutation = useMutation({
-    mutationFn: (data: RouterInputs["theme"]["delete"]) => {
-      return trpc.theme.delete.mutate(data);
+    mutationFn: () => {
+      return trpc.theme.delete.mutate({ themeId: theme.id });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(themesQueryKey);
@@ -37,13 +36,21 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
     },
   });
 
+  const openDeleteModal = () =>
+    openConfirmModal({
+      title: "アプリ開発のお題の削除",
+      children: (
+        <Text size="sm">
+          お題を削除すると、貰った「いいね」、開発者の情報がすべて削除されます。お題を削除しますか？
+        </Text>
+      ),
+      labels: { confirm: "削除する", cancel: "キャンセル" },
+      onConfirm: () => deleteThemeMutation.mutate(),
+      cancelProps: { variant: "outline" },
+    });
+
   const stopPropagation = (e: SyntheticEvent) => {
     e.stopPropagation();
-  };
-
-  const handleDeleteTheme = (e: SyntheticEvent) => {
-    e.stopPropagation();
-    deleteThemeMutation.mutate({ themeId: theme.id });
   };
 
   return (
@@ -75,7 +82,7 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
             </MenuLinkItem>
             <MenuItem
               icon={<FaTrash size={18} />}
-              onClick={handleDeleteTheme}
+              onClick={openDeleteModal}
               red
             >
               お題を削除する

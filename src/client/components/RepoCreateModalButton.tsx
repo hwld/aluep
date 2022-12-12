@@ -54,6 +54,7 @@ export const RepoCreateModalButton: React.FC<Props> = ({
         作成
       </Button>
       <Modal
+        exitTransitionDuration={150}
         opened={opened}
         onClose={() => {
           setOpened(false);
