@@ -14,6 +14,7 @@ export const themeSchema = z.object({
     name: z.string().nullable(),
   }),
   likes: z.number(),
+  developers: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
@@ -23,14 +24,14 @@ const themeArgs = {
   include: {
     tags: { include: { tag: true, theme: true } },
     user: true,
-    likes: true,
+    _count: { select: { likes: true, developers: true } },
   },
 } satisfies Prisma.AppThemeArgs;
 
 const convertTheme = (
   rawTheme: Prisma.AppThemeGetPayload<typeof themeArgs>
 ): Theme => {
-  const theme = {
+  const theme: Theme = {
     id: rawTheme.id,
     title: rawTheme.title,
     tags: rawTheme.tags.map(({ tag: { id, name } }) => ({ id, name })),
@@ -42,7 +43,8 @@ const convertTheme = (
       name: rawTheme.user.name,
       image: rawTheme.user.image,
     },
-    likes: rawTheme.likes.length,
+    likes: rawTheme._count.likes,
+    developers: rawTheme._count.developers,
   };
 
   return theme;
