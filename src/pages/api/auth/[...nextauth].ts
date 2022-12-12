@@ -19,7 +19,7 @@ export const authOptions: NextAuthOptions = {
       session.user.profile = (user as any)?.profile;
       return session;
     },
-    signIn: async ({ account }) => {
+    signIn: async ({ account, user }) => {
       //ログイン時にaccess_tokenが更新されないので、手動で更新する
       if (account) {
         try {
@@ -34,6 +34,14 @@ export const authOptions: NextAuthOptions = {
               },
             });
             if (!existingAccount) {
+              // const githubName = await tx.user.update({
+              //   where: {
+              //     id: user.id,
+              //   },
+              //   data: {
+              //     githubname: user.name,
+              //   },
+              // });
               return;
             }
 

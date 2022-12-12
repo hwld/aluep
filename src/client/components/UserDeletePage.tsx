@@ -28,7 +28,7 @@ export const UserDeletepage: React.FC = () => {
 
   return (
     <Box w={600} m="auto">
-      <Title>ユーザーの削除</Title>
+      <Title order={3}>ユーザーの削除</Title>
       <Box mt="xl">
         <Text>一度ユーザーを削除すると、</Text>
         <List

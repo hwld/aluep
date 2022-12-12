@@ -46,9 +46,9 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
   };
   return (
     <Box w={800} m="auto">
-      <Title>お題の参加情報の更新</Title>
-      <Card mt="xl">
-        <Title order={3}>{theme?.title}</Title>
+      <Title order={3}>お題の参加情報の更新</Title>
+      <Card mt="md">
+        <Title order={4}>{theme?.title}</Title>
         <Flex mt="md" gap={5}>
           <Avatar
             src={theme?.user.image}
@@ -61,7 +61,7 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
               borderRadius: "100%",
             })}
           />
-          <Text>{theme?.user.name}</Text>
+          <Text size="sm">{theme?.user.name}</Text>
         </Flex>
         <Flex gap={10} mt="sm" wrap="wrap">
           {theme?.tags.map((tag) => {

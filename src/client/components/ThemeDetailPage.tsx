@@ -44,7 +44,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Title align="center">{theme.title}</Title>
-      <Flex mt={30} gap={30} w="100%">
+      <Flex mt="xl" gap="lg" w="100%">
         {/* いいねボタン */}
         <ThemeLikeButton
           likes={theme.likes}
@@ -76,7 +76,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           >
             {joined ? "参加しています" : "参加する"}
           </Button>
-          <Title mt={30} order={2}>
+          <Title mt={30} order={4}>
             参加している開発者
           </Title>
           <Stack mt={10}>

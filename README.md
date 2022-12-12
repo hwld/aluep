@@ -42,3 +42,8 @@ GitHub から最新のコミットを取り込んだ後は、ライブラリの�
   - server --- サーバー側のコード
     - lib/ --- サーバー全体で共有するコード
     - routers/ --- API サーバーのコード
+
+## その他コマンド
+
+- `npx tsc --noEmit`: TypeScript のエラーをチェック
+- `npm run create:dummy`: DB にダミーデータの作成

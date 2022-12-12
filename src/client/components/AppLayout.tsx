@@ -1,4 +1,4 @@
-import { AppShell } from "@mantine/core";
+import { Box } from "@mantine/core";
 import { ReactNode } from "react";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { AppHeader } from "./AppHeader/AppHeader";
@@ -9,15 +9,31 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
   const { session } = useSessionQuery();
 
   return (
-    <>
-      <AppShell
-        padding="md"
-        header={<AppHeader user={session?.user} />}
-        sx={(theme) => ({ backgroundColor: theme.colors.gray[2] })}
-        styles={() => ({ body: { maxWidth: 1500, margin: "auto" } })}
+    <Box
+      sx={(theme) => ({
+        display: "grid",
+        gridTemplateRows: "auto 1fr",
+        backgroundColor: theme.colors.gray[2],
+        minHeight: "100vh",
+      })}
+    >
+      <AppHeader user={session?.user} />
+      <Box
+        sx={{
+          width: "100%",
+
+          overflow: "auto",
+        }}
+        pt="lg"
       >
-        {children}
-      </AppShell>
-    </>
+        <Box
+          component="main"
+          p="sm"
+          sx={(theme) => ({ maxWidth: "1500px", margin: "0 auto" })}
+        >
+          {children}
+        </Box>
+      </Box>
+    </Box>
   );
 };

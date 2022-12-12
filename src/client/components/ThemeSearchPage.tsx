@@ -13,7 +13,7 @@ import { ThemeCard } from "./ThemeCard/ThemeCard";
 export const ThemeSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
 
-  const [page, setPage] = usePaginationState();
+  const [page, setPage] = usePaginationState({});
 
   const [keyword, setKeyword] = useStateAndUrlParamString({
     paramName: "keyword",
@@ -50,7 +50,7 @@ export const ThemeSearchPage: React.FC = () => {
           })}
         >
           <Stack spacing="sm">
-            <Title order={2}>検索</Title>
+            <Title order={4}>検索</Title>
             <AppTextInput
               label="キーワード"
               value={keyword}
@@ -70,7 +70,7 @@ export const ThemeSearchPage: React.FC = () => {
           </Text>
         </Card>
         <Box mt={30}>
-          <Title order={2}>検索結果</Title>
+          <Title order={3}>検索結果</Title>
           <Flex mt={10} gap="md" wrap="wrap">
             {searchedThemesResult?.themes.map((theme) => {
               return <ThemeCard key={theme.id} theme={theme} />;

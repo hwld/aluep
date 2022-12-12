@@ -26,10 +26,16 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
       p="xs"
       px={30}
       sx={(theme) => ({
+        borderBottom: "none",
+        position: "sticky",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         backgroundColor: theme.colors.red[7],
+        boxShadow: `0px 2px 6px 1px  ${theme.fn.rgba(
+          theme.colors.red[7],
+          0.5
+        )}`,
       })}
     >
       <Text fw={700} color="gray.1" size={22} component={Link} href="/">

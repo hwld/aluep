@@ -44,9 +44,9 @@ export const ThemeJoinPage: React.FC = () => {
   };
   return (
     <Box w={800} m="auto">
-      <Title>お題へ参加</Title>
-      <Card mt="xl">
-        <Title order={3}>{theme?.title}</Title>
+      <Title order={3}>お題へ参加</Title>
+      <Card mt="md">
+        <Title order={4}>{theme?.title}</Title>
         <Flex mt="md" gap={5}>
           <Avatar
             src={theme?.user.image}
@@ -59,7 +59,7 @@ export const ThemeJoinPage: React.FC = () => {
               borderRadius: "100%",
             })}
           />
-          <Text>{theme?.user.name}</Text>
+          <Text size="sm">{theme?.user.name}</Text>
         </Flex>
         <Flex gap={10} mt="sm" wrap="wrap">
           {theme?.tags.map((tag) => {
