@@ -23,7 +23,9 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
 
   return (
     <>
-      <h1>開発者詳細ページ</h1>
+      <Box w={760} m="auto">
+        <Title order={3}>開発者詳細ページ</Title>
+      </Box>
 
       <Flex maw={1200} direction="column" align="center" m="auto">
         <Card h={150} w={760} mt="xl">
@@ -43,7 +45,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
             <Text>{theme?.user.name}</Text>
           </Flex>
         </Card>
-        <Flex maw={800} mih={300} direction="row" gap={10} mt={50} h="80%">
+        <Flex maw={800} mih={300} direction="row" gap={10} mt="xl" h="80%">
           <Card h={300} w={250}>
             <Flex direction={"column"} h="100%">
               <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
