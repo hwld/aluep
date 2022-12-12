@@ -8,6 +8,7 @@ export const RankingCard: React.FC<Props> = ({ title, children }) => {
       p="sm"
       mt={10}
       w={300}
+      mih={300}
       withBorder
       sx={(theme) => ({
         flexShrink: 0,
