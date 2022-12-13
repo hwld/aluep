@@ -1,6 +1,10 @@
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { ThemeJoinPage } from "../../../client/components/ThemeJoinPage";
-import { themeQueryKey } from "../../../client/hooks/useThemeQuery";
+import {
+  themeQueryKey,
+  useThemeQuery,
+} from "../../../client/hooks/useThemeQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
 
@@ -24,6 +28,14 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 );
 
 const JoinTheme: NextPage = () => {
-  return <ThemeJoinPage />;
+  const router = useRouter();
+  const themeId = router.query.id as string;
+  const { theme } = useThemeQuery(themeId);
+
+  if (!theme) {
+    return <div></div>;
+  }
+
+  return <ThemeJoinPage theme={theme} />;
 };
 export default JoinTheme;

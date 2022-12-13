@@ -2,12 +2,12 @@ import { showNotification } from "@mantine/notifications";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { RouterInputs } from "../../server/trpc";
 import { trpc } from "../trpc";
+import { themeQueryKey } from "./useThemeQuery";
 
 //TODO: ページング
 
-export const themeDevelopersQueryKey = (themeId: string) => [
-  `theme-${themeId}-developers`,
-];
+export const themeDevelopersQueryKey = (themeId: string) =>
+  [...themeQueryKey(themeId), "develoeprs"] as const;
 
 export const useThemeDevelopersQuery = (themeId: string) => {
   const queryClient = useQueryClient();

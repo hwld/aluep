@@ -1,42 +1,23 @@
 import { Avatar, Box, Card, Flex, Text, Title } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { RouterInputs } from "../../server/trpc";
+import { Theme } from "../../server/models/theme";
 import { ThemeJoinFormData } from "../../share/schema";
-import { useThemeQuery } from "../hooks/useThemeQuery";
-import { trpc } from "../trpc";
+import { useThemeJoin } from "../hooks/useThemeJoin";
 import { ThemeJoinForm } from "./ThemeJoinForm";
 import { ThemeTagBadge } from "./ThemeTagBadge";
 
-export const ThemeJoinPage: React.FC = () => {
+type Props = { theme: Theme };
+export const ThemeJoinPage: React.FC<Props> = ({ theme }) => {
   const router = useRouter();
-  const themeId = router.query.id as string;
-  const { theme } = useThemeQuery(themeId);
 
-  const joinThemeMutation = useMutation({
-    mutationFn: (data: RouterInputs["theme"]["join"]) => {
-      return trpc.theme.join.mutate(data);
-    },
-    onSuccess: () => {
-      showNotification({
-        color: "green",
-        title: "お題に参加",
-        message: "お題に参加しました。",
-      });
-      router.back();
-    },
-    onError: () => {
-      showNotification({
-        color: "red",
-        title: "お題に参加",
-        message: "お題に参加できませんでした。",
-      });
-    },
-  });
+  const {
+    mutations: { joinMutation },
+  } = useThemeJoin(theme.id);
 
   const handleJoinTheme = (data: ThemeJoinFormData) => {
-    joinThemeMutation.mutate(data);
+    joinMutation.mutate(data, {
+      onSuccess: () => router.replace(`/themes/${theme.id}`),
+    });
   };
 
   const handleBack = () => {
@@ -46,10 +27,10 @@ export const ThemeJoinPage: React.FC = () => {
     <Box w={800} m="auto">
       <Title order={3}>お題へ参加</Title>
       <Card mt="md">
-        <Title order={4}>{theme?.title}</Title>
+        <Title order={4}>{theme.title}</Title>
         <Flex mt="md" gap={5}>
           <Avatar
-            src={theme?.user.image}
+            src={theme.user.image}
             size="md"
             radius={100}
             sx={(theme) => ({
@@ -59,10 +40,10 @@ export const ThemeJoinPage: React.FC = () => {
               borderRadius: "100%",
             })}
           />
-          <Text size="sm">{theme?.user.name}</Text>
+          <Text size="sm">{theme.user.name}</Text>
         </Flex>
         <Flex gap={10} mt="sm" wrap="wrap">
-          {theme?.tags.map((tag) => {
+          {theme.tags.map((tag) => {
             return <ThemeTagBadge key={tag.id}>{tag.name}</ThemeTagBadge>;
           })}
         </Flex>
@@ -71,7 +52,7 @@ export const ThemeJoinPage: React.FC = () => {
         <ThemeJoinForm
           onSubmit={handleJoinTheme}
           onCancel={handleBack}
-          themeId={themeId}
+          themeId={theme.id}
           actionText="参加する"
         />
       </Card>

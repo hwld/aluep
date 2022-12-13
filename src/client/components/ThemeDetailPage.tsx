@@ -14,7 +14,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
-import { useThemeJoinQuery } from "../hooks/useThemeJoinedQuery";
+import { useThemeJoin } from "../hooks/useThemeJoin";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { ThemeDeveloperCard } from "./ThemeDeveloperCard";
 import { ThemeLikeButton } from "./ThemeLikeButton";
@@ -26,7 +26,9 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
 
   const { session } = useSessionQuery();
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(theme.id);
-  const { joined } = useThemeJoinQuery(theme.id);
+  const {
+    data: { joined },
+  } = useThemeJoin(theme.id);
   const { developers, likeDeveloperMutation } = useThemeDevelopersQuery(
     theme.id
   );
