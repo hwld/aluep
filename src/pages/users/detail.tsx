@@ -1,17 +1,46 @@
 import { UserDetailPage } from "../../client/components/UserDetailPage";
+import { joinThemesQueryKey } from "../../client/hooks/useJoinThemesQuery";
+import { likeThemesQueryKey } from "../../client/hooks/useLikeThemesQuery";
 import { postThemeQueryKey } from "../../client/hooks/usePostThemesQuery";
 import { useSessionQuery } from "../../client/hooks/useSessionQuery";
+import { themeDeveloperLikesQueryKey } from "../../client/hooks/useThemeDeveloperLikesQuery";
+import { themeLikesQueryKey } from "../../client/hooks/useThemeLikesQuery";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
     const caller = appRouter.createCaller({ session });
+
+    const userId = session?.user.id;
+
     const { page } = query;
 
-    await queryClient.prefetchQuery(
-      postThemeQueryKey,
-      () => caller.user.getPostTheme
+    if (typeof page === "object") {
+      throw new Error();
+    }
+    if (typeof userId !== "string") {
+      return;
+    }
+
+    await queryClient.prefetchQuery(postThemeQueryKey, () =>
+      caller.user.getPostTheme({ userId })
+    );
+
+    await queryClient.prefetchQuery(themeLikesQueryKey, () =>
+      caller.user.getThemeLike({ userId })
+    );
+
+    await queryClient.prefetchQuery(themeDeveloperLikesQueryKey, () =>
+      caller.user.getThemeDeveloperLike({ userId })
+    );
+
+    await queryClient.prefetchQuery(joinThemesQueryKey, () =>
+      caller.user.getJoinTheme({ userId })
+    );
+
+    await queryClient.prefetchQuery(likeThemesQueryKey, () =>
+      caller.user.getLikeTheme({ userId })
     );
 
     if (!session) {
@@ -19,27 +48,6 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
   }
 );
-// const caller = appRouter.createCaller({ session });
-
-// const { page } = query;
-// if (typeof page === "object") {
-//   throw new Error();
-// }
-
-// await queryClient.prefetchQuery(paginatedThemesQueryKey(Number(page)), () =>
-//   caller.theme.getMany({ page })
-// );
-// await queryClient.prefetchQuery(top10LikesThemesInThisMonthQueryKey, () =>
-//   caller.theme.getTop10LikesThemesInThisMonth()
-// );
-// await queryClient.prefetchQuery(
-//   top10LikesDevelopersInThisMonthQueryKey,
-//   () => caller.theme.getTop10LikesDevelopersInThisMonth()
-// );
-// await queryClient.prefetchQuery(top10LikesPostersInThisMonthQueryKey, () =>
-//   caller.theme.getTop10LikesPostersInThisMonth()
-// );
-// }
 
 export default function Detail() {
   const { session } = useSessionQuery();

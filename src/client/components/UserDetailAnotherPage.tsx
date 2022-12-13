@@ -1,55 +1,29 @@
 import { Button, Card, Flex, Text } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
+import { User } from "@prisma/client";
 import React, { useState } from "react";
-import { Theme } from "../../server/models/theme";
-import { useSessionQuery } from "../hooks/useSessionQuery";
-import { trpc } from "../trpc";
+import { useJoinThemesQuery } from "../hooks/useJoinThemesQuery";
+import { useLikeThemesQuery } from "../hooks/useLikeThemesQuery";
+import { usePostThemesQuery } from "../hooks/usePostThemesQuery";
+import { useThemeDeveloperLikesQuery } from "../hooks/useThemeDeveloperLikesQuery";
+import { useThemeLikesQuery } from "../hooks/useThemeLikesQuery";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 import UserDetailCard from "./UserDetailCard";
 
-type Props = { user: Theme };
+type Props = { user: User };
 
 export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
-  const { session } = useSessionQuery();
-  //投稿しているお題の表示
-  const { data: postThemes } = useQuery({
-    queryKey: ["postThemes"],
-    queryFn: () => {
-      return trpc.user.getPostTheme.query({ userId: user.user.id });
-    },
-  });
-  //参加しているお題の表示
-  const { data: joinThemes } = useQuery({
-    queryKey: ["joinThemes"],
-    queryFn: () => {
-      return trpc.user.getJoinTheme.query({ userId: user.user.id });
-    },
-  });
-  //いいねしたお題の表示
-  const { data: likeThemes } = useQuery({
-    queryKey: ["likeThemes"],
-    queryFn: () => {
-      return trpc.user.getLikeTheme.query({ userId: user.user.id });
-    },
-  });
+  const { postThemes } = usePostThemesQuery(user.id);
 
-  //お題のいいねの合計
-  const { data: themeLikes } = useQuery({
-    queryKey: ["themeLikes"],
-    queryFn: () => {
-      return trpc.user.getThemeLike.query({ userId: user.user.id });
-    },
-  });
-  //参加しているお題のいいねの合計
-  const { data: themeDeveloperLikes } = useQuery({
-    queryKey: ["themeDeveloperLikes"],
-    queryFn: () => {
-      return trpc.user.getThemeDeveloperLike.query({ userId: user.user.id });
-    },
-  });
+  const { joinThemes } = useJoinThemesQuery(user.id);
+
+  const { likeThemes } = useLikeThemesQuery(user.id);
+
+  const { themeLikes } = useThemeLikesQuery(user.id);
+
+  const { themeDeveloperLikes } = useThemeDeveloperLikesQuery(user.id);
 
   let githubUrl: string = "https://github.com/";
-  githubUrl += user.user.name;
+  githubUrl += user.name;
 
   const [state, setState] = useState<"post" | "join" | "like">("post");
 
@@ -101,8 +75,8 @@ export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Flex maw={1000} mih={300} direction="row" gap={10} mt={60}>
         <UserDetailCard
-          userImage={user.user.image}
-          userName={user.user.name}
+          userImage={user.image}
+          userName={user.name}
           themeLikes={themeLikes}
           themeDeveloperLikes={themeDeveloperLikes}
           githuburl={githubUrl}
@@ -120,7 +94,7 @@ export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
                 return { overflow: "auto" };
               }}
             >
-              {/* {user.user.profile} */}
+              {user.profile}
             </Text>
           </Card.Section>
         </Card>

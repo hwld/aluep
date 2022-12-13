@@ -17,7 +17,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
 
   const handleGoDeveloperDetail = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    router.push(`/users/${theme.id}`);
+    router.push(`/users/${theme.user.id}`);
   };
 
   return (
