@@ -4,9 +4,6 @@ import { useMemo } from "react";
 import { BiMedal } from "react-icons/bi";
 import { MdOutlineFavorite } from "react-icons/md";
 
-// TODO: prismaのUserを直接使っているため、Date型が含まれるのだが、
-//       trpcではシリアライズされてStringになっているのでエラーが出る
-//       models/uesrを作って、そこで変換できるようにしたい
 type Props = { ranking: number; user: User; likeCount: number };
 export const UserLikeRankingItem: React.FC<Props> = ({
   ranking,

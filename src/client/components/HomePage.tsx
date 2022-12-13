@@ -82,16 +82,7 @@ export const HomePage: React.FC = () => {
                     <UserLikeRankingItem
                       ranking={i + 1}
                       key={developer.id}
-                      // TODO
-                      user={{
-                        ...developer,
-                        createdAt: new Date(developer.createdAt),
-                        updatedAt: new Date(developer.updatedAt),
-                        emailVerified:
-                          developer.emailVerified === null
-                            ? null
-                            : new Date(developer.emailVerified),
-                      }}
+                      user={developer}
                       likeCount={developer.developerLikes}
                     />
                   ))}
@@ -103,16 +94,7 @@ export const HomePage: React.FC = () => {
                     <UserLikeRankingItem
                       ranking={i + 1}
                       key={poster.id}
-                      // TODO
-                      user={{
-                        ...poster,
-                        createdAt: new Date(poster.createdAt),
-                        updatedAt: new Date(poster.updatedAt),
-                        emailVerified:
-                          poster.emailVerified === null
-                            ? null
-                            : new Date(poster.emailVerified),
-                      }}
+                      user={poster}
                       likeCount={poster.themeLikes}
                     />
                   ))}
