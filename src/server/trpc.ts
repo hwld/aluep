@@ -1,9 +1,10 @@
 import { inferRouterInputs, initTRPC, TRPCError } from "@trpc/server";
+import SuperJSON from "superjson";
 import { Context } from "./contexts";
 import { prisma } from "./prismadb";
 import { AppRouter } from "./routers/_app";
 
-const t = initTRPC.context<Context>().create();
+const t = initTRPC.context<Context>().create({ transformer: SuperJSON });
 
 export const router = t.router;
 export type RouterInputs = inferRouterInputs<AppRouter>;
