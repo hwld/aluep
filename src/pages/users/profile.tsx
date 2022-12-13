@@ -1,38 +1,22 @@
-import { dehydrate, QueryClient } from "@tanstack/react-query";
-import { unstable_getServerSession } from "next-auth";
 import { UserEditPage } from "../../client/components/UserEditPage";
-import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
-import { GetServerSidePropsWithReactQuery } from "../../server/lib/GetServerSidePropsWithReactQuery";
-import { authOptions } from "../api/auth/[...nextauth]";
+import { useSessionQuery } from "../../client/hooks/useSessionQuery";
+import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 
-export const getServerSideProps: GetServerSidePropsWithReactQuery = async ({
-  req,
-  res,
-}) => {
-  const session = await unstable_getServerSession(req, res, authOptions);
+export const getServerSideProps = withReactQueryGetServerSideProps(
+  async ({ session }) => {
+    if (!session) {
+      return { redirect: { destination: "/", permanent: false } };
+    }
+  }
+);
 
-  // セッションがないときはホームにリダイレクトする
-  if (!session) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/",
-      },
-    };
+export default function Profile() {
+  const { session } = useSessionQuery();
+
+  if (!session?.user) {
+    // ユーザーがいないときはリダイレクトされるからここに到達することはない？
+    return <div>error</div>;
   }
 
-  const queryClient = new QueryClient();
-  queryClient.setQueryData(sessionQuerykey, session);
-  const dehydratedState = dehydrate(queryClient);
-
-  return {
-    props: {
-      dehydratedState,
-    },
-  };
-};
-
-// TODO: formのエラーハンドリングのためにreact-hook-formを導入する
-export default function Profile() {
-  return <UserEditPage />;
+  return <UserEditPage user={session.user} />;
 }

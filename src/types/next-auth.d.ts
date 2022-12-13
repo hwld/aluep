@@ -9,6 +9,10 @@ declare module "next-auth" {
   interface Session {
     user: DefaultUser & {
       id: string;
+      profile?: string | null;
+    };
+    developer: DefaultDepeloper & {
+      id: string;
     };
   }
 }

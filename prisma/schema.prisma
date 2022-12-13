@@ -7,7 +7,7 @@ generator client {
 
 // MySQLに変える
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -17,13 +17,13 @@ model Account {
   type                     String
   provider                 String
   providerAccountId        String
-  refresh_token            String? //@db.Text
+  refresh_token            String? @db.Text
   refresh_token_expires_in Int?
-  access_token             String? //@db.Text
+  access_token             String? @db.Text
   expires_at               Int?
   token_type               String?
   scope                    String?
-  id_token                 String? //@db.Text
+  id_token                 String? @db.Text
   session_state            String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -45,6 +45,7 @@ model User {
   email          String?                 @unique
   emailVerified  DateTime?
   image          String?
+  profile        String?                 @db.Text              
   accounts       Account[]
   sessions       Session[]
   appThemes      AppTheme[]
@@ -65,13 +66,13 @@ model VerificationToken {
 }
 
 model AppTheme {
-  id          String        @id @default(cuid())
-  tags        AppThemeTag[]
+  id          String                  @id @default(cuid())
+  tags        AppThemeTagOnAppTheme[]
   title       String
-  description String
+  description String                  @db.Text
   userId      String
   // とりあえずお題も削除されるようにする
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   developers AppThemeDeveloper[]
 
@@ -82,12 +83,21 @@ model AppTheme {
 }
 
 model AppThemeTag {
-  id        String     @id @default(cuid())
-  name      String     @unique
-  appThemes AppTheme[]
+  id        String                  @id @default(cuid())
+  name      String                  @unique
+  appThemes AppThemeTagOnAppTheme[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model AppThemeTagOnAppTheme {
+  themeId String
+  theme   AppTheme    @relation(fields: [themeId], references: [id], onDelete: Cascade)
+  tagId   String
+  tag     AppThemeTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([themeId, tagId])
 }
 
 model AppThemeLike {
@@ -109,7 +119,7 @@ model AppThemeDeveloper {
   appThemeId String
   appTheme   AppTheme                @relation(fields: [appThemeId], references: [id], onDelete: Cascade)
   githubUrl  String
-  comment    String
+  comment    String                  @db.Text
   likes      AppThemeDeveloperLike[]
 
   createdAt DateTime @default(now())

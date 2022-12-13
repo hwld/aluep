@@ -1,16 +1,11 @@
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
+import { repositoryFormSchema } from "../../share/schema";
 import { prisma } from "../prismadb";
 import { requireLoggedInProcedure, router } from "../trpc";
 
 export const githubRoute = router({
-  // リポジトリの作成に失敗することがある。
-  // 多分、DBに保存されてるアクセストークンの期限が切れてるからだと思うんだけど、refresh_tokenとかがないからプログラムで更新することができない？
-  // 例えばログインしなおしたらアクセストークンが更新されるなら、リポジトリの作成の前に再ログインさせるみたいなのも良いと思った。
   createRepo: requireLoggedInProcedure
-    .input(
-      z.object({ repoName: z.string().min(1), repoDescription: z.string() })
-    )
+    .input(repositoryFormSchema)
     .mutation(async ({ input, ctx }) => {
       // 認証済みユーザーのアカウント情報からアクセストークンを取得する、
       const account = await prisma.account.findFirst({
@@ -33,8 +28,12 @@ export const githubRoute = router({
           private: false,
         }),
       });
-      const json = await result.json();
 
+      if (result.status !== 201) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+
+      const json = await result.json();
       return { repoUrl: json.html_url as string };
     }),
 });

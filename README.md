@@ -11,6 +11,7 @@
 - [Mantine](https://mantine.dev/)
 - [NextAuth](https://next-auth.js.org/)
 - [Prisma](https://www.prisma.io/)
+- [Zod](https://zod.dev/)
 
 ### インフラ(予定)
 
@@ -26,8 +27,10 @@
 1. `npx prisma db seed` を実行し、初期データを DB に追加する。
 1. `npm run dev` でサーバーを立ち上げ、ターミナルに表示されている URL にアクセスする。
 
-6 まで終わった後は、1 で作成したディレクトリの中で`npm run dev`を実行することでサーバーを起動できる。  
+手順 6 まで終わった後は、手順 1 で作成したディレクトリの中で`npm run dev`を実行することでサーバーを起動できる。  
 `npx prisma studio` を実行することで、ブラウザ上で DB の内容を確認することができる。
+
+GitHub から最新のコミットを取り込んだ後は、ライブラリの追加や DB のスキーマ変更を反映させるため、手順 2 から行う。
 
 ## ディレクトリ構成概要
 
@@ -39,3 +42,8 @@
   - server --- サーバー側のコード
     - lib/ --- サーバー全体で共有するコード
     - routers/ --- API サーバーのコード
+
+## その他コマンド
+
+- `npx tsc --noEmit`: TypeScript のエラーをチェック
+- `npm run create:dummy`: DB にダミーデータの作成

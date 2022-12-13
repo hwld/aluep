@@ -15,7 +15,58 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session: async ({ session, user }) => {
       session.user.id = user.id;
+      // TODO
+      session.user.profile = (user as any)?.profile;
       return session;
+    },
+    signIn: async ({ account, user }) => {
+      //ログイン時にaccess_tokenが更新されないので、手動で更新する
+      if (account) {
+        try {
+          await prisma.$transaction(async (tx) => {
+            // 既に存在するアカウントであれば
+            const existingAccount = await tx.account.findUnique({
+              where: {
+                provider_providerAccountId: {
+                  provider: account.provider,
+                  providerAccountId: account.providerAccountId,
+                },
+              },
+            });
+            if (!existingAccount) {
+              // const githubName = await tx.user.update({
+              //   where: {
+              //     id: user.id,
+              //   },
+              //   data: {
+              //     githubname: user.name,
+              //   },
+              // });
+              return;
+            }
+
+            // 更新する
+            await tx.account.update({
+              where: {
+                provider_providerAccountId: {
+                  provider: existingAccount.provider,
+                  providerAccountId: existingAccount.providerAccountId,
+                },
+              },
+              data: { access_token: account.access_token },
+            });
+
+            return;
+          });
+        } catch (e) {
+          console.error(e);
+          // エラーメッセージが漏れてしまうので、例外を握りつぶしてnext-authが対応している
+          // エラーを返す
+          // https://next-auth.js.org/configuration/pages#error-page
+          throw new Error("Configuration");
+        }
+      }
+      return true;
     },
   },
 };

@@ -1,18 +1,16 @@
-import { Box, Button, Card, Flex, Stack, Title } from "@mantine/core";
+import { Box, Card, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
+import { Session } from "next-auth";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { RouterInputs } from "../../server/trpc";
-import { useSessionQuery } from "../hooks/useSessionQuery";
+import { ProfileFormData } from "../../share/schema";
 import { trpc } from "../trpc";
-import { AppTextInput } from "./AppTextInput";
+import { UserProfileForm } from "./UserProfileForm";
 
-export const UserEditPage: React.FC = () => {
+type Props = { user: Session["user"] };
+export const UserEditPage: React.FC<Props> = ({ user }) => {
   const router = useRouter();
-
-  const { session } = useSessionQuery();
-  const [name, setName] = useState(session?.user?.name || "");
 
   const updateMutation = useMutation({
     mutationFn: (data: RouterInputs["me"]["update"]) => {
@@ -35,33 +33,26 @@ export const UserEditPage: React.FC = () => {
     },
   });
 
-  const handleUpdateUser = () => {
-    updateMutation.mutate({ name });
+  const handleUpdateUser = ({ name, profile }: ProfileFormData) => {
+    updateMutation.mutate({ name, profile });
   };
 
-  const handleBack = () => {
+  const handleCancel = () => {
     router.back();
   };
-
   return (
     <Box w={800} m="auto">
-      <Title>プロフィールの更新</Title>
-      <Card mt="xl">
-        <Stack spacing="md">
-          <AppTextInput
-            label="ユーザー名"
-            value={name}
-            onChange={({ target: { value } }) => {
-              setName(value);
-            }}
-          />
-        </Stack>
-        <Flex gap="sm" mt="lg">
-          <Button onClick={handleUpdateUser}>更新する</Button>
-          <Button variant="outline" onClick={handleBack}>
-            キャンセル
-          </Button>
-        </Flex>
+      <Title order={3}>プロフィールの更新</Title>
+      <Card mt="md">
+        <UserProfileForm
+          actoinText="更新する"
+          onSubmit={handleUpdateUser}
+          onCancel={handleCancel}
+          defaultValues={{
+            name: user.name ?? "",
+            profile: user.profile ?? "",
+          }}
+        />
       </Card>
     </Box>
   );

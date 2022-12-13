@@ -1,4 +1,5 @@
 import { MantineProvider } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
 import { NotificationsProvider } from "@mantine/notifications";
 import {
   Hydrate,
@@ -8,13 +9,16 @@ import {
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { useState } from "react";
+import superjson from "superjson";
 import { AppLayout } from "../client/components/AppLayout";
+import "../client/style/global.css";
 import { theme } from "../client/style/theme";
+import { PageProps } from "../server/lib/GetServerSidePropsWithReactQuery";
 
-export default function App(props: AppProps) {
+export default function App(props: AppProps<PageProps>) {
   const {
     Component,
-    pageProps: { dehydratedState, ...pageProps },
+    pageProps: { stringifiedDehydratedState, ...pageProps },
   } = props;
   const [queryClient] = useState(
     () =>
@@ -36,12 +40,14 @@ export default function App(props: AppProps) {
       </Head>
 
       <QueryClientProvider client={queryClient}>
-        <Hydrate state={dehydratedState}>
+        <Hydrate state={superjson.parse(stringifiedDehydratedState || "{}")}>
           <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
             <NotificationsProvider>
-              <AppLayout>
-                <Component {...pageProps} />
-              </AppLayout>
+              <ModalsProvider>
+                <AppLayout>
+                  <Component {...pageProps} />
+                </AppLayout>
+              </ModalsProvider>
             </NotificationsProvider>
           </MantineProvider>
         </Hydrate>

@@ -1,6 +1,5 @@
 import {
   ActionIcon,
-  Avatar,
   Box,
   Card,
   Flex,
@@ -10,34 +9,42 @@ import {
 } from "@mantine/core";
 import Link from "next/link";
 import { BsGithub } from "react-icons/bs";
-import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
+import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
+import { useSessionQuery } from "../hooks/useSessionQuery";
+import { DeveloperDetailLinkButton } from "./DeveloperDetailLinkButton";
+import { DeveloperLikeButton } from "./DeveloperLikeButton";
+import { DeveloperMenuButton } from "./DeveloperMenuButton";
 
 type Props = {
+  theme: Theme;
   developer: ThemeDeveloper;
   onLikeDeveloper: (developerId: string, like: boolean) => void;
 };
 export const ThemeDeveloperCard: React.FC<Props> = ({
+  theme,
   developer,
   onLikeDeveloper: onLike,
 }) => {
   const mantineTheme = useMantineTheme();
-
+  const { session } = useSessionQuery();
   const handleLikeDeveloper = () => {
     onLike(developer.id, !developer.likedByLoggedInUser);
   };
+
+  // ログインしていて、開発者自身でなければいいねできる
+  const canLike = Boolean(session && developer.userId !== session.user.id);
 
   return (
     <Card
       key={developer.userId}
       sx={() => ({
-        cursor: "pointer",
         position: "static",
       })}
     >
       <Flex justify="space-between">
         <Flex gap={10}>
-          <Avatar
+          {/* <Avatar
             src={developer.image}
             size="lg"
             radius="xl"
@@ -45,12 +52,13 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
               border: "2px solid",
               borderColor: theme.colors.gray[2],
             })}
-          />
+          /> */}
+          <DeveloperDetailLinkButton theme={theme} developer={developer} />
           <Text fw="bold" size="lg">
             {developer.name}
           </Text>
         </Flex>
-        <Box>
+        <Flex>
           <Tooltip
             label="コードを見に行く"
             color="gray.5"
@@ -59,9 +67,13 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
             transition="pop"
           >
             <ActionIcon
-              size={50}
+              size={30}
               component={Link}
-              href={developer.githubUrl}
+              // githubのURLをgithub1sに変換
+              href={developer.githubUrl.replace(
+                /^(https:\/\/github)(.com)/,
+                "$11s$2"
+              )}
               target="_blank"
               sx={(theme) => ({
                 transition: "all 200ms",
@@ -73,39 +85,20 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
               <BsGithub size="80%" fill={mantineTheme.colors.gray[7]} />
             </ActionIcon>
           </Tooltip>
-        </Box>
+          <DeveloperMenuButton developer={developer} />
+        </Flex>
       </Flex>
       <Flex align="center" justify="space-between" mt={10}>
         <Text size="sm" color="gray.5">
           参加日: {new Date(developer.createdAt).toLocaleString()}
         </Text>
         <Box>
-          <Flex align="center">
-            <ActionIcon
-              color={developer.likedByLoggedInUser ? "pink" : undefined}
-              size={30}
-              radius="xl"
-              onClick={handleLikeDeveloper}
-              sx={(theme) => ({
-                transition: "all 200ms",
-                "&:hover": {
-                  backgroundColor: developer.likedByLoggedInUser
-                    ? theme.fn.rgba(theme.colors.gray[5], 0.2)
-                    : theme.fn.rgba(theme.colors.pink[5], 0.2),
-                },
-              })}
-            >
-              {developer.likedByLoggedInUser ? (
-                <MdOutlineFavorite size="70%" style={{ marginTop: "1px" }} />
-              ) : (
-                <MdOutlineFavoriteBorder
-                  size="70%"
-                  style={{ marginTop: "1px" }}
-                />
-              )}
-            </ActionIcon>
-            <Text>{developer.likes}</Text>
-          </Flex>
+          <DeveloperLikeButton
+            likes={developer.likes}
+            likedByLoggedInUser={developer.likedByLoggedInUser}
+            onClick={handleLikeDeveloper}
+            disabled={!canLike}
+          />
         </Box>
       </Flex>
     </Card>

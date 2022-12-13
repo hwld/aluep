@@ -1,14 +1,14 @@
-import { z } from "zod";
+import { profileFormSchema } from "../../share/schema";
 import { prisma } from "../prismadb";
 import { requireLoggedInProcedure, router } from "../trpc";
 
 export const meRoute = router({
   update: requireLoggedInProcedure
-    .input(z.object({ name: z.string() }))
+    .input(profileFormSchema)
     .mutation(async ({ input, ctx }) => {
       await prisma.user.update({
         where: { id: ctx.session.user.id },
-        data: { name: input.name },
+        data: { name: input.name, profile: input.profile },
       });
     }),
   delete: requireLoggedInProcedure.mutation(async ({ ctx }) => {

@@ -3,9 +3,11 @@ import { githubRoute } from "./github";
 import { meRoute } from "./me";
 import { themeRoute } from "./theme";
 import { themeDeveloperRoute } from "./themeDeveloper";
+import { userRoute } from "./user";
 
 export const appRouter = router({
   me: meRoute,
+  user: userRoute,
   theme: themeRoute,
   themeDeveloper: themeDeveloperRoute,
   github: githubRoute,

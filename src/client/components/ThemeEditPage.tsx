@@ -1,26 +1,18 @@
-import { Box, Button, Card, Flex, Stack, Title } from "@mantine/core";
+import { Box, Card, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Theme } from "../../server/models/theme";
 import { RouterInputs } from "../../server/trpc";
+import { ThemeFormData } from "../../share/schema";
 import { useAllTagsQuery } from "../hooks/useAllTagsQuery";
-import { useThemeQuery } from "../hooks/useThemeQuery";
 import { trpc } from "../trpc";
-import { AppMultiSelect } from "./AppMultiSelect";
-import { AppTextarea } from "./AppTextarea";
-import { AppTextInput } from "./AppTextInput";
+import { ThemeForm } from "./ThemeForm";
 
-export const ThemeEditPage: React.FC = () => {
+type Props = { theme: Theme };
+export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
   const router = useRouter();
-  // TODO
-  const themeId = router.query.id as string;
-  const { theme } = useThemeQuery(themeId);
   const { allTags } = useAllTagsQuery();
-
-  const [title, setTitle] = useState(theme?.title ?? "");
-  const [description, setDescription] = useState(theme?.description ?? "");
-  const [tags, setTags] = useState(theme?.tags.map(({ id }) => id) ?? []);
 
   const updateMutation = useMutation({
     mutationFn: (data: RouterInputs["theme"]["update"]) => {
@@ -43,51 +35,25 @@ export const ThemeEditPage: React.FC = () => {
     },
   });
 
-  const handleUpdateTheme = () => {
-    if (!theme) {
-      return;
-    }
-    updateMutation.mutate({ themeId: theme.id, title, description, tags });
+  const handleUpdateTheme = (data: ThemeFormData) => {
+    updateMutation.mutate({ ...data, themeId: theme.id });
   };
 
-  const handleBack = () => {
+  const handleCancel = () => {
     router.back();
   };
 
   return (
     <Box w={800} m="auto">
-      <Title>お題の投稿</Title>
-      <Card mt="xl">
-        <Stack spacing="md">
-          <AppTextInput
-            label="タイトル"
-            value={title}
-            onChange={({ target: { value } }) => setTitle(value)}
-          />
-          <AppMultiSelect
-            data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
-            onChange={(values) => {
-              setTags(values);
-            }}
-            value={tags}
-            label="タグ"
-            searchable
-            nothingFound="タグが見つかりませんでした"
-          />
-          <AppTextarea
-            label="説明"
-            autosize
-            minRows={10}
-            value={description}
-            onChange={({ target: { value } }) => setDescription(value)}
-          />
-        </Stack>
-        <Flex gap="sm" mt="lg">
-          <Button onClick={handleUpdateTheme}>更新する</Button>
-          <Button variant="outline" onClick={handleBack}>
-            キャンセル
-          </Button>
-        </Flex>
+      <Title order={3}>お題の更新</Title>
+      <Card mt="md">
+        <ThemeForm
+          actionText="更新する"
+          allTags={allTags}
+          onSubmit={handleUpdateTheme}
+          onCancel={handleCancel}
+          defaultValues={{ ...theme, tags: theme?.tags.map((t) => t.id) ?? [] }}
+        />
       </Card>
     </Box>
   );

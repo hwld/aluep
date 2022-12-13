@@ -19,3 +19,4 @@ export const AppTextarea = forwardRef<HTMLTextAreaElement, Props>(
     );
   }
 );
+AppTextarea.displayName = "AppTextarea";

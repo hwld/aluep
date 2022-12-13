@@ -16,12 +16,12 @@ export const useThemeLike = (themeId: string) => {
   const queryClient = useQueryClient();
   const { session } = useSessionQuery();
 
-  const { data: likedByLoggedInUser } = useQuery(
-    themeLikedQueryKey(themeId, session?.user.id),
-    () => {
+  const { data: likedByLoggedInUser } = useQuery({
+    queryKey: themeLikedQueryKey(themeId, session?.user.id),
+    queryFn: () => {
       return trpc.theme.liked.query({ themeId });
-    }
-  );
+    },
+  });
 
   const likeThemeMutation = useMutation({
     mutationFn: (data: RouterInputs["theme"]["like"]) => {
@@ -41,5 +41,8 @@ export const useThemeLike = (themeId: string) => {
     },
   });
 
-  return { likedByLoggedInUser, likeThemeMutation };
+  return {
+    likedByLoggedInUser: likedByLoggedInUser ?? false,
+    likeThemeMutation,
+  };
 };

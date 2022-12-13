@@ -1,9 +1,12 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
-  themeCreateInputSchema,
-  themeUpdateInputSchema
+  pageSchema,
+  themeFormSchema,
+  themeJoinFormSchema,
+  themeUpdateFormSchema
 } from "../../share/schema";
+import { paginate } from "../lib/paginate";
 import {
   findManyThemes,
   findTheme,
@@ -12,15 +15,28 @@ import {
 } from "../models/theme";
 import { findThemeDevelopers, ThemeDeveloper } from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
+import { UserAndDeveloperLikes, UserAndThemeLikes } from "../models/user";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
 export const themeRoute = router({
-  // すべてのお題を取得する
-  getAll: publicProcedure.query(async (): Promise<Theme[]> => {
-    const allThemes = await findManyThemes();
+  getAll: publicProcedure.query(async () => {
+    const allThemes = await findManyThemes({});
     return allThemes;
   }),
+  // ページを指定して、お題を取得する
+  getMany: publicProcedure
+    .input(z.object({ page: pageSchema }))
+    .query(async ({ input: { page } }) => {
+      const { data: themes, allPages } = await paginate({
+        finderInput: undefined,
+        finder: findManyThemes,
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 12 },
+      });
+
+      return { themes, allPages };
+    }),
 
   // すべてのタグを取得する
   getAllTags: publicProcedure.query(async (): Promise<ThemeTag[]> => {
@@ -47,26 +63,32 @@ export const themeRoute = router({
       z.object({
         keyword: z.string(),
         tagIds: z.array(z.string().min(1)),
+        page: pageSchema,
       })
     )
-    .query(async ({ input }): Promise<Theme[]> => {
-      const themes = await searchThemes({
-        keyword: input.keyword,
-        tagIds: input.tagIds,
-      });
+    .query(
+      async ({ input }): Promise<{ themes: Theme[]; allPages: number }> => {
+        const paginatedThemes = await searchThemes(
+          {
+            keyword: input.keyword,
+            tagIds: input.tagIds,
+          },
+          { page: input.page, limit: 6 }
+        );
 
-      return themes;
-    }),
+        return paginatedThemes;
+      }
+    ),
 
   // お題を作成する
   create: requireLoggedInProcedure
-    .input(themeCreateInputSchema)
+    .input(themeFormSchema)
     .mutation(async ({ input, ctx }) => {
       await prisma.appTheme.create({
         data: {
           title: input.title,
           description: input.description,
-          tags: { connect: input.tags.map((tag) => ({ id: tag })) },
+          tags: { create: input.tags.map((id) => ({ tagId: id })) },
           userId: ctx.session.user.id,
         },
       });
@@ -74,7 +96,7 @@ export const themeRoute = router({
 
   // お題を更新する
   update: requireLoggedInProcedure
-    .input(themeUpdateInputSchema)
+    .input(themeUpdateFormSchema)
     .mutation(async ({ input, ctx }) => {
       // ログインユーザーが投稿したお題が存在するか確認する
       const existingTheme = await prisma.appTheme.findFirst({
@@ -84,16 +106,23 @@ export const themeRoute = router({
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
 
-      await prisma.appTheme.update({
+      // 更新前のタグを全部外す
+      const deleteAllTags = prisma.appThemeTagOnAppTheme.deleteMany({
+        where: { themeId: input.themeId },
+      });
+
+      // 入力されたタグを全て付ける
+      const attachTags = prisma.appTheme.update({
         where: { id: input.themeId },
         data: {
           title: input.title,
           description: input.description,
-          tags: {
-            set: input.tags.map((t) => ({ id: t })),
-          },
+          tags: { create: input.tags.map((tagId) => ({ tagId })) },
         },
       });
+
+      // トランザクションを使用する
+      await prisma.$transaction([deleteAllTags, attachTags]);
     }),
 
   // お題を削除する
@@ -113,22 +142,38 @@ export const themeRoute = router({
 
   // お題に参加する
   join: requireLoggedInProcedure
-    .input(
-      z.object({
-        themeId: z.string().min(1),
-        githubUrl: z.string().regex(/https:\/\/github.com\/[^\/]+\/[^\/]+/),
-        comment: z.string().min(1),
-      })
-    )
+    .input(themeJoinFormSchema)
     .mutation(async ({ input, ctx }) => {
       await prisma.appThemeDeveloper.create({
         data: {
           appTheme: { connect: { id: input.themeId } },
           user: { connect: { id: ctx.session.user.id } },
           githubUrl: input.githubUrl,
-          comment: input.comment,
+          comment: input.comment ?? "",
         },
       });
+    }),
+
+  // ログインユーザーが指定されたお題に参加しているか
+  joined: publicProcedure
+    .input(z.object({ themeId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const loggedInUser = ctx.session?.user;
+      if (!loggedInUser) {
+        return false;
+      }
+
+      const developer = await prisma.appThemeDeveloper.findUnique({
+        where: {
+          userId_appThemeId: {
+            userId: loggedInUser.id,
+            appThemeId: input.themeId,
+          },
+        },
+        select: { id: true },
+      });
+
+      return Boolean(developer);
     }),
 
   // お題にいいねする
@@ -211,4 +256,153 @@ export const themeRoute = router({
 
       return users;
     }),
+    
+  // 1カ月間でいいねが多かった投稿を取得する
+  getTop10LikesThemesInThisMonth: publicProcedure.query(async () => {
+    const themes = await prisma.$transaction(async (tx) => {
+      // お題のidのリストを取得する
+      type ThemeIdObjs = { themeId: string }[];
+      const themeIdObjs = await tx.$queryRaw<ThemeIdObjs>`
+        SELECT
+          Theme.id as themeId
+          , COUNT(ThemeLike.id) as likeCount
+        FROM
+          AppThemeLike as ThemeLike
+          LEFT JOIN AppTheme as Theme
+            ON (ThemeLike.appThemeId = Theme.id)
+        WHERE
+          Theme.createdAt > (NOW() - INTERVAL 1 MONTh)
+        GROUP BY
+          Theme.id
+        ORDER BY
+          likeCount DESC
+          , Theme.createdAt DESC
+        LIMIT
+          10
+      `;
+      const themeIds = themeIdObjs.map(({ themeId }) => themeId);
+
+      const themes = await findManyThemes(
+        { where: { id: { in: themeIds } } },
+        tx
+      );
+
+      // themeIdsに並び順を合わせる
+      const sortedThemes = themes.sort((a, b) => {
+        return themeIds.indexOf(a.id) - themeIds.indexOf(b.id);
+      });
+
+      return sortedThemes;
+    });
+
+    return themes;
+  }),
+
+  // 1カ月間でいいねが多かった開発者ユーザーTop10を取得する
+  getTop10LikesDevelopersInThisMonth: publicProcedure.query(async () => {
+    const developerUsers: UserAndDeveloperLikes[] = await prisma.$transaction(
+      async (tx) => {
+        // ユーザーidのリストを取得する
+        type RawDeveloperUser = { userId: string; likeCount: BigInt }[];
+        const rawDeveloperUser = await tx.$queryRaw<RawDeveloperUser>`
+        SELECT
+          User.id as userId
+          , COUNT(DevLike.id) as likeCount
+        FROM
+          AppThemeDeveloperLike as DevLike
+          LEFT JOIN AppThemeDeveloper as Developer
+            ON (DevLike.developerId = Developer.id)
+          LEFT JOIN User
+            ON (Developer.userId = User.id)
+        WHERE
+          DevLike.createdAt > (NOW() - INTERVAL 1 MONTH)
+        GROUP BY
+          User.id
+        ORDER BY
+          likeCount DESC
+          , Developer.createdAt DESC
+        LIMIT
+          10
+      `;
+        const developerUserIds = rawDeveloperUser.map(({ userId }) => userId);
+
+        // ユーザーを取得する
+        const users = await tx.user.findMany({
+          where: { id: { in: developerUserIds } },
+        });
+
+        // developerUserIdsはランキング順どおりになっているが、prismaでinを通すと順番が不定になるので、
+        // developeruserIdsの順に並び変える
+        const sortedUsers = users.sort((a, b) => {
+          return (
+            developerUserIds.indexOf(a.id) - developerUserIds.indexOf(b.id)
+          );
+        });
+
+        // sortedUsersにlikeCountをつける
+        const usersAndDeveloperLikes = sortedUsers.map(
+          (user, i): UserAndDeveloperLikes => ({
+            ...user,
+            developerLikes: Number(rawDeveloperUser[i]?.likeCount) ?? 0,
+          })
+        );
+
+        return usersAndDeveloperLikes;
+      }
+    );
+
+    return developerUsers;
+  }),
+
+  // 1カ月間でいいねが多かった投稿者Top10を取得する
+  getTop10LikesPostersInThisMonth: publicProcedure.query(async () => {
+    const posterUsers: UserAndThemeLikes[] = await prisma.$transaction(
+      async (tx) => {
+        type RawPosterUser = { userId: string; likeCount: BigInt }[];
+        const rawPosterUser = await tx.$queryRaw<RawPosterUser>`
+        SELECT
+          User.id as userId
+          , COUNT(AppThemeLike.id) as likeCount
+        FROM
+          AppThemeLike
+          LEFT JOIN AppTheme
+            ON (AppThemeLike.appThemeId = AppTheme.id)
+          LEFT JOIN User
+            ON (AppTheme.userId = User.id)
+        WHERE
+          AppThemeLike.createdAt > (NOW() - INTERVAL 1 MONTH)
+        GROUP BY
+          User.id
+        ORDER BY
+          likeCount DESC
+          , AppTheme.createdAt DESC
+        LIMIT
+          10
+      `;
+        const posterUserIds = rawPosterUser.map(({ userId }) => userId);
+
+        // ユーザーを取得する
+        const users = await tx.user.findMany({
+          where: { id: { in: posterUserIds } },
+        });
+
+        // posterUserIdsはランキング順通りになっているが、prismaでinを通すと順番が不定になるので
+        // posterUseridsの順に並び変える
+        const sortedUsers = users.sort((a, b) => {
+          return posterUserIds.indexOf(a.id) - posterUserIds.indexOf(b.id);
+        });
+
+        const usersAndThemeLikes = sortedUsers.map(
+          (user, i): UserAndThemeLikes => ({
+            ...user,
+            themeLikes: Number(rawPosterUser[i]?.likeCount) ?? 0,
+          })
+        );
+
+        return usersAndThemeLikes;
+      }
+    );
+
+    return posterUsers;
+  }),
 });

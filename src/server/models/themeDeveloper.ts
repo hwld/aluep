@@ -4,6 +4,7 @@ import { prisma } from "../prismadb";
 
 export const themeDeveloperSchema = z.object({
   id: z.string(),
+  themeId: z.string(),
   userId: z.string(),
   name: z.string().nullable(),
   image: z.string().nullable(),
@@ -24,11 +25,12 @@ const convertDeveloper = (
 ): ThemeDeveloper => {
   const developer: ThemeDeveloper = {
     id: raw.id,
+    themeId: raw.appThemeId,
     userId: raw.user.id,
     name: raw.user.name,
     image: raw.user.image,
     githubUrl: raw.githubUrl,
-    comment: raw.githubUrl,
+    comment: raw.comment,
     likes: raw.likes.length,
     // ログインユーザーがいいねしているか
     likedByLoggedInUser: raw.likes.find(
@@ -59,4 +61,21 @@ export const findThemeDevelopers = async ({
   });
 
   return developers;
+};
+
+export const findThemeDeveloper = async (
+  developerId: string,
+  loggedInUserId: string | undefined
+): Promise<ThemeDeveloper | undefined> => {
+  const rawDeveloper = await prisma.appThemeDeveloper.findUnique({
+    where: { id: developerId },
+    ...developerArgs,
+  });
+
+  if (!rawDeveloper) {
+    return undefined;
+  }
+
+  const developer = convertDeveloper(rawDeveloper, loggedInUserId);
+  return developer;
 };
