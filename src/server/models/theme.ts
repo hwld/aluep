@@ -24,7 +24,12 @@ const themeArgs = {
   include: {
     tags: { include: { tag: true, theme: true } },
     user: true,
-    _count: { select: { likes: true, developers: true } },
+    // TODO
+    // こうすると正しく数えてくれないので、
+    // _count: { select: { likes: true, developers: true } },
+    // すべて取得してその数を数える。 数が多くなってきたときにどうなるだろうか。
+    likes: { select: { id: true } },
+    developers: { select: { id: true } },
   },
 } satisfies Prisma.AppThemeArgs;
 
@@ -43,8 +48,8 @@ const convertTheme = (
       name: rawTheme.user.name,
       image: rawTheme.user.image,
     },
-    likes: rawTheme._count.likes,
-    developers: rawTheme._count.developers,
+    likes: rawTheme.likes.length,
+    developers: rawTheme.developers.length,
   };
 
   return theme;
@@ -53,7 +58,7 @@ const convertTheme = (
 export const findTheme = async (
   where: Prisma.AppThemeWhereUniqueInput
 ): Promise<Theme | undefined> => {
-  const rawTheme = await prisma.appTheme.findUnique({
+  const rawTheme = await prisma.appTheme.findFirst({
     where,
     ...themeArgs,
   });
