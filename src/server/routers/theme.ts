@@ -2,13 +2,13 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
   themeCreateInputSchema,
-  themeUpdateInputSchema,
+  themeUpdateInputSchema
 } from "../../share/schema";
 import {
   findManyThemes,
   findTheme,
   searchThemes,
-  Theme,
+  Theme
 } from "../models/theme";
 import { findThemeDevelopers, ThemeDeveloper } from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
