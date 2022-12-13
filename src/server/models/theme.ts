@@ -26,10 +26,10 @@ const themeArgs = {
     user: true,
     // TODO
     // こうすると正しく数えてくれないので、
-    // _count: { select: { likes: true, developers: true } },
+    _count: { select: { likes: true, developers: true } },
     // すべて取得してその数を数える。 数が多くなってきたときにどうなるだろうか。
-    likes: { select: { id: true } },
-    developers: { select: { id: true } },
+    // likes: { select: { id: true } },
+    // developers: { select: { id: true } },
   },
 } satisfies Prisma.AppThemeArgs;
 
@@ -48,8 +48,8 @@ const convertTheme = (
       name: rawTheme.user.name,
       image: rawTheme.user.image,
     },
-    likes: rawTheme.likes.length,
-    developers: rawTheme.developers.length,
+    likes: rawTheme._count.likes,
+    developers: rawTheme._count.developers,
   };
 
   return theme;

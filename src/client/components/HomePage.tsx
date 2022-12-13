@@ -12,24 +12,17 @@ import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
 import { usePaginatedThemesQuery } from "../hooks/usePaginatedThemesQuery";
 import { usePaginationState } from "../hooks/usePaginationState";
-import {
-  useTop10LikesDeveloperInThisMonth,
-  useTop10LikesPostersInThisMonth,
-  useTop10LikesThemesInThisMonth,
-} from "../hooks/useRankingQuery";
-import { PopularThemeCarousel } from "./PopularThemeCarousel/PopularThemeCarousel";
-import { RankingCard } from "./RankingCard";
 
 import { ThemeCard, themeCardMinWidthPx } from "./ThemeCard/ThemeCard";
-import { UserLikeRankingItem } from "./UserLikeRankingItem";
 
 export const HomePage: React.FC = () => {
   const [page, setPage] = usePaginationState({});
   const { data } = usePaginatedThemesQuery(page);
-  const { top10LikesThemesInThisMonth } = useTop10LikesThemesInThisMonth();
-  const { top10LikesDevelopersInThisMonth } =
-    useTop10LikesDeveloperInThisMonth();
-  const { top10LikesPostersInThisMonth } = useTop10LikesPostersInThisMonth();
+
+  // const { top10LikesThemesInThisMonth } = useTop10LikesThemesInThisMonth();
+  // const { top10LikesDevelopersInThisMonth } =
+  //   useTop10LikesDeveloperInThisMonth();
+  // const { top10LikesPostersInThisMonth } = useTop10LikesPostersInThisMonth();
 
   return (
     <Flex gap={30} justify="space-between">
@@ -46,13 +39,13 @@ export const HomePage: React.FC = () => {
         </Button>
         <Flex justify="space-between" gap="lg">
           <Stack miw={0} sx={{ flexGrow: 1 }}>
-            <Stack spacing="sm" w="100%">
+            {/* <Stack spacing="sm" w="100%">
               <Title order={4}>人気のお題</Title>
               <PopularThemeCarousel
                 themes={top10LikesThemesInThisMonth}
                 miw={`${themeCardMinWidthPx}px`}
               />
-            </Stack>
+            </Stack> */}
 
             <Stack>
               <Title order={4}>全てのお題</Title>
@@ -77,7 +70,7 @@ export const HomePage: React.FC = () => {
           <MediaQuery smallerThan={"md"} styles={{ display: "none" }}>
             <Flex direction="column" gap={30}>
               <Box>
-                <RankingCard title="今月のいいねが多かった開発者">
+                {/* <RankingCard title="今月のいいねが多かった開発者">
                   {top10LikesDevelopersInThisMonth?.map((developer, i) => (
                     <UserLikeRankingItem
                       ranking={i + 1}
@@ -86,10 +79,10 @@ export const HomePage: React.FC = () => {
                       likeCount={developer.developerLikes}
                     />
                   ))}
-                </RankingCard>
+                </RankingCard> */}
               </Box>
               <Box>
-                <RankingCard title="今月のいいねが多かった投稿者">
+                {/* <RankingCard title="今月のいいねが多かった投稿者">
                   {top10LikesPostersInThisMonth?.map((poster, i) => (
                     <UserLikeRankingItem
                       ranking={i + 1}
@@ -98,7 +91,7 @@ export const HomePage: React.FC = () => {
                       likeCount={poster.themeLikes}
                     />
                   ))}
-                </RankingCard>
+                </RankingCard> */}
               </Box>
             </Flex>
           </MediaQuery>
