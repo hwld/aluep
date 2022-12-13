@@ -7,7 +7,7 @@ import {
   Stack,
   Text,
   Title,
-  useMantineTheme
+  useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
 import { FaUserAlt } from "react-icons/fa";
@@ -46,7 +46,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
       <Title align="center">{theme.title}</Title>
       <Flex mt="xl" gap="lg" w="100%">
         {/* いいねボタン */}
-        <Flex direction="column" align="center">
+        <Flex direction="column" align="center" gap="xs">
           <ThemeLikeButton
             likes={theme.likes}
             likedByLoggedInUser={likedByLoggedInUser}
@@ -56,8 +56,12 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           <Button
             component={Link}
             href={`/themes/${theme?.id}/likelist`}
-            mt={10}
-            sx={(theme) => ({ boxShadow: theme.shadows.lg })}
+            sx={(theme) => ({
+              transition: "all 250ms",
+              textDecoration: "underline",
+              "&:hover": { backgroundColor: theme.fn.rgba(theme.black, 0.1) },
+            })}
+            variant="subtle"
           >
             いいね一覧
           </Button>
