@@ -4,14 +4,14 @@ import {
   pageSchema,
   themeFormSchema,
   themeJoinFormSchema,
-  themeUpdateFormSchema,
+  themeUpdateFormSchema
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
 import {
   findManyThemes,
   findTheme,
   searchThemes,
-  Theme,
+  Theme
 } from "../models/theme";
 import { findThemeDevelopers, ThemeDeveloper } from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
@@ -246,6 +246,17 @@ export const themeRoute = router({
       return developers;
     }),
 
+  // 指定されたお題をいいねしたユーザーを取得する
+  getLikedUsers: publicProcedure
+    .input(z.object({ themeId: z.string() }))
+    .query(async ({ input }) => {
+      const users = await prisma.user.findMany({
+        where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+      });
+
+      return users;
+    }),
+    
   // 1カ月間でいいねが多かった投稿を取得する
   getTop10LikesThemesInThisMonth: publicProcedure.query(async () => {
     const themes = await prisma.$transaction(async (tx) => {
