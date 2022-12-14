@@ -4,7 +4,11 @@ import { AppRouter } from "../server/routers/_app";
 
 // TODO: 環境ごとにURLを設定する
 function getBaseUrl() {
-  return "http://localhost:3000";
+  if (process.env.NODE_ENV === "production") {
+    return process.env.NEXT_PUBLIC_URL;
+  } else {
+    return "http://localhost:3000";
+  }
 }
 
 export const trpc = createTRPCProxyClient<AppRouter>({

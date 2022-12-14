@@ -12,6 +12,9 @@ export const useTop10LikesDeveloperInThisMonth = () => {
     queryFn: () => {
       return trpc.theme.getTop10LikesDevelopersInThisMonth.query();
     },
+    // ランキングは最新のデータでなくても問題ないので、できる限りキャッシュから取ってこれるようにする
+    // これをやらないと再レンダリングのたびにデータを持ってくるようになってしまう？
+    staleTime: Infinity,
   });
 
   return { top10LikesDevelopersInThisMonth, ...others };
@@ -26,6 +29,8 @@ export const useTop10LikesPostersInThisMonth = () => {
     queryFn: () => {
       return trpc.theme.getTop10LikesPostersInThisMonth.query();
     },
+    // ランキングは最新のデータではなくても問題ないので、できる限りキャッシュから取ってこれるようにする
+    staleTime: Infinity,
   });
 
   return { top10LikesPostersInThisMonth, ...others };
@@ -40,6 +45,8 @@ export const useTop10LikesThemesInThisMonth = () => {
     queryFn: () => {
       return trpc.theme.getTop10LikesThemesInThisMonth.query();
     },
+    // ランキングは最新のデータではなくても問題ないので、できる限りキャッシュから取ってこれるようにする
+    staleTime: Infinity,
   });
 
   return { top10LikesThemesInThisMonth, ...others };
