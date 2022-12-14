@@ -101,12 +101,12 @@ export const searchThemes = async (
   // トランザクションを使用する
   const paginatedThemes = await prisma.$transaction(async (tx) => {
     const master = Prisma.sql`
-      WITH master AS (
+      (
         SELECT
           AppTheme.id as themeId
         FROM
           AppTheme
-          LEFT OUTER JOIN AppThemeTagOnAppTheme
+          LEFT JOIN AppThemeTagOnAppTheme
             ON (AppTheme.id = AppThemeTagOnAppTheme.themeId)
         WHERE
           AppTheme.title LIKE ${"%" + keyword + "%"}
@@ -125,17 +125,16 @@ export const searchThemes = async (
           COUNT(themeId) = ${tagIds.length}`
             : Prisma.empty
         }
-      )
+      ) master
     `;
 
     // お題のidのリストを求める
     type SearchedThemeIds = { themeId: string }[];
     const themeIdObjs = await tx.$queryRaw<SearchedThemeIds>`
-      ${master}
       SELECT 
         * 
       FROM
-        master
+        ${master}
       LIMIT 
         ${pagingData.limit}
       OFFSET
@@ -145,10 +144,9 @@ export const searchThemes = async (
 
     // 検索結果の合計数を求める
     const allItemsArray = await tx.$queryRaw<[{ allItems: BigInt }]>`
-      ${master}
       SELECT
         COUNT(*) as allItems
-      FROM master
+      FROM ${master}
     `;
     const allItems = Number(allItemsArray[0].allItems);
     const allPages = Math.ceil(allItems / pagingData?.limit);
