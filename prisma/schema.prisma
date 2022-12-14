@@ -9,6 +9,7 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Account {
@@ -28,6 +29,7 @@ model Account {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId])
   @@unique([provider, providerAccountId])
 }
 
@@ -37,6 +39,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -80,6 +84,8 @@ model AppTheme {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model AppThemeTag {
@@ -97,6 +103,8 @@ model AppThemeTagOnAppTheme {
   tagId   String
   tag     AppThemeTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
+  @@index([themeId])
+  @@index([tagId])
   @@id([themeId, tagId])
 }
 
@@ -109,6 +117,8 @@ model AppThemeLike {
 
   createdAt DateTime @default(now())
 
+  @@index([appThemeId])
+  @@index([userId])
   @@unique([userId, appThemeId])
 }
 
@@ -124,6 +134,8 @@ model AppThemeDeveloper {
 
   createdAt DateTime @default(now())
 
+  @@index([userId])
+  @@index([appThemeId])
   @@unique([userId, appThemeId])
 }
 
@@ -136,5 +148,7 @@ model AppThemeDeveloperLike {
 
   createdAt DateTime @default(now())
 
+  @@index([developerId])
+  @@index([userId])
   @@unique([userId, developerId])
 }
