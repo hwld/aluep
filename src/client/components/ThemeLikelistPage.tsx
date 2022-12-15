@@ -17,7 +17,7 @@ export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
         いいねした人
       </Title>
       <Stack mt={30}>
-        {users.map((user) => {
+        {users?.map((user) => {
           return (
             <ThemeLikelistCard
               key={user.id}
