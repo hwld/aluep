@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Stack } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
 import { Controller, useForm } from "react-hook-form";
+import { MdPostAdd } from "react-icons/md";
 import { ThemeTag } from "../../server/models/themeTag";
 import { ThemeFormData, themeFormSchema } from "../../share/schema";
 import { AppMultiSelect } from "./AppMultiSelect";
@@ -13,6 +15,7 @@ type Props = {
   onCancel: () => void;
   actionText: string;
   defaultValues?: ThemeFormData;
+  isSubmitting?: boolean;
 };
 
 // お題の作成と更新のためのForm
@@ -22,6 +25,7 @@ export const ThemeForm: React.FC<Props> = ({
   onCancel,
   actionText,
   defaultValues = { title: "", description: "", tags: [] },
+  isSubmitting,
 }) => {
   const {
     control,
@@ -31,6 +35,10 @@ export const ThemeForm: React.FC<Props> = ({
     defaultValues,
     resolver: zodResolver(themeFormSchema),
   });
+
+  // isSubmittingが変更された250ms後に反映される。
+  // デバウンスすることで、一瞬ローディングインジケータが表示されるのを防ぐ
+  const [debouncedSubmitting] = useDebouncedValue(isSubmitting, 250);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -84,8 +92,19 @@ export const ThemeForm: React.FC<Props> = ({
         />
       </Stack>
       <Flex gap="sm" mt="lg">
-        <Button type="submit">{actionText}</Button>
-        <Button variant="outline" onClick={onCancel}>
+        <Button
+          type="submit"
+          loading={debouncedSubmitting}
+          leftIcon={<MdPostAdd size={20} />}
+          loaderProps={{ size: 20 }}
+        >
+          {actionText}
+        </Button>
+        <Button
+          variant="outline"
+          onClick={onCancel}
+          disabled={debouncedSubmitting}
+        >
           キャンセル
         </Button>
       </Flex>

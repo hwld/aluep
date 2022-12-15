@@ -42,7 +42,7 @@ export default function App(props: AppProps<PageProps>) {
       <QueryClientProvider client={queryClient}>
         <Hydrate state={superjson.parse(stringifiedDehydratedState || "{}")}>
           <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-            <NotificationsProvider>
+            <NotificationsProvider position="bottom-center">
               <ModalsProvider>
                 <AppLayout>
                   <Component {...pageProps} />

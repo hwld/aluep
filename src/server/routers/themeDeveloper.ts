@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { themeJoinFormSchema } from "../../share/schema";
+import { sleep } from "../lib/utils";
 import { findThemeDeveloper } from "../models/themeDeveloper";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
@@ -32,6 +33,9 @@ export const themeDeveloperRoute = router({
       await prisma.appThemeDeveloper.delete({
         where: { id: input.developerId },
       });
+
+      // TODO
+      await sleep(3000);
     }),
 
   // 開発者を更新する
