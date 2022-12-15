@@ -4,14 +4,17 @@ import {
   Button,
   Card,
   Flex,
-  Stack,
+  Pagination,
   Text,
   Title,
   useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
+import { useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
+import { usePaginatedThemesQuery } from "../hooks/usePaginatedThemesQuery";
+import { usePaginationState } from "../hooks/usePaginationState";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeJoin } from "../hooks/useThemeJoin";
@@ -22,6 +25,7 @@ import { ThemeTagBadge } from "./ThemeTagBadge";
 
 type Props = { theme: Theme };
 export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
+  const [page, setPage] = usePaginationState({});
   const mantineTheme = useMantineTheme();
 
   const { session } = useSessionQuery();
@@ -39,6 +43,8 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
       like: !likedByLoggedInUser,
     });
   };
+  const [allpage, setAllPage] = useState(0);
+  const { data } = usePaginatedThemesQuery(page);
 
   // ログインしていて、テーマの投稿者と異なればいいねができる
   const canLike = Boolean(session && theme.user.id !== session.user.id);
@@ -96,8 +102,20 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           <Title mt={30} order={4}>
             参加している開発者
           </Title>
-          <Stack mt={10}>
+          <Box
+            sx={(theme) => ({
+              display: "grid",
+              gap: theme.spacing.md,
+            })}
+          >
             {developers.map((developer) => {
+              // {
+              //   if (theme.developers / 10 == 0) {
+              //     setAllPage(theme.developers / 10);
+              //   } else if (theme.developers / 10 != 0) {
+              //     setAllPage(theme.developers / 10 + 1);
+              //   }
+              // }
               return (
                 <ThemeDeveloperCard
                   key={developer.id}
@@ -109,7 +127,13 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
                 />
               );
             })}
-          </Stack>
+          </Box>
+
+          <Pagination
+            page={page}
+            onChange={setPage}
+            total={theme.developers / 10}
+          />
         </Box>
         {/* ユーザー情報 */}
         <Card

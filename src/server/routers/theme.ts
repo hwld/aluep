@@ -246,6 +246,19 @@ export const themeRoute = router({
       return developers;
     }),
 
+  getDeveloperAllpage: publicProcedure
+    .input(z.object({ page: pageSchema }))
+    .query(async ({ input: { page } }) => {
+      const { data: allPages } = await paginate({
+        finderInput: undefined,
+        finder: findManyThemes,
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 10 },
+      });
+
+      return allPages;
+    }),
+
   // 指定されたお題をいいねしたユーザーを取得する
   getLikedUsers: publicProcedure
     .input(z.object({ themeId: z.string() }))
