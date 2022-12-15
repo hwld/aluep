@@ -1,5 +1,5 @@
 import { Button, Card, Flex, Text } from "@mantine/core";
-import { Session } from "next-auth";
+import { User } from "@prisma/client";
 import React, { useState } from "react";
 import { useJoinThemesQuery } from "../hooks/useJoinThemesQuery";
 import { useLikeThemesQuery } from "../hooks/useLikeThemesQuery";
@@ -9,9 +9,9 @@ import { useThemeLikesQuery } from "../hooks/useThemeLikesQuery";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 import UserDetailCard from "./UserDetailCard";
 
-type Props = { user: Session["user"] };
+type Props = { user: User };
 
-export const UserDetailPage: React.FC<Props> = ({ user }) => {
+export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
   const { postThemes } = usePostThemesQuery(user.id);
 
   const { joinThemes } = useJoinThemesQuery(user.id);

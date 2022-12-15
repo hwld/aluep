@@ -51,7 +51,7 @@ function UserDetailCard({
         <Flex gap={40} mt={10} wrap="wrap" justify={"center"}>
           <Box>
             <Tooltip
-              label="お題のいいねの合計"
+              label="投稿したお題のいいねの合計"
               color="gray.5"
               position="top"
               withArrow
@@ -65,7 +65,7 @@ function UserDetailCard({
           </Box>
           <Box>
             <Tooltip
-              label="ユーザのいいねの合計"
+              label="参加したお題のいいねの合計"
               color="gray.5"
               position="top"
               withArrow

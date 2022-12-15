@@ -25,6 +25,10 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
     router.push(`/themes/${theme.id}`);
   };
 
+  const handleGoDeveloperDetail = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    router.push(`/users/${theme.user.id}`);
+  };
   const mantineTheme = useMantineTheme();
 
   return (
@@ -68,6 +72,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
                 borderRadius: "100%",
                 flexShrink: 0,
               })}
+              onClick={handleGoDeveloperDetail}
             />
             <Flex
               direction="column"
