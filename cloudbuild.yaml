@@ -1,0 +1,41 @@
+steps:
+  # コンテナイメージをビルドする
+  - id: App:Build
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "${_IMAGE_NAME}",
+        "--build-arg",
+        "NEXT_PUBLIC_URL=${_NEXT_PUBLIC_URL}",
+        ".",
+      ]
+
+  # コンテナイメージをcontainer registryにプッシュする
+  - id: App:Push
+    name: "gcr.io/cloud-builders/docker"
+    args: ["push", "${_IMAGE_NAME}"]
+
+  # コンテナイメージをCloud Runにデプロイする
+  - id: App:Deploy
+    name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: gcloud
+    args:
+      [
+        "run",
+        "deploy",
+        "${_SERVICE_NAME}",
+        "--image",
+        "${_IMAGE_NAME}",
+        "--region",
+        "asia-northeast1",
+        "--platform",
+        "managed",
+        "--allow-unauthenticated",
+      ]
+substitutions:
+  _SERVICE_NAME: "app-theme-post"
+  _IMAGE_NAME: "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}:${COMMIT_SHA}"
+images:
+  - ${_IMAGE_NAME}

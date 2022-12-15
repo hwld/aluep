@@ -1,6 +1,16 @@
-import { Avatar, Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
+import {
+  Avatar,
+  Box,
+  Card,
+  Flex,
+  Stack,
+  Text,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import { format } from "date-fns";
 import { useRouter } from "next/router";
+import { MdComputer, MdOutlineFavoriteBorder } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
 import { ThemeTagBadge } from "../ThemeTagBadge";
 import { ThemeMenuButton } from "./ThemeMenuButton";
@@ -19,6 +29,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
     e.stopPropagation();
     router.push(`/users/${theme.user.id}`);
   };
+  const mantineTheme = useMantineTheme();
 
   return (
     <Card
@@ -63,7 +74,12 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
               })}
               onClick={handleGoDeveloperDetail}
             />
-            <Flex direction="column" sx={{ overflow: "hidden" }} miw={0}>
+            <Flex
+              direction="column"
+              justify="center"
+              sx={{ overflow: "hidden" }}
+              miw={0}
+            >
               <Text
                 size="sm"
                 sx={{
@@ -75,9 +91,31 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
               >
                 {theme.user.name}
               </Text>
-              <Text color="gray.5" size="sm" sx={{ whiteSpace: "nowrap" }}>
-                {format(new Date(theme.createdAt), "yyyy年M月d日")}
-              </Text>
+              <Flex align="center" gap="lg">
+                <Text color="gray.5" size="sm" sx={{ whiteSpace: "nowrap" }}>
+                  {format(new Date(theme.createdAt), "yyyy年M月d日")}
+                </Text>
+                <Flex align="center" gap="sm">
+                  <Flex align="center" gap={3}>
+                    <MdOutlineFavoriteBorder
+                      size="15px"
+                      color={mantineTheme.colors.red[7]}
+                    />
+                    <Text size="xs" c="red.7">
+                      {theme.likes}
+                    </Text>
+                  </Flex>
+                  <Flex align="center" gap={3}>
+                    <MdComputer
+                      size="15px"
+                      color={mantineTheme.colors.red[7]}
+                    />
+                    <Text size="xs" c="red.7">
+                      {theme.developers}
+                    </Text>
+                  </Flex>
+                </Flex>
+              </Flex>
             </Flex>
           </Box>
         </Flex>

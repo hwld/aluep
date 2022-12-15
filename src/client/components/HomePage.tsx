@@ -26,6 +26,7 @@ import { UserLikeRankingItem } from "./UserLikeRankingItem";
 export const HomePage: React.FC = () => {
   const [page, setPage] = usePaginationState({});
   const { data } = usePaginatedThemesQuery(page);
+
   const { top10LikesThemesInThisMonth } = useTop10LikesThemesInThisMonth();
   const { top10LikesDevelopersInThisMonth } =
     useTop10LikesDeveloperInThisMonth();
@@ -45,17 +46,14 @@ export const HomePage: React.FC = () => {
           お題を検索する
         </Button>
         <Flex justify="space-between" gap="lg">
-          <Stack miw={0}>
-            {top10LikesThemesInThisMonth &&
-              top10LikesThemesInThisMonth.length > 0 && (
-                <Stack spacing="sm" w="100%">
-                  <Title order={4}>人気のお題</Title>
-                  <PopularThemeCarousel
-                    themes={top10LikesThemesInThisMonth}
-                    miw={`${themeCardMinWidthPx}px`}
-                  />
-                </Stack>
-              )}
+          <Stack miw={0} sx={{ flexGrow: 1 }}>
+            <Stack spacing="sm" w="100%">
+              <Title order={4}>人気のお題</Title>
+              <PopularThemeCarousel
+                themes={top10LikesThemesInThisMonth}
+                miw={`${themeCardMinWidthPx}px`}
+              />
+            </Stack>
 
             <Stack>
               <Title order={4}>全てのお題</Title>
@@ -85,16 +83,7 @@ export const HomePage: React.FC = () => {
                     <UserLikeRankingItem
                       ranking={i + 1}
                       key={developer.id}
-                      // TODO
-                      user={{
-                        ...developer,
-                        createdAt: new Date(developer.createdAt),
-                        updatedAt: new Date(developer.updatedAt),
-                        emailVerified:
-                          developer.emailVerified === null
-                            ? null
-                            : new Date(developer.emailVerified),
-                      }}
+                      user={developer}
                       likeCount={developer.developerLikes}
                     />
                   ))}
@@ -106,16 +95,7 @@ export const HomePage: React.FC = () => {
                     <UserLikeRankingItem
                       ranking={i + 1}
                       key={poster.id}
-                      // TODO
-                      user={{
-                        ...poster,
-                        createdAt: new Date(poster.createdAt),
-                        updatedAt: new Date(poster.updatedAt),
-                        emailVerified:
-                          poster.emailVerified === null
-                            ? null
-                            : new Date(poster.emailVerified),
-                      }}
+                      user={poster}
                       likeCount={poster.themeLikes}
                     />
                   ))}

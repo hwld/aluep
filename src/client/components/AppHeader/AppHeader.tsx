@@ -32,10 +32,7 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
         alignItems: "center",
         justifyContent: "space-between",
         backgroundColor: theme.colors.red[7],
-        boxShadow: `0px 2px 6px 1px  ${theme.fn.rgba(
-          theme.colors.red[7],
-          0.5
-        )}`,
+        boxShadow: `0px 1px 6px ${theme.fn.rgba(theme.colors.red[7], 0.5)}`,
       })}
     >
       <Text fw={700} color="gray.1" size={22} component={Link} href="/">

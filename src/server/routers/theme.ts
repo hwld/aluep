@@ -246,6 +246,17 @@ export const themeRoute = router({
       return developers;
     }),
 
+  // 指定されたお題をいいねしたユーザーを取得する
+  getLikedUsers: publicProcedure
+    .input(z.object({ themeId: z.string() }))
+    .query(async ({ input }) => {
+      const users = await prisma.user.findMany({
+        where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+      });
+
+      return users;
+    }),
+
   // 1カ月間でいいねが多かった投稿を取得する
   getTop10LikesThemesInThisMonth: publicProcedure.query(async () => {
     const themes = await prisma.$transaction(async (tx) => {
@@ -255,6 +266,7 @@ export const themeRoute = router({
         SELECT
           Theme.id as themeId
           , COUNT(ThemeLike.id) as likeCount
+          , MIN(Theme.createdAt) as firstPostDatetime
         FROM
           AppThemeLike as ThemeLike
           LEFT JOIN AppTheme as Theme
@@ -265,7 +277,7 @@ export const themeRoute = router({
           Theme.id
         ORDER BY
           likeCount DESC
-          , Theme.createdAt DESC
+          , firstPostDatetime ASC
         LIMIT
           10
       `;
@@ -297,6 +309,7 @@ export const themeRoute = router({
         SELECT
           User.id as userId
           , COUNT(DevLike.id) as likeCount
+          , MIN(Developer.createdAt) as firstDevelopDatetime
         FROM
           AppThemeDeveloperLike as DevLike
           LEFT JOIN AppThemeDeveloper as Developer
@@ -309,7 +322,7 @@ export const themeRoute = router({
           User.id
         ORDER BY
           likeCount DESC
-          , Developer.createdAt DESC
+          , firstDevelopDatetime ASC
         LIMIT
           10
       `;
@@ -348,26 +361,29 @@ export const themeRoute = router({
     const posterUsers: UserAndThemeLikes[] = await prisma.$transaction(
       async (tx) => {
         type RawPosterUser = { userId: string; likeCount: BigInt }[];
+        // このクエリが原因?
         const rawPosterUser = await tx.$queryRaw<RawPosterUser>`
-        SELECT
-          User.id as userId
-          , COUNT(AppThemeLike.id) as likeCount
-        FROM
-          AppThemeLike
-          LEFT JOIN AppTheme
-            ON (AppThemeLike.appThemeId = AppTheme.id)
-          LEFT JOIN User
-            ON (AppTheme.userId = User.id)
-        WHERE
-          AppThemeLike.createdAt > (NOW() - INTERVAL 1 MONTH)
-        GROUP BY
-          User.id
-        ORDER BY
-          likeCount DESC
-          , AppTheme.createdAt DESC
-        LIMIT
-          10
-      `;
+          SELECT
+            User.id as userId
+            , COUNT(ThemeLike.id) as likeCount
+            , MIN(Theme.createdAt) as firstPostDatetime
+          FROM
+            AppThemeLike as ThemeLike
+            LEFT JOIN AppTheme as Theme
+              ON (ThemeLike.appThemeId = Theme.id)
+            LEFT JOIN User
+              ON (Theme.userId = User.id)
+          WHERE
+            ThemeLike.createdAt > (NOW() - INTERVAL 1 MONTH)
+          GROUP BY
+            User.id
+          ORDER BY
+            likeCount DESC
+            , firstPostDatetime ASC
+          LIMIT
+            10
+        `;
+
         const posterUserIds = rawPosterUser.map(({ userId }) => userId);
 
         // ユーザーを取得する

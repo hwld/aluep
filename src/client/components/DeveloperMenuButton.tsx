@@ -1,14 +1,12 @@
-import { ActionIcon, Menu } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ActionIcon, Menu, Text } from "@mantine/core";
+import { openConfirmModal } from "@mantine/modals";
 import { SyntheticEvent } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { useSessionQuery } from "../hooks/useSessionQuery";
-import { themeDevelopersQueryKey } from "../hooks/useThemeDevelopersQuery";
-import { trpc } from "../trpc";
+import { useThemeJoin } from "../hooks/useThemeJoin";
 import { AppMenu } from "./AppMenu/AppMenu";
 import { MenuDropdown } from "./AppMenu/MenuDropdown";
 import { MenuItem } from "./AppMenu/MenuItem";
@@ -16,31 +14,28 @@ import { MenuLinkItem } from "./AppMenu/MenuLinkItem";
 
 type Props = { developer: ThemeDeveloper };
 export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
-  const queryClient = useQueryClient();
   const { session } = useSessionQuery();
 
   const stopPropagation = (e: SyntheticEvent) => {
     e.stopPropagation();
   };
 
-  const deleteMutation = useMutation({
-    mutationFn: () => {
-      return trpc.themeDeveloper.delete.mutate({ developerId: developer.id });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(themeDevelopersQueryKey(developer.themeId));
-    },
-    onError: () => {
-      showNotification({
-        color: "red",
-        title: "開発者の削除",
-        message: "開発者を削除できませんでした。",
-      });
-    },
-  });
+  const {
+    mutations: { cancelJoinMutation },
+  } = useThemeJoin(developer.themeId);
 
-  const handleDeleteDeveloper = () => {
-    deleteMutation.mutate();
+  const openDeleteModal = () => {
+    openConfirmModal({
+      title: "開発情報の削除",
+      children: (
+        <Text size="sm">
+          開発情報を削除すると、貰った「いいね」がすべて削除されます。開発情報を削除しますか?
+        </Text>
+      ),
+      labels: { confirm: "削除する", cancel: "キャンセル" },
+      onConfirm: () => cancelJoinMutation.mutate({ developerId: developer.id }),
+      cancelProps: { variant: "outline" },
+    });
   };
 
   return (
@@ -72,7 +67,7 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
             </MenuLinkItem>
             <MenuItem
               icon={<FaTrash size={18} />}
-              onClick={handleDeleteDeveloper}
+              onClick={openDeleteModal}
               red
             >
               参加情報を削除する

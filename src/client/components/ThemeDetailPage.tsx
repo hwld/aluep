@@ -14,7 +14,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
-import { useThemeJoinQuery } from "../hooks/useThemeJoinedQuery";
+import { useThemeJoin } from "../hooks/useThemeJoin";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { ThemeDeveloperCard } from "./ThemeDeveloperCard";
 import { ThemeLikeButton } from "./ThemeLikeButton";
@@ -26,7 +26,9 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
 
   const { session } = useSessionQuery();
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(theme.id);
-  const { joined } = useThemeJoinQuery(theme.id);
+  const {
+    data: { joined },
+  } = useThemeJoin(theme.id);
   const { developers, likeDeveloperMutation } = useThemeDevelopersQuery(
     theme.id
   );
@@ -46,12 +48,27 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
       <Title align="center">{theme.title}</Title>
       <Flex mt="xl" gap="lg" w="100%">
         {/* いいねボタン */}
-        <ThemeLikeButton
-          likes={theme.likes}
-          likedByLoggedInUser={likedByLoggedInUser}
-          onClick={handleLikeTheme}
-          disabled={!canLike}
-        />
+        <Flex direction="column" align="center" gap="xs">
+          <ThemeLikeButton
+            likes={theme.likes}
+            likedByLoggedInUser={likedByLoggedInUser}
+            onClick={handleLikeTheme}
+            disabled={!canLike}
+          />
+          <Button
+            component={Link}
+            href={`/themes/${theme?.id}/likelist`}
+            sx={(theme) => ({
+              transition: "all 250ms",
+              textDecoration: "underline",
+              "&:hover": { backgroundColor: theme.fn.rgba(theme.black, 0.1) },
+            })}
+            variant="subtle"
+          >
+            いいね一覧
+          </Button>
+        </Flex>
+
         {/* 説明 */}
         <Box sx={{ flexGrow: 1 }}>
           <Card mih={300}>

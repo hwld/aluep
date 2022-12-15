@@ -14,6 +14,7 @@ export const themeSchema = z.object({
     name: z.string().nullable(),
   }),
   likes: z.number(),
+  developers: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
@@ -23,14 +24,19 @@ const themeArgs = {
   include: {
     tags: { include: { tag: true, theme: true } },
     user: true,
-    likes: true,
+    // TODO
+    // こうすると正しく数えてくれないので、
+    _count: { select: { likes: true, developers: true } },
+    // すべて取得してその数を数える。 数が多くなってきたときにどうなるだろうか。
+    // likes: { select: { id: true } },
+    // developers: { select: { id: true } },
   },
 } satisfies Prisma.AppThemeArgs;
 
 const convertTheme = (
   rawTheme: Prisma.AppThemeGetPayload<typeof themeArgs>
 ): Theme => {
-  const theme = {
+  const theme: Theme = {
     id: rawTheme.id,
     title: rawTheme.title,
     tags: rawTheme.tags.map(({ tag: { id, name } }) => ({ id, name })),
@@ -42,7 +48,8 @@ const convertTheme = (
       name: rawTheme.user.name,
       image: rawTheme.user.image,
     },
-    likes: rawTheme.likes.length,
+    likes: rawTheme._count.likes,
+    developers: rawTheme._count.developers,
   };
 
   return theme;
@@ -51,7 +58,7 @@ const convertTheme = (
 export const findTheme = async (
   where: Prisma.AppThemeWhereUniqueInput
 ): Promise<Theme | undefined> => {
-  const rawTheme = await prisma.appTheme.findUnique({
+  const rawTheme = await prisma.appTheme.findFirst({
     where,
     ...themeArgs,
   });
@@ -94,12 +101,12 @@ export const searchThemes = async (
   // トランザクションを使用する
   const paginatedThemes = await prisma.$transaction(async (tx) => {
     const master = Prisma.sql`
-      WITH master AS (
+      (
         SELECT
           AppTheme.id as themeId
         FROM
           AppTheme
-          LEFT OUTER JOIN AppThemeTagOnAppTheme
+          LEFT JOIN AppThemeTagOnAppTheme
             ON (AppTheme.id = AppThemeTagOnAppTheme.themeId)
         WHERE
           AppTheme.title LIKE ${"%" + keyword + "%"}
@@ -118,17 +125,16 @@ export const searchThemes = async (
           COUNT(themeId) = ${tagIds.length}`
             : Prisma.empty
         }
-      )
+      ) master
     `;
 
     // お題のidのリストを求める
     type SearchedThemeIds = { themeId: string }[];
     const themeIdObjs = await tx.$queryRaw<SearchedThemeIds>`
-      ${master}
       SELECT 
         * 
       FROM
-        master
+        ${master}
       LIMIT 
         ${pagingData.limit}
       OFFSET
@@ -138,10 +144,9 @@ export const searchThemes = async (
 
     // 検索結果の合計数を求める
     const allItemsArray = await tx.$queryRaw<[{ allItems: BigInt }]>`
-      ${master}
       SELECT
         COUNT(*) as allItems
-      FROM master
+      FROM ${master}
     `;
     const allItems = Number(allItemsArray[0].allItems);
     const allPages = Math.ceil(allItems / pagingData?.limit);

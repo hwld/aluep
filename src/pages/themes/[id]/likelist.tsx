@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { ThemeJoinPage } from "../../../client/components/ThemeJoinPage";
+import { ThemeLikelistPage } from "../../../client/components/ThemeLikelistPage";
+import { themelikesQueryKey } from "../../../client/hooks/useThemeLikesQuery";
 import {
   themeQueryKey,
   useThemeQuery,
@@ -10,10 +11,6 @@ import { appRouter } from "../../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
-    if (!session) {
-      return { redirect: { destination: "/", permanent: false } };
-    }
-
     const { id: themeId } = query;
     if (typeof themeId !== "string") {
       return { notFound: true };
@@ -24,18 +21,21 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     await queryClient.prefetchQuery(themeQueryKey(themeId), () =>
       caller.theme.get({ themeId })
     );
+    await queryClient.prefetchQuery(themelikesQueryKey(themeId), () =>
+      caller.theme.getLikedUsers({ themeId })
+    );
   }
 );
 
-const JoinTheme: NextPage = () => {
+const ThemeLikelist: NextPage = () => {
   const router = useRouter();
   const themeId = router.query.id as string;
   const { theme } = useThemeQuery(themeId);
 
   if (!theme) {
-    return <div></div>;
+    return <div>error</div>;
   }
 
-  return <ThemeJoinPage theme={theme} />;
+  return <ThemeLikelistPage theme={theme} />;
 };
-export default JoinTheme;
+export default ThemeLikelist;
