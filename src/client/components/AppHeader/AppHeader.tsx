@@ -39,12 +39,21 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
       })}
     >
       <Flex align="center" gap={5}>
-        <Box sx={{ alignSelf: "flex-end" }}>
-          <Image src="/logo.svg" alt="logo" width={50} height={50} />
+        <Box
+          component={Link}
+          href="/"
+          sx={{
+            display: "flex",
+            alignItems: "flex-start",
+            textDecoration: "none",
+            gap: "3px",
+          }}
+        >
+          <Image src="/logo.svg" alt="logo" width={40} height={40} />
+          <Text fw={700} color="gray.1" size={22} mt={2}>
+            AppThemePost
+          </Text>
         </Box>
-        <Text fw={700} color="gray.1" size={22} component={Link} href="/">
-          AppThemePost
-        </Text>
       </Flex>
       <Flex gap={10}>
         <AppHeaderLinkButton
