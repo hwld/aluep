@@ -6,7 +6,7 @@ import {
   themeJoinFormSchema,
   themeUpdateFormSchema,
 } from "../../share/schema";
-import { paginate } from "../lib/paginate";
+import { paginate, paginateDeveloper } from "../lib/paginate";
 import {
   findManyThemes,
   findTheme,
@@ -36,6 +36,19 @@ export const themeRoute = router({
       });
 
       return { themes, allPages };
+    }),
+  //ページを指定して、開発者を取得する
+  getDeveloperAllpage: publicProcedure
+    .input(z.object({ page: pageSchema }))
+    .query(async ({ input: { page } }) => {
+      const { data: allPages } = await paginateDeveloper({
+        finderInput: undefined,
+        finder: findManyThemes,
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 10 },
+      });
+
+      return { allPages };
     }),
 
   // すべてのタグを取得する
@@ -244,19 +257,6 @@ export const themeRoute = router({
         loggedInUserId: ctx.session?.user.id,
       });
       return developers;
-    }),
-
-  getDeveloperAllpage: publicProcedure
-    .input(z.object({ page: pageSchema }))
-    .query(async ({ input: { page } }) => {
-      const { data: allPages } = await paginate({
-        finderInput: undefined,
-        finder: findManyThemes,
-        counter: prisma.appTheme.count,
-        pagingData: { page, limit: 10 },
-      });
-
-      return allPages;
     }),
 
   // 指定されたお題をいいねしたユーザーを取得する

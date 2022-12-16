@@ -28,7 +28,6 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     await queryClient.prefetchQuery(paginatedThemesQueryKey(Number(page)), () =>
       caller.theme.getDeveloperAllpage({ page })
     );
-
     await queryClient.prefetchQuery(themeQueryKey(themeId), () =>
       caller.theme.get({ themeId })
     );

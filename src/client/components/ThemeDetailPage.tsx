@@ -10,7 +10,6 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
-import { useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
 import { usePaginatedThemesQuery } from "../hooks/usePaginatedThemesQuery";
@@ -43,12 +42,10 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
       like: !likedByLoggedInUser,
     });
   };
-  const [allpage, setAllPage] = useState(0);
   const { data } = usePaginatedThemesQuery(page);
 
   // ログインしていて、テーマの投稿者と異なればいいねができる
   const canLike = Boolean(session && theme.user.id !== session.user.id);
-
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Title align="center">{theme.title}</Title>
@@ -132,7 +129,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           <Pagination
             page={page}
             onChange={setPage}
-            total={theme.developers / 10}
+            total={theme.developers / 10 + 1}
           />
         </Box>
         {/* ユーザー情報 */}
