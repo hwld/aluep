@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
-import { usePaginatedThemesQuery } from "../hooks/usePaginatedThemesQuery";
+import { usePaginatedDeveloperQuery } from "../hooks/usepaginatedDeveloperQueery";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
@@ -32,6 +32,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const {
     data: { joined },
   } = useThemeJoin(theme.id);
+
   const { developers, likeDeveloperMutation } = useThemeDevelopersQuery(
     theme.id
   );
@@ -42,7 +43,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
       like: !likedByLoggedInUser,
     });
   };
-  const { data } = usePaginatedThemesQuery(page);
+  const {} = usePaginatedDeveloperQuery(page);
 
   // ログインしていて、テーマの投稿者と異なればいいねができる
   const canLike = Boolean(session && theme.user.id !== session.user.id);
@@ -126,11 +127,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             })}
           </Box>
 
-          <Pagination
-            page={page}
-            onChange={setPage}
-            total={theme.developers / 10 + 1}
-          />
+          <Pagination page={page} onChange={setPage} total={theme.developers} />
         </Box>
         {/* ユーザー情報 */}
         <Card
