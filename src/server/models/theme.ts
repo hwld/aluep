@@ -89,6 +89,25 @@ export const findManyThemes = async (
   return themes;
 };
 
+//developer を取得
+export const findManyDevelopers = async (
+  {
+    orderBy,
+    ...args
+  }: OmitStrict<Prisma.AppThemeFindManyArgs, "include" | "select">,
+  transactionClient?: Prisma.TransactionClient
+) => {
+  const client = transactionClient ?? prisma;
+
+  const rawThemes = await client.appTheme.findMany({
+    orderBy: { createdAt: "desc", ...orderBy },
+    ...args,
+    ...themeArgs,
+  });
+  const developers = rawThemes.map(convertTheme);
+  return developers;
+};
+
 type SearchThemesArgs = { keyword: string; tagIds: string[] };
 export const searchThemes = async (
   { keyword, tagIds }: SearchThemesArgs,

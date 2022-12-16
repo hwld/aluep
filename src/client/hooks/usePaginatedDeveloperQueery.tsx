@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../trpc";
 
-export const developersQueryKey = ["themes"] as const;
+export const developersQueryKey = ["themeId"] as const;
 export const paginatedDeveloperQueryKey = (page: number) => {
   const p = isNaN(page) ? 1 : page;
   return [...developersQueryKey, { page: p }] as const;

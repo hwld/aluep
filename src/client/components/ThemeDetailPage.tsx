@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
-import { usePaginatedDeveloperQuery } from "../hooks/usepaginatedDeveloperQueery";
+import { usePaginatedDeveloperQuery } from "../hooks/usePaginatedDeveloperQueery";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
@@ -43,7 +43,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
       like: !likedByLoggedInUser,
     });
   };
-  const {} = usePaginatedDeveloperQuery(page);
+  const { data } = usePaginatedDeveloperQuery(page);
 
   // ログインしていて、テーマの投稿者と異なればいいねができる
   const canLike = Boolean(session && theme.user.id !== session.user.id);
@@ -127,7 +127,11 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             })}
           </Box>
 
-          <Pagination page={page} onChange={setPage} total={theme.developers} />
+          <Pagination
+            page={page}
+            onChange={setPage}
+            total={theme.developers / 10 + 1}
+          />
         </Box>
         {/* ユーザー情報 */}
         <Card
