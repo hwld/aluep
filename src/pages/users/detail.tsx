@@ -3,8 +3,8 @@ import { joinThemesQueryKey } from "../../client/hooks/useJoinThemesQuery";
 import { likeThemesQueryKey } from "../../client/hooks/useLikeThemesQuery";
 import { postThemeQueryKey } from "../../client/hooks/usePostThemesQuery";
 import { useSessionQuery } from "../../client/hooks/useSessionQuery";
+import { sumThemeLikesQueryKey } from "../../client/hooks/useSumThemeLikesQuery";
 import { themeDeveloperLikesQueryKey } from "../../client/hooks/useThemeDeveloperLikesQuery";
-import { themeLikesForUserQueryKey } from "../../client/hooks/useThemeLikesForUserQuery";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../server/routers/_app";
 
@@ -27,7 +27,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.user.getPostTheme({ userId })
     );
 
-    await queryClient.prefetchQuery(themeLikesForUserQueryKey(userId), () =>
+    await queryClient.prefetchQuery(sumThemeLikesQueryKey, () =>
       caller.user.getThemeLike({ userId })
     );
 

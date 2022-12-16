@@ -5,6 +5,12 @@ import { prisma } from "../../../server/prismadb";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
+  //ここでサインアウト時に飛べるページを指定できる
+  //csrfトークンを取得しないとここに飛べないっぽい？連続でやると飛べない理由はキャッシュが残っているから？
+
+  pages: {
+    signOut: "/signout",
+  },
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || "",
@@ -19,7 +25,7 @@ export const authOptions: NextAuthOptions = {
       session.user.profile = (user as any)?.profile;
       return session;
     },
-    signIn: async ({ account, user }) => {
+    signIn: async ({ account, profile, user }) => {
       //ログイン時にaccess_tokenが更新されないので、手動で更新する
       if (account) {
         try {
@@ -42,6 +48,7 @@ export const authOptions: NextAuthOptions = {
               //     githubname: user.name,
               //   },
               // });
+
               return;
             }
 

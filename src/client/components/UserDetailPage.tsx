@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { useJoinThemesQuery } from "../hooks/useJoinThemesQuery";
 import { useLikeThemesQuery } from "../hooks/useLikeThemesQuery";
 import { usePostThemesQuery } from "../hooks/usePostThemesQuery";
+import { useSumThemeLikesQuery } from "../hooks/useSumThemeLikesQuery";
 import { useThemeDeveloperLikesQuery } from "../hooks/useThemeDeveloperLikesQuery";
-import { useThemeLikesForUserQuery } from "../hooks/useThemeLikesForUserQuery";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 import UserDetailCard from "./UserDetailCard";
 
@@ -18,7 +18,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
 
   const { likeThemes } = useLikeThemesQuery(user.id);
 
-  const { themeLikes } = useThemeLikesForUserQuery(user.id);
+  const { sumThemeLikes } = useSumThemeLikesQuery(user.id);
 
   const { themeDeveloperLikes } = useThemeDeveloperLikesQuery(user.id);
 
@@ -77,7 +77,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
         <UserDetailCard
           userImage={user.image}
           userName={user.name}
-          themeLikes={themeLikes}
+          sumThemeLikes={sumThemeLikes}
           themeDeveloperLikes={themeDeveloperLikes}
           githuburl={githubUrl}
         />
