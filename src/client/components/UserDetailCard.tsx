@@ -15,14 +15,14 @@ import { GoMarkGithub } from "react-icons/go";
 type Props = {
   userImage?: string | null;
   userName?: string | null;
-  themeLikes?: number;
+  sumThemeLikes?: number;
   themeDeveloperLikes?: number;
   githuburl?: string;
 };
 function UserDetailCard({
   userImage,
   userName,
-  themeLikes,
+  sumThemeLikes,
   themeDeveloperLikes,
   githuburl,
 }: Props) {
@@ -59,7 +59,7 @@ function UserDetailCard({
             >
               <Flex align={"center"} wrap="wrap" direction={"column"}>
                 <BsFillFilePostFill size="30" style={{ marginTop: "4px" }} />
-                <Text>{themeLikes}</Text>
+                <Text>{sumThemeLikes}</Text>
               </Flex>
             </Tooltip>
           </Box>

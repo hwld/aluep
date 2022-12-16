@@ -8,6 +8,7 @@ import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
 import { useStateAndUrlParamStringArray } from "../hooks/useStateAndUrlParamStringArray";
 import { AppMultiSelect } from "./AppMultiSelect";
 import { AppTextInput } from "./AppTextInput";
+import { NothingThemeCard } from "./NothingThemeCard";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 
 export const ThemeSearchPage: React.FC = () => {
@@ -72,9 +73,13 @@ export const ThemeSearchPage: React.FC = () => {
         <Box mt={30}>
           <Title order={3}>検索結果</Title>
           <Flex mt={10} gap="md" wrap="wrap">
-            {searchedThemesResult?.themes.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
+            {searchedThemesResult?.themes.length === 0 ? (
+              <NothingThemeCard page="Search" />
+            ) : (
+              searchedThemesResult?.themes.map((theme) => {
+                return <ThemeCard key={theme.id} theme={theme} />;
+              })
+            )}
           </Flex>
         </Box>
         <Pagination
