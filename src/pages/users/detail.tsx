@@ -23,8 +23,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return;
     }
 
-    await queryClient.prefetchQuery(postThemeQueryKey, () =>
-      caller.user.getPostTheme({ userId })
+    await queryClient.prefetchQuery(postThemeQueryKey(userId), () =>
+      caller.user.getPostTheme({ userId, page })
     );
 
     await queryClient.prefetchQuery(sumThemeLikesQueryKey, () =>

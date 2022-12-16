@@ -1,5 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { pageSchema } from "../../share/schema";
+import { paginate } from "../lib/paginate";
 import { findManyThemes } from "../models/theme";
 import { prisma } from "../prismadb";
 import { publicProcedure, router } from "../trpc";
@@ -7,12 +9,16 @@ import { publicProcedure, router } from "../trpc";
 export const userRoute = router({
   //すべてのテーマからthemeのidがユーザidのthemeを取り出す
   getPostTheme: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ input }) => {
-      const postThemes = await findManyThemes({
-        where: { userId: input.userId },
+    .input(z.object({ userId: z.string(), page: pageSchema }))
+    .query(async ({ input, input: { page } }) => {
+      const { data: postThemes, allPages } = await paginate({
+        finder: findManyThemes,
+        finderInput: { where: { userId: input.userId } },
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 6 },
       });
-      return postThemes;
+
+      return { postThemes, allPages };
     }),
 
   getJoinTheme: publicProcedure

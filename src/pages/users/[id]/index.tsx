@@ -46,10 +46,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 export function UserDetail() {
   const router = useRouter();
   const userId = router.query.id as string;
-  console.log(userId);
   const { user } = useUserQuery(userId);
-
-  console.log(user);
 
   if (user == undefined) {
     return;

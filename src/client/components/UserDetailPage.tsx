@@ -1,8 +1,9 @@
-import { Button, Card, Flex, Text } from "@mantine/core";
+import { Button, Card, Flex, Pagination, Text } from "@mantine/core";
 import { Session } from "next-auth";
 import React, { useState } from "react";
 import { useJoinThemesQuery } from "../hooks/useJoinThemesQuery";
 import { useLikeThemesQuery } from "../hooks/useLikeThemesQuery";
+import { usePaginationState } from "../hooks/usePaginationState";
 import { usePostThemesQuery } from "../hooks/usePostThemesQuery";
 import { useSumThemeLikesQuery } from "../hooks/useSumThemeLikesQuery";
 import { useThemeDeveloperLikesQuery } from "../hooks/useThemeDeveloperLikesQuery";
@@ -12,6 +13,8 @@ import UserDetailCard from "./UserDetailCard";
 type Props = { user: Session["user"] };
 
 export const UserDetailPage: React.FC<Props> = ({ user }) => {
+  const [page, setPage] = usePaginationState({});
+
   const { postThemes } = usePostThemesQuery(user.id);
 
   const { joinThemes } = useJoinThemesQuery(user.id);
@@ -42,9 +45,15 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
       return (
         <div>
           <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {postThemes?.map((theme) => {
+            {postThemes?.postThemes.map((theme) => {
               return <ThemeCard key={theme.id} theme={theme} />;
             })}
+
+            <Pagination
+              page={page}
+              onChange={setPage}
+              total={postThemes?.allPages ?? 0}
+            />
           </Flex>
         </div>
       );
