@@ -1,6 +1,7 @@
 import { ActionIcon, Menu, Text } from "@mantine/core";
-import { openConfirmModal } from "@mantine/modals";
-import { SyntheticEvent } from "react";
+import { closeAllModals, openConfirmModal } from "@mantine/modals";
+import { showNotification, updateNotification } from "@mantine/notifications";
+import { SyntheticEvent, useId } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
@@ -24,6 +25,9 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
     mutations: { cancelJoinMutation },
   } = useThemeJoin(developer.themeId);
 
+  // TODO
+  // ネスト深くて何やってるかわかりずらいからhookに分けたい
+  const deleteNotificatoinId = useId();
   const openDeleteModal = () => {
     openConfirmModal({
       title: "開発情報の削除",
@@ -33,8 +37,43 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
         </Text>
       ),
       labels: { confirm: "削除する", cancel: "キャンセル" },
-      onConfirm: () => cancelJoinMutation.mutate({ developerId: developer.id }),
-      cancelProps: { variant: "outline" },
+      confirmProps: { loading: cancelJoinMutation.isLoading },
+      cancelProps: {
+        variant: "outline",
+        disabled: cancelJoinMutation.isLoading,
+      },
+      closeOnConfirm: false,
+      onConfirm: () => {
+        showNotification({
+          id: deleteNotificatoinId,
+          loading: true,
+          title: "開発情報の削除",
+          message: "開発情報の削除中です。",
+        });
+
+        cancelJoinMutation.mutate(
+          { developerId: developer.id },
+          {
+            onSuccess: () => {
+              updateNotification({
+                id: deleteNotificatoinId,
+                color: "green",
+                title: "開発情報の削除",
+                message: "開発情報を削除しました。",
+              });
+              closeAllModals();
+            },
+            onError: () => {
+              updateNotification({
+                id: deleteNotificatoinId,
+                color: "red",
+                title: "開発情報の削除",
+                message: "開発情報を削除できませんでした。",
+              });
+            },
+          }
+        );
+      },
     });
   };
 

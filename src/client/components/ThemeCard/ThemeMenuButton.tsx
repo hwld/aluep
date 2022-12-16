@@ -1,8 +1,8 @@
 import { ActionIcon, Menu, Text } from "@mantine/core";
-import { openConfirmModal } from "@mantine/modals";
-import { showNotification } from "@mantine/notifications";
+import { closeAllModals, openConfirmModal } from "@mantine/modals";
+import { showNotification, updateNotification } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useId } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
@@ -20,15 +20,24 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
   const { session } = useSessionQuery();
   const queryClient = useQueryClient();
 
+  // TODO: hookに切り出したい
+  const deleteNotificationId = useId();
   const deleteThemeMutation = useMutation({
     mutationFn: () => {
       return trpc.theme.delete.mutate({ themeId: theme.id });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(themesQueryKey);
+      updateNotification({
+        id: deleteNotificationId,
+        color: "green",
+        title: "お題の削除",
+        message: "お題を削除しました。",
+      });
     },
     onError: () => {
-      showNotification({
+      updateNotification({
+        id: deleteNotificationId,
         color: "red",
         title: "お題の削除",
         message: "お題を削除できませんでした。",
@@ -45,8 +54,26 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
         </Text>
       ),
       labels: { confirm: "削除する", cancel: "キャンセル" },
-      onConfirm: () => deleteThemeMutation.mutate(),
-      cancelProps: { variant: "outline" },
+      confirmProps: { loading: deleteThemeMutation.isLoading },
+      cancelProps: {
+        variant: "outline",
+        disabled: deleteThemeMutation.isLoading,
+      },
+      closeOnConfirm: false,
+      onConfirm: () => {
+        showNotification({
+          id: deleteNotificationId,
+          loading: true,
+          title: "お題の削除",
+          message: "お題の削除中です。",
+        });
+
+        deleteThemeMutation.mutate(undefined, {
+          onSettled: () => {
+            closeAllModals();
+          },
+        });
+      },
     });
 
   const stopPropagation = (e: SyntheticEvent) => {

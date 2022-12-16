@@ -10,6 +10,7 @@ export default class _Document extends Document {
     return (
       <Html>
         <Head>
+          <link rel="icon" href="/logo.svg" />
           <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap"
             rel="stylesheet"

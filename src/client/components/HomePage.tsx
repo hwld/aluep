@@ -1,15 +1,5 @@
-import {
-  Box,
-  Button,
-  Flex,
-  MediaQuery,
-  Pagination,
-  Stack,
-  Title,
-} from "@mantine/core";
+import { Box, Flex, MediaQuery, Pagination, Stack, Title } from "@mantine/core";
 
-import Link from "next/link";
-import { FaSearch } from "react-icons/fa";
 import { usePaginatedThemesQuery } from "../hooks/usePaginatedThemesQuery";
 import { usePaginationState } from "../hooks/usePaginationState";
 import {
@@ -41,16 +31,6 @@ export const HomePage: React.FC = () => {
   return (
     <Flex gap={30} justify="space-between">
       <Flex direction="column" w="100%" gap="md">
-        <Title order={3}>アプリ開発のお題</Title>
-        <Button
-          leftIcon={<FaSearch />}
-          component={Link}
-          href="/themes/search"
-          w="min-content"
-          mt={10}
-        >
-          お題を検索する
-        </Button>
         <Flex justify="space-between" gap="lg">
           <Stack miw={0} sx={{ flexGrow: 1 }}>
             <Stack spacing="sm" w="100%">

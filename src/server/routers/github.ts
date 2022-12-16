@@ -7,14 +7,13 @@ export const githubRoute = router({
   createRepo: requireLoggedInProcedure
     .input(repositoryFormSchema)
     .mutation(async ({ input, ctx }) => {
-      // 認証済みユーザーのアカウント情報からアクセストークンを取得する、
+      //認証済みユーザーのアカウント情報からアクセストークンを取得する、
       const account = await prisma.account.findFirst({
         where: { userId: ctx.session.user.id, provider: "github" },
       });
       if (!account) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
-
       // GitHub APIを使って、公開リポジトリを作成する。
       const result = await fetch("https://api.github.com/user/repos", {
         method: "POST",
@@ -28,11 +27,9 @@ export const githubRoute = router({
           private: false,
         }),
       });
-
       if (result.status !== 201) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
-
       const json = await result.json();
       return { repoUrl: json.html_url as string };
     }),

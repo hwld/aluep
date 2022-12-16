@@ -56,13 +56,6 @@ export const useThemeJoin = (themeId: string) => {
       // 特定のテーマのキャッシュを無効にする
       await queryClient.invalidateQueries(themeQueryKey(themeId));
     },
-    onError: () => {
-      showNotification({
-        color: "red",
-        title: "開発者の削除",
-        message: "開発者を削除できませんでした。",
-      });
-    },
   });
 
   return {

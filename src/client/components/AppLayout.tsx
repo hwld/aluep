@@ -24,7 +24,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
 
           overflow: "auto",
         }}
-        pt="lg"
+        pt={50}
       >
         <Box
           component="main"
