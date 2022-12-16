@@ -1,12 +1,12 @@
 import { Flex, Stack, Title } from "@mantine/core";
 import { Theme } from "../../server/models/theme";
-import { useThemeLikesQuery } from "../hooks/useThemeLikesQuery";
+import { useUsersLikedThemeQuery } from "../hooks/useUsersLikedThemeQuery";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 import ThemeLikelistCard from "./ThemeLikelistCard";
 
 type Props = { theme: Theme };
 export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
-  const { users } = useThemeLikesQuery(theme.id);
+  const { users } = useUsersLikedThemeQuery(theme.id);
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">

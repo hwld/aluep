@@ -5,7 +5,7 @@ import { useJoinThemesQuery } from "../hooks/useJoinThemesQuery";
 import { useLikeThemesQuery } from "../hooks/useLikeThemesQuery";
 import { usePostThemesQuery } from "../hooks/usePostThemesQuery";
 import { useThemeDeveloperLikesQuery } from "../hooks/useThemeDeveloperLikesQuery";
-import { useThemeLikesQuery } from "../hooks/useThemeLikesQuery";
+import { useThemeLikesForUserQuery } from "../hooks/useThemeLikesForUserQuery";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 import UserDetailCard from "./UserDetailCard";
 
@@ -18,7 +18,7 @@ export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
 
   const { likeThemes } = useLikeThemesQuery(user.id);
 
-  const { themeLikes } = useThemeLikesQuery(user.id);
+  const { themeLikes } = useThemeLikesForUserQuery(user.id);
 
   const { themeDeveloperLikes } = useThemeDeveloperLikesQuery(user.id);
 
