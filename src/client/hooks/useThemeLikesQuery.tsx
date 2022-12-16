@@ -1,20 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../trpc";
 
-export const themelikesQueryKey = (themeId: string) => [
-  "users",
-  themeId,
-  "likes",
-];
+export const usersQueryKey = ["users", "likes"] as const;
+export const themelikesQueryKey = (themeId: string, page: number) => {
+  themeId
+  const p = isNaN(page) ? 1 : page;
+  return [...usersQueryKey, { page: p }] as const;
+};
 
-export const useThemeLikesQuery = (themeId: string) => {
-  const { data: users, ...others } = useQuery({
-    queryKey: themelikesQueryKey(themeId),
+export const useThemeLikesQuery = (themeId: string, page: number) => {
+  const result = useQuery({
+    queryKey: themelikesQueryKey(themeId, page),
     queryFn: () => {
-      return trpc.theme.getLikedUsers.query({ themeId });
+      //const { page } = queryKey[1];
+      return trpc.theme.getLikedUsers.query({ themeId, page: page.toString() });
     },
     initialData: [],
   });
 
-  return { users, ...others };
+  return result;
 };

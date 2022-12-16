@@ -248,23 +248,22 @@ export const themeRoute = router({
 
   // 指定されたお題をいいねしたユーザーを取得する
   /*getLikedUsers: publicProcedure
-    .input(z.object({ themeId: z.string(), page: pageSchema }))
-    .query(async ({ input }): Promise<{ allPages: number }> => {
+    .input(z.object({ themeId: z.string() }))
+    .query(async ({ input }) => {
       const users = await prisma.user.findMany({
         where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
-        pagingData: { page: number; limit: number }
       });
 
       return users;
     }),*/
 
-    // ページを指定して、お題を取得する
+  // 指定されたお題をいいねしたユーザーを取得する
   getLikedUsers: publicProcedure
   .input(z.object({ themeId: z.string(), page: pageSchema }))
   .query(async ({ input }) => {
     const {  data: users, allPages } = await paginate({
-      finderInput: undefined,
-      finder: findManyThemes,
+      finderInput: {where: {appThemeLikes: { some: { appThemeId: input.themeId } } }},
+      finder: prisma.user.findMany,
       counter: prisma.user.count,
       pagingData: { page: input.page, limit: 12 },
     });
