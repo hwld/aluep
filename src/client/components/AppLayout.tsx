@@ -21,7 +21,6 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
       <Box
         sx={{
           width: "100%",
-
           overflow: "auto",
         }}
         pt={50}
@@ -29,7 +28,10 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
         <Box
           component="main"
           p="sm"
-          sx={(theme) => ({ maxWidth: "1500px", margin: "0 auto" })}
+          sx={(theme) => ({
+            maxWidth: "1500px",
+            margin: "0 auto",
+          })}
         >
           {children}
         </Box>
