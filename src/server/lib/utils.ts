@@ -3,7 +3,7 @@
  * デバッグ用
  * @param ms
  */
-export const sleep = async (ms: number) => {
+export const __sleep = async (ms: number) => {
   console.error("sleepが使用されています");
   return new Promise((resolve) => setTimeout(resolve, ms));
 };

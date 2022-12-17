@@ -1,49 +1,50 @@
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
-import { Theme } from "../../../server/models/theme";
-import { themesQueryKey } from "../../hooks/usePaginatedThemesQuery";
+import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
-import { trpc } from "../../trpc";
+import { useThemeJoin } from "../../hooks/useThemeJoin";
 import { stopPropagation } from "../../utils";
 import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
 import { MenuItem } from "../AppMenu/MenuItem";
 import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
-import { ThemeDeleteModal } from "./ThemeDeleteModal";
+import { DeveloperDeleteModal } from "./DeveloperDeleteModal";
 
-type Props = { theme: Theme };
-export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
-  const [opened, { open, close }] = useDisclosure(false);
-
+type Props = { developer: ThemeDeveloper };
+export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
+  const [opened, { close, open }] = useDisclosure(false);
   const { session } = useSessionQuery();
-  const queryClient = useQueryClient();
 
-  // TODO: hookに切り出したい
-  const deleteThemeMutation = useMutation({
-    mutationFn: () => {
-      return trpc.theme.delete.mutate({ themeId: theme.id });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(themesQueryKey);
-      showNotification({
-        color: "green",
-        title: "お題の削除",
-        message: "お題を削除しました。",
-      });
-    },
-    onError: () => {
-      showNotification({
-        color: "red",
-        title: "お題の削除",
-        message: "お題を削除できませんでした。",
-      });
-    },
-  });
+  const {
+    mutations: { cancelJoinMutation },
+  } = useThemeJoin(developer.themeId);
+
+  const handleDeleteDeveloper = () => {
+    cancelJoinMutation.mutate(
+      { developerId: developer.id },
+      {
+        onSuccess: () => {
+          showNotification({
+            color: "green",
+            title: "開発情報の削除",
+            message: "開発情報を削除しました。",
+          });
+          close();
+        },
+        onError: () => {
+          showNotification({
+            color: "red",
+            title: "開発情報の削除",
+            message: "開発情報を削除できませんでした。",
+          });
+        },
+      }
+    );
+  };
 
   return (
     <>
@@ -65,16 +66,16 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
         </Menu.Target>
 
         <MenuDropdown>
-          {session?.user.id === theme.user.id ? (
+          {session?.user.id === developer.userId ? (
             <>
               <MenuLinkItem
                 icon={<RiEdit2Fill size={20} />}
-                href={`/themes/${theme.id}/update`}
+                href={`/themes/${developer.themeId}/developers/${developer.id}/update`}
               >
-                お題を更新する
+                参加情報を更新する
               </MenuLinkItem>
               <MenuItem icon={<FaTrash size={18} />} onClick={open} red>
-                お題を削除する
+                参加情報を削除する
               </MenuItem>
             </>
           ) : (
@@ -82,13 +83,11 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
           )}
         </MenuDropdown>
       </AppMenu>
-      <ThemeDeleteModal
+      <DeveloperDeleteModal
         opened={opened}
         onClose={close}
-        onDeleteTheme={() => {
-          deleteThemeMutation.mutate(undefined, { onSuccess: () => close() });
-        }}
-        deleting={deleteThemeMutation.isLoading}
+        onDeleteDeveloepr={handleDeleteDeveloper}
+        deleting={cancelJoinMutation.isLoading}
       />
     </>
   );
