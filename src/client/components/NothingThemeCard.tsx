@@ -1,8 +1,10 @@
 import { Button, Card, Flex, Text, useMantineTheme } from "@mantine/core";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
-import { BsDot, BsQuestionLg, BsSearch } from "react-icons/bs";
+import { BsDot } from "react-icons/bs";
+import { GoSearch } from "react-icons/go";
 import { MdPostAdd } from "react-icons/md";
+import { RiQuestionMark } from "react-icons/ri";
 
 type Props = { page: string; user?: Session["user"] };
 
@@ -34,15 +36,15 @@ export const NothingThemeCard: React.FC<Props> = ({ page, user }) => {
   const nothigSearch = () => {
     return (
       <Flex direction={"column"} gap={30}>
-        <Flex justify={"center"} align={"end"}>
-          <BsSearch size={70} color={mantineTheme.colors.red[7]} />
+        <Flex justify={"center"} align={"center"}>
+          <GoSearch size={70} color={mantineTheme.colors.red[7]} />
           <BsDot size={40} color={mantineTheme.colors.red[3]} />
           <BsDot size={40} color={mantineTheme.colors.red[4]} />
           <BsDot size={40} color={mantineTheme.colors.red[5]} />
           <BsDot size={40} color={mantineTheme.colors.red[6]} />
-          <BsQuestionLg size={70} color={mantineTheme.colors.red[7]} />
+          <RiQuestionMark size={80} color={mantineTheme.colors.red[7]} />
         </Flex>
-        <Text size="xl">
+        <Text>
           条件に一致する検索結果はありません。<br></br>
           <Text align="center"> 別の条件をお試しください。</Text>
         </Text>
