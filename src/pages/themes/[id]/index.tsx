@@ -19,9 +19,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     const caller = appRouter.createCaller({ session });
 
-    await queryClient.prefetchQuery(themeQueryKey(themeId), () =>
-      caller.theme.get({ themeId })
-    );
+    // テーマがなければ404に飛ばす
+    const theme = await caller.theme.get({ themeId });
+    if (!theme) {
+      return { notFound: true };
+    }
+
+    queryClient.setQueryData(themeQueryKey(themeId), theme);
     await queryClient.prefetchQuery(
       themeLikedQueryKey(themeId, session?.user.id),
       () => caller.theme.liked({ themeId })

@@ -1,4 +1,3 @@
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { findManyThemes } from "../models/theme";
 import { prisma } from "../prismadb";
@@ -79,12 +78,7 @@ export const userRoute = router({
   get: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
-      console.log(input);
       const user = await prisma.user.findFirst({ where: { id: input.userId } });
-      if (!user) {
-        throw new TRPCError({ code: "NOT_FOUND" });
-      }
-      console.log(user);
       return user;
     }),
 });
