@@ -30,7 +30,14 @@ export const AppForm: React.FC<Props> = ({
       {/* formのネストを防ぐために、フォームを独立させる */}
       <form onSubmit={onSubmit} id={formId} />
       <Stack spacing="md">{children}</Stack>
-      <Flex gap="sm" mt="lg">
+      <Flex gap="sm" mt="lg" justify="flex-end">
+        <Button
+          variant="outline"
+          onClick={onCancel}
+          disabled={debouncedSubmitting}
+        >
+          キャンセル
+        </Button>
         <Button
           form={formId}
           type="submit"
@@ -39,13 +46,6 @@ export const AppForm: React.FC<Props> = ({
           loaderProps={{ size: 20 }}
         >
           {submitText}
-        </Button>
-        <Button
-          variant="outline"
-          onClick={onCancel}
-          disabled={debouncedSubmitting}
-        >
-          キャンセル
         </Button>
       </Flex>
     </>
