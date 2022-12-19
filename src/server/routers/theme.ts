@@ -265,7 +265,7 @@ export const themeRoute = router({
       finderInput: {where: {appThemeLikes: { some: { appThemeId: input.themeId } } }},
       finder: prisma.user.findMany,
       counter: prisma.user.count,
-      pagingData: { page: input.page, limit: 12 },
+      pagingData: { page: input.page, limit: 6 },
     });
 
     return { users, allPages };
