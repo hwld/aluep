@@ -1,8 +1,7 @@
-import { Flex, Pagination, Stack, Title } from "@mantine/core";
+import { Avatar, Card, Flex, Pagination, Stack, Text, Title } from "@mantine/core";
 import { Theme } from "../../server/models/theme";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useThemeLikesQuery } from "../hooks/useUsersLikedThemeQuery";
-import { ThemeCard } from "./ThemeCard/ThemeCard";
 import ThemeLikelistCard from "./ThemeLikelistCard";
 
 type Props = { theme: Theme };
@@ -13,18 +12,34 @@ export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Flex mt={30} gap={15} wrap="wrap">
-        <ThemeCard theme={theme} />
+      <Card h={150} w={760} mt="xl">
+          <Title order={3}>{theme?.title}</Title>
+          <Flex mt="md" gap={5}>
+            <Avatar
+              src={theme?.user.image}
+              size="md"
+              radius={100}
+              sx={(theme) => ({
+                borderWidth: "2px",
+                borderColor: theme.colors.gray[2],
+                borderStyle: "solid",
+                borderRadius: "100%",
+              })}
+            />
+            <Text>{theme?.user.name}</Text>
+          </Flex>
+        </Card>
       </Flex>
       <Title mt={30} order={3}>
         いいねした人
       </Title>
       <Stack mt={30}>
-        {data?.users.map((user) => {
+        {data?.users.map((users) => {
           return (
             <ThemeLikelistCard
-              key={user.id}
-              userImage={user.image}
-              userName={user.name}
+              key={users.id}
+              userImage={users.image}
+              userName={users.name}
             />
           );
         })}
