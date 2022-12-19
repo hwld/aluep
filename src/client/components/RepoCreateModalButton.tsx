@@ -1,9 +1,10 @@
-import { Button, Modal } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { RepositoryFormData } from "../../share/schema";
 import { trpc } from "../trpc";
+import { AppModal } from "./AppModal";
 import { RepositoryForm } from "./RepositoryForm";
 
 type Props = {
@@ -53,23 +54,19 @@ export const RepoCreateModalButton: React.FC<Props> = ({
       >
         作成
       </Button>
-      <Modal
-        exitTransitionDuration={150}
+      <AppModal
         opened={opened}
         onClose={() => {
           setOpened(false);
         }}
         title="GitHubリポジトリの作成"
-        styles={(theme) => ({
-          modal: { backgroundColor: theme.colors.gray[1] },
-          body: { backgroundColor: theme.colors.gray[1] },
-        })}
       >
         <RepositoryForm
           onSubmit={handleCreateRepository}
           onCancel={() => setOpened(false)}
+          isSubmitting={createRepositoryMutation.isLoading}
         />
-      </Modal>
+      </AppModal>
     </>
   );
 };

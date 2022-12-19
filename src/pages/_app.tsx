@@ -32,7 +32,7 @@ export default function App(props: AppProps<PageProps>) {
   return (
     <>
       <Head>
-        <title>Page title</title>
+        <title>AppThemePost</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
@@ -42,7 +42,7 @@ export default function App(props: AppProps<PageProps>) {
       <QueryClientProvider client={queryClient}>
         <Hydrate state={superjson.parse(stringifiedDehydratedState || "{}")}>
           <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-            <NotificationsProvider>
+            <NotificationsProvider position="bottom-center">
               <ModalsProvider>
                 <AppLayout>
                   <Component {...pageProps} />

@@ -47,13 +47,8 @@ export const themeRoute = router({
   // idを指定してタグを取得する
   get: publicProcedure
     .input(z.object({ themeId: z.string() }))
-    .query(async ({ input }): Promise<Theme> => {
+    .query(async ({ input }): Promise<Theme | undefined> => {
       const theme = await findTheme({ id: input.themeId });
-
-      if (!theme) {
-        throw new TRPCError({ code: "NOT_FOUND" });
-      }
-
       return theme;
     }),
 

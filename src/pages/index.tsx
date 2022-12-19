@@ -18,9 +18,16 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       throw new Error();
     }
 
-    await queryClient.prefetchQuery(paginatedThemesQueryKey(Number(page)), () =>
-      caller.theme.getMany({ page })
+    const paginatedThemes = await caller.theme.getMany({ page });
+    if (paginatedThemes.themes.length === 0) {
+      return { notFound: true };
+    }
+
+    queryClient.setQueryData(
+      paginatedThemesQueryKey(Number(page)),
+      paginatedThemes
     );
+
     await queryClient.prefetchQuery(top10LikesThemesInThisMonthQueryKey, () =>
       caller.theme.getTop10LikesThemesInThisMonth()
     );

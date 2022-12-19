@@ -54,6 +54,7 @@ export const ThemeJoinPage: React.FC<Props> = ({ theme }) => {
           onCancel={handleBack}
           themeId={theme.id}
           actionText="参加する"
+          isSubmitting={joinMutation.isLoading}
         />
       </Card>
     </Box>

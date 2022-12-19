@@ -1,7 +1,7 @@
 import { Flex, Pagination, Stack, Title } from "@mantine/core";
 import { Theme } from "../../server/models/theme";
 import { usePaginationState } from "../hooks/usePaginationState";
-import { useThemeLikesQuery } from "../hooks/useThemeLikesQuery";
+import { useThemeLikesQuery } from "../hooks/useUsersLikedThemeQuery";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 import ThemeLikelistCard from "./ThemeLikelistCard";
 
@@ -29,10 +29,10 @@ export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
           );
         })}
         <Pagination
-                page={page}
-                onChange={setPage}
-                total={data?.allPages ?? 0}
-              />
+          page={page}
+          onChange={setPage}
+          total={data?.allPages ?? 0}
+        />
       </Stack>
     </Flex>
   );

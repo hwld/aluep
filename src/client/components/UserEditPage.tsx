@@ -52,6 +52,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
             name: user.name ?? "",
             profile: user.profile ?? "",
           }}
+          isSubmitting={updateMutation.isLoading}
         />
       </Card>
     </Box>

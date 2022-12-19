@@ -29,6 +29,7 @@ export const userRoute = router({
       return joinPostedTheme;
     }),
 
+  /** 指定されたユーザがいいねしたお題を取得する */
   getLikeTheme: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
@@ -44,6 +45,7 @@ export const userRoute = router({
       return likePostedTheme;
     }),
 
+  /** 指定されたユーザーが投稿したお題についた「いいね」をすべて取得する */
   getThemeLike: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
@@ -71,5 +73,12 @@ export const userRoute = router({
         where: { developerId: { in: ids } },
       });
       return likes;
+    }),
+
+  get: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input }) => {
+      const user = await prisma.user.findFirst({ where: { id: input.userId } });
+      return user;
     }),
 });

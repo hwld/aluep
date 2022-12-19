@@ -1,7 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Stack } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
 import { useId } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { BsGithub } from "react-icons/bs";
 import { RepositoryFormData, repositoryFormSchema } from "../../share/schema";
 import { AppTextarea } from "./AppTextarea";
 import { AppTextInput } from "./AppTextInput";
@@ -9,8 +11,13 @@ import { AppTextInput } from "./AppTextInput";
 type Props = {
   onSubmit: (data: RepositoryFormData) => void;
   onCancel: () => void;
+  isSubmitting?: boolean;
 };
-export const RepositoryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
+export const RepositoryForm: React.FC<Props> = ({
+  onSubmit,
+  onCancel,
+  isSubmitting,
+}) => {
   const formId = useId();
   const {
     control,
@@ -20,6 +27,8 @@ export const RepositoryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
     defaultValues: { repoName: "", repoDescription: "" },
     resolver: zodResolver(repositoryFormSchema),
   });
+
+  const [debouncedSubmitting] = useDebouncedValue(isSubmitting, 250);
 
   return (
     <>
@@ -54,10 +63,20 @@ export const RepositoryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         />
       </Stack>
       <Flex gap="sm" mt="lg">
-        <Button type="submit" form={formId}>
+        <Button
+          type="submit"
+          form={formId}
+          loading={debouncedSubmitting}
+          leftIcon={<BsGithub size={20} />}
+          loaderProps={{ size: 20 }}
+        >
           リポジトリを作成する
         </Button>
-        <Button variant="outline" onClick={onCancel}>
+        <Button
+          variant="outline"
+          onClick={onCancel}
+          disabled={debouncedSubmitting}
+        >
           キャンセル
         </Button>
       </Flex>

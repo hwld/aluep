@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Stack } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
 import { Controller, useForm } from "react-hook-form";
+import { RiEdit2Line } from "react-icons/ri";
 import { ProfileFormData, profileFormSchema } from "../../share/schema";
 import { AppTextarea } from "./AppTextarea";
 import { AppTextInput } from "./AppTextInput";
@@ -10,12 +12,14 @@ type Props = {
   onCancel: () => void;
   actoinText: string;
   defaultValues?: ProfileFormData;
+  isSubmitting?: boolean;
 };
 export const UserProfileForm: React.FC<Props> = ({
   onSubmit,
   onCancel,
   actoinText,
   defaultValues = { name: "", profile: "" },
+  isSubmitting,
 }) => {
   const {
     control,
@@ -25,6 +29,8 @@ export const UserProfileForm: React.FC<Props> = ({
     defaultValues,
     resolver: zodResolver(profileFormSchema),
   });
+
+  const [debouncedSubmitting] = useDebouncedValue(isSubmitting, 250);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -56,8 +62,19 @@ export const UserProfileForm: React.FC<Props> = ({
         />
       </Stack>
       <Flex gap="sm" mt="lg">
-        <Button type="submit">{actoinText}</Button>
-        <Button variant="outline" onClick={onCancel}>
+        <Button
+          type="submit"
+          loading={debouncedSubmitting}
+          leftIcon={<RiEdit2Line size={20} />}
+          loaderProps={{ size: 20 }}
+        >
+          {actoinText}
+        </Button>
+        <Button
+          variant="outline"
+          onClick={onCancel}
+          disabled={debouncedSubmitting}
+        >
           キャンセル
         </Button>
       </Flex>

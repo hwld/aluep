@@ -24,20 +24,16 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     const caller = appRouter.createCaller({ session });
+    const theme = await caller.theme.get({ themeId });
     const developer = await caller.themeDeveloper.get({ developerId });
 
-    // 開発者とログインユーザーが異なれば404にする
-    if (developer?.userId !== session.user.id) {
+    //　お題か開発者が存在しない、または開発者とログインユーザーが異なれば404にする
+    if (!theme || !developer || developer?.userId !== session.user.id) {
       return { notFound: true };
     }
 
-    await queryClient.prefetchQuery(themeQueryKey(themeId), () =>
-      caller.theme.get({ themeId })
-    );
-    await queryClient.prefetchQuery(
-      developerQuerykey(developerId),
-      () => developer
-    );
+    queryClient.setQueryData(themeQueryKey(themeId), theme);
+    queryClient.setQueryData(developerQuerykey(developerId), developer);
   }
 );
 

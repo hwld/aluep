@@ -1,7 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Flex, Stack } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
 import { useId } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { MdComputer } from "react-icons/md";
 import { ThemeJoinFormData, themeJoinFormSchema } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
 import { AppTextarea } from "./AppTextarea";
@@ -14,6 +16,7 @@ type Props = {
   onSubmit: (data: ThemeJoinFormData) => void;
   onCancel: () => void;
   actionText: string;
+  isSubmitting?: boolean;
 };
 export const ThemeJoinForm: React.FC<Props> = ({
   themeId,
@@ -21,6 +24,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
   onSubmit,
   onCancel,
   actionText,
+  isSubmitting,
 }) => {
   const formId = useId();
   const {
@@ -31,6 +35,8 @@ export const ThemeJoinForm: React.FC<Props> = ({
     defaultValues: { ...defaultValues, themeId },
     resolver: zodResolver(themeJoinFormSchema),
   });
+
+  const [debouncedSubmitting] = useDebouncedValue(isSubmitting, 250);
 
   return (
     <>
@@ -76,10 +82,20 @@ export const ThemeJoinForm: React.FC<Props> = ({
         />
       </Stack>
       <Flex gap="sm" mt="lg">
-        <Button type="submit" form={formId}>
+        <Button
+          type="submit"
+          form={formId}
+          loading={debouncedSubmitting}
+          leftIcon={<MdComputer size={20} />}
+          loaderProps={{ size: 20 }}
+        >
           {actionText}
         </Button>
-        <Button variant="outline" onClick={onCancel}>
+        <Button
+          variant="outline"
+          onClick={onCancel}
+          disabled={debouncedSubmitting}
+        >
           キャンセル
         </Button>
       </Flex>

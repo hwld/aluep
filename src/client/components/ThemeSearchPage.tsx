@@ -8,6 +8,7 @@ import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
 import { useStateAndUrlParamStringArray } from "../hooks/useStateAndUrlParamStringArray";
 import { AppMultiSelect } from "./AppMultiSelect";
 import { AppTextInput } from "./AppTextInput";
+import { NothingThemeCard } from "./NothingThemeCard";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 
 export const ThemeSearchPage: React.FC = () => {
@@ -41,29 +42,43 @@ export const ThemeSearchPage: React.FC = () => {
   };
 
   return (
-    <Box p={30}>
+    <Box>
       <Flex w="100%" direction="column">
         <Card
-          maw="756px"
           sx={() => ({
             position: "static",
           })}
         >
           <Stack spacing="sm">
             <Title order={4}>検索</Title>
-            <AppTextInput
-              label="キーワード"
-              value={keyword}
-              onChange={handleChangeKeyword}
-            />
+            <Box
+              sx={(theme) => ({
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 20,
+                [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+                  gridTemplateColumns: "1fr",
+                  gap: 10,
+                },
+              })}
+            >
+              <AppTextInput
+                label="キーワード"
+                value={keyword}
+                onChange={handleChangeKeyword}
+              />
 
-            <AppMultiSelect
-              label="タグ"
-              data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
-              value={tagIds}
-              onChange={handleChangeTagIds}
-              searchable
-            />
+              <AppMultiSelect
+                label="タグ"
+                data={allTags.map((tag) => ({
+                  value: tag.id,
+                  label: tag.name,
+                }))}
+                value={tagIds}
+                onChange={handleChangeTagIds}
+                searchable
+              />
+            </Box>
           </Stack>
           <Text size="sm" mt={10}>
             ※指定されたタグをすべて含み、指定されたキーワードがお題のタイトルに含まれるお題を検索する。
@@ -72,9 +87,13 @@ export const ThemeSearchPage: React.FC = () => {
         <Box mt={30}>
           <Title order={3}>検索結果</Title>
           <Flex mt={10} gap="md" wrap="wrap">
-            {searchedThemesResult?.themes.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
+            {searchedThemesResult?.themes.length === 0 ? (
+              <NothingThemeCard page="Search" />
+            ) : (
+              searchedThemesResult?.themes.map((theme) => {
+                return <ThemeCard key={theme.id} theme={theme} />;
+              })
+            )}
           </Flex>
         </Box>
         <Pagination

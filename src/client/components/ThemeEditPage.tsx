@@ -53,6 +53,7 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
           onSubmit={handleUpdateTheme}
           onCancel={handleCancel}
           defaultValues={{ ...theme, tags: theme?.tags.map((t) => t.id) ?? [] }}
+          isSubmitting={updateMutation.isLoading}
         />
       </Card>
     </Box>

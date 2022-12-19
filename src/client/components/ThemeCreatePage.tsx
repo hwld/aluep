@@ -49,6 +49,7 @@ export const ThemeCreatePage: React.FC = () => {
           onSubmit={handleCreateTheme}
           onCancel={handleCancel}
           allTags={allTags}
+          isSubmitting={createMutate.isLoading}
         />
       </Card>
     </Box>
