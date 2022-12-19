@@ -19,7 +19,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     const paginatedThemes = await caller.theme.getMany({ page });
-    if (paginatedThemes.themes.length === 0) {
+    if (page !== undefined && paginatedThemes.themes.length === 0) {
       return { notFound: true };
     }
 
