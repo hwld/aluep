@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Pagination, Stack, Text, Title } from "@mantine/core";
+import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import React from "react";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
@@ -7,6 +7,7 @@ import { useSearchedThemesQuery } from "../hooks/useSearchedThemesQuery";
 import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
 import { useStateAndUrlParamStringArray } from "../hooks/useStateAndUrlParamStringArray";
 import { AppMultiSelect } from "./AppMultiSelect";
+import { AppPagination } from "./AppPagination";
 import { AppTextInput } from "./AppTextInput";
 import { NothingThemeCard } from "./NothingThemeCard";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
@@ -96,7 +97,7 @@ export const ThemeSearchPage: React.FC = () => {
             )}
           </Flex>
         </Box>
-        <Pagination
+        <AppPagination
           page={page}
           onChange={setPage}
           total={searchedThemesResult?.allPages ?? 0}
