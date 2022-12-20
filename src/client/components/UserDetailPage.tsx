@@ -13,7 +13,9 @@ import UserDetailCard from "./UserDetailCard";
 type Props = { user: Session["user"] };
 
 export const UserDetailPage: React.FC<Props> = ({ user }) => {
-  const [page, setPage] = usePaginationState({});
+  const [joinPage, setJoinPage] = usePaginationState({});
+  const [postPage, setPostPage] = usePaginationState({});
+  const [likePage, setLikePage] = usePaginationState({});
 
   const { postThemes } = usePostThemesQuery(user.id);
 
@@ -43,39 +45,44 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
   const panel = () => {
     if (state === "post") {
       return (
-        <div>
-          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {postThemes?.postThemes.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
+        <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
+          {postThemes?.postThemes.map((theme) => {
+            return <ThemeCard key={theme.id} theme={theme} />;
+          })}
 
-            <Pagination
-              page={page}
-              onChange={setPage}
-              total={postThemes?.allPages ?? 0}
-            />
-          </Flex>
-        </div>
+          <Pagination
+            page={joinPage}
+            onChange={setJoinPage}
+            total={postThemes?.allPages ?? 0}
+          />
+        </Flex>
       );
     } else if (state === "join") {
       return (
-        <div>
-          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {joinThemes?.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Flex>
-        </div>
+        <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
+          {joinThemes?.joinPostedTheme.map((theme) => {
+            return <ThemeCard key={theme.id} theme={theme} />;
+          })}
+          <Pagination
+            page={postPage}
+            onChange={setPostPage}
+            total={joinThemes?.allPages ?? 0}
+          />
+        </Flex>
       );
     } else {
       return (
-        <div>
-          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {likeThemes?.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Flex>
-        </div>
+        <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
+          {likeThemes?.likePostedTheme.map((theme) => {
+            return <ThemeCard key={theme.id} theme={theme} />;
+          })}
+
+          <Pagination
+            page={likePage}
+            onChange={setLikePage}
+            total={likeThemes?.allPages ?? 0}
+          />
+        </Flex>
       );
     }
   };

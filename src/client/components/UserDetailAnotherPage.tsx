@@ -1,8 +1,9 @@
-import { Button, Card, Flex, Text } from "@mantine/core";
+import { Button, Card, Flex, Pagination, Text } from "@mantine/core";
 import { User } from "@prisma/client";
 import React, { useState } from "react";
 import { useJoinThemesQuery } from "../hooks/useJoinThemesQuery";
 import { useLikeThemesQuery } from "../hooks/useLikeThemesQuery";
+import { usePaginationState } from "../hooks/usePaginationState";
 import { usePostThemesQuery } from "../hooks/usePostThemesQuery";
 import { useSumThemeLikesQuery } from "../hooks/useSumThemeLikesQuery";
 import { useThemeDeveloperLikesQuery } from "../hooks/useThemeDeveloperLikesQuery";
@@ -12,6 +13,9 @@ import UserDetailCard from "./UserDetailCard";
 type Props = { user: User };
 
 export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
+  const [joinPage, setJoinPage] = usePaginationState({});
+  const [postPage, setPostPage] = usePaginationState({});
+  const [likePage, setLikePage] = usePaginationState({});
   const { postThemes } = usePostThemesQuery(user.id);
 
   const { joinThemes } = useJoinThemesQuery(user.id);
@@ -42,9 +46,15 @@ export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
       return (
         <div>
           <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {postThemes?.map((theme) => {
+            {postThemes?.postThemes.map((theme) => {
               return <ThemeCard key={theme.id} theme={theme} />;
             })}
+
+            <Pagination
+              page={joinPage}
+              onChange={setJoinPage}
+              total={postThemes?.allPages ?? 0}
+            />
           </Flex>
         </div>
       );
@@ -52,9 +62,14 @@ export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
       return (
         <div>
           <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {joinThemes?.map((theme) => {
+            {joinThemes?.joinPostedTheme.map((theme) => {
               return <ThemeCard key={theme.id} theme={theme} />;
             })}
+            <Pagination
+              page={postPage}
+              onChange={setPostPage}
+              total={joinThemes?.allPages ?? 0}
+            />
           </Flex>
         </div>
       );
@@ -62,9 +77,15 @@ export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
       return (
         <div>
           <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {likeThemes?.map((theme) => {
+            {likeThemes?.likePostedTheme.map((theme) => {
               return <ThemeCard key={theme.id} theme={theme} />;
             })}
+
+            <Pagination
+              page={likePage}
+              onChange={setLikePage}
+              total={likeThemes?.allPages ?? 0}
+            />
           </Flex>
         </div>
       );

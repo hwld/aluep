@@ -12,17 +12,23 @@ import { appRouter } from "../../../server/routers/_app";
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
     const caller = appRouter.createCaller({ session });
+    const { page } = query;
+
     const { id: userId } = query;
+
     if (typeof userId !== "string") {
       return;
+    }
+    if (typeof page === "object") {
+      throw new Error();
     }
 
     await queryClient.prefetchQuery(userQueryKey(userId), () =>
       caller.user.get({ userId })
     );
 
-    await queryClient.prefetchQuery(postThemeQueryKey, () =>
-      caller.user.getPostTheme({ userId })
+    await queryClient.prefetchQuery(postThemeQueryKey(userId), () =>
+      caller.user.getPostTheme({ userId, page })
     );
 
     await queryClient.prefetchQuery(sumThemeLikesQueryKey, () =>
@@ -33,12 +39,12 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.user.getThemeDeveloperLike({ userId })
     );
 
-    await queryClient.prefetchQuery(joinThemesQueryKey, () =>
-      caller.user.getJoinTheme({ userId })
+    await queryClient.prefetchQuery(joinThemesQueryKey(userId), () =>
+      caller.user.getJoinTheme({ userId, page })
     );
 
-    await queryClient.prefetchQuery(likeThemesQueryKey, () =>
-      caller.user.getLikeTheme({ userId })
+    await queryClient.prefetchQuery(likeThemesQueryKey(userId), () =>
+      caller.user.getLikeTheme({ userId, page })
     );
   }
 );

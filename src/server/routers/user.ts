@@ -22,34 +22,44 @@ export const userRoute = router({
     }),
 
   getJoinTheme: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ input }) => {
-      //
+    .input(z.object({ userId: z.string(), page: pageSchema }))
+    .query(async ({ input, input: { page } }) => {
+      //すべての開発者からユーザを抽出
       const joinTheme = await prisma.appThemeDeveloper.findMany({
         where: { userId: input.userId },
       });
+      //テーマのidだけを抽出
       const joinThemeList = joinTheme.map((theme) => theme.appThemeId);
-      const joinPostedTheme = await findManyThemes({
-        where: { id: { in: joinThemeList } },
+
+      const { data: joinPostedTheme, allPages } = await paginate({
+        finder: findManyThemes,
+        finderInput: { where: { id: { in: joinThemeList } } },
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 6 },
       });
 
-      return joinPostedTheme;
+      return { joinPostedTheme, allPages };
     }),
 
   /** 指定されたユーザがいいねしたお題を取得する */
   getLikeTheme: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ input }) => {
+    .input(z.object({ userId: z.string(), page: pageSchema }))
+    .query(async ({ input, input: { page } }) => {
       //お題にいいねしてあるモデルの中から自分のIDを取得
       const likeThemeIds = await prisma.appThemeLike.findMany({
         select: { appThemeId: true },
         where: { userId: input.userId },
       });
       const likeThemeList = likeThemeIds.map((like) => like.appThemeId);
-      const likePostedTheme = await findManyThemes({
-        where: { id: { in: likeThemeList } },
+
+      const { data: likePostedTheme, allPages } = await paginate({
+        finder: findManyThemes,
+        finderInput: { where: { id: { in: likeThemeList } } },
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 6 },
       });
-      return likePostedTheme;
+
+      return { likePostedTheme, allPages };
     }),
 
   /** 指定されたユーザーが投稿したお題についた「いいね」をすべて取得する */
