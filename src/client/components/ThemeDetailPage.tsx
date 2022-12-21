@@ -7,7 +7,7 @@ import {
   Stack,
   Text,
   Title,
-  useMantineTheme,
+  useMantineTheme
 } from "@mantine/core";
 import Link from "next/link";
 import { FaUserAlt } from "react-icons/fa";

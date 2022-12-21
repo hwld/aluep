@@ -12,9 +12,9 @@ export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Flex mt={30} gap={15} wrap="wrap">
-      <Card h={150} w={760} mt="xl">
-          <Title order={3}>{theme?.title}</Title>
-          <Flex mt="md" gap={5}>
+      <Card h={150} w={560} mt="xl">
+          <Title order={3} color="red.7">{theme?.title}</Title>
+          <Flex mt="md" gap={10}>
             <Avatar
               src={theme?.user.image}
               size="md"
@@ -30,10 +30,10 @@ export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
           </Flex>
         </Card>
       </Flex>
-      <Title mt={30} order={3}>
-        いいねした人
-      </Title>
-      <Stack mt={30}>
+      <Stack mt={10}>
+        <Title mt={20} order={4} align="left">
+          いいねした人
+        </Title>
         {data?.users.map((users) => {
           return (
             <ThemeLikelistCard
