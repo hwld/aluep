@@ -68,7 +68,7 @@ export const themeRoute = router({
             keyword: input.keyword,
             tagIds: input.tagIds,
           },
-          { page: input.page, limit: 6 }
+          { page: input.page, limit: 12 }
         );
 
         return paginatedThemes;

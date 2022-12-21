@@ -1,4 +1,4 @@
-import { Box, Flex, MediaQuery, Stack, Title } from "@mantine/core";
+import { Flex, MediaQuery, Stack, Title } from "@mantine/core";
 
 import { usePaginatedThemesQuery } from "../hooks/usePaginatedThemesQuery";
 import { usePaginationState } from "../hooks/usePaginationState";
@@ -16,7 +16,8 @@ import { NothingThemeCard } from "./NothingThemeCard";
 import { PopularThemeCarousel } from "./PopularThemeCarousel/PopularThemeCarousel";
 import { RankingCard } from "./RankingCard";
 
-import { ThemeCard, themeCardMinWidthPx } from "./ThemeCard/ThemeCard";
+import { themeCardMinWidthPx } from "./ThemeCard/ThemeCard";
+import { ThemeCardContainer } from "./ThemeCardContainer";
 import { UserLikeRankingItem } from "./UserLikeRankingItem";
 
 export const HomePage: React.FC = () => {
@@ -48,21 +49,11 @@ export const HomePage: React.FC = () => {
 
             <Stack>
               <Title order={4}>全てのお題</Title>
-              <Box
-                sx={(theme) => ({
-                  display: "grid",
-                  gridTemplateColumns: `repeat(auto-fit, minmax(${themeCardMinWidthPx}px, 1fr))`,
-                  gap: theme.spacing.md,
-                })}
-              >
-                {data?.themes.length === 0 ? (
-                  <NothingThemeCard page="Home" user={session?.user} />
-                ) : (
-                  data?.themes.map((theme) => {
-                    return <ThemeCard key={theme.id} theme={theme} />;
-                  })
-                )}
-              </Box>
+              {data?.themes.length === 0 ? (
+                <NothingThemeCard page="Home" user={session?.user} />
+              ) : (
+                <ThemeCardContainer themes={data?.themes ?? []} />
+              )}
               <AppPagination
                 page={page}
                 onChange={setPage}
