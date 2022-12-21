@@ -8,8 +8,6 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { formatDistanceStrict } from "date-fns";
-import { ja } from "date-fns/locale";
 import Link from "next/link";
 import { MdComputer, MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
@@ -93,14 +91,7 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {formatDistanceStrict(
-                      new Date(theme.createdAt),
-                      new Date(),
-                      {
-                        addSuffix: true,
-                        locale: ja,
-                      }
-                    )}
+                    {theme.elapsedSinceCreation}
                   </Text>
                   <Flex align="center" gap={3}>
                     <MdComputer
