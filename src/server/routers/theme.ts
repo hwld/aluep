@@ -6,7 +6,7 @@ import {
   themeJoinFormSchema,
   themeUpdateFormSchema,
 } from "../../share/schema";
-import { paginate, paginateDeveloper } from "../lib/paginate";
+import { paginate } from "../lib/paginate";
 import {
   findManyDevelopers,
   findManyThemes,
@@ -42,14 +42,14 @@ export const themeRoute = router({
   getDeveloperAllpage: publicProcedure
     .input(z.object({ page: pageSchema }))
     .query(async ({ input: { page } }) => {
-      const { data: developer, allPages } = await paginateDeveloper({
+      const { data: developers, allPages } = await paginate({
         finderInput: undefined,
         finder: findManyDevelopers,
         counter: prisma.appThemeDeveloper.count,
         pagingData: { page, limit: 10 },
       });
 
-      return { developer, allPages };
+      return { developers, allPages };
     }),
 
   // すべてのタグを取得する

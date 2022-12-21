@@ -23,6 +23,7 @@ import { ThemeLikeButton } from "./ThemeLikeButton";
 import { ThemeTagBadge } from "./ThemeTagBadge";
 
 type Props = { theme: Theme };
+type Data = { data: number };
 export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const [page, setPage] = usePaginationState({});
   const mantineTheme = useMantineTheme();
@@ -44,6 +45,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
     });
   };
   const { data } = usePaginatedDeveloperQuery(page);
+  console.log(data?.allPages);
 
   // ログインしていて、テーマの投稿者と異なればいいねができる
   const canLike = Boolean(session && theme.user.id !== session.user.id);
@@ -130,7 +132,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           <Pagination
             page={page}
             onChange={setPage}
-            total={theme.developers / 10 + 1}
+            total={data?.allPages ?? 0}
           />
         </Box>
         {/* ユーザー情報 */}
