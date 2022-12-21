@@ -81,8 +81,8 @@ export const ThemeSearchPage: React.FC = () => {
               />
             </Box>
           </Stack>
-          <Text size="sm" mt={10}>
-            ※指定されたタグをすべて含み、指定されたキーワードがお題のタイトルに含まれるお題を検索する。
+          <Text size="sm" c="gray.4" mt={20}>
+            ※指定されたタグをすべて含み、指定されたキーワードがお題のタイトルに含まれるお題を検索します。
           </Text>
         </Card>
         <Stack mt={30}>
