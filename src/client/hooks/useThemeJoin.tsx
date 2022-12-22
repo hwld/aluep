@@ -1,7 +1,7 @@
-import { showNotification } from "@mantine/notifications";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { RouterInputs } from "../../server/trpc";
 import { trpc } from "../trpc";
+import { showErrorNotification, showSuccessNotification } from "../utils";
 import { useSessionQuery } from "./useSessionQuery";
 import { themeQueryKey } from "./useThemeQuery";
 
@@ -32,15 +32,13 @@ export const useThemeJoin = (themeId: string) => {
       await queryClient.invalidateQueries(
         themeJoinQueryKey(themeId, session?.user.id)
       );
-      showNotification({
-        color: "green",
+      showSuccessNotification({
         title: "お題に参加",
         message: "お題に参加しました。",
       });
     },
     onError: () => {
-      showNotification({
-        color: "red",
+      showErrorNotification({
         title: "お題に参加",
         message: "お題に参加できませんでした。",
       });

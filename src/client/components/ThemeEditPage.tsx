@@ -1,5 +1,4 @@
 import { Box, Card, Title } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { Theme } from "../../server/models/theme";
@@ -7,6 +6,7 @@ import { RouterInputs } from "../../server/trpc";
 import { ThemeFormData } from "../../share/schema";
 import { useAllTagsQuery } from "../hooks/useAllTagsQuery";
 import { trpc } from "../trpc";
+import { showErrorNotification, showSuccessNotification } from "../utils";
 import { ThemeForm } from "./ThemeForm";
 
 type Props = { theme: Theme };
@@ -19,16 +19,14 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
       return trpc.theme.update.mutate(data);
     },
     onSuccess: () => {
-      showNotification({
-        color: "green",
+      showSuccessNotification({
         title: "お題の更新",
         message: "お題を更新しました。",
       });
       router.push("/");
     },
     onError: () => {
-      showNotification({
-        color: "red",
+      showErrorNotification({
         title: "お題の更新",
         message: "お題を更新できませんでした。",
       });

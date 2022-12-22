@@ -1,6 +1,5 @@
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { showNotification } from "@mantine/notifications";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
@@ -8,7 +7,11 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
 import { useThemeJoin } from "../../hooks/useThemeJoin";
-import { stopPropagation } from "../../utils";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+  stopPropagation,
+} from "../../utils";
 import { AppConfirmModal } from "../AppConfirmModal";
 import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
@@ -29,16 +32,14 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
       { developerId: developer.id },
       {
         onSuccess: () => {
-          showNotification({
-            color: "green",
+          showSuccessNotification({
             title: "開発情報の削除",
             message: "開発情報を削除しました。",
           });
           close();
         },
         onError: () => {
-          showNotification({
-            color: "red",
+          showErrorNotification({
             title: "開発情報の削除",
             message: "開発情報を削除できませんでした。",
           });

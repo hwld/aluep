@@ -1,11 +1,14 @@
 import { Button } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { RepositoryFormData } from "../../share/schema";
 import { trpc } from "../trpc";
-import { isTRPCClientError } from "../utils";
+import {
+  isTRPCClientError,
+  showErrorNotification,
+  showSuccessNotification,
+} from "../utils";
 import { AppModal } from "./AppModal";
 import { RepositoryForm } from "./RepositoryForm";
 
@@ -26,9 +29,8 @@ export const RepoCreateModalButton: React.FC<Props> = ({
       return trpc.github.createRepo.mutate(data);
     },
     onSuccess: (data) => {
-      showNotification({
-        color: "green",
-        title: "リポジトリ作成",
+      showSuccessNotification({
+        title: "リポジトリの作成",
         message: "リポジトリを作成しました。",
       });
       onSetRepositoryUrl(data.repoUrl);
@@ -37,9 +39,8 @@ export const RepoCreateModalButton: React.FC<Props> = ({
     onError: (error, fieldValues) => {
       // 認証エラーで失敗した場合、ログインさせた後にリポジトリ作成ページに飛ばす
       if (isTRPCClientError(error) && error.data?.code === "UNAUTHORIZED") {
-        showNotification({
-          color: "red",
-          title: "リポジトリ作成",
+        showErrorNotification({
+          title: "リポジトリの作成",
           message: "リポジトリの作成に失敗したため、再ログインを行います。",
         });
 
@@ -52,9 +53,8 @@ export const RepoCreateModalButton: React.FC<Props> = ({
         signIn("github", { callbackUrl: url.toString() });
         return;
       }
-      showNotification({
-        color: "red",
-        title: "リポジトリ作成",
+      showErrorNotification({
+        title: "リポジトリの作成",
         message:
           "リポジトリを作成できませんでした。\n再度時間をおいて実行してみてください。",
       });

@@ -1,6 +1,5 @@
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { showNotification } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
@@ -10,7 +9,11 @@ import { Theme } from "../../../server/models/theme";
 import { themesQueryKey } from "../../hooks/usePaginatedThemesQuery";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
 import { trpc } from "../../trpc";
-import { stopPropagation } from "../../utils";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+  stopPropagation,
+} from "../../utils";
 import { AppConfirmModal } from "../AppConfirmModal";
 import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
@@ -30,15 +33,13 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(themesQueryKey);
-      showNotification({
-        color: "green",
+      showSuccessNotification({
         title: "お題の削除",
         message: "お題を削除しました。",
       });
     },
     onError: () => {
-      showNotification({
-        color: "red",
+      showErrorNotification({
         title: "お題の削除",
         message: "お題を削除できませんでした。",
       });

@@ -1,9 +1,9 @@
 import { Box, Card, Text, Title } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { RepositoryFormData } from "../../share/schema";
 import { trpc } from "../trpc";
+import { showErrorNotification, showSuccessNotification } from "../utils";
 import { RepositoryForm } from "./RepositoryForm";
 
 type Props = {
@@ -22,9 +22,8 @@ export const RepoCreatePageAfterSignIn: React.FC<Props> = ({
       return trpc.github.createRepo.mutate(data);
     },
     onSuccess: (data) => {
-      showNotification({
-        color: "green",
-        title: "リポジトリ作成",
+      showSuccessNotification({
+        title: "リポジトリの作成",
         message: "リポジトリを作成しました。",
       });
 
@@ -33,9 +32,8 @@ export const RepoCreatePageAfterSignIn: React.FC<Props> = ({
       router.replace(url);
     },
     onError: (e) => {
-      showNotification({
-        color: "red",
-        title: "リポジトリ作成",
+      showErrorNotification({
+        title: "リポジトリの作成",
         message:
           "リポジトリを作成できませんでした。\n再ログインしてもう一度試してください。",
       });
