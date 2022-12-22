@@ -1,23 +1,14 @@
 import { Button, Card, Flex, Text } from "@mantine/core";
-import { User } from "@prisma/client";
-import React, { useState } from "react";
-import { useJoinThemesQuery } from "../hooks/useJoinThemesQuery";
-import { useLikeThemesQuery } from "../hooks/useLikeThemesQuery";
-import { usePostThemesQuery } from "../hooks/usePostThemesQuery";
-import { useSumThemeLikesQuery } from "../hooks/useSumThemeLikesQuery";
-import { useThemeDeveloperLikesQuery } from "../hooks/useThemeDeveloperLikesQuery";
-import { ThemeCard } from "./ThemeCard/ThemeCard";
-import UserDetailCard from "./UserDetailCard";
+import { Session } from "next-auth";
+import router from "next/router";
+import React from "react";
+import { useSumThemeLikesQuery } from "../../hooks/useSumThemeLikesQuery";
+import { useThemeDeveloperLikesQuery } from "../../hooks/useThemeDeveloperLikesQuery";
+import UserDetailCard from "../UserDetailCard";
 
-type Props = { user: User };
+type Props = { user: Session["user"]; state: "post" | "join" | "like" };
 
-export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
-  const { postThemes } = usePostThemesQuery(user.id);
-
-  const { joinThemes } = useJoinThemesQuery(user.id);
-
-  const { likeThemes } = useLikeThemesQuery(user.id);
-
+export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
   const { sumThemeLikes } = useSumThemeLikesQuery(user.id);
 
   const { themeDeveloperLikes } = useThemeDeveloperLikesQuery(user.id);
@@ -25,54 +16,18 @@ export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
   let githubUrl: string = "https://github.com/";
   githubUrl += user.name;
 
-  const [state, setState] = useState<"post" | "join" | "like">("post");
-
   const handleSwitchPost = () => {
-    setState("post");
+    router.push(`/users/detail/userdetailpostpage`);
   };
   const handleSwitchJoin = () => {
-    setState("join");
+    router.push(`/users/detail/userdetailjoinpage`);
   };
   const handleSwitchLike = () => {
-    setState("like");
-  };
-
-  const panel = () => {
-    if (state === "post") {
-      return (
-        <div>
-          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {postThemes?.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Flex>
-        </div>
-      );
-    } else if (state === "join") {
-      return (
-        <div>
-          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {joinThemes?.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Flex>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-            {likeThemes?.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Flex>
-        </div>
-      );
-    }
+    router.push(`/users/detail/userdetaillikepage`);
   };
 
   return (
-    <Flex maw={1200} direction="column" align="center" m="auto">
+    <>
       <Flex maw={1000} mih={300} direction="row" gap={10} mt={60}>
         <UserDetailCard
           userImage={user.image}
@@ -139,7 +94,6 @@ export const UserDetailAnotherPage: React.FC<Props> = ({ user }) => {
           </Button>
         </Button.Group>
       </Flex>
-      {panel()}
-    </Flex>
+    </>
   );
 };
