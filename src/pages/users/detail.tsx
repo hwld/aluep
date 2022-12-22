@@ -9,12 +9,16 @@ import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSide
 import { appRouter } from "../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ queryClient, session }) => {
+  async ({ queryClient, session, params: { query } }) => {
     if (!session) {
       return { redirect: { destination: "/", permanent: false } };
     }
 
     const userId = session.user.id;
+    const { page } = query;
+    if (typeof page === "object") {
+      throw new Error();
+    }
 
     const caller = appRouter.createCaller({ session });
 
