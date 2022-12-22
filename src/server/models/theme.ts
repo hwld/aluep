@@ -1,4 +1,6 @@
 import { Prisma } from "@prisma/client";
+import { formatDistanceStrict } from "date-fns";
+import { ja } from "date-fns/locale";
 import { z } from "zod";
 import { OmitStrict } from "../../types/OmitStrict";
 import { prisma } from "../prismadb";
@@ -17,6 +19,8 @@ export const themeSchema = z.object({
   developers: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  // 作成してからの取得するまでの経過時間
+  elapsedSinceCreation: z.string(),
 });
 export type Theme = z.infer<typeof themeSchema>;
 
@@ -42,6 +46,10 @@ const convertTheme = (
     tags: rawTheme.tags.map(({ tag: { id, name } }) => ({ id, name })),
     description: rawTheme.description,
     createdAt: rawTheme.createdAt.toUTCString(),
+    elapsedSinceCreation: formatDistanceStrict(rawTheme.createdAt, new Date(), {
+      addSuffix: true,
+      locale: ja,
+    }),
     updatedAt: rawTheme.updatedAt.toUTCString(),
     user: {
       id: rawTheme.user.id,

@@ -23,8 +23,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const caller = appRouter.createCaller({ session });
     const theme = await caller.theme.get({ themeId });
 
-    // お題の作成者とログインユーザーが異なれば404にする
-    if (theme.user.id !== session.user.id) {
+    // お題が存在しないか、お題の作成者とログインユーザーが異なれば404にする
+    if (theme === undefined || theme.user.id !== session.user.id) {
       return { notFound: true };
     }
 

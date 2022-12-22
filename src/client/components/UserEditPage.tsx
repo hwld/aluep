@@ -45,7 +45,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
       <Title order={3}>プロフィールの更新</Title>
       <Card mt="md">
         <UserProfileForm
-          actoinText="更新する"
+          submitText="更新する"
           onSubmit={handleUpdateUser}
           onCancel={handleCancel}
           defaultValues={{

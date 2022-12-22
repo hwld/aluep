@@ -45,7 +45,7 @@ export const ThemeCreatePage: React.FC = () => {
       <Title order={3}>お題の投稿</Title>
       <Card mt="md">
         <ThemeForm
-          actionText="投稿する"
+          submitText="投稿する"
           onSubmit={handleCreateTheme}
           onCancel={handleCancel}
           allTags={allTags}

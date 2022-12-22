@@ -18,6 +18,12 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const tagIds = urlParamToStringArray(query.tagIds, []);
     const page = urlParamToString(query.page, "1");
 
+    const searchedThemes = await caller.theme.search({ keyword, tagIds, page });
+    //　検索結果は存在するが、指定されたページが存在しない場合は404にする
+    if (searchedThemes.allPages > 0 && searchedThemes.themes.length === 0) {
+      return { notFound: true };
+    }
+
     await queryClient.prefetchQuery(allTagsQueryKey, () =>
       caller.theme.getAllTags()
     );

@@ -17,7 +17,7 @@ export const NothingLike: React.FC<Props> = ({ page }) => {
             color={mantineTheme.colors.red[7]}
           />
         </Flex>
-        <Text fz="xl" align="center">
+        <Text fz="xl" align="center" c="gray.5">
           開発者へいいねしてみよう！
         </Text>
         <Text fz="xs" c={"gray.4"} align="center">
@@ -37,7 +37,7 @@ export const NothingLike: React.FC<Props> = ({ page }) => {
             color={mantineTheme.colors.red[7]}
           />
         </Flex>
-        <Text fz="xl" align="center">
+        <Text fz="xl" align="center" c="gray.5">
           投稿者へいいねしてみよう！
         </Text>
         <Text fz="xs" c={"gray.4"} align="center">

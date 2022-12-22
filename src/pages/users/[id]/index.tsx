@@ -11,21 +11,27 @@ import { appRouter } from "../../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
+
     const caller = appRouter.createCaller({ session });
     const { page } = query;
+
 
     const { id: userId } = query;
 
     if (typeof userId !== "string") {
-      return;
+      return { notFound: true };
     }
     if (typeof page === "object") {
       throw new Error();
     }
 
-    await queryClient.prefetchQuery(userQueryKey(userId), () =>
-      caller.user.get({ userId })
-    );
+    const caller = appRouter.createCaller({ session });
+    const user = await caller.user.get({ userId });
+    if (!user) {
+      return { notFound: true };
+    }
+
+    queryClient.setQueryData(userQueryKey(userId), user);
 
     await queryClient.prefetchQuery(postThemeQueryKey(userId), () =>
       caller.user.getPostTheme({ userId, page })

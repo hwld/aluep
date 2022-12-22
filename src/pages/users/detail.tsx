@@ -9,19 +9,14 @@ import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSide
 import { appRouter } from "../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session }) => {
+  async ({ queryClient, session }) => {
+    if (!session) {
+      return { redirect: { destination: "/", permanent: false } };
+    }
+
+    const userId = session.user.id;
+
     const caller = appRouter.createCaller({ session });
-
-    const userId = session?.user.id;
-
-    const { page } = query;
-
-    if (typeof page === "object") {
-      throw new Error();
-    }
-    if (typeof userId !== "string") {
-      return;
-    }
 
     await queryClient.prefetchQuery(postThemeQueryKey(userId), () =>
       caller.user.getPostTheme({ userId, page })
@@ -42,10 +37,6 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     await queryClient.prefetchQuery(likeThemesQueryKey(userId), () =>
       caller.user.getLikeTheme({ userId, page })
     );
-
-    if (!session) {
-      return { redirect: { destination: "/", permanent: false } };
-    }
   }
 );
 

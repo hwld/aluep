@@ -48,7 +48,7 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
       <Title order={3}>お題の更新</Title>
       <Card mt="md">
         <ThemeForm
-          actionText="更新する"
+          submitText="更新する"
           allTags={allTags}
           onSubmit={handleUpdateTheme}
           onCancel={handleCancel}

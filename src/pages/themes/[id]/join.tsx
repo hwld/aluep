@@ -20,10 +20,12 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     const caller = appRouter.createCaller({ session });
+    const theme = await caller.theme.get({ themeId });
+    if (!theme) {
+      return { notFound: true };
+    }
 
-    await queryClient.prefetchQuery(themeQueryKey(themeId), () =>
-      caller.theme.get({ themeId })
-    );
+    queryClient.setQueryData(themeQueryKey(themeId), theme);
   }
 );
 
