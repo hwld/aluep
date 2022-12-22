@@ -1,4 +1,4 @@
-import { UserDetailPage } from "../../client/components/UserDetailPage";
+import { UserDetailPostPage } from "../../client/components/UserDetail/UserDetailPostPage";
 import { joinThemesQueryKey } from "../../client/hooks/useJoinThemesQuery";
 import { likeThemesQueryKey } from "../../client/hooks/useLikeThemesQuery";
 import { postThemeQueryKey } from "../../client/hooks/usePostThemesQuery";
@@ -56,5 +56,5 @@ export default function Detail() {
     return <div>error</div>;
   }
 
-  return <UserDetailPage user={session.user} />;
+  return <UserDetailPostPage user={session.user} />;
 }

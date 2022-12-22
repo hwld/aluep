@@ -1,10 +1,6 @@
 import { useRouter } from "next/router";
-import { UserDetailAnotherPostPage } from "../../../client/components/UserDetailAnother/UserDetailAnotherPostPage";
-import { joinThemesQueryKey } from "../../../client/hooks/useJoinThemesQuery";
+import { UserDetailAnotherLikePage } from "../../../client/components/UserDetailAnother/UserDetailAnotherLikePage";
 import { likeThemesQueryKey } from "../../../client/hooks/useLikeThemesQuery";
-import { postThemeQueryKey } from "../../../client/hooks/usePostThemesQuery";
-import { sumThemeLikesQueryKey } from "../../../client/hooks/useSumThemeLikesQuery";
-import { themeDeveloperLikesQueryKey } from "../../../client/hooks/useThemeDeveloperLikesQuery";
 import { userQueryKey, useUserQuery } from "../../../client/hooks/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
@@ -27,22 +23,6 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.user.get({ userId })
     );
 
-    await queryClient.prefetchQuery(postThemeQueryKey(userId), () =>
-      caller.user.getPostTheme({ userId, page })
-    );
-
-    await queryClient.prefetchQuery(sumThemeLikesQueryKey, () =>
-      caller.user.getThemeLike({ userId })
-    );
-
-    await queryClient.prefetchQuery(themeDeveloperLikesQueryKey, () =>
-      caller.user.getThemeDeveloperLike({ userId })
-    );
-
-    await queryClient.prefetchQuery(joinThemesQueryKey(userId), () =>
-      caller.user.getJoinTheme({ userId, page })
-    );
-
     await queryClient.prefetchQuery(likeThemesQueryKey(userId), () =>
       caller.user.getLikeTheme({ userId, page })
     );
@@ -58,7 +38,7 @@ export function UserDetail() {
     return;
   } else {
     //TODO
-    return <UserDetailAnotherPostPage user={user} />;
+    return <UserDetailAnotherLikePage user={user} />;
   }
 }
 export default UserDetail;
