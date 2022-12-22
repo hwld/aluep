@@ -112,6 +112,7 @@ export const searchThemes = async (
       (
         SELECT
           AppTheme.id as themeId
+          , MAX(AppTheme.createdAt) as themeCreatedAt
         FROM
           AppTheme
           LEFT JOIN AppThemeTagOnAppTheme
@@ -133,6 +134,8 @@ export const searchThemes = async (
           COUNT(themeId) = ${tagIds.length}`
             : Prisma.empty
         }
+        ORDER BY
+          themeCreatedAt desc
       ) master
     `;
 
