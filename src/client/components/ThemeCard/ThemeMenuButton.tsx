@@ -24,7 +24,6 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
   const { session } = useSessionQuery();
   const queryClient = useQueryClient();
 
-  // TODO: hookに切り出したい
   const deleteThemeMutation = useMutation({
     mutationFn: () => {
       return trpc.theme.delete.mutate({ themeId: theme.id });

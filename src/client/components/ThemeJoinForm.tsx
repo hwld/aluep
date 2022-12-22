@@ -57,6 +57,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
                     <RepoCreateModalButton
                       width={70}
                       onSetRepositoryUrl={field.onChange}
+                      themeId={themeId}
                     />
                   }
                   rightSectionWidth={70}

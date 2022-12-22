@@ -1,19 +1,23 @@
 import { Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { RepositoryFormData } from "../../share/schema";
 import { trpc } from "../trpc";
+import { isTRPCClientError } from "../utils";
 import { AppModal } from "./AppModal";
 import { RepositoryForm } from "./RepositoryForm";
 
 type Props = {
+  themeId: string;
   onSetRepositoryUrl: (url: string) => void;
   width?: number;
 };
 export const RepoCreateModalButton: React.FC<Props> = ({
   onSetRepositoryUrl,
   width,
+  themeId,
 }) => {
   const [opened, setOpened] = useState(false);
 
@@ -30,12 +34,29 @@ export const RepoCreateModalButton: React.FC<Props> = ({
       onSetRepositoryUrl(data.repoUrl);
       setOpened(false);
     },
-    onError: () => {
+    onError: (error, fieldValues) => {
+      // 認証エラーで失敗した場合、ログインさせた後にリポジトリ作成ページに飛ばす
+      if (isTRPCClientError(error) && error.data?.code === "UNAUTHORIZED") {
+        showNotification({
+          color: "red",
+          title: "リポジトリ作成",
+          message: "リポジトリの作成に失敗したため、再ログインを行います。",
+        });
+
+        const url = new URL(
+          `${window.location.origin}/themes/${themeId}/create-repository`
+        );
+        url.searchParams.set("repoName", fieldValues.repoName);
+        url.searchParams.set("repoDescription", fieldValues.repoDescription);
+
+        signIn("github", { callbackUrl: url.toString() });
+        return;
+      }
       showNotification({
         color: "red",
         title: "リポジトリ作成",
         message:
-          "リポジトリを作成できませんでした。\n再ログインしてもう一度試してください。",
+          "リポジトリを作成できませんでした。\n再度時間をおいて実行してみてください。",
       });
     },
   });

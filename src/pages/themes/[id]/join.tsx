@@ -7,6 +7,7 @@ import {
 } from "../../../client/hooks/useThemeQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
+import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
@@ -32,12 +33,14 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 const JoinTheme: NextPage = () => {
   const router = useRouter();
   const themeId = router.query.id as string;
+  const repoUrl = router.query.repoUrl;
+
   const { theme } = useThemeQuery(themeId);
 
-  if (!theme) {
-    return <div></div>;
+  if (!theme || typeof repoUrl === "object") {
+    return <NotFoundPage />;
   }
 
-  return <ThemeJoinPage theme={theme} />;
+  return <ThemeJoinPage theme={theme} repoUrl={repoUrl} />;
 };
 export default JoinTheme;

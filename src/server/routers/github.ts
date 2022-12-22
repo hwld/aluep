@@ -27,7 +27,10 @@ export const githubRoute = router({
           private: false,
         }),
       });
-      if (result.status !== 201) {
+
+      if (result.status === 401) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      } else if (result.status !== 201) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
       const json = await result.json();
