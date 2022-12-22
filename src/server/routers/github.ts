@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { GitHubErrors } from "../../share/errors";
 import { repositoryFormSchema } from "../../share/schema";
 import { prisma } from "../prismadb";
 import { requireLoggedInProcedure, router } from "../trpc";
@@ -30,9 +31,15 @@ export const githubRoute = router({
 
       if (result.status === 401) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
+      } else if (result.status === 422) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: GitHubErrors.NAME_ALREADY_EXISTS,
+        });
       } else if (result.status !== 201) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
+
       const json = await result.json();
       return { repoUrl: json.html_url as string };
     }),

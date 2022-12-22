@@ -1,9 +1,7 @@
 import { Box, Card, Text, Title } from "@mantine/core";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { RepositoryFormData } from "../../share/schema";
-import { trpc } from "../trpc";
-import { showErrorNotification, showSuccessNotification } from "../utils";
+import { useGitHubRepoCreate } from "../hooks/useGitHubRepoCreate";
 import { RepositoryForm } from "./RepositoryForm";
 
 type Props = {
@@ -16,36 +14,20 @@ export const RepoCreatePageAfterSignIn: React.FC<Props> = ({
   repoFormData,
 }) => {
   const router = useRouter();
-
-  const createRepositoryMutation = useMutation({
-    mutationFn: (data: RepositoryFormData) => {
-      return trpc.github.createRepo.mutate(data);
-    },
-    onSuccess: (data) => {
-      showSuccessNotification({
-        title: "リポジトリの作成",
-        message: "リポジトリを作成しました。",
-      });
-
-      const url = new URL(`${window.location.origin}/themes/${themeId}/join`);
-      url.searchParams.set("repoUrl", data.repoUrl);
-      router.replace(url);
-    },
-    onError: (e) => {
-      showErrorNotification({
-        title: "リポジトリの作成",
-        message:
-          "リポジトリを作成できませんでした。\n再ログインしてもう一度試してください。",
-      });
-    },
-  });
+  const createRepositoryMutation = useGitHubRepoCreate(themeId);
 
   const handleGoJoinPage = () => {
     router.push(`/themes/${themeId}/join`);
   };
 
   const handleCreateRepository = (data: RepositoryFormData) => {
-    createRepositoryMutation.mutate(data);
+    createRepositoryMutation.mutate(data, {
+      onSuccess: (data) => {
+        const url = new URL(`${window.location.origin}/themes/${themeId}/join`);
+        url.searchParams.set("repoUrl", data.repoUrl);
+        router.replace(url);
+      },
+    });
   };
 
   return (

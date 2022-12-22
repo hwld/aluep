@@ -38,6 +38,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
   const handleCancel = () => {
     router.back();
   };
+
   return (
     <Box w={800} m="auto">
       <Title order={3}>プロフィールの更新</Title>
