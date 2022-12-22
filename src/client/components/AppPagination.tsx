@@ -25,7 +25,7 @@ export const AppPagination: React.FC<Props> = ({
         alignSelf: "center",
         borderRadius: theme.radius.md,
         overflow: "hidden",
-        boxShadow: theme.shadows.md,
+        boxShadow: theme.shadows.sm,
       })}
       py={7}
       px="sm"
