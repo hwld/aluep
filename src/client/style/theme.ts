@@ -73,5 +73,16 @@ export const theme: MantineThemeOverride = {
         },
       }),
     },
+    Notification: {
+      styles: (theme) => ({
+        root: {
+          backgroundColor: theme.colors.gray[1],
+          borderColor: theme.colors.gray[1],
+        },
+        description: {
+          color: theme.colors.gray[5],
+        },
+      }),
+    },
   },
 };
