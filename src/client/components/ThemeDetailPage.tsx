@@ -45,7 +45,6 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
     });
   };
   const { data } = usePaginatedDeveloperQuery(page);
-  console.log(data?.allPages);
 
   // ログインしていて、テーマの投稿者と異なればいいねができる
   const canLike = Boolean(session && theme.user.id !== session.user.id);

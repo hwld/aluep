@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
-import { paginatedThemesQueryKey } from "../../../client/hooks/usePaginatedThemesQuery";
 import { themeDevelopersQueryKey } from "../../../client/hooks/useThemeDevelopersQuery";
 import { themeJoinQueryKey } from "../../../client/hooks/useThemeJoin";
 import { themeLikedQueryKey } from "../../../client/hooks/useThemeLike";
@@ -18,16 +17,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    const { page } = query;
-    if (typeof page === "object") {
-      throw new Error();
-    }
-
     const caller = appRouter.createCaller({ session });
 
-    await queryClient.prefetchQuery(paginatedThemesQueryKey(Number(page)), () =>
-      caller.theme.getDeveloperAllpage({ page })
-    );
     await queryClient.prefetchQuery(themeQueryKey(themeId), () =>
       caller.theme.get({ themeId })
     );

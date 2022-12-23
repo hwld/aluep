@@ -8,13 +8,15 @@ import {
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
 import {
-  findManyDevelopers,
   findManyThemes,
   findTheme,
   searchThemes,
   Theme,
 } from "../models/theme";
-import { findThemeDevelopers, ThemeDeveloper } from "../models/themeDeveloper";
+import {
+  findManyThemeDevelopers,
+  ThemeDeveloper,
+} from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
 import { UserAndDeveloperLikes, UserAndThemeLikes } from "../models/user";
 import { prisma } from "../prismadb";
@@ -38,14 +40,16 @@ export const themeRoute = router({
 
       return { themes, allPages };
     }),
+
   //ページを指定して、開発者を取得する
   getDeveloperAllpage: publicProcedure
     .input(z.object({ page: pageSchema }))
     .query(async ({ input: { page } }) => {
       const { data: developers, allPages } = await paginate({
-        finderInput: undefined,
-        finder: findManyDevelopers,
-        counter: prisma.appThemeDeveloper.count,
+        finderInput: { where: { appThemeId: "1" }, loggedInUserId: "1" },
+        finder: findManyThemeDevelopers,
+        counter: ({ loggedInUserId, ...others }) =>
+          prisma.appThemeDeveloper.count(others),
         pagingData: { page, limit: 10 },
       });
 
@@ -253,7 +257,7 @@ export const themeRoute = router({
   getAllDevelopers: publicProcedure
     .input(z.object({ themeId: z.string().min(1) }))
     .query(async ({ input, ctx }): Promise<ThemeDeveloper[]> => {
-      const developers = findThemeDevelopers({
+      const developers = findManyThemeDevelopers({
         where: { appThemeId: input.themeId },
         loggedInUserId: ctx.session?.user.id,
       });
