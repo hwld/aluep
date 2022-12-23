@@ -1,4 +1,7 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { pageSchema } from "../../share/schema";
+import { paginate } from "../lib/paginate";
 import { findManyThemes } from "../models/theme";
 import { prisma } from "../prismadb";
 import { publicProcedure, router } from "../trpc";
@@ -6,44 +9,60 @@ import { publicProcedure, router } from "../trpc";
 export const userRoute = router({
   //すべてのテーマからthemeのidがユーザidのthemeを取り出す
   getPostTheme: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ input }) => {
-      const postThemes = await findManyThemes({
-        where: { userId: input.userId },
+    .input(z.object({ userId: z.string(), page: pageSchema }))
+    .query(async ({ input, input: { page } }) => {
+      const { data: postThemes, allPages } = await paginate({
+        finder: findManyThemes,
+        finderInput: { where: { userId: input.userId } },
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 6 },
       });
-      return postThemes;
+
+      return { postThemes, allPages };
     }),
 
   getJoinTheme: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ input }) => {
-      //
+    .input(z.object({ userId: z.string(), page: pageSchema }))
+    .query(async ({ input, input: { page } }) => {
+      //すべての開発者からユーザを抽出
       const joinTheme = await prisma.appThemeDeveloper.findMany({
         where: { userId: input.userId },
       });
+      //テーマのidだけを抽出
       const joinThemeList = joinTheme.map((theme) => theme.appThemeId);
-      const joinPostedTheme = await findManyThemes({
-        where: { id: { in: joinThemeList } },
+
+      const { data: joinPostedTheme, allPages } = await paginate({
+        finder: findManyThemes,
+        finderInput: { where: { id: { in: joinThemeList } } },
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 6 },
       });
 
-      return joinPostedTheme;
+      return { joinPostedTheme, allPages };
     }),
 
+  /** 指定されたユーザがいいねしたお題を取得する */
   getLikeTheme: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ input }) => {
+    .input(z.object({ userId: z.string(), page: pageSchema }))
+    .query(async ({ input, input: { page } }) => {
       //お題にいいねしてあるモデルの中から自分のIDを取得
       const likeThemeIds = await prisma.appThemeLike.findMany({
         select: { appThemeId: true },
         where: { userId: input.userId },
       });
       const likeThemeList = likeThemeIds.map((like) => like.appThemeId);
-      const likePostedTheme = await findManyThemes({
-        where: { id: { in: likeThemeList } },
+
+      const { data: likePostedTheme, allPages } = await paginate({
+        finder: findManyThemes,
+        finderInput: { where: { id: { in: likeThemeList } } },
+        counter: prisma.appTheme.count,
+        pagingData: { page, limit: 6 },
       });
-      return likePostedTheme;
+
+      return { likePostedTheme, allPages };
     }),
 
+  /** 指定されたユーザーが投稿したお題についた「いいね」をすべて取得する */
   getThemeLike: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
@@ -71,5 +90,15 @@ export const userRoute = router({
         where: { developerId: { in: ids } },
       });
       return likes;
+    }),
+
+  get: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input }) => {
+      const user = await prisma.user.findFirst({ where: { id: input.userId } });
+      if (!user) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+      return user;
     }),
 });

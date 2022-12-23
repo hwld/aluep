@@ -1,7 +1,7 @@
-import { showNotification } from "@mantine/notifications";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { RouterInputs } from "../../server/trpc";
 import { trpc } from "../trpc";
+import { showErrorNotification } from "../utils";
 import { themeQueryKey } from "./useThemeQuery";
 
 //TODO: ページング
@@ -28,8 +28,7 @@ export const useThemeDevelopersQuery = (themeId: string) => {
       queryClient.invalidateQueries(themeDevelopersQueryKey(themeId));
     },
     onError: () => {
-      showNotification({
-        color: "red",
+      showErrorNotification({
         title: "開発者へのいいね",
         message: "開発者にいいねできませんでした。",
       });

@@ -9,9 +9,9 @@ import {
 } from "@mantine/core";
 import Link from "next/link";
 import { BsGithub } from "react-icons/bs";
-import { Theme } from "../../server/models/theme";
-import { ThemeDeveloper } from "../../server/models/themeDeveloper";
-import { useSessionQuery } from "../hooks/useSessionQuery";
+import { Theme } from "../../../server/models/theme";
+import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
+import { useSessionQuery } from "../../hooks/useSessionQuery";
 import { DeveloperDetailLinkButton } from "./DeveloperDetailLinkButton";
 import { DeveloperLikeButton } from "./DeveloperLikeButton";
 import { DeveloperMenuButton } from "./DeveloperMenuButton";
@@ -44,15 +44,6 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
     >
       <Flex justify="space-between">
         <Flex gap={10}>
-          {/* <Avatar
-            src={developer.image}
-            size="lg"
-            radius="xl"
-            sx={(theme) => ({
-              border: "2px solid",
-              borderColor: theme.colors.gray[2],
-            })}
-          /> */}
           <DeveloperDetailLinkButton theme={theme} developer={developer} />
           <Text fw="bold" size="lg">
             {developer.name}

@@ -1,5 +1,4 @@
 import { Avatar, Box, Card, Flex, Text, Title } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { Theme } from "../../server/models/theme";
@@ -7,6 +6,7 @@ import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { RouterInputs } from "../../server/trpc";
 import { ThemeJoinFormData } from "../../share/schema";
 import { trpc } from "../trpc";
+import { showErrorNotification, showSuccessNotification } from "../utils";
 import { ThemeJoinForm } from "./ThemeJoinForm";
 import { ThemeTagBadge } from "./ThemeTagBadge";
 
@@ -20,8 +20,7 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
       return trpc.themeDeveloper.update.mutate(data);
     },
     onSuccess: () => {
-      showNotification({
-        color: "green",
+      showSuccessNotification({
         title: "参加情報の更新",
         message: "参加情報を更新しました。",
       });
@@ -29,8 +28,7 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
       router.push(`/themes/${theme.id}`);
     },
     onError: () => {
-      showNotification({
-        color: "red",
+      showErrorNotification({
         title: "参加情報の更新",
         message: "参加情報を更新できませんでした。",
       });
@@ -75,7 +73,8 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
           onCancel={handleBack}
           themeId={theme.id}
           defaultValues={developer}
-          actionText="更新する"
+          submitText="更新する"
+          isSubmitting={updateMutation.isLoading}
         />
       </Card>
     </Box>

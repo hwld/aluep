@@ -1,7 +1,7 @@
-import { showNotification } from "@mantine/notifications";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { RouterInputs } from "../../server/trpc";
 import { trpc } from "../trpc";
+import { showErrorNotification, showSuccessNotification } from "../utils";
 import { useSessionQuery } from "./useSessionQuery";
 import { themeQueryKey } from "./useThemeQuery";
 
@@ -32,15 +32,13 @@ export const useThemeJoin = (themeId: string) => {
       await queryClient.invalidateQueries(
         themeJoinQueryKey(themeId, session?.user.id)
       );
-      showNotification({
-        color: "green",
+      showSuccessNotification({
         title: "お題に参加",
         message: "お題に参加しました。",
       });
     },
     onError: () => {
-      showNotification({
-        color: "red",
+      showErrorNotification({
         title: "お題に参加",
         message: "お題に参加できませんでした。",
       });
@@ -55,13 +53,6 @@ export const useThemeJoin = (themeId: string) => {
     onSuccess: async () => {
       // 特定のテーマのキャッシュを無効にする
       await queryClient.invalidateQueries(themeQueryKey(themeId));
-    },
-    onError: () => {
-      showNotification({
-        color: "red",
-        title: "開発者の削除",
-        message: "開発者を削除できませんでした。",
-      });
     },
   });
 

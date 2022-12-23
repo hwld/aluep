@@ -1,4 +1,6 @@
 import { Prisma } from "@prisma/client";
+import { formatDistanceStrict } from "date-fns";
+import { ja } from "date-fns/locale";
 import { z } from "zod";
 import { OmitStrict } from "../../types/OmitStrict";
 import { prisma } from "../prismadb";
@@ -17,6 +19,8 @@ export const themeSchema = z.object({
   developers: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  // 作成してからの取得するまでの経過時間
+  elapsedSinceCreation: z.string(),
 });
 export type Theme = z.infer<typeof themeSchema>;
 
@@ -24,12 +28,7 @@ const themeArgs = {
   include: {
     tags: { include: { tag: true, theme: true } },
     user: true,
-    // TODO
-    // こうすると正しく数えてくれないので、
     _count: { select: { likes: true, developers: true } },
-    // すべて取得してその数を数える。 数が多くなってきたときにどうなるだろうか。
-    // likes: { select: { id: true } },
-    // developers: { select: { id: true } },
   },
 } satisfies Prisma.AppThemeArgs;
 
@@ -42,6 +41,10 @@ const convertTheme = (
     tags: rawTheme.tags.map(({ tag: { id, name } }) => ({ id, name })),
     description: rawTheme.description,
     createdAt: rawTheme.createdAt.toUTCString(),
+    elapsedSinceCreation: formatDistanceStrict(rawTheme.createdAt, new Date(), {
+      addSuffix: true,
+      locale: ja,
+    }),
     updatedAt: rawTheme.updatedAt.toUTCString(),
     user: {
       id: rawTheme.user.id,
@@ -104,6 +107,7 @@ export const searchThemes = async (
       (
         SELECT
           AppTheme.id as themeId
+          , MAX(AppTheme.createdAt) as themeCreatedAt
         FROM
           AppTheme
           LEFT JOIN AppThemeTagOnAppTheme
@@ -125,6 +129,8 @@ export const searchThemes = async (
           COUNT(themeId) = ${tagIds.length}`
             : Prisma.empty
         }
+        ORDER BY
+          themeCreatedAt desc
       ) master
     `;
 

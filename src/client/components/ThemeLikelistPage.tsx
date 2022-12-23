@@ -1,12 +1,15 @@
 import { Flex, Stack, Title } from "@mantine/core";
 import { Theme } from "../../server/models/theme";
-import { useThemeLikesQuery } from "../hooks/useThemeLikesQuery";
+import { usePaginationState } from "../hooks/usePaginationState";
+import { useThemeLikesQuery } from "../hooks/useUsersLikedThemeQuery";
+import { AppPagination } from "./AppPagination";
 import { ThemeCard } from "./ThemeCard/ThemeCard";
 import ThemeLikelistCard from "./ThemeLikelistCard";
 
 type Props = { theme: Theme };
 export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
-  const { users } = useThemeLikesQuery(theme.id);
+  const [page, setPage] = usePaginationState({});
+  const { data } = useThemeLikesQuery(theme.id, page);
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
@@ -17,7 +20,7 @@ export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
         いいねした人
       </Title>
       <Stack mt={30}>
-        {users.map((user) => {
+        {data?.users.map((user) => {
           return (
             <ThemeLikelistCard
               key={user.id}
@@ -26,6 +29,11 @@ export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
             />
           );
         })}
+        <AppPagination
+          page={page}
+          onChange={setPage}
+          total={data?.allPages ?? 0}
+        />
       </Stack>
     </Flex>
   );

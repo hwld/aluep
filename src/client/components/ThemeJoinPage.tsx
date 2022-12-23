@@ -6,8 +6,8 @@ import { useThemeJoin } from "../hooks/useThemeJoin";
 import { ThemeJoinForm } from "./ThemeJoinForm";
 import { ThemeTagBadge } from "./ThemeTagBadge";
 
-type Props = { theme: Theme };
-export const ThemeJoinPage: React.FC<Props> = ({ theme }) => {
+type Props = { theme: Theme; repoUrl?: string };
+export const ThemeJoinPage: React.FC<Props> = ({ theme, repoUrl }) => {
   const router = useRouter();
 
   const {
@@ -53,7 +53,9 @@ export const ThemeJoinPage: React.FC<Props> = ({ theme }) => {
           onSubmit={handleJoinTheme}
           onCancel={handleBack}
           themeId={theme.id}
-          actionText="参加する"
+          submitText="参加する"
+          isSubmitting={joinMutation.isLoading}
+          defaultValues={{ githubUrl: repoUrl ?? "", comment: "" }}
         />
       </Card>
     </Box>

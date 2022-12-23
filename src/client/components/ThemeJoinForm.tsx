@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Flex, Stack } from "@mantine/core";
-import { useId } from "react";
+import { Box, Flex } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
+import { MdComputer } from "react-icons/md";
 import { ThemeJoinFormData, themeJoinFormSchema } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
+import { AppForm } from "./AppForm";
 import { AppTextarea } from "./AppTextarea";
 import { AppTextInput } from "./AppTextInput";
 import { RepoCreateModalButton } from "./RepoCreateModalButton";
@@ -13,16 +14,17 @@ type Props = {
   themeId: string;
   onSubmit: (data: ThemeJoinFormData) => void;
   onCancel: () => void;
-  actionText: string;
+  submitText: string;
+  isSubmitting?: boolean;
 };
 export const ThemeJoinForm: React.FC<Props> = ({
   themeId,
   defaultValues = { comment: "", githubUrl: "" },
   onSubmit,
   onCancel,
-  actionText,
+  submitText,
+  isSubmitting,
 }) => {
-  const formId = useId();
   const {
     control,
     formState: { errors },
@@ -33,56 +35,51 @@ export const ThemeJoinForm: React.FC<Props> = ({
   });
 
   return (
-    <>
-      {/* formがネストしないようにidで紐づける */}
-      <form id={formId} onSubmit={handleSubmit(onSubmit)} noValidate />
-      <Stack>
-        <Flex align="end" gap={5}>
-          <Box sx={{ flexGrow: 1 }}>
-            <Controller
-              name="githubUrl"
-              control={control}
-              render={({ field }) => {
-                return (
-                  <AppTextInput
-                    required
-                    label="GitHubリポジトリ"
-                    error={errors.githubUrl?.message}
-                    rightSection={
-                      <RepoCreateModalButton
-                        width={70}
-                        onSetRepositoryUrl={field.onChange}
-                      />
-                    }
-                    rightSectionWidth={70}
-                    {...field}
-                  />
-                );
-              }}
-            />
-          </Box>
-        </Flex>
-        <Controller
-          control={control}
-          name="comment"
-          render={({ field }) => (
-            <AppTextarea
-              label="コメント"
-              minRows={5}
-              error={errors.comment?.message}
-              {...field}
-            />
-          )}
-        />
-      </Stack>
-      <Flex gap="sm" mt="lg">
-        <Button type="submit" form={formId}>
-          {actionText}
-        </Button>
-        <Button variant="outline" onClick={onCancel}>
-          キャンセル
-        </Button>
+    <AppForm
+      onSubmit={handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      submitIcon={MdComputer}
+      submitText={submitText}
+      isSubmitting={isSubmitting}
+    >
+      <Flex align="end" gap={5}>
+        <Box sx={{ flexGrow: 1 }}>
+          <Controller
+            name="githubUrl"
+            control={control}
+            render={({ field }) => {
+              return (
+                <AppTextInput
+                  required
+                  label="GitHubリポジトリ"
+                  error={errors.githubUrl?.message}
+                  rightSection={
+                    <RepoCreateModalButton
+                      width={70}
+                      onSetRepositoryUrl={field.onChange}
+                      themeId={themeId}
+                    />
+                  }
+                  rightSectionWidth={70}
+                  {...field}
+                />
+              );
+            }}
+          />
+        </Box>
       </Flex>
-    </>
+      <Controller
+        control={control}
+        name="comment"
+        render={({ field }) => (
+          <AppTextarea
+            label="コメント"
+            minRows={5}
+            error={errors.comment?.message}
+            {...field}
+          />
+        )}
+      />
+    </AppForm>
   );
 };

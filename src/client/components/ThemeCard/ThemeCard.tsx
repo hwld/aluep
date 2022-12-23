@@ -8,7 +8,6 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { MdComputer, MdOutlineFavoriteBorder } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
@@ -25,6 +24,10 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
     router.push(`/themes/${theme.id}`);
   };
 
+  const handleGoDeveloperDetail = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    router.push(`/users/${theme.user.id}`);
+  };
   const mantineTheme = useMantineTheme();
 
   return (
@@ -67,7 +70,11 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
                 borderStyle: "solid",
                 borderRadius: "100%",
                 flexShrink: 0,
+                "&:hover": {
+                  boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.gray[3]}`,
+                },
               })}
+              onClick={handleGoDeveloperDetail}
             />
             <Flex
               direction="column"
@@ -88,7 +95,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
               </Text>
               <Flex align="center" gap="lg">
                 <Text color="gray.5" size="sm" sx={{ whiteSpace: "nowrap" }}>
-                  {format(new Date(theme.createdAt), "yyyy年M月d日")}
+                  {theme.elapsedSinceCreation}
                 </Text>
                 <Flex align="center" gap="sm">
                   <Flex align="center" gap={3}>

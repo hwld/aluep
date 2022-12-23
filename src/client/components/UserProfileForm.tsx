@@ -1,21 +1,24 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Flex, Stack } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
+import { RiEdit2Line } from "react-icons/ri";
 import { ProfileFormData, profileFormSchema } from "../../share/schema";
+import { AppForm } from "./AppForm";
 import { AppTextarea } from "./AppTextarea";
 import { AppTextInput } from "./AppTextInput";
 
 type Props = {
   onSubmit: (data: ProfileFormData) => void;
   onCancel: () => void;
-  actoinText: string;
+  submitText: string;
   defaultValues?: ProfileFormData;
+  isSubmitting?: boolean;
 };
 export const UserProfileForm: React.FC<Props> = ({
   onSubmit,
   onCancel,
-  actoinText,
+  submitText,
   defaultValues = { name: "", profile: "" },
+  isSubmitting,
 }) => {
   const {
     control,
@@ -27,40 +30,38 @@ export const UserProfileForm: React.FC<Props> = ({
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <Stack spacing="md">
-        <Controller
-          control={control}
-          name="name"
-          render={({ field }) => (
-            <AppTextInput
-              required
-              label="ユーザー名"
-              error={errors.name?.message}
-              {...field}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="profile"
-          render={({ field }) => (
-            <AppTextarea
-              label="自己紹介"
-              error={errors.profile?.message}
-              autosize
-              minRows={4}
-              {...field}
-            />
-          )}
-        />
-      </Stack>
-      <Flex gap="sm" mt="lg">
-        <Button type="submit">{actoinText}</Button>
-        <Button variant="outline" onClick={onCancel}>
-          キャンセル
-        </Button>
-      </Flex>
-    </form>
+    <AppForm
+      onSubmit={handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      submitText={submitText}
+      submitIcon={RiEdit2Line}
+      isSubmitting={isSubmitting}
+    >
+      <Controller
+        control={control}
+        name="name"
+        render={({ field }) => (
+          <AppTextInput
+            required
+            label="ユーザー名"
+            error={errors.name?.message}
+            {...field}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="profile"
+        render={({ field }) => (
+          <AppTextarea
+            label="自己紹介"
+            error={errors.profile?.message}
+            autosize
+            minRows={4}
+            {...field}
+          />
+        )}
+      />
+    </AppForm>
   );
 };
