@@ -64,15 +64,23 @@ export const UserSearchPage: React.FC = () => {
               </Text>
             </Flex>
           ) : (
-            resultUserNames?.map((user) => {
-              return (
-                <ThemeLikelistCard
-                  key={user.id}
-                  userImage={user.image}
-                  userName={user.name}
-                />
-              );
-            })
+            <Box
+              sx={(theme) => ({
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+                gap: theme.spacing.md,
+              })}
+            >
+              {resultUserNames?.map((user) => {
+                return (
+                  <ThemeLikelistCard
+                    key={user.id}
+                    userImage={user.image}
+                    userName={user.name}
+                  />
+                );
+              })}
+            </Box>
           )}
         </Stack>
       </Flex>
