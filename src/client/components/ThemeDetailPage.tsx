@@ -71,7 +71,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
 
         {/* 説明 */}
         <Box sx={{ flexGrow: 1 }}>
-          <Card mih={300}>
+          <Card mih={300} >
             <Flex gap={10} mb={10} wrap="wrap">
               {theme.tags.map((tag) => (
                 <ThemeTagBadge key={tag.id}>{tag.name}</ThemeTagBadge>
@@ -114,9 +114,9 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
         {/* ユーザー情報 */}
         <Card
           sx={{ flexShrink: 0, flexGrow: 0, height: "min-content" }}
-          w={250}
+          w={150}
         >
-          <Flex gap={3} align="center">
+          <Flex gap="xs" align="center">
             <FaUserAlt size={15} fill={mantineTheme.colors.gray[5]} />
             <Text color="gray.5" size="sm">
               投稿者
