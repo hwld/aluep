@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FaSearch } from "react-icons/fa";
-import { MdLogin, MdPostAdd } from "react-icons/md";
+import { MdLogin, MdOutlinePersonSearch, MdPostAdd } from "react-icons/md";
 import { AppHeaderButton } from "./AppHeaderButton";
 import { AppHeaderLinkButton } from "./AppHeaderLinkButton";
 import { UserMenuButton } from "./UserMenuButton";
@@ -17,6 +17,10 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
 
   const handleCreateTheme = () => {
     router.push("/themes/create");
+  };
+
+  const handleSearchUser = () => {
+    router.push("/user/search");
   };
 
   const handleLogIn = () => {
@@ -56,6 +60,12 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
         </Box>
       </Flex>
       <Flex gap={10}>
+        <AppHeaderLinkButton
+          leftIcon={<MdOutlinePersonSearch size={18} />}
+          href="/users/search"
+        >
+          ユーザを検索する
+        </AppHeaderLinkButton>
         <AppHeaderLinkButton
           leftIcon={<FaSearch size={18} />}
           href="/themes/search"

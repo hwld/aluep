@@ -103,4 +103,22 @@ export const userRoute = router({
       //console.log(user);
       return user;
     }),
+
+  //ユーザ名を検索する
+  searchUser: publicProcedure
+    .input(
+      z.object({
+        userName: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      if (input.userName === "") {
+        return [];
+      } else {
+        const searchUsers = await prisma.user.findMany({
+          where: { name: { contains: input.userName } },
+        });
+        return searchUsers;
+      }
+    }),
 });
