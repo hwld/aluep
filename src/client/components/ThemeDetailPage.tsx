@@ -44,7 +44,9 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
       like: !likedByLoggedInUser,
     });
   };
-  const { data } = usePaginatedDeveloperQuery(page);
+  const { data } = usePaginatedDeveloperQuery(theme.id, page);
+  console.log(data?.allPages);
+  data?.developers;
 
   // ログインしていて、テーマの投稿者と異なればいいねができる
   const canLike = Boolean(session && theme.user.id !== session.user.id);
@@ -107,7 +109,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
               gap: theme.spacing.md,
             })}
           >
-            {developers.map((developer) => {
+            {data?.developers.map((developer) => {
               // {
               //   if (theme.developers / 10 == 0) {
               //     setAllPage(theme.developers / 10);

@@ -43,14 +43,17 @@ export const themeRoute = router({
 
   //ページを指定して、開発者を取得する
   getDeveloperAllpage: publicProcedure
-    .input(z.object({ page: pageSchema }))
-    .query(async ({ input: { page } }) => {
+    .input(z.object({ themeId: z.string(), page: pageSchema }))
+    .query(async ({ input: { page }, input, ctx }) => {
       const { data: developers, allPages } = await paginate({
-        finderInput: { where: { appThemeId: "1" }, loggedInUserId: "1" },
+        finderInput: {
+          where: { appThemeId: input.themeId },
+          loggedInUserId: ctx.session?.user.id,
+        },
         finder: findManyThemeDevelopers,
         counter: ({ loggedInUserId, ...others }) =>
           prisma.appThemeDeveloper.count(others),
-        pagingData: { page, limit: 10 },
+        pagingData: { page, limit: 8 },
       });
 
       return { developers, allPages };

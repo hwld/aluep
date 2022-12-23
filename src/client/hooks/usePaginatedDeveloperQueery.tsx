@@ -7,15 +7,18 @@ export const paginatedDeveloperQueryKey = (page: number) => {
   return [...developersQueryKey, { page: p }] as const;
 };
 
-export const usePaginatedDeveloperQuery = (page: number) => {
+export const usePaginatedDeveloperQuery = (themeId: string, page: number) => {
   const result = useQuery({
     queryKey: paginatedDeveloperQueryKey(page),
     queryFn: ({ queryKey }) => {
       const { page } = queryKey[1];
-      return trpc.theme.getDeveloperAllpage.query({ page: page.toString() });
+      return trpc.theme.getDeveloperAllpage.query({
+        page: page.toString(),
+        themeId,
+      });
     },
     keepPreviousData: true,
   });
-
+  console.log(result);
   return result;
 };
