@@ -29,7 +29,7 @@ export const HomePage: React.FC = () => {
   const { top10LikesDevelopersInThisMonth } =
     useTop10LikesDeveloperInThisMonth();
   const { top10LikesPostersInThisMonth } = useTop10LikesPostersInThisMonth();
-  console.log(data?.allPages);
+
   return (
     <Flex gap={30} justify="space-between">
       <Flex direction="column" w="100%" gap="md">

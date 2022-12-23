@@ -23,7 +23,7 @@ import { ThemeLikeButton } from "./ThemeLikeButton";
 import { ThemeTagBadge } from "./ThemeTagBadge";
 
 type Props = { theme: Theme };
-type Data = { data: number };
+
 export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const [page, setPage] = usePaginationState({});
   const mantineTheme = useMantineTheme();
@@ -34,9 +34,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
     data: { joined },
   } = useThemeJoin(theme.id);
 
-  const { developers, likeDeveloperMutation } = useThemeDevelopersQuery(
-    theme.id
-  );
+  const { likeDeveloperMutation } = useThemeDevelopersQuery(theme.id);
 
   const handleLikeTheme = () => {
     likeThemeMutation.mutate({
@@ -45,8 +43,6 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
     });
   };
   const { data } = usePaginatedDeveloperQuery(theme.id, page);
-  console.log(data?.allPages);
-  data?.developers;
 
   // ログインしていて、テーマの投稿者と異なればいいねができる
   const canLike = Boolean(session && theme.user.id !== session.user.id);

@@ -1,24 +1,12 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { RouterInputs } from "../../server/trpc";
 import { trpc } from "../trpc";
 import { showErrorNotification } from "../utils";
-import { themeQueryKey } from "./useThemeQuery";
+import { themeDevelopersQueryKey } from "./usePaginatedDeveloperQueery";
 
-//TODO: ページング
-
-export const themeDevelopersQueryKey = (themeId: string) =>
-  [...themeQueryKey(themeId), "develoeprs"] as const;
-
+// TODO: いいねするだけのhookにする
 export const useThemeDevelopersQuery = (themeId: string) => {
   const queryClient = useQueryClient();
-
-  const { data: developers, ...others } = useQuery({
-    queryKey: themeDevelopersQueryKey(themeId),
-    queryFn: () => {
-      return trpc.theme.getAllDevelopers.query({ themeId });
-    },
-    initialData: [],
-  });
 
   const likeDeveloperMutation = useMutation({
     mutationFn: (data: RouterInputs["themeDeveloper"]["like"]) => {
@@ -35,5 +23,5 @@ export const useThemeDevelopersQuery = (themeId: string) => {
     },
   });
 
-  return { developers, ...others, likeDeveloperMutation };
+  return { likeDeveloperMutation };
 };

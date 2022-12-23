@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
-import { themeDevelopersQueryKey } from "../../../client/hooks/useThemeDevelopersQuery";
+import { themeDevelopersQueryKey } from "../../../client/hooks/usePaginatedDeveloperQueery";
 import { themeJoinQueryKey } from "../../../client/hooks/useThemeJoin";
 import { themeLikedQueryKey } from "../../../client/hooks/useThemeLike";
 import {
