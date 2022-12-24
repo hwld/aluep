@@ -47,6 +47,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
 
   // ログインしていて、テーマの投稿者と異なればいいねができる
   const canLike = Boolean(session && theme.user.id !== session.user.id);
+
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Title align="center">{theme.title}</Title>

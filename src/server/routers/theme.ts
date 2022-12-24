@@ -263,17 +263,6 @@ export const themeRoute = router({
     }),
 
   // 指定されたお題をいいねしたユーザーを取得する
-  /*getLikedUsers: publicProcedure
-    .input(z.object({ themeId: z.string() }))
-    .query(async ({ input }) => {
-      const users = await prisma.user.findMany({
-        where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
-      });
-
-      return users;
-    }),*/
-
-  // 指定されたお題をいいねしたユーザーを取得する
   getLikedUsers: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
     .query(async ({ input }) => {
