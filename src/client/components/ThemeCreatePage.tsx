@@ -1,10 +1,10 @@
 import { Box, Card, Title } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
 import { trpc } from "../../client/trpc";
 import { ThemeFormData } from "../../share/schema";
+import { showErrorNotification, showSuccessNotification } from "../utils";
 import { ThemeForm } from "./ThemeForm";
 
 export const ThemeCreatePage: React.FC = () => {
@@ -16,17 +16,15 @@ export const ThemeCreatePage: React.FC = () => {
       return trpc.theme.create.mutate(data);
     },
     onSuccess: () => {
-      showNotification({
-        color: "green",
-        title: "投稿",
+      showSuccessNotification({
+        title: "お題の投稿",
         message: "お題を投稿しました。",
       });
       router.replace("/");
     },
     onError: () => {
-      showNotification({
-        color: "red",
-        title: "投稿",
+      showErrorNotification({
+        title: "お題の投稿",
         message: "お題が投稿できませんでした。",
       });
     },

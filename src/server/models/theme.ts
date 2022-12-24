@@ -28,12 +28,7 @@ const themeArgs = {
   include: {
     tags: { include: { tag: true, theme: true } },
     user: true,
-    // TODO
-    // こうすると正しく数えてくれないので、
     _count: { select: { likes: true, developers: true } },
-    // すべて取得してその数を数える。 数が多くなってきたときにどうなるだろうか。
-    // likes: { select: { id: true } },
-    // developers: { select: { id: true } },
   },
 } satisfies Prisma.AppThemeArgs;
 
@@ -112,6 +107,7 @@ export const searchThemes = async (
       (
         SELECT
           AppTheme.id as themeId
+          , MAX(AppTheme.createdAt) as themeCreatedAt
         FROM
           AppTheme
           LEFT JOIN AppThemeTagOnAppTheme
@@ -133,6 +129,8 @@ export const searchThemes = async (
           COUNT(themeId) = ${tagIds.length}`
             : Prisma.empty
         }
+        ORDER BY
+          themeCreatedAt desc
       ) master
     `;
 

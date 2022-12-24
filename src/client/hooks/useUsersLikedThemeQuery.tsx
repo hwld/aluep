@@ -11,8 +11,7 @@ export const themelikesQueryKey = (themeId: string, page: number) => {
 export const useThemeLikesQuery = (themeId: string, page: number) => {
   const result = useQuery({
     queryKey: themelikesQueryKey(themeId, page),
-    queryFn: ({ queryKey }) => {
-      const { page } = queryKey[1];
+    queryFn: () => {
       return trpc.theme.getLikedUsers.query({ themeId, page: page.toString() });
     },
     keepPreviousData: true,

@@ -14,7 +14,7 @@ export const AppPagination: React.FC<Props> = ({
   total,
   ...styleProps
 }) => {
-  if (total < 1) {
+  if (total <= 1) {
     return null;
   }
 
@@ -25,7 +25,7 @@ export const AppPagination: React.FC<Props> = ({
         alignSelf: "center",
         borderRadius: theme.radius.md,
         overflow: "hidden",
-        boxShadow: theme.shadows.md,
+        boxShadow: theme.shadows.sm,
       })}
       py={7}
       px="sm"

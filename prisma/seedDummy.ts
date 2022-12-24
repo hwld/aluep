@@ -1,3 +1,7 @@
+/**
+ * ダミーデータを生成
+ */
+
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
 import { Presets, SingleBar } from "cli-progress";

@@ -19,7 +19,7 @@ type Props = {
   themeDeveloperLikes?: number;
   githuburl?: string;
 };
-function UserDetailCard({
+export function UserDetailCard({
   userImage,
   userName,
   sumThemeLikes,
@@ -98,5 +98,3 @@ function UserDetailCard({
     </Card>
   );
 }
-
-export default UserDetailCard;

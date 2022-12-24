@@ -51,12 +51,13 @@ export const ThemeJoinForm: React.FC<Props> = ({
               return (
                 <AppTextInput
                   required
-                  label="GitHubリポジトリ"
+                  label="開発に使用するGitHubリポジトリ"
                   error={errors.githubUrl?.message}
                   rightSection={
                     <RepoCreateModalButton
                       width={70}
                       onSetRepositoryUrl={field.onChange}
+                      themeId={themeId}
                     />
                   }
                   rightSectionWidth={70}

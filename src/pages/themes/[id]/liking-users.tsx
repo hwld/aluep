@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { ThemeLikelistPage } from "../../../client/components/ThemeLikelistPage";
+import { ThemeLikingUsersPage } from "../../../client/components/ThemeLikingUsersPage";
 import {
   themeQueryKey,
   useThemeQuery,
@@ -30,20 +30,23 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     );
     await queryClient.prefetchQuery(
       themelikesQueryKey(themeId, Number(page)),
-      () => caller.theme.getLikedUsers({ themeId })
+      () => caller.theme.getLikedUsers({ themeId, page })
     );
   }
 );
 
-const ThemeLikelist: NextPage = () => {
+/**
+ * お題にいいねしているユーザー一覧を表示するページ
+ */
+const LikingUsers: NextPage = () => {
   const router = useRouter();
   const themeId = router.query.id as string;
   const { theme } = useThemeQuery(themeId);
 
   if (!theme) {
-    return <div>error</div>;
+    return <></>;
   }
 
-  return <ThemeLikelistPage theme={theme} />;
+  return <ThemeLikingUsersPage theme={theme} />;
 };
-export default ThemeLikelist;
+export default LikingUsers;

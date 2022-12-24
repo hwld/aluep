@@ -3,11 +3,8 @@ import { Avatar, Card, Flex, Stack, Text } from "@mantine/core";
 type Props = {
   userImage?: string | null;
   userName?: string | null;
- };
- function ThemeLikelistCard({
-  userImage,
-  userName,
-}: Props) {
+};
+export function ThemeLikingUserCard({ userImage, userName }: Props) {
   return (
     <Card
       w={560}
@@ -15,10 +12,8 @@ type Props = {
         cursor: "pointer",
         position: "static",
       })}
-      
     >
       <Stack spacing={10}>
-
         {/* ユーザー情報 */}
         <Flex align="center" justify="space-between">
           <Flex gap={10} align="flex-start">
@@ -39,6 +34,4 @@ type Props = {
       </Stack>
     </Card>
   );
-};
-
-export default ThemeLikelistCard;
+}

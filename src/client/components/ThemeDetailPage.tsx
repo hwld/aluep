@@ -12,16 +12,21 @@ import {
 import Link from "next/link";
 import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
+import { usePaginatedDeveloperQuery } from "../hooks/usePaginatedDeveloperQueery";
+import { usePaginationState } from "../hooks/usePaginationState";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeJoin } from "../hooks/useThemeJoin";
 import { useThemeLike } from "../hooks/useThemeLike";
+import { AppPagination } from "./AppPagination";
 import { ThemeDeveloperCard } from "./DeveloperCard/ThemeDeveloperCard";
 import { ThemeLikeButton } from "./ThemeLikeButton";
 import { ThemeTagBadge } from "./ThemeTagBadge";
 
 type Props = { theme: Theme };
+
 export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
+  const [page, setPage] = usePaginationState({});
   const mantineTheme = useMantineTheme();
 
   const { session } = useSessionQuery();
@@ -29,9 +34,8 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const {
     data: { joined },
   } = useThemeJoin(theme.id);
-  const { developers, likeDeveloperMutation } = useThemeDevelopersQuery(
-    theme.id
-  );
+
+  const { likeDeveloperMutation } = useThemeDevelopersQuery(theme.id);
 
   const handleLikeTheme = () => {
     likeThemeMutation.mutate({
@@ -39,6 +43,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
       like: !likedByLoggedInUser,
     });
   };
+  const { data } = usePaginatedDeveloperQuery(theme.id, page);
 
   // ログインしていて、テーマの投稿者と異なればいいねができる
   const canLike = Boolean(session && theme.user.id !== session.user.id);
@@ -57,7 +62,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           />
           <Button
             component={Link}
-            href={`/themes/${theme?.id}/likelist`}
+            href={`/themes/${theme?.id}/liking-users`}
             sx={(theme) => ({
               transition: "all 250ms",
               textDecoration: "underline",
@@ -93,30 +98,43 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           >
             {joined ? "参加しています" : "参加する"}
           </Button>
-          <Title mt={30} order={4}>
-            参加している開発者
-          </Title>
-          <Stack mt={10}>
-            {developers.map((developer) => {
-              return (
-                <ThemeDeveloperCard
-                  key={developer.id}
-                  theme={theme}
-                  developer={developer}
-                  onLikeDeveloper={(developerId, like) => {
-                    likeDeveloperMutation.mutate({ developerId, like });
-                  }}
-                />
-              );
-            })}
+          <Stack>
+            <Title mt={30} order={4}>
+              参加している開発者
+            </Title>
+            <Box
+              sx={(theme) => ({
+                display: "grid",
+                gap: theme.spacing.md,
+              })}
+            >
+              {data?.developers.map((developer) => {
+                return (
+                  <ThemeDeveloperCard
+                    key={developer.id}
+                    theme={theme}
+                    developer={developer}
+                    onLikeDeveloper={(developerId, like) => {
+                      likeDeveloperMutation.mutate({ developerId, like });
+                    }}
+                  />
+                );
+              })}
+            </Box>
+
+            <AppPagination
+              page={page}
+              onChange={setPage}
+              total={data?.allPages ?? 0}
+            />
           </Stack>
         </Box>
         {/* ユーザー情報 */}
         <Card
           sx={{ flexShrink: 0, flexGrow: 0, height: "min-content" }}
-          w={250}
+          w={150}
         >
-          <Flex gap={3} align="center">
+          <Flex gap="xs" align="center">
             <FaUserAlt size={15} fill={mantineTheme.colors.gray[5]} />
             <Text color="gray.5" size="sm">
               投稿者

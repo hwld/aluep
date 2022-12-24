@@ -9,11 +9,13 @@ import { AppTextInput } from "./AppTextInput";
 type Props = {
   onSubmit: (data: RepositoryFormData) => void;
   onCancel: () => void;
+  defaultValues?: RepositoryFormData;
   isSubmitting?: boolean;
 };
 export const RepositoryForm: React.FC<Props> = ({
   onSubmit,
   onCancel,
+  defaultValues = { repoName: "", repoDescription: "" },
   isSubmitting,
 }) => {
   const {
@@ -21,7 +23,7 @@ export const RepositoryForm: React.FC<Props> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<RepositoryFormData>({
-    defaultValues: { repoName: "", repoDescription: "" },
+    defaultValues,
     resolver: zodResolver(repositoryFormSchema),
   });
 

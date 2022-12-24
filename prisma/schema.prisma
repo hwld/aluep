@@ -79,7 +79,7 @@ model AppTheme {
   user        User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   developers AppThemeDeveloper[]
-
+  
   likes AppThemeLike[]
 
   createdAt DateTime @default(now())

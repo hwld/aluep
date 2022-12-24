@@ -1,12 +1,12 @@
 import { Button, Card, Flex, Text } from "@mantine/core";
-import { Session } from "next-auth";
+import { User } from "@prisma/client";
 import router from "next/router";
 import React from "react";
 import { useSumThemeLikesQuery } from "../../hooks/useSumThemeLikesQuery";
 import { useThemeDeveloperLikesQuery } from "../../hooks/useThemeDeveloperLikesQuery";
-import UserDetailCard from "../UserDetailCard";
+import { UserDetailCard } from "../UserDetailCard";
 
-type Props = { user: Session["user"]; state: "post" | "join" | "like" };
+type Props = { user: User; state: "post" | "join" | "like" };
 
 export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
   const { sumThemeLikes } = useSumThemeLikesQuery(user.id);
@@ -17,13 +17,13 @@ export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
   githubUrl += user.name;
 
   const handleSwitchPost = () => {
-    router.push(`/users/detail/userdetailpostpage`);
+    router.push(`/users/${user.id}/posted-themes`);
   };
   const handleSwitchJoin = () => {
-    router.push(`/users/detail/userdetailjoinpage`);
+    router.push(`/users/${user.id}/joined-themes`);
   };
   const handleSwitchLike = () => {
-    router.push(`/users/detail/userdetaillikepage`);
+    router.push(`/users/${user.id}/liked-themes`);
   };
 
   return (

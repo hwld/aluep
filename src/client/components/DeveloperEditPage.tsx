@@ -1,5 +1,4 @@
-import { Avatar, Box, Card, Flex, Text, Title } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
+import { Card, Stack, Text, Title } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { Theme } from "../../server/models/theme";
@@ -7,8 +6,9 @@ import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { RouterInputs } from "../../server/trpc";
 import { ThemeJoinFormData } from "../../share/schema";
 import { trpc } from "../trpc";
+import { showErrorNotification, showSuccessNotification } from "../utils";
 import { ThemeJoinForm } from "./ThemeJoinForm";
-import { ThemeTagBadge } from "./ThemeTagBadge";
+import { ThemeSummaryCard } from "./ThemeSummaryCard";
 
 type Props = { theme: Theme; developer: ThemeDeveloper };
 export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
@@ -20,8 +20,7 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
       return trpc.themeDeveloper.update.mutate(data);
     },
     onSuccess: () => {
-      showNotification({
-        color: "green",
+      showSuccessNotification({
         title: "参加情報の更新",
         message: "参加情報を更新しました。",
       });
@@ -29,8 +28,7 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
       router.push(`/themes/${theme.id}`);
     },
     onError: () => {
-      showNotification({
-        color: "red",
+      showErrorNotification({
         title: "参加情報の更新",
         message: "参加情報を更新できませんでした。",
       });
@@ -45,40 +43,25 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
     router.back();
   };
   return (
-    <Box w={800} m="auto">
+    <Stack w={800} m="auto" spacing="lg">
       <Title order={3}>お題の参加情報の更新</Title>
-      <Card mt="md">
-        <Title order={4}>{theme?.title}</Title>
-        <Flex mt="md" gap={5}>
-          <Avatar
-            src={theme?.user.image}
-            size="md"
-            radius={100}
-            sx={(theme) => ({
-              borderWidth: "2px",
-              borderColor: theme.colors.gray[2],
-              borderStyle: "solid",
-              borderRadius: "100%",
-            })}
+      <Stack spacing="xs">
+        <Text c="gray.5">参加しているお題</Text>
+        <ThemeSummaryCard theme={theme} />
+      </Stack>
+      <Stack spacing="xs">
+        <Text c="gray.5">参加情報</Text>
+        <Card>
+          <ThemeJoinForm
+            onSubmit={handleUpdateDeveloper}
+            onCancel={handleBack}
+            themeId={theme.id}
+            defaultValues={developer}
+            submitText="更新する"
+            isSubmitting={updateMutation.isLoading}
           />
-          <Text size="sm">{theme?.user.name}</Text>
-        </Flex>
-        <Flex gap={10} mt="sm" wrap="wrap">
-          {theme?.tags.map((tag) => {
-            return <ThemeTagBadge key={tag.id}>{tag.name}</ThemeTagBadge>;
-          })}
-        </Flex>
-      </Card>
-      <Card mt="xl">
-        <ThemeJoinForm
-          onSubmit={handleUpdateDeveloper}
-          onCancel={handleBack}
-          themeId={theme.id}
-          defaultValues={developer}
-          submitText="更新する"
-          isSubmitting={updateMutation.isLoading}
-        />
-      </Card>
-    </Box>
+        </Card>
+      </Stack>
+    </Stack>
   );
 };

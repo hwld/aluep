@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
+import { OmitStrict } from "../../types/OmitStrict";
 import { prisma } from "../prismadb";
 
 export const themeDeveloperSchema = z.object({
@@ -44,18 +45,23 @@ const convertDeveloper = (
   return developer;
 };
 
-type FindThemeDevelopersArgs = {
-  where?: Prisma.AppThemeDeveloperWhereInput;
+type FindThemeDevelopersArgs = OmitStrict<
+  Prisma.AppThemeDeveloperFindManyArgs,
+  "include" | "select"
+> & {
   loggedInUserId: string | undefined;
 };
-export const findThemeDevelopers = async ({
-  where,
+export const findManyThemeDevelopers = async ({
+  orderBy,
   loggedInUserId,
+  ...args
 }: FindThemeDevelopersArgs): Promise<ThemeDeveloper[]> => {
   const rawDevelopers = await prisma.appThemeDeveloper.findMany({
-    where,
+    orderBy: { createdAt: "desc", ...orderBy },
+    ...args,
     ...developerArgs,
   });
+
   const developers = rawDevelopers.map((raw) => {
     return convertDeveloper(raw, loggedInUserId);
   });

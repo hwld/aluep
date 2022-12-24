@@ -1,7 +1,7 @@
-import { showNotification } from "@mantine/notifications";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { RouterInputs } from "../../server/trpc";
 import { trpc } from "../trpc";
+import { showErrorNotification } from "../utils";
 import { useSessionQuery } from "./useSessionQuery";
 import { themeQueryKey } from "./useThemeQuery";
 
@@ -33,8 +33,7 @@ export const useThemeLike = (themeId: string) => {
       queryClient.invalidateQueries(themeQueryKey(themeId));
     },
     onError: () => {
-      showNotification({
-        color: "red",
+      showErrorNotification({
         title: "お題へのいいね",
         message: "お題にいいねできませんでした。",
       });

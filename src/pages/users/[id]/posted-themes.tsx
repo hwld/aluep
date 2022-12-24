@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { UserDetailAnotherPostPage } from "../../../client/components/UserDetailAnother/UserDetailAnotherPostPage";
+import { UserPostedThemesPage } from "../../../client/components/UserDetail/UserPostedThemesPage";
 import { postThemeQueryKey } from "../../../client/hooks/usePostThemesQuery";
 import { userQueryKey, useUserQuery } from "../../../client/hooks/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
@@ -29,6 +29,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
+/**
+ *  ユーザーの詳細ページ
+ *  ユーザーが投稿したお題一覧を一緒に表示する
+ */
 export function UserDetail() {
   const router = useRouter();
   const userId = router.query.id as string;
@@ -38,7 +42,7 @@ export function UserDetail() {
     return;
   } else {
     //TODO
-    return <UserDetailAnotherPostPage user={user} />;
+    return <UserPostedThemesPage user={user} />;
   }
 }
 export default UserDetail;
