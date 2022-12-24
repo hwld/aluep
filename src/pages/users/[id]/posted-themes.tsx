@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { UserPostedThemesPage } from "../../../client/components/UserDetail/UserPostedThemesPage";
-import { postThemeQueryKey } from "../../../client/hooks/usePostThemesQuery";
+import { postedThemesQueryKey } from "../../../client/hooks/usePostedThemesQuery";
 import { sumThemeLikesQueryKey } from "../../../client/hooks/useSumThemeLikesQuery";
 import { themeDeveloperLikesQueryKey } from "../../../client/hooks/useThemeDeveloperLikesQuery";
 import { userQueryKey, useUserQuery } from "../../../client/hooks/useUserQuery";
@@ -26,8 +26,9 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.user.get({ userId })
     );
 
-    await queryClient.prefetchQuery(postThemeQueryKey(userId), () =>
-      caller.user.getPostTheme({ userId, page })
+    await queryClient.prefetchQuery(
+      postedThemesQueryKey(userId, Number(page)),
+      () => caller.user.getPostTheme({ userId, page })
     );
 
     await queryClient.prefetchQuery(sumThemeLikesQueryKey, () =>

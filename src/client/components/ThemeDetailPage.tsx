@@ -88,6 +88,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             mt={15}
             component={Link}
             href={`/themes/${theme.id}/join`}
+            replace
             disabled={joined}
             sx={(theme) => ({
               "&[data-disabled]": {
