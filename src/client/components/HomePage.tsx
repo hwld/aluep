@@ -5,7 +5,7 @@ import { usePaginationState } from "../hooks/usePaginationState";
 import {
   useTop10LikesDeveloperInThisMonth,
   useTop10LikesPostersInThisMonth,
-  useTop10LikesThemesInThisMonth
+  useTop10LikesThemesInThisMonth,
 } from "../hooks/useRankingQuery";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { AppPagination } from "./AppPagination";

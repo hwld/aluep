@@ -1,10 +1,10 @@
-import { Avatar, Box, Card, Flex, Text, Title } from "@mantine/core";
+import { Card, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { Theme } from "../../server/models/theme";
 import { ThemeJoinFormData } from "../../share/schema";
 import { useThemeJoin } from "../hooks/useThemeJoin";
 import { ThemeJoinForm } from "./ThemeJoinForm";
-import { ThemeTagBadge } from "./ThemeTagBadge";
+import { ThemeSummaryCard } from "./ThemeSummaryCard";
 
 type Props = { theme: Theme; repoUrl?: string };
 export const ThemeJoinPage: React.FC<Props> = ({ theme, repoUrl }) => {
@@ -24,40 +24,25 @@ export const ThemeJoinPage: React.FC<Props> = ({ theme, repoUrl }) => {
     router.back();
   };
   return (
-    <Box w={800} m="auto">
+    <Stack w={800} m="auto" spacing="lg">
       <Title order={3}>お題へ参加</Title>
-      <Card mt="md">
-        <Title order={4}>{theme.title}</Title>
-        <Flex mt="md" gap={5}>
-          <Avatar
-            src={theme.user.image}
-            size="md"
-            radius={100}
-            sx={(theme) => ({
-              borderWidth: "2px",
-              borderColor: theme.colors.gray[2],
-              borderStyle: "solid",
-              borderRadius: "100%",
-            })}
+      <Stack spacing="xs">
+        <Text c="gray.5">参加するお題</Text>
+        <ThemeSummaryCard theme={theme} />
+      </Stack>
+      <Stack spacing="xs">
+        <Text c="gray.5">開発情報</Text>
+        <Card>
+          <ThemeJoinForm
+            onSubmit={handleJoinTheme}
+            onCancel={handleBack}
+            themeId={theme.id}
+            submitText="参加する"
+            isSubmitting={joinMutation.isLoading}
+            defaultValues={{ githubUrl: repoUrl ?? "", comment: "" }}
           />
-          <Text size="sm">{theme.user.name}</Text>
-        </Flex>
-        <Flex gap={10} mt="sm" wrap="wrap">
-          {theme.tags.map((tag) => {
-            return <ThemeTagBadge key={tag.id}>{tag.name}</ThemeTagBadge>;
-          })}
-        </Flex>
-      </Card>
-      <Card mt="xl">
-        <ThemeJoinForm
-          onSubmit={handleJoinTheme}
-          onCancel={handleBack}
-          themeId={theme.id}
-          submitText="参加する"
-          isSubmitting={joinMutation.isLoading}
-          defaultValues={{ githubUrl: repoUrl ?? "", comment: "" }}
-        />
-      </Card>
-    </Box>
+        </Card>
+      </Stack>
+    </Stack>
   );
 };
