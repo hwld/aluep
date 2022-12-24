@@ -1,8 +1,9 @@
-import { Flex, Pagination } from "@mantine/core";
+import { Flex } from "@mantine/core";
 import { User } from "@prisma/client";
 import React from "react";
 import { useJoinThemesQuery } from "../../hooks/useJoinThemesQuery";
 import { usePaginationState } from "../../hooks/usePaginationState";
+import { AppPagination } from "../AppPagination";
 import { ThemeCard } from "../ThemeCard/ThemeCard";
 import { UserDetailAnotherPage } from "./UserDetailAnother";
 
@@ -21,7 +22,7 @@ export const UserDetailAnotherJoinPage: React.FC<Props> = ({ user }) => {
           return <ThemeCard key={theme.id} theme={theme} />;
         })}
 
-        <Pagination
+        <AppPagination
           page={joinPage}
           onChange={setJoinPage}
           total={joinThemes?.allPages ?? 0}

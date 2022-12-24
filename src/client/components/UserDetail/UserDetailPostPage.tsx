@@ -1,8 +1,9 @@
-import { Flex, Pagination } from "@mantine/core";
+import { Flex } from "@mantine/core";
 import { Session } from "next-auth";
 import React from "react";
 import { usePaginationState } from "../../hooks/usePaginationState";
 import { usePostThemesQuery } from "../../hooks/usePostThemesQuery";
+import { AppPagination } from "../AppPagination";
 import { ThemeCard } from "../ThemeCard/ThemeCard";
 import { UserDetailPage } from "./UserDetail";
 
@@ -20,7 +21,7 @@ export const UserDetailPostPage: React.FC<Props> = ({ user }) => {
           return <ThemeCard key={theme.id} theme={theme} />;
         })}
 
-        <Pagination
+        <AppPagination
           page={postPage}
           onChange={setPostPage}
           total={postThemes?.allPages ?? 0}

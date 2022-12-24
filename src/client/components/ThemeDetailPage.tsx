@@ -4,10 +4,10 @@ import {
   Button,
   Card,
   Flex,
-  Pagination,
+  Stack,
   Text,
   Title,
-  useMantineTheme
+  useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
 import { FaUserAlt } from "react-icons/fa";
@@ -18,6 +18,7 @@ import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeJoin } from "../hooks/useThemeJoin";
 import { useThemeLike } from "../hooks/useThemeLike";
+import { AppPagination } from "./AppPagination";
 import { ThemeDeveloperCard } from "./DeveloperCard/ThemeDeveloperCard";
 import { ThemeLikeButton } from "./ThemeLikeButton";
 import { ThemeTagBadge } from "./ThemeTagBadge";
@@ -74,7 +75,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
 
         {/* 説明 */}
         <Box sx={{ flexGrow: 1 }}>
-          <Card mih={300} >
+          <Card mih={300}>
             <Flex gap={10} mb={10} wrap="wrap">
               {theme.tags.map((tag) => (
                 <ThemeTagBadge key={tag.id}>{tag.name}</ThemeTagBadge>
@@ -96,41 +97,36 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           >
             {joined ? "参加しています" : "参加する"}
           </Button>
-          <Title mt={30} order={4}>
-            参加している開発者
-          </Title>
-          <Box
-            sx={(theme) => ({
-              display: "grid",
-              gap: theme.spacing.md,
-            })}
-          >
-            {data?.developers.map((developer) => {
-              // {
-              //   if (theme.developers / 10 == 0) {
-              //     setAllPage(theme.developers / 10);
-              //   } else if (theme.developers / 10 != 0) {
-              //     setAllPage(theme.developers / 10 + 1);
-              //   }
-              // }
-              return (
-                <ThemeDeveloperCard
-                  key={developer.id}
-                  theme={theme}
-                  developer={developer}
-                  onLikeDeveloper={(developerId, like) => {
-                    likeDeveloperMutation.mutate({ developerId, like });
-                  }}
-                />
-              );
-            })}
-          </Box>
+          <Stack>
+            <Title mt={30} order={4}>
+              参加している開発者
+            </Title>
+            <Box
+              sx={(theme) => ({
+                display: "grid",
+                gap: theme.spacing.md,
+              })}
+            >
+              {data?.developers.map((developer) => {
+                return (
+                  <ThemeDeveloperCard
+                    key={developer.id}
+                    theme={theme}
+                    developer={developer}
+                    onLikeDeveloper={(developerId, like) => {
+                      likeDeveloperMutation.mutate({ developerId, like });
+                    }}
+                  />
+                );
+              })}
+            </Box>
 
-          <Pagination
-            page={page}
-            onChange={setPage}
-            total={data?.allPages ?? 0}
-          />
+            <AppPagination
+              page={page}
+              onChange={setPage}
+              total={data?.allPages ?? 0}
+            />
+          </Stack>
         </Box>
         {/* ユーザー情報 */}
         <Card
