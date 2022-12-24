@@ -40,7 +40,10 @@ export const UserMenuButton: React.FC<Props> = ({ user }) => {
           </Text>
         </Menu.Label>
         <Divider color="gray.3" />
-        <MenuLinkItem icon={<VscAccount size={20} />} href="/users/detail">
+        <MenuLinkItem
+          icon={<VscAccount size={20} />}
+          href={`/users/${user.id}`}
+        >
           プロフィール
         </MenuLinkItem>
         <MenuLinkItem icon={<RiEdit2Line size={20} />} href="/users/profile">
