@@ -8,7 +8,7 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { RiFileList2Line } from "react-icons/ri";
+import { TbFileText } from "react-icons/tb";
 import { Theme } from "../../server/models/theme";
 
 /**　アプリ開発のお題の概要カード */
@@ -19,10 +19,10 @@ export const ThemeSummaryCard: React.FC<Props> = ({ theme }) => {
     <Card>
       <Flex gap="md" align="center">
         <Box sx={{ flexShrink: 0 }}>
-          <RiFileList2Line color={mantineTheme.colors.red[7]} size={70} />
+          <TbFileText color={mantineTheme.colors.red[7]} size={80} />
         </Box>
-        <Stack spacing="md">
-          <Title order={2} color="red.7">
+        <Stack spacing="sm">
+          <Title order={4} color="red.7">
             {theme.title}
           </Title>
           <Flex gap={5}>
@@ -37,7 +37,7 @@ export const ThemeSummaryCard: React.FC<Props> = ({ theme }) => {
                 borderRadius: "100%",
               })}
             />
-            <Text>{theme?.user.name}</Text>
+            <Text size="sm">{theme?.user.name}</Text>
           </Flex>
         </Stack>
       </Flex>

@@ -14,7 +14,7 @@ export const AppPagination: React.FC<Props> = ({
   total,
   ...styleProps
 }) => {
-  if (total < 1) {
+  if (total <= 1) {
     return null;
   }
 

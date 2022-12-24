@@ -30,7 +30,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     );
     await queryClient.prefetchQuery(
       themelikesQueryKey(themeId, Number(page)),
-      () => caller.theme.getLikedUsers({ themeId })
+      () => caller.theme.getLikedUsers({ themeId, page })
     );
   }
 );
@@ -41,7 +41,7 @@ const ThemeLikelist: NextPage = () => {
   const { theme } = useThemeQuery(themeId);
 
   if (!theme) {
-    return <div>error</div>;
+    return <></>;
   }
 
   return <ThemeLikelistPage theme={theme} />;
