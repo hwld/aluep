@@ -1,7 +1,7 @@
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { showNotification } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { BiTrashAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
@@ -9,12 +9,16 @@ import { Theme } from "../../../server/models/theme";
 import { themesQueryKey } from "../../hooks/usePaginatedThemesQuery";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
 import { trpc } from "../../trpc";
-import { stopPropagation } from "../../utils";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+  stopPropagation,
+} from "../../utils";
+import { AppConfirmModal } from "../AppConfirmModal";
 import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
 import { MenuItem } from "../AppMenu/MenuItem";
 import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
-import { ThemeDeleteModal } from "./ThemeDeleteModal";
 
 type Props = { theme: Theme };
 export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
@@ -23,27 +27,28 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
   const { session } = useSessionQuery();
   const queryClient = useQueryClient();
 
-  // TODO: hookに切り出したい
   const deleteThemeMutation = useMutation({
     mutationFn: () => {
       return trpc.theme.delete.mutate({ themeId: theme.id });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(themesQueryKey);
-      showNotification({
-        color: "green",
+      showSuccessNotification({
         title: "お題の削除",
         message: "お題を削除しました。",
       });
     },
     onError: () => {
-      showNotification({
-        color: "red",
+      showErrorNotification({
         title: "お題の削除",
         message: "お題を削除できませんでした。",
       });
     },
   });
+
+  const handleDeleteTheme = () => {
+    deleteThemeMutation.mutate(undefined, { onSuccess: () => close() });
+  };
 
   return (
     <>
@@ -82,13 +87,21 @@ export const ThemeMenuButton: React.FC<Props> = ({ theme }) => {
           )}
         </MenuDropdown>
       </AppMenu>
-      <ThemeDeleteModal
+      <AppConfirmModal
+        title="お題の削除"
+        message={
+          <>
+            お題を削除してもよろしいですか？
+            <br />
+            お題を削除すると、もらった「いいね」、開発者の情報が完全に削除されます。
+          </>
+        }
         opened={opened}
         onClose={close}
-        onDeleteTheme={() => {
-          deleteThemeMutation.mutate(undefined, { onSuccess: () => close() });
-        }}
-        deleting={deleteThemeMutation.isLoading}
+        onConfirm={handleDeleteTheme}
+        isConfirming={deleteThemeMutation.isLoading}
+        confirmIcon={BiTrashAlt}
+        confirmText="削除する"
       />
     </>
   );

@@ -23,7 +23,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
           width: "100%",
           overflow: "auto",
         }}
-        pt={50}
+        pt="xl"
       >
         <Box
           component="main"

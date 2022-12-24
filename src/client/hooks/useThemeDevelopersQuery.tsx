@@ -1,24 +1,12 @@
-import { showNotification } from "@mantine/notifications";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { RouterInputs } from "../../server/trpc";
 import { trpc } from "../trpc";
-import { themeQueryKey } from "./useThemeQuery";
+import { showErrorNotification } from "../utils";
+import { themeDevelopersQueryKey } from "./usePaginatedDeveloperQueery";
 
-//TODO: ページング
-
-export const themeDevelopersQueryKey = (themeId: string) =>
-  [...themeQueryKey(themeId), "develoeprs"] as const;
-
+// TODO: いいねするだけのhookにする
 export const useThemeDevelopersQuery = (themeId: string) => {
   const queryClient = useQueryClient();
-
-  const { data: developers, ...others } = useQuery({
-    queryKey: themeDevelopersQueryKey(themeId),
-    queryFn: () => {
-      return trpc.theme.getAllDevelopers.query({ themeId });
-    },
-    initialData: [],
-  });
 
   const likeDeveloperMutation = useMutation({
     mutationFn: (data: RouterInputs["themeDeveloper"]["like"]) => {
@@ -28,13 +16,12 @@ export const useThemeDevelopersQuery = (themeId: string) => {
       queryClient.invalidateQueries(themeDevelopersQueryKey(themeId));
     },
     onError: () => {
-      showNotification({
-        color: "red",
+      showErrorNotification({
         title: "開発者へのいいね",
         message: "開発者にいいねできませんでした。",
       });
     },
   });
 
-  return { developers, ...others, likeDeveloperMutation };
+  return { likeDeveloperMutation };
 };

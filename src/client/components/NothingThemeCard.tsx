@@ -17,7 +17,7 @@ export const NothingThemeCard: React.FC<Props> = ({ page, user }) => {
   const nothingHome = () => {
     return (
       <Flex direction={"column"} gap={10}>
-        <Text>お題はまだ投稿されていません。</Text>
+        <Text color="gray.5">お題はまだ投稿されていません。</Text>
         {user ? (
           <Button
             bg={"red.7"}
@@ -44,9 +44,12 @@ export const NothingThemeCard: React.FC<Props> = ({ page, user }) => {
           <BsDot size={40} color={mantineTheme.colors.red[6]} />
           <RiQuestionMark size={80} color={mantineTheme.colors.red[7]} />
         </Flex>
-        <Text>
+        <Text c="gray.5">
           条件に一致する検索結果はありません。<br></br>
-          <Text align="center"> 別の条件をお試しください。</Text>
+          <Text align="center" c="gray.5">
+            {" "}
+            別の条件をお試しください。
+          </Text>
         </Text>
       </Flex>
     );

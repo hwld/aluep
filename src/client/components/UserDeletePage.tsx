@@ -1,8 +1,8 @@
 import { Box, Button, List, Mark, Text, Title } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { trpc } from "../trpc";
+import { showErrorNotification } from "../utils";
 
 export const UserDeletepage: React.FC = () => {
   const router = useRouter();
@@ -14,9 +14,8 @@ export const UserDeletepage: React.FC = () => {
       router.replace("/");
     },
     onError: () => {
-      showNotification({
-        color: "red",
-        title: "ユーザー削除",
+      showErrorNotification({
+        title: "ユーザーの削除",
         message: "ユーザーを削除できませんでした。",
       });
     },

@@ -1,18 +1,22 @@
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { showNotification } from "@mantine/notifications";
+import { BiTrashAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
 import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
 import { useThemeJoin } from "../../hooks/useThemeJoin";
-import { stopPropagation } from "../../utils";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+  stopPropagation,
+} from "../../utils";
+import { AppConfirmModal } from "../AppConfirmModal";
 import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
 import { MenuItem } from "../AppMenu/MenuItem";
 import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
-import { DeveloperDeleteModal } from "./DeveloperDeleteModal";
 
 type Props = { developer: ThemeDeveloper };
 export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
@@ -28,16 +32,14 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
       { developerId: developer.id },
       {
         onSuccess: () => {
-          showNotification({
-            color: "green",
+          showSuccessNotification({
             title: "開発情報の削除",
             message: "開発情報を削除しました。",
           });
           close();
         },
         onError: () => {
-          showNotification({
-            color: "red",
+          showErrorNotification({
             title: "開発情報の削除",
             message: "開発情報を削除できませんでした。",
           });
@@ -83,11 +85,21 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
           )}
         </MenuDropdown>
       </AppMenu>
-      <DeveloperDeleteModal
+      <AppConfirmModal
+        title="開発情報の削除"
+        message={
+          <>
+            開発情報を削除してもよろしいですか？
+            <br />
+            開発情報を削除すると、もらった「いいね」の情報が完全に削除されます。
+          </>
+        }
         opened={opened}
         onClose={close}
-        onDeleteDeveloepr={handleDeleteDeveloper}
-        deleting={cancelJoinMutation.isLoading}
+        onConfirm={handleDeleteDeveloper}
+        isConfirming={cancelJoinMutation.isLoading}
+        confirmIcon={BiTrashAlt}
+        confirmText="削除する"
       />
     </>
   );

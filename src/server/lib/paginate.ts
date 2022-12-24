@@ -26,3 +26,21 @@ export const paginate = async <FinderInput, FinderResult>({
 
   return { data, allPages };
 };
+
+export const paginateDeveloper = async <FinderInput, FinderResult>({
+  finderInput,
+  finder,
+  counter,
+  pagingData: { page, limit },
+}: PaginateArgs<FinderInput, FinderResult>) => {
+  const alldeveloperCount = await counter(finderInput);
+  const allPages = Math.ceil(alldeveloperCount / limit);
+
+  const data = await finder({
+    ...finderInput,
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+
+  return { data, allPages };
+};

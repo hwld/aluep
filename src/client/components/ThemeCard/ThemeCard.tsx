@@ -8,7 +8,6 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { MdComputer, MdOutlineFavoriteBorder } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
@@ -96,7 +95,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
               </Text>
               <Flex align="center" gap="lg">
                 <Text color="gray.5" size="sm" sx={{ whiteSpace: "nowrap" }}>
-                  {format(new Date(theme.createdAt), "yyyy年M月d日")}
+                  {theme.elapsedSinceCreation}
                 </Text>
                 <Flex align="center" gap="sm">
                   <Flex align="center" gap={3}>

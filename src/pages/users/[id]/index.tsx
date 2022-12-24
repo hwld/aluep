@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { UserDetailAnotherPage } from "../../../client/components/UserDetailAnotherPage";
+import { UserDetailAnotherPostPage } from "../../../client/components/UserDetailAnother/UserDetailAnotherPostPage";
 import { joinThemesQueryKey } from "../../../client/hooks/useJoinThemesQuery";
 import { likeThemesQueryKey } from "../../../client/hooks/useLikeThemesQuery";
 import { postThemeQueryKey } from "../../../client/hooks/usePostThemesQuery";
@@ -11,12 +11,17 @@ import { appRouter } from "../../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
+    const caller = appRouter.createCaller({ session });
+    const { page } = query;
+
     const { id: userId } = query;
+
     if (typeof userId !== "string") {
       return { notFound: true };
     }
-
-    const caller = appRouter.createCaller({ session });
+    if (typeof page === "object") {
+      throw new Error();
+    }
     const user = await caller.user.get({ userId });
     if (!user) {
       return { notFound: true };
@@ -24,8 +29,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     queryClient.setQueryData(userQueryKey(userId), user);
 
-    await queryClient.prefetchQuery(postThemeQueryKey, () =>
-      caller.user.getPostTheme({ userId })
+    await queryClient.prefetchQuery(postThemeQueryKey(userId), () =>
+      caller.user.getPostTheme({ userId, page })
     );
 
     await queryClient.prefetchQuery(sumThemeLikesQueryKey, () =>
@@ -36,12 +41,12 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.user.getThemeDeveloperLike({ userId })
     );
 
-    await queryClient.prefetchQuery(joinThemesQueryKey, () =>
-      caller.user.getJoinTheme({ userId })
+    await queryClient.prefetchQuery(joinThemesQueryKey(userId), () =>
+      caller.user.getJoinTheme({ userId, page })
     );
 
-    await queryClient.prefetchQuery(likeThemesQueryKey, () =>
-      caller.user.getLikeTheme({ userId })
+    await queryClient.prefetchQuery(likeThemesQueryKey(userId), () =>
+      caller.user.getLikeTheme({ userId, page })
     );
   }
 );
@@ -55,7 +60,7 @@ export function UserDetail() {
     return;
   } else {
     //TODO
-    return <UserDetailAnotherPage user={user} />;
+    return <UserDetailAnotherPostPage user={user} />;
   }
 }
 export default UserDetail;

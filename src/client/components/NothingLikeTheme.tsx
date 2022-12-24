@@ -21,7 +21,7 @@ export const NothingLikeTheme = () => {
               <SlLike size={45} color={mantineTheme.colors.red[6]} />
               <SlLike size={50} color={mantineTheme.colors.red[7]} />
             </Flex>
-            <Text fz="xl" align="center">
+            <Text fz="xl" c="gray.5" align="center">
               お題へいいねしてみよう！
             </Text>
             <Text fz="xs" c={"gray.4"} align="center">
