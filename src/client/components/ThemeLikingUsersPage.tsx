@@ -3,11 +3,11 @@ import { Theme } from "../../server/models/theme";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useThemeLikesQuery } from "../hooks/useUsersLikedThemeQuery";
 import { AppPagination } from "./AppPagination";
-import { NothingLikelist } from "./NothingLikelist";
-import ThemeLikelistCard from "./ThemeLikelistCard";
+import { NothingThemeLikingUsers } from "./NothingThemeLikingUsers";
+import ThemeLikingUserCard from "./ThemeLikingUserCard";
 
 type Props = { theme: Theme };
-export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
+export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
   const [page, setPage] = usePaginationState({});
   const { data } = useThemeLikesQuery(theme.id, page);
 
@@ -36,7 +36,7 @@ export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
       </Flex>
       <Stack mt={10}>
         {theme.likes === 0 ? (
-          <NothingLikelist />
+          <NothingThemeLikingUsers />
         ) : (
           <Title mt={10} order={4} align="left">
             いいねした人
@@ -44,7 +44,7 @@ export const ThemeLikelistPage: React.FC<Props> = ({ theme }) => {
         )}
         {data?.users.map((users) => {
           return (
-            <ThemeLikelistCard
+            <ThemeLikingUserCard
               key={users.id}
               userImage={users.image}
               userName={users.name}

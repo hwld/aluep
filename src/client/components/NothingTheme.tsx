@@ -6,9 +6,9 @@ import { GoSearch } from "react-icons/go";
 import { MdPostAdd } from "react-icons/md";
 import { RiQuestionMark } from "react-icons/ri";
 
-type Props = { page: string; user?: Session["user"] };
+type Props = { page: "Home" | "Search"; user?: Session["user"] };
 
-export const NothingThemeCard: React.FC<Props> = ({ page, user }) => {
+export const NothingTheme: React.FC<Props> = ({ page, user }) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
   const handleCreateTheme = () => {

@@ -1,6 +1,6 @@
 import { Card, Flex, Text, useMantineTheme } from "@mantine/core";
 import { SlLike } from "react-icons/sl";
-export const NothingLikeTheme = () => {
+export const NothingPopularThemes = () => {
   const mantineTheme = useMantineTheme();
   return (
     <Card bg="red.7" h={250}>

@@ -10,8 +10,8 @@ import {
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { AppPagination } from "./AppPagination";
 import { NothingLike } from "./NothingLike";
-import { NothingLikeTheme } from "./NothingLikeTheme";
-import { NothingThemeCard } from "./NothingThemeCard";
+import { NothingPopularThemes } from "./NothingPopularThemes";
+import { NothingTheme } from "./NothingTheme";
 
 import { PopularThemeCarousel } from "./PopularThemeCarousel/PopularThemeCarousel";
 import { RankingCard } from "./RankingCard";
@@ -38,7 +38,7 @@ export const HomePage: React.FC = () => {
             <Stack spacing="sm" w="100%">
               <Title order={4}>人気のお題</Title>
               {top10LikesThemesInThisMonth?.length === 0 ? (
-                <NothingLikeTheme />
+                <NothingPopularThemes />
               ) : (
                 <PopularThemeCarousel
                   themes={top10LikesThemesInThisMonth}
@@ -50,7 +50,7 @@ export const HomePage: React.FC = () => {
             <Stack>
               <Title order={4}>全てのお題</Title>
               {data?.themes.length === 0 ? (
-                <NothingThemeCard page="Home" user={session?.user} />
+                <NothingTheme page="Home" user={session?.user} />
               ) : (
                 <ThemeCardContainer themes={data?.themes ?? []} />
               )}

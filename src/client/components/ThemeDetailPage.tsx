@@ -62,7 +62,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           />
           <Button
             component={Link}
-            href={`/themes/${theme?.id}/likelist`}
+            href={`/themes/${theme?.id}/liking-users`}
             sx={(theme) => ({
               transition: "all 250ms",
               textDecoration: "underline",

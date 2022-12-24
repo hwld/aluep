@@ -2,7 +2,7 @@ import { Flex, Text, useMantineTheme } from "@mantine/core";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdOutlineFavoriteBorder, MdOutlinePostAdd } from "react-icons/md";
 
-type Props = { page: string };
+type Props = { page: "Developers" | "Posters" };
 
 export const NothingLike: React.FC<Props> = ({ page }) => {
   const mantineTheme = useMantineTheme();

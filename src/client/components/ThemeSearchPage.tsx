@@ -9,7 +9,7 @@ import { useStateAndUrlParamStringArray } from "../hooks/useStateAndUrlParamStri
 import { AppMultiSelect } from "./AppMultiSelect";
 import { AppPagination } from "./AppPagination";
 import { AppTextInput } from "./AppTextInput";
-import { NothingThemeCard } from "./NothingThemeCard";
+import { NothingTheme } from "./NothingTheme";
 import { ThemeCardContainer } from "./ThemeCardContainer";
 
 export const ThemeSearchPage: React.FC = () => {
@@ -88,7 +88,7 @@ export const ThemeSearchPage: React.FC = () => {
         <Stack mt={30}>
           <Title order={4}>検索結果</Title>
           {searchedThemesResult?.themes.length === 0 ? (
-            <NothingThemeCard page="Search" />
+            <NothingTheme page="Search" />
           ) : (
             <ThemeCardContainer themes={searchedThemesResult?.themes ?? []} />
           )}
