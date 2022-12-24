@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { UserDetailAnotherJoinPage } from "../../../client/components/UserDetailAnother/UserDetailAnotherJoinPage";
-import { joinThemesQueryKey } from "../../../client/hooks/useJoinThemesQuery";
+import { UserDetailLikePage } from "../../../client/components/UserDetail/UserDetailLikePage";
+import { likeThemesQueryKey } from "../../../client/hooks/useLikeThemesQuery";
 import { userQueryKey, useUserQuery } from "../../../client/hooks/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
@@ -23,8 +23,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.user.get({ userId })
     );
 
-    await queryClient.prefetchQuery(joinThemesQueryKey(userId), () =>
-      caller.user.getJoinTheme({ userId, page })
+    await queryClient.prefetchQuery(likeThemesQueryKey(userId), () =>
+      caller.user.getLikeTheme({ userId, page })
     );
   }
 );
@@ -38,7 +38,7 @@ export function UserDetail() {
     return;
   } else {
     //TODO
-    return <UserDetailAnotherJoinPage user={user} />;
+    return <UserDetailLikePage user={user} />;
   }
 }
 export default UserDetail;

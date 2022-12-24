@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { UserDetailAnotherPostPage } from "../../../client/components/UserDetailAnother/UserDetailAnotherPostPage";
-import { postThemeQueryKey } from "../../../client/hooks/usePostThemesQuery";
+import { UserDetailJoinPage } from "../../../client/components/UserDetail/UserDetailJoinPage";
+import { joinThemesQueryKey } from "../../../client/hooks/useJoinThemesQuery";
 import { userQueryKey, useUserQuery } from "../../../client/hooks/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
@@ -23,8 +23,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.user.get({ userId })
     );
 
-    await queryClient.prefetchQuery(postThemeQueryKey(userId), () =>
-      caller.user.getPostTheme({ userId, page })
+    await queryClient.prefetchQuery(joinThemesQueryKey(userId), () =>
+      caller.user.getJoinTheme({ userId, page })
     );
   }
 );
@@ -38,7 +38,7 @@ export function UserDetail() {
     return;
   } else {
     //TODO
-    return <UserDetailAnotherPostPage user={user} />;
+    return <UserDetailJoinPage user={user} />;
   }
 }
 export default UserDetail;

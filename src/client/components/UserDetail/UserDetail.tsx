@@ -8,7 +8,7 @@ import UserDetailCard from "../UserDetailCard";
 
 type Props = { user: User; state: "post" | "join" | "like" };
 
-export const UserDetailAnotherPage: React.FC<Props> = ({ user, state }) => {
+export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
   const { sumThemeLikes } = useSumThemeLikesQuery(user.id);
 
   const { themeDeveloperLikes } = useThemeDeveloperLikesQuery(user.id);
@@ -17,13 +17,13 @@ export const UserDetailAnotherPage: React.FC<Props> = ({ user, state }) => {
   githubUrl += user.name;
 
   const handleSwitchPost = () => {
-    router.push(`/users/${user.id}/anotherdetailpostpage`);
+    router.push(`/users/${user.id}/detailpostpage`);
   };
   const handleSwitchJoin = () => {
-    router.push(`/users/${user.id}/anotherdetailjoinpage`);
+    router.push(`/users/${user.id}/detailjoinpage`);
   };
   const handleSwitchLike = () => {
-    router.push(`/users/${user.id}/anotherdetaillikepage`);
+    router.push(`/users/${user.id}/detaillikepage`);
   };
 
   return (

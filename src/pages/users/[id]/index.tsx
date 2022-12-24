@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { UserDetailAnotherPostPage } from "../../../client/components/UserDetailAnother/UserDetailAnotherPostPage";
+import { UserDetailPostPage } from "../../../client/components/UserDetail/UserDetailPostPage";
 import { joinThemesQueryKey } from "../../../client/hooks/useJoinThemesQuery";
 import { likeThemesQueryKey } from "../../../client/hooks/useLikeThemesQuery";
 import { postThemeQueryKey } from "../../../client/hooks/usePostThemesQuery";
@@ -60,7 +60,7 @@ export function UserDetail() {
     return;
   } else {
     //TODO
-    return <UserDetailAnotherPostPage user={user} />;
+    return <UserDetailPostPage user={user} />;
   }
 }
 export default UserDetail;

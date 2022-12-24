@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { UserDetailAnotherLikePage } from "../../../client/components/UserDetailAnother/UserDetailAnotherLikePage";
-import { likeThemesQueryKey } from "../../../client/hooks/useLikeThemesQuery";
+import { UserDetailPostPage } from "../../../client/components/UserDetail/UserDetailPostPage";
+import { postThemeQueryKey } from "../../../client/hooks/usePostThemesQuery";
 import { userQueryKey, useUserQuery } from "../../../client/hooks/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
@@ -23,8 +23,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.user.get({ userId })
     );
 
-    await queryClient.prefetchQuery(likeThemesQueryKey(userId), () =>
-      caller.user.getLikeTheme({ userId, page })
+    await queryClient.prefetchQuery(postThemeQueryKey(userId), () =>
+      caller.user.getPostTheme({ userId, page })
     );
   }
 );
@@ -38,7 +38,7 @@ export function UserDetail() {
     return;
   } else {
     //TODO
-    return <UserDetailAnotherLikePage user={user} />;
+    return <UserDetailPostPage user={user} />;
   }
 }
 export default UserDetail;

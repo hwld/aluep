@@ -1,30 +1,30 @@
 import { Flex } from "@mantine/core";
 import { User } from "@prisma/client";
 import React from "react";
-import { useLikeThemesQuery } from "../../hooks/useLikeThemesQuery";
 import { usePaginationState } from "../../hooks/usePaginationState";
+import { usePostThemesQuery } from "../../hooks/usePostThemesQuery";
 import { AppPagination } from "../AppPagination";
 import { ThemeCard } from "../ThemeCard/ThemeCard";
-import { UserDetailAnotherPage } from "./UserDetailAnother";
+import { UserDetailPage } from "./UserDetail";
 
 type Props = { user: User };
 
-export const UserDetailAnotherLikePage: React.FC<Props> = ({ user }) => {
-  const [likePage, setLikePage] = usePaginationState({});
-  const { likeThemes } = useLikeThemesQuery(user.id);
+export const UserDetailPostPage: React.FC<Props> = ({ user }) => {
+  const [postPage, setPostPage] = usePaginationState({});
+  const { postThemes } = usePostThemesQuery(user.id);
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
-      <UserDetailAnotherPage user={user} state="like" />
+      <UserDetailPage user={user} state="post" />
       <Flex mt={30} gap={15} wrap="wrap" direction={"column"}>
-        {likeThemes?.likePostedTheme.map((theme) => {
+        {postThemes?.postThemes.map((theme) => {
           return <ThemeCard key={theme.id} theme={theme} />;
         })}
 
         <AppPagination
-          page={likePage}
-          onChange={setLikePage}
-          total={likeThemes?.allPages ?? 0}
+          page={postPage}
+          onChange={setPostPage}
+          total={postThemes?.allPages ?? 0}
         />
       </Flex>
     </Flex>
