@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { UserDetailLikePage } from "../../../client/components/UserDetail/UserDetailLikePage";
+import { UserLikedThemesPage } from "../../../client/components/UserDetail/UserLikedThemesPage";
 import { likeThemesQueryKey } from "../../../client/hooks/useLikeThemesQuery";
 import { userQueryKey, useUserQuery } from "../../../client/hooks/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
@@ -29,6 +29,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
+/**
+ *  ユーザーの詳細ページ
+ *  ユーザーがいいねしたお題一覧を表示する
+ */
 export function UserDetail() {
   const router = useRouter();
   const userId = router.query.id as string;
@@ -38,7 +42,7 @@ export function UserDetail() {
     return;
   } else {
     //TODO
-    return <UserDetailLikePage user={user} />;
+    return <UserLikedThemesPage user={user} />;
   }
 }
 export default UserDetail;

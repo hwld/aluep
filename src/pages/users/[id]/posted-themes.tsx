@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { UserDetailJoinPage } from "../../../client/components/UserDetail/UserDetailJoinPage";
-import { joinThemesQueryKey } from "../../../client/hooks/useJoinThemesQuery";
+import { UserPostedThemesPage } from "../../../client/components/UserDetail/UserPostedThemesPage";
+import { postThemeQueryKey } from "../../../client/hooks/usePostThemesQuery";
 import { userQueryKey, useUserQuery } from "../../../client/hooks/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
@@ -23,12 +23,16 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.user.get({ userId })
     );
 
-    await queryClient.prefetchQuery(joinThemesQueryKey(userId), () =>
-      caller.user.getJoinTheme({ userId, page })
+    await queryClient.prefetchQuery(postThemeQueryKey(userId), () =>
+      caller.user.getPostTheme({ userId, page })
     );
   }
 );
 
+/**
+ *  ユーザーの詳細ページ
+ *  ユーザーが投稿したお題一覧を一緒に表示する
+ */
 export function UserDetail() {
   const router = useRouter();
   const userId = router.query.id as string;
@@ -38,7 +42,7 @@ export function UserDetail() {
     return;
   } else {
     //TODO
-    return <UserDetailJoinPage user={user} />;
+    return <UserPostedThemesPage user={user} />;
   }
 }
 export default UserDetail;

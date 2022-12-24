@@ -9,7 +9,7 @@ import { UserDetailPage } from "./UserDetail";
 
 type Props = { user: User };
 
-export const UserDetailLikePage: React.FC<Props> = ({ user }) => {
+export const UserLikedThemesPage: React.FC<Props> = ({ user }) => {
   const [likePage, setLikePage] = usePaginationState({});
   const { likeThemes } = useLikeThemesQuery(user.id);
 

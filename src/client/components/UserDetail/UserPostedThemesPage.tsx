@@ -9,7 +9,7 @@ import { UserDetailPage } from "./UserDetail";
 
 type Props = { user: User };
 
-export const UserDetailPostPage: React.FC<Props> = ({ user }) => {
+export const UserPostedThemesPage: React.FC<Props> = ({ user }) => {
   const [postPage, setPostPage] = usePaginationState({});
   const { postThemes } = usePostThemesQuery(user.id);
 

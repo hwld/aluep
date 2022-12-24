@@ -17,13 +17,13 @@ export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
   githubUrl += user.name;
 
   const handleSwitchPost = () => {
-    router.push(`/users/${user.id}/detailpostpage`);
+    router.push(`/users/${user.id}/posted-themes`);
   };
   const handleSwitchJoin = () => {
-    router.push(`/users/${user.id}/detailjoinpage`);
+    router.push(`/users/${user.id}/joined-themes`);
   };
   const handleSwitchLike = () => {
-    router.push(`/users/${user.id}/detaillikepage`);
+    router.push(`/users/${user.id}/liked-themes`);
   };
 
   return (

@@ -9,7 +9,7 @@ import { UserDetailPage } from "./UserDetail";
 
 type Props = { user: User };
 
-export const UserDetailJoinPage: React.FC<Props> = ({ user }) => {
+export const UserJoinedThemesPage: React.FC<Props> = ({ user }) => {
   const [joinPage, setJoinPage] = usePaginationState({});
   const { joinThemes } = useJoinThemesQuery(user.id);
 
