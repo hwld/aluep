@@ -1,7 +1,7 @@
 import { Avatar, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { Theme } from "../../server/models/theme";
 import { usePaginationState } from "../hooks/usePaginationState";
-import { useThemeLikesQuery } from "../hooks/useUsersLikedThemeQuery";
+import { useThemeLikingUsersQuery } from "../hooks/useThemeLikingUsersQuery";
 import { AppPagination } from "./AppPagination";
 import { NothingThemeLikingUsers } from "./NothingThemeLikingUsers";
 import { ThemeLikingUserCard } from "./ThemeLikingUserCard";
@@ -9,18 +9,18 @@ import { ThemeLikingUserCard } from "./ThemeLikingUserCard";
 type Props = { theme: Theme };
 export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
   const [page, setPage] = usePaginationState({});
-  const { data } = useThemeLikesQuery(theme.id, page);
+  const { data } = useThemeLikingUsersQuery(theme.id, page);
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Flex mt={10} gap={15} wrap="wrap">
         <Card h={150} w={560} mt="xl">
           <Title order={3} color="red.7">
-            {theme?.title}
+            {theme.title}
           </Title>
           <Flex mt="md" gap={10}>
             <Avatar
-              src={theme?.user.image}
+              src={theme.user.image}
               size="md"
               radius={100}
               sx={(theme) => ({
@@ -30,7 +30,7 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
                 borderRadius: "100%",
               })}
             />
-            <Text>{theme?.user.name}</Text>
+            <Text>{theme.user.name}</Text>
           </Flex>
         </Card>
       </Flex>

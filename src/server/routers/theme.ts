@@ -263,7 +263,7 @@ export const themeRoute = router({
     }),
 
   // 指定されたお題をいいねしたユーザーを取得する
-  getLikedUsers: publicProcedure
+  getThemeLikingUsers: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
     .query(async ({ input }) => {
       const { data: users, allPages } = await paginate({
