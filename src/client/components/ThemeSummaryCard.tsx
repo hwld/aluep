@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Card,
   Flex,
@@ -10,6 +9,7 @@ import {
 } from "@mantine/core";
 import { TbFileText } from "react-icons/tb";
 import { Theme } from "../../server/models/theme";
+import { UserIconLink } from "./UserIconLink";
 
 /**　アプリ開発のお題の概要カード */
 type Props = { theme: Theme };
@@ -26,17 +26,7 @@ export const ThemeSummaryCard: React.FC<Props> = ({ theme }) => {
             {theme.title}
           </Title>
           <Flex gap={5}>
-            <Avatar
-              src={theme.user.image}
-              size="md"
-              radius={100}
-              sx={(theme) => ({
-                borderWidth: "2px",
-                borderColor: theme.colors.gray[2],
-                borderStyle: "solid",
-                borderRadius: "100%",
-              })}
-            />
+            <UserIconLink userId={theme.user.id} imageSrc={theme.user.image} />
             <Text size="sm">{theme?.user.name}</Text>
           </Flex>
         </Stack>

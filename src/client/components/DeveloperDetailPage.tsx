@@ -1,6 +1,5 @@
 import {
   ActionIcon,
-  Avatar,
   Box,
   Card,
   Flex,
@@ -15,6 +14,7 @@ import { BsGithub } from "react-icons/bs";
 import { MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
+import { UserIconLink } from "./UserIconLink";
 
 type Props = { developer: ThemeDeveloper; theme: Theme };
 
@@ -31,17 +31,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
         <Card h={150} w={760} mt="xl">
           <Title order={3}>{theme?.title}</Title>
           <Flex mt="md" gap={5}>
-            <Avatar
-              src={theme?.user.image}
-              size="md"
-              radius={100}
-              sx={(theme) => ({
-                borderWidth: "2px",
-                borderColor: theme.colors.gray[2],
-                borderStyle: "solid",
-                borderRadius: "100%",
-              })}
-            />
+            <UserIconLink imageSrc={theme.user.image} userId={theme.user.id} />
             <Text>{theme?.user.name}</Text>
           </Flex>
         </Card>
@@ -49,15 +39,10 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
           <Card h={300} w={250}>
             <Flex direction={"column"} h="100%">
               <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
-                <Avatar
-                  src={developer.image}
+                <UserIconLink
                   size="xl"
-                  sx={(theme) => ({
-                    borderWidth: "2px",
-                    borderColor: theme.colors.gray[2],
-                    borderStyle: "solid",
-                    borderRadius: "100%",
-                  })}
+                  imageSrc={developer.image}
+                  userId={developer.userId}
                 />
               </Flex>
               <Flex align={"center"} justify={"center"} mt={30}>

@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Card,
   Flex,
@@ -11,6 +10,7 @@ import {
 import Link from "next/link";
 import { MdComputer, MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
+import { UserIconLink } from "../UserIconLink";
 
 export const popularThemeCardWidthPx = 400;
 export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
@@ -61,16 +61,10 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
 
             {/* ユーザー情報 */}
             <Flex gap={5}>
-              <Avatar
-                src={theme.user.image}
-                radius="xl"
+              <UserIconLink
                 size="sm"
-                sx={(theme) => ({
-                  borderWidth: "2px",
-                  borderColor: theme.colors.gray[2],
-                  borderStyle: "solid",
-                  borderRadius: "100%",
-                })}
+                userId={theme.user.id}
+                imageSrc={theme.user.image}
               />
               <Flex direction="column" miw={0} sx={{ flexShrink: 1 }}>
                 <Text

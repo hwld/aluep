@@ -1,10 +1,12 @@
-import { Avatar, Card, Flex, Stack, Text } from "@mantine/core";
+import { Card, Flex, Stack, Text } from "@mantine/core";
+import { UserIconLink } from "./UserIconLink";
 
 type Props = {
+  userId: string;
   userImage?: string | null;
   userName?: string | null;
 };
-export function ThemeLikingUserCard({ userImage, userName }: Props) {
+export function ThemeLikingUserCard({ userId, userImage, userName }: Props) {
   return (
     <Card
       w={560}
@@ -17,17 +19,8 @@ export function ThemeLikingUserCard({ userImage, userName }: Props) {
         {/* ユーザー情報 */}
         <Flex align="center" justify="space-between">
           <Flex gap={10} align="flex-start">
-            <Avatar
-              src={userImage}
-              radius="xl"
-              size="md"
-              sx={(theme) => ({
-                borderWidth: "2px",
-                borderColor: theme.colors.gray[2],
-                borderStyle: "solid",
-                borderRadius: "100%",
-              })}
-            />
+            <UserIconLink userId={userId} imageSrc={userImage} />
+
             <Text>{userName}</Text>
           </Flex>
         </Flex>

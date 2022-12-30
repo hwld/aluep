@@ -58,7 +58,6 @@ export const UserSearchPage: React.FC = () => {
               <Text align="center" c="gray.5">
                 ユーザがいません<br></br>
                 <Text align="center" c="gray.5">
-                  {" "}
                   別の条件をお試しください。
                 </Text>
               </Text>
@@ -75,6 +74,7 @@ export const UserSearchPage: React.FC = () => {
                 return (
                   <ThemeLikingUserCard
                     key={user.id}
+                    userId={user.id}
                     userImage={user.image}
                     userName={user.name}
                   />

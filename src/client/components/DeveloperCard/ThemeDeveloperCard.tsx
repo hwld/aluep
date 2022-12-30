@@ -21,6 +21,8 @@ type Props = {
   developer: ThemeDeveloper;
   onLikeDeveloper: (developerId: string, like: boolean) => void;
 };
+
+//TODO: 開発者詳細ページとユーザー詳細ページどちらにも遷移できるようにする
 export const ThemeDeveloperCard: React.FC<Props> = ({
   theme,
   developer,

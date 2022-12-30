@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Card,
   Flex,
@@ -12,6 +11,7 @@ import { useRouter } from "next/router";
 import { MdComputer, MdOutlineFavoriteBorder } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
 import { ThemeTagBadge } from "../ThemeTagBadge";
+import { UserIconLink } from "../UserIconLink";
 import { ThemeMenuButton } from "./ThemeMenuButton";
 
 export const themeCardMinWidthPx = 450;
@@ -24,12 +24,11 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
     router.push(`/themes/${theme.id}`);
   };
 
-  const handleGoDeveloperDetail = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    router.push(`/users/${theme.user.id}`);
-  };
   const mantineTheme = useMantineTheme();
 
+  // TODO:
+  // 右クリックの「新規タブで開く」などに対応するため、
+  // onClickではなくLinkでラップする。
   return (
     <Card
       key={theme.id}
@@ -60,22 +59,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
           <Box
             sx={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 10 }}
           >
-            <Avatar
-              src={theme.user.image}
-              radius="xl"
-              size="md"
-              sx={(theme) => ({
-                borderWidth: "2px",
-                borderColor: theme.colors.gray[2],
-                borderStyle: "solid",
-                borderRadius: "100%",
-                flexShrink: 0,
-                "&:hover": {
-                  boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.gray[3]}`,
-                },
-              })}
-              onClick={handleGoDeveloperDetail}
-            />
+            <UserIconLink imageSrc={theme.user.image} userId={theme.user.id} />
             <Flex
               direction="column"
               justify="center"

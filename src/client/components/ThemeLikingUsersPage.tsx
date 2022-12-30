@@ -1,10 +1,11 @@
-import { Avatar, Card, Flex, Stack, Text, Title } from "@mantine/core";
+import { Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { Theme } from "../../server/models/theme";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useThemeLikingUsersQuery } from "../hooks/useThemeLikingUsersQuery";
 import { AppPagination } from "./AppPagination";
 import { NothingThemeLikingUsers } from "./NothingThemeLikingUsers";
 import { ThemeLikingUserCard } from "./ThemeLikingUserCard";
+import { UserIconLink } from "./UserIconLink";
 
 type Props = { theme: Theme };
 export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
@@ -19,17 +20,7 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
             {theme.title}
           </Title>
           <Flex mt="md" gap={10}>
-            <Avatar
-              src={theme.user.image}
-              size="md"
-              radius={100}
-              sx={(theme) => ({
-                borderWidth: "2px",
-                borderColor: theme.colors.gray[2],
-                borderStyle: "solid",
-                borderRadius: "100%",
-              })}
-            />
+            <UserIconLink userId={theme.user.id} imageSrc={theme.user.image} />
             <Text>{theme.user.name}</Text>
           </Flex>
         </Card>
@@ -46,6 +37,7 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
           return (
             <ThemeLikingUserCard
               key={users.id}
+              userId={users.id}
               userImage={users.image}
               userName={users.name}
             />

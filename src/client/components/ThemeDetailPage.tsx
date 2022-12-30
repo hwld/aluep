@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -22,6 +21,7 @@ import { AppPagination } from "./AppPagination";
 import { ThemeDeveloperCard } from "./DeveloperCard/ThemeDeveloperCard";
 import { ThemeLikeButton } from "./ThemeLikeButton";
 import { ThemeTagBadge } from "./ThemeTagBadge";
+import { UserIconLink } from "./UserIconLink";
 
 type Props = { theme: Theme };
 
@@ -142,16 +142,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             </Text>
           </Flex>
           <Flex gap={5} mt={5}>
-            <Avatar
-              src={theme.user.image}
-              size="md"
-              sx={(theme) => ({
-                borderWidth: "2px",
-                borderColor: theme.colors.gray[2],
-                borderStyle: "solid",
-                borderRadius: "100%",
-              })}
-            />
+            <UserIconLink imageSrc={theme.user.image} userId={theme.user.id} />
             <Text size={13}>{theme.user.name}</Text>
           </Flex>
         </Card>
