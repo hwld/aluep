@@ -15,10 +15,6 @@ type Props = { user?: Session["user"] };
 export const AppHeader: React.FC<Props> = ({ user }) => {
   const router = useRouter();
 
-  const handleCreateTheme = () => {
-    router.push("/themes/create");
-  };
-
   const handleLogIn = () => {
     signIn("github");
   };
@@ -77,12 +73,12 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
             </AppHeaderLinkButton>
             {user ? (
               <Flex gap={10} align="center">
-                <AppHeaderButton
+                <AppHeaderLinkButton
                   leftIcon={<MdPostAdd size={25} />}
-                  onClick={handleCreateTheme}
+                  href="/themes/create"
                 >
                   お題を投稿する
-                </AppHeaderButton>
+                </AppHeaderLinkButton>
                 <UserMenuButton user={user} />
               </Flex>
             ) : (
