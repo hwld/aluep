@@ -1,4 +1,4 @@
-import { Box, Flex, Progress, Text, Transition } from "@mantine/core";
+import { Box, Flex, Text } from "@mantine/core";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FaSearch } from "react-icons/fa";
 import { MdLogin, MdOutlinePersonSearch, MdPostAdd } from "react-icons/md";
-import { usePageLoading } from "../../contexts/PageLoadingContext";
 import { AppHeaderButton } from "./AppHeaderButton";
 import { AppHeaderLinkButton } from "./AppHeaderLinkButton";
 import { UserMenuButton } from "./UserMenuButton";
@@ -14,17 +13,10 @@ import { UserMenuButton } from "./UserMenuButton";
 type Props = { user?: Session["user"] };
 
 export const AppHeader: React.FC<Props> = ({ user }) => {
-  const { loadingValue } = usePageLoading();
-  const indicatorHeight = 3;
-
   const router = useRouter();
 
   const handleCreateTheme = () => {
     router.push("/themes/create");
-  };
-
-  const handleSearchUser = () => {
-    router.push("/user/search");
   };
 
   const handleLogIn = () => {
@@ -40,25 +32,6 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
         backgroundColor: theme.colors.red[7],
       })}
     >
-      <Box h={indicatorHeight}>
-        <Transition mounted={loadingValue > 0} transition="fade">
-          {(styles) => (
-            <Progress
-              h={indicatorHeight}
-              color="red.1"
-              value={loadingValue}
-              radius={0}
-              style={styles}
-              styles={() => ({
-                root: {
-                  backgroundColor: "transparent",
-                },
-                bar: { transition: "all 250ms" },
-              })}
-            />
-          )}
-        </Transition>
-      </Box>
       <Box
         p="xs"
         px={30}
