@@ -25,7 +25,7 @@ export const UserIconLink: React.FC<Props> = ({
           borderRadius: "100%",
           transition: "all 150ms",
           "&:hover": {
-            borderColor: theme.colors.red[7],
+            borderColor: theme.colors.red[8],
           },
         })}
       />

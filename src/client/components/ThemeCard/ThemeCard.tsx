@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/router";
 import { MdComputer, MdOutlineFavoriteBorder } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
+import { TextLink } from "../TextLink";
 import { ThemeTagBadge } from "../ThemeTagBadge";
 import { UserIconLink } from "../UserIconLink";
 import { ThemeMenuButton } from "./ThemeMenuButton";
@@ -19,19 +20,14 @@ export const themeCardMinWidthPx = 450;
 type Props = { theme: Theme };
 export const ThemeCard: React.FC<Props> = ({ theme }) => {
   const router = useRouter();
+  const mantineTheme = useMantineTheme();
 
-  const handleGoDetail = () => {
+  const handleGoThemeDetail = () => {
     router.push(`/themes/${theme.id}`);
   };
 
-  const mantineTheme = useMantineTheme();
-
-  // TODO:
-  // 右クリックの「新規タブで開く」などに対応するため、
-  // onClickではなくLinkでラップする。
   return (
     <Card
-      key={theme.id}
       miw={themeCardMinWidthPx}
       w="100%"
       h="100%"
@@ -43,14 +39,17 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
           boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
         },
       })}
-      onClick={handleGoDetail}
+      onClick={handleGoThemeDetail}
     >
       <Stack spacing={10} miw={0}>
         {/* ヘッダ */}
         <Flex justify="space-between" align="flex-start" gap={10} miw={0}>
-          <Title order={3} color="red.7" sx={{ lineHeight: 1.2 }}>
-            {theme.title}
-          </Title>
+          <TextLink href={`/themes/${theme.id}`}>
+            <Title order={3} color="red.7" sx={{ lineHeight: 1.4 }}>
+              {theme.title}
+            </Title>
+          </TextLink>
+
           <ThemeMenuButton theme={theme} />
         </Flex>
 

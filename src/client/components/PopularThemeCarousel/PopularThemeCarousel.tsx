@@ -5,7 +5,6 @@ import { PopularThemeCard, popularThemeCardWidthPx } from "./PopularThemeCard";
 
 type Props = { themes: Theme[] | undefined; miw?: string };
 export const PopularThemeCarousel: React.FC<Props> = ({ themes, miw }) => {
-  // TDOO: カルーセルが自動で縮小してくれない
   return (
     <Carousel
       align="center"
@@ -38,15 +37,6 @@ export const PopularThemeCarousel: React.FC<Props> = ({ themes, miw }) => {
       ) : (
         <Box></Box>
       )}
-      {/* {themes.map((theme) => (
-        <Carousel.Slide key={theme.id}>
-          <Flex h="100%" w={`${popularThemeCardWidthPx}px`} align="center">
-            <Box w="100%" h="80%">
-              <PopularThemeCard theme={theme} />
-            </Box>
-          </Flex>
-        </Carousel.Slide>
-      ))} */}
     </Carousel>
   );
 };
