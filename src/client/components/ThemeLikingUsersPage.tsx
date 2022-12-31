@@ -4,7 +4,7 @@ import { usePaginationState } from "../hooks/usePaginationState";
 import { useThemeLikingUsersQuery } from "../hooks/useThemeLikingUsersQuery";
 import { AppPagination } from "./AppPagination";
 import { NothingThemeLikingUsers } from "./NothingThemeLikingUsers";
-import { ThemeLikingUserCard } from "./ThemeLikingUserCard";
+import { UserCard } from "./UserCard";
 import { UserIconLink } from "./UserIconLink";
 
 type Props = { theme: Theme };
@@ -13,35 +13,26 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
   const { data } = useThemeLikingUsersQuery(theme.id, page);
 
   return (
-    <Flex maw={1200} direction="column" align="center" m="auto">
-      <Flex mt={10} gap={15} wrap="wrap">
-        <Card h={150} w={560} mt="xl">
-          <Title order={3} color="red.7">
-            {theme.title}
-          </Title>
-          <Flex mt="md" gap={10}>
-            <UserIconLink userId={theme.user.id} imageSrc={theme.user.image} />
-            <Text>{theme.user.name}</Text>
-          </Flex>
-        </Card>
-      </Flex>
-      <Stack mt={10}>
+    <Flex maw={800} direction="column" align="center" m="auto">
+      <Card h={150} w="100%" mt="xl">
+        <Title order={3} color="red.7">
+          {theme.title}
+        </Title>
+        <Flex mt="md" gap={10}>
+          <UserIconLink userId={theme.user.id} iconSrc={theme.user.image} />
+          <Text>{theme.user.name}</Text>
+        </Flex>
+      </Card>
+      <Stack mt="xl" w="100%" spacing="xs">
         {theme.likes === 0 ? (
           <NothingThemeLikingUsers />
         ) : (
-          <Title mt={10} order={4} align="left">
+          <Title order={4} align="left">
             いいねした人
           </Title>
         )}
-        {data?.users.map((users) => {
-          return (
-            <ThemeLikingUserCard
-              key={users.id}
-              userId={users.id}
-              userImage={users.image}
-              userName={users.name}
-            />
-          );
+        {data?.users.map((user) => {
+          return <UserCard user={user} key={user.id} />;
         })}
         <AppPagination
           page={page}

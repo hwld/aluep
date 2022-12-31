@@ -35,7 +35,10 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         cursor: "pointer",
         position: "static",
         transition: "all 150ms",
-        "&:hover": {
+        // カードがホバー状態で、カードの子要素のimgがホバー状態でなければスタイルをあてる
+        // アイコンをホバーしたときにスタイルを当てたくないのでimgタグを指定しているが
+        // タグ名はちょっと具体的すぎる・・・
+        "&:not(:has(img:hover)):hover": {
           boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
         },
       })}

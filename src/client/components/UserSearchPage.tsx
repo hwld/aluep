@@ -13,7 +13,7 @@ import { RiQuestionMark } from "react-icons/ri";
 import { useSearchedUsersQuery } from "../hooks/useSearchedUsersQuery";
 import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
 import { AppTextInput } from "./AppTextInput";
-import { ThemeLikingUserCard } from "./ThemeLikingUserCard";
+import { UserCard } from "./UserCard";
 
 export const UserSearchPage: React.FC = () => {
   const [userName, setUserName] = useStateAndUrlParamString({
@@ -71,14 +71,7 @@ export const UserSearchPage: React.FC = () => {
               })}
             >
               {resultUserNames?.map((user) => {
-                return (
-                  <ThemeLikingUserCard
-                    key={user.id}
-                    userId={user.id}
-                    userImage={user.image}
-                    userName={user.name}
-                  />
-                );
+                return <UserCard key={user.id} user={user} />;
               })}
             </Box>
           )}

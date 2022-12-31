@@ -15,6 +15,7 @@ export const TextLink: React.FC<Props> = ({ href, children }) => {
           textDecorationLine: "underline",
           textDecorationColor: theme.colors.red[7],
           textUnderlineOffset: "3px",
+          "*": { color: theme.colors.red[7] },
         },
       })}
       onClick={stopPropagation}
