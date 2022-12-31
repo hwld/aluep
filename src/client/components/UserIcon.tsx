@@ -15,6 +15,8 @@ export const UserIcon: React.FC<UserIconProps> = ({
 }) => {
   return (
     <Avatar
+      // スタイルを当てるのにも使用している
+      aria-label="user-icon"
       src={iconSrc}
       size={size}
       sx={(theme) => ({

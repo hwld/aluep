@@ -12,6 +12,8 @@ import { UserMenuButton } from "./UserMenuButton";
 
 type Props = { user?: Session["user"] };
 
+export const appHeaderHeightPx = 60;
+
 export const AppHeader: React.FC<Props> = ({ user }) => {
   const router = useRouter();
 
@@ -32,7 +34,7 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
         p="xs"
         px={30}
         sx={(theme) => ({
-          height: 60,
+          height: appHeaderHeightPx,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",

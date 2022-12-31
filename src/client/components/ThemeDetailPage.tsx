@@ -17,6 +17,7 @@ import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeJoin } from "../hooks/useThemeJoin";
 import { useThemeLike } from "../hooks/useThemeLike";
+import { appHeaderHeightPx } from "./AppHeader/AppHeader";
 import { AppPagination } from "./AppPagination";
 import { ThemeDeveloperCard } from "./DeveloperCard/ThemeDeveloperCard";
 import { ThemeLikeButton } from "./ThemeLikeButton";
@@ -53,7 +54,13 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
       <Title align="center">{theme.title}</Title>
       <Flex mt="xl" gap="lg" w="100%">
         {/* いいねボタン */}
-        <Flex direction="column" align="center" gap="xs">
+        <Flex
+          direction="column"
+          align="center"
+          gap="xs"
+          h="min-content"
+          sx={{ position: "sticky", top: appHeaderHeightPx + 10 }}
+        >
           <ThemeLikeButton
             likes={theme.likes}
             likedByLoggedInUser={likedByLoggedInUser}
@@ -130,22 +137,32 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             />
           </Stack>
         </Box>
+
         {/* ユーザー情報 */}
-        <Card
-          sx={{ flexShrink: 0, flexGrow: 0, height: "min-content" }}
-          w={150}
+        <Stack
+          h="min-content"
+          sx={{ position: "sticky", top: appHeaderHeightPx + 10 }}
         >
-          <Flex gap="xs" align="center">
-            <FaUserAlt size={15} fill={mantineTheme.colors.gray[5]} />
-            <Text color="gray.5" size="sm">
-              投稿者
-            </Text>
-          </Flex>
-          <Flex gap={5} mt={5}>
-            <UserIconLink iconSrc={theme.user.image} userId={theme.user.id} />
-            <Text size={13}>{theme.user.name}</Text>
-          </Flex>
-        </Card>
+          <Card
+            sx={{
+              flexShrink: 0,
+              flexGrow: 0,
+              height: "min-content",
+            }}
+            w={300}
+          >
+            <Flex gap="xs" align="center">
+              <FaUserAlt size={15} fill={mantineTheme.colors.gray[5]} />
+              <Text color="gray.5" size="sm">
+                投稿者
+              </Text>
+            </Flex>
+            <Flex gap={5} mt={5}>
+              <UserIconLink iconSrc={theme.user.image} userId={theme.user.id} />
+              <Text size={13}>{theme.user.name}</Text>
+            </Flex>
+          </Card>
+        </Stack>
       </Flex>
     </Flex>
   );

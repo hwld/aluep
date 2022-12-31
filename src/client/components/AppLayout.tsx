@@ -19,22 +19,17 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
     >
       <AppHeader user={session?.user} />
       <Box
-        sx={{
-          width: "100%",
-          overflow: "auto",
-        }}
+        component="main"
         pt="xl"
+        pb="sm"
+        px="sm"
+        sx={(theme) => ({
+          maxWidth: "1500px",
+          width: "100%",
+          margin: "0 auto",
+        })}
       >
-        <Box
-          component="main"
-          p="sm"
-          sx={(theme) => ({
-            maxWidth: "1500px",
-            margin: "0 auto",
-          })}
-        >
-          {children}
-        </Box>
+        {children}
       </Box>
     </Box>
   );

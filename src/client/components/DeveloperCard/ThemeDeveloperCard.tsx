@@ -8,11 +8,13 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
 import { Theme } from "../../../server/models/theme";
 import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
-import { DeveloperDetailLinkButton } from "./DeveloperDetailLinkButton";
+import { TextLink } from "../TextLink";
+import { UserIconLink } from "../UserIconLink";
 import { DeveloperLikeButton } from "./DeveloperLikeButton";
 import { DeveloperMenuButton } from "./DeveloperMenuButton";
 
@@ -28,10 +30,16 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
   developer,
   onLikeDeveloper: onLike,
 }) => {
+  const router = useRouter();
   const mantineTheme = useMantineTheme();
   const { session } = useSessionQuery();
+
   const handleLikeDeveloper = () => {
     onLike(developer.id, !developer.likedByLoggedInUser);
+  };
+
+  const handleGoDeveloperDetail = () => {
+    router.push(`/themes/${theme.id}/developers/${developer.id}/detail`);
   };
 
   // ログインしていて、開発者自身でなければいいねできる
@@ -40,16 +48,26 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
   return (
     <Card
       key={developer.userId}
-      sx={() => ({
+      sx={(theme) => ({
         position: "static",
+        cursor: "pointer",
+        transition: "all 150ms",
+        "&:not(:has(*[aria-label='user-icon']:hover)):hover": {
+          boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
+        },
       })}
+      onClick={handleGoDeveloperDetail}
     >
       <Flex justify="space-between">
         <Flex gap={10}>
-          <DeveloperDetailLinkButton theme={theme} developer={developer} />
-          <Text fw="bold" size="lg">
-            {developer.name}
-          </Text>
+          <UserIconLink iconSrc={developer.image} userId={developer.userId} />
+          <TextLink
+            href={`/themes/${theme.id}/developers/${developer.id}/detail`}
+          >
+            <Text fw="bold" size="lg">
+              {developer.name}
+            </Text>
+          </TextLink>
         </Flex>
         <Flex>
           <Tooltip
