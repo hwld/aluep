@@ -82,7 +82,7 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
         <Group position="apart">
           {/* ユーザー情報 */}
           <Flex gap={5} sx={{ alignSelf: "flex-end" }}>
-            <UserIconLink userId={theme.user.id} imageSrc={theme.user.image} />
+            <UserIconLink userId={theme.user.id} iconSrc={theme.user.image} />
             <Flex direction="column" miw={0} sx={{ flexShrink: 1 }}>
               <Text
                 size="xs"

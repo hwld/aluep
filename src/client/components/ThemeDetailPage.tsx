@@ -142,7 +142,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             </Text>
           </Flex>
           <Flex gap={5} mt={5}>
-            <UserIconLink imageSrc={theme.user.image} userId={theme.user.id} />
+            <UserIconLink iconSrc={theme.user.image} userId={theme.user.id} />
             <Text size={13}>{theme.user.name}</Text>
           </Flex>
         </Card>

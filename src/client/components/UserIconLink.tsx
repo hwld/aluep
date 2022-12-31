@@ -1,34 +1,22 @@
-import { Avatar } from "@mantine/core";
 import Link from "next/link";
+import React from "react";
 import { stopPropagation } from "../utils";
+import { UserIcon, UserIconProps } from "./UserIcon";
 
 type Props = {
-  imageSrc?: string | null;
+  iconSrc?: string | null;
   userId: string;
-  size?: "md" | "sm" | "xl";
+  size?: UserIconProps["size"];
 };
 
 export const UserIconLink: React.FC<Props> = ({
-  imageSrc: src,
+  iconSrc,
   userId,
   size = "md",
 }) => {
   return (
     <Link href={`/users/${userId}`} onClick={stopPropagation}>
-      <Avatar
-        src={src}
-        size={size}
-        sx={(theme) => ({
-          borderWidth: "2px",
-          borderColor: theme.colors.gray[2],
-          borderStyle: "solid",
-          borderRadius: "100%",
-          transition: "all 150ms",
-          "&:hover": {
-            borderColor: theme.colors.red[8],
-          },
-        })}
-      />
+      <UserIcon iconSrc={iconSrc} interactive size={size} />
     </Link>
   );
 };

@@ -31,7 +31,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
         <Card h={150} w={760} mt="xl">
           <Title order={3}>{theme?.title}</Title>
           <Flex mt="md" gap={5}>
-            <UserIconLink imageSrc={theme.user.image} userId={theme.user.id} />
+            <UserIconLink iconSrc={theme.user.image} userId={theme.user.id} />
             <Text>{theme?.user.name}</Text>
           </Flex>
         </Card>
@@ -41,7 +41,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
               <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
                 <UserIconLink
                   size="xl"
-                  imageSrc={developer.image}
+                  iconSrc={developer.image}
                   userId={developer.userId}
                 />
               </Flex>

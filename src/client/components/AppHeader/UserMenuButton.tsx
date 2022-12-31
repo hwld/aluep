@@ -1,4 +1,4 @@
-import { Avatar, Divider, Menu, Text, UnstyledButton } from "@mantine/core";
+import { Divider, Menu, Text, UnstyledButton } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { FaTrash } from "react-icons/fa";
@@ -9,6 +9,7 @@ import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
 import { MenuItem } from "../AppMenu/MenuItem";
 import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
+import { UserIcon } from "../UserIcon";
 
 type Props = { user: Session["user"] };
 
@@ -21,7 +22,7 @@ export const UserMenuButton: React.FC<Props> = ({ user }) => {
     <AppMenu>
       <Menu.Target>
         <UnstyledButton>
-          <Avatar src={user.image} radius="xl" />
+          <UserIcon iconSrc={user.image} withBorder={false} />
         </UnstyledButton>
       </Menu.Target>
       <MenuDropdown maw={180}>

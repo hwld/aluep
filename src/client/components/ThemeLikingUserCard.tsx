@@ -19,7 +19,7 @@ export function ThemeLikingUserCard({ userId, userImage, userName }: Props) {
         {/* ユーザー情報 */}
         <Flex align="center" justify="space-between">
           <Flex gap={10} align="flex-start">
-            <UserIconLink userId={userId} imageSrc={userImage} />
+            <UserIconLink userId={userId} iconSrc={userImage} />
 
             <Text>{userName}</Text>
           </Flex>

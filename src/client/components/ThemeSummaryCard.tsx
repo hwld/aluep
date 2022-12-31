@@ -26,7 +26,7 @@ export const ThemeSummaryCard: React.FC<Props> = ({ theme }) => {
             {theme.title}
           </Title>
           <Flex gap={5}>
-            <UserIconLink userId={theme.user.id} imageSrc={theme.user.image} />
+            <UserIconLink userId={theme.user.id} iconSrc={theme.user.image} />
             <Text size="sm">{theme?.user.name}</Text>
           </Flex>
         </Stack>

@@ -58,7 +58,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
           <Box
             sx={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 10 }}
           >
-            <UserIconLink imageSrc={theme.user.image} userId={theme.user.id} />
+            <UserIconLink iconSrc={theme.user.image} userId={theme.user.id} />
             <Flex
               direction="column"
               justify="center"

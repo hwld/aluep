@@ -1,16 +1,9 @@
-import {
-  ActionIcon,
-  Avatar,
-  Box,
-  Card,
-  Flex,
-  Text,
-  Tooltip,
-} from "@mantine/core";
+import { ActionIcon, Box, Card, Flex, Text, Tooltip } from "@mantine/core";
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
 import { BsFillFilePostFill } from "react-icons/bs";
 import { GoMarkGithub } from "react-icons/go";
+import { UserIcon } from "./UserIcon";
 
 type Props = {
   userImage?: string | null;
@@ -33,16 +26,7 @@ export function UserDetailCard({
     <Card h={300} w={250}>
       <Flex direction={"column"} justify={"space-between"} h="100%">
         <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
-          <Avatar
-            src={userImage}
-            size="xl"
-            sx={(theme) => ({
-              borderWidth: "2px",
-              borderColor: theme.colors.gray[2],
-              borderStyle: "solid",
-              borderRadius: "100%",
-            })}
-          />
+          <UserIcon iconSrc={userImage} size="xl" />
         </Flex>
         <Flex align={"center"} justify={"center"}>
           <Text>{userName}</Text>

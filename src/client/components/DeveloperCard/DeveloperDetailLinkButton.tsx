@@ -1,7 +1,8 @@
-import { Avatar, UnstyledButton } from "@mantine/core";
+import { UnstyledButton } from "@mantine/core";
 import { useRouter } from "next/router";
 import { Theme } from "../../../server/models/theme";
 import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
+import { UserIcon } from "../UserIcon";
 
 type Props = { theme: Theme; developer: ThemeDeveloper };
 export const DeveloperDetailLinkButton: React.FC<Props> = ({
@@ -16,7 +17,7 @@ export const DeveloperDetailLinkButton: React.FC<Props> = ({
   return (
     <>
       <UnstyledButton onClick={handleGoDetail}>
-        <Avatar src={developer.image} radius="xl" />
+        <UserIcon iconSrc={developer.image} />
       </UnstyledButton>
     </>
   );

@@ -33,7 +33,7 @@ export const UserLikeRankingItem: React.FC<Props> = ({
           {rank}
         </Flex>
         <Flex align="center" gap="xs" miw={0}>
-          <UserIconLink userId={user.id} imageSrc={user.image} />
+          <UserIconLink userId={user.id} iconSrc={user.image} />
           <Flex miw={0} direction="column">
             <Text
               size="xs"
