@@ -11,8 +11,6 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
   return (
     <Box
       sx={(theme) => ({
-        display: "grid",
-        gridTemplateRows: "auto 1fr",
         backgroundColor: theme.colors.gray[2],
         minHeight: "100vh",
       })}
