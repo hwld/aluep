@@ -100,7 +100,7 @@ export const themeRoute = router({
   create: requireLoggedInProcedure
     .input(themeFormSchema)
     .mutation(async ({ input, ctx }) => {
-      await prisma.appTheme.create({
+      const theme = await prisma.appTheme.create({
         data: {
           title: input.title,
           description: input.description,
@@ -108,6 +108,8 @@ export const themeRoute = router({
           userId: ctx.session.user.id,
         },
       });
+
+      return { themeId: theme.id };
     }),
 
   // お題を更新する
