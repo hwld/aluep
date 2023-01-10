@@ -2,7 +2,7 @@ import { User } from "@prisma/client";
 import React from "react";
 import { useLikedThemesQuery } from "../../hooks/useLikedThemesQuery";
 import { usePaginationState } from "../../hooks/usePaginationState";
-import { ThemeCard } from "../ThemeCard/ThemeCard";
+import { ThemeCardContainer } from "../ThemeCardContainer";
 import { UserDetailLayout } from "./UserDetailLayout";
 
 type Props = { user: User };
@@ -19,9 +19,7 @@ export const UserLikedThemesPage: React.FC<Props> = ({ user }) => {
       onChangePostPage={setLikePage}
       totalPages={likedThemes?.allPages ?? 0}
     >
-      {likedThemes?.likePostedTheme.map((theme) => {
-        return <ThemeCard key={theme.id} theme={theme} />;
-      })}
+      <ThemeCardContainer themes={likedThemes?.likePostedTheme ?? []} />
     </UserDetailLayout>
   );
 };

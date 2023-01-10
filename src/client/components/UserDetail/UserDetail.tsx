@@ -53,7 +53,7 @@ export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
           </Card.Section>
         </Card>
       </Flex>
-      <Flex mt="xl">
+      <Flex mt={50}>
         <Button.Group>
           <Button
             variant="light"

@@ -2,7 +2,7 @@ import { User } from "@prisma/client";
 import React from "react";
 import { useJoinedThemesQuery } from "../../hooks/useJoinedThemesQuery";
 import { usePaginationState } from "../../hooks/usePaginationState";
-import { ThemeCard } from "../ThemeCard/ThemeCard";
+import { ThemeCardContainer } from "../ThemeCardContainer";
 import { UserDetailLayout } from "./UserDetailLayout";
 
 type Props = { user: User };
@@ -19,9 +19,7 @@ export const UserJoinedThemesPage: React.FC<Props> = ({ user }) => {
       onChangePostPage={setJoinPage}
       totalPages={joinedThemes?.allPages ?? 0}
     >
-      {joinedThemes?.joinPostedTheme.map((theme) => {
-        return <ThemeCard key={theme.id} theme={theme} />;
-      })}
+      <ThemeCardContainer themes={joinedThemes?.joinPostedTheme ?? []} />
     </UserDetailLayout>
   );
 };
