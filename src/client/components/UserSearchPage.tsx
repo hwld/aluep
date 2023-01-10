@@ -13,7 +13,7 @@ import { RiQuestionMark } from "react-icons/ri";
 import { useSearchedUsersQuery } from "../hooks/useSearchedUsersQuery";
 import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
 import { AppTextInput } from "./AppTextInput";
-import { UserCard } from "./UserCard";
+import { UserCard, userCardMinWidthPx } from "./UserCard";
 
 export const UserSearchPage: React.FC = () => {
   const [userName, setUserName] = useStateAndUrlParamString({
@@ -29,8 +29,19 @@ export const UserSearchPage: React.FC = () => {
   const { resultUserNames } = useSearchedUsersQuery(userName);
   return (
     <Box>
-      <Flex direction="column" align={"center"}>
-        <Card w="50%">
+      <Flex
+        direction="column"
+        w="50%"
+        sx={() => ({
+          marginLeft: "auto",
+          marginRight: "auto",
+        })}
+      >
+        <Card
+          sx={() => ({
+            position: "static",
+          })}
+        >
           <Stack>
             <Title order={5}>検索</Title>
 
@@ -42,7 +53,19 @@ export const UserSearchPage: React.FC = () => {
           </Stack>
         </Card>
         <Stack mt={30}>
-          {resultUserNames?.length === 0 ? (
+          {userName === "" ? (
+            <Flex direction={"column"} gap={30}>
+              <Flex justify={"center"} align={"center"}>
+                <MdOutlinePersonSearch
+                  size={100}
+                  color={mantineTheme.colors.red[7]}
+                />
+              </Flex>
+              <Text align="center" c="gray.5">
+                ユーザを検索してみよう!
+              </Text>
+            </Flex>
+          ) : resultUserNames?.length === 0 ? (
             <Flex direction={"column"} gap={30}>
               <Flex justify={"center"} align={"center"}>
                 <MdOutlinePersonSearch
@@ -66,7 +89,7 @@ export const UserSearchPage: React.FC = () => {
             <Box
               sx={(theme) => ({
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+                gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
                 gap: theme.spacing.md,
               })}
             >
