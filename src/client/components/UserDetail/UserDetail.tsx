@@ -6,9 +6,9 @@ import { useSumThemeLikesQuery } from "../../hooks/useSumThemeLikesQuery";
 import { useThemeDeveloperLikesQuery } from "../../hooks/useThemeDeveloperLikesQuery";
 import { UserDetailCard } from "../UserDetailCard";
 
-type Props = { user: User; state: "post" | "join" | "like" };
+export type UserDetailProps = { user: User; type: "post" | "join" | "like" };
 
-export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
+export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
   const { sumThemeLikes } = useSumThemeLikesQuery(user.id);
 
   const { themeDeveloperLikes } = useThemeDeveloperLikesQuery(user.id);
@@ -28,7 +28,7 @@ export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
 
   return (
     <>
-      <Flex maw={1000} mih={300} direction="row" gap={10} mt={60}>
+      <Flex mih={300} direction="row" gap={10} mt={60}>
         <UserDetailCard
           userImage={user.image}
           userName={user.name}
@@ -36,8 +36,7 @@ export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
           themeDeveloperLikes={themeDeveloperLikes}
           githuburl={githubUrl}
         />
-
-        <Card mih={20} w={500}>
+        <Card mih={20}>
           <Card.Section withBorder inheritPadding py="md">
             <div>自己紹介</div>
           </Card.Section>
@@ -54,13 +53,13 @@ export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
           </Card.Section>
         </Card>
       </Flex>
-      <Flex mt={30}>
+      <Flex mt="xl">
         <Button.Group>
           <Button
             variant="light"
             w={140}
             onClick={handleSwitchPost}
-            bg={state === "post" ? "gray.0" : "gray.3"}
+            bg={type === "post" ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
               return { "&:hover": { backgroundColor: theme.colors.gray[4] } };
@@ -72,7 +71,7 @@ export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
             variant="light"
             w={140}
             onClick={handleSwitchJoin}
-            bg={state === "join" ? "gray.0" : "gray.3"}
+            bg={type === "join" ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
               return { "&:hover": { backgroundColor: theme.colors.gray[4] } };
@@ -84,7 +83,7 @@ export const UserDetailPage: React.FC<Props> = ({ user, state }) => {
             variant="light"
             w={140}
             onClick={handleSwitchLike}
-            bg={state === "like" ? "gray.0" : "gray.3"}
+            bg={type === "like" ? "gray.0" : "gray.3"}
             color="dark"
             sx={(theme) => {
               return { "&:hover": { backgroundColor: theme.colors.gray[4] } };
