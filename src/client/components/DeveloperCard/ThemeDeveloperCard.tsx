@@ -13,6 +13,7 @@ import { BsGithub } from "react-icons/bs";
 import { Theme } from "../../../server/models/theme";
 import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
+import { stopPropagation } from "../../utils";
 import { TextLink } from "../TextLink";
 import { UserIconLink } from "../UserIconLink";
 import { DeveloperLikeButton } from "./DeveloperLikeButton";
@@ -69,7 +70,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
             </Text>
           </TextLink>
         </Flex>
-        <Flex>
+        <Flex onClick={stopPropagation}>
           <Tooltip
             label="コードを見に行く"
             color="gray.5"
