@@ -3,9 +3,10 @@ import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { SyntheticEvent } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdLogin, MdOutlinePersonSearch, MdPostAdd } from "react-icons/md";
+import { useRequireLoginModal } from "../../contexts/RequireLoginModalProvider";
 import { AppHeaderButton } from "./AppHeaderButton";
 import { AppHeaderLinkButton } from "./AppHeaderLinkButton";
 import { UserMenuButton } from "./UserMenuButton";
@@ -15,10 +16,18 @@ type Props = { user?: Session["user"] };
 export const appHeaderHeightPx = 60;
 
 export const AppHeader: React.FC<Props> = ({ user }) => {
-  const router = useRouter();
+  const { openLoginModal } = useRequireLoginModal();
 
   const handleLogIn = () => {
     signIn("github");
+  };
+
+  const handleClickCreateTheme = (e: SyntheticEvent) => {
+    if (!user) {
+      e.preventDefault();
+      openLoginModal("/themes/create");
+      return;
+    }
   };
 
   return (
@@ -73,16 +82,15 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
             >
               お題を検索する
             </AppHeaderLinkButton>
+            <AppHeaderLinkButton
+              leftIcon={<MdPostAdd size={25} />}
+              href="/themes/create"
+              onClick={handleClickCreateTheme}
+            >
+              お題を投稿する
+            </AppHeaderLinkButton>
             {user ? (
-              <Flex gap={10} align="center">
-                <AppHeaderLinkButton
-                  leftIcon={<MdPostAdd size={25} />}
-                  href="/themes/create"
-                >
-                  お題を投稿する
-                </AppHeaderLinkButton>
-                <UserMenuButton user={user} />
-              </Flex>
+              <UserMenuButton user={user} />
             ) : (
               <AppHeaderButton
                 leftIcon={<MdLogin size={25} />}

@@ -9,8 +9,13 @@ export const AppModal: React.FC<ModalProps> = ({ children, ...props }) => {
       <Modal
         exitTransitionDuration={150}
         styles={(theme) => ({
-          title: { fontSize: theme.fontSizes.xl, fontWeight: "bold" },
+          title: {
+            fontSize: theme.fontSizes.xl,
+            fontWeight: "bold",
+            color: theme.colors.red[7],
+          },
           modal: { margin: "auto" },
+          root: { zIndex: 100000 },
         })}
         {...props}
       >

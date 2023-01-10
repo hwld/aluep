@@ -9,8 +9,10 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
+import { SyntheticEvent } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
+import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { usePaginatedDeveloperQuery } from "../hooks/usePaginatedDeveloperQueery";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useSessionQuery } from "../hooks/useSessionQuery";
@@ -31,6 +33,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const mantineTheme = useMantineTheme();
 
   const { session } = useSessionQuery();
+  const { openLoginModal } = useRequireLoginModal();
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(theme.id);
   const {
     data: { joined },
@@ -39,15 +42,32 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const { likeDeveloperMutation } = useThemeDevelopersQuery(theme.id);
 
   const handleLikeTheme = () => {
+    //ログインしていなければログインモーダルを表示する
+    if (!session) {
+      openLoginModal();
+      return;
+    }
+
     likeThemeMutation.mutate({
       themeId: theme.id,
       like: !likedByLoggedInUser,
     });
   };
+
+  const handleClickJoin = (e: SyntheticEvent) => {
+    // ログインしていなければログインモーダルを表示する
+    if (!session) {
+      // クリックで遷移しないようにする
+      e.preventDefault();
+      openLoginModal(`/themes/${theme.id}/join`);
+      return;
+    }
+  };
+
   const { data } = usePaginatedDeveloperQuery(theme.id, page);
 
-  // ログインしていて、テーマの投稿者と異なればいいねができる
-  const canLike = Boolean(session && theme.user.id !== session.user.id);
+  // 自分の投稿にいいねは出来ない
+  const canLike = theme.user.id !== session?.user.id;
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
@@ -64,7 +84,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           <ThemeLikeButton
             likes={theme.likes}
             likedByLoggedInUser={likedByLoggedInUser}
-            onClick={handleLikeTheme}
+            onLikeTheme={handleLikeTheme}
             disabled={!canLike}
           />
           <Button
@@ -95,6 +115,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             mt={15}
             component={Link}
             href={`/themes/${theme.id}/join`}
+            onClick={handleClickJoin}
             replace
             disabled={joined}
             sx={(theme) => ({
