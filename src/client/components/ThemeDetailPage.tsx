@@ -87,6 +87,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             onLikeTheme={handleLikeTheme}
             disabled={!canLike}
           />
+
           <Button
             component={Link}
             href={`/themes/${theme?.id}/liking-users`}

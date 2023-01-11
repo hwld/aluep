@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   Box,
+  Button,
   Card,
   Flex,
   Text,
@@ -28,22 +29,24 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
       </Box>
 
       <Flex maw={1200} direction="column" align="center" m="auto">
-        <Card h={150} w={760} mt="xl">
-          <Title order={3}>{theme?.title}</Title>
-          <Flex mt="md" gap={5}>
-            <UserIconLink iconSrc={theme.user.image} userId={theme.user.id} />
-            <Text>{theme?.user.name}</Text>
-          </Flex>
-        </Card>
         <Flex maw={800} mih={300} direction="row" gap={10} mt="xl" h="80%">
+          <Card mih={20} w={500}>
+            <Card.Section inheritPadding pb="md" pt={10}>
+              <Text placeholder="開発に対するコメント" mah={200} />
+              {developer.comment}
+              <Text />
+            </Card.Section>
+          </Card>
           <Card h={300} w={250}>
             <Flex direction={"column"} h="100%">
               <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
-                <UserIconLink
-                  size="xl"
-                  iconSrc={developer.image}
-                  userId={developer.userId}
-                />
+                <div style={{ marginTop: "-10px" }}>
+                  <UserIconLink
+                    size="xl"
+                    iconSrc={developer.image}
+                    userId={developer.userId}
+                  />
+                </div>
               </Flex>
               <Flex align={"center"} justify={"center"} mt={30}>
                 <Text>{developer.name}</Text>
@@ -121,28 +124,29 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
               </Flex>
             </Flex>
           </Card>
-
-          <Card mih={20} w={500}>
-            <Card.Section withBorder inheritPadding py="md">
-              <div>コメント</div>
-            </Card.Section>
-
-            <Card.Section inheritPadding mt="sm" pb="md">
-              <Text placeholder="開発に対するコメント" mah={200} />
-              {developer.comment}
-              <Text />
-            </Card.Section>
-          </Card>
         </Flex>
+        <div style={{ marginLeft: -635, marginTop: 20 }}>
+          <Button>コードを見る</Button>
+        </div>
 
-        {/* {isJoinTheme && (
-      <div>
-        <Flex mt={30} gap={15} wrap="wrap">
-          <ThemeCard key={theme.id} theme={theme} />
-        </Flex>
-      </div>
-    )} */}
+        <Title>コメント</Title>
+
+        <Card h={150} w={760} mt="xl">
+          <Title order={3}>{theme?.title}</Title>
+          <Flex mt="md" gap={5}>
+            <UserIconLink iconSrc={theme.user.image} userId={theme.user.id} />
+            <Text>{theme?.user.name}</Text>
+          </Flex>
+        </Card>
       </Flex>
+
+      {/* <div style={{ marginTop: "-295px", marginLeft: "245px" }}>
+        <UserIconLink
+          size="xl"
+          iconSrc={developer.image}
+          userId={developer.userId}
+        />
+      </div> */}
     </>
   );
 };
