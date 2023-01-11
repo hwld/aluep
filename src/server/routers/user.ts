@@ -116,7 +116,15 @@ export const userRoute = router({
         const searchUsers = await prisma.user.findMany({
           where: { name: { contains: input.userName } },
         });
-        return searchUsers;
+        //検索結果がn件以上の場合の処理
+        if (searchUsers.length >= 10) {
+          const overSearchUsers = [...Array(10)].map((_, i) => {
+            return searchUsers[i];
+          });
+          return overSearchUsers;
+        } else {
+          return searchUsers;
+        }
       }
     }),
 });
