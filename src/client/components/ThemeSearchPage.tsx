@@ -87,7 +87,9 @@ export const ThemeSearchPage: React.FC = () => {
         </Card>
         <Stack mt={30}>
           <Title order={4}>検索結果</Title>
-          {searchedThemesResult?.themes.length === 0 ? (
+          {keyword === "" && tagIds.length === 0 ? (
+            <NothingTheme page="initial" />
+          ) : searchedThemesResult?.themes.length === 0 ? (
             <NothingTheme page="Search" />
           ) : (
             <ThemeCardContainer themes={searchedThemesResult?.themes ?? []} />
