@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { formatDistanceStrict } from "date-fns";
 import { ja } from "date-fns/locale";
 import { z } from "zod";
+import { ThemeOrder } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
 import { prisma } from "../prismadb";
 
@@ -92,9 +93,15 @@ export const findManyThemes = async (
   return themes;
 };
 
-type SearchThemesArgs = { keyword: string; tagIds: string[] };
+type SearchThemesArgs = {
+  keyword: string;
+  tagIds: string[];
+  order: ThemeOrder;
+};
+
+// TODO: :(
 export const searchThemes = async (
-  { keyword, tagIds }: SearchThemesArgs,
+  { keyword, tagIds, order }: SearchThemesArgs,
   pagingData: { page: number; limit: number }
 ): Promise<{ themes: Theme[]; allPages: number }> => {
   if (keyword === "" && tagIds.length === 0) {
@@ -103,15 +110,46 @@ export const searchThemes = async (
 
   // トランザクションを使用する
   const paginatedThemes = await prisma.$transaction(async (tx) => {
+    // orderに対応するクエリを宣言する
+    const orderQuery: {
+      [T in typeof order]: {
+        select: Prisma.Sql;
+        from: Prisma.Sql;
+        orderBy: Prisma.Sql;
+      };
+    } = {
+      createdAsc: {
+        select: Prisma.sql`, MAX(AppTheme.createdAt) as themeCreatedAt`,
+        from: Prisma.empty,
+        orderBy: Prisma.sql`themeCreatedAt asc`,
+      },
+      createdDesc: {
+        select: Prisma.sql`, MAX(AppTheme.createdAt) as themeCreatedAt`,
+        from: Prisma.empty,
+        orderBy: Prisma.sql`themeCreatedAt desc`,
+      },
+      likeDesc: {
+        select: Prisma.sql`, COUNT(AppThemeLike.id) as likeCounts`,
+        from: Prisma.sql`LEFT JOIN AppThemeLike ON (AppTheme.id = AppThemeLike.appThemeId)`,
+        orderBy: Prisma.sql`likeCounts desc`,
+      },
+      developerDesc: {
+        select: Prisma.sql`, COUNT(AppThemeDeveloper.id) as developerCounts`,
+        from: Prisma.sql`LEFT JOIN AppThemeDeveloper ON (AppTheme.id = AppThemeDeveloper.appThemeId)`,
+        orderBy: Prisma.sql`developerCounts desc`,
+      },
+    };
+
     const master = Prisma.sql`
       (
         SELECT
           AppTheme.id as themeId
-          , MAX(AppTheme.createdAt) as themeCreatedAt
+          ${orderQuery[order].select}
         FROM
           AppTheme
           LEFT JOIN AppThemeTagOnAppTheme
             ON (AppTheme.id = AppThemeTagOnAppTheme.themeId)
+          ${orderQuery[order].from}
         WHERE
           AppTheme.title LIKE ${"%" + keyword + "%"}
           ${
@@ -130,7 +168,7 @@ export const searchThemes = async (
             : Prisma.empty
         }
         ORDER BY
-          themeCreatedAt desc
+          ${orderQuery[order].orderBy}
       ) master
     `;
 
@@ -146,7 +184,9 @@ export const searchThemes = async (
       OFFSET
         ${(pagingData.page - 1) * pagingData.limit}
     `;
+    console.log(master.sql);
     const searchedThemeIds = themeIdObjs.map(({ themeId }) => themeId);
+    console.log(searchedThemeIds);
 
     // 検索結果の合計数を求める
     const allItemsArray = await tx.$queryRaw<[{ allItems: BigInt }]>`

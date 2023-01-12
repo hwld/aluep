@@ -29,9 +29,16 @@ export const ThemeSearchPage: React.FC = () => {
     initialData: [],
   });
 
+  // TODO: 選択肢の中から一つ選ぶ状態のhookを作成する
+  const [order, setOrder] = useStateAndUrlParamString({
+    paramName: "order",
+    initialData: "createdDesc",
+  });
+
   const { searchedThemesResult } = useSearchedThemesQuery({
     keyword: debouncedKeyword,
     tagIds,
+    order: "createdDesc",
     page,
   });
 
