@@ -1,9 +1,9 @@
 import {
   ActionIcon,
   Box,
-  Button,
   Card,
   Flex,
+  Stack,
   Text,
   Title,
   Tooltip,
@@ -15,6 +15,7 @@ import { BsGithub } from "react-icons/bs";
 import { MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
+import { ThemeSummaryCard } from "./ThemeSummaryCard";
 import { UserIconLink } from "./UserIconLink";
 
 type Props = { developer: ThemeDeveloper; theme: Theme };
@@ -24,129 +25,102 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
 
   return (
     <>
-      <Box w={760} m="auto">
+      <Stack w={800} m="auto" spacing="lg">
         <Title order={3}>開発者詳細ページ</Title>
-      </Box>
+        <Stack spacing="xs" w={760}>
+          <Text c="gray.5">参加しているお題</Text>
+          <ThemeSummaryCard theme={theme} />
+        </Stack>
+        <Text c="gray.5" mt={-10}>
+          開発者の情報
+        </Text>
+        <Flex maw={800} mih={300} direction="row" gap={10} mt={-10} h="80%">
+          <Card h={300} w={250} sx={{ flexShrink: 0 }}>
+            <Flex direction={"column"} justify={"space-between"} h="100%">
+              <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
+                <UserIconLink
+                  size="xl"
+                  iconSrc={developer.image}
+                  userId={developer.userId}
+                />
+              </Flex>
+              <Flex align={"center"} justify={"center"}>
+                <Text>{developer.name}</Text>
+              </Flex>
 
-      <Flex maw={1200} direction="column" align="center" m="auto">
-        <Flex maw={800} mih={300} direction="row" gap={10} mt="xl" h="80%">
+              <Flex gap={40} mt={10} wrap="wrap" justify={"center"}>
+                <Box>
+                  <Tooltip
+                    label="開発者に対するいいねの合計"
+                    color="gray.5"
+                    position="top"
+                    withArrow
+                    transition="pop"
+                  >
+                    <Flex align={"center"} wrap="wrap">
+                      <MdOutlineFavorite
+                        color={mantineTheme.colors.red[7]}
+                        size="30"
+                        style={{ marginRight: "2px" }}
+                      />
+                      <Text>{developer.likes}</Text>
+                    </Flex>
+                  </Tooltip>
+                </Box>
+
+                <Box>
+                  <Tooltip
+                    label="GitHubへのアクセス"
+                    color="gray.5"
+                    position="top"
+                    withArrow
+                    transition="pop"
+                  >
+                    <Flex align={"center"} wrap="wrap" direction={"column"}>
+                      <ActionIcon
+                        size={30}
+                        component={Link}
+                        // githubのURLをgithub1sに変換
+                        href={developer.githubUrl.replace(
+                          /^(https:\/\/github)(.com)/,
+                          "$11s$2"
+                        )}
+                        target="_blank"
+                        sx={(theme) => ({
+                          transition: "all 200ms",
+                          "&:hover": {
+                            backgroundColor: theme.fn.rgba(
+                              theme.colors.gray[7],
+                              0.1
+                            ),
+                          },
+                        })}
+                      >
+                        <BsGithub
+                          size="90%"
+                          fill={mantineTheme.colors.gray[7]}
+                        />
+                      </ActionIcon>
+                    </Flex>
+                  </Tooltip>
+                </Box>
+              </Flex>
+            </Flex>
+          </Card>
+
           <Card mih={20} w={500}>
-            <Card.Section inheritPadding pb="md" pt={10}>
+            <Card.Section withBorder inheritPadding py="md">
+              <div>コメント</div>
+            </Card.Section>
+
+            <Card.Section inheritPadding mt="sm" pb="md">
               <Text placeholder="開発に対するコメント" mah={200} />
               {developer.comment}
               <Text />
             </Card.Section>
           </Card>
-          <Card h={300} w={250}>
-            <Flex direction={"column"} h="100%">
-              <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
-                <div style={{ marginTop: "-10px" }}>
-                  <UserIconLink
-                    size="xl"
-                    iconSrc={developer.image}
-                    userId={developer.userId}
-                  />
-                </div>
-              </Flex>
-              <Flex align={"center"} justify={"center"} mt={30}>
-                <Text>{developer.name}</Text>
-              </Flex>
-
-              <Flex gap={70} mt={30} wrap="wrap" justify={"center"}>
-                <Flex
-                  align={"center"}
-                  gap={15}
-                  wrap="wrap"
-                  direction={"column"}
-                >
-                  <Box>
-                    <Tooltip
-                      label="開発者へのいいねの合計"
-                      color="gray.5"
-                      position="top"
-                      withArrow
-                      transition="pop"
-                    >
-                      <Flex align={"center"} wrap="wrap" direction={"column"}>
-                        <MdOutlineFavorite
-                          color={mantineTheme.colors.red[7]}
-                          size="30"
-                          style={{ marginTop: "2px" }}
-                        />
-                      </Flex>
-                    </Tooltip>
-                  </Box>
-                  <div style={{ marginTop: "-12px" }}>{developer.likes}</div>
-                </Flex>
-                <Flex
-                  align={"center"}
-                  gap={15}
-                  wrap="wrap"
-                  direction={"column"}
-                >
-                  <Box>
-                    <Tooltip
-                      label="GitHubへのアクセス"
-                      color="gray.5"
-                      position="top"
-                      withArrow
-                      transition="pop"
-                    >
-                      <Flex align={"center"} wrap="wrap" direction={"column"}>
-                        <ActionIcon
-                          size={30}
-                          component={Link}
-                          href={developer.githubUrl.replace(
-                            /^(https:\/\/github)(.com)/,
-                            "$11s$2"
-                          )}
-                          target="_blank"
-                          sx={(theme) => ({
-                            transition: "all 200ms",
-                            "&:hover": {
-                              backgroundColor: theme.fn.rgba(
-                                theme.colors.gray[7],
-                                0.1
-                              ),
-                            },
-                          })}
-                        >
-                          <BsGithub
-                            size="100"
-                            fill={mantineTheme.colors.gray[7]}
-                          />
-                        </ActionIcon>
-                      </Flex>
-                    </Tooltip>
-                    <div style={{ marginTop: "4px" }}>GitHub</div>
-                  </Box>
-                </Flex>
-              </Flex>
-            </Flex>
-          </Card>
         </Flex>
-        <div style={{ marginLeft: -635, marginTop: 20 }}>
-          <Button>コードを見る</Button>
-        </div>
-
-        <Title>コメント</Title>
-
-        <Card h={150} w={760} mt="xl">
-          <Title order={3}>{theme?.title}</Title>
-          <Flex mt="md" gap={5}>
-            <UserIconLink iconSrc={theme.user.image} userId={theme.user.id} />
-            <Text>{theme?.user.name}</Text>
-          </Flex>
-        </Card>
-      </Flex>
-
-      {/* <div style={{ marginTop: "-295px", marginLeft: "245px" }}>
-        <UserIconLink
-          size="xl"
-          iconSrc={developer.image}
-          userId={developer.userId}
-        />
-      </div> */}
+      </Stack>
     </>
   );
 };
