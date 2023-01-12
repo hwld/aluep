@@ -40,7 +40,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
         <Flex maw={800} mih={300} direction="row" gap={10} mt={-10} h="80%">
           <Card h={300} w={250} sx={{ flexShrink: 0 }}>
             <Flex direction={"column"} justify={"space-between"} h="100%">
-              <Flex ml={190} mt={-5}>
+              <Flex mt={-5}>
                 {isThemeOwner && (
                   <DeveloperMenuButton developer={developer} theme={theme} />
                 )}
