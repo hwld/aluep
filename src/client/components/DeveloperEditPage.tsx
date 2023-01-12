@@ -25,7 +25,7 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
         message: "参加情報を更新しました。",
       });
       queryClient.invalidateQueries(["developers", developer.id]);
-      router.push(`/themes/${theme.id}`);
+      router.push(`/themes/${theme.id}/developers/${developer.id}/detail`);
     },
     onError: () => {
       showErrorNotification({
