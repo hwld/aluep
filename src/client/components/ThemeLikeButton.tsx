@@ -1,4 +1,11 @@
-import { ActionIcon, Flex, Text, useMantineTheme } from "@mantine/core";
+import {
+  ActionIcon,
+  Anchor,
+  Stack,
+  Tooltip,
+  useMantineTheme,
+} from "@mantine/core";
+import Link from "next/link";
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 
 type Props = {
@@ -6,17 +13,19 @@ type Props = {
   likedByLoggedInUser: boolean;
   onLikeTheme: () => void;
   disabled?: boolean;
+  themeId: string;
 };
 export const ThemeLikeButton: React.FC<Props> = ({
   likes,
   likedByLoggedInUser,
   onLikeTheme,
   disabled,
+  themeId,
 }) => {
   const mantineTheme = useMantineTheme();
 
   return (
-    <Flex direction="column" align="center">
+    <Stack align="center" spacing={3}>
       <ActionIcon
         disabled={disabled}
         color={likedByLoggedInUser ? "pink" : undefined}
@@ -51,7 +60,20 @@ export const ThemeLikeButton: React.FC<Props> = ({
           />
         )}
       </ActionIcon>
-      <Text>{likes}</Text>
-    </Flex>
+      {likes > 0 && (
+        <Tooltip label="いいねしたユーザーを表示する" position="bottom">
+          <Anchor
+            component={Link}
+            href={`/themes/${themeId}/liking-users`}
+            sx={(theme) => ({
+              textDecoration: "underline",
+              "&:hover": { color: theme.colors.red[7] },
+            })}
+          >
+            {likes}
+          </Anchor>
+        </Tooltip>
+      )}
+    </Stack>
   );
 };

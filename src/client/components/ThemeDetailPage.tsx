@@ -72,36 +72,27 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
-      <Title align="center">{theme.title}</Title>
+      <Title align="center" color="red.7">
+        {theme.title}
+      </Title>
       <Flex mt="xl" gap="lg" w="100%">
         {/* 左カラム */}
         <Flex
           direction="column"
           align="center"
-          gap="xs"
+          gap="md"
           h="min-content"
           // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
           sx={{ position: "sticky", top: appHeaderHeightPx + 10, zIndex: 1 }}
         >
           {isThemeOwner && <ThemeOperationButton theme={theme} />}
           <ThemeLikeButton
+            themeId={theme.id}
             likes={theme.likes}
             likedByLoggedInUser={likedByLoggedInUser}
             onLikeTheme={handleLikeTheme}
             disabled={isThemeOwner}
           />
-          <Button
-            component={Link}
-            href={`/themes/${theme?.id}/liking-users`}
-            sx={(theme) => ({
-              transition: "all 250ms",
-              textDecoration: "underline",
-              "&:hover": { backgroundColor: theme.fn.rgba(theme.black, 0.1) },
-            })}
-            variant="subtle"
-          >
-            いいね一覧
-          </Button>
         </Flex>
 
         {/* 中カラム */}
