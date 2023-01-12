@@ -53,6 +53,7 @@ export const UserSearchPage: React.FC = () => {
           </Stack>
         </Card>
         <Stack mt={30}>
+          {/* 検索ボックスが空 */}
           {userName === "" ? (
             <Flex direction={"column"} gap={30}>
               <Flex justify={"center"} align={"center"}>
@@ -65,7 +66,43 @@ export const UserSearchPage: React.FC = () => {
                 ユーザを検索してみよう!
               </Text>
             </Flex>
-          ) : resultUserNames?.length === 0 ? (
+          ) : resultUserNames?.length !== 0 ? (
+            //検索結果がn件以上の場合
+            <>
+              {resultUserNames?.length === 30 ? (
+                <>
+                  <Box
+                    sx={(theme) => ({
+                      display: "grid",
+                      gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
+                      gap: theme.spacing.md,
+                    })}
+                  >
+                    {resultUserNames?.map((user) => {
+                      return <UserCard key={user.id} user={user} />;
+                    })}
+                  </Box>
+
+                  <Text align="center" c="gray.5">
+                    ユーザの検索結果が30件以上見つかったため、30件のみ表示しています。
+                  </Text>
+                </>
+              ) : (
+                //検索結果がn件未満の場合
+                <Box
+                  sx={(theme) => ({
+                    display: "grid",
+                    gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
+                    gap: theme.spacing.md,
+                  })}
+                >
+                  {resultUserNames?.map((user) => {
+                    return <UserCard key={user.id} user={user} />;
+                  })}
+                </Box>
+              )}
+            </>
+          ) : (
             <Flex direction={"column"} gap={30}>
               <Flex justify={"center"} align={"center"}>
                 <MdOutlinePersonSearch
@@ -85,42 +122,6 @@ export const UserSearchPage: React.FC = () => {
                 </Text>
               </Text>
             </Flex>
-          ) : (
-            //検索結果がn件以上の場合
-            <>
-              {resultUserNames?.length === 10 ? (
-                <>
-                  <Box
-                    sx={(theme) => ({
-                      display: "grid",
-                      gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
-                      gap: theme.spacing.md,
-                    })}
-                  >
-                    {resultUserNames?.map((user) => {
-                      return <UserCard key={user.id} user={user} />;
-                    })}
-                  </Box>
-
-                  <Text align="center" c="gray.5">
-                    ユーザの検索結果が10件以上見つかったため、10件のみ表示しています。
-                  </Text>
-                </>
-              ) : (
-                //検索結果がn件未満の場合
-                <Box
-                  sx={(theme) => ({
-                    display: "grid",
-                    gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
-                    gap: theme.spacing.md,
-                  })}
-                >
-                  {resultUserNames?.map((user) => {
-                    return <UserCard key={user.id} user={user} />;
-                  })}
-                </Box>
-              )}
-            </>
           )}
         </Stack>
       </Flex>
