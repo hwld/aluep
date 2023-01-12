@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Text } from "@mantine/core";
+import { Box, Button, Card, Flex, Text } from "@mantine/core";
 import { User } from "@prisma/client";
 import router from "next/router";
 import React from "react";
@@ -27,7 +27,7 @@ export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
   };
 
   return (
-    <>
+    <Box w="100%">
       <Flex mih={300} direction="row" gap={10} mt={60}>
         <UserDetailCard
           userImage={user.image}
@@ -36,7 +36,7 @@ export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
           themeDeveloperLikes={themeDeveloperLikes}
           githuburl={githubUrl}
         />
-        <Card mih={20}>
+        <Card mih={20} sx={{ flexGrow: 1 }}>
           <Card.Section withBorder inheritPadding py="md">
             <div>自己紹介</div>
           </Card.Section>
@@ -53,7 +53,7 @@ export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
           </Card.Section>
         </Card>
       </Flex>
-      <Flex mt={50}>
+      <Flex mt={50} justify="center">
         <Button.Group>
           <Button
             variant="light"
@@ -93,6 +93,6 @@ export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
           </Button>
         </Button.Group>
       </Flex>
-    </>
+    </Box>
   );
 };
