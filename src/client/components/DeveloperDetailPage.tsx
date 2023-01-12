@@ -62,7 +62,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                 <Text>{developer.name}</Text>
               </Flex>
 
-              <Flex gap={40} wrap="wrap" justify={"center"}>
+              <Flex gap={40} mt={10} wrap="wrap" justify={"center"}>
                 <Box>
                   <Tooltip
                     label="開発者に対するいいねの合計"

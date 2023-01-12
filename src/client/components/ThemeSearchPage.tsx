@@ -1,45 +1,69 @@
-import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
+import { Box, Card, Flex, Title } from "@mantine/core";
 import React from "react";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
-import { usePaginationState } from "../hooks/usePaginationState";
+import {
+  ThemeOrder,
+  themeOrderSchema,
+  ThemePeriod,
+  themePeriodSchema,
+} from "../../share/schema";
+import { themeOrderItems, themePeriodItems } from "../consts";
 import { useSearchedThemesQuery } from "../hooks/useSearchedThemesQuery";
-import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
-import { useStateAndUrlParamStringArray } from "../hooks/useStateAndUrlParamStringArray";
-import { AppMultiSelect } from "./AppMultiSelect";
+import { useURLParams } from "../hooks/useURLParams";
 import { AppPagination } from "./AppPagination";
-import { AppTextInput } from "./AppTextInput";
+import { AppSelect } from "./AppSelect";
 import { NothingTheme } from "./NothingTheme";
 import { ThemeCardContainer } from "./ThemeCardContainer";
+import { ThemeSearchForm, ThemeSearchParams } from "./ThemeSearchForm";
+
+type ThemeSearchPageQueryParams = {
+  keyword: string;
+  tagIds: string[];
+  order: ThemeOrder;
+  period: ThemePeriod;
+  page: string;
+};
 
 export const ThemeSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
 
-  const [page, setPage] = usePaginationState({});
-
-  const [keyword, setKeyword] = useStateAndUrlParamString({
-    paramName: "keyword",
-    initialData: "",
-  });
-  // keywordが変更されてから200ms後に変更される
-  const [debouncedKeyword] = useDebouncedValue(keyword, 200);
-
-  const [tagIds, setTagIds] = useStateAndUrlParamStringArray({
-    paramName: "tagIds",
-    initialData: [],
-  });
+  const [{ keyword, tagIds, order, period, page }, setQueryParams] =
+    useURLParams<ThemeSearchPageQueryParams>({
+      keyword: "",
+      tagIds: [],
+      order: "createdDesc",
+      period: "all",
+      page: "1",
+    });
 
   const { searchedThemesResult } = useSearchedThemesQuery({
-    keyword: debouncedKeyword,
+    keyword,
     tagIds,
-    page,
+    order,
+    period,
+    page: Number(page),
   });
 
-  const handleChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value);
+  const handleSearch = async (param: ThemeSearchParams) => {
+    setQueryParams({
+      keyword: param.keyword,
+      tagIds: param.tagIds,
+      page: "1",
+    });
   };
-  const handleChangeTagIds = (values: string[]) => {
-    setTagIds(values);
+
+  const handleChangeOrder = (value: string) => {
+    const order = themeOrderSchema.parse(value);
+    setQueryParams({ order, page: "1" });
+  };
+
+  const handleChangePeriod = (value: string) => {
+    const period = themePeriodSchema.parse(value);
+    setQueryParams({ period, page: "1" });
+  };
+
+  const handleChangePage = (value: number) => {
+    setQueryParams({ page: value.toString() });
   };
 
   return (
@@ -50,54 +74,38 @@ export const ThemeSearchPage: React.FC = () => {
             position: "static",
           })}
         >
-          <Stack spacing="sm">
-            <Title order={5}>検索</Title>
-            <Box
-              sx={(theme) => ({
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 20,
-                [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-                  gridTemplateColumns: "1fr",
-                  gap: 10,
-                },
-              })}
-            >
-              <AppTextInput
-                label="キーワード"
-                value={keyword}
-                onChange={handleChangeKeyword}
-              />
-
-              <AppMultiSelect
-                label="タグ"
-                data={allTags.map((tag) => ({
-                  value: tag.id,
-                  label: tag.name,
-                }))}
-                value={tagIds}
-                onChange={handleChangeTagIds}
-                searchable
-              />
-            </Box>
-          </Stack>
-          <Text size="sm" c="gray.4" mt={20}>
-            ※指定されたタグをすべて含み、指定されたキーワードがお題のタイトルに含まれるお題を検索します。
-          </Text>
+          <ThemeSearchForm
+            allTags={allTags}
+            defaultValues={{ keyword, tagIds }}
+            key={`${keyword}-${tagIds.join()}`}
+            onSearch={handleSearch}
+          />
         </Card>
-        <Stack mt={30}>
+        <Flex mt={30} align="center" justify="space-between" mb="xl">
           <Title order={4}>検索結果</Title>
-          {keyword === "" && tagIds.length === 0 ? (
-            <NothingTheme page="initial" />
-          ) : searchedThemesResult?.themes.length === 0 ? (
-            <NothingTheme page="Search" />
-          ) : (
-            <ThemeCardContainer themes={searchedThemesResult?.themes ?? []} />
-          )}
-        </Stack>
+          <Flex align="center" sx={(theme) => ({ gap: theme.spacing.md })}>
+            <AppSelect
+              w={150}
+              value={period}
+              onChange={handleChangePeriod}
+              data={themePeriodItems}
+            />
+            <AppSelect
+              w={150}
+              value={order}
+              onChange={handleChangeOrder}
+              data={themeOrderItems}
+            />
+          </Flex>
+        </Flex>
+        {searchedThemesResult?.themes.length === 0 ? (
+          <NothingTheme page="Search" />
+        ) : (
+          <ThemeCardContainer themes={searchedThemesResult?.themes ?? []} />
+        )}
         <AppPagination
-          page={page}
-          onChange={setPage}
+          page={Number(page)}
+          onChange={handleChangePage}
           total={searchedThemesResult?.allPages ?? 0}
           mt="md"
         />

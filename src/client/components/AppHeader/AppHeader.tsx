@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@mantine/core";
+import { Box, Flex, MediaQuery, Text } from "@mantine/core";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
@@ -64,31 +64,32 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
               }}
             >
               <Image src="/logo.svg" alt="logo" width={40} height={40} />
-              <Text fw={700} color="gray.1" size={22} mt={2}>
-                AppThemePost
-              </Text>
+              {/* 画面幅が小さいときはタイトルは表示しない */}
+              {/* TODO: ヘッダーのレイアウトの度に微調整する必要がありそう・・・ */}
+              <MediaQuery smallerThan={1000} styles={{ display: "none" }}>
+                <Text fw={700} color="gray.1" size={22} mt={2}>
+                  AppThemePost
+                </Text>
+              </MediaQuery>
             </Box>
           </Flex>
           <Flex gap={10} align="center">
             <AppHeaderLinkButton
-              leftIcon={<MdOutlinePersonSearch size={18} />}
+              icon={<MdOutlinePersonSearch size={18} />}
               href="/users/search"
-            >
-              ユーザを検索する
-            </AppHeaderLinkButton>
+              text="ユーザーを検索する"
+            />
             <AppHeaderLinkButton
-              leftIcon={<FaSearch size={18} />}
+              icon={<FaSearch size={18} />}
               href="/themes/search"
-            >
-              お題を検索する
-            </AppHeaderLinkButton>
+              text="お題を検索する"
+            />
             <AppHeaderLinkButton
-              leftIcon={<MdPostAdd size={25} />}
+              icon={<MdPostAdd size={25} />}
               href="/themes/create"
               onClick={handleClickCreateTheme}
-            >
-              お題を投稿する
-            </AppHeaderLinkButton>
+              text="お題を投稿する"
+            />
             {user ? (
               <UserMenuButton user={user} />
             ) : (

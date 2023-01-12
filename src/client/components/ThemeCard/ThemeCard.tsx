@@ -34,11 +34,12 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         cursor: "pointer",
         position: "static",
         transition: "all 150ms",
-        // アイコンをホバーしたときにスタイルを当てたくないのでaria-label='icon'の要素を使っているが、
-        // UserIconLinkが変わったときにスタイルが当たらなくなりそう
-        "&:not(:has(*[aria-label='user-icon']:hover)):hover": {
-          boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
-        },
+        // アイコン、タグバッジをホバーしたときにスタイルを当てたくないのでaria-label='user-icon'|'tag-badge'の要素を使っているが、
+        // UserIcon, ThemeTagBadgeが変わったときにスタイルが当たらなくなりそう
+        "&:not(:has(*[aria-label='user-icon']:hover,*[aria-label='tag-badge']:hover)):hover":
+          {
+            boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
+          },
       })}
       onClick={handleGoThemeDetail}
     >
@@ -108,7 +109,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         <Flex gap={5} wrap="wrap" miw={0}>
           {theme.tags.map((tag) => {
             return (
-              <ThemeTagBadge size="md" key={tag.id}>
+              <ThemeTagBadge tagId={tag.id} size="md" key={tag.id}>
                 {tag.name}
               </ThemeTagBadge>
             );

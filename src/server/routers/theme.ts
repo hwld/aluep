@@ -4,6 +4,8 @@ import {
   pageSchema,
   themeFormSchema,
   themeJoinFormSchema,
+  themeOrderSchema,
+  themePeriodSchema,
   themeUpdateFormSchema,
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
@@ -79,6 +81,8 @@ export const themeRoute = router({
       z.object({
         keyword: z.string(),
         tagIds: z.array(z.string().min(1)),
+        order: themeOrderSchema,
+        period: themePeriodSchema,
         page: pageSchema,
       })
     )
@@ -88,13 +92,30 @@ export const themeRoute = router({
           {
             keyword: input.keyword,
             tagIds: input.tagIds,
+            order: input.order,
+            period: input.period,
           },
-          { page: input.page, limit: 12 }
+          { page: input.page, limit: 24 }
         );
 
         return paginatedThemes;
       }
     ),
+  pickUp: publicProcedure
+    .input(z.object({ order: themeOrderSchema }))
+    .query(async ({ input }) => {
+      const pickedUpThemes = await searchThemes(
+        {
+          keyword: "",
+          tagIds: [],
+          order: input.order,
+          period: "all",
+        },
+        { page: 1, limit: 6 }
+      );
+
+      return pickedUpThemes.themes ?? [];
+    }),
 
   // お題を作成する
   create: requireLoggedInProcedure
@@ -270,9 +291,17 @@ export const themeRoute = router({
     .query(async ({ input }) => {
       const { data: users, allPages } = await paginate({
         finderInput: {
-          where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+          //where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+          include: {
+            appThemeLikes: {
+              where: { appThemeId: input.themeId },
+              orderBy: { createdAt: "desc" as const },
+            },
+          },
         },
         finder: prisma.user.findMany,
+        // TODO: 山岸君担当
+        // @ts-ignore
         counter: prisma.user.count,
         pagingData: { page: input.page, limit: 6 },
       });

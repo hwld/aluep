@@ -100,7 +100,9 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           <Card mih={300}>
             <Flex gap={10} mb={10} wrap="wrap">
               {theme.tags.map((tag) => (
-                <ThemeTagBadge key={tag.id}>{tag.name}</ThemeTagBadge>
+                <ThemeTagBadge tagId={tag.id} key={tag.id}>
+                  {tag.name}
+                </ThemeTagBadge>
               ))}
             </Flex>
             <Text>{theme.description}</Text>
