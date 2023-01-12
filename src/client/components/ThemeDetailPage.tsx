@@ -23,6 +23,7 @@ import { appHeaderHeightPx } from "./AppHeader/AppHeader";
 import { AppPagination } from "./AppPagination";
 import { ThemeDeveloperCard } from "./DeveloperCard/ThemeDeveloperCard";
 import { ThemeLikeButton } from "./ThemeLikeButton";
+import { ThemeOperationButton } from "./ThemeOperationButton";
 import { ThemeTagBadge } from "./ThemeTagBadge";
 import { UserIconLink } from "./UserIconLink";
 
@@ -66,26 +67,28 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
 
   const { data } = usePaginatedDeveloperQuery(theme.id, page);
 
-  // 自分の投稿にいいねは出来ない
-  const canLike = theme.user.id !== session?.user.id;
+  // 自分の投稿かどうか
+  const isThemeOwner = theme.user.id === session?.user.id;
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Title align="center">{theme.title}</Title>
       <Flex mt="xl" gap="lg" w="100%">
-        {/* いいねボタン */}
+        {/* 左カラム */}
         <Flex
           direction="column"
           align="center"
           gap="xs"
           h="min-content"
-          sx={{ position: "sticky", top: appHeaderHeightPx + 10 }}
+          // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
+          sx={{ position: "sticky", top: appHeaderHeightPx + 10, zIndex: 1 }}
         >
+          {isThemeOwner && <ThemeOperationButton theme={theme} />}
           <ThemeLikeButton
             likes={theme.likes}
             likedByLoggedInUser={likedByLoggedInUser}
             onLikeTheme={handleLikeTheme}
-            disabled={!canLike}
+            disabled={isThemeOwner}
           />
           <Button
             component={Link}
@@ -101,7 +104,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           </Button>
         </Flex>
 
-        {/* 説明 */}
+        {/* 中カラム */}
         <Box sx={{ flexGrow: 1 }}>
           <Card mih={300}>
             <Flex gap={10} mb={10} wrap="wrap">
@@ -159,10 +162,11 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           </Stack>
         </Box>
 
-        {/* ユーザー情報 */}
+        {/* 右カラム */}
         <Stack
           h="min-content"
-          sx={{ position: "sticky", top: appHeaderHeightPx + 10 }}
+          // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
+          sx={{ position: "sticky", top: appHeaderHeightPx + 10, zIndex: 1 }}
         >
           <Card
             sx={{

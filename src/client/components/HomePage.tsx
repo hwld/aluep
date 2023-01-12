@@ -38,7 +38,6 @@ export const HomePage: React.FC = () => {
           {top10LikesThemesInThisMonth?.length === 0 ? (
             <NothingPopularThemes />
           ) : (
-            // TODO: Carouselが縮まない・・・
             <PopularThemeCarousel
               themes={top10LikesThemesInThisMonth}
               miw={`${themeCardMinWidthPx}px`}
