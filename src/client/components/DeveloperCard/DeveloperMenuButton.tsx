@@ -1,9 +1,11 @@
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import router from "next/router";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
+import { Theme } from "../../../server/models/theme";
 import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
 import { useThemeJoin } from "../../hooks/useThemeJoin";
@@ -18,8 +20,8 @@ import { MenuDropdown } from "../AppMenu/MenuDropdown";
 import { MenuItem } from "../AppMenu/MenuItem";
 import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
 
-type Props = { developer: ThemeDeveloper };
-export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
+type Props = { developer: ThemeDeveloper; theme: Theme };
+export const DeveloperMenuButton: React.FC<Props> = ({ developer, theme }) => {
   const [opened, { close, open }] = useDisclosure(false);
   const { session } = useSessionQuery();
 
@@ -37,6 +39,7 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
             message: "開発情報を削除しました。",
           });
           close();
+          router.push(`/themes/${theme.id}`);
         },
         onError: () => {
           showErrorNotification({

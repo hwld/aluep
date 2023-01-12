@@ -39,7 +39,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
           <Card h={300} w={250} sx={{ flexShrink: 0 }}>
             <Flex direction={"column"} justify={"space-between"} h="100%">
               <Flex ml={190} mt={-5}>
-                <DeveloperMenuButton developer={developer} />
+                <DeveloperMenuButton developer={developer} theme={theme} />
               </Flex>
               <Flex
                 align={"center"}
