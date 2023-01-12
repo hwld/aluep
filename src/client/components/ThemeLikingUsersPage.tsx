@@ -11,7 +11,6 @@ type Props = { theme: Theme };
 export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
   const [page, setPage] = usePaginationState({});
   const { data } = useThemeLikingUsersQuery(theme.id, page);
-
   return (
     <Flex maw={800} direction="column" align="center" m="auto">
       

@@ -4,18 +4,18 @@ import {
   pageSchema,
   themeFormSchema,
   themeJoinFormSchema,
-  themeUpdateFormSchema,
+  themeUpdateFormSchema
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
 import {
   findManyThemes,
   findTheme,
   searchThemes,
-  Theme,
+  Theme
 } from "../models/theme";
 import {
   findManyThemeDevelopers,
-  ThemeDeveloper,
+  ThemeDeveloper
 } from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
 import { UserAndDeveloperLikes, UserAndThemeLikes } from "../models/user";
@@ -270,7 +270,13 @@ export const themeRoute = router({
     .query(async ({ input }) => {
       const { data: users, allPages } = await paginate({
         finderInput: {
+          //where: { user: { appThemeLikes: { some: { appThemeId: input.themeId } } } },
           where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+          include: { 
+            appThemeLikes:{
+              orderBy: { createdAt: "desc" as const, }
+            },
+          },
         },
         finder: prisma.user.findMany,
         counter: prisma.user.count,
