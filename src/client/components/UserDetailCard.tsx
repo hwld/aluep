@@ -10,9 +10,11 @@ import {
 import { User } from "@prisma/client";
 
 import Link from "next/link";
+import router from "next/router";
 import { AiOutlineUser } from "react-icons/ai";
 import { BsFillFilePostFill } from "react-icons/bs";
 import { GoMarkGithub } from "react-icons/go";
+
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { useFavoriteAnother } from "../hooks/useFavoriteAnother";
 import { useFavoriteUser } from "../hooks/useFavoriteUser";
@@ -81,6 +83,10 @@ export function UserDetailCard({
     }
   };
 
+  const handleFavoriteLiet = () => {
+    router.push(`/users/${user.id}/favorite-list`);
+  };
+
   return (
     <Card h={300} w={250} sx={{ flexShrink: 0 }}>
       <Flex direction={"column"} justify={"space-between"} h="100%">
@@ -97,6 +103,7 @@ export function UserDetailCard({
               leftIcon={favoritedSum === 0 ? "0" : favoritedSum}
               variant="subtle"
               compact
+              onClick={handleFavoriteLiet}
             >
               favorite
             </Button>
@@ -111,6 +118,7 @@ export function UserDetailCard({
               leftIcon={favoritedAnotherSum === 0 ? "0" : favoritedAnotherSum}
               variant="subtle"
               compact
+              onClick={handleFavoriteLiet}
             >
               favorite
             </Button>

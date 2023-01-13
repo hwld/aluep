@@ -193,4 +193,44 @@ export const userRoute = router({
       }
       return favoritedSum;
     }),
+
+  //お気に入りリストの表示pageの追加もしたい
+  favoriteList: publicProcedure
+    .input(z.object({ favoriteUserId: string(), page: pageSchema }))
+    .query(async ({ input }) => {
+      const favoriteList = await prisma.favoriteUser.findMany({
+        select: { userId: true },
+        where: { favoritedUserId: input.favoriteUserId },
+      });
+
+      const ids = favoriteList.map((favorite) => favorite.userId);
+
+      const favoriteResultList = await prisma.user.findMany({
+        where: {
+          id: { in: ids },
+        },
+      });
+
+      return favoriteResultList;
+    }),
+
+  // getLikeTssheme: publicProcedure
+  //   .input(z.object({ userId: z.string(), page: pageSchema }))
+  //   .query(async ({ input, input: { page } }) => {
+  //     //お題にいいねしてあるモデルの中から自分のIDを取得
+  //     const likeThemeIds = await prisma.appThemeLike.findMany({
+  //       select: { appThemeId: true },
+  //       where: { userId: input.userId },
+  //     });
+  //     const likeThemeList = likeThemeIds.map((like) => like.appThemeId);
+
+  //     const { data: likePostedTheme, allPages } = await paginate({
+  //       finder: findManyThemes,
+  //       finderInput: { where: { id: { in: likeThemeList } } },
+  //       counter: prisma.appTheme.count,
+  //       pagingData: { page, limit: 18 },
+  //     });
+
+  //     return { likePostedTheme, allPages };
+  //   }),
 });
