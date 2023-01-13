@@ -116,7 +116,9 @@ export const userRoute = router({
       } else {
         const searchUsers = await prisma.user.findMany({
           where: { name: { contains: input.userName } },
+          take: 30,
         });
+
         return searchUsers;
       }
     }),

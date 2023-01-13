@@ -23,7 +23,7 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
         title: "お題の更新",
         message: "お題を更新しました。",
       });
-      router.push("/");
+      router.push(`/themes/${theme.id}`);
     },
     onError: () => {
       showErrorNotification({

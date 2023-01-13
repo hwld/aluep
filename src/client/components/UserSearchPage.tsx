@@ -13,7 +13,7 @@ import { RiQuestionMark } from "react-icons/ri";
 import { useSearchedUsersQuery } from "../hooks/useSearchedUsersQuery";
 import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
 import { AppTextInput } from "./AppTextInput";
-import { UserCard } from "./UserCard";
+import { UserCard, userCardMinWidthPx } from "./UserCard";
 
 export const UserSearchPage: React.FC = () => {
   const [userName, setUserName] = useStateAndUrlParamString({
@@ -29,8 +29,19 @@ export const UserSearchPage: React.FC = () => {
   const { resultUserNames } = useSearchedUsersQuery(userName);
   return (
     <Box>
-      <Flex direction="column" align={"center"}>
-        <Card w="50%">
+      <Flex
+        direction="column"
+        w="50%"
+        sx={() => ({
+          marginLeft: "auto",
+          marginRight: "auto",
+        })}
+      >
+        <Card
+          sx={() => ({
+            position: "static",
+          })}
+        >
           <Stack>
             <Title order={5}>検索</Title>
 
@@ -42,7 +53,56 @@ export const UserSearchPage: React.FC = () => {
           </Stack>
         </Card>
         <Stack mt={30}>
-          {resultUserNames?.length === 0 ? (
+          {/* 検索ボックスが空 */}
+          {userName === "" ? (
+            <Flex direction={"column"} gap={30}>
+              <Flex justify={"center"} align={"center"}>
+                <MdOutlinePersonSearch
+                  size={100}
+                  color={mantineTheme.colors.red[7]}
+                />
+              </Flex>
+              <Text align="center" c="gray.5">
+                ユーザを検索してみよう!
+              </Text>
+            </Flex>
+          ) : resultUserNames?.length !== 0 ? (
+            //検索結果がn件以上の場合
+            <>
+              {resultUserNames?.length === 30 ? (
+                <>
+                  <Box
+                    sx={(theme) => ({
+                      display: "grid",
+                      gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
+                      gap: theme.spacing.md,
+                    })}
+                  >
+                    {resultUserNames?.map((user) => {
+                      return <UserCard key={user.id} user={user} />;
+                    })}
+                  </Box>
+
+                  <Text align="center" c="gray.5">
+                    ユーザの検索結果が30件以上見つかったため、30件のみ表示しています。
+                  </Text>
+                </>
+              ) : (
+                //検索結果がn件未満の場合
+                <Box
+                  sx={(theme) => ({
+                    display: "grid",
+                    gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
+                    gap: theme.spacing.md,
+                  })}
+                >
+                  {resultUserNames?.map((user) => {
+                    return <UserCard key={user.id} user={user} />;
+                  })}
+                </Box>
+              )}
+            </>
+          ) : (
             <Flex direction={"column"} gap={30}>
               <Flex justify={"center"} align={"center"}>
                 <MdOutlinePersonSearch
@@ -62,18 +122,6 @@ export const UserSearchPage: React.FC = () => {
                 </Text>
               </Text>
             </Flex>
-          ) : (
-            <Box
-              sx={(theme) => ({
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
-                gap: theme.spacing.md,
-              })}
-            >
-              {resultUserNames?.map((user) => {
-                return <UserCard key={user.id} user={user} />;
-              })}
-            </Box>
           )}
         </Stack>
       </Flex>

@@ -13,7 +13,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const userName = urlParamToString(query.userName, "");
 
     await queryClient.prefetchQuery(searchedUsersQueryKey(userName), () => {
-      return caller.user.searchUser({ userName });
+      caller.user.searchUser({ userName });
     });
   }
 );

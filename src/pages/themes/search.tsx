@@ -8,17 +8,34 @@ import {
   urlParamToStringArray,
 } from "../../server/lib/urlParam";
 import { appRouter } from "../../server/routers/_app";
+import { ThemeOrder, themeOrderSchema } from "../../share/schema";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
     const caller = appRouter.createCaller({ session });
 
-    // URLパラメータからkeyword,tagIds,pageを取得する
+    // URLパラメータからkeyword,tagIds,order,pageを取得する
     const keyword = urlParamToString(query.keyword, "");
     const tagIds = urlParamToStringArray(query.tagIds, []);
+    const rawOrder = urlParamToString(
+      query.order,
+      "createdDesc" satisfies ThemeOrder
+    );
     const page = urlParamToString(query.page, "1");
 
-    const searchedThemes = await caller.theme.search({ keyword, tagIds, page });
+    // orderが正しくない場合は404にする
+    const parseResult = themeOrderSchema.safeParse(rawOrder);
+    if (!parseResult.success) {
+      return { notFound: true };
+    }
+    const order = parseResult.data;
+
+    const searchedThemes = await caller.theme.search({
+      keyword,
+      tagIds,
+      page,
+      order,
+    });
     //　検索結果は存在するが、指定されたページが存在しない場合は404にする
     if (searchedThemes.allPages > 0 && searchedThemes.themes.length === 0) {
       return { notFound: true };
@@ -28,8 +45,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.theme.getAllTags()
     );
     await queryClient.prefetchQuery(
-      searchedThemesQueryKey({ keyword, tagIds, page: Number(page) }),
-      () => caller.theme.search({ keyword, tagIds, page })
+      searchedThemesQueryKey({
+        keyword,
+        tagIds,
+        order,
+        page: Number(page),
+      }),
+      () => searchedThemes
     );
   }
 );

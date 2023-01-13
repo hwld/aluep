@@ -1,10 +1,9 @@
-import { Divider, Menu, Text, UnstyledButton } from "@mantine/core";
+import { Divider, Menu, Space, Text, UnstyledButton } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { FaTrash } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
-import { RiEdit2Line } from "react-icons/ri";
-import { VscAccount } from "react-icons/vsc";
+import { RiAccountCircleLine, RiEdit2Line } from "react-icons/ri";
 import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
 import { MenuItem } from "../AppMenu/MenuItem";
@@ -41,8 +40,9 @@ export const UserMenuButton: React.FC<Props> = ({ user }) => {
           </Text>
         </Menu.Label>
         <Divider color="gray.3" />
+        <Space mt="xs" />
         <MenuLinkItem
-          icon={<VscAccount size={20} />}
+          icon={<RiAccountCircleLine size={20} />}
           href={`/users/${user.id}`}
         >
           プロフィール

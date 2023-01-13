@@ -38,6 +38,15 @@ export const themeJoinFormSchema = z.object({
     .optional(),
 });
 
+// お題の並び順
+export const themeOrderSchema = z.union([
+  z.literal("createdDesc"),
+  z.literal("createdAsc"),
+  z.literal("likeDesc"),
+  z.literal("developerDesc"),
+]);
+export type ThemeOrder = z.infer<typeof themeOrderSchema>;
+
 // プロフィールのフォームデータ
 export const profileFormSchema = z.object({
   name: z
