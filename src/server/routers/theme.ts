@@ -4,6 +4,7 @@ import {
   pageSchema,
   themeFormSchema,
   themeJoinFormSchema,
+  themeOrderSchema,
   themeUpdateFormSchema,
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
@@ -79,6 +80,7 @@ export const themeRoute = router({
       z.object({
         keyword: z.string(),
         tagIds: z.array(z.string().min(1)),
+        order: themeOrderSchema,
         page: pageSchema,
       })
     )
@@ -88,6 +90,7 @@ export const themeRoute = router({
           {
             keyword: input.keyword,
             tagIds: input.tagIds,
+            order: input.order,
           },
           { page: input.page, limit: 12 }
         );
