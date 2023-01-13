@@ -15,6 +15,7 @@ import { BsGithub } from "react-icons/bs";
 import { MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
+import { useSessionQuery } from "../hooks/useSessionQuery";
 import { DeveloperMenuButton } from "./DeveloperCard/DeveloperMenuButton";
 import { ThemeSummaryCard } from "./ThemeSummaryCard";
 import { UserIconLink } from "./UserIconLink";
@@ -22,8 +23,9 @@ import { UserIconLink } from "./UserIconLink";
 type Props = { developer: ThemeDeveloper; theme: Theme };
 
 export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
+  const { session } = useSessionQuery();
   const mantineTheme = useMantineTheme();
-
+  const isThemeOwner = theme.user.id === session?.user.id;
   return (
     <>
       <Stack w={800} m="auto" spacing="lg">
@@ -39,7 +41,9 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
           <Card h={300} w={250} sx={{ flexShrink: 0 }}>
             <Flex direction={"column"} justify={"space-between"} h="100%">
               <Flex ml={190} mt={-5}>
-                <DeveloperMenuButton developer={developer} theme={theme} />
+                {isThemeOwner && (
+                  <DeveloperMenuButton developer={developer} theme={theme} />
+                )}
               </Flex>
               <Flex
                 align={"center"}
