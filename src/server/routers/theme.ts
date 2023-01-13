@@ -90,7 +90,7 @@ export const themeRoute = router({
           {
             keyword: input.keyword,
             tagIds: input.tagIds,
-            order: "createdAsc",
+            order: input.order,
           },
           { page: input.page, limit: 12 }
         );

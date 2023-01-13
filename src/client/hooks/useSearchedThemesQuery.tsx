@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ThemeOrder } from "../../share/schema";
+import { themeOrderSchema } from "../../share/schema";
 import { trpc } from "../trpc";
 
 export const searchedThemesQueryKey = ({
@@ -13,19 +13,27 @@ export const searchedThemesQueryKey = ({
 type UseSearchedThemesQueryArgs = {
   keyword: string;
   tagIds: string[];
-  order: ThemeOrder;
+  order: string;
   page: number;
 };
 export const useSearchedThemesQuery = ({
   keyword,
   tagIds,
-  order,
+  order: rawOrder,
   page,
 }: UseSearchedThemesQueryArgs) => {
   const { data: searchedThemesResult, ...others } = useQuery({
-    queryKey: searchedThemesQueryKey({ keyword, tagIds, page, order }),
+    queryKey: searchedThemesQueryKey({
+      keyword,
+      tagIds,
+      page,
+      order: rawOrder,
+    }),
     queryFn: ({ queryKey }) => {
       const { keyword, tagIds } = queryKey[1];
+
+      const order = themeOrderSchema.parse(rawOrder);
+
       return trpc.theme.search.query({
         keyword,
         tagIds,
