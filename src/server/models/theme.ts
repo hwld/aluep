@@ -104,10 +104,6 @@ export const searchThemes = async (
   { keyword, tagIds, order }: SearchThemesArgs,
   pagingData: { page: number; limit: number }
 ): Promise<{ themes: Theme[]; allPages: number }> => {
-  if (keyword === "" && tagIds.length === 0) {
-    return { themes: [], allPages: 0 };
-  }
-
   // トランザクションを使用する
   const paginatedThemes = await prisma.$transaction(async (tx) => {
     // orderに対応するクエリや並び替え関数を宣言する

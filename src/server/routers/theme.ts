@@ -92,7 +92,7 @@ export const themeRoute = router({
             tagIds: input.tagIds,
             order: input.order,
           },
-          { page: input.page, limit: 12 }
+          { page: input.page, limit: 24 }
         );
 
         return paginatedThemes;

@@ -68,9 +68,7 @@ export const ThemeSearchForm: React.FC<Props> = ({
           />
         </Box>
         <Flex gap="lg" align="flex-end">
-          <Button type="submit" sx={{ alignSelf: "flex-start" }}>
-            検索
-          </Button>
+          <Button type="submit">検索</Button>
           <Text size="sm" c="gray.4">
             ※指定されたタグをすべて含み、指定されたキーワードがお題のタイトルに含まれるお題を検索します。
           </Text>
