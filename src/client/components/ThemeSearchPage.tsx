@@ -1,8 +1,8 @@
 import { Box, Card, Flex, Space, Stack, Title } from "@mantine/core";
 import React from "react";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
-import { themeOrderItems } from "../../pages/consts";
 import { ThemeOrder } from "../../share/schema";
+import { themeOrderItems } from "../consts";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useSearchedThemesQuery } from "../hooks/useSearchedThemesQuery";
 import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
