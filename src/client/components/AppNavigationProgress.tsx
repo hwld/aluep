@@ -34,5 +34,7 @@ export const AppNavigationProgress = () => {
     };
   }, [router.asPath, router.events]);
 
-  return <NavigationProgress autoReset color="gray.0" stepInterval={100} />;
+  return (
+    <NavigationProgress autoReset color="red.7" stepInterval={100} size={3} />
+  );
 };

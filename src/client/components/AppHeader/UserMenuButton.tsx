@@ -18,13 +18,13 @@ export const UserMenuButton: React.FC<Props> = ({ user }) => {
   };
 
   return (
-    <AppMenu>
+    <AppMenu offset={20} position="right-end">
       <Menu.Target>
         <UnstyledButton>
           <UserIcon iconSrc={user.image} withBorder={false} />
         </UnstyledButton>
       </Menu.Target>
-      <MenuDropdown maw={180}>
+      <MenuDropdown maw={180} sx={{ zIndex: 1000 }}>
         <Menu.Label>
           <Text
             align="center"
