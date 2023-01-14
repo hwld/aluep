@@ -7,21 +7,23 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
+import { useState } from "react";
 import { BsDot } from "react-icons/bs";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { RiQuestionMark } from "react-icons/ri";
 import { useSearchedUsersQuery } from "../hooks/useSearchedUsersQuery";
-import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
+import { useURLParams } from "../hooks/useURLParams";
 import { AppTextInput } from "./AppTextInput";
 import { UserCard, userCardMinWidthPx } from "./UserCard";
 
 export const UserSearchPage: React.FC = () => {
-  const [userName, setUserName] = useStateAndUrlParamString({
-    paramName: "userName",
-    initialData: "",
+  const [urlParam, setURLParams] = useURLParams({
+    userName: "",
   });
+  const [userName, setUserName] = useState(urlParam.userName);
 
   const handleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setURLParams({ userName: e.target.value });
     setUserName(e.target.value);
   };
   const mantineTheme = useMantineTheme();

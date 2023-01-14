@@ -3,13 +3,12 @@ import { useCallback, useMemo } from "react";
 import { objectKeys } from "../utils";
 
 /**
+ * TODO: もうちょっと型どうにかしたい
  * URLSearchParamsを操作するhook
  * @param initialData
  * @returns
  */
-export const useURLParams = <
-  T extends Record<string, string | string[] | number>
->(
+export const useURLParams = <T extends Record<string, string | string[]>>(
   initialData: T
 ) => {
   const router = useRouter();
@@ -28,7 +27,7 @@ export const useURLParams = <
   }, [initialData, router.query]);
 
   const setQueryParams = useCallback(
-    async (newObj: Partial<T>) => {
+    async (newObj: Partial<T>, options?: Parameters<typeof router.push>[2]) => {
       const url = new URL(window.location.href);
 
       // queryParamsをすべて削除する
@@ -53,7 +52,7 @@ export const useURLParams = <
         }
       });
 
-      await router.push(url);
+      await router.push(url, undefined, options);
     },
     [queryParams, router]
   );
