@@ -17,13 +17,13 @@ export const useStateAndUrlParamStringArray = ({
     urlParamToStringArray(urlParam, initialData)
   );
 
-  const setStateAndUrlParam = (values: string[]) => {
+  const setStateAndUrlParam = async (values: string[]) => {
     const url = new URL(window.location.href);
     url.searchParams.delete(paramName);
     values.forEach((value) => {
       url.searchParams.append(paramName, value);
     });
-    router.replace(url, undefined, { shallow: true });
+    await router.replace(url, undefined, { shallow: true });
 
     setState(values);
   };
