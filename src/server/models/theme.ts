@@ -1,5 +1,8 @@
 import { Prisma } from "@prisma/client";
+import { formatDistanceStrict } from "date-fns";
+import { ja } from "date-fns/locale";
 import { z } from "zod";
+import { ThemeOrder } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
 import { prisma } from "../prismadb";
 
@@ -17,6 +20,8 @@ export const themeSchema = z.object({
   developers: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  // 作成してからの取得するまでの経過時間
+  elapsedSinceCreation: z.string(),
 });
 export type Theme = z.infer<typeof themeSchema>;
 
@@ -24,12 +29,7 @@ const themeArgs = {
   include: {
     tags: { include: { tag: true, theme: true } },
     user: true,
-    // TODO
-    // こうすると正しく数えてくれないので、
     _count: { select: { likes: true, developers: true } },
-    // すべて取得してその数を数える。 数が多くなってきたときにどうなるだろうか。
-    // likes: { select: { id: true } },
-    // developers: { select: { id: true } },
   },
 } satisfies Prisma.AppThemeArgs;
 
@@ -42,6 +42,10 @@ const convertTheme = (
     tags: rawTheme.tags.map(({ tag: { id, name } }) => ({ id, name })),
     description: rawTheme.description,
     createdAt: rawTheme.createdAt.toUTCString(),
+    elapsedSinceCreation: formatDistanceStrict(rawTheme.createdAt, new Date(), {
+      addSuffix: true,
+      locale: ja,
+    }),
     updatedAt: rawTheme.updatedAt.toUTCString(),
     user: {
       id: rawTheme.user.id,
@@ -89,9 +93,15 @@ export const findManyThemes = async (
   return themes;
 };
 
-type SearchThemesArgs = { keyword: string; tagIds: string[] };
+type SearchThemesArgs = {
+  keyword: string;
+  tagIds: string[];
+  order: ThemeOrder;
+};
+
+// TODO: :(
 export const searchThemes = async (
-  { keyword, tagIds }: SearchThemesArgs,
+  { keyword, tagIds, order }: SearchThemesArgs,
   pagingData: { page: number; limit: number }
 ): Promise<{ themes: Theme[]; allPages: number }> => {
   if (keyword === "" && tagIds.length === 0) {
@@ -100,14 +110,55 @@ export const searchThemes = async (
 
   // トランザクションを使用する
   const paginatedThemes = await prisma.$transaction(async (tx) => {
+    // orderに対応するクエリや並び替え関数を宣言する
+    const orderMap: {
+      [T in typeof order]: {
+        select: Prisma.Sql;
+        from: Prisma.Sql;
+        orderBy: Prisma.Sql;
+        sortFn: (a: Theme, b: Theme) => number;
+      };
+    } = {
+      // 古い順
+      createdAsc: {
+        select: Prisma.sql`, MAX(AppTheme.createdAt) as themeCreatedAt`,
+        from: Prisma.empty,
+        orderBy: Prisma.sql`themeCreatedAt asc`,
+        sortFn: (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      },
+      createdDesc: {
+        select: Prisma.sql`, MAX(AppTheme.createdAt) as themeCreatedAt`,
+        from: Prisma.empty,
+        orderBy: Prisma.sql`themeCreatedAt desc`,
+        sortFn: (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      },
+      likeDesc: {
+        select: Prisma.sql`, COUNT(AppThemeLike.id) as likeCounts`,
+        from: Prisma.sql`LEFT JOIN AppThemeLike ON (AppTheme.id = AppThemeLike.appThemeId)`,
+        orderBy: Prisma.sql`likeCounts desc`,
+        sortFn: (a, b) => b.likes - a.likes,
+      },
+      developerDesc: {
+        select: Prisma.sql`, COUNT(AppThemeDeveloper.id) as developerCounts`,
+        from: Prisma.sql`LEFT JOIN AppThemeDeveloper ON (AppTheme.id = AppThemeDeveloper.appThemeId)`,
+        orderBy: Prisma.sql`developerCounts desc`,
+        sortFn: (a, b) => b.developers - a.developers,
+      },
+    };
+
+    // マスタとなるクエリを作る
     const master = Prisma.sql`
       (
         SELECT
           AppTheme.id as themeId
+          ${orderMap[order].select}
         FROM
           AppTheme
           LEFT JOIN AppThemeTagOnAppTheme
             ON (AppTheme.id = AppThemeTagOnAppTheme.themeId)
+          ${orderMap[order].from}
         WHERE
           AppTheme.title LIKE ${"%" + keyword + "%"}
           ${
@@ -125,6 +176,8 @@ export const searchThemes = async (
           COUNT(themeId) = ${tagIds.length}`
             : Prisma.empty
         }
+        ORDER BY
+          ${orderMap[order].orderBy}
       ) master
     `;
 
@@ -155,7 +208,13 @@ export const searchThemes = async (
       { where: { id: { in: searchedThemeIds } } },
       tx
     );
-    return { themes, allPages };
+
+    // searchedThemeIdsの並び順が保持されないので、並び替え直す。
+    // idを正しい順番で並び変えた後にページングが行われるので、ページ単位では正しい結果になってるはず
+    // なので、ページ単位の並び替えで十分だと思う
+    const sortedThemes = [...themes].sort(orderMap[order].sortFn);
+
+    return { themes: sortedThemes, allPages };
   });
 
   return paginatedThemes;

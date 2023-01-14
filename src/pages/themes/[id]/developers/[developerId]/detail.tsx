@@ -20,12 +20,15 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     const caller = appRouter.createCaller({ session });
 
-    await queryClient.prefetchQuery(themeQueryKey(themeId), () =>
-      caller.theme.get({ themeId })
-    );
-    await queryClient.prefetchQuery(developerQuerykey(developerId), () =>
-      caller.themeDeveloper.get({ developerId })
-    );
+    // お題、開発者が存在しない場合は404にする
+    const theme = await caller.theme.get({ themeId });
+    const developer = await caller.themeDeveloper.get({ developerId });
+    if (!theme || !developer) {
+      return { notFound: true };
+    }
+
+    queryClient.setQueryData(themeQueryKey(themeId), theme);
+    queryClient.setQueryData(developerQuerykey(developerId), developer);
   }
 );
 

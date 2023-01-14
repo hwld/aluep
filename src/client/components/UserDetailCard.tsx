@@ -1,28 +1,21 @@
-import {
-  ActionIcon,
-  Avatar,
-  Box,
-  Card,
-  Flex,
-  Text,
-  Tooltip,
-} from "@mantine/core";
+import { ActionIcon, Box, Card, Flex, Text, Tooltip } from "@mantine/core";
 import Link from "next/link";
 import { AiOutlineUser } from "react-icons/ai";
 import { BsFillFilePostFill } from "react-icons/bs";
 import { GoMarkGithub } from "react-icons/go";
+import { UserIcon } from "./UserIcon";
 
 type Props = {
   userImage?: string | null;
   userName?: string | null;
-  themeLikes?: number;
+  sumThemeLikes?: number;
   themeDeveloperLikes?: number;
   githuburl?: string;
 };
-function UserDetailCard({
+export function UserDetailCard({
   userImage,
   userName,
-  themeLikes,
+  sumThemeLikes,
   themeDeveloperLikes,
   githuburl,
 }: Props) {
@@ -30,19 +23,10 @@ function UserDetailCard({
     githuburl = "/";
   }
   return (
-    <Card h={300} w={250}>
+    <Card h={300} w={250} sx={{ flexShrink: 0 }}>
       <Flex direction={"column"} justify={"space-between"} h="100%">
         <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
-          <Avatar
-            src={userImage}
-            size="xl"
-            sx={(theme) => ({
-              borderWidth: "2px",
-              borderColor: theme.colors.gray[2],
-              borderStyle: "solid",
-              borderRadius: "100%",
-            })}
-          />
+          <UserIcon iconSrc={userImage} size="xl" />
         </Flex>
         <Flex align={"center"} justify={"center"}>
           <Text>{userName}</Text>
@@ -59,7 +43,7 @@ function UserDetailCard({
             >
               <Flex align={"center"} wrap="wrap" direction={"column"}>
                 <BsFillFilePostFill size="30" style={{ marginTop: "4px" }} />
-                <Text>{themeLikes}</Text>
+                <Text>{sumThemeLikes}</Text>
               </Flex>
             </Tooltip>
           </Box>
@@ -98,5 +82,3 @@ function UserDetailCard({
     </Card>
   );
 }
-
-export default UserDetailCard;

@@ -1,11 +1,11 @@
 import { Box, Card, Title } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { RouterInputs } from "../../server/trpc";
 import { ProfileFormData } from "../../share/schema";
 import { trpc } from "../trpc";
+import { showErrorNotification, showSuccessNotification } from "../utils";
 import { UserProfileForm } from "./UserProfileForm";
 
 type Props = { user: Session["user"] };
@@ -17,18 +17,16 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
       return trpc.me.update.mutate(data);
     },
     onSuccess: () => {
-      showNotification({
-        title: "更新結果",
+      showSuccessNotification({
+        title: "プロフィールの更新",
         message: "プロフィールを更新しました。",
-        color: "green",
       });
       router.back();
     },
     onError: () => {
-      showNotification({
-        title: "更新結果",
+      showErrorNotification({
+        title: "プロフィールの更新",
         message: "プロフィールを更新できませんでした。",
-        color: "red",
       });
     },
   });
@@ -40,12 +38,13 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
   const handleCancel = () => {
     router.back();
   };
+
   return (
     <Box w={800} m="auto">
       <Title order={3}>プロフィールの更新</Title>
       <Card mt="md">
         <UserProfileForm
-          actoinText="更新する"
+          submitText="更新する"
           onSubmit={handleUpdateUser}
           onCancel={handleCancel}
           defaultValues={{

@@ -12,6 +12,8 @@
 - [NextAuth](https://next-auth.js.org/)
 - [Prisma](https://www.prisma.io/)
 - [Zod](https://zod.dev/)
+- [Jest](https://jestjs.io/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
 ### インフラ(予定)
 

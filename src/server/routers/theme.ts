@@ -4,6 +4,7 @@ import {
   pageSchema,
   themeFormSchema,
   themeJoinFormSchema,
+  themeOrderSchema,
   themeUpdateFormSchema,
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
@@ -13,7 +14,10 @@ import {
   searchThemes,
   Theme,
 } from "../models/theme";
-import { findThemeDevelopers, ThemeDeveloper } from "../models/themeDeveloper";
+import {
+  findManyThemeDevelopers,
+  ThemeDeveloper,
+} from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
 import { UserAndDeveloperLikes, UserAndThemeLikes } from "../models/user";
 import { prisma } from "../prismadb";
@@ -38,6 +42,24 @@ export const themeRoute = router({
       return { themes, allPages };
     }),
 
+  //ページを指定して、開発者を取得する
+  getDeveloperAllpage: publicProcedure
+    .input(z.object({ themeId: z.string(), page: pageSchema }))
+    .query(async ({ input: { page }, input, ctx }) => {
+      const { data: developers, allPages } = await paginate({
+        finderInput: {
+          where: { appThemeId: input.themeId },
+          loggedInUserId: ctx.session?.user.id,
+        },
+        finder: findManyThemeDevelopers,
+        counter: ({ loggedInUserId, ...others }) =>
+          prisma.appThemeDeveloper.count(others),
+        pagingData: { page, limit: 8 },
+      });
+
+      return { developers, allPages };
+    }),
+
   // すべてのタグを取得する
   getAllTags: publicProcedure.query(async (): Promise<ThemeTag[]> => {
     const allTags = await findAllThemeTags();
@@ -47,13 +69,8 @@ export const themeRoute = router({
   // idを指定してタグを取得する
   get: publicProcedure
     .input(z.object({ themeId: z.string() }))
-    .query(async ({ input }): Promise<Theme> => {
+    .query(async ({ input }): Promise<Theme | undefined> => {
       const theme = await findTheme({ id: input.themeId });
-
-      if (!theme) {
-        throw new TRPCError({ code: "NOT_FOUND" });
-      }
-
       return theme;
     }),
 
@@ -63,6 +80,7 @@ export const themeRoute = router({
       z.object({
         keyword: z.string(),
         tagIds: z.array(z.string().min(1)),
+        order: themeOrderSchema,
         page: pageSchema,
       })
     )
@@ -72,8 +90,9 @@ export const themeRoute = router({
           {
             keyword: input.keyword,
             tagIds: input.tagIds,
+            order: input.order,
           },
-          { page: input.page, limit: 6 }
+          { page: input.page, limit: 12 }
         );
 
         return paginatedThemes;
@@ -84,7 +103,7 @@ export const themeRoute = router({
   create: requireLoggedInProcedure
     .input(themeFormSchema)
     .mutation(async ({ input, ctx }) => {
-      await prisma.appTheme.create({
+      const theme = await prisma.appTheme.create({
         data: {
           title: input.title,
           description: input.description,
@@ -92,6 +111,8 @@ export const themeRoute = router({
           userId: ctx.session.user.id,
         },
       });
+
+      return { themeId: theme.id };
     }),
 
   // お題を更新する
@@ -239,7 +260,7 @@ export const themeRoute = router({
   getAllDevelopers: publicProcedure
     .input(z.object({ themeId: z.string().min(1) }))
     .query(async ({ input, ctx }): Promise<ThemeDeveloper[]> => {
-      const developers = findThemeDevelopers({
+      const developers = findManyThemeDevelopers({
         where: { appThemeId: input.themeId },
         loggedInUserId: ctx.session?.user.id,
       });
@@ -247,14 +268,19 @@ export const themeRoute = router({
     }),
 
   // 指定されたお題をいいねしたユーザーを取得する
-  getLikedUsers: publicProcedure
-    .input(z.object({ themeId: z.string() }))
+  getThemeLikingUsers: publicProcedure
+    .input(z.object({ themeId: z.string(), page: pageSchema }))
     .query(async ({ input }) => {
-      const users = await prisma.user.findMany({
-        where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+      const { data: users, allPages } = await paginate({
+        finderInput: {
+          where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+        },
+        finder: prisma.user.findMany,
+        counter: prisma.user.count,
+        pagingData: { page: input.page, limit: 6 },
       });
 
-      return users;
+      return { users, allPages };
     }),
 
   // 1カ月間でいいねが多かった投稿を取得する

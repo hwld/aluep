@@ -9,8 +9,9 @@ export const theme: MantineThemeOverride = {
   headings: {
     fontFamily: `'Noto Sans JP', sans-serif`,
   },
+  breakpoints: { md: 900 },
   shadows: {
-    sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    sm: "0 1px 2px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.06)",
     md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
     lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
     xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
@@ -59,17 +60,29 @@ export const theme: MantineThemeOverride = {
     ],
   },
   components: {
+    Tooltip: { defaultProps: { color: "gray.5" } },
     Paper: { defaultProps: { bg: "gray.1" } },
     Text: {
       defaultProps: { color: "gray.7" },
     },
-    Card: { defaultProps: { bg: "gray.1", radius: "md", shadow: "md" } },
+    Card: { defaultProps: { bg: "gray.1", radius: "md", shadow: "sm" } },
     Divider: { defaultProps: { color: "gray.3" } },
     Input: {
       styles: (theme) => ({
         invalid: {
           borderColor: theme.colors.red[7],
           borderWidth: "2px",
+        },
+      }),
+    },
+    Notification: {
+      styles: (theme) => ({
+        root: {
+          backgroundColor: theme.colors.gray[1],
+          borderColor: theme.colors.gray[1],
+        },
+        description: {
+          color: theme.colors.gray[5],
         },
       }),
     },

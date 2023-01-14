@@ -8,11 +8,15 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
-import { Theme } from "../../server/models/theme";
-import { ThemeDeveloper } from "../../server/models/themeDeveloper";
-import { useSessionQuery } from "../hooks/useSessionQuery";
-import { DeveloperDetailLinkButton } from "./DeveloperDetailLinkButton";
+import { Theme } from "../../../server/models/theme";
+import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
+import { useRequireLoginModal } from "../../contexts/RequireLoginModalProvider";
+import { useSessionQuery } from "../../hooks/useSessionQuery";
+import { stopPropagation } from "../../utils";
+import { TextLink } from "../TextLink";
+import { UserIconLink } from "../UserIconLink";
 import { DeveloperLikeButton } from "./DeveloperLikeButton";
 import { DeveloperMenuButton } from "./DeveloperMenuButton";
 
@@ -21,44 +25,58 @@ type Props = {
   developer: ThemeDeveloper;
   onLikeDeveloper: (developerId: string, like: boolean) => void;
 };
+
 export const ThemeDeveloperCard: React.FC<Props> = ({
   theme,
   developer,
   onLikeDeveloper: onLike,
 }) => {
+  const router = useRouter();
   const mantineTheme = useMantineTheme();
   const { session } = useSessionQuery();
+  const { openLoginModal } = useRequireLoginModal();
+
   const handleLikeDeveloper = () => {
+    //ログインしていなければログインモーダルを表示させる
+    if (!session) {
+      openLoginModal();
+      return;
+    }
     onLike(developer.id, !developer.likedByLoggedInUser);
   };
 
-  // ログインしていて、開発者自身でなければいいねできる
-  const canLike = Boolean(session && developer.userId !== session.user.id);
+  const handleGoDeveloperDetail = () => {
+    router.push(`/themes/${theme.id}/developers/${developer.id}/detail`);
+  };
+
+  // 開発者自身でなければいいねできる
+  const canLike = developer.userId !== session?.user.id;
 
   return (
     <Card
       key={developer.userId}
-      sx={() => ({
+      sx={(theme) => ({
         position: "static",
+        cursor: "pointer",
+        transition: "all 150ms",
+        "&:not(:has(*[aria-label='user-icon']:hover)):hover": {
+          boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
+        },
       })}
+      onClick={handleGoDeveloperDetail}
     >
       <Flex justify="space-between">
         <Flex gap={10}>
-          {/* <Avatar
-            src={developer.image}
-            size="lg"
-            radius="xl"
-            sx={(theme) => ({
-              border: "2px solid",
-              borderColor: theme.colors.gray[2],
-            })}
-          /> */}
-          <DeveloperDetailLinkButton theme={theme} developer={developer} />
-          <Text fw="bold" size="lg">
-            {developer.name}
-          </Text>
+          <UserIconLink iconSrc={developer.image} userId={developer.userId} />
+          <TextLink
+            href={`/themes/${theme.id}/developers/${developer.id}/detail`}
+          >
+            <Text fw="bold" size="lg">
+              {developer.name}
+            </Text>
+          </TextLink>
         </Flex>
-        <Flex>
+        <Flex onClick={stopPropagation}>
           <Tooltip
             label="コードを見に行く"
             color="gray.5"

@@ -21,8 +21,8 @@ export const useStateAndUrlParamString = ({
   const [state, setState] = useState(stateFromUrlParam);
 
   const setStateAndUrlParam = useCallback(
-    (value: string) => {
-      setStateFromUrlParam(value);
+    async (value: string) => {
+      await setStateFromUrlParam(value);
       setState(value);
     },
     [setStateFromUrlParam]

@@ -1,41 +1,52 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { ThemeLikelistPage } from "../../../client/components/ThemeLikelistPage";
+import { ThemeLikingUsersPage } from "../../../client/components/ThemeLikingUsersPage";
+import { themeLikingUsersQueryKey } from "../../../client/hooks/useThemeLikingUsersQuery";
 import {
   themeQueryKey,
   useThemeQuery,
 } from "../../../client/hooks/useThemeQuery";
-import { usersLikedThemeQueryKey } from "../../../client/hooks/useUsersLikedThemeQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
-    const { id: themeId } = query;
+    const { id: themeId, page } = query;
     if (typeof themeId !== "string") {
       return { notFound: true };
     }
+    if (typeof page === "object") {
+      throw new Error();
+    }
 
     const caller = appRouter.createCaller({ session });
+    const theme = await caller.theme.get({ themeId });
+    if (!theme) {
+      return { notFound: true };
+    }
 
     await queryClient.prefetchQuery(themeQueryKey(themeId), () =>
       caller.theme.get({ themeId })
     );
-    await queryClient.prefetchQuery(usersLikedThemeQueryKey(themeId), () =>
-      caller.theme.getLikedUsers({ themeId })
+    await queryClient.prefetchQuery(
+      themeLikingUsersQueryKey(themeId, Number(page)),
+      () => caller.theme.getThemeLikingUsers({ themeId, page })
     );
   }
 );
 
-const ThemeLikelist: NextPage = () => {
+/**
+ * お題にいいねしているユーザー一覧を表示するページ
+ */
+const LikingUsers: NextPage = () => {
   const router = useRouter();
   const themeId = router.query.id as string;
   const { theme } = useThemeQuery(themeId);
 
   if (!theme) {
-    return <div>error</div>;
+    return <></>;
   }
 
-  return <ThemeLikelistPage theme={theme} />;
+  return <ThemeLikingUsersPage theme={theme} />;
 };
-export default ThemeLikelist;
+export default LikingUsers;

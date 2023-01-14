@@ -1,8 +1,9 @@
-import { Avatar, Flex, Text, useMantineTheme } from "@mantine/core";
+import { Flex, Text, useMantineTheme } from "@mantine/core";
 import { User } from "@prisma/client";
 import { useMemo } from "react";
 import { BiMedal } from "react-icons/bi";
 import { MdOutlineFavorite } from "react-icons/md";
+import { UserIconLink } from "./UserIconLink";
 
 type Props = { ranking: number; user: User; likeCount: number };
 export const UserLikeRankingItem: React.FC<Props> = ({
@@ -32,17 +33,7 @@ export const UserLikeRankingItem: React.FC<Props> = ({
           {rank}
         </Flex>
         <Flex align="center" gap="xs" miw={0}>
-          <Avatar
-            size="md"
-            src={user.image}
-            radius="xl"
-            sx={(theme) => ({
-              borderWidth: "2px",
-              borderColor: theme.colors.gray[2],
-              borderStyle: "solid",
-              flexShrink: 0,
-            })}
-          />
+          <UserIconLink userId={user.id} iconSrc={user.image} />
           <Flex miw={0} direction="column">
             <Text
               size="xs"

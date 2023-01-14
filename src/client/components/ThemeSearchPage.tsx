@@ -1,83 +1,90 @@
-import { Box, Card, Flex, Pagination, Stack, Text, Title } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
+import { Box, Card, Flex, Space, Stack, Title } from "@mantine/core";
 import React from "react";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
+import { themeOrderItems } from "../../pages/consts";
+import { ThemeOrder } from "../../share/schema";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useSearchedThemesQuery } from "../hooks/useSearchedThemesQuery";
 import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
 import { useStateAndUrlParamStringArray } from "../hooks/useStateAndUrlParamStringArray";
-import { AppMultiSelect } from "./AppMultiSelect";
-import { AppTextInput } from "./AppTextInput";
-import { ThemeCard } from "./ThemeCard/ThemeCard";
+import { AppPagination } from "./AppPagination";
+import { AppSelect } from "./AppSelect";
+import { NothingTheme } from "./NothingTheme";
+import { ThemeCardContainer } from "./ThemeCardContainer";
+import { ThemeSearchForm, ThemeSearchParams } from "./ThemeSearchForm";
 
 export const ThemeSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
-
   const [page, setPage] = usePaginationState({});
 
   const [keyword, setKeyword] = useStateAndUrlParamString({
     paramName: "keyword",
     initialData: "",
   });
-  // keywordが変更されてから200ms後に変更される
-  const [debouncedKeyword] = useDebouncedValue(keyword, 200);
 
   const [tagIds, setTagIds] = useStateAndUrlParamStringArray({
     paramName: "tagIds",
     initialData: [],
   });
 
+  const [order, setOrder] = useStateAndUrlParamString({
+    paramName: "order",
+    initialData: "createdDesc" satisfies ThemeOrder,
+  });
+
   const { searchedThemesResult } = useSearchedThemesQuery({
-    keyword: debouncedKeyword,
+    keyword,
     tagIds,
+    order,
     page,
   });
 
-  const handleChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value);
+  const handleChangeOrder = async (value: string) => {
+    await setOrder(value);
+    await setPage(1);
   };
-  const handleChangeTagIds = (values: string[]) => {
-    setTagIds(values);
+
+  const handleSearch = async (param: ThemeSearchParams) => {
+    await setKeyword(param.keyword);
+    await setTagIds(param.tagIds);
+    await setPage(1);
   };
 
   return (
-    <Box p={30}>
+    <Box>
       <Flex w="100%" direction="column">
         <Card
-          maw="756px"
           sx={() => ({
             position: "static",
           })}
         >
-          <Stack spacing="sm">
-            <Title order={4}>検索</Title>
-            <AppTextInput
-              label="キーワード"
-              value={keyword}
-              onChange={handleChangeKeyword}
-            />
-
-            <AppMultiSelect
-              label="タグ"
-              data={allTags.map((tag) => ({ value: tag.id, label: tag.name }))}
-              value={tagIds}
-              onChange={handleChangeTagIds}
-              searchable
-            />
-          </Stack>
-          <Text size="sm" mt={10}>
-            ※指定されたタグをすべて含み、指定されたキーワードがお題のタイトルに含まれるお題を検索する。
-          </Text>
+          <ThemeSearchForm
+            allTags={allTags}
+            defaultValues={{ keyword, tagIds }}
+            onSearch={handleSearch}
+          />
         </Card>
-        <Box mt={30}>
-          <Title order={3}>検索結果</Title>
-          <Flex mt={10} gap="md" wrap="wrap">
-            {searchedThemesResult?.themes.map((theme) => {
-              return <ThemeCard key={theme.id} theme={theme} />;
-            })}
-          </Flex>
-        </Box>
-        <Pagination
+        <Stack mt={30} spacing={0}>
+          <Title order={4}>検索結果</Title>
+          {keyword === "" && tagIds.length === 0 ? (
+            <NothingTheme page="initial" />
+          ) : searchedThemesResult?.themes.length === 0 ? (
+            <NothingTheme page="Search" />
+          ) : (
+            <>
+              <AppSelect
+                w={150}
+                label="並び順"
+                value={order}
+                onChange={handleChangeOrder}
+                data={themeOrderItems}
+              />
+              <Space mt="xl" />
+              <ThemeCardContainer themes={searchedThemesResult?.themes ?? []} />
+            </>
+          )}
+        </Stack>
+        <AppPagination
           page={page}
           onChange={setPage}
           total={searchedThemesResult?.allPages ?? 0}

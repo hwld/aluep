@@ -18,9 +18,17 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       throw new Error();
     }
 
-    await queryClient.prefetchQuery(paginatedThemesQueryKey(Number(page)), () =>
-      caller.theme.getMany({ page })
+    const paginatedThemes = await caller.theme.getMany({ page });
+    // ページが指定されているが、お題が取得できなかった場合に404を返す
+    if (page !== undefined && paginatedThemes.themes.length === 0) {
+      return { notFound: true };
+    }
+
+    queryClient.setQueryData(
+      paginatedThemesQueryKey(Number(page)),
+      paginatedThemes
     );
+
     await queryClient.prefetchQuery(top10LikesThemesInThisMonthQueryKey, () =>
       caller.theme.getTop10LikesThemesInThisMonth()
     );

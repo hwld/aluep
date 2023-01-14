@@ -1,5 +1,6 @@
 import { ActionIcon, Flex, Text } from "@mantine/core";
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
+import { stopPropagation } from "../../utils";
 
 type Props = {
   likes: number;
@@ -14,7 +15,7 @@ export const DeveloperLikeButton: React.FC<Props> = ({
   disabled,
 }) => {
   return (
-    <Flex align="center">
+    <Flex align="center" onClick={stopPropagation}>
       <ActionIcon
         disabled={disabled}
         color={likedByLoggedInUser ? "pink" : undefined}

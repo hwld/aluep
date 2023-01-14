@@ -22,7 +22,7 @@ export const useUrlParamString = ({
     return urlParamToString(rawUrlParma, initialData);
   }, [initialData, rawUrlParma]);
 
-  const setUrlParam = (value: string) => {
+  const setUrlParam = async (value: string) => {
     const url = new URL(window.location.href);
     if (value === "") {
       url.searchParams.delete(paramName);
@@ -36,7 +36,7 @@ export const useUrlParamString = ({
     } else {
       method = router.push;
     }
-    method(url, undefined, transitionOptions);
+    await method(url, undefined, transitionOptions);
   };
 
   return [urlParam, setUrlParam] as const;

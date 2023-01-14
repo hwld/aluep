@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Card,
   Flex,
@@ -8,32 +7,26 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { MdComputer, MdOutlineFavoriteBorder } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
+import { TextLink } from "../TextLink";
 import { ThemeTagBadge } from "../ThemeTagBadge";
-import { ThemeMenuButton } from "./ThemeMenuButton";
+import { UserIconLink } from "../UserIconLink";
 
 export const themeCardMinWidthPx = 450;
 
 type Props = { theme: Theme };
 export const ThemeCard: React.FC<Props> = ({ theme }) => {
   const router = useRouter();
+  const mantineTheme = useMantineTheme();
 
-  const handleGoDetail = () => {
+  const handleGoThemeDetail = () => {
     router.push(`/themes/${theme.id}`);
   };
 
-  const handleGoDeveloperDetail = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    router.push(`/users/${theme.user.id}`);
-  };
-  const mantineTheme = useMantineTheme();
-
   return (
     <Card
-      key={theme.id}
       miw={themeCardMinWidthPx}
       w="100%"
       h="100%"
@@ -41,19 +34,22 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         cursor: "pointer",
         position: "static",
         transition: "all 150ms",
-        "&:hover": {
+        // アイコンをホバーしたときにスタイルを当てたくないのでaria-label='icon'の要素を使っているが、
+        // UserIconLinkが変わったときにスタイルが当たらなくなりそう
+        "&:not(:has(*[aria-label='user-icon']:hover)):hover": {
           boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
         },
       })}
-      onClick={handleGoDetail}
+      onClick={handleGoThemeDetail}
     >
       <Stack spacing={10} miw={0}>
         {/* ヘッダ */}
         <Flex justify="space-between" align="flex-start" gap={10} miw={0}>
-          <Title order={3} color="red.7" sx={{ lineHeight: 1.2 }}>
-            {theme.title}
-          </Title>
-          <ThemeMenuButton theme={theme} />
+          <TextLink href={`/themes/${theme.id}`}>
+            <Title order={3} color="red.7" sx={{ lineHeight: 1.4 }}>
+              {theme.title}
+            </Title>
+          </TextLink>
         </Flex>
 
         {/* ユーザー情報 */}
@@ -61,19 +57,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
           <Box
             sx={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 10 }}
           >
-            <Avatar
-              src={theme.user.image}
-              radius="xl"
-              size="md"
-              sx={(theme) => ({
-                borderWidth: "2px",
-                borderColor: theme.colors.gray[2],
-                borderStyle: "solid",
-                borderRadius: "100%",
-                flexShrink: 0,
-              })}
-              onClick={handleGoDeveloperDetail}
-            />
+            <UserIconLink iconSrc={theme.user.image} userId={theme.user.id} />
             <Flex
               direction="column"
               justify="center"
@@ -93,7 +77,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
               </Text>
               <Flex align="center" gap="lg">
                 <Text color="gray.5" size="sm" sx={{ whiteSpace: "nowrap" }}>
-                  {format(new Date(theme.createdAt), "yyyy年M月d日")}
+                  {theme.elapsedSinceCreation}
                 </Text>
                 <Flex align="center" gap="sm">
                   <Flex align="center" gap={3}>

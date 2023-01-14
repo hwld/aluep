@@ -1,114 +1,133 @@
 import {
-  Avatar,
   Box,
   Card,
   Flex,
+  Group,
   Stack,
   Text,
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { format } from "date-fns";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { MouseEventHandler } from "react";
 import { MdComputer, MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
+import { useSamePositionLeftClick } from "../../hooks/useSamePositionLeftClick";
+import { TextLink } from "../TextLink";
+import { UserIconLink } from "../UserIconLink";
 
 export const popularThemeCardWidthPx = 400;
 export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
+  const router = useRouter();
   const mantineTheme = useMantineTheme();
+
+  // ただのクリックで処理するとカルーセルの移動で発火してしまうので
+  // mouseDownと同じ位置でmouseUpが発火されたときに処理する
+  const { setLeftClickPosition, isSameLeftClickPosition, resetPosition } =
+    useSamePositionLeftClick();
+
+  const handleMouseUp: MouseEventHandler = (e) => {
+    if (isSameLeftClickPosition(e)) {
+      resetPosition();
+      router.push(`/themes/${theme.id}`);
+    }
+    resetPosition();
+  };
+
   return (
-    <Box
-      component={Link}
-      href={`/themes/${theme.id}`}
-      sx={(theme) => ({ textDecoration: "none" })}
+    <Card
+      key={theme.id}
+      miw={popularThemeCardWidthPx}
+      h="100%"
+      sx={(theme) => ({
+        cursor: "pointer",
+        position: "static",
+        transition: "all 150ms",
+        "&:hover": {
+          boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
+        },
+      })}
+      onMouseDown={setLeftClickPosition}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={resetPosition}
     >
-      <Card
-        key={theme.id}
-        miw={popularThemeCardWidthPx}
-        h="100%"
-        sx={(theme) => ({
-          cursor: "pointer",
-          position: "static",
-          transition: "all 150ms",
-          "&:hover": {
-            boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
-          },
-        })}
-      >
-        <Stack spacing={10} justify="space-between" h="100%">
-          {/* ヘッダ */}
-          <Title
-            order={4}
-            color="red.7"
-            sx={{
-              lineHeight: 1.2,
-            }}
-          >
-            {theme.title}
-          </Title>
+      <Stack justify="space-between" h="100%">
+        {/* ヘッダ */}
+        <Box
+          sx={{
+            flexShrink: 1,
+            minHeight: 0,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+          style={{
+            display: "-webkit-box",
+            WebkitLineClamp: 5,
+            WebkitBoxOrient: "vertical",
+          }}
+        >
+          <TextLink href={`/themes/${theme.id}`}>
+            <Title
+              order={4}
+              color="red.7"
+              sx={{
+                lineHeight: 1.2,
+              }}
+            >
+              {theme.title}
+            </Title>
+          </TextLink>
+        </Box>
 
-          <Stack spacing="sm">
-            <Flex justify="flex-end" align="flex-end" gap={"xs"}>
-              <Flex align="center" gap={5}>
-                <MdOutlineFavorite
-                  size="45px"
-                  color={mantineTheme.colors.red[7]}
-                />
-                <Text size="xl" fw="bold" c="red.7">
-                  {theme.likes}
-                </Text>
-              </Flex>
-            </Flex>
-
-            {/* ユーザー情報 */}
-            <Flex gap={5}>
-              <Avatar
-                src={theme.user.image}
-                radius="xl"
-                size="sm"
-                sx={(theme) => ({
-                  borderWidth: "2px",
-                  borderColor: theme.colors.gray[2],
-                  borderStyle: "solid",
-                  borderRadius: "100%",
-                })}
-              />
-              <Flex direction="column" miw={0} sx={{ flexShrink: 1 }}>
+        <Group position="apart">
+          {/* ユーザー情報 */}
+          <Flex gap={5} sx={{ alignSelf: "flex-end" }}>
+            <UserIconLink userId={theme.user.id} iconSrc={theme.user.image} />
+            <Flex direction="column" miw={0} sx={{ flexShrink: 1 }}>
+              <Text
+                size="xs"
+                sx={{
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                }}
+              >
+                {theme.user.name}
+              </Text>
+              <Flex align="center" gap="sm">
                 <Text
+                  color="gray.5"
                   size="xs"
                   sx={{
                     whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
                   }}
                 >
-                  {theme.user.name}
+                  {theme.elapsedSinceCreation}
                 </Text>
-                <Flex align="center" gap="sm">
-                  <Text
-                    color="gray.5"
-                    size="xs"
-                    sx={{
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {format(new Date(theme.createdAt), "yyyy年M月d日")}
+                <Flex align="center" gap={3}>
+                  <MdComputer size="15px" color={mantineTheme.colors.red[7]} />
+                  <Text size="xs" c="red.7">
+                    {theme.developers}
                   </Text>
-                  <Flex align="center" gap={3}>
-                    <MdComputer
-                      size="15px"
-                      color={mantineTheme.colors.red[7]}
-                    />
-                    <Text size="xs" c="red.7">
-                      {theme.developers}
-                    </Text>
-                  </Flex>
                 </Flex>
               </Flex>
             </Flex>
-          </Stack>
-        </Stack>
-      </Card>
-    </Box>
+          </Flex>
+
+          {/* いいね数 */}
+          <Flex justify="flex-end" align="flex-end" gap={"xs"}>
+            <Flex align="center" gap={5}>
+              <MdOutlineFavorite
+                size="50px"
+                color={mantineTheme.colors.red[7]}
+              />
+              <Text size={25} fw="bold" c="red.7">
+                {theme.likes}
+              </Text>
+            </Flex>
+          </Flex>
+        </Group>
+      </Stack>
+    </Card>
   );
 };

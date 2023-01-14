@@ -24,8 +24,8 @@ export const usePaginationState = ({
   }, [stringPage]);
 
   const setPage = useCallback(
-    (page: number) => {
-      setStringPage(page.toString());
+    async (page: number) => {
+      await setStringPage(page.toString());
     },
     [setStringPage]
   );
