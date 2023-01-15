@@ -1,38 +1,44 @@
-import { Flex, MediaQuery, Stack, Title } from "@mantine/core";
+import { Flex, MediaQuery, Stack, Title, useMantineTheme } from "@mantine/core";
 
-import { usePaginatedThemesQuery } from "../hooks/usePaginatedThemesQuery";
-import { usePaginationState } from "../hooks/usePaginationState";
 import {
   useTop10LikesDeveloperInThisMonth,
   useTop10LikesPostersInThisMonth,
   useTop10LikesThemesInThisMonth,
 } from "../hooks/useRankingQuery";
-import { useSessionQuery } from "../hooks/useSessionQuery";
-import { AppPagination } from "./AppPagination";
 import { NothingLike } from "./NothingLike";
 import { NothingPopularThemes } from "./NothingPopularThemes";
-import { NothingTheme } from "./NothingTheme";
 
 import { PopularThemeCarousel } from "./PopularThemeCarousel/PopularThemeCarousel";
 import { RankingCard } from "./RankingCard";
 
+import { PickedUpThemes } from "./PickedUpThemes";
 import { themeCardMinWidthPx } from "./ThemeCard/ThemeCard";
-import { ThemeCardContainer } from "./ThemeCardContainer";
 import { UserLikeRankingItem } from "./UserLikeRankingItem";
 
-export const HomePage: React.FC = () => {
-  const [page, setPage] = usePaginationState({});
-  const { data } = usePaginatedThemesQuery(page);
-  const { session } = useSessionQuery();
+import { IoSparkles } from "react-icons/io5";
+import { MdComputer, MdOutlineFavorite } from "react-icons/md";
+import { usePickedUpThemesQuery } from "../hooks/usePickedUpThemesQuery";
 
+export const HomePage: React.FC = () => {
+  const mantineTheme = useMantineTheme();
+
+  // ランキング
   const { top10LikesThemesInThisMonth } = useTop10LikesThemesInThisMonth();
   const { top10LikesDevelopersInThisMonth } =
     useTop10LikesDeveloperInThisMonth();
   const { top10LikesPostersInThisMonth } = useTop10LikesPostersInThisMonth();
 
+  // ピックアップされたお題
+  const { pickedUpThemes: latestThemes } =
+    usePickedUpThemesQuery("createdDesc");
+  const { pickedUpThemes: manyLikesThemes } =
+    usePickedUpThemesQuery("likeDesc");
+  const { pickedUpThemes: manyDevelopersThemes } =
+    usePickedUpThemesQuery("developerDesc");
+
   return (
     <Flex w="100%" gap="xl">
-      <Stack miw={0} sx={{ flexGrow: 1, flexShrink: 1 }} spacing={50}>
+      <Stack miw={0} sx={{ flexGrow: 1, flexShrink: 1 }} spacing={35}>
         <Stack spacing="sm">
           <Title order={4}>人気のお題</Title>
           {top10LikesThemesInThisMonth?.length === 0 ? (
@@ -45,19 +51,31 @@ export const HomePage: React.FC = () => {
           )}
         </Stack>
 
-        <Stack spacing="sm">
-          <Title order={4}>全てのお題</Title>
-          {data?.themes.length === 0 ? (
-            <NothingTheme page="Home" user={session?.user} />
-          ) : (
-            <ThemeCardContainer themes={data?.themes ?? []} />
-          )}
-          <AppPagination
-            page={page}
-            onChange={setPage}
-            total={data?.allPages ?? 0}
-          />
-        </Stack>
+        <PickedUpThemes
+          icon={
+            <IoSparkles size="25px" color={mantineTheme.colors.yellow[7]} />
+          }
+          title="最新のお題"
+          readMoreHref="/themes/search?order=createdDesc"
+          themes={latestThemes}
+        />
+        <PickedUpThemes
+          icon={
+            <MdOutlineFavorite
+              size="25px"
+              color={mantineTheme.colors.pink[7]}
+            />
+          }
+          title="いいねが多かったお題"
+          readMoreHref="/themes/search?order=likeDesc"
+          themes={manyLikesThemes}
+        />
+        <PickedUpThemes
+          icon={<MdComputer size="30px" color={mantineTheme.colors.blue[7]} />}
+          title="開発者が多かったお題"
+          readMoreHref="/themes/search?order=developerDesc"
+          themes={manyDevelopersThemes}
+        />
       </Stack>
       <MediaQuery smallerThan={"md"} styles={{ display: "none" }}>
         <Flex direction="column" gap={30}>

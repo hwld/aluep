@@ -98,6 +98,20 @@ export const themeRoute = router({
         return paginatedThemes;
       }
     ),
+  pickUp: publicProcedure
+    .input(z.object({ order: themeOrderSchema }))
+    .query(async ({ input }) => {
+      const pickedUpThemes = await searchThemes(
+        {
+          keyword: "",
+          tagIds: [],
+          order: input.order,
+        },
+        { page: 1, limit: 6 }
+      );
+
+      return pickedUpThemes.themes ?? [];
+    }),
 
   // お題を作成する
   create: requireLoggedInProcedure

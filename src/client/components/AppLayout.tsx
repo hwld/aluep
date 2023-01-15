@@ -24,9 +24,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
         <AppHeader user={session?.user} />
         <Box
           component="main"
-          pt="xl"
-          pb="sm"
-          px="sm"
+          p="xl"
           sx={(theme) => ({
             maxWidth: "1500px",
             width: "100%",
