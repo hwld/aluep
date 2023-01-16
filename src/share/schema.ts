@@ -47,6 +47,13 @@ export const themeOrderSchema = z.union([
 ]);
 export type ThemeOrder = z.infer<typeof themeOrderSchema>;
 
+// お題の期間
+export const themePeriodSchema = z.union([
+  z.literal("all"),
+  z.literal("monthly"),
+]);
+export type ThemePeriod = z.infer<typeof themePeriodSchema>;
+
 // プロフィールのフォームデータ
 export const profileFormSchema = z.object({
   name: z

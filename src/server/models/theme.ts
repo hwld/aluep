@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { formatDistanceStrict } from "date-fns";
 import { ja } from "date-fns/locale";
 import { z } from "zod";
-import { ThemeOrder } from "../../share/schema";
+import { ThemeOrder, ThemePeriod } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
 import { prisma } from "../prismadb";
 
@@ -97,11 +97,12 @@ type SearchThemesArgs = {
   keyword: string;
   tagIds: string[];
   order: ThemeOrder;
+  period: ThemePeriod;
 };
 
 // TODO: :(
 export const searchThemes = async (
-  { keyword, tagIds, order }: SearchThemesArgs,
+  { keyword, tagIds, order, period }: SearchThemesArgs,
   pagingData: { page: number; limit: number }
 ): Promise<{ themes: Theme[]; allPages: number }> => {
   // トランザクションを使用する
@@ -157,6 +158,12 @@ export const searchThemes = async (
           ${orderMap[order].from}
         WHERE
           AppTheme.title LIKE ${"%" + keyword + "%"}
+          ${
+            period === "monthly"
+              ? Prisma.sql`
+          AND AppTheme.createdAt > (NOW() - INTERVAL 1 MONTH)`
+              : Prisma.empty
+          }
           ${
             tagIds.length > 0
               ? Prisma.sql`

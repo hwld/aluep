@@ -13,9 +13,8 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
   const { data } = useThemeLikingUsersQuery(theme.id, page);
   return (
     <Flex maw={800} direction="column" align="center" m="auto">
-      
       <Stack mt="xl" w="100%" spacing="xs">
-        <ThemeSummaryCard theme={theme}/>
+        <ThemeSummaryCard theme={theme} />
         {theme.likes === 0 ? (
           <NothingThemeLikingUsers />
         ) : (
@@ -23,6 +22,8 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
             いいねした人
           </Title>
         )}
+        {/* TODO: 山岸君担当 */}
+        {/* @ts-ignore */}
         {data?.users.map((user) => {
           return <UserCard user={user} key={user.userId} />;
         })}
