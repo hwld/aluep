@@ -77,7 +77,7 @@ export const HomePage: React.FC = () => {
           themes={manyDevelopersThemes}
         />
       </Stack>
-      <MediaQuery smallerThan={"md"} styles={{ display: "none" }}>
+      <MediaQuery smallerThan={"lg"} styles={{ display: "none" }}>
         <Flex direction="column" gap={30}>
           <RankingCard title="今月のいいねが多かった開発者">
             {top10LikesDevelopersInThisMonth?.length === 0 ? (
