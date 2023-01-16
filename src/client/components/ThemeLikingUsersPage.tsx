@@ -24,7 +24,7 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
           </Title>
         )}
         {data?.users.map((user) => {
-          return <UserCard user={user} key={user.id} />;
+          return <UserCard user={user} key={user.userId} />;
         })}
         <AppPagination
           page={page}

@@ -270,11 +270,11 @@ export const themeRoute = router({
     .query(async ({ input }) => {
       const { data: users, allPages } = await paginate({
         finderInput: {
-          //where: { user: { appThemeLikes: { some: { appThemeId: input.themeId } } } },
-          where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+          //where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
           include: { 
             appThemeLikes:{
-              orderBy: { createdAt: "desc" as const, }
+              where: { appThemeId: input.themeId },
+                orderBy: { createdAt: "desc" as const, },
             },
           },
         },
