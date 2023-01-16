@@ -9,6 +9,7 @@ export const theme: MantineThemeOverride = {
   headings: {
     fontFamily: `'Noto Sans JP', sans-serif`,
   },
+  breakpoints: { md: 900 },
   shadows: {
     sm: "0 1px 2px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.06)",
     md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
@@ -59,6 +60,7 @@ export const theme: MantineThemeOverride = {
     ],
   },
   components: {
+    Tooltip: { defaultProps: { color: "gray.5" } },
     Paper: { defaultProps: { bg: "gray.1" } },
     Text: {
       defaultProps: { color: "gray.7" },

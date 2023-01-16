@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { HomePage } from "../client/components/HomePage";
 import { paginatedThemesQueryKey } from "../client/hooks/usePaginatedThemesQuery";
+import { pickedUpThemesQueryKey } from "../client/hooks/usePickedUpThemesQuery";
 import {
   top10LikesDevelopersInThisMonthQueryKey,
   top10LikesPostersInThisMonthQueryKey,
@@ -29,6 +30,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       paginatedThemes
     );
 
+    // ランキング
     await queryClient.prefetchQuery(top10LikesThemesInThisMonthQueryKey, () =>
       caller.theme.getTop10LikesThemesInThisMonth()
     );
@@ -38,6 +40,18 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     );
     await queryClient.prefetchQuery(top10LikesPostersInThisMonthQueryKey, () =>
       caller.theme.getTop10LikesPostersInThisMonth()
+    );
+
+    //　ピックアップされたお題
+    await queryClient.prefetchQuery(pickedUpThemesQueryKey("createdDesc"), () =>
+      caller.theme.pickUp({ order: "createdDesc" })
+    );
+    await queryClient.prefetchQuery(pickedUpThemesQueryKey("likeDesc"), () =>
+      caller.theme.pickUp({ order: "likeDesc" })
+    );
+    await queryClient.prefetchQuery(
+      pickedUpThemesQueryKey("developerDesc"),
+      () => caller.theme.pickUp({ order: "developerDesc" })
     );
   }
 );

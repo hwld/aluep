@@ -13,7 +13,6 @@ import { Theme } from "../../../server/models/theme";
 import { TextLink } from "../TextLink";
 import { ThemeTagBadge } from "../ThemeTagBadge";
 import { UserIconLink } from "../UserIconLink";
-import { ThemeMenuButton } from "./ThemeMenuButton";
 
 export const themeCardMinWidthPx = 450;
 
@@ -51,8 +50,6 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
               {theme.title}
             </Title>
           </TextLink>
-
-          <ThemeMenuButton theme={theme} />
         </Flex>
 
         {/* ユーザー情報 */}

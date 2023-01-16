@@ -7,7 +7,7 @@ import { prisma } from "../prismadb";
 import { publicProcedure, router } from "../trpc";
 
 export const userRoute = router({
-  //すべてのテーマからthemeのidがユーザidのthemeを取り出す
+  /** 指定されたユーザーが投稿したお題を取得する */
   getPostTheme: publicProcedure
     .input(z.object({ userId: z.string(), page: pageSchema }))
     .query(async ({ input, input: { page } }) => {
@@ -15,12 +15,13 @@ export const userRoute = router({
         finder: findManyThemes,
         finderInput: { where: { userId: input.userId } },
         counter: prisma.appTheme.count,
-        pagingData: { page, limit: 6 },
+        pagingData: { page, limit: 18 },
       });
 
       return { postThemes, allPages };
     }),
 
+  /** 指定されたユーザが参加しているお題を取得する */
   getJoinTheme: publicProcedure
     .input(z.object({ userId: z.string(), page: pageSchema }))
     .query(async ({ input, input: { page } }) => {
@@ -35,7 +36,7 @@ export const userRoute = router({
         finder: findManyThemes,
         finderInput: { where: { id: { in: joinThemeList } } },
         counter: prisma.appTheme.count,
-        pagingData: { page, limit: 6 },
+        pagingData: { page, limit: 18 },
       });
 
       return { joinPostedTheme, allPages };
@@ -56,7 +57,7 @@ export const userRoute = router({
         finder: findManyThemes,
         finderInput: { where: { id: { in: likeThemeList } } },
         counter: prisma.appTheme.count,
-        pagingData: { page, limit: 6 },
+        pagingData: { page, limit: 18 },
       });
 
       return { likePostedTheme, allPages };
@@ -115,7 +116,9 @@ export const userRoute = router({
       } else {
         const searchUsers = await prisma.user.findMany({
           where: { name: { contains: input.userName } },
+          take: 30,
         });
+
         return searchUsers;
       }
     }),

@@ -32,7 +32,7 @@ export const AppNavigationProgress = () => {
       router.events.off("routeChangeComplete", handleComplete);
       router.events.off("routeChangeError", handleError);
     };
-  }, [router.asPath]);
+  }, [router.asPath, router.events]);
 
   return <NavigationProgress autoReset color="gray.0" stepInterval={100} />;
 };

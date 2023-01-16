@@ -23,7 +23,7 @@ export function UserDetailCard({
     githuburl = "/";
   }
   return (
-    <Card h={300} w={250}>
+    <Card h={300} w={250} sx={{ flexShrink: 0 }}>
       <Flex direction={"column"} justify={"space-between"} h="100%">
         <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
           <UserIcon iconSrc={userImage} size="xl" />

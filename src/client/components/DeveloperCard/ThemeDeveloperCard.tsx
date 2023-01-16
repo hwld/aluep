@@ -12,7 +12,9 @@ import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
 import { Theme } from "../../../server/models/theme";
 import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
+import { useRequireLoginModal } from "../../contexts/RequireLoginModalProvider";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
+import { stopPropagation } from "../../utils";
 import { TextLink } from "../TextLink";
 import { UserIconLink } from "../UserIconLink";
 import { DeveloperLikeButton } from "./DeveloperLikeButton";
@@ -24,7 +26,6 @@ type Props = {
   onLikeDeveloper: (developerId: string, like: boolean) => void;
 };
 
-//TODO: 開発者詳細ページとユーザー詳細ページどちらにも遷移できるようにする
 export const ThemeDeveloperCard: React.FC<Props> = ({
   theme,
   developer,
@@ -33,8 +34,14 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
   const router = useRouter();
   const mantineTheme = useMantineTheme();
   const { session } = useSessionQuery();
+  const { openLoginModal } = useRequireLoginModal();
 
   const handleLikeDeveloper = () => {
+    //ログインしていなければログインモーダルを表示させる
+    if (!session) {
+      openLoginModal();
+      return;
+    }
     onLike(developer.id, !developer.likedByLoggedInUser);
   };
 
@@ -42,8 +49,8 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
     router.push(`/themes/${theme.id}/developers/${developer.id}/detail`);
   };
 
-  // ログインしていて、開発者自身でなければいいねできる
-  const canLike = Boolean(session && developer.userId !== session.user.id);
+  // 開発者自身でなければいいねできる
+  const canLike = developer.userId !== session?.user.id;
 
   return (
     <Card
@@ -69,7 +76,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
             </Text>
           </TextLink>
         </Flex>
-        <Flex>
+        <Flex onClick={stopPropagation}>
           <Tooltip
             label="コードを見に行く"
             color="gray.5"

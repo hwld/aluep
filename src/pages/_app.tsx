@@ -12,6 +12,7 @@ import { useState } from "react";
 import superjson from "superjson";
 import { AppLayout } from "../client/components/AppLayout";
 import { AppNavigationProgress } from "../client/components/AppNavigationProgress";
+import { RequireLoginModalProvider } from "../client/contexts/RequireLoginModalProvider";
 import "../client/style/global.css";
 import { theme } from "../client/style/theme";
 import { PageProps } from "../server/lib/GetServerSidePropsWithReactQuery";
@@ -45,10 +46,12 @@ export default function App(props: AppProps<PageProps>) {
           <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
             <NotificationsProvider position="bottom-center">
               <ModalsProvider>
-                <AppLayout>
-                  <AppNavigationProgress />
-                  <Component {...pageProps} />
-                </AppLayout>
+                <RequireLoginModalProvider>
+                  <AppLayout>
+                    <AppNavigationProgress />
+                    <Component {...pageProps} />
+                  </AppLayout>
+                </RequireLoginModalProvider>
               </ModalsProvider>
             </NotificationsProvider>
           </MantineProvider>

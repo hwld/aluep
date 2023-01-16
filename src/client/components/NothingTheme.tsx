@@ -1,12 +1,14 @@
-import { Button, Card, Flex, Text, useMantineTheme } from "@mantine/core";
+import { Button, Flex, Text, useMantineTheme } from "@mantine/core";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
+import { AiFillTag } from "react-icons/ai";
 import { BsDot } from "react-icons/bs";
+import { FaKey } from "react-icons/fa";
 import { GoSearch } from "react-icons/go";
 import { MdPostAdd } from "react-icons/md";
 import { RiQuestionMark } from "react-icons/ri";
 
-type Props = { page: "Home" | "Search"; user?: Session["user"] };
+type Props = { page: "Home" | "Search" | "initial"; user?: Session["user"] };
 
 export const NothingTheme: React.FC<Props> = ({ page, user }) => {
   const router = useRouter();
@@ -29,6 +31,23 @@ export const NothingTheme: React.FC<Props> = ({ page, user }) => {
         ) : (
           <></>
         )}
+      </Flex>
+    );
+  };
+
+  const initialPage = () => {
+    return (
+      <Flex direction={"column"} gap={30}>
+        <Flex justify={"center"} align={"center"} gap={20}>
+          <FaKey size={70} color={mantineTheme.colors.red[7]} />
+          <Text size={50} c="red.7">
+            or
+          </Text>
+          <AiFillTag size={70} color={mantineTheme.colors.red[7]} />
+        </Flex>
+        <Text c="gray.5">
+          キーワードまたはタグを入力してお題を検索してみよう！<br></br>
+        </Text>
       </Flex>
     );
   };
@@ -60,19 +79,19 @@ export const NothingTheme: React.FC<Props> = ({ page, user }) => {
       return nothingHome();
     } else if (page === "Search") {
       return nothigSearch();
+    } else if (page === "initial") {
+      return initialPage();
     }
   };
 
   return (
-    <Card h="100%" w="100%">
-      <Flex
-        justify={"center"}
-        sx={() => {
-          return { margin: 40 };
-        }}
-      >
-        {changePage()}
-      </Flex>
-    </Card>
+    <Flex
+      justify={"center"}
+      sx={() => {
+        return { margin: 40 };
+      }}
+    >
+      {changePage()}
+    </Flex>
   );
 };

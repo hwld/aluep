@@ -4,7 +4,8 @@ import {
   pageSchema,
   themeFormSchema,
   themeJoinFormSchema,
-  themeUpdateFormSchema
+  themeOrderSchema,
+  themeUpdateFormSchema,
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
 import {
@@ -79,6 +80,7 @@ export const themeRoute = router({
       z.object({
         keyword: z.string(),
         tagIds: z.array(z.string().min(1)),
+        order: themeOrderSchema,
         page: pageSchema,
       })
     )
@@ -88,13 +90,28 @@ export const themeRoute = router({
           {
             keyword: input.keyword,
             tagIds: input.tagIds,
+            order: input.order,
           },
-          { page: input.page, limit: 12 }
+          { page: input.page, limit: 24 }
         );
 
         return paginatedThemes;
       }
     ),
+  pickUp: publicProcedure
+    .input(z.object({ order: themeOrderSchema }))
+    .query(async ({ input }) => {
+      const pickedUpThemes = await searchThemes(
+        {
+          keyword: "",
+          tagIds: [],
+          order: input.order,
+        },
+        { page: 1, limit: 6 }
+      );
+
+      return pickedUpThemes.themes ?? [];
+    }),
 
   // お題を作成する
   create: requireLoggedInProcedure

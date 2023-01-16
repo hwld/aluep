@@ -1,44 +1,79 @@
-import { ActionIcon, Flex, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Anchor,
+  Stack,
+  Tooltip,
+  useMantineTheme,
+} from "@mantine/core";
+import Link from "next/link";
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 
 type Props = {
   likes: number;
   likedByLoggedInUser: boolean;
-  onClick: () => void;
+  onLikeTheme: () => void;
   disabled?: boolean;
+  themeId: string;
 };
 export const ThemeLikeButton: React.FC<Props> = ({
   likes,
   likedByLoggedInUser,
-  onClick,
+  onLikeTheme,
   disabled,
+  themeId,
 }) => {
+  const mantineTheme = useMantineTheme();
+
   return (
-    <Flex direction="column" align="center">
+    <Stack align="center" spacing={3}>
       <ActionIcon
         disabled={disabled}
         color={likedByLoggedInUser ? "pink" : undefined}
         size={60}
         radius="xl"
-        bg="gray.1"
         sx={(theme) => ({
           boxShadow: theme.shadows.md,
           transition: "all 200ms",
+          backgroundColor: likedByLoggedInUser
+            ? theme.fn.rgba(theme.colors.pink[1], 0.8)
+            : theme.colors.gray[1],
           "&:hover": {
             backgroundColor: likedByLoggedInUser
-              ? theme.colors.gray[2]
+              ? theme.colors.gray[3]
               : theme.colors.pink[1],
           },
+          "&[data-disabled]": {
+            backgroundColor: theme.colors.gray[3],
+            borderColor: theme.colors.gray[3],
+            boxShadow: theme.shadows.xs,
+          },
         })}
-        onClick={onClick}
+        onClick={onLikeTheme}
       >
         {likedByLoggedInUser ? (
           <MdOutlineFavorite size="70%" style={{ marginTop: "4px" }} />
         ) : (
-          <MdOutlineFavoriteBorder size="70%" style={{ marginTop: "4px" }} />
+          <MdOutlineFavoriteBorder
+            size="70%"
+            style={{ marginTop: "4px" }}
+            color={mantineTheme.colors.gray[5]}
+          />
         )}
       </ActionIcon>
-      <Text>{likes}</Text>
-    </Flex>
+      {likes > 0 && (
+        <Tooltip label="いいねしたユーザーを表示する" position="bottom">
+          <Anchor
+            component={Link}
+            href={`/themes/${themeId}/liking-users`}
+            sx={(theme) => ({
+              textDecoration: "underline",
+              "&:hover": { color: theme.colors.red[7] },
+            })}
+          >
+            {likes}
+          </Anchor>
+        </Tooltip>
+      )}
+    </Stack>
   );
 };
