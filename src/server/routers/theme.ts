@@ -5,7 +5,7 @@ import {
   themeFormSchema,
   themeJoinFormSchema,
   themeOrderSchema,
-  themeUpdateFormSchema,
+  themeUpdateFormSchema
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
 import {
@@ -286,16 +286,15 @@ export const themeRoute = router({
     .input(z.object({ themeId: z.string(), page: pageSchema }))
     .query(async ({ input }) => {
       const { data: users, allPages } = await paginate({
-        finderInput: {
-          //where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
-          include: { 
-            appThemeLikes:{
-              where: { appThemeId: input.themeId },
-                orderBy: { createdAt: "desc" as const, },
-            },
-          },
-        },
         finder: prisma.user.findMany,
+        finderInput: {
+          where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+          include: { 
+            appThemeLikes: {
+              orderBy: { createdAt: "desc" as const, },
+            },
+          },         
+        },
         counter: prisma.user.count,
         pagingData: { page: input.page, limit: 6 },
       });
