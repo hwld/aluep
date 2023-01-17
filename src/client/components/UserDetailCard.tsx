@@ -111,7 +111,7 @@ export function UserDetailCard({
         ) : (
           <Flex justify={"center"}>
             <UserFavoriteButton
-              onLikeTheme={handleFavoriteUser}
+              onFavorite={handleFavoriteUser}
               favorited={favorited}
             />
             <Button

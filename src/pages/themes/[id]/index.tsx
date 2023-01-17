@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
+import { favoriteAnotherSumQueryKey } from "../../../client/hooks/useFavoriteAnother";
 import { paginatedDevelopersQueryKey } from "../../../client/hooks/usePaginatedDeveloperQueery";
 import { themeJoinQueryKey } from "../../../client/hooks/useThemeJoin";
 import { themeLikedQueryKey } from "../../../client/hooks/useThemeLike";
@@ -14,12 +15,19 @@ import NotFoundPage from "../../404";
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
     const { id: themeId, page } = query;
+    const userId = themeId;
     if (typeof themeId !== "string") {
       return { notFound: true };
     }
 
+    if (typeof userId !== "string") {
+      return { notFound: true };
+    }
     if (typeof page === "object") {
       throw new Error();
+    }
+    if (!session) {
+      return;
     }
 
     const caller = appRouter.createCaller({ session });
@@ -51,6 +59,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     await queryClient.prefetchQuery(
       themeJoinQueryKey(themeId, session?.user.id),
       () => caller.theme.joined({ themeId })
+    );
+
+    await queryClient.prefetchQuery(favoriteAnotherSumQueryKey(userId), () =>
+      caller.user.favoritedAnotherSum({ userId })
     );
   }
 );

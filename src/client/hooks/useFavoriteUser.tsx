@@ -53,7 +53,6 @@ export const useFavoriteUser = (userId: string, favoriteUserId: string) => {
   return {
     favorited,
     favoritedSum,
-
     createFavoriteMutation,
     deleteFavoriteMutation,
   };
