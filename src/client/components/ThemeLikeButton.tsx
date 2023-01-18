@@ -61,11 +61,12 @@ export const ThemeLikeButton: React.FC<Props> = ({
         )}
       </ActionIcon>
       {likes > 0 && (
-        <Tooltip label="いいねしたユーザーを表示する" position="bottom">
+        <Tooltip label="いいねしたユーザーを表示する" position="right">
           <Anchor
             component={Link}
             href={`/themes/${themeId}/liking-users`}
             sx={(theme) => ({
+              color: likedByLoggedInUser ? theme.colors.pink[7] : "inherit",
               textDecoration: "underline",
               "&:hover": { color: theme.colors.red[7] },
             })}
