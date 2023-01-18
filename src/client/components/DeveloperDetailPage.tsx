@@ -25,9 +25,10 @@ type Props = { developer: ThemeDeveloper; theme: Theme };
 export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
   const { session } = useSessionQuery();
   const mantineTheme = useMantineTheme();
-  const isThemeOwner = theme.user.id === session?.user.id;
+  const isThemeOwner = developer.userId === session?.user.id;
   return (
     <>
+      <></>
       <Stack w={800} m="auto" spacing="lg">
         <Title order={3}>開発者詳細ページ</Title>
         <Stack spacing="xs" w={760}>
