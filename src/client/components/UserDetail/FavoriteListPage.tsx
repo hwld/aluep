@@ -51,7 +51,7 @@ export const FavoriteListPage: React.FC<Props> = ({ user }) => {
                 <MdFavorite size={190} color={mantineTheme.colors.red[6]} />
               </Flex>
             </Card>
-            <Text size={30}>開発者をお気に入りしてみよう！</Text>
+            <Text size={30}>開発者のお気に入りをまだしていません</Text>
 
             <Text c="gray.5">
               他の開発者をお気に入りすると、ここに表示されます。

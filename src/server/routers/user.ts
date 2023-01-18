@@ -194,7 +194,7 @@ export const userRoute = router({
       return favoritedSum;
     }),
 
-  //お気に入りリストの表示pageの追加もしたい
+  //お気に入りリストの表示
   favoriteList: publicProcedure
     .input(z.object({ favoriteUserId: string(), page: pageSchema }))
     .query(async ({ input, input: { page } }) => {
@@ -209,7 +209,7 @@ export const userRoute = router({
         finderInput: { where: { id: { in: ids } } },
         finder: prisma.user.findMany,
         counter: prisma.user.count,
-        pagingData: { page, limit: 20 },
+        pagingData: { page, limit: 5 },
       });
 
       return { pagefavo, allPages };

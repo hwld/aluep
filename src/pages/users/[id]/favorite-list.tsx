@@ -21,13 +21,20 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       throw new Error();
     }
     if (!session) {
-      return { notFound: true };
+      return;
     }
 
-    const favoriteUserId = session.user.id;
+    let favoriteUserId = session.user.id;
 
     await queryClient.prefetchQuery(
       favoriteListQueryKey(userId, Number(page)),
+      () => caller.user.favoriteList({ favoriteUserId })
+    );
+
+    favoriteUserId = userId;
+
+    await queryClient.prefetchQuery(
+      favoriteListQueryKey(favoriteUserId, Number(page)),
       () => caller.user.favoriteList({ favoriteUserId })
     );
   }
