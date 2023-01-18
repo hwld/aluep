@@ -285,19 +285,21 @@ export const themeRoute = router({
   getThemeLikingUsers: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
     .query(async ({ input }) => {
-      const { data: users, allPages } = await paginate({
-        finder: prisma.user.findMany,
+      const { data: use, allPages } = await paginate({
+        finder: prisma.appThemeLike.findMany,
         finderInput: {
-          where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
-          include: { 
-            appThemeLikes: {
-              orderBy: { createdAt: "desc" as const, },
-            },
-          },         
+          where: { appThemeId: input.themeId } ,
+          orderBy: { createdAt: "desc" as const, },       
         },
-        counter: prisma.user.count,
+        counter: prisma.appThemeLike.count,
         pagingData: { page: input.page, limit: 6 },
       });
+      
+        const users = await prisma.user.findMany({
+            where: {
+              id:use.map,
+              },
+        });
 
       return { users, allPages };
     }),
