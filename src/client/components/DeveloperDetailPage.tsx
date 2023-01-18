@@ -25,7 +25,7 @@ type Props = { developer: ThemeDeveloper; theme: Theme };
 export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
   const { session } = useSessionQuery();
   const mantineTheme = useMantineTheme();
-  const isThemeOwner = developer.userId === session?.user.id;
+  const isDeveloperOwner = developer.userId === session?.user.id;
   return (
     <>
       <></>
@@ -42,7 +42,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
           <Card h={300} w={250} sx={{ flexShrink: 0 }}>
             <Flex direction={"column"} justify={"space-between"} h="100%">
               <Flex mt={-5}>
-                {isThemeOwner && (
+                {isDeveloperOwner && (
                   <DeveloperMenuButton developer={developer} theme={theme} />
                 )}
               </Flex>

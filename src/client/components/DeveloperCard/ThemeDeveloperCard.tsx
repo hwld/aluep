@@ -102,7 +102,6 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
               <BsGithub size="80%" fill={mantineTheme.colors.gray[7]} />
             </ActionIcon>
           </Tooltip>
-          {/* <DeveloperMenuButton developer={developer} /> */}
         </Flex>
       </Flex>
       <Flex align="center" justify="space-between" mt={10}>
