@@ -9,18 +9,25 @@ const NotFoundPage: NextPage = () => {
   return (
     <>
       <Flex h="100%" align="center" pos="relative">
-        <Box pos="absolute" opacity={0.1} right={0} top={50} bottom={0}>
-          <MdOutlineErrorOutline size={600} color={theme.colors.red[7]} />
-        </Box>
         <Flex
           align="center"
           direction="column"
           m="auto"
-          sx={{ zIndex: 2 }}
-          pos="fixed"
+          sx={{ zIndex: 2, width: "620px" }}
+          pos="relative"
           inset={0}
           h="min-content"
         >
+          <Box
+            pos="absolute"
+            opacity={0.1}
+            sx={{
+              top: "-200px",
+              right: "-350px",
+            }}
+          >
+            <MdOutlineErrorOutline size={600} color={theme.colors.red[7]} />
+          </Box>
           <Title size={200} fw={900} sx={{ lineHeight: "180px" }}>
             404
           </Title>
