@@ -23,6 +23,7 @@ import { useThemeLike } from "../hooks/useThemeLike";
 import { appHeaderHeightPx } from "./AppHeader/AppHeader";
 import { AppPagination } from "./AppPagination";
 import { ThemeDeveloperCard } from "./DeveloperCard/ThemeDeveloperCard";
+import { ThemeComments } from "./ThemeComments";
 import { ThemeJoinButton } from "./ThemeJoinButton";
 import { ThemeLikeButton } from "./ThemeLikeButton";
 import { ThemeOperationButton } from "./ThemeOperationButton";
@@ -130,8 +131,11 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
               },
             })}
           >
-            {joinData ? "参加しています" : "参加する"}
+            {joinData?.joined ? "参加しています" : "参加する"}
           </Button>
+          <ThemeComments themeId={theme.id} />
+
+          {/* TODO: 別ページに移動させる */}
           <Stack>
             <Title mt={30} order={4}>
               参加している開発者

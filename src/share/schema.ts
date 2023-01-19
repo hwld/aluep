@@ -16,6 +16,13 @@ export const themeFormSchema = z.object({
 });
 export type ThemeFormData = z.infer<typeof themeFormSchema>;
 
+export const themeCommentFormSchema = z.object({
+  themeId: z.string().min(1),
+  comment: z.string().min(1).max(2000),
+  inReplyToCommentId: z.string().min(1).optional(),
+});
+export type ThemeCommentFormData = z.infer<typeof themeCommentFormSchema>;
+
 // 更新するときにはidが必要なのでお題のフォームにそれを追加する
 export const themeUpdateFormSchema = z
   .object({ themeId: z.string().min(1).max(100) })

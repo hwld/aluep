@@ -18,7 +18,7 @@ export const themeCommentSchema = z.object({
   inReplyToCommentId: z.string().nullable().optional(),
 });
 
-type ThemeComment = z.infer<typeof themeCommentSchema>;
+export type ThemeComment = z.infer<typeof themeCommentSchema>;
 
 const themeCommentArgs = {
   select: {

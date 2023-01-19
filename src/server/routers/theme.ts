@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
   JoinData,
   pageSchema,
+  themeCommentFormSchema,
   themeFormSchema,
   themeJoinFormSchema,
   themeOrderSchema,
@@ -474,13 +475,7 @@ export const themeRoute = router({
 
   // お題にコメントを投稿する
   comment: requireLoggedInProcedure
-    .input(
-      z.object({
-        themeId: z.string().min(1),
-        comment: z.string().min(1).max(2000),
-        inReplyToCommentId: z.string().min(1).optional(),
-      })
-    )
+    .input(themeCommentFormSchema)
     .mutation(async ({ input, ctx }) => {
       const comment = await prisma.appThemeComment.create({
         data: {
