@@ -16,6 +16,7 @@ export const themeCommentSchema = z.object({
   // undefinedの時は返信元がそもそもないことを表している。
   // nullとundefinedで区別するのはどうなんだろうと思ったが、とりあえずシンプルにやってみる
   inReplyToCommentId: z.string().nullable().optional(),
+  createdAt: z.date(),
 });
 
 export type ThemeComment = z.infer<typeof themeCommentSchema>;
@@ -26,6 +27,7 @@ const themeCommentArgs = {
     comment: true,
     themeId: true,
     fromUser: true,
+    createdAt: true,
     // このコメントがChildのParentChildアイテムを取得する
     asChild: { select: { parentCommentId: true } },
   },
@@ -44,6 +46,7 @@ const convertThemeComment = (
       image: raw.fromUser.image,
     },
     inReplyToCommentId: raw.asChild?.parentCommentId,
+    createdAt: raw.createdAt,
   };
   return comment;
 };

@@ -1,4 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Flex } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
+import { MouseEventHandler } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
 import {
@@ -6,20 +9,19 @@ import {
   themeCommentFormSchema,
 } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
-import { AppForm } from "./AppForm";
 import { AppTextarea } from "./AppTextarea";
 
 type Props = {
+  themeId: string;
   onSubmit: (data: OmitStrict<ThemeCommentFormData, "themeId">) => void;
-  onCancel: () => void;
-  submitText: string;
+  onClickSubmitButton?: MouseEventHandler<HTMLButtonElement>;
   isSubmitting?: boolean;
 };
 
 export const ThemeCommentForm: React.FC<Props> = ({
+  themeId,
   onSubmit,
-  onCancel,
-  submitText,
+  onClickSubmitButton,
   isSubmitting,
 }) => {
   const {
@@ -27,23 +29,21 @@ export const ThemeCommentForm: React.FC<Props> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<ThemeCommentFormData>({
+    defaultValues: { themeId, comment: "" },
     resolver: zodResolver(themeCommentFormSchema),
   });
 
+  const [debouncedSubmitting] = useDebouncedValue(isSubmitting, 250);
+
   return (
-    <AppForm
-      onSubmit={handleSubmit(onSubmit)}
-      onCancel={onCancel}
-      submitIcon={MdOutlineInsertComment}
-      submitText={submitText}
-      isSubmitting={isSubmitting}
-    >
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Controller
         control={control}
         name="comment"
         render={({ field }) => {
           return (
             <AppTextarea
+              placeholder="コメントする"
               autosize
               minRows={5}
               error={errors.comment?.message}
@@ -52,6 +52,17 @@ export const ThemeCommentForm: React.FC<Props> = ({
           );
         }}
       />
-    </AppForm>
+      <Flex mt="xs" justify="flex-end">
+        <Button
+          type="submit"
+          loading={debouncedSubmitting}
+          leftIcon={<MdOutlineInsertComment size={20} />}
+          loaderProps={{ size: 20 }}
+          onClick={onClickSubmitButton}
+        >
+          送信
+        </Button>
+      </Flex>
+    </form>
   );
 };

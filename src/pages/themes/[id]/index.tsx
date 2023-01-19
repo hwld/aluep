@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
-import { favoriteAnotherSumQueryKey } from "../../../client/hooks/useFavoriteAnother";
-import { paginatedDevelopersQueryKey } from "../../../client/hooks/usePaginatedDeveloperQueery";
+import { themeCommentsQueryKey } from "../../../client/hooks/useThemeComments";
 import { themeJoinQueryKey } from "../../../client/hooks/useThemeJoin";
 import {
   themeQueryKey,
@@ -14,19 +13,13 @@ import NotFoundPage from "../../404";
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
     const { id: themeId, page } = query;
-    const userId = themeId;
+
     if (typeof themeId !== "string") {
       return { notFound: true };
     }
 
-    if (typeof userId !== "string") {
-      return { notFound: true };
-    }
     if (typeof page === "object") {
       throw new Error();
-    }
-    if (!session) {
-      return;
     }
 
     const caller = appRouter.createCaller({ session });
@@ -37,28 +30,18 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    const paginatedDevelopers = await caller.theme.getDeveloperAllpage({
-      themeId,
-      page,
-    });
-    // ページが指定されているが、開発者が取得できなかった場合404を返す
-    if (page !== undefined && paginatedDevelopers.developers.length === 0) {
-      return { notFound: true };
-    }
-
+    // お題情報のプリフェッチ
     queryClient.setQueryData(themeQueryKey(themeId), theme);
-    queryClient.setQueryData(
-      paginatedDevelopersQueryKey(themeId, Number(page)),
-      paginatedDevelopers
-    );
 
+    // ログインユーザーの参加情報のプリフェッチ
     await queryClient.prefetchQuery(
       themeJoinQueryKey(themeId, session?.user.id),
       () => caller.theme.joined({ themeId })
     );
 
-    await queryClient.prefetchQuery(favoriteAnotherSumQueryKey(userId), () =>
-      caller.user.favoritedAnotherSum({ userId })
+    // コメントのプリフェッチ
+    await queryClient.prefetchQuery(themeCommentsQueryKey(themeId), () =>
+      caller.theme.getManyComments({ themeId })
     );
   }
 );
