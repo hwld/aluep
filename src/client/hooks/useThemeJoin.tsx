@@ -15,7 +15,7 @@ export const useThemeJoin = (themeId: string) => {
   const queryClient = useQueryClient();
   const { session } = useSessionQuery();
 
-  const { data: joined, ...others } = useQuery({
+  const { data: joinData, ...others } = useQuery({
     queryKey: themeJoinQueryKey(themeId, session?.user.id),
     queryFn: () => {
       return trpc.theme.joined.query({ themeId });
@@ -57,7 +57,7 @@ export const useThemeJoin = (themeId: string) => {
   });
 
   return {
-    data: { joined, ...others },
+    data: { joinData, ...others },
     mutations: { joinMutation, cancelJoinMutation },
   };
 };

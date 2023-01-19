@@ -38,6 +38,10 @@ export const themeJoinFormSchema = z.object({
     .optional(),
 });
 
+export type JoinData =
+  | { joined: false }
+  | { joined: true; developerId: string };
+
 // お題の並び順
 export const themeOrderSchema = z.union([
   z.literal("createdDesc"),

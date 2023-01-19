@@ -26,6 +26,14 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
+    // すでに参加している場合はお題にリダイレクトする
+    const joinData = await caller.theme.joined({ themeId: theme.id });
+    if (joinData.joined) {
+      return {
+        redirect: { destination: `/themes/${theme.id}`, permanent: false },
+      };
+    }
+
     queryClient.setQueryData(themeQueryKey(themeId), theme);
   }
 );
