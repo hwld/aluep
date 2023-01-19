@@ -50,6 +50,7 @@ export function UserDetailCard({
 
   let sessionId: string;
   if (!session) {
+    //sessionがなければ、ログインのモーダルが出るから""でも問題がないと思う。
     sessionId = "";
   } else {
     sessionId = session.user.id;
@@ -113,6 +114,7 @@ export function UserDetailCard({
             <UserFavoriteButton
               onFavorite={handleFavoriteUser}
               favorited={favorited}
+              userName={userName}
             />
             <Button
               leftIcon={favoritedAnotherSum === 0 ? "0" : favoritedAnotherSum}

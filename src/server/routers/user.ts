@@ -209,7 +209,7 @@ export const userRoute = router({
         finderInput: { where: { id: { in: ids } } },
         finder: prisma.user.findMany,
         counter: prisma.user.count,
-        pagingData: { page, limit: 5 },
+        pagingData: { page, limit: 50 },
       });
 
       return { pagefavo, allPages };
