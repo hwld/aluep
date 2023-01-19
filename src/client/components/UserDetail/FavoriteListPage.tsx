@@ -55,19 +55,15 @@ export const FavoriteListPage: React.FC<Props> = ({ user }) => {
 
       <Stack mt="md" w="100%">
         {favoriteList?.pagefavo.length === 0 ? (
-          <Flex direction={"column"} align={"center"} gap={10}>
-            <Card bg={"red.1"} w="100%">
-              <Flex align={"flex-end"}>
-                <BsFillPeopleFill
-                  size={70}
-                  color={mantineTheme.colors.red[7]}
-                />
-                <MdFavorite size={70} color={mantineTheme.colors.red[3]} />
-                <MdFavorite size={100} color={mantineTheme.colors.red[4]} />
-                <MdFavorite size={130} color={mantineTheme.colors.red[5]} />
-                <MdFavorite size={160} color={mantineTheme.colors.red[6]} />
-              </Flex>
-            </Card>
+          <Flex direction="column" align="center" gap={50}>
+            <Flex align="flex-end" justify="center">
+              <BsFillPeopleFill size={70} color={mantineTheme.colors.red[7]} />
+              <MdFavorite size={70} color={mantineTheme.colors.red[3]} />
+              <MdFavorite size={100} color={mantineTheme.colors.red[4]} />
+              <MdFavorite size={130} color={mantineTheme.colors.red[5]} />
+              <MdFavorite size={160} color={mantineTheme.colors.red[6]} />
+            </Flex>
+
             <Text size={30}>ユーザのお気に入りをまだしていません</Text>
 
             <Text c="gray.5">
