@@ -1,4 +1,5 @@
 import { Box, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { AppThemeLike } from "@prisma/client";
 import { MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { usePaginationState } from "../hooks/usePaginationState";
@@ -8,8 +9,8 @@ import { NothingThemeLikingUsers } from "./NothingThemeLikingUsers";
 import { ThemeSummaryCard } from "./ThemeSummaryCard";
 import { UserCard, userCardMinWidthPx } from "./UserCard";
 
-type Props = { theme: Theme };
-export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
+type Props = { theme: Theme; appTheme: AppThemeLike };
+export const ThemeLikingUsersPage: React.FC<Props> = ({ theme, appTheme }) => {
   const [page, setPage] = usePaginationState({});
   const { data } = useThemeLikingUsersQuery(theme.id, page);
   const mantineTheme = useMantineTheme();

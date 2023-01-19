@@ -272,9 +272,16 @@ export const themeRoute = router({
       });
 
       //userIdsに並び順を合わせる
-      const users = usered.sort((a, b) => {
+      const sortusers = usered.sort((a, b) => {
         return userIds.indexOf(a.id) - userIds.indexOf(b.id);
       });
+
+      //const likestime = use.map((raw) => ({}));
+
+      const users = sortusers.map((user, i) => ({
+        ...user,
+        themeLikes: Number(use[i]?.createdAt) ?? 0,
+      }));
 
       return { users, allPages };
     }),
