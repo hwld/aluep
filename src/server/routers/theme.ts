@@ -1,10 +1,12 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
+  JoinData,
   pageSchema,
   themeFormSchema,
   themeJoinFormSchema,
   themeOrderSchema,
+  themePeriodSchema,
   themeUpdateFormSchema,
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
@@ -81,6 +83,7 @@ export const themeRoute = router({
         keyword: z.string(),
         tagIds: z.array(z.string().min(1)),
         order: themeOrderSchema,
+        period: themePeriodSchema,
         page: pageSchema,
       })
     )
@@ -91,6 +94,7 @@ export const themeRoute = router({
             keyword: input.keyword,
             tagIds: input.tagIds,
             order: input.order,
+            period: input.period,
           },
           { page: input.page, limit: 24 }
         );
@@ -106,6 +110,7 @@ export const themeRoute = router({
           keyword: "",
           tagIds: [],
           order: input.order,
+          period: "all",
         },
         { page: 1, limit: 6 }
       );
@@ -192,10 +197,10 @@ export const themeRoute = router({
   // ログインユーザーが指定されたお題に参加しているか
   joined: publicProcedure
     .input(z.object({ themeId: z.string() }))
-    .query(async ({ input, ctx }) => {
+    .query(async ({ input, ctx }): Promise<JoinData> => {
       const loggedInUser = ctx.session?.user;
       if (!loggedInUser) {
-        return false;
+        return { joined: false };
       }
 
       const developer = await prisma.appThemeDeveloper.findUnique({
@@ -207,8 +212,11 @@ export const themeRoute = router({
         },
         select: { id: true },
       });
+      if (!developer) {
+        return { joined: false };
+      }
 
-      return Boolean(developer);
+      return { joined: true, developerId: developer.id };
     }),
 
   // お題にいいねする

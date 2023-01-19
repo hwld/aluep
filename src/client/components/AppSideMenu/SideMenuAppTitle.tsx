@@ -11,7 +11,7 @@ export const SideMenuAppTitle: React.FC = () => {
         display: "flex",
         alignItems: "center",
         flexShrink: 1,
-        gap: "10px",
+        gap: "12px",
         overflow: "hidden",
         "&:hover": { textDecoration: "none" },
       }}
@@ -20,11 +20,22 @@ export const SideMenuAppTitle: React.FC = () => {
         bg="red.3"
         sx={(theme) => ({
           borderRadius: theme.radius.md,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexShrink: 0,
+          width: "45px",
+          height: "45px",
           marginTop: "5px",
-          padding: "3px",
         })}
       >
-        <Image src="/logo.svg" alt="app-log" width={35} height={35} />
+        <Image
+          src="/logo.svg"
+          alt="app-log"
+          width={35}
+          height={35}
+          style={{ marginTop: "2px" }}
+        />
       </Box>
       <Title
         order={3}

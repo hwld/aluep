@@ -1,5 +1,5 @@
 import { Box, Flex, Stack } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -28,6 +28,10 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
   const [isOpen, { toggle }] = useDisclosure(false);
   const { openLoginModal } = useRequireLoginModal();
 
+  const isWideDisplay = useMediaQuery("(min-width: 1200px)");
+
+  const isMenuOpen = isWideDisplay && isOpen;
+
   const handleClickCreateTheme = (e: SyntheticEvent) => {
     if (!user) {
       e.preventDefault();
@@ -36,14 +40,18 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
     }
   };
 
+  const handleToggle = () => {
+    toggle();
+  };
+
   const handleLogin = () => {
     signIn("github");
   };
 
   return (
-    <Box h="100vh" p="md" sx={{ position: "sticky", top: 0, zIndex: 1 }}>
+    <Box h="100vh" p="md" sx={{ position: "sticky", top: 0, zIndex: 2 }}>
       <Box
-        w={isOpen ? 300 : barMinWidth}
+        w={isMenuOpen ? 300 : barMinWidth}
         h="100%"
         bg="red.7"
         p={barPadding}
@@ -59,14 +67,17 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
           <Flex
             align="center"
             justify="space-between"
-            sx={{ overflow: "hidden", gap: isOpen ? "5px" : "0px" }}
+            sx={{ overflow: "hidden", gap: isMenuOpen ? "5px" : "0px" }}
           >
             <SideMenuAppTitle />
-            <SideMenuToggle
-              isOpen={isOpen}
-              onToggle={toggle}
-              width={`${iconWidth}px`}
-            />
+
+            {isWideDisplay && (
+              <SideMenuToggle
+                isOpen={isOpen}
+                onToggle={handleToggle}
+                width={`${iconWidth}px`}
+              />
+            )}
           </Flex>
           <Stack spacing={10}>
             <SideMenuItem
@@ -75,7 +86,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               asLink
               href="/"
               active={router.route === "/"}
-              tooltip={!isOpen}
+              tooltip={!isMenuOpen}
             />
             <SideMenuItem
               icon={MdPostAdd}
@@ -84,7 +95,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               asLink
               href="/themes/create"
               active={router.route === "/themes/create"}
-              tooltip={!isOpen}
+              tooltip={!isMenuOpen}
             />
             <SideMenuItem
               icon={MdSearch}
@@ -92,7 +103,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               asLink
               href="/themes/search"
               active={router.route === "/themes/search"}
-              tooltip={!isOpen}
+              tooltip={!isMenuOpen}
             />
             <SideMenuItem
               icon={MdOutlinePersonSearch}
@@ -100,7 +111,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               asLink
               href="/users/search"
               active={router.route === "/users/search"}
-              tooltip={!isOpen}
+              tooltip={!isMenuOpen}
             />
           </Stack>
         </Stack>
@@ -115,7 +126,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               icon={IoMdLogIn}
               label="ログイン"
               onClick={handleLogin}
-              tooltip={!isOpen}
+              tooltip={!isMenuOpen}
             />
           )}
         </Flex>

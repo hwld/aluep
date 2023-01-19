@@ -152,3 +152,10 @@ model AppThemeDeveloperLike {
   @@index([userId])
   @@unique([userId, developerId])
 }
+
+model FavoriteUser{
+  userId              String
+  favoritedUserId     String
+
+  @@id([userId,favoritedUserId])
+}

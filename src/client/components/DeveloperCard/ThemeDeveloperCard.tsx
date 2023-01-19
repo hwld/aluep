@@ -18,7 +18,6 @@ import { stopPropagation } from "../../utils";
 import { TextLink } from "../TextLink";
 import { UserIconLink } from "../UserIconLink";
 import { DeveloperLikeButton } from "./DeveloperLikeButton";
-import { DeveloperMenuButton } from "./DeveloperMenuButton";
 
 type Props = {
   theme: Theme;
@@ -103,7 +102,6 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
               <BsGithub size="80%" fill={mantineTheme.colors.gray[7]} />
             </ActionIcon>
           </Tooltip>
-          <DeveloperMenuButton developer={developer} />
         </Flex>
       </Flex>
       <Flex align="center" justify="space-between" mt={10}>

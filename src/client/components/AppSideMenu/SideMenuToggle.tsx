@@ -1,15 +1,22 @@
 import { ActionIcon, Box } from "@mantine/core";
 import { HiArrowRight } from "react-icons/hi";
 
-type Props = { isOpen: boolean; onToggle: () => void; width: string };
+type Props = {
+  isOpen: boolean;
+  onToggle: () => void;
+  width: string;
+  className?: string;
+};
 
 export const SideMenuToggle: React.FC<Props> = ({
   isOpen,
   onToggle,
   width,
+  className,
 }) => {
   return (
     <ActionIcon
+      className={className}
       onClick={onToggle}
       color="gray.1"
       sx={(theme) => ({

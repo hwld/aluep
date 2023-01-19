@@ -15,7 +15,7 @@ export const UserIconLink: React.FC<Props> = ({
   size = "md",
 }) => {
   return (
-    <Link href={`/users/${userId}`} onClick={stopPropagation}>
+    <Link href={`/users/${userId}`} onClick={stopPropagation} passHref>
       <UserIcon iconSrc={iconSrc} interactive size={size} />
     </Link>
   );

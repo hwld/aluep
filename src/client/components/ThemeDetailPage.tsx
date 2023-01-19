@@ -9,6 +9,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
@@ -22,6 +23,7 @@ import { useThemeLike } from "../hooks/useThemeLike";
 import { appHeaderHeightPx } from "./AppHeader/AppHeader";
 import { AppPagination } from "./AppPagination";
 import { ThemeDeveloperCard } from "./DeveloperCard/ThemeDeveloperCard";
+import { ThemeJoinButton } from "./ThemeJoinButton";
 import { ThemeLikeButton } from "./ThemeLikeButton";
 import { ThemeOperationButton } from "./ThemeOperationButton";
 import { ThemeTagBadge } from "./ThemeTagBadge";
@@ -34,10 +36,11 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const mantineTheme = useMantineTheme();
 
   const { session } = useSessionQuery();
+  const router = useRouter();
   const { openLoginModal } = useRequireLoginModal();
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(theme.id);
   const {
-    data: { joined },
+    data: { joinData },
   } = useThemeJoin(theme.id);
 
   const { likeDeveloperMutation } = useThemeDevelopersQuery(theme.id);
@@ -58,11 +61,11 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const handleClickJoin = (e: SyntheticEvent) => {
     // ログインしていなければログインモーダルを表示する
     if (!session) {
-      // クリックで遷移しないようにする
-      e.preventDefault();
       openLoginModal(`/themes/${theme.id}/join`);
       return;
     }
+
+    router.push(`/themes/${theme.id}/join`);
   };
 
   const { data } = usePaginatedDeveloperQuery(theme.id, page);
@@ -86,6 +89,12 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           sx={{ position: "sticky", top: appHeaderHeightPx + 10, zIndex: 1 }}
         >
           {isThemeOwner && <ThemeOperationButton theme={theme} />}
+          <ThemeJoinButton
+            themeId={theme.id}
+            developers={theme.developers}
+            loggedInUserJoinData={joinData}
+            onJoinTheme={handleClickJoin}
+          />
           <ThemeLikeButton
             themeId={theme.id}
             likes={theme.likes}
@@ -100,7 +109,9 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           <Card mih={300}>
             <Flex gap={10} mb={10} wrap="wrap">
               {theme.tags.map((tag) => (
-                <ThemeTagBadge key={tag.id}>{tag.name}</ThemeTagBadge>
+                <ThemeTagBadge tagId={tag.id} key={tag.id}>
+                  {tag.name}
+                </ThemeTagBadge>
               ))}
             </Flex>
             <Text>{theme.description}</Text>
@@ -111,7 +122,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             href={`/themes/${theme.id}/join`}
             onClick={handleClickJoin}
             replace
-            disabled={joined}
+            disabled={joinData?.joined ?? false}
             sx={(theme) => ({
               "&[data-disabled]": {
                 backgroundColor: theme.colors.gray[3],
@@ -119,7 +130,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
               },
             })}
           >
-            {joined ? "参加しています" : "参加する"}
+            {joinData ? "参加しています" : "参加する"}
           </Button>
           <Stack>
             <Title mt={30} order={4}>

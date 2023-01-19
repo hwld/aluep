@@ -22,6 +22,8 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
             いいねした人
           </Title>
         )}
+        {/* TODO: 山岸君担当 */}
+        {/* @ts-ignore */}
         {data?.users.map((user) => {
           return <UserCard user={user} key={user.id} />;
         })}
