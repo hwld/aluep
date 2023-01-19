@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { ThemeDeveloperPage } from "../../../../client/components/ThemeDeveloperPage";
-import { themeLikingUsersQueryKey } from "../../../../client/hooks/useThemeLikingUsersQuery";
+import { paginatedDevelopersQueryKey } from "../../../../client/hooks/usePaginatedDeveloperQueery";
 import {
   themeQueryKey,
   useThemeQuery,
@@ -29,8 +29,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.theme.get({ themeId })
     );
     await queryClient.prefetchQuery(
-      themeLikingUsersQueryKey(themeId, Number(page)),
-      () => caller.theme.getThemeLikingUsers({ themeId, page })
+      paginatedDevelopersQueryKey(themeId, Number(page)),
+      () => caller.theme.getDeveloperAllpage({ themeId, page })
     );
   }
 );
