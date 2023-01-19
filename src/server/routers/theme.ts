@@ -293,21 +293,25 @@ export const themeRoute = router({
   getThemeLikingUsers: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
     .query(async ({ input }) => {
-      const { data: users, allPages } = await paginate({
+      const { data: use, allPages } = await paginate({
+        finder: prisma.appThemeLike.findMany,
         finderInput: {
-          //where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
-          include: {
-            appThemeLikes: {
-              where: { appThemeId: input.themeId },
-              orderBy: { createdAt: "desc" as const },
-            },
-          },
+          where: { appThemeId: input.themeId },
+          orderBy: { createdAt: "desc" as const },
         },
-        finder: prisma.user.findMany,
-        // TODO: 山岸君担当
-        // @ts-ignore
-        counter: prisma.user.count,
+        counter: prisma.appThemeLike.count,
         pagingData: { page: input.page, limit: 6 },
+      });
+
+      const userIds = use.map(({ userId }) => userId);
+
+      const usered = await prisma.user.findMany({
+        where: { id: { in: userIds } },
+      });
+
+      //userIdsに並び順を合わせる
+      const users = usered.sort((a, b) => {
+        return userIds.indexOf(a.id) - userIds.indexOf(b.id);
       });
 
       return { users, allPages };
