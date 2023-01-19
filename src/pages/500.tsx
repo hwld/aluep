@@ -9,18 +9,25 @@ const ServerErrorPage: NextPage = () => {
   return (
     <>
       <Flex h="100%" align="center" pos="relative">
-        <Box pos="absolute" opacity={0.1} right={0} top={50} bottom={0}>
-          <BiWrench size={600} color={theme.colors.red[7]} />
-        </Box>
         <Flex
           align="center"
           direction="column"
           m="auto"
           sx={{ zIndex: 2 }}
-          pos="fixed"
+          pos="relative"
           inset={0}
           h="min-content"
         >
+          <Box
+            pos="absolute"
+            opacity={0.1}
+            sx={{
+              top: "-200px",
+              right: "-350px",
+            }}
+          >
+            <BiWrench size={600} color={theme.colors.red[7]} />
+          </Box>
           <Title size={200} fw={900} sx={{ lineHeight: "180px" }}>
             500
           </Title>

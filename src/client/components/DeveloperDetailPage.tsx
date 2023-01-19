@@ -25,10 +25,9 @@ type Props = { developer: ThemeDeveloper; theme: Theme };
 export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
   const { session } = useSessionQuery();
   const mantineTheme = useMantineTheme();
-  const isThemeOwner = developer.userId === session?.user.id;
+  const isDeveloper = developer.userId === session?.user.id;
   return (
     <>
-      <></>
       <Stack w={800} m="auto" spacing="lg">
         <Title order={3}>開発者詳細ページ</Title>
         <Stack spacing="xs" w={760}>
@@ -42,7 +41,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
           <Card h={300} w={250} sx={{ flexShrink: 0 }}>
             <Flex direction={"column"} justify={"space-between"} h="100%">
               <Flex mt={-5}>
-                {isThemeOwner && (
+                {isDeveloper && (
                   <DeveloperMenuButton developer={developer} theme={theme} />
                 )}
               </Flex>
