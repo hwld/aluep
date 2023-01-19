@@ -3,7 +3,6 @@ import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
 import { favoriteAnotherSumQueryKey } from "../../../client/hooks/useFavoriteAnother";
 import { paginatedDevelopersQueryKey } from "../../../client/hooks/usePaginatedDeveloperQueery";
 import { themeJoinQueryKey } from "../../../client/hooks/useThemeJoin";
-import { themeLikedQueryKey } from "../../../client/hooks/useThemeLike";
 import {
   themeQueryKey,
   useThemeQuery,
@@ -52,10 +51,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       paginatedDevelopersQueryKey(themeId, Number(page)),
       paginatedDevelopers
     );
-    await queryClient.prefetchQuery(
-      themeLikedQueryKey(themeId, session?.user.id),
-      () => caller.theme.liked({ themeId })
-    );
+
     await queryClient.prefetchQuery(
       themeJoinQueryKey(themeId, session?.user.id),
       () => caller.theme.joined({ themeId })
