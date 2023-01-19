@@ -13,9 +13,8 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
   const { data } = useThemeLikingUsersQuery(theme.id, page);
   return (
     <Flex maw={800} direction="column" align="center" m="auto">
-      
       <Stack mt="xl" w="100%" spacing="xs">
-        <ThemeSummaryCard theme={theme}/>
+        <ThemeSummaryCard theme={theme} />
         {theme.likes === 0 ? (
           <NothingThemeLikingUsers />
         ) : (

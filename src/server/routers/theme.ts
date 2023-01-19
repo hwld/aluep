@@ -5,18 +5,18 @@ import {
   themeFormSchema,
   themeJoinFormSchema,
   themeOrderSchema,
-  themeUpdateFormSchema
+  themeUpdateFormSchema,
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
 import {
   findManyThemes,
   findTheme,
   searchThemes,
-  Theme
+  Theme,
 } from "../models/theme";
 import {
   findManyThemeDevelopers,
-  ThemeDeveloper
+  ThemeDeveloper,
 } from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
 import { UserAndDeveloperLikes, UserAndThemeLikes } from "../models/user";
@@ -288,18 +288,23 @@ export const themeRoute = router({
       const { data: use, allPages } = await paginate({
         finder: prisma.appThemeLike.findMany,
         finderInput: {
-          where: { appThemeId: input.themeId } ,
-          orderBy: { createdAt: "desc" as const, },       
+          where: { appThemeId: input.themeId },
+          orderBy: { createdAt: "desc" as const },
         },
         counter: prisma.appThemeLike.count,
         pagingData: { page: input.page, limit: 6 },
       });
-      
-        const users = await prisma.user.findMany({
-            where: {
-              id:use.map,
-              },
-        });
+
+      const userIds = use.map(({ userId }) => userId);
+
+      const usered = await prisma.user.findMany({
+        where: { id: { in: userIds } },
+      });
+
+      //userIdsに並び順を合わせる
+      const users = usered.sort((a, b) => {
+        return userIds.indexOf(a.id) - userIds.indexOf(b.id);
+      });
 
       return { users, allPages };
     }),
