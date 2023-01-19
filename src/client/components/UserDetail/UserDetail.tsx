@@ -6,7 +6,10 @@ import { useSumThemeLikesQuery } from "../../hooks/useSumThemeLikesQuery";
 import { useThemeDeveloperLikesQuery } from "../../hooks/useThemeDeveloperLikesQuery";
 import { UserDetailCard } from "../UserDetailCard";
 
-export type UserDetailProps = { user: User; type: "post" | "join" | "like" };
+export type UserDetailProps = {
+  user: User;
+  type: "post" | "join" | "like";
+};
 
 export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
   const { sumThemeLikes } = useSumThemeLikesQuery(user.id);
@@ -35,6 +38,7 @@ export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
           sumThemeLikes={sumThemeLikes}
           themeDeveloperLikes={themeDeveloperLikes}
           githuburl={githubUrl}
+          user={user}
         />
         <Card mih={20} sx={{ flexGrow: 1 }}>
           <Card.Section withBorder inheritPadding py="md">

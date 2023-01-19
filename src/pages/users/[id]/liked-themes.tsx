@@ -1,6 +1,8 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { UserLikedThemesPage } from "../../../client/components/UserDetail/UserLikedThemesPage";
+import { favoriteAnotherSumQueryKey } from "../../../client/hooks/useFavoriteAnother";
+import { favoriteUserQueryKey } from "../../../client/hooks/useFavoriteUser";
 import { likedThemesQueryKey } from "../../../client/hooks/useLikedThemesQuery";
 import { sumThemeLikesQueryKey } from "../../../client/hooks/useSumThemeLikesQuery";
 import { themeDeveloperLikesQueryKey } from "../../../client/hooks/useThemeDeveloperLikesQuery";
@@ -37,6 +39,21 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     await queryClient.prefetchQuery(themeDeveloperLikesQueryKey, () =>
       caller.user.getThemeDeveloperLike({ userId })
+    );
+
+    //お気に入りのちらつきを無くす
+    if (!session) {
+      return;
+    }
+    const favoriteUserId = session.user.id;
+
+    await queryClient.prefetchQuery(favoriteAnotherSumQueryKey(userId), () =>
+      caller.user.favoritedAnotherSum({ userId })
+    );
+
+    await queryClient.prefetchQuery(
+      favoriteUserQueryKey(userId, favoriteUserId),
+      () => caller.user.favorited({ userId, favoriteUserId })
     );
   }
 );
