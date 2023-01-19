@@ -8,12 +8,21 @@ const NotFoundPage: NextPage = () => {
 
   return (
     <>
-      <Flex h="100%" align="center" pos="relative">
+      <Flex
+        h="100%"
+        align="center"
+        pos="relative"
+        // AppLayoutのpaddingとここのmarginを合わせる
+        sx={(theme) => ({
+          overflow: "hidden",
+          margin: `-${theme.spacing.xl}px`,
+        })}
+      >
         <Flex
           align="center"
           direction="column"
           m="auto"
-          sx={{ zIndex: 2, width: "620px" }}
+          sx={{ zIndex: 2 }}
           pos="relative"
           inset={0}
           h="min-content"

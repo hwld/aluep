@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
+  JoinData,
   pageSchema,
   themeFormSchema,
   themeJoinFormSchema,
@@ -196,10 +197,10 @@ export const themeRoute = router({
   // ログインユーザーが指定されたお題に参加しているか
   joined: publicProcedure
     .input(z.object({ themeId: z.string() }))
-    .query(async ({ input, ctx }) => {
+    .query(async ({ input, ctx }): Promise<JoinData> => {
       const loggedInUser = ctx.session?.user;
       if (!loggedInUser) {
-        return false;
+        return { joined: false };
       }
 
       const developer = await prisma.appThemeDeveloper.findUnique({
@@ -211,8 +212,11 @@ export const themeRoute = router({
         },
         select: { id: true },
       });
+      if (!developer) {
+        return { joined: false };
+      }
 
-      return Boolean(developer);
+      return { joined: true, developerId: developer.id };
     }),
 
   // お題にいいねする
@@ -289,21 +293,25 @@ export const themeRoute = router({
   getThemeLikingUsers: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
     .query(async ({ input }) => {
-      const { data: users, allPages } = await paginate({
+      const { data: use, allPages } = await paginate({
+        finder: prisma.appThemeLike.findMany,
         finderInput: {
-          //where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
-          include: {
-            appThemeLikes: {
-              where: { appThemeId: input.themeId },
-              orderBy: { createdAt: "desc" as const },
-            },
-          },
+          where: { appThemeId: input.themeId },
+          orderBy: { createdAt: "desc" as const },
         },
-        finder: prisma.user.findMany,
-        // TODO: 山岸君担当
-        // @ts-ignore
-        counter: prisma.user.count,
+        counter: prisma.appThemeLike.count,
         pagingData: { page: input.page, limit: 6 },
+      });
+
+      const userIds = use.map(({ userId }) => userId);
+
+      const usered = await prisma.user.findMany({
+        where: { id: { in: userIds } },
+      });
+
+      //userIdsに並び順を合わせる
+      const users = usered.sort((a, b) => {
+        return userIds.indexOf(a.id) - userIds.indexOf(b.id);
       });
 
       return { users, allPages };

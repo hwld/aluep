@@ -8,7 +8,15 @@ const ServerErrorPage: NextPage = () => {
 
   return (
     <>
-      <Flex h="100%" align="center" pos="relative">
+      <Flex
+        h="100%"
+        align="center"
+        pos="relative"
+        sx={(theme) => ({
+          overflow: "hidden",
+          margin: `-${theme.spacing.xl}px`,
+        })}
+      >
         <Flex
           align="center"
           direction="column"
