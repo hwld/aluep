@@ -58,7 +58,7 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
             themeId={theme.id}
             defaultValues={developer}
             submitText="更新する"
-            isSubmitting={updateMutation.isLoading}
+            isLoading={updateMutation.isLoading || updateMutation.isSuccess}
           />
         </Card>
       </Stack>

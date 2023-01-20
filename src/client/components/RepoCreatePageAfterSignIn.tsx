@@ -45,7 +45,10 @@ export const RepoCreatePageAfterSignIn: React.FC<Props> = ({
         <RepositoryForm
           onSubmit={handleCreateRepository}
           onCancel={handleGoJoinPage}
-          isSubmitting={createRepositoryMutation.isLoading}
+          isLoading={
+            createRepositoryMutation.isLoading ||
+            createRepositoryMutation.isSuccess
+          }
           defaultValues={repoFormData}
         />
       </Card>

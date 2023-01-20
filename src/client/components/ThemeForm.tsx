@@ -14,7 +14,7 @@ type Props = {
   onCancel: () => void;
   submitText: string;
   defaultValues?: ThemeFormData;
-  isSubmitting?: boolean;
+  isLoading?: boolean;
 };
 
 // お題の作成と更新のためのForm
@@ -24,7 +24,7 @@ export const ThemeForm: React.FC<Props> = ({
   onCancel,
   submitText,
   defaultValues = { title: "", description: "", tags: [] },
-  isSubmitting,
+  isLoading,
 }) => {
   const {
     control,
@@ -41,7 +41,7 @@ export const ThemeForm: React.FC<Props> = ({
       onCancel={onCancel}
       submitText={submitText}
       submitIcon={MdPostAdd}
-      isSubmitting={isSubmitting}
+      isSubmitting={isLoading}
     >
       <Controller
         control={control}

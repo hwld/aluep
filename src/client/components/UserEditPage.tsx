@@ -21,7 +21,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
         title: "プロフィールの更新",
         message: "プロフィールを更新しました。",
       });
-      router.back();
+      router.push(`/users/${user.id}`);
     },
     onError: () => {
       showErrorNotification({
@@ -51,7 +51,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
             name: user.name ?? "",
             profile: user.profile ?? "",
           }}
-          isSubmitting={updateMutation.isLoading}
+          isLoading={updateMutation.isLoading || updateMutation.isSuccess}
         />
       </Card>
     </Box>

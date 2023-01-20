@@ -23,17 +23,31 @@ export const AppForm: React.FC<Props> = ({
 
   // すぐに終わる操作で一瞬インジケータが表示されるのを防ぐために、
   // isSubmittingが変更されてから250ms経過した後に反映させる。
+  // ただ、その間にキャンセルボタンやSubmitボタンを押されたくないので、
+  // スタイルには反映させないが、内部的には押しても何も起こらないようにする。
   const [debouncedSubmitting] = useDebouncedValue(isSubmitting, 250);
+
+  const handleCancel = () => {
+    if (!isSubmitting) {
+      onCancel();
+    }
+  };
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if (!isSubmitting) {
+      onSubmit(e);
+    }
+  };
 
   return (
     <>
       {/* formのネストを防ぐために、フォームを独立させる */}
-      <form onSubmit={onSubmit} id={formId} />
+      <form onSubmit={handleSubmit} id={formId} />
       <Stack spacing="md">{children}</Stack>
       <Flex gap="sm" mt="lg" justify="flex-end">
         <Button
           variant="outline"
-          onClick={onCancel}
+          onClick={handleCancel}
           disabled={debouncedSubmitting}
         >
           キャンセル

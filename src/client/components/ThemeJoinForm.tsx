@@ -15,7 +15,7 @@ type Props = {
   onSubmit: (data: ThemeJoinFormData) => void;
   onCancel: () => void;
   submitText: string;
-  isSubmitting?: boolean;
+  isLoading?: boolean;
 };
 export const ThemeJoinForm: React.FC<Props> = ({
   themeId,
@@ -23,7 +23,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
   onSubmit,
   onCancel,
   submitText,
-  isSubmitting,
+  isLoading,
 }) => {
   const {
     control,
@@ -40,7 +40,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
       onCancel={onCancel}
       submitIcon={MdComputer}
       submitText={submitText}
-      isSubmitting={isSubmitting}
+      isSubmitting={isLoading}
     >
       <Flex align="end" gap={5}>
         <Box sx={{ flexGrow: 1 }}>

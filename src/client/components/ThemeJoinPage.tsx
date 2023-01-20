@@ -38,7 +38,7 @@ export const ThemeJoinPage: React.FC<Props> = ({ theme, repoUrl }) => {
             onCancel={handleBack}
             themeId={theme.id}
             submitText="参加する"
-            isSubmitting={joinMutation.isLoading}
+            isLoading={joinMutation.isLoading || joinMutation.isSuccess}
             defaultValues={{ githubUrl: repoUrl ?? "", comment: "" }}
           />
         </Card>

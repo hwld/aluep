@@ -47,7 +47,8 @@ export const ThemeCreatePage: React.FC = () => {
           onSubmit={handleCreateTheme}
           onCancel={handleCancel}
           allTags={allTags}
-          isSubmitting={createMutate.isLoading}
+          // お題の投稿に成功したら遷移するので、isSuccessがtrueでも遷移するまでloading状態にさせる
+          isLoading={createMutate.isLoading || createMutate.isSuccess}
         />
       </Card>
     </Box>
