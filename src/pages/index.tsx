@@ -56,6 +56,9 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
+// TODO:
+// ユーザーランキングとピックアップされたお題の取得をアクセスが行われるたびに計算しているため、DBに負荷がかかりそう。
+// こういった集計はリアルタイム性を必要としないから、バッチ処理として集計用のテーブルに追加していった方が良い？
 const Home: NextPage = () => {
   return <HomePage />;
 };

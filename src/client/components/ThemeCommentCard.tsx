@@ -1,8 +1,9 @@
-import { Anchor, Card, Flex, Stack, Text } from "@mantine/core";
+import { Box, Card, Flex, Stack, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { BiTrashAlt } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
+import { HiOutlineChevronDoubleRight } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
 import { ThemeComment } from "../../server/models/themeComment";
 import { ThemeCommentFormData } from "../../share/schema";
@@ -69,15 +70,44 @@ export const ThemeCommentCard: React.FC<Props> = ({
               />
               <Text>{comment.fromUser.name}</Text>
             </Flex>
-            {comment.inReplyToCommentId && inReplyToUserName !== undefined && (
-              <Anchor
-                component={Link}
-                href={`#${comment.inReplyToCommentId}`}
-                replace
+            {/* 返信コメントだが、返信元が削除されている場合はnullになる */}
+            {comment.inReplyToCommentId === null && (
+              <Box
                 color="red.7"
+                sx={(theme) => ({
+                  color: theme.colors.red[7],
+                  textDecoration: "none",
+                  display: "flex",
+                  gap: 3,
+                  alignItems: "center",
+                })}
               >
-                {`>>${inReplyToUserName}`}
-              </Anchor>
+                <HiOutlineChevronDoubleRight />
+                削除されたコメント
+              </Box>
+            )}
+            {comment.inReplyToCommentId && inReplyToUserName !== undefined && (
+              <Flex>
+                <Box
+                  component={Link}
+                  href={`#${comment.inReplyToCommentId}`}
+                  replace
+                  color="red.7"
+                  sx={(theme) => ({
+                    color: theme.colors.red[7],
+                    textDecoration: "none",
+                    display: "flex",
+                    gap: 3,
+                    alignItems: "center",
+                    "&:hover": {
+                      color: theme.colors.red[9],
+                    },
+                  })}
+                >
+                  <HiOutlineChevronDoubleRight />
+                  {inReplyToUserName}
+                </Box>
+              </Flex>
             )}
             <Text>{comment.comment}</Text>
             <Flex justify="space-between" align="center" gap="xs">
