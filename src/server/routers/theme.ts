@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
   JoinData,
   pageSchema,
+  themeCommentFormSchema,
   themeFormSchema,
   themeJoinFormSchema,
   themeOrderSchema,
@@ -16,6 +17,7 @@ import {
   searchThemes,
   Theme,
 } from "../models/theme";
+import { findManyThemeComments } from "../models/themeComment";
 import {
   findManyThemeDevelopers,
   ThemeDeveloper,
@@ -470,4 +472,53 @@ export const themeRoute = router({
 
     return posterUsers;
   }),
+
+  // お題にコメントを投稿する
+  comment: requireLoggedInProcedure
+    .input(themeCommentFormSchema)
+    .mutation(async ({ input, ctx }) => {
+      const comment = await prisma.appThemeComment.create({
+        data: {
+          themeId: input.themeId,
+          comment: input.comment,
+          fromUserId: ctx.session.user.id,
+          // 返信元が指定されていればParentChildを作成する
+          ...(input.inReplyToCommentId
+            ? {
+                asChild: {
+                  create: { parentCommentId: input.inReplyToCommentId },
+                },
+              }
+            : {}),
+        },
+      });
+
+      return { commentId: comment.id };
+    }),
+
+  // お題につけたコメントを削除する
+  deleteComment: requireLoggedInProcedure
+    .input(z.object({ commentId: z.string().min(1) }))
+    .mutation(async ({ input, ctx }) => {
+      // ログインユーザーが投稿したコメントか確認する
+      const comment = await prisma.appThemeComment.findUnique({
+        where: { id: input.commentId },
+      });
+      if (ctx.session.user.id !== comment?.fromUserId) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
+
+      await prisma.appThemeComment.delete({ where: { id: input.commentId } });
+    }),
+
+  getManyComments: publicProcedure
+    .input(z.object({ themeId: z.string().min(1) }))
+    .query(async ({ input }) => {
+      const comments = await findManyThemeComments({
+        where: { themeId: input.themeId },
+        orderBy: { createdAt: "asc" },
+      });
+
+      return comments;
+    }),
 });

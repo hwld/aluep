@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Card,
   Flex,
   Stack,
@@ -8,21 +7,16 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
-import { usePaginatedDeveloperQuery } from "../hooks/usePaginatedDeveloperQueery";
-import { usePaginationState } from "../hooks/usePaginationState";
 import { useSessionQuery } from "../hooks/useSessionQuery";
-import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { useThemeJoin } from "../hooks/useThemeJoin";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { appHeaderHeightPx } from "./AppHeader/AppHeader";
-import { AppPagination } from "./AppPagination";
-import { ThemeDeveloperCard } from "./DeveloperCard/ThemeDeveloperCard";
+import { ThemeComments } from "./ThemeComments";
 import { ThemeJoinButton } from "./ThemeJoinButton";
 import { ThemeLikeButton } from "./ThemeLikeButton";
 import { ThemeOperationButton } from "./ThemeOperationButton";
@@ -32,7 +26,6 @@ import { UserIconLink } from "./UserIconLink";
 type Props = { theme: Theme };
 
 export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
-  const [page, setPage] = usePaginationState({});
   const mantineTheme = useMantineTheme();
 
   const { session } = useSessionQuery();
@@ -42,8 +35,6 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const {
     data: { joinData },
   } = useThemeJoin(theme.id);
-
-  const { likeDeveloperMutation } = useThemeDevelopersQuery(theme.id);
 
   const handleLikeTheme = () => {
     //ログインしていなければログインモーダルを表示する
@@ -67,8 +58,6 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
 
     router.push(`/themes/${theme.id}/join`);
   };
-
-  const { data } = usePaginatedDeveloperQuery(theme.id, page);
 
   // 自分の投稿かどうか
   const isThemeOwner = theme.user.id === session?.user.id;
@@ -116,52 +105,8 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             </Flex>
             <Text>{theme.description}</Text>
           </Card>
-          <Button
-            mt={15}
-            component={Link}
-            href={`/themes/${theme.id}/join`}
-            onClick={handleClickJoin}
-            replace
-            disabled={joinData?.joined ?? false}
-            sx={(theme) => ({
-              "&[data-disabled]": {
-                backgroundColor: theme.colors.gray[3],
-                color: theme.colors.gray[7],
-              },
-            })}
-          >
-            {joinData ? "参加しています" : "参加する"}
-          </Button>
-          <Stack>
-            <Title mt={30} order={4}>
-              参加している開発者
-            </Title>
-            <Box
-              sx={(theme) => ({
-                display: "grid",
-                gap: theme.spacing.md,
-              })}
-            >
-              {data?.developers.map((developer) => {
-                return (
-                  <ThemeDeveloperCard
-                    key={developer.id}
-                    theme={theme}
-                    developer={developer}
-                    onLikeDeveloper={(developerId, like) => {
-                      likeDeveloperMutation.mutate({ developerId, like });
-                    }}
-                  />
-                );
-              })}
-            </Box>
 
-            <AppPagination
-              page={page}
-              onChange={setPage}
-              total={data?.allPages ?? 0}
-            />
-          </Stack>
+          <ThemeComments themeId={theme.id} />
         </Box>
 
         {/* 右カラム */}

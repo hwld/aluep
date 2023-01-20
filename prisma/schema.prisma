@@ -7,8 +7,8 @@ generator client {
 
 // MySQLに変える
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
@@ -29,8 +29,8 @@ model Account {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId])
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -44,18 +44,19 @@ model Session {
 }
 
 model User {
-  id             String                  @id @default(cuid())
-  name           String?
-  email          String?                 @unique
-  emailVerified  DateTime?
-  image          String?
-  profile        String?                 @db.Text              
-  accounts       Account[]
-  sessions       Session[]
-  appThemes      AppTheme[]
-  developers     AppThemeDeveloper[]
-  appThemeLikes  AppThemeLike[]
-  developerLikes AppThemeDeveloperLike[]
+  id               String                  @id @default(cuid())
+  name             String?
+  email            String?                 @unique
+  emailVerified    DateTime?
+  image            String?
+  profile          String?                 @db.Text
+  accounts         Account[]
+  sessions         Session[]
+  appThemes        AppTheme[]
+  developers       AppThemeDeveloper[]
+  appThemeLikes    AppThemeLike[]
+  developerLikes   AppThemeDeveloperLike[]
+  appThemeComments AppThemeComment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -79,8 +80,10 @@ model AppTheme {
   user        User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   developers AppThemeDeveloper[]
-  
+
   likes AppThemeLike[]
+
+  comments AppThemeComment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -103,9 +106,9 @@ model AppThemeTagOnAppTheme {
   tagId   String
   tag     AppThemeTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
+  @@id([themeId, tagId])
   @@index([themeId])
   @@index([tagId])
-  @@id([themeId, tagId])
 }
 
 model AppThemeLike {
@@ -117,9 +120,9 @@ model AppThemeLike {
 
   createdAt DateTime @default(now())
 
+  @@unique([userId, appThemeId])
   @@index([appThemeId])
   @@index([userId])
-  @@unique([userId, appThemeId])
 }
 
 model AppThemeDeveloper {
@@ -134,9 +137,9 @@ model AppThemeDeveloper {
 
   createdAt DateTime @default(now())
 
+  @@unique([userId, appThemeId])
   @@index([userId])
   @@index([appThemeId])
-  @@unique([userId, appThemeId])
 }
 
 model AppThemeDeveloperLike {
@@ -148,9 +151,9 @@ model AppThemeDeveloperLike {
 
   createdAt DateTime @default(now())
 
+  @@unique([userId, developerId])
   @@index([developerId])
   @@index([userId])
-  @@unique([userId, developerId])
 }
 
 model FavoriteUser{
@@ -158,4 +161,39 @@ model FavoriteUser{
   favoritedUserId     String
 
   @@id([userId,favoritedUserId])
+}
+
+model AppThemeComment {
+  id      String @id @default(cuid())
+  comment String @db.Text
+
+  themeId    String
+  theme      AppTheme @relation(fields: [themeId], references: [id], onDelete: Cascade)
+  fromUserId String
+  fromUser   User     @relation(fields: [fromUserId], references: [id], onDelete: Cascade)
+
+  asParent AppThemeCommentParentChild[] @relation("asParent")
+  // 親は一つなので、あるコメントが返信となるParentChildは一つ
+  asChild  AppThemeCommentParentChild? @relation("asChild")
+
+  createdAt DateTime @default(now())
+
+  @@index([fromUserId])
+  @@index([themeId])
+}
+
+model AppThemeCommentParentChild {
+  // 返信元コメントが削除されたときにNullに設定することで、childに該当するコメントが返信であることを表現できるようにする
+  parentCommentId String?
+  parentComment   AppThemeComment? @relation("asParent", fields: [parentCommentId], references: [id], onDelete: SetNull)
+
+  // 一つのコメントは最大で一つの返信元を持つので、childCommentIdを主キーにできる？
+  childCommentId String @id @default(cuid())
+  // 返信コメントが削除れたときに返信元コメントから見えなくしても問題ないため、行を削除する 
+  childComment   AppThemeComment @relation("asChild", fields: [childCommentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([parentCommentId])
+  @@index([childCommentId])
 }
