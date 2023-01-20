@@ -12,7 +12,7 @@ import {
   MdSearch,
 } from "react-icons/md";
 import { useRequireLoginModal } from "../../contexts/RequireLoginModalProvider";
-import { UserMenuButton } from "../AppHeader/UserMenuButton";
+import { AppLoginedSideMenu } from "./AppLoginedSideMenu";
 import { SideMenuAppTitle } from "./SideMenuAppTitle";
 import { SideMenuItem } from "./SideMenuItem";
 import { SideMenuToggle } from "./SideMenuToggle";
@@ -118,9 +118,8 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
         <Flex mb="sm">
           {user ? (
             //TODO: 広げたときにユーザーの情報がある程度表示されるようにする
-            <Flex justify="center" sx={{ width: iconWidth }}>
-              <UserMenuButton user={user} />
-            </Flex>
+
+            <AppLoginedSideMenu user={user} isMenuOpen={isMenuOpen} />
           ) : (
             <SideMenuItem
               icon={IoMdLogIn}

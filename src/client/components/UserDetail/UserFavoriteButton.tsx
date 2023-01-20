@@ -48,7 +48,7 @@ export const UserFavoriteButton: React.FC<Props> = ({
             </Flex>
           </Modal>
           <Button variant="light" onClick={open} compact>
-            お気に入りの解除
+            お気に入り中
           </Button>
         </>
       )}
