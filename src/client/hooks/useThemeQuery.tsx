@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../trpc";
-import { themesQueryKey } from "./usePaginatedThemesQuery";
 
+export const themesQueryKey = ["themes"] as const;
 export const themeQueryKey = (themeId: string) =>
   [...themesQueryKey, themeId] as const;
 

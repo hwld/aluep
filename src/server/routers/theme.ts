@@ -18,34 +18,13 @@ import {
   Theme,
 } from "../models/theme";
 import { findManyThemeComments } from "../models/themeComment";
-import {
-  findManyThemeDevelopers,
-  ThemeDeveloper,
-} from "../models/themeDeveloper";
+import { findManyThemeDevelopers } from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
 import { UserAndDeveloperLikes, UserAndThemeLikes } from "../models/user";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
 export const themeRoute = router({
-  getAll: publicProcedure.query(async () => {
-    const allThemes = await findManyThemes({});
-    return allThemes;
-  }),
-  // ページを指定して、お題を取得する
-  getMany: publicProcedure
-    .input(z.object({ page: pageSchema }))
-    .query(async ({ input: { page } }) => {
-      const { data: themes, allPages } = await paginate({
-        finderInput: undefined,
-        finder: findManyThemes,
-        counter: prisma.appTheme.count,
-        pagingData: { page, limit: 12 },
-      });
-
-      return { themes, allPages };
-    }),
-
   //ページを指定して、開発者を取得する
   getDeveloperAllpage: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
@@ -58,7 +37,7 @@ export const themeRoute = router({
         finder: findManyThemeDevelopers,
         counter: ({ loggedInUserId, ...others }) =>
           prisma.appThemeDeveloper.count(others),
-        pagingData: { page, limit: 8 },
+        pagingData: { page, limit: 20 },
       });
 
       return { developers, allPages };
@@ -70,7 +49,7 @@ export const themeRoute = router({
     return allTags;
   }),
 
-  // idを指定してタグを取得する
+  // idを指定してテーマを取得する
   get: publicProcedure
     .input(z.object({ themeId: z.string() }))
     .query(async ({ input }): Promise<Theme | undefined> => {
@@ -280,17 +259,6 @@ export const themeRoute = router({
       return Boolean(like);
     }),
 
-  // 指定されたお題の参加者を取得する
-  getAllDevelopers: publicProcedure
-    .input(z.object({ themeId: z.string().min(1) }))
-    .query(async ({ input, ctx }): Promise<ThemeDeveloper[]> => {
-      const developers = findManyThemeDevelopers({
-        where: { appThemeId: input.themeId },
-        loggedInUserId: ctx.session?.user.id,
-      });
-      return developers;
-    }),
-
   // 指定されたお題をいいねしたユーザーを取得する
   getThemeLikingUsers: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
@@ -302,7 +270,7 @@ export const themeRoute = router({
           orderBy: { createdAt: "desc" as const },
         },
         counter: prisma.appThemeLike.count,
-        pagingData: { page: input.page, limit: 6 },
+        pagingData: { page: input.page, limit: 20 },
       });
 
       const userIds = use.map(({ userId }) => userId);
