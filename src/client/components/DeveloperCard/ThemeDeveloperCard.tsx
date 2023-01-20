@@ -78,7 +78,6 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
         <Flex onClick={stopPropagation}>
           <Tooltip
             label="コードを見に行く"
-            color="gray.5"
             position="top"
             withArrow
             transition="pop"

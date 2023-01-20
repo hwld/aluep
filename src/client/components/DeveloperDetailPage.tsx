@@ -66,7 +66,6 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                 <Box>
                   <Tooltip
                     label="開発者に対するいいねの合計"
-                    color="gray.5"
                     position="top"
                     withArrow
                     transition="pop"
@@ -85,7 +84,6 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                 <Box>
                   <Tooltip
                     label="GitHubへのアクセス"
-                    color="gray.5"
                     position="top"
                     withArrow
                     transition="pop"

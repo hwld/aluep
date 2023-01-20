@@ -130,7 +130,6 @@ export function UserDetailCard({
           <Box>
             <Tooltip
               label="投稿したお題のいいねの合計"
-              color="gray.5"
               position="top"
               withArrow
               transition="pop"
@@ -144,7 +143,6 @@ export function UserDetailCard({
           <Box>
             <Tooltip
               label="参加したお題のいいねの合計"
-              color="gray.5"
               position="top"
               withArrow
               transition="pop"
@@ -158,7 +156,6 @@ export function UserDetailCard({
           <Box>
             <Tooltip
               label="GitHubへのアクセス"
-              color="gray.5"
               position="top"
               withArrow
               transition="pop"
