@@ -45,7 +45,6 @@ const UserDetail: NextPage = () => {
   const userId = router.query.id as string;
   const { user } = useUserQuery(userId);
 
-  console.log(user?.id);
   if (user) {
     return <FavoriteListPage user={user} />;
   }

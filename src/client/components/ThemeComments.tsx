@@ -3,6 +3,7 @@ import { SyntheticEvent } from "react";
 import { ThemeCommentFormData } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
+import { useCyclicRandom } from "../hooks/useCyclicRandom";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeComments } from "../hooks/useThemeComments";
 import { CommentCard } from "./CommentCard";
@@ -17,6 +18,9 @@ export const ThemeComments: React.FC<Props> = ({ themeId }) => {
   const { themeComments, postCommentMutation, deleteCommentMutation } =
     useThemeComments(themeId);
 
+  // コメント送信後にformを再マウントさせるために使用するkey
+  const { random: formKey, nextRandom: nextFormKey } = useCyclicRandom();
+
   // submit前に呼び出される。
   // ログインしていなければログインモーダルを表示させる。
   const handleClickSubmit = (e: SyntheticEvent) => {
@@ -29,7 +33,11 @@ export const ThemeComments: React.FC<Props> = ({ themeId }) => {
   const handleSubmitComment = (
     data: OmitStrict<ThemeCommentFormData, "themeId">
   ) => {
-    postCommentMutation.mutate(data);
+    postCommentMutation.mutate(data, {
+      onSuccess: () => {
+        nextFormKey();
+      },
+    });
   };
 
   const handleDeleteComment = (commentId: string) => {
@@ -48,6 +56,7 @@ export const ThemeComments: React.FC<Props> = ({ themeId }) => {
               key={comment.id}
               comment={comment}
               onDeleteComment={handleDeleteComment}
+              isDeleting={deleteCommentMutation.isLoading}
               loggedInUserId={session?.user.id}
             />
           );
@@ -55,6 +64,7 @@ export const ThemeComments: React.FC<Props> = ({ themeId }) => {
       </Stack>
       <Card>
         <ThemeCommentForm
+          key={formKey}
           themeId={themeId}
           onSubmit={handleSubmitComment}
           onClickSubmitButton={handleClickSubmit}

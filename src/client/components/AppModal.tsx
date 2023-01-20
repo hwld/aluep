@@ -15,7 +15,7 @@ export const AppModal: React.FC<ModalProps> = ({ children, ...props }) => {
             color: theme.colors.red[7],
           },
           modal: { margin: "auto" },
-          root: { zIndex: 100000 },
+          root: { zIndex: 10 },
         })}
         {...props}
       >

@@ -26,7 +26,7 @@ export const ThemeCommentForm: React.FC<Props> = ({
 }) => {
   const {
     control,
-    handleSubmit,
+    handleSubmit: innerHandleSubmit,
     formState: { errors },
   } = useForm<ThemeCommentFormData>({
     defaultValues: { themeId, comment: "" },
@@ -35,8 +35,12 @@ export const ThemeCommentForm: React.FC<Props> = ({
 
   const [debouncedSubmitting] = useDebouncedValue(isSubmitting, 250);
 
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    innerHandleSubmit(onSubmit)(e);
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit}>
       <Controller
         control={control}
         name="comment"

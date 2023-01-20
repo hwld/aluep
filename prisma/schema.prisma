@@ -165,7 +165,7 @@ model FavoriteUser{
 
 model AppThemeComment {
   id      String @id @default(cuid())
-  comment String
+  comment String @db.Text
 
   themeId    String
   theme      AppTheme @relation(fields: [themeId], references: [id], onDelete: Cascade)
