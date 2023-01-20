@@ -11,9 +11,8 @@ import { User } from "@prisma/client";
 
 import Link from "next/link";
 import router from "next/router";
-import { AiOutlineUser } from "react-icons/ai";
-import { BsFillFilePostFill } from "react-icons/bs";
 import { GoMarkGithub } from "react-icons/go";
+import { MdOutlineTextSnippet, MdPersonOutline } from "react-icons/md";
 
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { useFavoriteAnother } from "../hooks/useFavoriteAnother";
@@ -137,7 +136,7 @@ export function UserDetailCard({
               transition="pop"
             >
               <Flex align={"center"} wrap="wrap" direction={"column"}>
-                <BsFillFilePostFill size="30" style={{ marginTop: "4px" }} />
+                <MdOutlineTextSnippet size="30" style={{ marginTop: "4px" }} />
                 <Text>{sumThemeLikes}</Text>
               </Flex>
             </Tooltip>
@@ -151,7 +150,7 @@ export function UserDetailCard({
               transition="pop"
             >
               <Flex align={"center"} wrap="wrap" direction={"column"}>
-                <AiOutlineUser size="30" style={{ marginTop: "4px" }} />
+                <MdPersonOutline size="30" style={{ marginTop: "4px" }} />
                 <Text>{themeDeveloperLikes}</Text>
               </Flex>
             </Tooltip>

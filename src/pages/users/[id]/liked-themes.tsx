@@ -33,11 +33,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       () => caller.user.getLikeTheme({ userId, page })
     );
 
-    await queryClient.prefetchQuery(sumThemeLikesQueryKey, () =>
+    await queryClient.prefetchQuery(sumThemeLikesQueryKey(userId), () =>
       caller.user.getThemeLike({ userId })
     );
 
-    await queryClient.prefetchQuery(themeDeveloperLikesQueryKey, () =>
+    await queryClient.prefetchQuery(themeDeveloperLikesQueryKey(userId), () =>
       caller.user.getThemeDeveloperLike({ userId })
     );
 
