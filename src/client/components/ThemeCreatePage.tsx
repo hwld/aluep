@@ -15,12 +15,12 @@ export const ThemeCreatePage: React.FC = () => {
     mutationFn: (data: ThemeFormData) => {
       return trpc.theme.create.mutate(data);
     },
-    onSuccess: () => {
+    onSuccess: ({ themeId }) => {
       showSuccessNotification({
         title: "お題の投稿",
         message: "お題を投稿しました。",
       });
-      router.replace("/");
+      router.replace(`/themes/${themeId}`);
     },
     onError: () => {
       showErrorNotification({

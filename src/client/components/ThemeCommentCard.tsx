@@ -1,6 +1,5 @@
-import { Box, Card, Flex, Stack, Text } from "@mantine/core";
+import { Box, Card, Flex, Stack, Text, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import Link from "next/link";
 import { BiTrashAlt } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
@@ -58,6 +57,16 @@ export const ThemeCommentCard: React.FC<Props> = ({
     });
   };
 
+  // このコメントの返信元コメントにスクロールする
+  // #[comment.inReplyToCommentId]に遷移させることもできるが、リロードしたときに
+  // そのコメントまでスクロールさせたくないのでElementを直接触る。
+  const handleScrollReplySource = () => {
+    if (comment.inReplyToCommentId) {
+      const element = document.querySelector(`#${comment.inReplyToCommentId}`);
+      element?.scrollIntoView();
+    }
+  };
+
   return (
     <>
       <Stack spacing="xs">
@@ -88,10 +97,8 @@ export const ThemeCommentCard: React.FC<Props> = ({
             )}
             {comment.inReplyToCommentId && inReplyToUserName !== undefined && (
               <Flex>
-                <Box
-                  component={Link}
-                  href={`#${comment.inReplyToCommentId}`}
-                  replace
+                <UnstyledButton
+                  onClick={handleScrollReplySource}
                   color="red.7"
                   sx={(theme) => ({
                     color: theme.colors.red[7],
@@ -106,7 +113,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
                 >
                   <HiOutlineChevronDoubleRight />
                   {inReplyToUserName}
-                </Box>
+                </UnstyledButton>
               </Flex>
             )}
             <Text>{comment.comment}</Text>

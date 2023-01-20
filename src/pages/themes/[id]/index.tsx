@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
 import { themeCommentsQueryKey } from "../../../client/hooks/useThemeComments";
 import { themeJoinQueryKey } from "../../../client/hooks/useThemeJoin";
+import { themeLikedQueryKey } from "../../../client/hooks/useThemeLike";
 import {
   themeQueryKey,
   useThemeQuery,
@@ -32,6 +33,12 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     // お題情報のプリフェッチ
     queryClient.setQueryData(themeQueryKey(themeId), theme);
+
+    // ログインユーザーのいいね状況のプリフェッチ
+    await queryClient.prefetchQuery(
+      themeLikedQueryKey(themeId, session?.user.id),
+      () => caller.theme.liked({ themeId })
+    );
 
     // ログインユーザーの参加情報のプリフェッチ
     await queryClient.prefetchQuery(
