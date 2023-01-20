@@ -1,17 +1,7 @@
-import {
-  ActionIcon,
-  Box,
-  Button,
-  Card,
-  Flex,
-  Text,
-  Tooltip,
-} from "@mantine/core";
+import { Box, Button, Card, Flex, Text, Tooltip } from "@mantine/core";
 import { User } from "@prisma/client";
 
-import Link from "next/link";
 import router from "next/router";
-import { GoMarkGithub } from "react-icons/go";
 import { MdOutlineTextSnippet, MdPersonOutline } from "react-icons/md";
 
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
@@ -153,7 +143,7 @@ export function UserDetailCard({
               </Flex>
             </Tooltip>
           </Box>
-          <Box>
+          {/* <Box>
             <Tooltip
               label="GitHubへのアクセス"
               position="top"
@@ -167,7 +157,7 @@ export function UserDetailCard({
                 </ActionIcon>
               </Flex>
             </Tooltip>
-          </Box>
+          </Box> */}
         </Flex>
       </Flex>
     </Card>
