@@ -5,6 +5,7 @@ import React from "react";
 import { useSumThemeLikesQuery } from "../../hooks/useSumThemeLikesQuery";
 import { useThemeDeveloperLikesQuery } from "../../hooks/useThemeDeveloperLikesQuery";
 import { UserDetailCard } from "../UserDetailCard";
+import { UserDetailTab } from "./UserDetailTab";
 
 export type UserDetailProps = {
   user: User;
@@ -59,42 +60,27 @@ export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
       </Flex>
       <Flex mt={50} justify="center">
         <Button.Group>
-          <Button
-            variant="light"
-            w={140}
+          <UserDetailTab
+            type="post"
+            activeType={type}
             onClick={handleSwitchPost}
-            bg={type === "post" ? "gray.0" : "gray.3"}
-            color="dark"
-            sx={(theme) => {
-              return { "&:hover": { backgroundColor: theme.colors.gray[4] } };
-            }}
           >
             投稿したお題
-          </Button>
-          <Button
-            variant="light"
-            w={140}
+          </UserDetailTab>
+          <UserDetailTab
+            type="join"
+            activeType={type}
             onClick={handleSwitchJoin}
-            bg={type === "join" ? "gray.0" : "gray.3"}
-            color="dark"
-            sx={(theme) => {
-              return { "&:hover": { backgroundColor: theme.colors.gray[4] } };
-            }}
           >
             参加したお題
-          </Button>
-          <Button
-            variant="light"
-            w={140}
+          </UserDetailTab>
+          <UserDetailTab
+            type="like"
+            activeType={type}
             onClick={handleSwitchLike}
-            bg={type === "like" ? "gray.0" : "gray.3"}
-            color="dark"
-            sx={(theme) => {
-              return { "&:hover": { backgroundColor: theme.colors.gray[4] } };
-            }}
           >
             いいねしたお題
-          </Button>
+          </UserDetailTab>
         </Button.Group>
       </Flex>
     </Box>
