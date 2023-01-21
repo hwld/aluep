@@ -105,7 +105,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
       </Flex>
       <Flex align="center" justify="space-between" mt={10}>
         <Text size="sm" color="gray.5">
-          参加日: {new Date(developer.createdAt).toLocaleString()}
+          開発開始日: {new Date(developer.createdAt).toLocaleString()}
         </Text>
         <Box>
           <DeveloperLikeButton

@@ -36,7 +36,7 @@ export const UserDeletepage: React.FC = () => {
           styles={(theme) => ({ item: { color: theme.colors.gray[7] } })}
         >
           <List.Item>投稿したお題</List.Item>
-          <List.Item>お題への参加状況</List.Item>
+          <List.Item>お題への開発状況</List.Item>
           <List.Item>ユーザーの情報</List.Item>
         </List>
         <Text>

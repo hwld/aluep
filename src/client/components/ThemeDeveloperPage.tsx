@@ -1,4 +1,5 @@
-import { Box, Flex, Stack, Title } from "@mantine/core";
+import { Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { MdComputer } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { usePaginatedDeveloperQuery } from "../hooks/usePaginatedDeveloperQueery";
 import { usePaginationState } from "../hooks/usePaginationState";
@@ -12,21 +13,26 @@ export const ThemeDeveloperPage: React.FC<Props> = ({ theme }) => {
   const [page, setPage] = usePaginationState({});
   const { data } = usePaginatedDeveloperQuery(theme.id, page);
   const { likeDeveloperMutation } = useThemeDevelopersQuery(theme.id);
+  const mantineTheme = useMantineTheme();
+
   return (
     <>
-      <Flex maw={800} direction="column" align="center" m="auto">
-        <Stack mt="xl" w="100%" spacing="xs">
-          <Title order={4}>参加しているお題</Title>
+      <Stack maw={800} m="auto" spacing="lg">
+        <Flex align="center" gap="xs">
+          <MdComputer
+            size="30px"
+            color={mantineTheme.colors.red[7]}
+            style={{ marginTop: "3px" }}
+          />
+          <Title order={3}>お題開発者一覧</Title>
+        </Flex>
+        <Stack spacing="xs">
+          <Text c="gray.5">開発されているお題</Text>
           <ThemeSummaryCard theme={theme} />
-          <Title align="left" order={4}>
-            参加している開発者
-          </Title>
-          <Box
-            sx={(theme) => ({
-              display: "grid",
-              gap: theme.spacing.md,
-            })}
-          >
+        </Stack>
+        <Stack spacing="xs">
+          <Text c="gray.5">開発者</Text>
+          <Stack spacing="xs">
             {data?.developers.map((developer) => {
               return (
                 <ThemeDeveloperCard
@@ -39,14 +45,14 @@ export const ThemeDeveloperPage: React.FC<Props> = ({ theme }) => {
                 />
               );
             })}
-          </Box>
-          <AppPagination
-            page={page}
-            onChange={setPage}
-            total={data?.allPages ?? 0}
-          />
+          </Stack>
         </Stack>
-      </Flex>
+        <AppPagination
+          page={page}
+          onChange={setPage}
+          total={data?.allPages ?? 0}
+        />
+      </Stack>
     </>
   );
 };

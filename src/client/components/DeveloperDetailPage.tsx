@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import { BsGithub } from "react-icons/bs";
-import { MdOutlineFavorite } from "react-icons/md";
+import { MdComputer, MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { useSessionQuery } from "../hooks/useSessionQuery";
@@ -29,9 +29,16 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
   return (
     <>
       <Stack w={800} m="auto" spacing="lg">
-        <Title order={3}>開発者詳細ページ</Title>
+        <Flex align="center" gap="xs">
+          <MdComputer
+            size="30px"
+            color={mantineTheme.colors.red[7]}
+            style={{ marginTop: "3px" }}
+          />
+          <Title order={3}>お題開発情報</Title>
+        </Flex>
         <Stack spacing="xs" w={760}>
-          <Text c="gray.5">参加しているお題</Text>
+          <Text c="gray.5">開発しているお題</Text>
           <ThemeSummaryCard theme={theme} />
         </Stack>
         <Text c="gray.5" mt={-10}>

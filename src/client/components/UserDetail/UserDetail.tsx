@@ -72,7 +72,7 @@ export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
             activeType={type}
             onClick={handleSwitchJoin}
           >
-            参加したお題
+            開発したお題
           </UserDetailTab>
           <UserDetailTab
             type="like"

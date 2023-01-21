@@ -25,9 +25,9 @@ export const UserJoinedThemesPage: React.FC<Props> = ({ user }) => {
       {joinedThemes?.joinPostedTheme.length === 0 ? (
         <Flex align="center" direction="column" gap={10}>
           <TbFileText color={mantineTheme.colors.red[7]} size={200} />
-          <Text size={30}>参加したお題がありません。</Text>
+          <Text size={30}>開発したお題がありません。</Text>
           <Text size={15} color="gray.5">
-            お題に参加すると、ここに表示されます。
+            お題の開発を開始すると、ここに表示されます。
           </Text>
         </Flex>
       ) : (

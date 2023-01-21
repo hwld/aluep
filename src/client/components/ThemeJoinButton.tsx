@@ -75,7 +75,7 @@ export const ThemeJoinButton: React.FC<Props> = ({
         </ActionIcon>
       </AppTooltip>
       {developers > 0 && (
-        <Tooltip label="参加している開発者を表示する" position="right">
+        <Tooltip label="このお題の開発者を表示する" position="right">
           <Anchor
             component={Link}
             href={`/themes/${themeId}/developers`}

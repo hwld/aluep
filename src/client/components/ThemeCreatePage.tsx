@@ -1,6 +1,7 @@
-import { Box, Card, Title } from "@mantine/core";
+import { Box, Card, Flex, Title, useMantineTheme } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { MdPostAdd } from "react-icons/md";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
 import { trpc } from "../../client/trpc";
 import { ThemeFormData } from "../../share/schema";
@@ -10,6 +11,7 @@ import { ThemeForm } from "./ThemeForm";
 export const ThemeCreatePage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
   const router = useRouter();
+  const mantineTheme = useMantineTheme();
 
   const createMutate = useMutation({
     mutationFn: (data: ThemeFormData) => {
@@ -40,7 +42,10 @@ export const ThemeCreatePage: React.FC = () => {
 
   return (
     <Box w={800} m="auto">
-      <Title order={3}>お題の投稿</Title>
+      <Flex align="center" gap="xs">
+        <MdPostAdd size="30px" color={mantineTheme.colors.red[7]} />
+        <Title order={3}>お題の投稿</Title>
+      </Flex>
       <Card mt="md">
         <ThemeForm
           submitText="投稿する"

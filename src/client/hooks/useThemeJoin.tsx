@@ -33,14 +33,14 @@ export const useThemeJoin = (themeId: string) => {
         themeJoinQueryKey(themeId, session?.user.id)
       );
       showSuccessNotification({
-        title: "お題に参加",
-        message: "お題に参加しました。",
+        title: "お題の開発",
+        message: "お題の開発を開始しました。",
       });
     },
     onError: () => {
       showErrorNotification({
-        title: "お題に参加",
-        message: "お題に参加できませんでした。",
+        title: "お題の開発",
+        message: "お題の開発を開始できませんでした。",
       });
     },
   });

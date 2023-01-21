@@ -132,7 +132,7 @@ export function UserDetailCard({
           </Box>
           <Box>
             <Tooltip
-              label="参加したお題のいいねの合計"
+              label="開発情報のいいねの合計"
               position="top"
               withArrow
               transition="pop"

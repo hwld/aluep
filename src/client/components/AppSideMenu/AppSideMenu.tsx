@@ -25,10 +25,10 @@ const iconWidth = barMinWidth - barPadding * 2;
 
 export const AppSideMenu: React.FC<Props> = ({ user }) => {
   const router = useRouter();
-  const [isOpen, { toggle }] = useDisclosure(false);
+  const [isOpen, { toggle }] = useDisclosure(true);
   const { openLoginModal } = useRequireLoginModal();
 
-  const isWideDisplay = useMediaQuery("(min-width: 1200px)");
+  const isWideDisplay = useMediaQuery("(min-width: 1200px)", true);
 
   const isMenuOpen = isWideDisplay && isOpen;
 

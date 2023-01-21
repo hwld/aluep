@@ -73,10 +73,10 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer, theme }) => {
             icon={<RiEdit2Fill size={20} />}
             href={`/themes/${developer.themeId}/developers/${developer.id}/update`}
           >
-            参加情報を更新する
+            開発情報を更新する
           </MenuLinkItem>
           <MenuItem icon={<FaTrash size={18} />} onClick={open} red>
-            参加情報を削除する
+            開発情報を削除する
           </MenuItem>
         </MenuDropdown>
       </AppMenu>
