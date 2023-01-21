@@ -60,7 +60,7 @@ export const theme: MantineThemeOverride = {
     ],
   },
   components: {
-    Tooltip: { defaultProps: { color: "gray.5" } },
+    Tooltip: { defaultProps: { color: "gray.7" } },
     Paper: { defaultProps: { bg: "gray.1" } },
     Text: {
       defaultProps: { color: "gray.7" },

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../trpc";
-import { themesQueryKey } from "./usePaginatedThemesQuery";
+import { themesQueryKey } from "./useThemeQuery";
 
 export const themeLikingUsersQueryKey = (themeId: string, page: number) => {
   const p = isNaN(page) ? 1 : page;

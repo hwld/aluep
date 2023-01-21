@@ -1,10 +1,13 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
+  JoinData,
   pageSchema,
+  themeCommentFormSchema,
   themeFormSchema,
   themeJoinFormSchema,
   themeOrderSchema,
+  themePeriodSchema,
   themeUpdateFormSchema,
 } from "../../share/schema";
 import { paginate } from "../lib/paginate";
@@ -14,34 +17,14 @@ import {
   searchThemes,
   Theme,
 } from "../models/theme";
-import {
-  findManyThemeDevelopers,
-  ThemeDeveloper,
-} from "../models/themeDeveloper";
+import { findManyThemeComments } from "../models/themeComment";
+import { findManyThemeDevelopers } from "../models/themeDeveloper";
 import { findAllThemeTags, ThemeTag } from "../models/themeTag";
 import { UserAndDeveloperLikes, UserAndThemeLikes } from "../models/user";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
 export const themeRoute = router({
-  getAll: publicProcedure.query(async () => {
-    const allThemes = await findManyThemes({});
-    return allThemes;
-  }),
-  // ページを指定して、お題を取得する
-  getMany: publicProcedure
-    .input(z.object({ page: pageSchema }))
-    .query(async ({ input: { page } }) => {
-      const { data: themes, allPages } = await paginate({
-        finderInput: undefined,
-        finder: findManyThemes,
-        counter: prisma.appTheme.count,
-        pagingData: { page, limit: 12 },
-      });
-
-      return { themes, allPages };
-    }),
-
   //ページを指定して、開発者を取得する
   getDeveloperAllpage: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
@@ -54,7 +37,7 @@ export const themeRoute = router({
         finder: findManyThemeDevelopers,
         counter: ({ loggedInUserId, ...others }) =>
           prisma.appThemeDeveloper.count(others),
-        pagingData: { page, limit: 8 },
+        pagingData: { page, limit: 20 },
       });
 
       return { developers, allPages };
@@ -66,7 +49,7 @@ export const themeRoute = router({
     return allTags;
   }),
 
-  // idを指定してタグを取得する
+  // idを指定してテーマを取得する
   get: publicProcedure
     .input(z.object({ themeId: z.string() }))
     .query(async ({ input }): Promise<Theme | undefined> => {
@@ -81,6 +64,7 @@ export const themeRoute = router({
         keyword: z.string(),
         tagIds: z.array(z.string().min(1)),
         order: themeOrderSchema,
+        period: themePeriodSchema,
         page: pageSchema,
       })
     )
@@ -91,13 +75,29 @@ export const themeRoute = router({
             keyword: input.keyword,
             tagIds: input.tagIds,
             order: input.order,
+            period: input.period,
           },
-          { page: input.page, limit: 12 }
+          { page: input.page, limit: 24 }
         );
 
         return paginatedThemes;
       }
     ),
+  pickUp: publicProcedure
+    .input(z.object({ order: themeOrderSchema }))
+    .query(async ({ input }) => {
+      const pickedUpThemes = await searchThemes(
+        {
+          keyword: "",
+          tagIds: [],
+          order: input.order,
+          period: "all",
+        },
+        { page: 1, limit: 6 }
+      );
+
+      return pickedUpThemes.themes ?? [];
+    }),
 
   // お題を作成する
   create: requireLoggedInProcedure
@@ -178,10 +178,10 @@ export const themeRoute = router({
   // ログインユーザーが指定されたお題に参加しているか
   joined: publicProcedure
     .input(z.object({ themeId: z.string() }))
-    .query(async ({ input, ctx }) => {
+    .query(async ({ input, ctx }): Promise<JoinData> => {
       const loggedInUser = ctx.session?.user;
       if (!loggedInUser) {
-        return false;
+        return { joined: false };
       }
 
       const developer = await prisma.appThemeDeveloper.findUnique({
@@ -193,8 +193,11 @@ export const themeRoute = router({
         },
         select: { id: true },
       });
+      if (!developer) {
+        return { joined: false };
+      }
 
-      return Boolean(developer);
+      return { joined: true, developerId: developer.id };
     }),
 
   // お題にいいねする
@@ -256,28 +259,29 @@ export const themeRoute = router({
       return Boolean(like);
     }),
 
-  // 指定されたお題の参加者を取得する
-  getAllDevelopers: publicProcedure
-    .input(z.object({ themeId: z.string().min(1) }))
-    .query(async ({ input, ctx }): Promise<ThemeDeveloper[]> => {
-      const developers = findManyThemeDevelopers({
-        where: { appThemeId: input.themeId },
-        loggedInUserId: ctx.session?.user.id,
-      });
-      return developers;
-    }),
-
   // 指定されたお題をいいねしたユーザーを取得する
   getThemeLikingUsers: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
     .query(async ({ input }) => {
-      const { data: users, allPages } = await paginate({
+      const { data: use, allPages } = await paginate({
+        finder: prisma.appThemeLike.findMany,
         finderInput: {
-          where: { appThemeLikes: { some: { appThemeId: input.themeId } } },
+          where: { appThemeId: input.themeId },
+          orderBy: { createdAt: "desc" as const },
         },
-        finder: prisma.user.findMany,
-        counter: prisma.user.count,
-        pagingData: { page: input.page, limit: 6 },
+        counter: prisma.appThemeLike.count,
+        pagingData: { page: input.page, limit: 20 },
+      });
+
+      const userIds = use.map(({ userId }) => userId);
+
+      const usered = await prisma.user.findMany({
+        where: { id: { in: userIds } },
+      });
+
+      //userIdsに並び順を合わせる
+      const users = usered.sort((a, b) => {
+        return userIds.indexOf(a.id) - userIds.indexOf(b.id);
       });
 
       return { users, allPages };
@@ -436,4 +440,53 @@ export const themeRoute = router({
 
     return posterUsers;
   }),
+
+  // お題にコメントを投稿する
+  comment: requireLoggedInProcedure
+    .input(themeCommentFormSchema)
+    .mutation(async ({ input, ctx }) => {
+      const comment = await prisma.appThemeComment.create({
+        data: {
+          themeId: input.themeId,
+          comment: input.comment,
+          fromUserId: ctx.session.user.id,
+          // 返信元が指定されていればParentChildを作成する
+          ...(input.inReplyToCommentId
+            ? {
+                asChild: {
+                  create: { parentCommentId: input.inReplyToCommentId },
+                },
+              }
+            : {}),
+        },
+      });
+
+      return { commentId: comment.id };
+    }),
+
+  // お題につけたコメントを削除する
+  deleteComment: requireLoggedInProcedure
+    .input(z.object({ commentId: z.string().min(1) }))
+    .mutation(async ({ input, ctx }) => {
+      // ログインユーザーが投稿したコメントか確認する
+      const comment = await prisma.appThemeComment.findUnique({
+        where: { id: input.commentId },
+      });
+      if (ctx.session.user.id !== comment?.fromUserId) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
+
+      await prisma.appThemeComment.delete({ where: { id: input.commentId } });
+    }),
+
+  getManyComments: publicProcedure
+    .input(z.object({ themeId: z.string().min(1) }))
+    .query(async ({ input }) => {
+      const comments = await findManyThemeComments({
+        where: { themeId: input.themeId },
+        orderBy: { createdAt: "asc" },
+      });
+
+      return comments;
+    }),
 });

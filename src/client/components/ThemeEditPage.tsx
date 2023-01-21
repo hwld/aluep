@@ -1,6 +1,7 @@
-import { Box, Card, Title } from "@mantine/core";
+import { Box, Card, Flex, Title, useMantineTheme } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { MdPostAdd } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { RouterInputs } from "../../server/trpc";
 import { ThemeFormData } from "../../share/schema";
@@ -13,6 +14,7 @@ type Props = { theme: Theme };
 export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
   const router = useRouter();
   const { allTags } = useAllTagsQuery();
+  const mantineTheme = useMantineTheme();
 
   const updateMutation = useMutation({
     mutationFn: (data: RouterInputs["theme"]["update"]) => {
@@ -43,7 +45,10 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
 
   return (
     <Box w={800} m="auto">
-      <Title order={3}>お題の更新</Title>
+      <Flex align="center" gap="xs">
+        <MdPostAdd size="30px" color={mantineTheme.colors.red[7]} />
+        <Title order={3}>お題の更新</Title>
+      </Flex>
       <Card mt="md">
         <ThemeForm
           submitText="更新する"
@@ -51,7 +56,7 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
           onSubmit={handleUpdateTheme}
           onCancel={handleCancel}
           defaultValues={{ ...theme, tags: theme?.tags.map((t) => t.id) ?? [] }}
-          isSubmitting={updateMutation.isLoading}
+          isLoading={updateMutation.isLoading || updateMutation.isSuccess}
         />
       </Card>
     </Box>

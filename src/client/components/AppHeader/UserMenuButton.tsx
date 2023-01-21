@@ -1,30 +1,26 @@
-import { Divider, Menu, Space, Text, UnstyledButton } from "@mantine/core";
+import { BadgeProps, Divider, Menu, Space, Text } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { FaTrash } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { RiAccountCircleLine, RiEdit2Line } from "react-icons/ri";
+import { OmitStrict } from "../../../types/OmitStrict";
 import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
 import { MenuItem } from "../AppMenu/MenuItem";
 import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
-import { UserIcon } from "../UserIcon";
 
-type Props = { user: Session["user"] };
+type Props = { user: Session["user"] } & OmitStrict<BadgeProps, "sx">;
 
-export const UserMenuButton: React.FC<Props> = ({ user }) => {
+export const UserMenuButton: React.FC<Props> = ({ user, children }) => {
   const handleLogOut = () => {
     signOut();
   };
 
   return (
-    <AppMenu>
-      <Menu.Target>
-        <UnstyledButton>
-          <UserIcon iconSrc={user.image} withBorder={false} />
-        </UnstyledButton>
-      </Menu.Target>
-      <MenuDropdown maw={180}>
+    <AppMenu offset={20} position="right-end">
+      <Menu.Target>{children}</Menu.Target>
+      <MenuDropdown maw={180} sx={{ zIndex: 1000 }}>
         <Menu.Label>
           <Text
             align="center"

@@ -23,7 +23,7 @@ export const UserDetailLayout: React.FC<Props> = ({
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
       <UserDetail user={user} type={pageType} />
-      <Stack mt="md" w="100%">
+      <Stack mt="xl" w="100%">
         <Flex gap="xs" direction="column">
           {children}
         </Flex>

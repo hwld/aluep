@@ -1,10 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
+import { string, z } from "zod";
 import { pageSchema } from "../../share/schema";
 import { paginate } from "../lib/paginate";
 import { findManyThemes } from "../models/theme";
 import { prisma } from "../prismadb";
-import { publicProcedure, router } from "../trpc";
+import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
 export const userRoute = router({
   /** 指定されたユーザーが投稿したお題を取得する */
@@ -121,5 +121,97 @@ export const userRoute = router({
 
         return searchUsers;
       }
+    }),
+
+  //お気に入りを登録
+  crateFavorite: requireLoggedInProcedure
+    .input(z.object({ userId: z.string(), favoriteUserId: z.string() }))
+    .mutation(async ({ input }) => {
+      await prisma.favoriteUser.create({
+        data: {
+          userId: input.userId,
+          favoritedUserId: input.favoriteUserId,
+        },
+      });
+    }),
+
+  //お気に入りの解除
+  deleteFavorite: requireLoggedInProcedure
+    .input(z.object({ userId: z.string(), favoriteUserId: z.string() }))
+    .mutation(async ({ input }) => {
+      await prisma.favoriteUser.delete({
+        where: {
+          userId_favoritedUserId: {
+            userId: input.userId,
+            favoritedUserId: input.favoriteUserId,
+          },
+        },
+      });
+    }),
+
+  //お気に入りしているか
+  favorited: publicProcedure
+    .input(z.object({ userId: z.string(), favoriteUserId: z.string() }))
+    .query(async ({ input }): Promise<boolean> => {
+      const favorite = await prisma.favoriteUser.findUnique({
+        where: {
+          userId_favoritedUserId: {
+            userId: input.userId,
+            favoritedUserId: input.favoriteUserId,
+          },
+        },
+      });
+      return Boolean(favorite);
+    }),
+
+  //自分がお気に入りしている人数の合計
+  favoritedSum: publicProcedure
+    .input(z.object({ favoriteUserId: string() }))
+    .query(async ({ input }) => {
+      const favoritedSum = await prisma.favoriteUser.count({
+        where: {
+          favoritedUserId: input.favoriteUserId,
+        },
+      });
+      if (favoritedSum === 0) {
+        return 0;
+      }
+      return favoritedSum;
+    }),
+
+  //他人がお気に入りしている人数の合計
+  favoritedAnotherSum: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input }) => {
+      const favoritedSum = await prisma.favoriteUser.count({
+        where: {
+          favoritedUserId: input.userId,
+        },
+      });
+      if (favoritedSum === 0) {
+        return 0;
+      }
+      return favoritedSum;
+    }),
+
+  //お気に入りリストの表示
+  favoriteList: publicProcedure
+    .input(z.object({ favoriteUserId: string(), page: pageSchema }))
+    .query(async ({ input, input: { page } }) => {
+      const favoriteList = await prisma.favoriteUser.findMany({
+        select: { userId: true },
+        where: { favoritedUserId: input.favoriteUserId },
+      });
+
+      const ids = favoriteList.map((favorite) => favorite.userId);
+
+      const { data: pagefavo, allPages } = await paginate({
+        finderInput: { where: { id: { in: ids } } },
+        finder: prisma.user.findMany,
+        counter: prisma.user.count,
+        pagingData: { page, limit: 50 },
+      });
+
+      return { pagefavo, allPages };
     }),
 });

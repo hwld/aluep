@@ -16,6 +16,16 @@ export const themeFormSchema = z.object({
 });
 export type ThemeFormData = z.infer<typeof themeFormSchema>;
 
+export const themeCommentFormSchema = z.object({
+  themeId: z.string().min(1),
+  comment: z
+    .string()
+    .min(1, "コメントを入力してください。")
+    .max(2000, "コメントは2000文字以下で入力してください"),
+  inReplyToCommentId: z.string().min(1).optional(),
+});
+export type ThemeCommentFormData = z.infer<typeof themeCommentFormSchema>;
+
 // 更新するときにはidが必要なのでお題のフォームにそれを追加する
 export const themeUpdateFormSchema = z
   .object({ themeId: z.string().min(1).max(100) })
@@ -38,6 +48,10 @@ export const themeJoinFormSchema = z.object({
     .optional(),
 });
 
+export type JoinData =
+  | { joined: false }
+  | { joined: true; developerId: string };
+
 // お題の並び順
 export const themeOrderSchema = z.union([
   z.literal("createdDesc"),
@@ -46,6 +60,13 @@ export const themeOrderSchema = z.union([
   z.literal("developerDesc"),
 ]);
 export type ThemeOrder = z.infer<typeof themeOrderSchema>;
+
+// お題の期間
+export const themePeriodSchema = z.union([
+  z.literal("all"),
+  z.literal("monthly"),
+]);
+export type ThemePeriod = z.infer<typeof themePeriodSchema>;
 
 // プロフィールのフォームデータ
 export const profileFormSchema = z.object({

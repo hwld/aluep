@@ -1,53 +1,69 @@
-import { Box, Card, Flex, Space, Stack, Title } from "@mantine/core";
+import { Box, Card, Flex, Title } from "@mantine/core";
 import React from "react";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
-import { ThemeOrder } from "../../share/schema";
-import { themeOrderItems } from "../consts";
-import { usePaginationState } from "../hooks/usePaginationState";
+import {
+  ThemeOrder,
+  themeOrderSchema,
+  ThemePeriod,
+  themePeriodSchema,
+} from "../../share/schema";
+import { themeOrderItems, themePeriodItems } from "../consts";
 import { useSearchedThemesQuery } from "../hooks/useSearchedThemesQuery";
-import { useStateAndUrlParamString } from "../hooks/useStateAndUrlParamString";
-import { useStateAndUrlParamStringArray } from "../hooks/useStateAndUrlParamStringArray";
+import { useURLParams } from "../hooks/useURLParams";
 import { AppPagination } from "./AppPagination";
 import { AppSelect } from "./AppSelect";
 import { NothingTheme } from "./NothingTheme";
 import { ThemeCardContainer } from "./ThemeCardContainer";
 import { ThemeSearchForm, ThemeSearchParams } from "./ThemeSearchForm";
 
+type ThemeSearchPageQueryParams = {
+  keyword: string;
+  tagIds: string[];
+  order: ThemeOrder;
+  period: ThemePeriod;
+  page: string;
+};
+
 export const ThemeSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
-  const [page, setPage] = usePaginationState({});
 
-  const [keyword, setKeyword] = useStateAndUrlParamString({
-    paramName: "keyword",
-    initialData: "",
-  });
-
-  const [tagIds, setTagIds] = useStateAndUrlParamStringArray({
-    paramName: "tagIds",
-    initialData: [],
-  });
-
-  const [order, setOrder] = useStateAndUrlParamString({
-    paramName: "order",
-    initialData: "createdDesc" satisfies ThemeOrder,
-  });
+  const [{ keyword, tagIds, order, period, page }, setQueryParams] =
+    useURLParams<ThemeSearchPageQueryParams>({
+      keyword: "",
+      tagIds: [],
+      order: "createdDesc",
+      period: "all",
+      page: "1",
+    });
 
   const { searchedThemesResult } = useSearchedThemesQuery({
     keyword,
     tagIds,
     order,
-    page,
+    period,
+    page: Number(page),
   });
 
-  const handleChangeOrder = async (value: string) => {
-    await setOrder(value);
-    await setPage(1);
+  const handleSearch = async (param: ThemeSearchParams) => {
+    setQueryParams({
+      keyword: param.keyword,
+      tagIds: param.tagIds,
+      page: "1",
+    });
   };
 
-  const handleSearch = async (param: ThemeSearchParams) => {
-    await setKeyword(param.keyword);
-    await setTagIds(param.tagIds);
-    await setPage(1);
+  const handleChangeOrder = (value: string) => {
+    const order = themeOrderSchema.parse(value);
+    setQueryParams({ order, page: "1" });
+  };
+
+  const handleChangePeriod = (value: string) => {
+    const period = themePeriodSchema.parse(value);
+    setQueryParams({ period, page: "1" });
+  };
+
+  const handleChangePage = (value: number) => {
+    setQueryParams({ page: value.toString() });
   };
 
   return (
@@ -61,32 +77,35 @@ export const ThemeSearchPage: React.FC = () => {
           <ThemeSearchForm
             allTags={allTags}
             defaultValues={{ keyword, tagIds }}
+            key={`${keyword}-${tagIds.join()}`}
             onSearch={handleSearch}
           />
         </Card>
-        <Stack mt={30} spacing={0}>
+        <Flex mt={30} align="center" justify="space-between" mb="xl">
           <Title order={4}>検索結果</Title>
-          {keyword === "" && tagIds.length === 0 ? (
-            <NothingTheme page="initial" />
-          ) : searchedThemesResult?.themes.length === 0 ? (
-            <NothingTheme page="Search" />
-          ) : (
-            <>
-              <AppSelect
-                w={150}
-                label="並び順"
-                value={order}
-                onChange={handleChangeOrder}
-                data={themeOrderItems}
-              />
-              <Space mt="xl" />
-              <ThemeCardContainer themes={searchedThemesResult?.themes ?? []} />
-            </>
-          )}
-        </Stack>
+          <Flex align="center" sx={(theme) => ({ gap: theme.spacing.md })}>
+            <AppSelect
+              w={150}
+              value={period}
+              onChange={handleChangePeriod}
+              data={themePeriodItems}
+            />
+            <AppSelect
+              w={150}
+              value={order}
+              onChange={handleChangeOrder}
+              data={themeOrderItems}
+            />
+          </Flex>
+        </Flex>
+        {searchedThemesResult?.themes.length === 0 ? (
+          <NothingTheme page="Search" />
+        ) : (
+          <ThemeCardContainer themes={searchedThemesResult?.themes ?? []} />
+        )}
         <AppPagination
-          page={page}
-          onChange={setPage}
+          page={Number(page)}
+          onChange={handleChangePage}
           total={searchedThemesResult?.allPages ?? 0}
           mt="md"
         />

@@ -1,7 +1,8 @@
-import { Box, Card, Title } from "@mantine/core";
+import { Box, Card, Flex, Title, useMantineTheme } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
+import { RiEdit2Line } from "react-icons/ri";
 import { RouterInputs } from "../../server/trpc";
 import { ProfileFormData } from "../../share/schema";
 import { trpc } from "../trpc";
@@ -11,6 +12,7 @@ import { UserProfileForm } from "./UserProfileForm";
 type Props = { user: Session["user"] };
 export const UserEditPage: React.FC<Props> = ({ user }) => {
   const router = useRouter();
+  const mantineTheme = useMantineTheme();
 
   const updateMutation = useMutation({
     mutationFn: (data: RouterInputs["me"]["update"]) => {
@@ -21,7 +23,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
         title: "プロフィールの更新",
         message: "プロフィールを更新しました。",
       });
-      router.back();
+      router.push(`/users/${user.id}`);
     },
     onError: () => {
       showErrorNotification({
@@ -41,7 +43,10 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
 
   return (
     <Box w={800} m="auto">
-      <Title order={3}>プロフィールの更新</Title>
+      <Flex align="center" gap="xs">
+        <RiEdit2Line size="30px" color={mantineTheme.colors.red[7]} />
+        <Title order={3}>プロフィールの更新</Title>
+      </Flex>
       <Card mt="md">
         <UserProfileForm
           submitText="更新する"
@@ -51,7 +56,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
             name: user.name ?? "",
             profile: user.profile ?? "",
           }}
-          isSubmitting={updateMutation.isLoading}
+          isLoading={updateMutation.isLoading || updateMutation.isSuccess}
         />
       </Card>
     </Box>

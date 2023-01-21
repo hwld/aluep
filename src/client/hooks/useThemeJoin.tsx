@@ -15,7 +15,7 @@ export const useThemeJoin = (themeId: string) => {
   const queryClient = useQueryClient();
   const { session } = useSessionQuery();
 
-  const { data: joined, ...others } = useQuery({
+  const { data: joinData, ...others } = useQuery({
     queryKey: themeJoinQueryKey(themeId, session?.user.id),
     queryFn: () => {
       return trpc.theme.joined.query({ themeId });
@@ -33,14 +33,14 @@ export const useThemeJoin = (themeId: string) => {
         themeJoinQueryKey(themeId, session?.user.id)
       );
       showSuccessNotification({
-        title: "お題に参加",
-        message: "お題に参加しました。",
+        title: "お題の開発",
+        message: "お題の開発を開始しました。",
       });
     },
     onError: () => {
       showErrorNotification({
-        title: "お題に参加",
-        message: "お題に参加できませんでした。",
+        title: "お題の開発",
+        message: "お題の開発を開始できませんでした。",
       });
     },
   });
@@ -57,7 +57,7 @@ export const useThemeJoin = (themeId: string) => {
   });
 
   return {
-    data: { joined, ...others },
+    data: { joinData, ...others },
     mutations: { joinMutation, cancelJoinMutation },
   };
 };

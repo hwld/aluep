@@ -2,8 +2,8 @@ import { Box } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { ReactNode } from "react";
 import { useSessionQuery } from "../hooks/useSessionQuery";
-import { AppHeader } from "./AppHeader/AppHeader";
 import { AppModal } from "./AppModal";
+import { AppSideMenu } from "./AppSideMenu/AppSideMenu";
 import { RequireLoginModal } from "./RequireLoginModal";
 
 type Props = { children: ReactNode };
@@ -11,7 +11,7 @@ type Props = { children: ReactNode };
 export const AppLayout: React.FC<Props> = ({ children }) => {
   const { session } = useSessionQuery();
   // TODO: スマートフォンなどの幅の狭い端末に対応していない
-  const unsupportedDisplay = useMediaQuery("(max-width: 800px)");
+  const unsupportedDisplay = useMediaQuery("(max-width: 820px)");
   const [isOpen, { close }] = useDisclosure(true);
   return (
     <>
@@ -19,17 +19,16 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
         sx={(theme) => ({
           backgroundColor: theme.colors.gray[2],
           minHeight: "100vh",
+          display: "flex",
         })}
       >
-        <AppHeader user={session?.user} />
+        <AppSideMenu user={session?.user} />
         <Box
           component="main"
-          pt="xl"
-          pb="sm"
-          px="sm"
+          p="xl"
           sx={(theme) => ({
-            maxWidth: "1500px",
             width: "100%",
+            minWidth: "0",
             margin: "0 auto",
           })}
         >

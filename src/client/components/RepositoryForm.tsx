@@ -10,13 +10,13 @@ type Props = {
   onSubmit: (data: RepositoryFormData) => void;
   onCancel: () => void;
   defaultValues?: RepositoryFormData;
-  isSubmitting?: boolean;
+  isLoading?: boolean;
 };
 export const RepositoryForm: React.FC<Props> = ({
   onSubmit,
   onCancel,
   defaultValues = { repoName: "", repoDescription: "" },
-  isSubmitting,
+  isLoading,
 }) => {
   const {
     control,
@@ -33,7 +33,7 @@ export const RepositoryForm: React.FC<Props> = ({
       onCancel={onCancel}
       submitText="リポジトリを作成する"
       submitIcon={BsGithub}
-      isSubmitting={isSubmitting}
+      isSubmitting={isLoading}
     >
       <Controller
         control={control}

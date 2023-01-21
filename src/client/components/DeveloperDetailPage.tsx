@@ -12,23 +12,33 @@ import {
 import Link from "next/link";
 import React from "react";
 import { BsGithub } from "react-icons/bs";
-import { MdOutlineFavorite } from "react-icons/md";
+import { MdComputer, MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
+import { useSessionQuery } from "../hooks/useSessionQuery";
+import { DeveloperMenuButton } from "./DeveloperCard/DeveloperMenuButton";
 import { ThemeSummaryCard } from "./ThemeSummaryCard";
 import { UserIconLink } from "./UserIconLink";
 
 type Props = { developer: ThemeDeveloper; theme: Theme };
 
 export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
+  const { session } = useSessionQuery();
   const mantineTheme = useMantineTheme();
-
+  const isDeveloper = developer.userId === session?.user.id;
   return (
     <>
       <Stack w={800} m="auto" spacing="lg">
-        <Title order={3}>開発者詳細ページ</Title>
+        <Flex align="center" gap="xs">
+          <MdComputer
+            size="30px"
+            color={mantineTheme.colors.red[7]}
+            style={{ marginTop: "3px" }}
+          />
+          <Title order={3}>お題開発情報</Title>
+        </Flex>
         <Stack spacing="xs" w={760}>
-          <Text c="gray.5">参加しているお題</Text>
+          <Text c="gray.5">開発しているお題</Text>
           <ThemeSummaryCard theme={theme} />
         </Stack>
         <Text c="gray.5" mt={-10}>
@@ -37,7 +47,18 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
         <Flex maw={800} mih={300} direction="row" gap={10} mt={-10} h="80%">
           <Card h={300} w={250} sx={{ flexShrink: 0 }}>
             <Flex direction={"column"} justify={"space-between"} h="100%">
-              <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
+              <Flex mt={-5}>
+                {isDeveloper && (
+                  <DeveloperMenuButton developer={developer} theme={theme} />
+                )}
+              </Flex>
+              <Flex
+                align={"center"}
+                mt={-40}
+                gap={20}
+                wrap="wrap"
+                direction={"column"}
+              >
                 <UserIconLink
                   size="xl"
                   iconSrc={developer.image}
@@ -52,7 +73,6 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                 <Box>
                   <Tooltip
                     label="開発者に対するいいねの合計"
-                    color="gray.5"
                     position="top"
                     withArrow
                     transition="pop"
@@ -71,7 +91,6 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                 <Box>
                   <Tooltip
                     label="GitHubへのアクセス"
-                    color="gray.5"
                     position="top"
                     withArrow
                     transition="pop"

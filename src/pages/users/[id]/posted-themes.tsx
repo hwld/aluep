@@ -1,6 +1,8 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { UserPostedThemesPage } from "../../../client/components/UserDetail/UserPostedThemesPage";
+import { favoriteAnotherSumQueryKey } from "../../../client/hooks/useFavoriteAnother";
+import { favoriteUserQueryKey } from "../../../client/hooks/useFavoriteUser";
 import { postedThemesQueryKey } from "../../../client/hooks/usePostedThemesQuery";
 import { sumThemeLikesQueryKey } from "../../../client/hooks/useSumThemeLikesQuery";
 import { themeDeveloperLikesQueryKey } from "../../../client/hooks/useThemeDeveloperLikesQuery";
@@ -31,12 +33,27 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       () => caller.user.getPostTheme({ userId, page })
     );
 
-    await queryClient.prefetchQuery(sumThemeLikesQueryKey, () =>
+    await queryClient.prefetchQuery(sumThemeLikesQueryKey(userId), () =>
       caller.user.getThemeLike({ userId })
     );
 
-    await queryClient.prefetchQuery(themeDeveloperLikesQueryKey, () =>
+    await queryClient.prefetchQuery(themeDeveloperLikesQueryKey(userId), () =>
       caller.user.getThemeDeveloperLike({ userId })
+    );
+
+    //お気に入りのちらつきを無くす
+    if (!session) {
+      return;
+    }
+    const favoriteUserId = session.user.id;
+
+    await queryClient.prefetchQuery(favoriteAnotherSumQueryKey(userId), () =>
+      caller.user.favoritedAnotherSum({ userId })
+    );
+
+    await queryClient.prefetchQuery(
+      favoriteUserQueryKey(userId, favoriteUserId),
+      () => caller.user.favorited({ userId, favoriteUserId })
     );
   }
 );

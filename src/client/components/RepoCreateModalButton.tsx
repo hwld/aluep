@@ -47,7 +47,10 @@ export const RepoCreateModalButton: React.FC<Props> = ({
         <RepositoryForm
           onSubmit={handleCreateRepository}
           onCancel={() => setOpened(false)}
-          isSubmitting={createRepositoryMutation.isLoading}
+          isLoading={
+            createRepositoryMutation.isLoading ||
+            createRepositoryMutation.isSuccess
+          }
         />
       </AppModal>
     </>

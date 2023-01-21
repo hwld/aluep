@@ -11,14 +11,14 @@ type Props = {
   onCancel: () => void;
   submitText: string;
   defaultValues?: ProfileFormData;
-  isSubmitting?: boolean;
+  isLoading?: boolean;
 };
 export const UserProfileForm: React.FC<Props> = ({
   onSubmit,
   onCancel,
   submitText,
   defaultValues = { name: "", profile: "" },
-  isSubmitting,
+  isLoading,
 }) => {
   const {
     control,
@@ -35,7 +35,7 @@ export const UserProfileForm: React.FC<Props> = ({
       onCancel={onCancel}
       submitText={submitText}
       submitIcon={RiEdit2Line}
-      isSubmitting={isSubmitting}
+      isSubmitting={isLoading}
     >
       <Controller
         control={control}

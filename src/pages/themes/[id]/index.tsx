@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { ThemeDetailPage } from "../../../client/components/ThemeDetailPage";
-import { paginatedDevelopersQueryKey } from "../../../client/hooks/usePaginatedDeveloperQueery";
+import { themeCommentsQueryKey } from "../../../client/hooks/useThemeComments";
 import { themeJoinQueryKey } from "../../../client/hooks/useThemeJoin";
 import { themeLikedQueryKey } from "../../../client/hooks/useThemeLike";
 import {
@@ -14,6 +14,7 @@ import NotFoundPage from "../../404";
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session }) => {
     const { id: themeId, page } = query;
+
     if (typeof themeId !== "string") {
       return { notFound: true };
     }
@@ -30,27 +31,24 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    const paginatedDevelopers = await caller.theme.getDeveloperAllpage({
-      themeId,
-      page,
-    });
-    // ページが指定されているが、開発者が取得できなかった場合404を返す
-    if (page !== undefined && paginatedDevelopers.developers.length === 0) {
-      return { notFound: true };
-    }
-
+    // お題情報のプリフェッチ
     queryClient.setQueryData(themeQueryKey(themeId), theme);
-    queryClient.setQueryData(
-      paginatedDevelopersQueryKey(themeId, Number(page)),
-      paginatedDevelopers
-    );
+
+    // ログインユーザーのいいね状況のプリフェッチ
     await queryClient.prefetchQuery(
       themeLikedQueryKey(themeId, session?.user.id),
       () => caller.theme.liked({ themeId })
     );
+
+    // ログインユーザーの参加情報のプリフェッチ
     await queryClient.prefetchQuery(
       themeJoinQueryKey(themeId, session?.user.id),
       () => caller.theme.joined({ themeId })
+    );
+
+    // コメントのプリフェッチ
+    await queryClient.prefetchQuery(themeCommentsQueryKey(themeId), () =>
+      caller.theme.getManyComments({ themeId })
     );
   }
 );

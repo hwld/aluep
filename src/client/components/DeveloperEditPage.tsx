@@ -1,6 +1,7 @@
-import { Card, Stack, Text, Title } from "@mantine/core";
+import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { MdComputer } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { RouterInputs } from "../../server/trpc";
@@ -14,6 +15,7 @@ type Props = { theme: Theme; developer: ThemeDeveloper };
 export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const mantineTheme = useMantineTheme();
 
   const updateMutation = useMutation({
     mutationFn: (data: RouterInputs["themeDeveloper"]["update"]) => {
@@ -21,16 +23,16 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
     },
     onSuccess: () => {
       showSuccessNotification({
-        title: "参加情報の更新",
-        message: "参加情報を更新しました。",
+        title: "お題開発情報の更新",
+        message: "お題開発情報を更新しました。",
       });
       queryClient.invalidateQueries(["developers", developer.id]);
-      router.push(`/themes/${theme.id}`);
+      router.push(`/themes/${theme.id}/developers/${developer.id}/detail`);
     },
     onError: () => {
       showErrorNotification({
-        title: "参加情報の更新",
-        message: "参加情報を更新できませんでした。",
+        title: "お題開発情報の更新",
+        message: "お題開発情報を更新できませんでした。",
       });
     },
   });
@@ -44,13 +46,20 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
   };
   return (
     <Stack w={800} m="auto" spacing="lg">
-      <Title order={3}>お題の参加情報の更新</Title>
+      <Flex align="center" gap="xs">
+        <MdComputer
+          size="30px"
+          color={mantineTheme.colors.red[7]}
+          style={{ marginTop: "3px" }}
+        />
+        <Title order={3}>お題開発情報の更新</Title>
+      </Flex>
       <Stack spacing="xs">
-        <Text c="gray.5">参加しているお題</Text>
+        <Text c="gray.5">開発しているお題</Text>
         <ThemeSummaryCard theme={theme} />
       </Stack>
       <Stack spacing="xs">
-        <Text c="gray.5">参加情報</Text>
+        <Text c="gray.5">開発情報</Text>
         <Card>
           <ThemeJoinForm
             onSubmit={handleUpdateDeveloper}
@@ -58,7 +67,7 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
             themeId={theme.id}
             defaultValues={developer}
             submitText="更新する"
-            isSubmitting={updateMutation.isLoading}
+            isLoading={updateMutation.isLoading || updateMutation.isSuccess}
           />
         </Card>
       </Stack>

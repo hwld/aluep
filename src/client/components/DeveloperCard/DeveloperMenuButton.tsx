@@ -1,11 +1,12 @@
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import router from "next/router";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
+import { Theme } from "../../../server/models/theme";
 import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
-import { useSessionQuery } from "../../hooks/useSessionQuery";
 import { useThemeJoin } from "../../hooks/useThemeJoin";
 import {
   showErrorNotification,
@@ -18,10 +19,9 @@ import { MenuDropdown } from "../AppMenu/MenuDropdown";
 import { MenuItem } from "../AppMenu/MenuItem";
 import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
 
-type Props = { developer: ThemeDeveloper };
-export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
+type Props = { developer: ThemeDeveloper; theme: Theme };
+export const DeveloperMenuButton: React.FC<Props> = ({ developer, theme }) => {
   const [opened, { close, open }] = useDisclosure(false);
-  const { session } = useSessionQuery();
 
   const {
     mutations: { cancelJoinMutation },
@@ -37,6 +37,7 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
             message: "開発情報を削除しました。",
           });
           close();
+          router.push(`/themes/${theme.id}`);
         },
         onError: () => {
           showErrorNotification({
@@ -68,21 +69,15 @@ export const DeveloperMenuButton: React.FC<Props> = ({ developer }) => {
         </Menu.Target>
 
         <MenuDropdown>
-          {session?.user.id === developer.userId ? (
-            <>
-              <MenuLinkItem
-                icon={<RiEdit2Fill size={20} />}
-                href={`/themes/${developer.themeId}/developers/${developer.id}/update`}
-              >
-                参加情報を更新する
-              </MenuLinkItem>
-              <MenuItem icon={<FaTrash size={18} />} onClick={open} red>
-                参加情報を削除する
-              </MenuItem>
-            </>
-          ) : (
-            <Menu.Label>選択できる項目がありません。</Menu.Label>
-          )}
+          <MenuLinkItem
+            icon={<RiEdit2Fill size={20} />}
+            href={`/themes/${developer.themeId}/developers/${developer.id}/update`}
+          >
+            開発情報を更新する
+          </MenuLinkItem>
+          <MenuItem icon={<FaTrash size={18} />} onClick={open} red>
+            開発情報を削除する
+          </MenuItem>
         </MenuDropdown>
       </AppMenu>
       <AppConfirmModal

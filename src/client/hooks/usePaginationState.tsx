@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { useUrlParamString } from "./useUrlParamString";
+import { useURLParams } from "./useURLParams";
 
 type UsePaginationStateArgs = {
   initialPage?: number;
@@ -10,24 +10,23 @@ type UsePaginationStateArgs = {
 export const usePaginationState = ({
   initialPage = 1,
 }: UsePaginationStateArgs) => {
-  const [stringPage, setStringPage] = useUrlParamString({
-    paramName: "page",
-    initialData: initialPage.toString(),
+  const [urlParams, setURLParams] = useURLParams({
+    page: initialPage.toString(),
   });
 
   const page = useMemo(() => {
-    const p = Number(stringPage);
+    const p = Number(urlParams.page);
     if (isNaN(p)) {
       return 1;
     }
     return p;
-  }, [stringPage]);
+  }, [urlParams.page]);
 
   const setPage = useCallback(
     async (page: number) => {
-      await setStringPage(page.toString());
+      setURLParams({ page: page.toString() });
     },
-    [setStringPage]
+    [setURLParams]
   );
 
   return [page, setPage] as const;
