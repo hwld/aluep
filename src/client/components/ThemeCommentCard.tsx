@@ -8,6 +8,8 @@ import { ThemeComment } from "../../server/models/themeComment";
 import { ThemeCommentFormData } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
 import { CardActionIcon } from "../CardActionIcon";
+import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
+import { useSessionQuery } from "../hooks/useSessionQuery";
 import { AppConfirmModal } from "./AppConfirmModal";
 import { ThemeCommentReplyForm } from "./ThemeCommentReplyForm";
 import { UserIconLink } from "./UserIconLink";
@@ -31,6 +33,8 @@ export const ThemeCommentCard: React.FC<Props> = ({
   isDeleting = false,
   loggedInUserId,
 }) => {
+  const { session } = useSessionQuery();
+  const { openLoginModal } = useRequireLoginModal();
   const [
     isDeleteModalOpen,
     { close: closeDeleteModal, open: openDeleteModal },
@@ -41,6 +45,14 @@ export const ThemeCommentCard: React.FC<Props> = ({
 
   const handleDelete = () => {
     onDeleteComment(comment.id);
+  };
+
+  const handleOpenReplyForm = () => {
+    if (!session) {
+      openLoginModal();
+      return;
+    }
+    openReplyForm();
   };
 
   const handleSubmitReply = (
@@ -119,7 +131,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
             <Text>{comment.comment}</Text>
             <Flex justify="space-between" align="center" gap="xs">
               <Flex align="center">
-                <CardActionIcon color="gray.5" onClick={openReplyForm}>
+                <CardActionIcon color="gray.5" onClick={handleOpenReplyForm}>
                   <FaRegComment size="70%" />
                 </CardActionIcon>
                 {loggedInUserId === comment.fromUser.id && (
