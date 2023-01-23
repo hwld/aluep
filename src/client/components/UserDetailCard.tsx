@@ -1,8 +1,11 @@
 import { Box, Button, Card, Flex, Text, Tooltip } from "@mantine/core";
 import { User } from "@prisma/client";
+import Link from "next/link";
 
 import router from "next/router";
 import { MdOutlineTextSnippet, MdPersonOutline } from "react-icons/md";
+import { RiEdit2Line } from "react-icons/ri";
+import { CardActionIcon } from "../CardActionIcon";
 
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { useFavoriteAnother } from "../hooks/useFavoriteAnother";
@@ -79,7 +82,19 @@ export function UserDetailCard({
 
   return (
     <Card h={300} w={250} sx={{ flexShrink: 0 }}>
-      <Flex direction={"column"} justify={"space-between"} h="100%">
+      <Flex
+        direction={"column"}
+        justify={"space-between"}
+        h="100%"
+        style={{ position: "relative" }}
+      >
+        {sessionUser && (
+          <Link href="/users/profile" passHref>
+            <CardActionIcon style={{ position: "absolute" }}>
+              <RiEdit2Line size={20} />
+            </CardActionIcon>
+          </Link>
+        )}
         <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
           <UserIcon iconSrc={userImage} size="xl" />
         </Flex>
@@ -143,26 +158,8 @@ export function UserDetailCard({
               </Flex>
             </Tooltip>
           </Box>
-          {/* <Box>
-            <Tooltip
-              label="GitHubへのアクセス"
-              position="top"
-              withArrow
-              transition="pop"
-            >
-              <Flex align={"center"} wrap="wrap" direction={"column"}>
-                <GoMarkGithub size="30" style={{ marginTop: "4px" }} />
-                <ActionIcon component={Link} href={githuburl}>
-                  <Text>git</Text>
-                </ActionIcon>
-              </Flex>
-            </Tooltip>
-          </Box> */}
         </Flex>
       </Flex>
     </Card>
   );
-}
-function openLoginModal() {
-  throw new Error("Function not implemented.");
 }

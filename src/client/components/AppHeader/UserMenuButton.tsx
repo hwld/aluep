@@ -1,9 +1,10 @@
 import { BadgeProps, Divider, Menu, Space, Text } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
+import { BiBookmarkHeart } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
-import { RiAccountCircleLine, RiEdit2Line } from "react-icons/ri";
+import { RiAccountCircleLine } from "react-icons/ri";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { AppMenu } from "../AppMenu/AppMenu";
 import { MenuDropdown } from "../AppMenu/MenuDropdown";
@@ -43,8 +44,11 @@ export const UserMenuButton: React.FC<Props> = ({ user, children }) => {
         >
           プロフィール
         </MenuLinkItem>
-        <MenuLinkItem icon={<RiEdit2Line size={20} />} href="/users/profile">
-          プロフィール変更
+        <MenuLinkItem
+          icon={<BiBookmarkHeart size={20} />}
+          href={`/users/${user.id}/favorite-list`}
+        >
+          お気に入り
         </MenuLinkItem>
         <MenuItem icon={<MdLogout size={20} />} onClick={handleLogOut}>
           ログアウト

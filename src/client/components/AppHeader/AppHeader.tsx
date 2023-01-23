@@ -68,7 +68,7 @@ export const AppHeader: React.FC<Props> = ({ user }) => {
               {/* TODO: ヘッダーのレイアウトの度に微調整する必要がありそう・・・ */}
               <MediaQuery smallerThan={1000} styles={{ display: "none" }}>
                 <Text fw={700} color="gray.1" size={22} mt={2}>
-                  AppThemePost
+                  Atopose
                 </Text>
               </MediaQuery>
             </Box>

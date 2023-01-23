@@ -73,7 +73,7 @@ export const ThemeComments: React.FC<Props> = ({ themeId }) => {
       <Title mt={30} order={4}>
         投稿されたコメント
       </Title>
-      {themeComments && themeComments.length > 1 && (
+      {themeComments && themeComments.length > 0 && (
         <Stack spacing="xs">
           {themeComments.map((comment) => {
             return (

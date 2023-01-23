@@ -18,19 +18,19 @@ export const ThemeDeveloperPage: React.FC<Props> = ({ theme }) => {
   return (
     <>
       <Stack maw={800} m="auto" spacing="lg">
-        <Flex align="center" gap="xs">
+        <Flex align="center" gap="sm">
           <MdComputer
             size="30px"
             color={mantineTheme.colors.red[7]}
             style={{ marginTop: "3px" }}
           />
-          <Title order={3}>お題開発者一覧</Title>
+          <Title order={3}>お題の開発者</Title>
         </Flex>
-        <Stack spacing="xs">
+        <Stack spacing="sm">
           <Text c="gray.5">開発されているお題</Text>
           <ThemeSummaryCard theme={theme} />
         </Stack>
-        <Stack spacing="xs">
+        <Stack spacing="sm">
           <Text c="gray.5">開発者</Text>
           <Stack spacing="xs">
             {data?.developers.map((developer) => {

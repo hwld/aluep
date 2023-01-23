@@ -41,104 +41,104 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
           <Text c="gray.5">開発しているお題</Text>
           <ThemeSummaryCard theme={theme} />
         </Stack>
-        <Text c="gray.5" mt={-10}>
-          開発者の情報
-        </Text>
-        <Flex maw={800} mih={300} direction="row" gap={10} mt={-10} h="80%">
-          <Card h={300} w={250} sx={{ flexShrink: 0 }}>
-            <Flex direction={"column"} justify={"space-between"} h="100%">
-              <Flex mt={-5}>
-                {isDeveloper && (
-                  <DeveloperMenuButton developer={developer} theme={theme} />
-                )}
-              </Flex>
-              <Flex
-                align={"center"}
-                mt={-40}
-                gap={20}
-                wrap="wrap"
-                direction={"column"}
-              >
-                <UserIconLink
-                  size="xl"
-                  iconSrc={developer.image}
-                  userId={developer.userId}
-                />
-              </Flex>
-              <Flex align={"center"} justify={"center"}>
-                <Text>{developer.name}</Text>
-              </Flex>
+        <Stack spacing="xs">
+          <Text c="gray.5">開発者の情報</Text>
+          <Flex maw={800} mih={300} direction="row" gap={10} h="80%">
+            <Card h={300} w={250} sx={{ flexShrink: 0 }}>
+              <Flex direction={"column"} justify={"space-between"} h="100%">
+                <Flex mt={-5}>
+                  {isDeveloper && (
+                    <DeveloperMenuButton developer={developer} theme={theme} />
+                  )}
+                </Flex>
+                <Flex
+                  align={"center"}
+                  mt={-40}
+                  gap={20}
+                  wrap="wrap"
+                  direction={"column"}
+                >
+                  <UserIconLink
+                    size="xl"
+                    iconSrc={developer.image}
+                    userId={developer.userId}
+                  />
+                </Flex>
+                <Flex align={"center"} justify={"center"}>
+                  <Text>{developer.name}</Text>
+                </Flex>
 
-              <Flex gap={40} mt={10} wrap="wrap" justify={"center"}>
-                <Box>
-                  <Tooltip
-                    label="開発者に対するいいねの合計"
-                    position="top"
-                    withArrow
-                    transition="pop"
-                  >
-                    <Flex align={"center"} wrap="wrap">
-                      <MdOutlineFavorite
-                        color={mantineTheme.colors.red[7]}
-                        size="30"
-                        style={{ marginRight: "2px" }}
-                      />
-                      <Text>{developer.likes}</Text>
-                    </Flex>
-                  </Tooltip>
-                </Box>
-
-                <Box>
-                  <Tooltip
-                    label="GitHubへのアクセス"
-                    position="top"
-                    withArrow
-                    transition="pop"
-                  >
-                    <Flex align={"center"} wrap="wrap" direction={"column"}>
-                      <ActionIcon
-                        size={30}
-                        component={Link}
-                        // githubのURLをgithub1sに変換
-                        href={developer.githubUrl.replace(
-                          /^(https:\/\/github)(.com)/,
-                          "$11s$2"
-                        )}
-                        target="_blank"
-                        sx={(theme) => ({
-                          transition: "all 200ms",
-                          "&:hover": {
-                            backgroundColor: theme.fn.rgba(
-                              theme.colors.gray[7],
-                              0.1
-                            ),
-                          },
-                        })}
-                      >
-                        <BsGithub
-                          size="90%"
-                          fill={mantineTheme.colors.gray[7]}
+                <Flex gap={40} mt={10} wrap="wrap" justify={"center"}>
+                  <Box>
+                    <Tooltip
+                      label="開発者に対するいいねの合計"
+                      position="top"
+                      withArrow
+                      transition="pop"
+                    >
+                      <Flex align={"center"} wrap="wrap">
+                        <MdOutlineFavorite
+                          color={mantineTheme.colors.red[7]}
+                          size="30"
+                          style={{ marginRight: "2px" }}
                         />
-                      </ActionIcon>
-                    </Flex>
-                  </Tooltip>
-                </Box>
+                        <Text>{developer.likes}</Text>
+                      </Flex>
+                    </Tooltip>
+                  </Box>
+
+                  <Box>
+                    <Tooltip
+                      label="GitHubへのアクセス"
+                      position="top"
+                      withArrow
+                      transition="pop"
+                    >
+                      <Flex align={"center"} wrap="wrap" direction={"column"}>
+                        <ActionIcon
+                          size={30}
+                          component={Link}
+                          // githubのURLをgithub1sに変換
+                          href={developer.githubUrl.replace(
+                            /^(https:\/\/github)(.com)/,
+                            "$11s$2"
+                          )}
+                          target="_blank"
+                          sx={(theme) => ({
+                            transition: "all 200ms",
+                            "&:hover": {
+                              backgroundColor: theme.fn.rgba(
+                                theme.colors.gray[7],
+                                0.1
+                              ),
+                            },
+                          })}
+                        >
+                          <BsGithub
+                            size="90%"
+                            fill={mantineTheme.colors.gray[7]}
+                          />
+                        </ActionIcon>
+                      </Flex>
+                    </Tooltip>
+                  </Box>
+                </Flex>
               </Flex>
-            </Flex>
-          </Card>
+            </Card>
 
-          <Card mih={20} w={500}>
-            <Card.Section withBorder inheritPadding py="md">
-              <div>コメント</div>
-            </Card.Section>
+            <Card mih={20} w={500}>
+              <Card.Section withBorder inheritPadding py="md">
+                <div>コメント</div>
+              </Card.Section>
 
-            <Card.Section inheritPadding mt="sm" pb="md">
-              <Text placeholder="開発に対するコメント" mah={200} />
-              {developer.comment}
-              <Text />
-            </Card.Section>
-          </Card>
-        </Flex>
+              <Card.Section inheritPadding mt="sm" pb="md">
+                <Text placeholder="開発に対するコメント" mah={200} />
+                {developer.comment}
+                <Text />
+              </Card.Section>
+            </Card>
+          </Flex>
+        </Stack>
       </Stack>
     </>
   );
