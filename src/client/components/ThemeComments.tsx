@@ -9,10 +9,10 @@ import { useThemeComments } from "../hooks/useThemeComments";
 import { ThemeCommentCard } from "./ThemeCommentCard";
 import { ThemeCommentForm } from "./ThemeCommentForm";
 
-type Props = { themeId: string };
+type Props = { themeId: string; themeOwnerId: string };
 
 /** お題へのコメント */
-export const ThemeComments: React.FC<Props> = ({ themeId }) => {
+export const ThemeComments: React.FC<Props> = ({ themeId, themeOwnerId }) => {
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
 
@@ -73,23 +73,26 @@ export const ThemeComments: React.FC<Props> = ({ themeId }) => {
       <Title mt={30} order={4}>
         投稿されたコメント
       </Title>
-      <Stack spacing="xs">
-        {themeComments?.map((comment) => {
-          return (
-            <ThemeCommentCard
-              key={comment.id}
-              comment={comment}
-              inReplyToUserName={getUserNameByCommentId(
-                comment.inReplyToCommentId
-              )}
-              onReplyComment={handleSubmitReply}
-              onDeleteComment={handleDeleteComment}
-              isDeleting={deleteCommentMutation.isLoading}
-              loggedInUserId={session?.user.id}
-            />
-          );
-        })}
-      </Stack>
+      {themeComments && themeComments.length > 0 && (
+        <Stack spacing="xs">
+          {themeComments.map((comment) => {
+            return (
+              <ThemeCommentCard
+                key={comment.id}
+                comment={comment}
+                inReplyToUserName={getUserNameByCommentId(
+                  comment.inReplyToCommentId
+                )}
+                onReplyComment={handleSubmitReply}
+                onDeleteComment={handleDeleteComment}
+                isDeleting={deleteCommentMutation.isLoading}
+                loggedInUserId={session?.user.id}
+                themeOwnerId={themeOwnerId}
+              />
+            );
+          })}
+        </Stack>
+      )}
       <Card>
         <ThemeCommentForm
           key={formKey}

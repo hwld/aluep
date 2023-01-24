@@ -1,13 +1,23 @@
-import { Box, Card, Flex, Stack, Text, UnstyledButton } from "@mantine/core";
+import {
+  Box,
+  Card,
+  Flex,
+  Stack,
+  Text,
+  UnstyledButton,
+  useMantineTheme,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { BiTrashAlt } from "react-icons/bi";
-import { FaRegComment } from "react-icons/fa";
+import { FaRegComment, FaUserAlt } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
 import { ThemeComment } from "../../server/models/themeComment";
 import { ThemeCommentFormData } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
 import { CardActionIcon } from "../CardActionIcon";
+import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
+import { useSessionQuery } from "../hooks/useSessionQuery";
 import { AppConfirmModal } from "./AppConfirmModal";
 import { ThemeCommentReplyForm } from "./ThemeCommentReplyForm";
 import { UserIconLink } from "./UserIconLink";
@@ -22,6 +32,7 @@ type Props = {
   onDeleteComment: (id: string) => void;
   isDeleting?: boolean;
   loggedInUserId?: string;
+  themeOwnerId: string;
 };
 export const ThemeCommentCard: React.FC<Props> = ({
   comment,
@@ -30,17 +41,29 @@ export const ThemeCommentCard: React.FC<Props> = ({
   onDeleteComment,
   isDeleting = false,
   loggedInUserId,
+  themeOwnerId,
 }) => {
+  const { session } = useSessionQuery();
+  const { openLoginModal } = useRequireLoginModal();
   const [
     isDeleteModalOpen,
     { close: closeDeleteModal, open: openDeleteModal },
   ] = useDisclosure(false);
+  const mantineTheme = useMantineTheme();
 
   const [isReplyFormOpen, { close: closeReplyForm, open: openReplyForm }] =
     useDisclosure(false);
 
   const handleDelete = () => {
     onDeleteComment(comment.id);
+  };
+
+  const handleOpenReplyForm = () => {
+    if (!session) {
+      openLoginModal();
+      return;
+    }
+    openReplyForm();
   };
 
   const handleSubmitReply = (
@@ -77,7 +100,17 @@ export const ThemeCommentCard: React.FC<Props> = ({
                 userId={comment.fromUser.id}
                 iconSrc={comment.fromUser.image}
               />
-              <Text>{comment.fromUser.name}</Text>
+              <Box>
+                {comment.fromUser.id === themeOwnerId && (
+                  <Flex gap={5} align="center">
+                    <FaUserAlt size={14} fill={mantineTheme.colors.red[7]} />
+                    <Text color="red.7" size="xs">
+                      投稿者
+                    </Text>
+                  </Flex>
+                )}
+                <Text>{comment.fromUser.name}</Text>
+              </Box>
             </Flex>
             {/* 返信コメントだが、返信元が削除されている場合はnullになる */}
             {comment.inReplyToCommentId === null && (
@@ -119,7 +152,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
             <Text>{comment.comment}</Text>
             <Flex justify="space-between" align="center" gap="xs">
               <Flex align="center">
-                <CardActionIcon color="gray.5" onClick={openReplyForm}>
+                <CardActionIcon color="gray.5" onClick={handleOpenReplyForm}>
                   <FaRegComment size="70%" />
                 </CardActionIcon>
                 {loggedInUserId === comment.fromUser.id && (

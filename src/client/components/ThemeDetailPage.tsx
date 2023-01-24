@@ -106,7 +106,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             <Text>{theme.description}</Text>
           </Card>
 
-          <ThemeComments themeId={theme.id} />
+          <ThemeComments themeId={theme.id} themeOwnerId={theme.user.id} />
         </Box>
 
         {/* 右カラム */}

@@ -44,7 +44,7 @@ export const SideMenuAppTitle: React.FC = () => {
           color: theme.colors.gray[1],
         })}
       >
-        AppThemePost
+        Atopose
       </Title>
     </Anchor>
   );

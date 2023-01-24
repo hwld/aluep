@@ -34,7 +34,7 @@ export default function App(props: AppProps<PageProps>) {
   return (
     <>
       <Head>
-        <title>AppThemePost</title>
+        <title>Atopose</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"

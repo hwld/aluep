@@ -11,6 +11,8 @@ export const usePickedUpThemesQuery = (order: ThemeOrder) => {
     queryFn: () => {
       return trpc.theme.pickUp.query({ order });
     },
+    //　古いとみなさない
+    staleTime: Infinity,
   });
 
   return { pickedUpThemes: pickedUpThemes ?? [], ...others };

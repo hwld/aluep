@@ -5,6 +5,6 @@ import { AppHeader } from "./AppHeader";
 describe("AppHeader", () => {
   it("アプリのタイトルが表示されている", () => {
     const { getByText } = render(<AppHeader />);
-    expect(getByText("AppThemePost")).toBeInTheDocument();
+    expect(getByText("Atopose")).toBeInTheDocument();
   });
 });

@@ -14,6 +14,7 @@ import { paginate } from "../lib/paginate";
 import {
   findManyThemes,
   findTheme,
+  pickUpThemes,
   searchThemes,
   Theme,
 } from "../models/theme";
@@ -86,17 +87,8 @@ export const themeRoute = router({
   pickUp: publicProcedure
     .input(z.object({ order: themeOrderSchema }))
     .query(async ({ input }) => {
-      const pickedUpThemes = await searchThemes(
-        {
-          keyword: "",
-          tagIds: [],
-          order: input.order,
-          period: "all",
-        },
-        { page: 1, limit: 6 }
-      );
-
-      return pickedUpThemes.themes ?? [];
+      const pickedUpThemes = await pickUpThemes(input.order, 6);
+      return pickedUpThemes;
     }),
 
   // お題を作成する

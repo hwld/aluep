@@ -100,6 +100,89 @@ type SearchThemesArgs = {
   period: ThemePeriod;
 };
 
+// TODO: 共通化
+// 以前はsearchを使っていたが、無駄なSELECT COUNT(*)や、LEFT JOINが発生するので
+// 必要な部分だけ切り出した。
+export const pickUpThemes = async (
+  order: ThemeOrder,
+  limit: number
+): Promise<Theme[]> => {
+  const paginatedThemes = await prisma.$transaction(async (tx) => {
+    // orderに対応するクエリや並び替え関数を宣言する
+    const orderMap: {
+      [T in typeof order]: {
+        select: Prisma.Sql;
+        from: Prisma.Sql;
+        orderBy: Prisma.Sql;
+      };
+    } = {
+      // 古い順
+      createdAsc: {
+        select: Prisma.sql`, MAX(AppTheme.createdAt) as themeCreatedAt`,
+        from: Prisma.empty,
+        orderBy: Prisma.sql`themeCreatedAt asc`,
+      },
+      createdDesc: {
+        select: Prisma.sql`, MAX(AppTheme.createdAt) as themeCreatedAt`,
+        from: Prisma.empty,
+        orderBy: Prisma.sql`themeCreatedAt desc`,
+      },
+      likeDesc: {
+        select: Prisma.sql`, COUNT(AppThemeLike.id) as likeCounts`,
+        from: Prisma.sql`LEFT JOIN AppThemeLike ON (AppTheme.id = AppThemeLike.appThemeId)`,
+        orderBy: Prisma.sql`likeCounts desc`,
+      },
+      developerDesc: {
+        select: Prisma.sql`, COUNT(AppThemeDeveloper.id) as developerCounts`,
+        from: Prisma.sql`LEFT JOIN AppThemeDeveloper ON (AppTheme.id = AppThemeDeveloper.appThemeId)`,
+        orderBy: Prisma.sql`developerCounts desc`,
+      },
+    };
+
+    // マスタとなるクエリを作る
+    const master = Prisma.sql`
+      (
+        SELECT
+          AppTheme.id as themeId
+          ${orderMap[order].select}
+        FROM
+          AppTheme
+          ${orderMap[order].from}
+        GROUP BY
+          AppTheme.id
+        ORDER BY
+          ${orderMap[order].orderBy}
+      ) master
+    `;
+
+    // お題のidのリストを求める
+    type ThemeIds = { themeId: string }[];
+    const themeIdObjs = await tx.$queryRaw<ThemeIds>`
+      SELECT 
+        * 
+      FROM
+        ${master}
+      LIMIT 
+        ${limit}
+    `;
+    const pickUpedThemeIds = themeIdObjs.map(({ themeId }) => themeId);
+
+    const themes = await findManyThemes(
+      { where: { id: { in: pickUpedThemeIds } } },
+      tx
+    );
+
+    // searchedThemeIdsの並び順が保持されないので、並び替え直す。
+    const sortedThemes = themes.sort((a, b) => {
+      return pickUpedThemeIds.indexOf(a.id) - pickUpedThemeIds.indexOf(b.id);
+    });
+
+    return sortedThemes;
+  });
+
+  return paginatedThemes;
+};
+
 // TODO: :(
 export const searchThemes = async (
   { keyword, tagIds, order, period }: SearchThemesArgs,
@@ -113,7 +196,6 @@ export const searchThemes = async (
         select: Prisma.Sql;
         from: Prisma.Sql;
         orderBy: Prisma.Sql;
-        sortFn: (a: Theme, b: Theme) => number;
       };
     } = {
       // 古い順
@@ -121,27 +203,21 @@ export const searchThemes = async (
         select: Prisma.sql`, MAX(AppTheme.createdAt) as themeCreatedAt`,
         from: Prisma.empty,
         orderBy: Prisma.sql`themeCreatedAt asc`,
-        sortFn: (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       },
       createdDesc: {
         select: Prisma.sql`, MAX(AppTheme.createdAt) as themeCreatedAt`,
         from: Prisma.empty,
         orderBy: Prisma.sql`themeCreatedAt desc`,
-        sortFn: (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
       },
       likeDesc: {
         select: Prisma.sql`, COUNT(AppThemeLike.id) as likeCounts`,
         from: Prisma.sql`LEFT JOIN AppThemeLike ON (AppTheme.id = AppThemeLike.appThemeId)`,
         orderBy: Prisma.sql`likeCounts desc`,
-        sortFn: (a, b) => b.likes - a.likes,
       },
       developerDesc: {
         select: Prisma.sql`, COUNT(AppThemeDeveloper.id) as developerCounts`,
         from: Prisma.sql`LEFT JOIN AppThemeDeveloper ON (AppTheme.id = AppThemeDeveloper.appThemeId)`,
         orderBy: Prisma.sql`developerCounts desc`,
-        sortFn: (a, b) => b.developers - a.developers,
       },
     };
 
@@ -213,9 +289,9 @@ export const searchThemes = async (
     );
 
     // searchedThemeIdsの並び順が保持されないので、並び替え直す。
-    // idを正しい順番で並び変えた後にページングが行われるので、ページ単位では正しい結果になってるはず
-    // なので、ページ単位の並び替えで十分だと思う
-    const sortedThemes = [...themes].sort(orderMap[order].sortFn);
+    const sortedThemes = themes.sort((a, b) => {
+      return searchedThemeIds.indexOf(a.id) - searchedThemeIds.indexOf(b.id);
+    });
 
     return { themes: sortedThemes, allPages };
   });
