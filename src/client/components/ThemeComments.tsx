@@ -9,10 +9,10 @@ import { useThemeComments } from "../hooks/useThemeComments";
 import { ThemeCommentCard } from "./ThemeCommentCard";
 import { ThemeCommentForm } from "./ThemeCommentForm";
 
-type Props = { themeId: string };
+type Props = { themeId: string; themeOwnerId: string };
 
 /** お題へのコメント */
-export const ThemeComments: React.FC<Props> = ({ themeId }) => {
+export const ThemeComments: React.FC<Props> = ({ themeId, themeOwnerId }) => {
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
 
@@ -87,6 +87,7 @@ export const ThemeComments: React.FC<Props> = ({ themeId }) => {
                 onDeleteComment={handleDeleteComment}
                 isDeleting={deleteCommentMutation.isLoading}
                 loggedInUserId={session?.user.id}
+                themeOwnerId={themeOwnerId}
               />
             );
           })}
