@@ -6,18 +6,18 @@ import {
   useTop10LikesThemesInThisMonth,
 } from "../hooks/useRankingQuery";
 import { NothingLike } from "./NothingLike";
-import { NothingPopularThemes } from "./NothingPopularThemes";
 
-import { PopularThemeCarousel } from "./PopularThemeCarousel/PopularThemeCarousel";
 import { RankingCard } from "./RankingCard";
 
 import { PickedUpThemes } from "./PickedUpThemes";
-import { themeCardMinWidthPx } from "./ThemeCard/ThemeCard";
 import { UserLikeRankingItem } from "./UserLikeRankingItem";
 
 import { IoSparkles } from "react-icons/io5";
 import { MdComputer, MdOutlineFavorite } from "react-icons/md";
 import { usePickedUpThemesQuery } from "../hooks/usePickedUpThemesQuery";
+import { NothingPopularThemes } from "./NothingPopularThemes";
+import { PopularThemeCarousel } from "./PopularThemeCarousel/PopularThemeCarousel";
+import { themeCardMinWidthPx } from "./ThemeCard/ThemeCard";
 
 export const HomePage: React.FC = () => {
   const mantineTheme = useMantineTheme();
