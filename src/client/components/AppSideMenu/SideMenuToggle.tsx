@@ -1,45 +1,40 @@
-import { ActionIcon, Box } from "@mantine/core";
-import { HiArrowRight } from "react-icons/hi";
+import { Burger, useMantineTheme } from "@mantine/core";
 
 type Props = {
   isOpen: boolean;
   onToggle: () => void;
   width: string;
-  className?: string;
 };
 
 export const SideMenuToggle: React.FC<Props> = ({
   isOpen,
   onToggle,
   width,
-  className,
 }) => {
+  const mantineTheme = useMantineTheme();
+
   return (
-    <ActionIcon
-      className={className}
+    <Burger
+      opened={isOpen}
       onClick={onToggle}
-      color="gray.1"
+      color={mantineTheme.colors.gray[1]}
       sx={(theme) => ({
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         flexShrink: 0,
-        borderRadius: "50%",
-        alignSelf: "flex-end",
         width,
         height: "auto",
         aspectRatio: "1",
+        color: theme.colors.gray[1],
 
-        transition: "all 150ms",
+        borderRadius: "50%",
+        transition: "all 250ms",
         backgroundColor: theme.colors.red[8],
-        "&:hover": { backgroundColor: theme.colors.red[5] },
+        "&:hover": {
+          backgroundColor: theme.colors.red[5],
+        },
       })}
-    >
-      <Box
-        sx={{
-          transition: "all 250ms",
-          transform: isOpen ? "rotate(180deg)" : "none",
-        }}
-      >
-        <HiArrowRight size={30} />
-      </Box>
-    </ActionIcon>
+    />
   );
 };
