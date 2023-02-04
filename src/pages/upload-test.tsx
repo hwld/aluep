@@ -1,12 +1,12 @@
-import { Box, Button, FileInput, Switch, Title } from "@mantine/core";
+import { Avatar, Box, Button, FileInput, Switch, Title } from "@mantine/core";
 import { NextPage } from "next";
-import Image from "next/image";
 import { FormEventHandler, useState } from "react";
 import { useSessionQuery } from "../client/hooks/useSessionQuery";
 
 const UploadTest: NextPage = () => {
   const { session } = useSessionQuery();
   const [file, setFile] = useState<File | undefined>();
+  const [avatarUrl, setAvatarUrl] = useState("");
 
   const [show, setShow] = useState(false);
 
@@ -17,8 +17,12 @@ const UploadTest: NextPage = () => {
       formData.append("icon", file);
     }
 
-    const data = await fetch("/api/upload", { method: "POST", body: formData });
+    const data = await fetch("/api/upload-avatar", {
+      method: "POST",
+      body: formData,
+    });
     const json = await data.json();
+    setAvatarUrl(json.avatarUrl);
     console.log(json);
   };
 
@@ -46,14 +50,7 @@ const UploadTest: NextPage = () => {
             setShow(e.currentTarget.checked);
           }}
         />
-        {session && show && (
-          <Image
-            height={100}
-            width={100}
-            src={`/users/${session?.user.id}`}
-            alt="logo"
-          />
-        )}
+        {session && show && <Avatar size="xl" src={`${session.user.image}`} />}
       </Box>
     </Box>
   );
