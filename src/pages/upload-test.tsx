@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, FileInput, Switch, Title } from "@mantine/core";
 import { NextPage } from "next";
 import { FormEventHandler, useState } from "react";
+import { ImageCropper } from "../client/components/ImageCropper";
 import { useSessionQuery } from "../client/hooks/useSessionQuery";
 
 const UploadTest: NextPage = () => {
@@ -52,6 +53,8 @@ const UploadTest: NextPage = () => {
         />
         {session && show && <Avatar size="xl" src={`${session.user.image}`} />}
       </Box>
+      <Title>ImageCropper</Title>
+      <ImageCropper />
     </Box>
   );
 };
