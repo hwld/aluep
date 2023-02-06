@@ -1,22 +1,19 @@
-import { Box, Button, FileInput, Slider } from "@mantine/core";
-import { useRef, useState } from "react";
+import { Box, Button, Slider } from "@mantine/core";
+import { useEffect, useRef } from "react";
 
-const canvasSize = 300;
+export const canvasSize = 300;
 
-const initialDragInfo = () => ({
-  dragging: false,
-  currentX: 0,
-  currentY: 0,
-  diffX: 0,
-  diffY: 0,
-  dragStartX: 0,
-  dragStartY: 0,
-});
+export type ImageInfo = { image: HTMLImageElement; defaultScale?: number };
+type Props = { info: ImageInfo };
 
-export const ImageCropper: React.FC<{}> = () => {
+// TODO: 汚い
+// contextを操作するときは順番が重要になってくるが、
+// 共通化などを行わずにべた書きしてるところが多いので、ちょっと変更したときに
+// いろんなところが壊れてしまう可能性がありそう。
+export const ImageCropper: React.FC<Props> = ({
+  info: { image, defaultScale = 1 },
+}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [imageObjectURL, setImageObjectURL] = useState("");
-  const imageRef = useRef<HTMLImageElement>();
   const scaleRef = useRef(1);
 
   const dragInfo = useRef({
@@ -29,14 +26,24 @@ export const ImageCropper: React.FC<{}> = () => {
     dragStartY: 0,
   });
 
-  const handleChangeFile = (file: File | null) => {
-    if (!file) {
-      return;
-    }
-    URL.revokeObjectURL(imageObjectURL);
+  // canvas上に円形の切り抜きレイヤーを描画する
+  const drawClippingLayer = (ctx: CanvasRenderingContext2D) => {
+    ctx.save();
 
-    const objectURL = URL.createObjectURL(file);
-    setImageObjectURL(objectURL);
+    // 円の外側
+    ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+    ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+    ctx.fillStyle = "rgb(255, 255, 255)";
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.arc(canvasSize / 2, canvasSize / 2, canvasSize / 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  };
+
+  const handleScale = (value: number) => {
+    scaleRef.current = value;
 
     const ctx = canvasRef.current?.getContext("2d");
     if (!ctx) {
@@ -45,57 +52,13 @@ export const ImageCropper: React.FC<{}> = () => {
 
     ctx.clearRect(0, 0, canvasSize, canvasSize);
 
-    const img = new Image();
-    img.src = objectURL;
-    img.onload = () => {
-      ctx.save();
-
-      // 原点を真ん中にする
-      ctx.translate(canvasSize / 2, canvasSize / 2);
-
-      // 横と高さで大きいほうが300pxになるようなスケールを求める
-      const scale = canvasSize / Math.max(img.width, img.height);
-      ctx.scale(scale, scale);
-
-      let x = 0;
-      let y = 0;
-      if (img.width > img.height) {
-        y = (canvasSize / 2 - (img.height * scale) / 2) / scale;
-      } else if (img.height > img.width) {
-        x = (canvasSize / 2 - (img.width * scale) / 2) / scale;
-      }
-
-      x -= canvasSize / 2 / scale;
-      y -= canvasSize / 2 / scale;
-
-      ctx.drawImage(img, x, y);
-      scaleRef.current = scale;
-      dragInfo.current.currentX = x;
-      dragInfo.current.currentY = y;
-
-      ctx.restore();
-      imageRef.current = img;
-    };
-  };
-
-  const handleScale = (value: number) => {
-    scaleRef.current = value;
-
-    const ctx = canvasRef.current?.getContext("2d");
-    if (!ctx || !imageRef.current) {
-      return;
-    }
-
-    ctx.clearRect(0, 0, canvasSize, canvasSize);
     ctx.save();
+    drawClippingLayer(ctx);
 
     ctx.translate(canvasSize / 2, canvasSize / 2);
     ctx.scale(value, value);
-    ctx.drawImage(
-      imageRef.current,
-      dragInfo.current.currentX,
-      dragInfo.current.currentY
-    );
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.drawImage(image, dragInfo.current.currentX, dragInfo.current.currentY);
 
     ctx.restore();
   };
@@ -115,8 +78,7 @@ export const ImageCropper: React.FC<{}> = () => {
 
   const handleDragging: React.MouseEventHandler<HTMLCanvasElement> = (e) => {
     const ctx = canvasRef.current?.getContext("2d");
-    const image = imageRef.current;
-    if (!dragInfo.current.dragging || !ctx || !image) {
+    if (!dragInfo.current.dragging || !ctx) {
       return;
     }
 
@@ -128,9 +90,11 @@ export const ImageCropper: React.FC<{}> = () => {
 
     ctx.clearRect(0, 0, canvasSize, canvasSize);
     ctx.save();
+    drawClippingLayer(ctx);
 
     ctx.translate(canvasSize / 2, canvasSize / 2);
     ctx.scale(scale, scale);
+    ctx.globalCompositeOperation = "destination-over";
     ctx.drawImage(image, dragInfo.current.diffX, dragInfo.current.diffY);
 
     ctx.restore();
@@ -155,25 +119,67 @@ export const ImageCropper: React.FC<{}> = () => {
     const data = canvasRef.current.toDataURL();
   };
 
+  // レンダリング時にcanvasにimageをセットする
+  useEffect(() => {
+    const ctx = canvasRef.current?.getContext("2d");
+    if (!ctx) {
+      return;
+    }
+
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.save();
+    drawClippingLayer(ctx);
+
+    // 原点を真ん中にする
+    ctx.translate(canvasSize / 2, canvasSize / 2);
+
+    // 横と高さで大きいほうが300pxになるようなスケールを求める
+    const scale = canvasSize / Math.max(image.width, image.height);
+    ctx.scale(scale, scale);
+
+    let x = 0;
+    let y = 0;
+    if (image.width > image.height) {
+      y = (canvasSize / 2 - (image.height * scale) / 2) / scale;
+    } else if (image.height > image.width) {
+      x = (canvasSize / 2 - (image.width * scale) / 2) / scale;
+    }
+
+    x -= canvasSize / 2 / scale;
+    y -= canvasSize / 2 / scale;
+
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.drawImage(image, x, y);
+    scaleRef.current = scale;
+    dragInfo.current.currentX = x;
+    dragInfo.current.currentY = y;
+
+    ctx.restore();
+
+    return () => {
+      ctx.clearRect(0, 0, canvasSize, canvasSize);
+    };
+  }, [image]);
+
   return (
     <Box>
-      <FileInput name="icon" label="画像" onChange={handleChangeFile} />
       <canvas
         ref={canvasRef}
         width={canvasSize}
         height={canvasSize}
-        style={{ border: "1px solid black", cursor: "grab" }}
+        style={{ cursor: "grab" }}
         onMouseDown={handleDragStart}
         onMouseMove={handleDragging}
         onMouseUp={handleDragEnd}
         onMouseLeave={handleDragEnd}
       />
       <Slider
+        defaultValue={defaultScale}
         label={null}
         thumbSize={30}
         w={300}
         step={0.1}
-        min={0.1}
+        min={0.3}
         max={3}
         styles={(theme) => ({
           track: { "&::before": { backgroundColor: theme.colors.gray[3] } },

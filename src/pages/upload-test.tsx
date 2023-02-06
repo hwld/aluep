@@ -1,7 +1,11 @@
 import { Avatar, Box, Button, FileInput, Switch, Title } from "@mantine/core";
 import { NextPage } from "next";
 import { FormEventHandler, useState } from "react";
-import { ImageCropper } from "../client/components/ImageCropper";
+import {
+  canvasSize,
+  ImageCropper,
+  ImageInfo,
+} from "../client/components/ImageCropper";
 import { useSessionQuery } from "../client/hooks/useSessionQuery";
 
 const UploadTest: NextPage = () => {
@@ -33,6 +37,11 @@ const UploadTest: NextPage = () => {
     }
   };
 
+  const [imageObjectURL, setImageObjectURL] = useState("");
+  const [image, setImage] = useState<HTMLImageElement>();
+  const [defaultScale, setDefaultScale] = useState(1);
+  const [imageInfo, setImageInfo] = useState<ImageInfo | undefined>(undefined);
+
   return (
     <Box>
       <Title>画像アップロードテスト</Title>
@@ -54,7 +63,37 @@ const UploadTest: NextPage = () => {
         {session && show && <Avatar size="xl" src={`${session.user.image}`} />}
       </Box>
       <Title>ImageCropper</Title>
-      <ImageCropper />
+      <FileInput
+        onChange={async (file) => {
+          if (!file) {
+            return;
+          }
+
+          // 以前作成したObjectを削除する
+          URL.revokeObjectURL(imageObjectURL);
+
+          const objectURL = URL.createObjectURL(file);
+          setImageObjectURL(objectURL);
+
+          // 画像を作成する
+          const newImage = new Image();
+          newImage.src = objectURL;
+
+          setImageInfo(undefined);
+          return await new Promise((resolve) => {
+            newImage.onload = () => {
+              // 画像のロードが終わった時に画像情報をセットする
+              const defaultScale =
+                canvasSize / Math.max(newImage.width, newImage.height);
+
+              setImageInfo({ image: newImage, defaultScale });
+
+              resolve(undefined);
+            };
+          });
+        }}
+      />
+      {imageInfo && <ImageCropper info={imageInfo} />}
     </Box>
   );
 };
