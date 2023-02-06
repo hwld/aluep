@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 export const canvasSize = 300;
 
 export type ImageInfo = { image: HTMLImageElement; defaultScale?: number };
-type Props = { info: ImageInfo };
+type Props = { info: ImageInfo; onCompleteCrop: (objectURL: string) => void };
 
 // TODO: 汚い
 // contextを操作するときは順番が重要になってくるが、
@@ -12,9 +12,10 @@ type Props = { info: ImageInfo };
 // いろんなところが壊れてしまう可能性がありそう。
 export const ImageCropper: React.FC<Props> = ({
   info: { image, defaultScale = 1 },
+  onCompleteCrop,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const scaleRef = useRef(1);
+  const scaleRef = useRef(defaultScale);
 
   const dragInfo = useRef({
     dragging: false,
@@ -113,10 +114,32 @@ export const ImageCropper: React.FC<Props> = ({
   };
 
   const handleSaveImage = () => {
-    if (!canvasRef.current) {
+    const ctx = canvasRef.current?.getContext("2d");
+    if (!canvasRef.current || !ctx) {
       return;
     }
-    const data = canvasRef.current.toDataURL();
+
+    // 取得したい画像では切り抜きレイヤーを表示させたくないので、
+    // 切り抜きレイヤーなしでcanvasを作る
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.save();
+    ctx.translate(canvasSize / 2, canvasSize / 2);
+    ctx.scale(scaleRef.current, scaleRef.current);
+    ctx.drawImage(image, dragInfo.current.currentX, dragInfo.current.currentY);
+    ctx.restore();
+
+    const data = canvasRef.current.toDataURL("image/png");
+    onCompleteCrop(data);
+
+    // 画像を取得した後に切り抜きレイヤーありで描画しなおす
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.save();
+    drawClippingLayer(ctx);
+    ctx.translate(canvasSize / 2, canvasSize / 2);
+    ctx.scale(scaleRef.current, scaleRef.current);
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.drawImage(image, dragInfo.current.currentX, dragInfo.current.currentY);
+    ctx.restore();
   };
 
   // レンダリング時にcanvasにimageをセットする
@@ -133,8 +156,7 @@ export const ImageCropper: React.FC<Props> = ({
     // 原点を真ん中にする
     ctx.translate(canvasSize / 2, canvasSize / 2);
 
-    // 横と高さで大きいほうが300pxになるようなスケールを求める
-    const scale = canvasSize / Math.max(image.width, image.height);
+    const scale = scaleRef.current;
     ctx.scale(scale, scale);
 
     let x = 0;
@@ -150,7 +172,6 @@ export const ImageCropper: React.FC<Props> = ({
 
     ctx.globalCompositeOperation = "destination-over";
     ctx.drawImage(image, x, y);
-    scaleRef.current = scale;
     dragInfo.current.currentX = x;
     dragInfo.current.currentY = y;
 
@@ -176,10 +197,9 @@ export const ImageCropper: React.FC<Props> = ({
       <Slider
         defaultValue={defaultScale}
         label={null}
-        thumbSize={30}
         w={300}
         step={0.1}
-        min={0.3}
+        min={0.1}
         max={3}
         styles={(theme) => ({
           track: { "&::before": { backgroundColor: theme.colors.gray[3] } },
