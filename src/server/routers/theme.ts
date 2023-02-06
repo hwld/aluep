@@ -280,7 +280,7 @@ export const themeRoute = router({
 
       const users = sortusers.map((user, i) => ({
         ...user,
-        themeLikes: Number(use[i]?.createdAt) ?? 0,
+        themeLikeCreated: new Date(use[i]?.createdAt) ?? 0,
       }));
 
       return { users, allPages };

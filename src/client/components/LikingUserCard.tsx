@@ -1,4 +1,4 @@
-import { Card, Stack, Text } from "@mantine/core";
+import { Card, Flex, Text } from "@mantine/core";
 import { AppThemeLike, User } from "@prisma/client";
 import { useRouter } from "next/router";
 import { TextLink } from "./TextLink";
@@ -34,29 +34,28 @@ export const LikingUserCard: React.FC<Props> = ({ user, appTheme }) => {
       })}
       onClick={handleGoUserDetail}
     >
-      <UserIcon iconSrc={user.image} />
-      <Stack spacing={3} sx={{ flexShrink: 1, minWidth: 0 }}>
-        <TextLink href={`/users/${user.id}`}>
-          <Text
-            sx={{
-              flexShrink: 0,
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {user.name}
-          </Text>
-        </TextLink>
-
-        <Text
-          sx={{ flexShrink: 1, minHeight: 0, overflow: "hidden" }}
-          size="sm"
-          color="gray.5"
-        >
+      <Flex align="flex-start" justify="space-between">
+        <Flex gap={10}>
+          <UserIcon iconSrc={user.image} />
+          <TextLink href={`/users/${user.id}`}>
+            <Text
+              sx={{
+                flexShrink: 0,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {user.name}
+            </Text>
+          </TextLink>
+        </Flex>
+      </Flex>
+      <Flex align="center" justify="flex-start" mt={10}>
+        <Text size="sm" color="gray.5">
           いいねした日: {new Date(appTheme.createdAt).toLocaleString()}
         </Text>
-      </Stack>
+      </Flex>
     </Card>
   );
 };

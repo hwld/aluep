@@ -1,16 +1,16 @@
 import { Box, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
-import { AppThemeLike } from "@prisma/client";
 import { MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useThemeLikingUsersQuery } from "../hooks/useThemeLikingUsersQuery";
 import { AppPagination } from "./AppPagination";
+import { LikingUserCard } from "./LikingUserCard";
 import { NothingThemeLikingUsers } from "./NothingThemeLikingUsers";
 import { ThemeSummaryCard } from "./ThemeSummaryCard";
-import { UserCard, userCardMinWidthPx } from "./UserCard";
+import { userCardMinWidthPx } from "./UserCard";
 
-type Props = { theme: Theme; appTheme: AppThemeLike };
-export const ThemeLikingUsersPage: React.FC<Props> = ({ theme, appTheme }) => {
+type Props = { theme: Theme };
+export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
   const [page, setPage] = usePaginationState({});
   const { data } = useThemeLikingUsersQuery(theme.id, page);
   const mantineTheme = useMantineTheme();
@@ -44,7 +44,18 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme, appTheme }) => {
             })}
           >
             {data?.users.map((user) => {
-              return <UserCard key={user.id} user={user} />;
+              return (
+                <LikingUserCard
+                  key={user.id}
+                  user={user}
+                  appTheme={{
+                    id: "",
+                    appThemeId: "",
+                    userId: "",
+                    createdAt: user.themeLikeCreated,
+                  }}
+                />
+              );
             })}
           </Box>
         </Stack>
