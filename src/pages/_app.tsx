@@ -57,6 +57,10 @@ export default function App(props: AppProps<PageProps>) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <meta
+          name="google-site-verification"
+          content="_asspesaHdXrFgIrOfHxy_aSen_ECuxyphxcl-TqBtI"
+        />
       </Head>
 
       <QueryClientProvider client={queryClient}>
