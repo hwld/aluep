@@ -14,7 +14,7 @@ import { Theme } from "../../../server/models/theme";
 import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
 import { useRequireLoginModal } from "../../contexts/RequireLoginModalProvider";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
-import { stopPropagation } from "../../utils";
+import { formatDate, stopPropagation } from "../../utils";
 import { TextLink } from "../TextLink";
 import { UserIconLink } from "../UserIconLink";
 import { DeveloperLikeButton } from "./DeveloperLikeButton";
@@ -105,7 +105,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
       </Flex>
       <Flex align="center" justify="space-between" mt={10}>
         <Text size="sm" color="gray.5">
-          開発開始日: {new Date(developer.createdAt).toLocaleString()}
+          開発開始日: {formatDate(new Date(developer.createdAt))}
         </Text>
         <Box>
           <DeveloperLikeButton

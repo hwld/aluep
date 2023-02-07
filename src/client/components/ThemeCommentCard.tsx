@@ -18,6 +18,7 @@ import { OmitStrict } from "../../types/OmitStrict";
 import { CardActionIcon } from "../CardActionIcon";
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { useSessionQuery } from "../hooks/useSessionQuery";
+import { formatDate } from "../utils";
 import { AppConfirmModal } from "./AppConfirmModal";
 import { ThemeCommentReplyForm } from "./ThemeCommentReplyForm";
 import { UserIconLink } from "./UserIconLink";
@@ -161,7 +162,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
                   </CardActionIcon>
                 )}
               </Flex>
-              <Text c="gray.5">{comment.createdAt.toLocaleString()}</Text>
+              <Text c="gray.5">{formatDate(comment.createdAt)}</Text>
             </Flex>
           </Stack>
         </Card>
