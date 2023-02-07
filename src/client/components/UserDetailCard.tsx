@@ -3,7 +3,6 @@ import { User } from "@prisma/client";
 import Link from "next/link";
 
 import router from "next/router";
-import { MdOutlineTextSnippet, MdPersonOutline } from "react-icons/md";
 import { RiEdit2Line } from "react-icons/ri";
 import { CardActionIcon } from "../CardActionIcon";
 
@@ -11,6 +10,8 @@ import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { useFavoriteAnother } from "../hooks/useFavoriteAnother";
 import { useFavoriteUser } from "../hooks/useFavoriteUser";
 import { useSessionQuery } from "../hooks/useSessionQuery";
+import { FavoriteDeveloperIcon } from "./FavoriteDeveloperIcon";
+import { FavoriteThemeIcon } from "./FavoriteThemeIcon";
 import { UserFavoriteButton } from "./UserDetail/UserFavoriteButton";
 import { UserIcon } from "./UserIcon";
 
@@ -140,7 +141,7 @@ export function UserDetailCard({
               transition="pop"
             >
               <Flex align={"center"} wrap="wrap" direction={"column"}>
-                <MdOutlineTextSnippet size="30" style={{ marginTop: "4px" }} />
+                <FavoriteThemeIcon />
                 <Text>{sumThemeLikes}</Text>
               </Flex>
             </Tooltip>
@@ -153,7 +154,7 @@ export function UserDetailCard({
               transition="pop"
             >
               <Flex align={"center"} wrap="wrap" direction={"column"}>
-                <MdPersonOutline size="30" style={{ marginTop: "4px" }} />
+                <FavoriteDeveloperIcon />
                 <Text>{themeDeveloperLikes}</Text>
               </Flex>
             </Tooltip>

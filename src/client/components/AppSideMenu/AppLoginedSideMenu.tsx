@@ -6,14 +6,12 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { Session } from "next-auth";
-import {
-  MdOutlineFavoriteBorder,
-  MdOutlineTextSnippet,
-  MdPersonOutline,
-} from "react-icons/md";
+import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { useSumThemeLikesQuery } from "../../hooks/useSumThemeLikesQuery";
 import { useThemeDeveloperLikesQuery } from "../../hooks/useThemeDeveloperLikesQuery";
 import { UserMenuButton } from "../AppHeader/UserMenuButton";
+import { FavoriteDeveloperIcon } from "../FavoriteDeveloperIcon";
+import { FavoriteThemeIcon } from "../FavoriteThemeIcon";
 import { UserIcon } from "../UserIcon";
 
 type Props = { user: Session["user"]; isMenuOpen: boolean };
@@ -62,12 +60,12 @@ export const AppLoginedSideMenu: React.FC<Props> = ({ user, isMenuOpen }) => {
 
             <Flex gap={10}>
               <Flex gap={5}>
-                <MdOutlineTextSnippet size={25} style={{ marginTop: "4px" }} />
+                <FavoriteThemeIcon size="sm" />
                 <Text size={20}>{sumThemeLikes}</Text>
               </Flex>
 
               <Flex gap={5}>
-                <MdPersonOutline size={25} style={{ marginTop: "4px" }} />
+                <FavoriteDeveloperIcon size="sm" />
                 <Text size={20}>{themeDeveloperLikes}</Text>
               </Flex>
             </Flex>
