@@ -58,6 +58,10 @@ export default function App(props: AppProps<PageProps>) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
         <meta
+          name="description"
+          content="Atoposeはアプリ開発のお題を投稿・検索するためのサービスです。投稿者は他の開発者を参考にするためにお題を投稿することができ、開発者は作りたいアプリを見つけることができます。"
+        />
+        <meta
           name="google-site-verification"
           content="_asspesaHdXrFgIrOfHxy_aSen_ECuxyphxcl-TqBtI"
         />
