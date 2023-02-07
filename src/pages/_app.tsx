@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-query";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import Script from "next/script";
 import { useState } from "react";
 import superjson from "superjson";
 import { AppLayout } from "../client/components/AppLayout";
@@ -33,6 +34,23 @@ export default function App(props: AppProps<PageProps>) {
 
   return (
     <>
+      {/* idは環境変数で付けたほうが柔軟性があるけど、めんどくさいのでとりあえず・・・ */}
+      {/* また、next.jsではクライアントサイドのルーティングが多いので、これだけだと正しく測定できない。 */}
+      {/* 参考:(https://github.com/vercel/next.js/tree/canary/examples/with-google-analytics) */}
+      {/* Google tag (gtag.js)  */}
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-Q6CPPR70ZM" />
+      <Script
+        id="gtag-init"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'G-Q6CPPR70ZM');
+          `,
+        }}
+      />
       <Head>
         <title>Atopose</title>
         <meta
