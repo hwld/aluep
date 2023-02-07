@@ -18,15 +18,18 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const { id: userId } = query;
 
     if (typeof userId !== "string") {
-      return;
+      return { notFound: true };
     }
     if (typeof page === "object") {
       throw new Error();
     }
 
-    await queryClient.prefetchQuery(userQueryKey(userId), () =>
-      caller.user.get({ userId })
-    );
+    const user = await caller.user.get({ userId });
+    if (!user) {
+      return { notFound: true };
+    }
+
+    await queryClient.prefetchQuery(userQueryKey(userId), () => user);
 
     await queryClient.prefetchQuery(
       joinedThemesQueryKey(userId, Number(page)),
@@ -67,7 +70,7 @@ const UserDetail: NextPage = () => {
   const userId = router.query.id as string;
   const { user } = useUserQuery(userId);
 
-  if (user === undefined) {
+  if (!user) {
     return null;
   } else {
     return <UserJoinedThemesPage user={user} />;

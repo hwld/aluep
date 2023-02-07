@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { useRouter } from "next/router";
 import { MouseEventHandler } from "react";
+import { FaRegComment } from "react-icons/fa";
 import { MdComputer, MdOutlineFavorite } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
 import { useSamePositionLeftClick } from "../../hooks/useSamePositionLeftClick";
@@ -108,6 +109,15 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
                   <MdComputer size="15px" color={mantineTheme.colors.red[7]} />
                   <Text size="xs" c="red.7">
                     {theme.developers}
+                  </Text>
+                </Flex>
+                <Flex align="center" gap={3}>
+                  <FaRegComment
+                    size="15px"
+                    color={mantineTheme.colors.red[7]}
+                  />
+                  <Text size="xs" c="red.7">
+                    {theme.comments}
                   </Text>
                 </Flex>
               </Flex>

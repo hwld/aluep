@@ -113,7 +113,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
                 <Text>{comment.fromUser.name}</Text>
               </Box>
             </Flex>
-            {/* 返信コメントだが、返信元が削除されている場合はnullになる */}
+            {/* 返信コメントは返信元が削除されている場合はnullになる */}
             {comment.inReplyToCommentId === null && (
               <Box
                 color="red.7"

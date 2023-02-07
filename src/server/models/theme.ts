@@ -18,6 +18,7 @@ export const themeSchema = z.object({
   }),
   likes: z.number(),
   developers: z.number(),
+  comments: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
   // 作成してからの取得するまでの経過時間
@@ -29,7 +30,7 @@ const themeArgs = {
   include: {
     tags: { include: { tag: true, theme: true } },
     user: true,
-    _count: { select: { likes: true, developers: true } },
+    _count: { select: { likes: true, developers: true, comments: true } },
   },
 } satisfies Prisma.AppThemeArgs;
 
@@ -54,6 +55,7 @@ const convertTheme = (
     },
     likes: rawTheme._count.likes,
     developers: rawTheme._count.developers,
+    comments: rawTheme._count.comments,
   };
 
   return theme;

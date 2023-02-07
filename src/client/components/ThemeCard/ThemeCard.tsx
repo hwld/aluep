@@ -8,6 +8,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useRouter } from "next/router";
+import { FaRegComment } from "react-icons/fa";
 import { MdComputer, MdOutlineFavoriteBorder } from "react-icons/md";
 import { Theme } from "../../../server/models/theme";
 import { TextLink } from "../TextLink";
@@ -97,6 +98,15 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
                     />
                     <Text size="xs" c="red.7">
                       {theme.developers}
+                    </Text>
+                  </Flex>
+                  <Flex align="center" gap={3}>
+                    <FaRegComment
+                      size="15px"
+                      color={mantineTheme.colors.red[7]}
+                    />
+                    <Text size="xs" c="red.7">
+                      {theme.comments}
                     </Text>
                   </Flex>
                 </Flex>

@@ -1,4 +1,3 @@
-import { TRPCError } from "@trpc/server";
 import { string, z } from "zod";
 import { pageSchema } from "../../share/schema";
 import { paginate } from "../lib/paginate";
@@ -97,9 +96,6 @@ export const userRoute = router({
     .input(z.object({ userId: z.string() }))
     .query(async ({ input }) => {
       const user = await prisma.user.findFirst({ where: { id: input.userId } });
-      if (!user) {
-        throw new TRPCError({ code: "NOT_FOUND" });
-      }
       return user;
     }),
 
@@ -149,7 +145,7 @@ export const userRoute = router({
       });
     }),
 
-  //お気に入りしているか
+  //ログインユーザーがお気に入りしているか
   favorited: publicProcedure
     .input(z.object({ userId: z.string(), favoriteUserId: z.string() }))
     .query(async ({ input }): Promise<boolean> => {
