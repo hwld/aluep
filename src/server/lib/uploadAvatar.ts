@@ -4,7 +4,10 @@ import { NextApiRequest } from "next";
 import path from "path";
 
 const storage = new Storage({
-  keyFilename: `${__dirname}/../../../../gcs-key.json`,
+  keyFilename:
+    process.env.NODE_ENV === "production"
+      ? "/secret/gcs-key.json"
+      : `${__dirname}/../../../../gcs-key.json`,
 });
 
 type UploadAvatar = (
@@ -14,9 +17,6 @@ type UploadAvatar = (
 
 // 開発環境ではローカルストレージにアバター画像を保存したいから実装を切り替える
 // 他に良い方法が思いつかなかった・・・
-// TODO:
-// 開発環境でGCSを使用したいこともあるから、シンプルにバケットを環境変数で切り替えるのが現実的？
-// チーム開発の場合、それぞれのメンバーが固有のバケットを使用すれば良さそう
 export const uploadAvatar: UploadAvatar = async (...params) => {
   if (process.env.STORAGE_TYPE === "local") {
     return await uploadAvatarOnDevelop(...params);
@@ -27,7 +27,11 @@ export const uploadAvatar: UploadAvatar = async (...params) => {
 
 // 仮実装
 const uploadAvatarOnProduct: UploadAvatar = async (req, loggedInUserId) => {
-  const bucket = storage.bucket("aptose-user-upload");
+  const bucket = storage.bucket(
+    process.env.NODE_ENV === "production"
+      ? "aptose-user-upload"
+      : "dev-aptose-user-upload"
+  );
   const filePath = `avatars/${loggedInUserId}`;
   const file = bucket.file(filePath);
   const writableStream = file.createWriteStream();
@@ -56,5 +60,18 @@ const uploadAvatarOnProduct: UploadAvatar = async (req, loggedInUserId) => {
 };
 
 const uploadAvatarOnDevelop: UploadAvatar = async (req, loggedInUserId) => {
-  return "";
+  const form = formidable({
+    uploadDir: `${__dirname}/../../../../public/user-avatars`,
+    filename: () => {
+      return `${loggedInUserId}`;
+    },
+  });
+
+  await new Promise((resolve, reject) => {
+    form.parse(req, () => {
+      resolve(undefined);
+    });
+  });
+
+  return `/user-avatars/${loggedInUserId}`;
 };
