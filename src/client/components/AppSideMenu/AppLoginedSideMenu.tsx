@@ -10,8 +10,8 @@ import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { useSumThemeLikesQuery } from "../../hooks/useSumThemeLikesQuery";
 import { useThemeDeveloperLikesQuery } from "../../hooks/useThemeDeveloperLikesQuery";
 import { UserMenuButton } from "../AppHeader/UserMenuButton";
-import { FavoriteDeveloperIcon } from "../FavoriteDeveloperIcon";
-import { FavoriteThemeIcon } from "../FavoriteThemeIcon";
+import { LikeDeveloperIcon } from "../LikeDeveloperIcon";
+import { LikeThemeIcon } from "../LikeThemeIcon";
 import { UserIcon } from "../UserIcon";
 
 type Props = { user: Session["user"]; isMenuOpen: boolean };
@@ -60,12 +60,12 @@ export const AppLoginedSideMenu: React.FC<Props> = ({ user, isMenuOpen }) => {
 
             <Flex gap={10}>
               <Flex gap={5}>
-                <FavoriteThemeIcon size="sm" />
+                <LikeThemeIcon size="sm" />
                 <Text size={20}>{sumThemeLikes}</Text>
               </Flex>
 
               <Flex gap={5}>
-                <FavoriteDeveloperIcon size="sm" />
+                <LikeDeveloperIcon size="sm" />
                 <Text size={20}>{themeDeveloperLikes}</Text>
               </Flex>
             </Flex>

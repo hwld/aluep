@@ -11,7 +11,8 @@ import {
 import { useRouter } from "next/router";
 import { MouseEventHandler } from "react";
 import { FaRegComment } from "react-icons/fa";
-import { MdComputer, MdOutlineFavorite } from "react-icons/md";
+import { MdComputer } from "react-icons/md";
+import { TbHeart } from "react-icons/tb";
 import { Theme } from "../../../server/models/theme";
 import { useSamePositionLeftClick } from "../../hooks/useSamePositionLeftClick";
 import { TextLink } from "../TextLink";
@@ -127,9 +128,10 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
           {/* いいね数 */}
           <Flex justify="flex-end" align="flex-end" gap={"xs"}>
             <Flex align="center" gap={5}>
-              <MdOutlineFavorite
+              <TbHeart
                 size="50px"
                 color={mantineTheme.colors.red[7]}
+                fill={mantineTheme.colors.red[7]}
               />
               <Text size={25} fw="bold" c="red.7">
                 {theme.likes}
