@@ -14,6 +14,9 @@ type UploadAvatar = (
 
 // 開発環境ではローカルストレージにアバター画像を保存したいから実装を切り替える
 // 他に良い方法が思いつかなかった・・・
+// TODO:
+// 開発環境でGCSを使用したいこともあるから、シンプルにバケットを環境変数で切り替えるのが現実的？
+// チーム開発の場合、それぞれのメンバーが固有のバケットを使用すれば良さそう
 export const uploadAvatar: UploadAvatar = async (...params) => {
   if (process.env.STORAGE_TYPE === "local") {
     return await uploadAvatarOnDevelop(...params);
@@ -36,11 +39,11 @@ const uploadAvatarOnProduct: UploadAvatar = async (req, loggedInUserId) => {
     ext: string;
   }>((resolve, reject) => {
     form.parse(req, (error, _, files) => {
-      if (!Object.hasOwn(files, "icon")) {
-        reject(new Error("icon not specified"));
+      if (!Object.hasOwn(files, "avatar")) {
+        reject(new Error("avatar not specified"));
       }
 
-      const icon = files.icon as formidable.File;
+      const icon = files.avatar as formidable.File;
       const ext = path.extname(icon.originalFilename || "");
       resolve({ mimeType: icon.mimetype, ext });
     });

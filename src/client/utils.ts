@@ -1,4 +1,8 @@
-import { NotificationProps, showNotification } from "@mantine/notifications";
+import {
+  NotificationProps,
+  showNotification,
+  updateNotification,
+} from "@mantine/notifications";
 import { TRPCClientError } from "@trpc/client";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
@@ -13,16 +17,40 @@ export const isTRPCClientError = (
   return e instanceof TRPCClientError;
 };
 
-export const showSuccessNotification = (props: NotificationProps) => {
+export const showLoadingNotification = (props: NotificationProps) => {
   showNotification({
+    color: "blue",
+    styles: (theme) => ({ title: { color: theme.colors.blue[7] } }),
+    ...props,
+  });
+};
+
+export const showSuccessNotification = (
+  props: NotificationProps,
+  opt?: { update: true; id: string }
+) => {
+  const notification = opt?.update
+    ? (others: NotificationProps) =>
+        updateNotification({ id: opt.id, ...others })
+    : showNotification;
+
+  notification({
     color: "green",
     styles: (theme) => ({ title: { color: theme.colors.green[7] } }),
     ...props,
   });
 };
 
-export const showErrorNotification = (props: NotificationProps) => {
-  showNotification({
+export const showErrorNotification = (
+  props: NotificationProps,
+  opt?: { update: true; id: string }
+) => {
+  const notification = opt?.update
+    ? (others: NotificationProps) =>
+        updateNotification({ id: opt.id, ...others })
+    : showNotification;
+
+  notification({
     color: "red",
     styles: (theme) => ({ title: { color: theme.colors.red[7] } }),
     ...props,

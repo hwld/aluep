@@ -1,7 +1,8 @@
-import { Box, Button, Slider } from "@mantine/core";
+import { Button, Slider, Stack } from "@mantine/core";
 import { useEffect, useRef } from "react";
 
-export const canvasSize = 300;
+export const imageCropperSize = 300;
+export const imageCropperStep = 0.01;
 
 export type ImageInfo = { image: HTMLImageElement; defaultScale?: number };
 type Props = { info: ImageInfo; onCompleteCrop: (objectURL: string) => void };
@@ -10,6 +11,7 @@ type Props = { info: ImageInfo; onCompleteCrop: (objectURL: string) => void };
 // contextを操作するときは順番が重要になってくるが、
 // 共通化などを行わずにべた書きしてるところが多いので、ちょっと変更したときに
 // いろんなところが壊れてしまう可能性がありそう。
+// あと、thumbをクリックしてもスライダーがちょっと動いてしまう。
 export const ImageCropper: React.FC<Props> = ({
   info: { image, defaultScale = 1 },
   onCompleteCrop,
@@ -33,11 +35,17 @@ export const ImageCropper: React.FC<Props> = ({
 
     // 円の外側
     ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
-    ctx.fillRect(0, 0, canvasSize, canvasSize);
+    ctx.fillRect(0, 0, imageCropperSize, imageCropperSize);
 
     ctx.fillStyle = "rgb(255, 255, 255)";
     ctx.globalCompositeOperation = "destination-out";
-    ctx.arc(canvasSize / 2, canvasSize / 2, canvasSize / 2, 0, Math.PI * 2);
+    ctx.arc(
+      imageCropperSize / 2,
+      imageCropperSize / 2,
+      imageCropperSize / 2,
+      0,
+      Math.PI * 2
+    );
     ctx.fill();
 
     ctx.restore();
@@ -51,12 +59,12 @@ export const ImageCropper: React.FC<Props> = ({
       return;
     }
 
-    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.clearRect(0, 0, imageCropperSize, imageCropperSize);
 
     ctx.save();
     drawClippingLayer(ctx);
 
-    ctx.translate(canvasSize / 2, canvasSize / 2);
+    ctx.translate(imageCropperSize / 2, imageCropperSize / 2);
     ctx.scale(value, value);
     ctx.globalCompositeOperation = "destination-over";
     ctx.drawImage(image, dragInfo.current.currentX, dragInfo.current.currentY);
@@ -89,11 +97,11 @@ export const ImageCropper: React.FC<Props> = ({
     dragInfo.current.diffX = currentX + (e.clientX - dragStartX) / scale;
     dragInfo.current.diffY = currentY + (e.clientY - dragStartY) / scale;
 
-    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.clearRect(0, 0, imageCropperSize, imageCropperSize);
     ctx.save();
     drawClippingLayer(ctx);
 
-    ctx.translate(canvasSize / 2, canvasSize / 2);
+    ctx.translate(imageCropperSize / 2, imageCropperSize / 2);
     ctx.scale(scale, scale);
     ctx.globalCompositeOperation = "destination-over";
     ctx.drawImage(image, dragInfo.current.diffX, dragInfo.current.diffY);
@@ -121,9 +129,9 @@ export const ImageCropper: React.FC<Props> = ({
 
     // 取得したい画像では切り抜きレイヤーを表示させたくないので、
     // 切り抜きレイヤーなしでcanvasを作る
-    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.clearRect(0, 0, imageCropperSize, imageCropperSize);
     ctx.save();
-    ctx.translate(canvasSize / 2, canvasSize / 2);
+    ctx.translate(imageCropperSize / 2, imageCropperSize / 2);
     ctx.scale(scaleRef.current, scaleRef.current);
     ctx.drawImage(image, dragInfo.current.currentX, dragInfo.current.currentY);
     ctx.restore();
@@ -132,10 +140,10 @@ export const ImageCropper: React.FC<Props> = ({
     onCompleteCrop(data);
 
     // 画像を取得した後に切り抜きレイヤーありで描画しなおす
-    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.clearRect(0, 0, imageCropperSize, imageCropperSize);
     ctx.save();
     drawClippingLayer(ctx);
-    ctx.translate(canvasSize / 2, canvasSize / 2);
+    ctx.translate(imageCropperSize / 2, imageCropperSize / 2);
     ctx.scale(scaleRef.current, scaleRef.current);
     ctx.globalCompositeOperation = "destination-over";
     ctx.drawImage(image, dragInfo.current.currentX, dragInfo.current.currentY);
@@ -149,12 +157,12 @@ export const ImageCropper: React.FC<Props> = ({
       return;
     }
 
-    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.clearRect(0, 0, imageCropperSize, imageCropperSize);
     ctx.save();
     drawClippingLayer(ctx);
 
     // 原点を真ん中にする
-    ctx.translate(canvasSize / 2, canvasSize / 2);
+    ctx.translate(imageCropperSize / 2, imageCropperSize / 2);
 
     const scale = scaleRef.current;
     ctx.scale(scale, scale);
@@ -162,13 +170,13 @@ export const ImageCropper: React.FC<Props> = ({
     let x = 0;
     let y = 0;
     if (image.width > image.height) {
-      y = (canvasSize / 2 - (image.height * scale) / 2) / scale;
+      y = (imageCropperSize / 2 - (image.height * scale) / 2) / scale;
     } else if (image.height > image.width) {
-      x = (canvasSize / 2 - (image.width * scale) / 2) / scale;
+      x = (imageCropperSize / 2 - (image.width * scale) / 2) / scale;
     }
 
-    x -= canvasSize / 2 / scale;
-    y -= canvasSize / 2 / scale;
+    x -= imageCropperSize / 2 / scale;
+    y -= imageCropperSize / 2 / scale;
 
     ctx.globalCompositeOperation = "destination-over";
     ctx.drawImage(image, x, y);
@@ -178,35 +186,38 @@ export const ImageCropper: React.FC<Props> = ({
     ctx.restore();
 
     return () => {
-      ctx.clearRect(0, 0, canvasSize, canvasSize);
+      ctx.clearRect(0, 0, imageCropperSize, imageCropperSize);
     };
   }, [image]);
 
   return (
-    <Box>
-      <canvas
-        ref={canvasRef}
-        width={canvasSize}
-        height={canvasSize}
-        style={{ cursor: "grab" }}
-        onMouseDown={handleDragStart}
-        onMouseMove={handleDragging}
-        onMouseUp={handleDragEnd}
-        onMouseLeave={handleDragEnd}
-      />
-      <Slider
-        defaultValue={defaultScale}
-        label={null}
-        w={300}
-        step={0.1}
-        min={0.1}
-        max={3}
-        styles={(theme) => ({
-          track: { "&::before": { backgroundColor: theme.colors.gray[3] } },
-        })}
-        onChange={handleScale}
-      />
-      <Button onClick={handleSaveImage}>確定</Button>
-    </Box>
+    <Stack w="min-content" spacing="xl">
+      <Stack spacing="md">
+        <canvas
+          ref={canvasRef}
+          width={imageCropperSize}
+          height={imageCropperSize}
+          style={{ cursor: "grab" }}
+          onMouseDown={handleDragStart}
+          onMouseMove={handleDragging}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
+        />
+        <Slider
+          defaultValue={defaultScale}
+          label={null}
+          w={300}
+          step={imageCropperStep}
+          min={0.1}
+          max={2}
+          styles={(theme) => ({
+            thumb: { borderWidth: 2 },
+            track: { "&::before": { backgroundColor: theme.colors.gray[3] } },
+          })}
+          onChange={handleScale}
+        />
+      </Stack>
+      <Button onClick={handleSaveImage}>確定する</Button>
+    </Stack>
   );
 };
