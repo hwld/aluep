@@ -17,12 +17,12 @@ export const LikingUserCard: React.FC<Props> = ({ user, appTheme }) => {
     router.push(`/users/${user.id}`);
   };
 
+  //お題をいいねしたユーザーのカード
   return (
     <Card
       miw={userCardMinWidthPx}
       w="100%"
       sx={(theme) => ({
-        display: "flex",
         gap: theme.spacing.sm,
         maxHeight: "100px",
         cursor: "pointer",
@@ -34,9 +34,11 @@ export const LikingUserCard: React.FC<Props> = ({ user, appTheme }) => {
       })}
       onClick={handleGoUserDetail}
     >
-      <Flex align="flex-start" justify="space-between">
+      <Flex justify="space-between">
         <Flex gap={10}>
+          {/* アイコン　*/}
           <UserIcon iconSrc={user.image} />
+          {/* 名前 */}
           <TextLink href={`/users/${user.id}`}>
             <Text
               sx={{
@@ -45,12 +47,15 @@ export const LikingUserCard: React.FC<Props> = ({ user, appTheme }) => {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
               }}
+              fw="bold"
+              size="lg"
             >
               {user.name}
             </Text>
           </TextLink>
         </Flex>
       </Flex>
+      {/* いいねをした日付 */}
       <Flex align="center" justify="flex-start" mt={10}>
         <Text size="sm" color="gray.5">
           いいねした日: {new Date(appTheme.createdAt).toLocaleString()}

@@ -267,6 +267,7 @@ export const themeRoute = router({
 
       const userIds = use.map(({ userId }) => userId);
 
+      //ユーザーの情報を取得する
       const usered = await prisma.user.findMany({
         where: { id: { in: userIds } },
       });
@@ -276,8 +277,7 @@ export const themeRoute = router({
         return userIds.indexOf(a.id) - userIds.indexOf(b.id);
       });
 
-      //const likestime = use.map((raw) => ({}));
-
+      //usersにceratedAt(いいねをした日)をつける
       const users = sortusers.map((user, i) => ({
         ...user,
         themeLikeCreated: new Date(use[i]?.createdAt) ?? 0,
