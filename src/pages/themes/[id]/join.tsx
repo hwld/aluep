@@ -42,13 +42,32 @@ const JoinTheme: NextPage = () => {
   const router = useRouter();
   const themeId = router.query.id as string;
   const repoUrl = router.query.repoUrl;
+  const { repoName, repoDescription, comment, reRepo } = router.query;
 
   const { theme } = useThemeQuery(themeId);
 
-  if (!theme || typeof repoUrl === "object") {
+  if (
+    !theme ||
+    typeof repoUrl === "object" ||
+    typeof repoName === "object" ||
+    typeof repoDescription === "object" ||
+    typeof reRepo === "object" ||
+    typeof comment === "object"
+  ) {
     return <NotFoundPage />;
   }
 
-  return <ThemeJoinPage theme={theme} repoUrl={repoUrl} />;
+  return (
+    <ThemeJoinPage
+      theme={theme}
+      repoUrl={repoUrl}
+      repoFormData={{
+        repoName: repoName ?? "",
+        repoDescription: repoDescription ?? "",
+        comment: comment ?? "",
+      }}
+      reRepo={reRepo}
+    />
+  );
 };
 export default JoinTheme;

@@ -1,13 +1,9 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Flex } from "@mantine/core";
-import { Controller, useForm } from "react-hook-form";
-import { MdComputer } from "react-icons/md";
-import { ThemeJoinFormData, themeJoinFormSchema } from "../../share/schema";
+import { Radio, Text } from "@mantine/core";
+import React, { useState } from "react";
+import { RepositoryFormData, ThemeJoinFormData } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
-import { AppForm } from "./AppForm";
-import { AppTextarea } from "./AppTextarea";
-import { AppTextInput } from "./AppTextInput";
-import { RepoCreateModalButton } from "./RepoCreateModalButton";
+import { ThemeJoinAlreadyForm } from "./ThemeJoinAlreadyForm";
+import { ThemeJoinNewForm } from "./ThemeJoinNewForm";
 
 type Props = {
   defaultValues?: OmitStrict<ThemeJoinFormData, "themeId">;
@@ -16,70 +12,70 @@ type Props = {
   onCancel: () => void;
   submitText: string;
   isLoading?: boolean;
+  repoFormData?: RepositoryFormData;
+  repository: string;
 };
 export const ThemeJoinForm: React.FC<Props> = ({
   themeId,
-  defaultValues = { comment: "", githubUrl: "" },
+  repository,
   onSubmit,
   onCancel,
   submitText,
-  isLoading,
+  repoFormData,
 }) => {
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<ThemeJoinFormData>({
-    defaultValues: { ...defaultValues, themeId },
-    resolver: zodResolver(themeJoinFormSchema),
-  });
+  //repositoryにはリダイレクトしない限りalreadyが必ず渡される。
+  //flgでリダイレクトしてあるか判断
+  const flg: boolean = repository === "already";
+  const [val, setVal] = useState(repository);
+  const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    setVal(e.currentTarget.value);
+  };
 
   return (
-    <AppForm
-      onSubmit={handleSubmit(onSubmit)}
-      onCancel={onCancel}
-      submitIcon={MdComputer}
-      submitText={submitText}
-      isSubmitting={isLoading}
+    <Radio.Group
+      value={val}
+      name="repository"
+      orientation="vertical"
+      label="開発に使用するGitHubリポジトリを選択する"
+      spacing="sm"
+      withAsterisk
     >
-      <Flex align="end" gap={5}>
-        <Box sx={{ flexGrow: 1 }}>
-          <Controller
-            name="githubUrl"
-            control={control}
-            render={({ field }) => {
-              return (
-                <AppTextInput
-                  required
-                  label="開発に使用するGitHubリポジトリ"
-                  error={errors.githubUrl?.message}
-                  rightSection={
-                    <RepoCreateModalButton
-                      width={70}
-                      onSetRepositoryUrl={field.onChange}
-                      themeId={themeId}
-                    />
-                  }
-                  rightSectionWidth={70}
-                  {...field}
-                />
-              );
-            }}
-          />
-        </Box>
-      </Flex>
-      <Controller
-        control={control}
-        name="comment"
-        render={({ field }) => (
-          <AppTextarea
-            label="コメント"
-            minRows={5}
-            error={errors.comment?.message}
-            {...field}
-          />
-        )}
+      {flg ? (
+        <Radio
+          value="already"
+          label="既存のリポジトリを使用する"
+          onClick={handleClick}
+        />
+      ) : (
+        <Text mt={5} size="sm" color="red">
+          GitHubリポジトリを作成することができなかったため、再ログインを行いました。
+          <br />
+          もう一度「開発する」ボタンを押してください。
+        </Text>
+      )}
+
+      <Radio
+        value="new"
+        label="新しいリポジトリを作成する"
+        onClick={handleClick}
       />
-    </AppForm>
+      {val === "already" && (
+        <ThemeJoinAlreadyForm
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+          themeId={themeId}
+          submitText={submitText}
+        />
+      )}
+
+      {val === "new" && (
+        <ThemeJoinNewForm
+          onCancel={onCancel}
+          themeId={themeId}
+          submitText={submitText}
+          repoFormData={repoFormData}
+        />
+      )}
+    </Radio.Group>
   );
 };

@@ -30,10 +30,12 @@ export const useGitHubRepoCreate = (themeId: string) => {
           });
 
           const url = new URL(
-            `${window.location.origin}/themes/${themeId}/create-repository`
+            `${window.location.origin}/themes/${themeId}/join`
           );
           url.searchParams.set("repoName", fieldValues.repoName);
           url.searchParams.set("repoDescription", fieldValues.repoDescription);
+          url.searchParams.set("comment", fieldValues.comment ?? "");
+          url.searchParams.set("reRepo", "new");
 
           signIn("github", { callbackUrl: url.toString() });
           return;
