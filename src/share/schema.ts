@@ -98,3 +98,34 @@ export const repositoryFormSchema = z.object({
   repoDescription: z.string().max(200, "説明は200文字以下で入力してください。"),
 });
 export type RepositoryFormData = z.infer<typeof repositoryFormSchema>;
+
+///////////////////////////////////////////////////////////////////////////////////
+// 通報関連
+
+const reportBaseSchema = z.object({
+  reportDetail: z.string().min(0).max(5000),
+  reportedUser: z.object({ name: z.string(), url: z.string() }).optional(),
+});
+export type ReportBase = z.infer<typeof reportBaseSchema>;
+
+export const reportThemeFormSchema = reportBaseSchema.and(
+  z.object({ targetThemeUrl: z.string() })
+);
+export type ReportThemeForm = z.infer<typeof reportThemeFormSchema>;
+
+const reportThemeCommentFormSchema = reportBaseSchema.and(
+  z.object({ targetCommentUrl: z.string() })
+);
+export type ReportThemeFormComment = z.infer<
+  typeof reportThemeCommentFormSchema
+>;
+
+export const reportDeveloperFormSchema = reportBaseSchema.and(
+  z.object({ targetDeveloeprUrl: z.string() })
+);
+export type ReportDeveloperForm = z.infer<typeof reportDeveloperFormSchema>;
+
+export const reportUserSchema = reportBaseSchema.and(
+  z.object({ targetUserUrl: z.string() })
+);
+export type ReportUserForm = z.infer<typeof reportUserSchema>;

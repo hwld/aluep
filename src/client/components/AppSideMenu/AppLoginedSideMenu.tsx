@@ -15,14 +15,13 @@ export const AppLoginedSideMenu: React.FC<Props> = ({ user, iconWidth }) => {
   return (
     <Flex
       w="100%"
-      gap="xs"
       align="center"
       justify="space-between"
       sx={() => ({
         overflow: "hidden",
       })}
     >
-      <Flex gap="xs">
+      <Flex gap="xs" miw="0">
         <Stack sx={() => ({ flexShrink: 0 })}>
           <UserIcon size={iconWidth} iconSrc={user.image} withBorder={true} />
         </Stack>
@@ -51,7 +50,7 @@ export const AppLoginedSideMenu: React.FC<Props> = ({ user, iconWidth }) => {
             <Flex gap="2px" align="center">
               <TbHeart size="20" color={colors.gray[1]} />
               <Text
-                size="xs"
+                size="sm"
                 color={colors.gray[1]}
                 sx={() => ({
                   whiteSpace: "nowrap",
@@ -66,7 +65,7 @@ export const AppLoginedSideMenu: React.FC<Props> = ({ user, iconWidth }) => {
             <Flex gap="2px" align="center">
               <TbFileText size="20" color={colors.gray[1]} />
               <Text
-                size="xs"
+                size="sm"
                 color={colors.gray[1]}
                 sx={() => ({
                   whiteSpace: "nowrap",
@@ -81,7 +80,7 @@ export const AppLoginedSideMenu: React.FC<Props> = ({ user, iconWidth }) => {
             <Flex gap="2px" align="center">
               <TbCode size="20" color={colors.gray[1]} />
               <Text
-                size="xs"
+                size="sm"
                 color={colors.gray[1]}
                 sx={() => ({
                   whiteSpace: "nowrap",
@@ -96,9 +95,9 @@ export const AppLoginedSideMenu: React.FC<Props> = ({ user, iconWidth }) => {
         </Stack>
       </Flex>
       <TbChevronDown
-        size="45"
+        size="30"
         color={colors.gray[3]}
-        style={{ paddingTop: "3px" }}
+        style={{ paddingTop: "3px", flexShrink: 0 }}
       />
     </Flex>
   );
