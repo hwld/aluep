@@ -1,6 +1,7 @@
 import { Card, Flex, Text } from "@mantine/core";
 import { AppThemeLike, User } from "@prisma/client";
 import { useRouter } from "next/router";
+import { formatDate } from "../utils";
 import { TextLink } from "./TextLink";
 import { UserIcon } from "./UserIcon";
 
@@ -58,7 +59,7 @@ export const LikingUserCard: React.FC<Props> = ({ user, appTheme }) => {
       {/* いいねをした日付 */}
       <Flex align="center" justify="flex-start" mt={10}>
         <Text size="sm" color="gray.5">
-          いいねした日: {new Date(appTheme.createdAt).toLocaleString()}
+          いいねした日: {formatDate(new Date(appTheme.createdAt))}
         </Text>
       </Flex>
     </Card>
