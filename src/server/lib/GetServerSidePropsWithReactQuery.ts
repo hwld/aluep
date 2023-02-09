@@ -27,8 +27,14 @@ export const withReactQueryGetServerSideProps = (
       params.res,
       authOptions
     );
+
+    // セッション情報をプリフェッチする
     queryClient.setQueryData(sessionQuerykey, session);
 
+    // APIを呼び出すcallerを作る
+    // const caller = appRouter.createCaller({ session });
+
+    // TODO: callerを渡したいが、callbackにどんな型を付ければよいかわからない・・・
     const result = await callback({ params, queryClient, session });
     if (result) {
       return result;

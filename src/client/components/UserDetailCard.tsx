@@ -10,8 +10,8 @@ import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { useFavoriteAnother } from "../hooks/useFavoriteAnother";
 import { useFavoriteUser } from "../hooks/useFavoriteUser";
 import { useSessionQuery } from "../hooks/useSessionQuery";
-import { FavoriteDeveloperIcon } from "./FavoriteDeveloperIcon";
-import { FavoriteThemeIcon } from "./FavoriteThemeIcon";
+import { LikeDeveloperIcon } from "./LikeDeveloperIcon";
+import { LikeThemeIcon } from "./LikeThemeIcon";
 import { UserFavoriteButton } from "./UserDetail/UserFavoriteButton";
 import { UserIcon } from "./UserIcon";
 
@@ -141,7 +141,7 @@ export function UserDetailCard({
               transition="pop"
             >
               <Flex align={"center"} wrap="wrap" direction={"column"}>
-                <FavoriteThemeIcon />
+                <LikeThemeIcon />
                 <Text>{sumThemeLikes}</Text>
               </Flex>
             </Tooltip>
@@ -154,7 +154,7 @@ export function UserDetailCard({
               transition="pop"
             >
               <Flex align={"center"} wrap="wrap" direction={"column"}>
-                <FavoriteDeveloperIcon />
+                <LikeDeveloperIcon />
                 <Text>{themeDeveloperLikes}</Text>
               </Flex>
             </Tooltip>
