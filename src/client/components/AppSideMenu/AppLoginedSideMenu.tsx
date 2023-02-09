@@ -1,77 +1,96 @@
-import {
-  Card,
-  Flex,
-  Text,
-  UnstyledButton,
-  useMantineTheme,
-} from "@mantine/core";
+import { Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { Session } from "next-auth";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { useSumThemeLikesQuery } from "../../hooks/useSumThemeLikesQuery";
-import { useThemeDeveloperLikesQuery } from "../../hooks/useThemeDeveloperLikesQuery";
-import { UserMenuButton } from "../AppHeader/UserMenuButton";
-import { LikeDeveloperIcon } from "../LikeDeveloperIcon";
-import { LikeThemeIcon } from "../LikeThemeIcon";
+import { TbCode, TbFileText, TbHeart } from "react-icons/tb";
+import { useLoggedInUserInfoQuery } from "../../hooks/useLoggedInUserInfoQuery";
 import { UserIcon } from "../UserIcon";
 
-type Props = { user: Session["user"]; isMenuOpen: boolean };
+type Props = { user: Session["user"]; iconWidth: number };
 
-export const AppLoginedSideMenu: React.FC<Props> = ({ user, isMenuOpen }) => {
-  const mantineTheme = useMantineTheme();
-  const { sumThemeLikes } = useSumThemeLikesQuery(user.id);
-  const { themeDeveloperLikes } = useThemeDeveloperLikesQuery(user.id);
-  const sum = (sumThemeLikes ?? 0) + (themeDeveloperLikes ?? 0);
+export const AppLoginedSideMenu: React.FC<Props> = ({ user, iconWidth }) => {
+  const { colors } = useMantineTheme();
+  //  TODO: ユーザーの情報を取得するためにいろんなAPIを呼んでいる。
+  // 全ての情報を取得する一つのAPIを作ったほうがよさそう。
+  const { loggedInUserInfo } = useLoggedInUserInfoQuery(user.id);
+
   return (
-    <UserMenuButton user={user}>
-      <Card h={110}>
-        <Flex align="flex-start" gap={5}>
-          <Flex direction="column" sx={{ marginLeft: -12 }} gap={3}>
-            <UnstyledButton>
-              <UserIcon iconSrc={user.image} withBorder={true} />
-            </UnstyledButton>
-            {!isMenuOpen && (
-              <Flex align="center" direction="column" sx={{ marginTop: 5 }}>
-                <MdOutlineFavoriteBorder
-                  size="20px"
-                  color={mantineTheme.colors.red[7]}
-                />
-                <Text size={14} align="center" sx={{ marginTop: -5 }}>
-                  {sum}
-                </Text>
-              </Flex>
-            )}
+    <Flex
+      w="100%"
+      gap="xs"
+      sx={() => ({
+        overflow: "hidden",
+      })}
+    >
+      <Stack sx={() => ({ flexShrink: 0 })}>
+        <UserIcon size={iconWidth} iconSrc={user.image} withBorder={true} />
+      </Stack>
+      <Stack
+        sx={() => ({
+          flexShrink: 1,
+          flexWrap: "nowrap",
+          overflow: "hidden",
+        })}
+        spacing="xs"
+      >
+        <Text
+          c="gray.1"
+          fw="bold"
+          size="sm"
+          sx={() => ({
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          })}
+        >
+          {user.name}
+        </Text>
+        {/* アイコン類 */}
+        <Flex gap="xs">
+          <Flex gap="2px" align="center">
+            <TbHeart size="20" color={colors.gray[1]} />
+            <Text
+              size="xs"
+              color={colors.gray[1]}
+              sx={() => ({
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              })}
+            >
+              {loggedInUserInfo?.allLikes ?? 0}
+            </Text>
           </Flex>
 
-          <Flex direction="column" gap={20}>
-            <Flex w={230}>
-              <Text
-                size={15}
-                sx={() => {
-                  return {
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  };
-                }}
-              >
-                {user.name}
-              </Text>
-            </Flex>
+          <Flex gap="2px" align="center">
+            <TbFileText size="20" color={colors.gray[1]} />
+            <Text
+              size="xs"
+              color={colors.gray[1]}
+              sx={() => ({
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              })}
+            >
+              {loggedInUserInfo?.themes ?? 0}
+            </Text>
+          </Flex>
 
-            <Flex gap={10}>
-              <Flex gap={5}>
-                <LikeThemeIcon size="sm" />
-                <Text size={20}>{sumThemeLikes}</Text>
-              </Flex>
-
-              <Flex gap={5}>
-                <LikeDeveloperIcon size="sm" />
-                <Text size={20}>{themeDeveloperLikes}</Text>
-              </Flex>
-            </Flex>
+          <Flex gap="2px" align="center">
+            <TbCode size="20" color={colors.gray[1]} />
+            <Text
+              size="xs"
+              color={colors.gray[1]}
+              sx={() => ({
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              })}
+            >
+              {loggedInUserInfo?.developers ?? 0}
+            </Text>
           </Flex>
         </Flex>
-      </Card>
-    </UserMenuButton>
+      </Stack>
+    </Flex>
   );
 };

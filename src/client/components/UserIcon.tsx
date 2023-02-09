@@ -45,6 +45,7 @@ export const UserIcon: React.FC<UserIconProps> = ({
         aria-label="user-icon"
         src={iconSrc}
         size={size}
+        bg="gray.1"
         sx={(theme) => ({
           borderRadius: "100%",
           transition: "all 150ms",

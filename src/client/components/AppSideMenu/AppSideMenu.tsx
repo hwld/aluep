@@ -1,4 +1,4 @@
-import { Box, Flex, Stack } from "@mantine/core";
+import { Box, Flex, Stack, UnstyledButton } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
@@ -12,6 +12,7 @@ import {
   MdSearch,
 } from "react-icons/md";
 import { useRequireLoginModal } from "../../contexts/RequireLoginModalProvider";
+import { UserMenuButton } from "../AppHeader/UserMenuButton";
 import { AppLoginedSideMenu } from "./AppLoginedSideMenu";
 import { SideMenuAppTitle } from "./SideMenuAppTitle";
 import { SideMenuItem } from "./SideMenuItem";
@@ -29,7 +30,6 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
   const { openLoginModal } = useRequireLoginModal();
 
   const isWideDisplay = useMediaQuery("(min-width: 1200px)", true);
-
   const isMenuOpen = isWideDisplay && isOpen;
 
   const handleClickCreateTheme = (e: SyntheticEvent) => {
@@ -49,7 +49,15 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
   };
 
   return (
-    <Box h="100vh" p="md" sx={{ position: "sticky", top: 0, zIndex: 2 }}>
+    <Box
+      h="100vh"
+      p="md"
+      sx={() => ({
+        position: "sticky",
+        top: 0,
+        zIndex: 2,
+      })}
+    >
       <Box
         w={isMenuOpen ? 300 : barMinWidth}
         h="100%"
@@ -61,6 +69,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
           justifyContent: "space-between",
           borderRadius: theme.radius.lg,
           transition: "all 200ms",
+          overflow: "auto",
         })}
       >
         <Stack>
@@ -115,20 +124,29 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
             />
           </Stack>
         </Stack>
-        <Flex mb="sm">
-          {user ? (
-            //TODO: 広げたときにユーザーの情報がある程度表示されるようにする
-
-            <AppLoginedSideMenu user={user} isMenuOpen={isMenuOpen} />
-          ) : (
-            <SideMenuItem
-              icon={IoMdLogIn}
-              label="ログイン"
-              onClick={handleLogin}
-              tooltip={!isMenuOpen}
-            />
-          )}
-        </Flex>
+        {user ? (
+          <UserMenuButton user={user}>
+            <UnstyledButton
+              bg="red.8"
+              p={`20px ${barPadding}px 20px ${barPadding}px`}
+              m={`0 -${barPadding}px -${barPadding}px -${barPadding}px`}
+              sx={(theme) => ({
+                display: "flex",
+                borderBottomLeftRadius: theme.radius.lg,
+                borderBottomRightRadius: theme.radius.lg,
+              })}
+            >
+              <AppLoginedSideMenu iconWidth={iconWidth} user={user} />
+            </UnstyledButton>
+          </UserMenuButton>
+        ) : (
+          <SideMenuItem
+            icon={IoMdLogIn}
+            label="ログイン"
+            onClick={handleLogin}
+            tooltip={!isMenuOpen}
+          />
+        )}
       </Box>
     </Box>
   );
