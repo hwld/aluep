@@ -1,11 +1,14 @@
 import { Card, Stack, Title } from "@mantine/core";
-import { SyntheticEvent } from "react";
+import { useClickOutside } from "@mantine/hooks";
+import { useRouter } from "next/router";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { ThemeCommentFormData } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { useCyclicRandom } from "../hooks/useCyclicRandom";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeComments } from "../hooks/useThemeComments";
+import { extractHash } from "../utils";
 import { ThemeCommentCard } from "./ThemeCommentCard";
 import { ThemeCommentForm } from "./ThemeCommentForm";
 
@@ -14,7 +17,20 @@ type Props = { themeId: string; themeOwnerId: string };
 /** お題へのコメント */
 export const ThemeComments: React.FC<Props> = ({ themeId, themeOwnerId }) => {
   const { session } = useSessionQuery();
+  const router = useRouter();
   const { openLoginModal } = useRequireLoginModal();
+  const [focusedCommentId, setFocusedCommentId] = useState("");
+
+  const commentsRef = useClickOutside(async () => {
+    // フラグメントを削除する
+    // フラグメントで指定されているカードの外側のクリックでフラグメントを削除したかったのだが、
+    // 別のコメントの返信元へのリンクをクリックすると、そちらでもrouter.replaceを使用しているため、
+    // routingがキャンセルされてエラーが出ることがあるため、コメント全体の外側のクリックでフラグメントを削除するようにしている
+    await router.replace(router.asPath.split("#")[0], undefined, {
+      shallow: true,
+      scroll: false,
+    });
+  });
 
   // お題のコメント操作
   const { themeComments, postCommentMutation, deleteCommentMutation } =
@@ -68,13 +84,23 @@ export const ThemeComments: React.FC<Props> = ({ themeId, themeOwnerId }) => {
     );
   };
 
+  // フラグメントで指定されているコメントを設定する
+  // SSRではフラグメントを取得できないので、クライアント側だけで設定されるように
+  // useEffectを使用する
+  useEffect(() => {
+    // ThemeCommentCardがid={comment.id}を設定しなければ
+    // 動かない
+    const id = extractHash(router.asPath);
+    setFocusedCommentId(id);
+  }, [router.asPath]);
+
   return (
     <Stack>
       <Title mt={30} order={4}>
         投稿されたコメント
       </Title>
       {themeComments && themeComments.length > 0 && (
-        <Stack spacing="xs">
+        <Stack spacing="xs" ref={commentsRef}>
           {themeComments.map((comment) => {
             return (
               <ThemeCommentCard
@@ -88,6 +114,7 @@ export const ThemeComments: React.FC<Props> = ({ themeId, themeOwnerId }) => {
                 isDeleting={deleteCommentMutation.isLoading}
                 loggedInUserId={session?.user.id}
                 themeOwnerId={themeOwnerId}
+                focused={focusedCommentId === comment.id}
               />
             );
           })}

@@ -64,3 +64,7 @@ export const objectKeys = <T extends {}>(obj: T): (keyof T)[] => {
 export const formatDate = (date: Date) => {
   return format(date, "yyyy年MM月dd日 H:m", { locale: ja });
 };
+
+export const extractHash = (path: string) => {
+  return path.split("#")[1] ?? "";
+};

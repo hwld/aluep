@@ -8,6 +8,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useRouter } from "next/router";
 import { BiTrashAlt } from "react-icons/bi";
 import { FaRegComment, FaUserAlt } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
@@ -34,7 +35,9 @@ type Props = {
   isDeleting?: boolean;
   loggedInUserId?: string;
   themeOwnerId: string;
+  focused?: boolean;
 };
+
 export const ThemeCommentCard: React.FC<Props> = ({
   comment,
   inReplyToUserName,
@@ -43,6 +46,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
   isDeleting = false,
   loggedInUserId,
   themeOwnerId,
+  focused = false,
 }) => {
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
@@ -51,6 +55,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
     { close: closeDeleteModal, open: openDeleteModal },
   ] = useDisclosure(false);
   const mantineTheme = useMantineTheme();
+  const router = useRouter();
 
   const [isReplyFormOpen, { close: closeReplyForm, open: openReplyForm }] =
     useDisclosure(false);
@@ -82,19 +87,23 @@ export const ThemeCommentCard: React.FC<Props> = ({
   };
 
   // このコメントの返信元コメントにスクロールする
-  // #[comment.inReplyToCommentId]に遷移させることもできるが、リロードしたときに
-  // そのコメントまでスクロールさせたくないのでElementを直接触る。
-  const handleScrollReplySource = () => {
+  const handleScrollReplySource = async () => {
     if (comment.inReplyToCommentId) {
-      const element = document.querySelector(`#${comment.inReplyToCommentId}`);
-      element?.scrollIntoView();
+      await router.replace({ hash: comment.inReplyToCommentId }, undefined, {
+        shallow: true,
+      });
     }
   };
 
   return (
     <>
       <Stack spacing="xs">
-        <Card id={comment.id}>
+        <Card
+          id={comment.id}
+          sx={(theme) => ({
+            boxShadow: focused ? `0 0 0 2px ${theme.colors.red[7]}` : "",
+          })}
+        >
           <Stack spacing="xs">
             <Flex gap="xs">
               <UserIconLink
