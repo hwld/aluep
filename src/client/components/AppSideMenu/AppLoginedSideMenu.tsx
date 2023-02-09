@@ -1,10 +1,4 @@
-import {
-  Flex,
-  Stack,
-  Text,
-  UnstyledButton,
-  useMantineTheme,
-} from "@mantine/core";
+import { Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { Session } from "next-auth";
 import { TbChevronDown, TbCode, TbFileText, TbHeart } from "react-icons/tb";
 import { useLoggedInUserInfoQuery } from "../../hooks/useLoggedInUserInfoQuery";
@@ -101,24 +95,11 @@ export const AppLoginedSideMenu: React.FC<Props> = ({ user, iconWidth }) => {
           </Flex>
         </Stack>
       </Flex>
-      <UnstyledButton
-        sx={(theme) => ({
-          borderRadius: "50%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          transition: "background-color 150ms",
-          "&:hover": {
-            backgroundColor: theme.fn.rgba("#000", 0.1),
-          },
-        })}
-      >
-        <TbChevronDown
-          size="45"
-          color={colors.gray[3]}
-          style={{ paddingTop: "3px" }}
-        />
-      </UnstyledButton>
+      <TbChevronDown
+        size="45"
+        color={colors.gray[3]}
+        style={{ paddingTop: "3px" }}
+      />
     </Flex>
   );
 };
