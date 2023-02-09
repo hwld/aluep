@@ -123,6 +123,7 @@ export const UserIconFormDialog: React.FC<Props> = ({
           onChange={handleChangeIconFile}
           type="file"
           hidden
+          accept="image/*"
         />
         <UserIcon iconSrc={userIconUrl} size="xl" />
         <Text size="sm" color="gray.6">

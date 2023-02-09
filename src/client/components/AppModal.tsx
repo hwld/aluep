@@ -8,6 +8,7 @@ export const AppModal: React.FC<ModalProps> = ({ children, ...props }) => {
     <Box sx={{ display: "none" }} onClick={stopPropagation}>
       <Modal
         exitTransitionDuration={150}
+        overlayOpacity={0.4}
         styles={(theme) => ({
           title: {
             fontSize: theme.fontSizes.xl,
