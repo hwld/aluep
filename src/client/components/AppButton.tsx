@@ -16,10 +16,10 @@ export const AppButton: React.FC<AppButtonProps> = forwardRef<
   HTMLButtonElement,
   AppButtonProps
 >(({ children, ...props }, ref) => {
-  // asLink,hrefがあるときに無条件で渡さないようにする
+  // asLink,href, blankがあるときに無条件で渡さないようにする
   // どうやって型エラーを無くすのがわからないので一時的に...
   // @ts-ignore
-  const { asLink, href, ...otherProps } = props;
+  const { asLink, href, blank, ...otherProps } = props;
 
   // なぜか型が間違っていると言われてしまうので無理やり型を合わせる
   const polymorphicProps = useMemo(() => {
