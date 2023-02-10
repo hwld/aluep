@@ -10,7 +10,7 @@ import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServ
 import { appRouter } from "../../../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session }) => {
+  async ({ params: { query }, queryClient, session, callerContext }) => {
     const { id: themeId, page } = query;
     if (typeof themeId !== "string") {
       return { notFound: true };
@@ -19,7 +19,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       throw new Error();
     }
 
-    const caller = appRouter.createCaller({ session });
+    const caller = appRouter.createCaller(callerContext);
     const theme = await caller.theme.get({ themeId });
     if (!theme) {
       return { notFound: true };

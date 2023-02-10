@@ -1,12 +1,16 @@
 import { IncomingWebhook, IncomingWebhookSendArguments } from "@slack/webhook";
+import { IncomingMessage } from "http";
 import { HttpsProxyAgent } from "https-proxy-agent";
-import { NextApiRequest } from "next";
 import { Routes } from "../../share/routes";
 import { ReportBaseForm } from "../../share/schema";
 
 type ReportedUser = { url: string; name: string } | undefined;
 export const buildReportedUser = (
-  req: NextApiRequest,
+  req: IncomingMessage & {
+    cookies: Partial<{
+      [key: string]: string;
+    }>;
+  },
   user?: { id: string; name?: string | undefined | null } | undefined
 ): ReportedUser => {
   return user

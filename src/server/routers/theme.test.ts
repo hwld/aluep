@@ -1,4 +1,5 @@
 import { addYears } from "date-fns";
+import { createRequest } from "node-mocks-http";
 import { prisma } from "../prismadb";
 import { appRouter } from "./_app";
 
@@ -11,6 +12,7 @@ describe("server/routers/theme.ts", () => {
         user: createdUser,
         expires: addYears(new Date(), 1).toUTCString(),
       },
+      req: createRequest(),
     });
 
     const title = "test-title";

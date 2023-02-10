@@ -12,13 +12,13 @@ import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetS
 import { appRouter } from "../../../../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session }) => {
+  async ({ params: { query }, queryClient, callerContext }) => {
     const { id: themeId, developerId } = query;
     if (typeof themeId !== "string" || typeof developerId !== "string") {
       return { notFound: true };
     }
 
-    const caller = appRouter.createCaller({ session });
+    const caller = appRouter.createCaller(callerContext);
 
     // お題、開発者が存在しない場合は404にする
     const theme = await caller.theme.get({ themeId });

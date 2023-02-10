@@ -8,6 +8,7 @@ import { Session, unstable_getServerSession } from "next-auth";
 import superjson from "superjson";
 import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
+import { Context } from "../contexts";
 
 export type PageProps = { stringifiedDehydratedState?: string };
 
@@ -15,6 +16,7 @@ type Callback = (params: {
   params: GetServerSidePropsContext;
   queryClient: QueryClient;
   session: Session | null;
+  callerContext: Context;
 }) => Promise<GetServerSidePropsResult<PageProps> | void>;
 
 export const withReactQueryGetServerSideProps = (
@@ -31,11 +33,14 @@ export const withReactQueryGetServerSideProps = (
     // セッション情報をプリフェッチする
     queryClient.setQueryData(sessionQuerykey, session);
 
-    // APIを呼び出すcallerを作る
-    // const caller = appRouter.createCaller({ session });
+    const result = await callback({
+      params,
+      queryClient,
+      session,
+      callerContext: { session, req: params.req },
+    });
 
-    // TODO: callerを渡したいが、callbackにどんな型を付ければよいかわからない・・・
-    const result = await callback({ params, queryClient, session });
+    // callbackが戻り値を持っていればそれをそのまま返す
     if (result) {
       return result;
     }

@@ -16,8 +16,8 @@ import {
 } from "../../share/schema";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session }) => {
-    const caller = appRouter.createCaller({ session });
+  async ({ params: { query }, queryClient, callerContext }) => {
+    const caller = appRouter.createCaller(callerContext);
 
     // URLパラメータからkeyword,tagIds,order,pageを取得する
     const keyword = urlParamToString(query.keyword, "");

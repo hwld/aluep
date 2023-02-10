@@ -10,7 +10,7 @@ import { appRouter } from "../../../server/routers/_app";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session }) => {
+  async ({ params: { query }, queryClient, session, callerContext }) => {
     if (!session) {
       return { redirect: { destination: "/", permanent: false } };
     }
@@ -20,7 +20,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    const caller = appRouter.createCaller({ session });
+    const caller = appRouter.createCaller(callerContext);
     const theme = await caller.theme.get({ themeId });
     if (!theme) {
       return { notFound: true };

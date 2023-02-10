@@ -10,8 +10,8 @@ import { withReactQueryGetServerSideProps } from "../server/lib/GetServerSidePro
 import { appRouter } from "../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ queryClient, session }) => {
-    const caller = appRouter.createCaller({ session });
+  async ({ queryClient, callerContext }) => {
+    const caller = appRouter.createCaller(callerContext);
 
     // ランキング
     await queryClient.prefetchQuery(top10LikesThemesInThisMonthQueryKey, () =>

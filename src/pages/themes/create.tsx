@@ -4,12 +4,12 @@ import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSide
 import { appRouter } from "../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ queryClient, session }) => {
+  async ({ queryClient, session, callerContext }) => {
     if (!session) {
       return { redirect: { destination: "/", permanent: false } };
     }
 
-    const caller = appRouter.createCaller({ session });
+    const caller = appRouter.createCaller(callerContext);
     await queryClient.prefetchQuery(allTagsQueryKey, () =>
       caller.theme.getAllTags()
     );

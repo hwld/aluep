@@ -7,8 +7,8 @@ import { urlParamToString } from "../../server/lib/urlParam";
 import { appRouter } from "../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session }) => {
-    const caller = appRouter.createCaller({ session });
+  async ({ params: { query }, queryClient, callerContext }) => {
+    const caller = appRouter.createCaller(callerContext);
 
     const userName = urlParamToString(query.userName, "");
 

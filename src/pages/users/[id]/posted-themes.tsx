@@ -11,8 +11,8 @@ import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerS
 import { appRouter } from "../../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session }) => {
-    const caller = appRouter.createCaller({ session });
+  async ({ params: { query }, queryClient, session, callerContext }) => {
+    const caller = appRouter.createCaller(callerContext);
     const { page } = query;
 
     const { id: userId } = query;

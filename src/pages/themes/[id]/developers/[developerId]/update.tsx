@@ -13,7 +13,7 @@ import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetS
 import { appRouter } from "../../../../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session }) => {
+  async ({ params: { query }, queryClient, session, callerContext }) => {
     if (!session) {
       return { redirect: { destination: "/", permanent: false } };
     }
@@ -23,7 +23,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    const caller = appRouter.createCaller({ session });
+    const caller = appRouter.createCaller(callerContext);
     const theme = await caller.theme.get({ themeId });
     const developer = await caller.themeDeveloper.get({ developerId });
 

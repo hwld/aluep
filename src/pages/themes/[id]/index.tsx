@@ -12,7 +12,7 @@ import { appRouter } from "../../../server/routers/_app";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session }) => {
+  async ({ params: { query }, queryClient, session, callerContext }) => {
     const { id: themeId, page } = query;
 
     if (typeof themeId !== "string") {
@@ -23,7 +23,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       throw new Error();
     }
 
-    const caller = appRouter.createCaller({ session });
+    const caller = appRouter.createCaller(callerContext);
 
     // テーマがなければ404に飛ばす
     const theme = await caller.theme.get({ themeId });
