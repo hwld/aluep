@@ -23,6 +23,7 @@ export const ReportForm: React.FC<Props> = ({
     handleSubmit,
     formState: { errors },
   } = useForm<ReportBaseForm>({
+    defaultValues: { reportDetail: "" },
     resolver: zodResolver(reportBaseFormSchema),
   });
 

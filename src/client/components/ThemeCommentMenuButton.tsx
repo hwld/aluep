@@ -1,4 +1,4 @@
-import { ActionIcon, Divider, Menu, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Divider, Menu } from "@mantine/core";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 import { BiTrashAlt } from "react-icons/bi";
@@ -36,7 +36,6 @@ export const ThemeCommentMenuButton: React.FC<Props> = ({
   isDeleting,
   isOwner,
 }) => {
-  const { colors } = useMantineTheme();
   const clipboard = useClipboard();
 
   const [
@@ -71,7 +70,7 @@ export const ThemeCommentMenuButton: React.FC<Props> = ({
   const handleSubmitReportThemeComment = (data: ReportBaseForm) => {
     reportThemeCommentMutation.mutate({
       reportDetail: data.reportDetail,
-      targetCommentUrl: `${window.location.origin}/${Routes.themeDetail(
+      targetCommentUrl: `${window.location.origin}/${Routes.theme(
         themeId
       )}#${commentId}`,
     });
@@ -79,7 +78,7 @@ export const ThemeCommentMenuButton: React.FC<Props> = ({
 
   const handleCopyLink = () => {
     clipboard.copy(
-      `${window.location.origin}/${Routes.themeDetail(themeId)}#${commentId}`
+      `${window.location.origin}/${Routes.theme(themeId)}#${commentId}`
     );
   };
 
@@ -120,7 +119,7 @@ export const ThemeCommentMenuButton: React.FC<Props> = ({
               リンクをコピーする
             </MenuItem>
             <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
-              コメントを通報する
+              通報する
             </MenuItem>
           </>
         </MenuDropdown>

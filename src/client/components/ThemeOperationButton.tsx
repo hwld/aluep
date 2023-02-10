@@ -9,6 +9,7 @@ import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import { Theme } from "../../server/models/theme";
 import { RouterInputs } from "../../server/trpc";
+import { Routes } from "../../share/routes";
 import { ReportBaseForm } from "../../share/schema";
 import { trpc } from "../trpc";
 import { showErrorNotification, showSuccessNotification } from "../utils";
@@ -84,7 +85,10 @@ export const ThemeOperationButton: React.FC<Props> = ({
   const handleSubmitReportTheme = (data: ReportBaseForm) => {
     reportThemeMutation.mutate({
       reportDetail: data.reportDetail,
-      targetTheme: { url: window.location.href, title: theme.title },
+      targetTheme: {
+        url: `${window.location.origin}/${Routes.theme(theme.id)}`,
+        title: theme.title,
+      },
     });
   };
 
@@ -128,7 +132,7 @@ export const ThemeOperationButton: React.FC<Props> = ({
             </>
           )}
           <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
-            お題を通報する
+            通報する
           </MenuItem>
         </MenuDropdown>
       </AppMenu>

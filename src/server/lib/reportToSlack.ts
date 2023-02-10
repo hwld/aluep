@@ -11,7 +11,7 @@ export const buildReportedUser = (
 ): ReportedUser => {
   return user
     ? {
-        url: `${req.headers.origin}/${Routes.userDetail(user.id)}`,
+        url: `${req.headers.origin}/${Routes.user(user.id)}`,
         name: user.name || "不明なユーザー名",
       }
     : undefined;

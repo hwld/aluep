@@ -62,7 +62,9 @@ export const reportRouter = router({
         fields: [
           {
             name: "通報対象の開発情報",
-            value: `<${input.targetDeveloepr.url}|${input.targetDeveloepr.name}>`,
+            value: `<${input.targetDeveloepr.url}|${
+              input.targetDeveloepr.name ?? "不明なユーザー名"
+            }>`,
           },
         ],
       });

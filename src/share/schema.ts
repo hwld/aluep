@@ -106,7 +106,7 @@ export const reportBaseFormSchema = z.object({
   reportDetail: z
     .string()
     .min(1, "通報の内容を入力してください。")
-    .max(5000, "通報の内容は5000文字以下で入力してください。"),
+    .max(2000, "通報の内容は2000文字以下で入力してください。"),
 });
 export type ReportBaseForm = z.infer<typeof reportBaseFormSchema>;
 
@@ -123,11 +123,18 @@ export type ReportThemeFormComment = z.infer<
 >;
 
 export const reportDeveloperFormSchema = reportBaseFormSchema.and(
-  z.object({ targetDeveloepr: z.object({ url: z.string(), name: z.string() }) })
+  z.object({
+    targetDeveloepr: z.object({
+      url: z.string(),
+      name: z.string().nullable().optional(),
+    }),
+  })
 );
 export type ReportDeveloperForm = z.infer<typeof reportDeveloperFormSchema>;
 
 export const reportUserSchema = reportBaseFormSchema.and(
-  z.object({ targetUser: z.object({ url: z.string(), name: z.string() }) })
+  z.object({
+    targetUser: z.object({ url: z.string(), name: z.string().optional() }),
+  })
 );
 export type ReportUserForm = z.infer<typeof reportUserSchema>;
