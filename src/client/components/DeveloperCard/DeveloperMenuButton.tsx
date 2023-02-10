@@ -92,7 +92,7 @@ export const DeveloperMenuButton: React.FC<Props> = ({
     reportDeveloperMutation.mutate({
       reportDetail: data.reportDetail,
       targetDeveloepr: {
-        url: `${window.location.origin}/${Routes.developer(
+        url: `${window.location.origin}${Routes.developer(
           theme.id,
           developer.id
         )}`,

@@ -86,7 +86,7 @@ export const ThemeOperationButton: React.FC<Props> = ({
     reportThemeMutation.mutate({
       reportDetail: data.reportDetail,
       targetTheme: {
-        url: `${window.location.origin}/${Routes.theme(theme.id)}`,
+        url: `${window.location.origin}${Routes.theme(theme.id)}`,
         title: theme.title,
       },
     });

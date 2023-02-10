@@ -70,7 +70,7 @@ export const ThemeCommentMenuButton: React.FC<Props> = ({
   const handleSubmitReportThemeComment = (data: ReportBaseForm) => {
     reportThemeCommentMutation.mutate({
       reportDetail: data.reportDetail,
-      targetCommentUrl: `${window.location.origin}/${Routes.theme(
+      targetCommentUrl: `${window.location.origin}${Routes.theme(
         themeId
       )}#${commentId}`,
     });
@@ -78,7 +78,7 @@ export const ThemeCommentMenuButton: React.FC<Props> = ({
 
   const handleCopyLink = () => {
     clipboard.copy(
-      `${window.location.origin}/${Routes.theme(themeId)}#${commentId}`
+      `${window.location.origin}${Routes.theme(themeId)}#${commentId}`
     );
   };
 

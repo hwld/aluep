@@ -49,7 +49,7 @@ export const UserDetailMenuButton: React.FC<Props> = ({ user }) => {
     reportUserMutation.mutate({
       reportDetail: data.reportDetail,
       targetUser: {
-        url: `${window.location.origin}/${Routes.user(user.id)}`,
+        url: `${window.location.origin}${Routes.user(user.id)}`,
         name: user.name,
       },
     });
