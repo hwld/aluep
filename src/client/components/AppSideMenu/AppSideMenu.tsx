@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 import { IoMdLogIn } from "react-icons/io";
 import {
-  MdHome,
+  MdMailOutline,
+  MdOutlineHome,
   MdOutlinePersonSearch,
   MdPostAdd,
   MdSearch,
@@ -26,7 +27,7 @@ const iconWidth = barMinWidth - barPadding * 2;
 
 export const AppSideMenu: React.FC<Props> = ({ user }) => {
   const router = useRouter();
-  const [isOpen, { toggle }] = useDisclosure(true);
+  const [isOpen, { toggle }] = useDisclosure(false);
   const { openLoginModal } = useRequireLoginModal();
 
   const isWideDisplay = useMediaQuery("(min-width: 1200px)", true);
@@ -90,7 +91,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
           </Flex>
           <Stack spacing={10}>
             <SideMenuItem
-              icon={MdHome}
+              icon={MdOutlineHome}
               label="ホーム"
               asLink
               href="/"
@@ -120,6 +121,14 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               asLink
               href="/users/search"
               active={router.route === "/users/search"}
+              tooltip={!isMenuOpen}
+            />
+            <SideMenuItem
+              icon={MdMailOutline}
+              label="お問い合わせ"
+              asLink
+              href={process.env.NEXT_PUBLIC_CONTACT_URL || "/500"}
+              blank={true}
               tooltip={!isMenuOpen}
             />
           </Stack>

@@ -10,7 +10,7 @@ type Props = {
   label: string;
   tooltip?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-} & ({ asLink?: false } | { asLink: true; href: string });
+} & ({ asLink?: false } | { asLink: true; href: string; blank?: boolean });
 
 export const SideMenuItem: React.FC<Props> = ({
   label,
