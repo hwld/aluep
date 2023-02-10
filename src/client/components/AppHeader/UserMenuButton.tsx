@@ -36,7 +36,7 @@ export const UserMenuButton: React.FC<Props> = ({ user, children }) => {
             {user.name}
           </Text>
         </Menu.Label>
-        <Divider color="gray.3" />
+        <Divider color="gray.3" my="xs" />
         <Space mt="xs" />
         <MenuLinkItem
           icon={<RiAccountCircleLine size={20} />}

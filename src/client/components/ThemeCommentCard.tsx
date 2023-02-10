@@ -9,7 +9,6 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/router";
-import { BiTrashAlt } from "react-icons/bi";
 import { FaRegComment, FaUserAlt } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
@@ -20,11 +19,12 @@ import { CardActionIcon } from "../CardActionIcon";
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { formatDate } from "../utils";
-import { AppConfirmModal } from "./AppConfirmModal";
+import { ThemeCommentMenuButton } from "./ThemeCommentMenuButton";
 import { ThemeCommentReplyForm } from "./ThemeCommentReplyForm";
 import { UserIconLink } from "./UserIconLink";
 
 type Props = {
+  themeId: string;
   comment: ThemeComment;
   inReplyToUserName?: string;
   onReplyComment: (
@@ -33,27 +33,24 @@ type Props = {
   ) => void;
   onDeleteComment: (id: string) => void;
   isDeleting?: boolean;
-  loggedInUserId?: string;
+  isOwner: boolean;
   themeOwnerId: string;
   focused?: boolean;
 };
 
 export const ThemeCommentCard: React.FC<Props> = ({
+  themeId,
   comment,
   inReplyToUserName,
   onReplyComment,
   onDeleteComment,
   isDeleting = false,
-  loggedInUserId,
+  isOwner,
   themeOwnerId,
   focused = false,
 }) => {
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
-  const [
-    isDeleteModalOpen,
-    { close: closeDeleteModal, open: openDeleteModal },
-  ] = useDisclosure(false);
   const mantineTheme = useMantineTheme();
   const router = useRouter();
 
@@ -100,26 +97,38 @@ export const ThemeCommentCard: React.FC<Props> = ({
       <Stack spacing="xs">
         <Card
           id={comment.id}
+          pos="static"
           sx={(theme) => ({
             boxShadow: focused ? `0 0 0 2px ${theme.colors.red[7]}` : "",
           })}
         >
           <Stack spacing="xs">
-            <Flex gap="xs">
-              <UserIconLink
-                userId={comment.fromUser.id}
-                iconSrc={comment.fromUser.image}
-              />
+            <Flex gap="0" justify="space-between">
+              <Flex gap="xs" align="flex-start">
+                <UserIconLink
+                  userId={comment.fromUser.id}
+                  iconSrc={comment.fromUser.image}
+                />
+                <Box>
+                  {comment.fromUser.id === themeOwnerId && (
+                    <Flex gap={5} align="center">
+                      <FaUserAlt size={14} fill={mantineTheme.colors.red[7]} />
+                      <Text color="red.7" size="xs">
+                        投稿者
+                      </Text>
+                    </Flex>
+                  )}
+                  <Text c="gray.5">{comment.fromUser.name}</Text>
+                </Box>
+              </Flex>
               <Box>
-                {comment.fromUser.id === themeOwnerId && (
-                  <Flex gap={5} align="center">
-                    <FaUserAlt size={14} fill={mantineTheme.colors.red[7]} />
-                    <Text color="red.7" size="xs">
-                      投稿者
-                    </Text>
-                  </Flex>
-                )}
-                <Text>{comment.fromUser.name}</Text>
+                <ThemeCommentMenuButton
+                  themeId={themeId}
+                  commentId={comment.id}
+                  isOwner={isOwner}
+                  onDeleteComment={handleDelete}
+                  isDeleting={isDeleting}
+                />
               </Box>
             </Flex>
             {/* 返信コメントは返信元が削除されている場合はnullになる */}
@@ -165,11 +174,6 @@ export const ThemeCommentCard: React.FC<Props> = ({
                 <CardActionIcon color="gray.5" onClick={handleOpenReplyForm}>
                   <FaRegComment size="70%" />
                 </CardActionIcon>
-                {loggedInUserId === comment.fromUser.id && (
-                  <CardActionIcon color="gray.5" onClick={openDeleteModal}>
-                    <BiTrashAlt size="80%" />
-                  </CardActionIcon>
-                )}
               </Flex>
               <Text c="gray.5">{formatDate(comment.createdAt)}</Text>
             </Flex>
@@ -192,16 +196,6 @@ export const ThemeCommentCard: React.FC<Props> = ({
           </Card>
         )}
       </Stack>
-      <AppConfirmModal
-        title="コメントの削除"
-        message={<>コメントを削除してもよろしいですか？</>}
-        opened={isDeleteModalOpen}
-        onClose={closeDeleteModal}
-        onConfirm={handleDelete}
-        isConfirming={isDeleting}
-        confirmIcon={BiTrashAlt}
-        confirmText="削除する"
-      />
     </>
   );
 };

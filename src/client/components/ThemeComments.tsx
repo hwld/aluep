@@ -108,13 +108,14 @@ export const ThemeComments: React.FC<Props> = ({ themeId, themeOwnerId }) => {
               <ThemeCommentCard
                 key={comment.id}
                 comment={comment}
+                themeId={themeId}
                 inReplyToUserName={getUserNameByCommentId(
                   comment.inReplyToCommentId
                 )}
                 onReplyComment={handleSubmitReply}
                 onDeleteComment={handleDeleteComment}
                 isDeleting={deleteCommentMutation.isLoading}
-                loggedInUserId={session?.user.id}
+                isOwner={session?.user.id === comment.fromUser.id}
                 themeOwnerId={themeOwnerId}
                 focused={focusedCommentId === comment.id}
               />

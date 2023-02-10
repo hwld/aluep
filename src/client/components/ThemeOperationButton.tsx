@@ -18,7 +18,7 @@ import { MenuDropdown } from "./AppMenu/MenuDropdown";
 import { MenuItem } from "./AppMenu/MenuItem";
 import { MenuLinkItem } from "./AppMenu/MenuLinkItem";
 import { AppModal } from "./AppModal";
-import { ReportThemeForm } from "./ReportThemeForm";
+import { ReportForm } from "./ReportForm";
 
 type Props = { theme: Theme; isThemeOwner: boolean };
 export const ThemeOperationButton: React.FC<Props> = ({
@@ -76,7 +76,7 @@ export const ThemeOperationButton: React.FC<Props> = ({
     onError: () => {
       showErrorNotification({
         title: "お題の通報",
-        message: "お題を通報できませんでした",
+        message: "お題を通報できませんでした。",
       });
     },
   });
@@ -124,7 +124,7 @@ export const ThemeOperationButton: React.FC<Props> = ({
                 お題を削除する
               </MenuItem>
 
-              <Divider my="xs" />
+              <Divider my="5px" />
             </>
           )}
           <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
@@ -153,7 +153,8 @@ export const ThemeOperationButton: React.FC<Props> = ({
         onClose={closeReportModal}
         title="お題の通報"
       >
-        <ReportThemeForm
+        <ReportForm
+          submitText="お題を通報する"
           onSubmit={handleSubmitReportTheme}
           onCancel={closeReportModal}
           isLoading={reportThemeMutation.isLoading}

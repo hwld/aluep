@@ -6,12 +6,14 @@ import { AppForm } from "./AppForm";
 import { AppTextarea } from "./AppTextarea";
 
 type Props = {
+  submitText: string;
   onSubmit: (formData: ReportBaseForm) => void;
   onCancel: () => void;
   isLoading?: boolean;
 };
 
-export const ReportThemeForm: React.FC<Props> = ({
+export const ReportForm: React.FC<Props> = ({
+  submitText,
   onSubmit,
   onCancel,
   isLoading,
@@ -28,7 +30,7 @@ export const ReportThemeForm: React.FC<Props> = ({
     <AppForm
       onSubmit={handleSubmit(onSubmit)}
       onCancel={onCancel}
-      submitText="お題を通報する"
+      submitText={submitText}
       submitIcon={MdFlag}
       isSubmitting={isLoading}
     >
