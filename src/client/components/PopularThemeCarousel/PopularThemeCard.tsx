@@ -81,9 +81,9 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
           </TextLink>
         </Box>
 
-        <Group position="apart">
+        <Group position="apart" noWrap>
           {/* ユーザー情報 */}
-          <Flex gap={5} sx={{ alignSelf: "flex-end" }}>
+          <Flex miw={0} gap={5} sx={{ alignSelf: "flex-end", flexShrink: 1 }}>
             <UserIconLink userId={theme.user.id} iconSrc={theme.user.image} />
             <Flex direction="column" miw={0} sx={{ flexShrink: 1 }}>
               <Text
@@ -133,7 +133,12 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
                 color={mantineTheme.colors.red[7]}
                 fill={mantineTheme.colors.red[7]}
               />
-              <Text size={25} fw="bold" c="red.7">
+              <Text
+                size={25}
+                fw="bold"
+                c="red.7"
+                style={{ whiteSpace: "nowrap" }}
+              >
                 {theme.likes}
               </Text>
             </Flex>
