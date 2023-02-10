@@ -5,7 +5,7 @@ import {
 } from "@mantine/notifications";
 import { TRPCClientError } from "@trpc/client";
 import { format } from "date-fns";
-import { ja } from "date-fns/locale";
+import ja from "date-fns/locale/ja";
 import { SyntheticEvent } from "react";
 import { AppRouter } from "../server/routers/_app";
 
