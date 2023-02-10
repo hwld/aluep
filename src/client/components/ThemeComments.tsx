@@ -22,14 +22,16 @@ export const ThemeComments: React.FC<Props> = ({ themeId, themeOwnerId }) => {
   const [focusedCommentId, setFocusedCommentId] = useState("");
 
   const commentsRef = useClickOutside(async () => {
-    // フラグメントを削除する
-    // フラグメントで指定されているカードの外側のクリックでフラグメントを削除したかったのだが、
-    // 別のコメントの返信元へのリンクをクリックすると、そちらでもrouter.replaceを使用しているため、
-    // routingがキャンセルされてエラーが出ることがあるため、コメント全体の外側のクリックでフラグメントを削除するようにしている
-    await router.replace(router.asPath.split("#")[0], undefined, {
-      shallow: true,
-      scroll: false,
-    });
+    if (focusedCommentId !== "") {
+      // フラグメントを削除する
+      // フラグメントで指定されているカードの外側のクリックでフラグメントを削除したかったのだが、
+      // 別のコメントの返信元へのリンクをクリックすると、そちらでもrouter.replaceを使用しているため、
+      // routingがキャンセルされてエラーが出ることがあるため、コメント全体の外側のクリックでフラグメントを削除するようにしている
+      await router.replace(router.asPath.split("#")[0], undefined, {
+        shallow: true,
+        scroll: false,
+      });
+    }
   });
 
   // お題のコメント操作

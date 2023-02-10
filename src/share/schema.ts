@@ -102,29 +102,32 @@ export type RepositoryFormData = z.infer<typeof repositoryFormSchema>;
 ///////////////////////////////////////////////////////////////////////////////////
 // 通報関連
 
-const reportBaseSchema = z.object({
-  reportDetail: z.string().min(0).max(5000),
+export const reportBaseFormSchema = z.object({
+  reportDetail: z
+    .string()
+    .min(1, "通報の内容を入力してください。")
+    .max(5000, "通報の内容は5000文字以下で入力してください。"),
 });
-export type ReportBase = z.infer<typeof reportBaseSchema>;
+export type ReportBaseForm = z.infer<typeof reportBaseFormSchema>;
 
-export const reportThemeFormSchema = reportBaseSchema.and(
+export const reportThemeFormSchema = reportBaseFormSchema.and(
   z.object({ targetTheme: z.object({ url: z.string(), title: z.string() }) })
 );
 export type ReportThemeForm = z.infer<typeof reportThemeFormSchema>;
 
-export const reportThemeCommentFormSchema = reportBaseSchema.and(
+export const reportThemeCommentFormSchema = reportBaseFormSchema.and(
   z.object({ targetCommentUrl: z.string() })
 );
 export type ReportThemeFormComment = z.infer<
   typeof reportThemeCommentFormSchema
 >;
 
-export const reportDeveloperFormSchema = reportBaseSchema.and(
+export const reportDeveloperFormSchema = reportBaseFormSchema.and(
   z.object({ targetDeveloepr: z.object({ url: z.string(), name: z.string() }) })
 );
 export type ReportDeveloperForm = z.infer<typeof reportDeveloperFormSchema>;
 
-export const reportUserSchema = reportBaseSchema.and(
+export const reportUserSchema = reportBaseFormSchema.and(
   z.object({ targetUser: z.object({ url: z.string(), name: z.string() }) })
 );
 export type ReportUserForm = z.infer<typeof reportUserSchema>;

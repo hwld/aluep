@@ -6,7 +6,10 @@ const ReportTest: NextPage = () => {
   const handleClick = async () => {
     await trpc.report.theme.mutate({
       reportDetail: "うおおおおおお",
-      targetThemeUrl: "http://localhost:3000/report-test",
+      targetTheme: {
+        url: "http://localhost:3000/report-test",
+        title: "テスト",
+      },
     });
   };
   return <Button onClick={handleClick}>送信</Button>;

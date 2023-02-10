@@ -1,9 +1,24 @@
 import { IncomingWebhook, IncomingWebhookSendArguments } from "@slack/webhook";
 import { HttpsProxyAgent } from "https-proxy-agent";
-import { ReportBase } from "../../share/schema";
+import { NextApiRequest } from "next";
+import { Routes } from "../../share/routes";
+import { ReportBaseForm } from "../../share/schema";
 
-type TemplateArgs = ReportBase & {
-  reportedUser: { url: string; name: string } | undefined;
+type ReportedUser = { url: string; name: string } | undefined;
+export const buildReportedUser = (
+  req: NextApiRequest,
+  user?: { id: string; name?: string | undefined | null } | undefined
+): ReportedUser => {
+  return user
+    ? {
+        url: `${req.headers.origin}/${Routes.userDetail(user.id)}`,
+        name: user.name || "不明なユーザー名",
+      }
+    : undefined;
+};
+
+type TemplateArgs = ReportBaseForm & {
+  reportedUser: ReportedUser;
   title: string;
   fields: { name: string; value: string }[];
 };

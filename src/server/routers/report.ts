@@ -1,11 +1,10 @@
-import { Routes } from "../../share/routes";
 import {
   reportDeveloperFormSchema,
   reportThemeCommentFormSchema,
   reportThemeFormSchema,
   reportUserSchema,
 } from "../../share/schema";
-import { reportToSlack } from "../lib/reportToSlack";
+import { buildReportedUser, reportToSlack } from "../lib/reportToSlack";
 import { publicProcedure, router } from "../trpc";
 
 export const reportRouter = router({
@@ -14,16 +13,12 @@ export const reportRouter = router({
     .input(reportThemeFormSchema)
     .mutation(async ({ input, ctx }) => {
       const loggedInUser = ctx.session?.user;
+      const request = ctx.req;
 
       await reportToSlack({
         title: "お題の通報",
         reportDetail: input.reportDetail,
-        reportedUser: loggedInUser
-          ? {
-              url: Routes.userDetail(loggedInUser.id),
-              name: loggedInUser.name || "不明なユーザー名",
-            }
-          : undefined,
+        reportedUser: buildReportedUser(request, loggedInUser),
         fields: [
           {
             name: "通報対象のお題",
@@ -38,16 +33,12 @@ export const reportRouter = router({
     .input(reportThemeCommentFormSchema)
     .mutation(async ({ input, ctx }) => {
       const loggedInUser = ctx.session?.user;
+      const request = ctx.req;
 
       await reportToSlack({
         title: "お題コメントの通報",
         reportDetail: input.reportDetail,
-        reportedUser: loggedInUser
-          ? {
-              url: Routes.userDetail(loggedInUser.id),
-              name: loggedInUser.name || "不明なユーザー名",
-            }
-          : undefined,
+        reportedUser: buildReportedUser(request, loggedInUser),
         fields: [
           {
             name: "通報対象のお題コメント",
@@ -62,16 +53,12 @@ export const reportRouter = router({
     .input(reportDeveloperFormSchema)
     .mutation(async ({ input, ctx }) => {
       const loggedInUser = ctx.session?.user;
+      const request = ctx.req;
 
       await reportToSlack({
         title: "開発情報の通報",
         reportDetail: input.reportDetail,
-        reportedUser: loggedInUser
-          ? {
-              url: Routes.userDetail(loggedInUser.id),
-              name: loggedInUser.name || "不明なユーザー名",
-            }
-          : undefined,
+        reportedUser: buildReportedUser(request, loggedInUser),
         fields: [
           {
             name: "通報対象の開発情報",
@@ -86,16 +73,12 @@ export const reportRouter = router({
     .input(reportUserSchema)
     .mutation(async ({ input, ctx }) => {
       const loggedInUser = ctx.session?.user;
+      const request = ctx.req;
 
       await reportToSlack({
         title: "ユーザーの通報",
         reportDetail: input.reportDetail,
-        reportedUser: loggedInUser
-          ? {
-              url: Routes.userDetail(loggedInUser.id),
-              name: loggedInUser.name || "不明なユーザー名",
-            }
-          : undefined,
+        reportedUser: buildReportedUser(request, loggedInUser),
         fields: [
           {
             name: "通報対象のユーザー",

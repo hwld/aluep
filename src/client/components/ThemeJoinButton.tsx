@@ -74,21 +74,20 @@ export const ThemeJoinButton: React.FC<Props> = ({
           </Text>
         </ActionIcon>
       </AppTooltip>
-      {developers > 0 && (
-        <Tooltip label="このお題の開発者を表示する" position="right">
-          <Anchor
-            component={Link}
-            href={`/themes/${themeId}/developers`}
-            sx={(theme) => ({
-              color: theme.colors.red[7],
-              textDecoration: "underline",
-              "&:hover": { color: theme.colors.red[7] },
-            })}
-          >
-            {developers}
-          </Anchor>
-        </Tooltip>
-      )}
+      <Tooltip label="このお題の開発者を表示する" position="right">
+        <Anchor
+          component={Link}
+          href={`/themes/${themeId}/developers`}
+          sx={(theme) => ({
+            pointerEvents: developers === 0 ? "none" : "auto",
+            textDecoration: developers === 0 ? "none" : "underline",
+            color: theme.colors.red[7],
+            "&:hover": { color: theme.colors.red[7] },
+          })}
+        >
+          {developers}
+        </Anchor>
+      </Tooltip>
     </Stack>
   );
 };

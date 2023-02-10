@@ -60,21 +60,20 @@ export const ThemeLikeButton: React.FC<Props> = ({
           />
         )}
       </ActionIcon>
-      {likes > 0 && (
-        <Tooltip label="いいねしたユーザーを表示する" position="right">
-          <Anchor
-            component={Link}
-            href={`/themes/${themeId}/liking-users`}
-            sx={(theme) => ({
-              color: likedByLoggedInUser ? theme.colors.pink[7] : "inherit",
-              textDecoration: "underline",
-              "&:hover": { color: theme.colors.red[7] },
-            })}
-          >
-            {likes}
-          </Anchor>
-        </Tooltip>
-      )}
+      <Tooltip label="いいねしたユーザーを表示する" position="right">
+        <Anchor
+          component={Link}
+          href={`/themes/${themeId}/liking-users`}
+          sx={(theme) => ({
+            pointerEvents: likes === 0 ? "none" : "auto",
+            textDecoration: likes === 0 ? "none" : "underline",
+            color: likedByLoggedInUser ? theme.colors.pink[7] : "inherit",
+            "&:hover": { color: theme.colors.red[7] },
+          })}
+        >
+          {likes}
+        </Anchor>
+      </Tooltip>
     </Stack>
   );
 };

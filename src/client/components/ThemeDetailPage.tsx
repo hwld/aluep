@@ -77,7 +77,6 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
           sx={{ position: "sticky", top: appHeaderHeightPx + 10, zIndex: 1 }}
         >
-          {isThemeOwner && <ThemeOperationButton theme={theme} />}
           <ThemeJoinButton
             themeId={theme.id}
             developers={theme.developers}
@@ -91,6 +90,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
             onLikeTheme={handleLikeTheme}
             disabled={isThemeOwner}
           />
+          <ThemeOperationButton theme={theme} isThemeOwner={isThemeOwner} />
         </Flex>
 
         {/* 中カラム */}
