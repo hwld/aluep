@@ -134,7 +134,10 @@ export type ReportDeveloperForm = z.infer<typeof reportDeveloperFormSchema>;
 
 export const reportUserSchema = reportBaseFormSchema.and(
   z.object({
-    targetUser: z.object({ url: z.string(), name: z.string().optional() }),
+    targetUser: z.object({
+      url: z.string(),
+      name: z.string().nullable().optional(),
+    }),
   })
 );
 export type ReportUserForm = z.infer<typeof reportUserSchema>;

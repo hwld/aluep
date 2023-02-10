@@ -19,7 +19,7 @@ export const UserMenuButton: React.FC<Props> = ({ user, children }) => {
   };
 
   return (
-    <AppMenu offset={20} position="right-end">
+    <AppMenu offset={10} position="right-end">
       <Menu.Target>{children}</Menu.Target>
       <MenuDropdown maw={180} sx={{ zIndex: 1000 }}>
         <Menu.Label>

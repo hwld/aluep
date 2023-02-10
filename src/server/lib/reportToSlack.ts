@@ -31,7 +31,7 @@ export const buildReportTemplate = ({
   const sections = fields.map((field) => {
     return {
       type: "section",
-      text: { type: "mrkdwn", text: `*${field.name}* ${field.value}` },
+      text: { type: "mrkdwn", text: `*${field.name}:* ${field.value}` },
     };
   });
 

@@ -13,6 +13,7 @@ import { useSessionQuery } from "../hooks/useSessionQuery";
 import { LikeDeveloperIcon } from "./LikeDeveloperIcon";
 import { LikeThemeIcon } from "./LikeThemeIcon";
 import { UserFavoriteButton } from "./UserDetail/UserFavoriteButton";
+import { UserDetailMenuButton } from "./UserDetailMenuButton";
 import { UserIcon } from "./UserIcon";
 
 type Props = {
@@ -89,9 +90,13 @@ export function UserDetailCard({
         h="100%"
         style={{ position: "relative" }}
       >
+        <Box style={{ position: "absolute" }}>
+          <UserDetailMenuButton user={user} />
+        </Box>
+
         {sessionUser && (
           <Link href="/users/profile" passHref>
-            <CardActionIcon style={{ position: "absolute" }}>
+            <CardActionIcon style={{ position: "absolute", right: 0, top: 0 }}>
               <RiEdit2Line size={20} />
             </CardActionIcon>
           </Link>
