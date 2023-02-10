@@ -3,6 +3,7 @@ import { HttpsProxyAgent } from "https-proxy-agent";
 import { ReportBase } from "../../share/schema";
 
 type TemplateArgs = ReportBase & {
+  reportedUser: { url: string; name: string } | undefined;
   title: string;
   fields: { name: string; value: string }[];
 };

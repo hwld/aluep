@@ -104,16 +104,15 @@ export type RepositoryFormData = z.infer<typeof repositoryFormSchema>;
 
 const reportBaseSchema = z.object({
   reportDetail: z.string().min(0).max(5000),
-  reportedUser: z.object({ name: z.string(), url: z.string() }).optional(),
 });
 export type ReportBase = z.infer<typeof reportBaseSchema>;
 
 export const reportThemeFormSchema = reportBaseSchema.and(
-  z.object({ targetThemeUrl: z.string() })
+  z.object({ targetTheme: z.object({ url: z.string(), title: z.string() }) })
 );
 export type ReportThemeForm = z.infer<typeof reportThemeFormSchema>;
 
-const reportThemeCommentFormSchema = reportBaseSchema.and(
+export const reportThemeCommentFormSchema = reportBaseSchema.and(
   z.object({ targetCommentUrl: z.string() })
 );
 export type ReportThemeFormComment = z.infer<
@@ -121,11 +120,11 @@ export type ReportThemeFormComment = z.infer<
 >;
 
 export const reportDeveloperFormSchema = reportBaseSchema.and(
-  z.object({ targetDeveloeprUrl: z.string() })
+  z.object({ targetDeveloepr: z.object({ url: z.string(), name: z.string() }) })
 );
 export type ReportDeveloperForm = z.infer<typeof reportDeveloperFormSchema>;
 
 export const reportUserSchema = reportBaseSchema.and(
-  z.object({ targetUserUrl: z.string() })
+  z.object({ targetUser: z.object({ url: z.string(), name: z.string() }) })
 );
 export type ReportUserForm = z.infer<typeof reportUserSchema>;
