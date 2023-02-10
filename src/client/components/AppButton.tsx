@@ -10,7 +10,7 @@ import { ComponentPropsWithoutRef, forwardRef, useMemo } from "react";
 // childrenが存在するときにhrefだけ渡してもエラーにならない...
 type AppButtonProps = ButtonProps &
   ComponentPropsWithoutRef<"button"> &
-  ({ asLink?: false } | { asLink: true; href: string });
+  ({ asLink?: false } | { asLink: true; href: string; blank?: boolean });
 
 export const AppButton: React.FC<AppButtonProps> = forwardRef<
   HTMLButtonElement,
@@ -24,7 +24,11 @@ export const AppButton: React.FC<AppButtonProps> = forwardRef<
   // なぜか型が間違っていると言われてしまうので無理やり型を合わせる
   const polymorphicProps = useMemo(() => {
     if (props.asLink) {
-      return { component: Link, href: props.href } as ButtonProps;
+      return {
+        component: Link,
+        href: props.href,
+        target: props.blank ? "_brank" : "_self",
+      } as ButtonProps;
     }
     return { component: "button" } as ButtonProps;
   }, [props]);

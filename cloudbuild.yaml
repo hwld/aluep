@@ -9,6 +9,8 @@ steps:
         "${_IMAGE_NAME}",
         "--build-arg",
         "NEXT_PUBLIC_URL=${_NEXT_PUBLIC_URL}",
+        "--build-arg",
+        "NEXT_PUBLIC_CONTACT_URL=${_NEXT_PUBLIC_CONTACT_URL}"
         ".",
       ]
 
