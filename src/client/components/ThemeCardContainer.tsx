@@ -10,6 +10,7 @@ export const ThemeCardContainer: React.FC<Props> = ({ children, themes }) => {
       sx={(theme) => ({
         display: "grid",
         gridTemplateColumns: `repeat(auto-fit, minmax(${themeCardMinWidthPx}px, 1fr))`,
+        gridAutoRows: "max-content",
         gap: theme.spacing.md,
       })}
     >
