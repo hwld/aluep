@@ -43,7 +43,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
         </Stack>
         <Stack spacing="xs">
           <Text c="gray.5">開発者の情報</Text>
-          <Flex mah={300} direction="row" gap={10} h="80%">
+          <Flex direction="row" gap={10} h={300}>
             <Card w={250} sx={{ flexShrink: 0 }}>
               <Flex direction={"column"} justify={"space-between"} h="100%">
                 <Flex mt={-5}>
@@ -128,9 +128,9 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
               </Flex>
             </Card>
 
-            <Card mih={20}>
+            <Card mih={20} sx={{ flexGrow: 1 }}>
               <Card.Section withBorder inheritPadding py="md">
-                <div>コメント</div>
+                <Text c="gray.5">コメント</Text>
               </Card.Section>
 
               <Card.Section inheritPadding mt="sm" pb="md">

@@ -30,7 +30,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
     <Card
       miw={themeCardMinWidthPx}
       w="100%"
-      h="100%"
+      h="min-content"
       sx={(theme) => ({
         cursor: "pointer",
         position: "static",

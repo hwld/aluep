@@ -43,7 +43,7 @@ export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
         />
         <Card mih={20} sx={{ flexGrow: 1 }}>
           <Card.Section withBorder inheritPadding py="md">
-            <div>自己紹介</div>
+            <Text c="gray.5">自己紹介</Text>
           </Card.Section>
 
           <Card.Section inheritPadding mt="sm" pb="md">
