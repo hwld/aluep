@@ -2,6 +2,7 @@ import {
   Box,
   Card,
   Flex,
+  MediaQuery,
   Stack,
   Text,
   Title,
@@ -71,7 +72,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
         <Flex
           direction="column"
           align="center"
-          gap="md"
+          gap="sm"
           h="min-content"
           // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
           sx={{ position: "sticky", top: 10, zIndex: 1 }}
@@ -109,31 +110,36 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
         </Box>
 
         {/* 右カラム */}
-        <Stack
-          h="min-content"
-          // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
-          sx={{ position: "sticky", top: 10, zIndex: 1 }}
-        >
-          <Card
-            sx={{
-              flexShrink: 0,
-              flexGrow: 0,
-              height: "min-content",
-            }}
-            w={300}
+        <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+          <Stack
+            h="min-content"
+            // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
+            sx={{ position: "sticky", top: 10, zIndex: 1 }}
           >
-            <Flex gap="xs" align="center">
-              <FaUserAlt size={15} fill={mantineTheme.colors.gray[5]} />
-              <Text color="gray.5" size="sm">
-                投稿者
-              </Text>
-            </Flex>
-            <Flex gap={5} mt={5}>
-              <UserIconLink iconSrc={theme.user.image} userId={theme.user.id} />
-              <Text size={13}>{theme.user.name}</Text>
-            </Flex>
-          </Card>
-        </Stack>
+            <Card
+              sx={{
+                flexShrink: 0,
+                flexGrow: 0,
+                height: "min-content",
+              }}
+              w={300}
+            >
+              <Flex gap="xs" align="center">
+                <FaUserAlt size={15} fill={mantineTheme.colors.gray[5]} />
+                <Text color="gray.5" size="sm">
+                  投稿者
+                </Text>
+              </Flex>
+              <Flex gap={5} mt={5}>
+                <UserIconLink
+                  iconSrc={theme.user.image}
+                  userId={theme.user.id}
+                />
+                <Text size={13}>{theme.user.name}</Text>
+              </Flex>
+            </Card>
+          </Stack>
+        </MediaQuery>
       </Flex>
     </Flex>
   );

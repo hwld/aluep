@@ -33,7 +33,9 @@ export const UserSearchPage: React.FC = () => {
     <Box>
       <Flex
         direction="column"
-        w="50%"
+        w="100%"
+        maw={750}
+        miw={userCardMinWidthPx}
         sx={() => ({
           marginLeft: "auto",
           marginRight: "auto",

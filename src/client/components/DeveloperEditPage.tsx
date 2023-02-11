@@ -45,7 +45,7 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
     router.back();
   };
   return (
-    <Stack w={800} m="auto" spacing="lg">
+    <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
       <Flex align="center" gap="xs">
         <MdComputer
           size="30px"

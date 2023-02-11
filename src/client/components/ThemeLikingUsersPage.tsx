@@ -16,7 +16,7 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
   const mantineTheme = useMantineTheme();
 
   return (
-    <Stack maw={800} m="auto" spacing="lg">
+    <Stack w="100%" miw={userCardMinWidthPx} maw={800} m="auto" spacing="lg">
       <Flex align="center" gap="sm">
         <MdOutlineFavorite
           size="30px"

@@ -51,7 +51,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
 
   return (
     <Box
-      h="100vh"
+      h="100dvh"
       p="md"
       sx={() => ({
         position: "sticky",

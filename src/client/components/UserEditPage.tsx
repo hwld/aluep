@@ -98,7 +98,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
   };
 
   return (
-    <Box w={800} m="auto">
+    <Box w="100%" maw={800} miw={400} m="auto">
       <Flex align="center" gap="xs">
         <RiEdit2Line size="30px" color={mantineTheme.colors.red[7]} />
         <Title order={3}>プロフィールの更新</Title>

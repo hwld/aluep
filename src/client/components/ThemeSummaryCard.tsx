@@ -19,15 +19,32 @@ export const ThemeSummaryCard: React.FC<Props> = ({ theme }) => {
     <Card>
       <Flex gap="md" align="center">
         <Box sx={{ flexShrink: 0 }}>
-          <TbFileText color={mantineTheme.colors.red[7]} size={80} />
+          <TbFileText color={mantineTheme.colors.red[7]} size={60} />
         </Box>
-        <Stack spacing="sm">
-          <Title order={4} color="red.7">
+        <Stack spacing="sm" miw={0}>
+          <Title
+            order={4}
+            color="red.7"
+            sx={() => ({
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            })}
+          >
             {theme.title}
           </Title>
-          <Flex gap={5}>
+          <Flex gap={5} align="center">
             <UserIconLink userId={theme.user.id} iconSrc={theme.user.image} />
-            <Text size="sm">{theme?.user.name}</Text>
+            <Text
+              size="sm"
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {theme?.user.name}
+            </Text>
           </Flex>
         </Stack>
       </Flex>

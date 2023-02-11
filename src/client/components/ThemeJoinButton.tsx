@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   Anchor,
+  Flex,
   Stack,
   Text,
   Tooltip,
@@ -43,41 +44,47 @@ export const ThemeJoinButton: React.FC<Props> = ({
 
   return (
     <Stack align="center" spacing={3}>
-      <AppTooltip
-        label={
-          loggedInUserJoinData.joined
-            ? "自分の開発情報を表示する"
-            : "お題を開発する"
-        }
-        position="right"
-      >
-        <ActionIcon
-          onClick={handleClick}
-          size={70}
-          sx={(theme) => ({
-            display: "flex",
-            flexDirection: "column",
-            borderRadius: "50%",
-            boxShadow: `2px 3px 6px ${theme.fn.rgba(theme.colors.red[7], 0.5)}`,
-            transition: "all 200ms",
-            backgroundColor: loggedInUserJoinData.joined
-              ? theme.colors.red[7]
-              : theme.colors.red[7],
-            "&:hover": {
-              backgroundColor: theme.colors.red[6],
-            },
-          })}
+      <Flex direction="column" justify="center" align="center" gap="5px">
+        <Text color="gray.5" size="sm">
+          {loggedInUserJoinData.joined ? "開発中" : "開発する"}
+        </Text>
+        <AppTooltip
+          label={
+            loggedInUserJoinData.joined
+              ? "自分の開発情報を表示する"
+              : "お題を開発する"
+          }
+          position="right"
         >
-          <ComputerIcon size="50%" fill={mantineTheme.colors.gray[1]} />
-          <Text color="gray.1" sx={{ fontSize: "11px", marginTop: "-2px" }}>
-            {loggedInUserJoinData.joined ? "開発中" : "開発する"}
-          </Text>
-        </ActionIcon>
-      </AppTooltip>
+          <ActionIcon
+            onClick={handleClick}
+            size={60}
+            sx={(theme) => ({
+              display: "flex",
+              flexDirection: "column",
+              borderRadius: "50%",
+              boxShadow: `2px 3px 6px ${theme.fn.rgba(
+                theme.colors.red[7],
+                0.5
+              )}`,
+              transition: "all 200ms",
+              backgroundColor: loggedInUserJoinData.joined
+                ? theme.colors.red[7]
+                : theme.colors.red[7],
+              "&:hover": {
+                backgroundColor: theme.colors.red[6],
+              },
+            })}
+          >
+            <ComputerIcon size="70%" fill={mantineTheme.colors.gray[1]} />
+          </ActionIcon>
+        </AppTooltip>
+      </Flex>
       <Tooltip label="このお題の開発者を表示する" position="right">
         <Anchor
           component={Link}
           href={`/themes/${themeId}/developers`}
+          size="sm"
           sx={(theme) => ({
             pointerEvents: developers === 0 ? "none" : "auto",
             textDecoration: developers === 0 ? "none" : "underline",

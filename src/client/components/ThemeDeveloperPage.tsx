@@ -17,7 +17,7 @@ export const ThemeDeveloperPage: React.FC<Props> = ({ theme }) => {
 
   return (
     <>
-      <Stack maw={800} m="auto" spacing="lg">
+      <Stack w="100%" miw={300} maw={800} m="auto" spacing="lg">
         <Flex align="center" gap="sm">
           <MdComputer
             size="30px"

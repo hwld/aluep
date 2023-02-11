@@ -41,7 +41,7 @@ export const ThemeCreatePage: React.FC = () => {
   };
 
   return (
-    <Box w={800} m="auto">
+    <Box w="100%" maw={800} miw={300} m="auto">
       <Flex align="center" gap="xs">
         <MdPostAdd size="30px" color={mantineTheme.colors.red[7]} />
         <Title order={3}>お題の投稿</Title>

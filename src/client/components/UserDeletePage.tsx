@@ -26,7 +26,7 @@ export const UserDeletepage: React.FC = () => {
   };
 
   return (
-    <Box w={600} m="auto">
+    <Box w="100%" maw={600} m="auto">
       <Title order={3}>ユーザーの削除</Title>
       <Box mt="xl">
         <Text>一度ユーザーを削除すると、</Text>
@@ -40,7 +40,7 @@ export const UserDeletepage: React.FC = () => {
           <List.Item>ユーザーの情報</List.Item>
         </List>
         <Text>
-          が
+          などが
           <Mark
             sx={(theme) => ({
               color: theme.colors.red[5],
@@ -51,7 +51,7 @@ export const UserDeletepage: React.FC = () => {
           </Mark>
         </Text>
         <Box
-          mt={100}
+          mt={50}
           w="100%"
           h={120}
           sx={(theme) => ({

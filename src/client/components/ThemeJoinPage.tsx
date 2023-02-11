@@ -26,7 +26,7 @@ export const ThemeJoinPage: React.FC<Props> = ({ theme, repoUrl }) => {
     router.back();
   };
   return (
-    <Stack w={800} m="auto" spacing="lg">
+    <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
       <Flex align="center" gap="xs">
         <ComputerIcon size="30px" fill={mantineTheme.colors.red[7]} />
         <Title order={3}>お題を開発</Title>

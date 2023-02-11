@@ -14,7 +14,6 @@ import superjson from "superjson";
 import { AppLayout } from "../client/components/AppLayout";
 import { AppNavigationProgress } from "../client/components/AppNavigationProgress";
 import { RequireLoginModalProvider } from "../client/contexts/RequireLoginModalProvider";
-import "../client/style/global.css";
 import { theme } from "../client/style/theme";
 import { PageProps } from "../server/lib/GetServerSidePropsWithReactQuery";
 

@@ -11,14 +11,15 @@ type Props = { children: ReactNode };
 export const AppLayout: React.FC<Props> = ({ children }) => {
   const { session } = useSessionQuery();
   // TODO: スマートフォンなどの幅の狭い端末に対応していない
-  const unsupportedDisplay = useMediaQuery("(max-width: 820px)");
+  const unsupportedDisplay = useMediaQuery("(max-width: 600px)");
   const [isOpen, { close }] = useDisclosure(true);
+
   return (
     <>
       <Box
         sx={(theme) => ({
           backgroundColor: theme.colors.gray[2],
-          minHeight: "100vh",
+          minHeight: "100dvh",
           display: "flex",
         })}
       >

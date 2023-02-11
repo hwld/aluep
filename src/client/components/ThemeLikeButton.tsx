@@ -29,7 +29,7 @@ export const ThemeLikeButton: React.FC<Props> = ({
       <ActionIcon
         disabled={disabled}
         color={likedByLoggedInUser ? "pink" : undefined}
-        size={60}
+        size={50}
         radius="xl"
         sx={(theme) => ({
           boxShadow: theme.shadows.md,
@@ -64,6 +64,7 @@ export const ThemeLikeButton: React.FC<Props> = ({
         <Anchor
           component={Link}
           href={`/themes/${themeId}/liking-users`}
+          size="sm"
           sx={(theme) => ({
             pointerEvents: likes === 0 ? "none" : "auto",
             textDecoration: likes === 0 ? "none" : "underline",

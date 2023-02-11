@@ -44,7 +44,7 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
   };
 
   return (
-    <Box w={800} m="auto">
+    <Box w="100%" miw={300} maw={800} m="auto">
       <Flex align="center" gap="xs">
         <MdPostAdd size="30px" color={mantineTheme.colors.red[7]} />
         <Title order={3}>お題の更新</Title>

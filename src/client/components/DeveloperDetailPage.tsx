@@ -28,7 +28,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
   const isDeveloper = developer.userId === session?.user.id;
   return (
     <>
-      <Stack w={800} m="auto" spacing="lg">
+      <Stack maw={800} w="100%" m="auto" spacing="lg">
         <Flex align="center" gap="xs">
           <MdComputer
             size="30px"
@@ -37,14 +37,14 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
           />
           <Title order={3}>お題開発情報</Title>
         </Flex>
-        <Stack spacing="xs" w={760}>
+        <Stack spacing="xs">
           <Text c="gray.5">開発しているお題</Text>
           <ThemeSummaryCard theme={theme} />
         </Stack>
         <Stack spacing="xs">
           <Text c="gray.5">開発者の情報</Text>
-          <Flex maw={800} mih={300} direction="row" gap={10} h="80%">
-            <Card h={300} w={250} sx={{ flexShrink: 0 }}>
+          <Flex mah={300} direction="row" gap={10} h="80%">
+            <Card w={250} sx={{ flexShrink: 0 }}>
               <Flex direction={"column"} justify={"space-between"} h="100%">
                 <Flex mt={-5}>
                   <DeveloperMenuButton
@@ -128,15 +128,19 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
               </Flex>
             </Card>
 
-            <Card mih={20} w={500}>
+            <Card mih={20}>
               <Card.Section withBorder inheritPadding py="md">
                 <div>コメント</div>
               </Card.Section>
 
               <Card.Section inheritPadding mt="sm" pb="md">
-                <Text placeholder="開発に対するコメント" mah={200} />
-                {developer.comment}
-                <Text />
+                <Text
+                  placeholder="開発に対するコメント"
+                  mah={200}
+                  sx={{ overflow: "auto" }}
+                >
+                  {developer.comment}
+                </Text>
               </Card.Section>
             </Card>
           </Flex>
