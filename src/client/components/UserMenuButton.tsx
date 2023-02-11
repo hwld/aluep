@@ -5,11 +5,11 @@ import { BiBookmarkHeart } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { RiAccountCircleLine } from "react-icons/ri";
-import { OmitStrict } from "../../../types/OmitStrict";
-import { AppMenu } from "../AppMenu/AppMenu";
-import { MenuDropdown } from "../AppMenu/MenuDropdown";
-import { MenuItem } from "../AppMenu/MenuItem";
-import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
+import { OmitStrict } from "../../types/OmitStrict";
+import { AppMenu } from "./AppMenu/AppMenu";
+import { MenuDropdown } from "./AppMenu/MenuDropdown";
+import { MenuItem } from "./AppMenu/MenuItem";
+import { MenuLinkItem } from "./AppMenu/MenuLinkItem";
 
 type Props = { user: Session["user"] } & OmitStrict<BadgeProps, "sx">;
 

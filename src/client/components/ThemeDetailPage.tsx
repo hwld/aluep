@@ -15,7 +15,6 @@ import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeJoin } from "../hooks/useThemeJoin";
 import { useThemeLike } from "../hooks/useThemeLike";
-import { appHeaderHeightPx } from "./AppHeader/AppHeader";
 import { ThemeComments } from "./ThemeComments";
 import { ThemeJoinButton } from "./ThemeJoinButton";
 import { ThemeLikeButton } from "./ThemeLikeButton";
@@ -75,7 +74,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           gap="md"
           h="min-content"
           // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
-          sx={{ position: "sticky", top: appHeaderHeightPx + 10, zIndex: 1 }}
+          sx={{ position: "sticky", top: 10, zIndex: 1 }}
         >
           <ThemeJoinButton
             themeId={theme.id}
@@ -113,7 +112,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
         <Stack
           h="min-content"
           // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
-          sx={{ position: "sticky", top: appHeaderHeightPx + 10, zIndex: 1 }}
+          sx={{ position: "sticky", top: 10, zIndex: 1 }}
         >
           <Card
             sx={{

@@ -13,7 +13,7 @@ import {
   MdSearch,
 } from "react-icons/md";
 import { useRequireLoginModal } from "../../contexts/RequireLoginModalProvider";
-import { UserMenuButton } from "../AppHeader/UserMenuButton";
+import { UserMenuButton } from "../UserMenuButton";
 import { AppLoginedSideMenu } from "./AppLoginedSideMenu";
 import { SideMenuAppTitle } from "./SideMenuAppTitle";
 import { SideMenuItem } from "./SideMenuItem";
