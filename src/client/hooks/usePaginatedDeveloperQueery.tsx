@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { trpc } from "../trpc";
 import { themeQueryKey } from "./useThemeQuery";
 
@@ -10,10 +11,14 @@ export const paginatedDevelopersQueryKey = (themeId: string, page: number) => {
   return [...themeDevelopersQueryKey(themeId), { page: p }] as const;
 };
 
+export type PaginatedDeveloperQueryData = {
+  developers: ThemeDeveloper[];
+  allPages: number;
+};
 export const usePaginatedDeveloperQuery = (themeId: string, page: number) => {
   const result = useQuery({
     queryKey: paginatedDevelopersQueryKey(themeId, page),
-    queryFn: () => {
+    queryFn: (): Promise<PaginatedDeveloperQueryData> => {
       return trpc.theme.getDeveloperAllpage.query({
         page: page.toString(),
         themeId,

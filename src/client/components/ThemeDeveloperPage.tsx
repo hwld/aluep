@@ -1,9 +1,9 @@
 import { Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { MdComputer } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
+import { useLikeThemeDeveloper } from "../hooks/useLikeThemeDeveloper";
 import { usePaginatedDeveloperQuery } from "../hooks/usePaginatedDeveloperQueery";
 import { usePaginationState } from "../hooks/usePaginationState";
-import { useThemeDevelopersQuery } from "../hooks/useThemeDevelopersQuery";
 import { AppPagination } from "./AppPagination";
 import { ThemeDeveloperCard } from "./DeveloperCard/ThemeDeveloperCard";
 import { ThemeSummaryCard } from "./ThemeSummaryCard";
@@ -12,7 +12,7 @@ type Props = { theme: Theme };
 export const ThemeDeveloperPage: React.FC<Props> = ({ theme }) => {
   const [page, setPage] = usePaginationState({});
   const { data } = usePaginatedDeveloperQuery(theme.id, page);
-  const { likeDeveloperMutation } = useThemeDevelopersQuery(theme.id);
+  const { likeDeveloperMutation } = useLikeThemeDeveloper(theme.id, page);
   const mantineTheme = useMantineTheme();
 
   return (

@@ -26,6 +26,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
   const { session } = useSessionQuery();
   const mantineTheme = useMantineTheme();
   const isDeveloper = developer.userId === session?.user.id;
+
   return (
     <>
       <Stack maw={800} w="100%" m="auto" spacing="lg">

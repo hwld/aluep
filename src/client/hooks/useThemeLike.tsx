@@ -37,7 +37,7 @@ export const useThemeLike = (themeId: string) => {
         themeLikedQueryKey(themeId, session?.user.id)
       );
       // お題(いいね数を含む)
-      const previousTheme = queryClient.getQueryData<Theme | undefined>(
+      const previousTheme = queryClient.getQueryData<Theme>(
         themeQueryKey(themeId)
       );
 
@@ -48,16 +48,13 @@ export const useThemeLike = (themeId: string) => {
       );
 
       // いいね数を変える
-      queryClient.setQueryData<Theme | undefined>(
-        themeQueryKey(themeId),
-        (old) => {
-          if (!old) {
-            return old;
-          }
-
-          return { ...old, likes: old.likes + (previousLiked ? -1 : 1) };
+      queryClient.setQueryData<Theme>(themeQueryKey(themeId), (old) => {
+        if (!old) {
+          return old;
         }
-      );
+
+        return { ...old, likes: old.likes + (previousLiked ? -1 : 1) };
+      });
 
       return { previousLiked, previousTheme };
     },
