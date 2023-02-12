@@ -12,7 +12,8 @@ import {
 import Link from "next/link";
 import React from "react";
 import { BsGithub } from "react-icons/bs";
-import { MdComputer, MdOutlineFavorite } from "react-icons/md";
+import { MdComputer } from "react-icons/md";
+import { TbHeart } from "react-icons/tb";
 import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { useSessionQuery } from "../hooks/useSessionQuery";
@@ -79,11 +80,11 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                       withArrow
                       transition="pop"
                     >
-                      <Flex align={"center"} wrap="wrap">
-                        <MdOutlineFavorite
-                          color={mantineTheme.colors.red[7]}
+                      <Flex align={"center"} wrap="wrap" gap="3px">
+                        <TbHeart
+                          color="transparent"
+                          fill={mantineTheme.colors.red[7]}
                           size="30"
-                          style={{ marginRight: "2px" }}
                         />
                         <Text>{developer.likes}</Text>
                       </Flex>

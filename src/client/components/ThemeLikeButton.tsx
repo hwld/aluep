@@ -6,7 +6,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
-import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
+import { TbHeart } from "react-icons/tb";
 
 type Props = {
   likes: number;
@@ -51,12 +51,17 @@ export const ThemeLikeButton: React.FC<Props> = ({
         onClick={onLikeTheme}
       >
         {likedByLoggedInUser ? (
-          <MdOutlineFavorite size="70%" style={{ marginTop: "4px" }} />
-        ) : (
-          <MdOutlineFavoriteBorder
-            size="70%"
+          <TbHeart
+            size="75%"
+            color="transparent"
+            fill={mantineTheme.colors.pink[7]}
             style={{ marginTop: "4px" }}
+          />
+        ) : (
+          <TbHeart
+            size="70%"
             color={mantineTheme.colors.gray[5]}
+            style={{ marginTop: "4px" }}
           />
         )}
       </ActionIcon>

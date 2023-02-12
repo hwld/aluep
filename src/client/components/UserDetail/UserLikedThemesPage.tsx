@@ -1,7 +1,7 @@
 import { Flex, Text, useMantineTheme } from "@mantine/core";
 import { User } from "@prisma/client";
 import React from "react";
-import { MdOutlineFavorite } from "react-icons/md";
+import { TbHeart } from "react-icons/tb";
 import { useLikedThemesQuery } from "../../hooks/useLikedThemesQuery";
 import { usePaginationState } from "../../hooks/usePaginationState";
 import { ThemeCardContainer } from "../ThemeCardContainer";
@@ -24,7 +24,11 @@ export const UserLikedThemesPage: React.FC<Props> = ({ user }) => {
     >
       {likedThemes?.likePostedTheme.length === 0 ? (
         <Flex align="center" direction="column" gap={10}>
-          <MdOutlineFavorite color={mantineTheme.colors.red[7]} size={200} />
+          <TbHeart
+            size={200}
+            color="transparent"
+            fill={mantineTheme.colors.red[7]}
+          />
           <Text size={30}>いいねをしたお題がありません。</Text>
           <Text size={15} color="gray.5">
             お題にいいねすると、ここに表示されます。

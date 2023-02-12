@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import React from "react";
 import { BiBookmarkHeart } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
-import { MdFavorite } from "react-icons/md";
+import { TbHeart } from "react-icons/tb";
 import { useFavoriteListQuery } from "../../hooks/useFavoriteListQuery";
 import { usePaginationState } from "../../hooks/usePaginationState";
 import { AppPagination } from "../AppPagination";
@@ -36,10 +36,26 @@ export const FavoriteListPage: React.FC<Props> = ({ user }) => {
         <Flex direction="column" align="center" gap={50}>
           <Flex align="flex-end" justify="center">
             <BsFillPeopleFill size={70} color={mantineTheme.colors.red[7]} />
-            <MdFavorite size={70} color={mantineTheme.colors.red[3]} />
-            <MdFavorite size={100} color={mantineTheme.colors.red[4]} />
-            <MdFavorite size={130} color={mantineTheme.colors.red[5]} />
-            <MdFavorite size={160} color={mantineTheme.colors.red[6]} />
+            <TbHeart
+              size={70}
+              color={mantineTheme.colors.red[3]}
+              fill={mantineTheme.colors.red[3]}
+            />
+            <TbHeart
+              size={100}
+              color={mantineTheme.colors.red[4]}
+              fill={mantineTheme.colors.red[4]}
+            />
+            <TbHeart
+              size={130}
+              color={mantineTheme.colors.red[5]}
+              fill={mantineTheme.colors.red[5]}
+            />
+            <TbHeart
+              size={160}
+              color={mantineTheme.colors.red[6]}
+              fill={mantineTheme.colors.red[6]}
+            />
           </Flex>
 
           <Text size={30}>ユーザのお気に入りをまだしていません</Text>

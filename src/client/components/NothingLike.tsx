@@ -1,6 +1,7 @@
 import { Flex, Text, useMantineTheme } from "@mantine/core";
 import { AiOutlineUser } from "react-icons/ai";
-import { MdOutlineFavoriteBorder, MdOutlinePostAdd } from "react-icons/md";
+import { MdOutlinePostAdd } from "react-icons/md";
+import { TbHeart } from "react-icons/tb";
 
 type Props = { page: "Developers" | "Posters" };
 
@@ -12,10 +13,7 @@ export const NothingLike: React.FC<Props> = ({ page }) => {
       <Flex direction={"column"} align={"center"} gap={15}>
         <Flex align={"flex-end"}>
           <AiOutlineUser size={60} />
-          <MdOutlineFavoriteBorder
-            size={80}
-            color={mantineTheme.colors.red[7]}
-          />
+          <TbHeart size={80} color={mantineTheme.colors.red[7]} />
         </Flex>
         <Text fz="xl" align="center" c="gray.5">
           開発者へいいねしてみよう！
@@ -32,10 +30,7 @@ export const NothingLike: React.FC<Props> = ({ page }) => {
       <Flex direction={"column"} align={"center"} gap={15}>
         <Flex align={"flex-end"}>
           <MdOutlinePostAdd size={60} />
-          <MdOutlineFavoriteBorder
-            size={80}
-            color={mantineTheme.colors.red[7]}
-          />
+          <TbHeart size={80} color={mantineTheme.colors.red[7]} />
         </Flex>
         <Text fz="xl" align="center" c="gray.5">
           投稿者へいいねしてみよう！

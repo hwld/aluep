@@ -129,8 +129,8 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
           <Flex justify="flex-end" align="flex-end" gap={"xs"}>
             <Flex align="center" gap={5}>
               <TbHeart
-                size="50px"
-                color={mantineTheme.colors.red[7]}
+                size="55px"
+                color="transparent"
                 fill={mantineTheme.colors.red[7]}
               />
               <Text

@@ -9,7 +9,8 @@ import {
 } from "@mantine/core";
 import { useRouter } from "next/router";
 import { FaRegComment } from "react-icons/fa";
-import { MdComputer, MdOutlineFavoriteBorder } from "react-icons/md";
+import { MdComputer } from "react-icons/md";
+import { TbHeart } from "react-icons/tb";
 import { Theme } from "../../../server/models/theme";
 import { TextLink } from "../TextLink";
 import { ThemeTagBadge } from "../ThemeTagBadge";
@@ -83,10 +84,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
                 </Text>
                 <Flex align="center" gap="sm">
                   <Flex align="center" gap={3}>
-                    <MdOutlineFavoriteBorder
-                      size="15px"
-                      color={mantineTheme.colors.red[7]}
-                    />
+                    <TbHeart size="16px" color={mantineTheme.colors.red[7]} />
                     <Text size="xs" c="red.7">
                       {theme.likes}
                     </Text>

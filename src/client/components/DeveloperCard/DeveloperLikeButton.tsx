@@ -1,5 +1,5 @@
-import { ActionIcon, Flex, Text } from "@mantine/core";
-import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
+import { ActionIcon, Flex, Text, useMantineTheme } from "@mantine/core";
+import { TbHeart } from "react-icons/tb";
 import { stopPropagation } from "../../utils";
 
 type Props = {
@@ -14,6 +14,8 @@ export const DeveloperLikeButton: React.FC<Props> = ({
   onClick,
   disabled,
 }) => {
+  const { colors } = useMantineTheme();
+
   return (
     <Flex align="center" onClick={stopPropagation}>
       <ActionIcon
@@ -32,9 +34,9 @@ export const DeveloperLikeButton: React.FC<Props> = ({
         })}
       >
         {likedByLoggedInUser ? (
-          <MdOutlineFavorite size="70%" style={{ marginTop: "1px" }} />
+          <TbHeart size="78%" color="transparent" fill={colors.pink[7]} />
         ) : (
-          <MdOutlineFavoriteBorder size="70%" style={{ marginTop: "1px" }} />
+          <TbHeart size="75%" color={colors.gray[7]} />
         )}
       </ActionIcon>
       <Text>{likes}</Text>

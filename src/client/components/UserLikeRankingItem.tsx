@@ -2,7 +2,7 @@ import { Flex, Text, useMantineTheme } from "@mantine/core";
 import { User } from "@prisma/client";
 import { useMemo } from "react";
 import { BiMedal } from "react-icons/bi";
-import { MdOutlineFavorite } from "react-icons/md";
+import { TbHeart } from "react-icons/tb";
 import { UserIconLink } from "./UserIconLink";
 
 type Props = { ranking: number; user: User; likeCount: number };
@@ -46,9 +46,10 @@ export const UserLikeRankingItem: React.FC<Props> = ({
               {user.name}
             </Text>
             <Flex align="center" gap={5}>
-              <MdOutlineFavorite
-                size="15px"
-                color={mantineTheme.colors.red[7]}
+              <TbHeart
+                size="20px"
+                color="transparent"
+                fill={mantineTheme.colors.red[7]}
               />
               <Text size="xs" c="red.7">
                 {likeCount}

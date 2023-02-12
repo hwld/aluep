@@ -13,7 +13,8 @@ import { PickedUpThemes } from "./PickedUpThemes";
 import { UserLikeRankingItem } from "./UserLikeRankingItem";
 
 import { IoSparkles } from "react-icons/io5";
-import { MdComputer, MdOutlineFavorite } from "react-icons/md";
+import { MdComputer } from "react-icons/md";
+import { TbHeart } from "react-icons/tb";
 import { usePickedUpThemesQuery } from "../hooks/usePickedUpThemesQuery";
 import { NothingPopularThemes } from "./NothingPopularThemes";
 import { PopularThemeCarousel } from "./PopularThemeCarousel/PopularThemeCarousel";
@@ -61,9 +62,10 @@ export const HomePage: React.FC = () => {
         />
         <PickedUpThemes
           icon={
-            <MdOutlineFavorite
-              size="25px"
-              color={mantineTheme.colors.pink[7]}
+            <TbHeart
+              size="30px"
+              color="transparent"
+              fill={mantineTheme.colors.pink[7]}
             />
           }
           title="いいねが多かったお題"

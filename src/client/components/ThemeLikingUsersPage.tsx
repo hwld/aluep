@@ -1,5 +1,5 @@
 import { Box, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
-import { MdOutlineFavorite } from "react-icons/md";
+import { TbHeart } from "react-icons/tb";
 import { Theme } from "../../server/models/theme";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useThemeLikingUsersQuery } from "../hooks/useThemeLikingUsersQuery";
@@ -18,10 +18,10 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
   return (
     <Stack w="100%" miw={userCardMinWidthPx} maw={800} m="auto" spacing="lg">
       <Flex align="center" gap="sm">
-        <MdOutlineFavorite
-          size="30px"
-          color={mantineTheme.colors.red[7]}
-          style={{ marginTop: "2px" }}
+        <TbHeart
+          size="35px"
+          color="transparent"
+          fill={mantineTheme.colors.red[7]}
         />
         <Title order={3}>お題のいいね</Title>
       </Flex>
