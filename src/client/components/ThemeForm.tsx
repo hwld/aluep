@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Stack } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { MdPostAdd } from "react-icons/md";
 import { ThemeTag } from "../../server/models/themeTag";
@@ -7,6 +8,8 @@ import { AppForm } from "./AppForm";
 import { AppMultiSelect } from "./AppMultiSelect";
 import { AppTextarea } from "./AppTextarea";
 import { AppTextInput } from "./AppTextInput";
+import { ThemeDescriptionEditor } from "./ThemeDescriptionEditor/ThemeDescriptionEditor";
+import { useThemeDescriptionEditor } from "./ThemeDescriptionEditor/useThemeDescriptionEditor";
 
 type Props = {
   allTags: ThemeTag[];
@@ -34,6 +37,8 @@ export const ThemeForm: React.FC<Props> = ({
     defaultValues,
     resolver: zodResolver(themeFormSchema),
   });
+
+  const editor = useThemeDescriptionEditor(defaultValues.description);
 
   return (
     <AppForm
@@ -90,6 +95,9 @@ export const ThemeForm: React.FC<Props> = ({
           );
         }}
       />
+      <Stack spacing={3}>
+        <ThemeDescriptionEditor editor={editor} />
+      </Stack>
     </AppForm>
   );
 };
