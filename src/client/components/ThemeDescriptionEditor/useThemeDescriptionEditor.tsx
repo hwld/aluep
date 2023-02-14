@@ -13,6 +13,32 @@ import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import { useEditor } from "@tiptap/react";
 import { lowlight } from "lowlight";
+import { IOptions } from "sanitize-html";
+
+export const themeDescriptionSanitizeOptions: IOptions = {
+  allowedTags: [
+    "p",
+    "strong",
+    "per",
+    "code",
+    "span",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "ul",
+    "ol",
+    "li",
+    "a",
+    "hr",
+    "br",
+  ],
+  allowedAttributes: {
+    a: ["href", "target"],
+  },
+};
 
 export const useThemeDescriptionEditor = (defaultContent: string) => {
   return useEditor({

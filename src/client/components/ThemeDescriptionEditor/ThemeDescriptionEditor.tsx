@@ -1,11 +1,27 @@
+import { Sx } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import { Editor } from "@tiptap/react";
+
+export const themeDescriptionStyles: Sx = (theme) => ({
+  color: theme.colors.gray[7],
+  "& p": { margin: 0, minHeight: "1rem" },
+  // TODO: 目立たないのでスタイルを考える
+  "& strong": { color: theme.colors.gray[9] },
+  "& a": { color: theme.colors.blue[5] },
+  "h1, h2, h3, h4, h5, h6": {
+    margin: "0.1rem 0 0.1rem 0",
+  },
+});
 
 type Props = { editor: Editor | null };
 export const ThemeDescriptionEditor: React.FC<Props> = ({ editor }) => {
   return (
     // TODO: タブを入力できるようにしたい
-    <RichTextEditor editor={editor}>
+    <RichTextEditor
+      editor={editor}
+      withCodeHighlightStyles={false}
+      withTypographyStyles={false}
+    >
       {/* TODO: sticky属性をつけただけではstickyにならない */}
       <RichTextEditor.Toolbar>
         <RichTextEditor.ControlsGroup>
@@ -29,18 +45,7 @@ export const ThemeDescriptionEditor: React.FC<Props> = ({ editor }) => {
           <RichTextEditor.Unlink />
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
-      <RichTextEditor.Content
-        // TODO: このあたりのスタイルは、お題詳細画面でも共有する必要があると思う
-        sx={(theme) => ({
-          height: "300px",
-          fontSize: "14px",
-          color: theme.colors.gray[7],
-          "& p": { marginBottom: 0 },
-          // TODO: 目立たないのでスタイルを考える
-          "& strong": { color: theme.colors.gray[9] },
-          "& a": { color: theme.colors.blue[5] },
-        })}
-      />
+      <RichTextEditor.Content sx={themeDescriptionStyles} />
     </RichTextEditor>
   );
 };

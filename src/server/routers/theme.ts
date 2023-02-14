@@ -1,5 +1,7 @@
 import { TRPCError } from "@trpc/server";
+import sanitize from "sanitize-html";
 import { z } from "zod";
+import { themeDescriptionSanitizeOptions } from "../../client/components/ThemeDescriptionEditor/useThemeDescriptionEditor";
 import {
   JoinData,
   pageSchema,
@@ -95,10 +97,15 @@ export const themeRoute = router({
   create: requireLoggedInProcedure
     .input(themeFormSchema)
     .mutation(async ({ input, ctx }) => {
+      const sanitizedThemeDescriptionHtml = sanitize(
+        input.descriptionHtml,
+        themeDescriptionSanitizeOptions
+      );
+
       const theme = await prisma.appTheme.create({
         data: {
           title: input.title,
-          description: input.descriptionHtml,
+          description: sanitizedThemeDescriptionHtml,
           tags: { create: input.tags.map((id) => ({ tagId: id })) },
           userId: ctx.session.user.id,
         },
@@ -124,12 +131,18 @@ export const themeRoute = router({
         where: { themeId: input.themeId },
       });
 
+      // htmlをサニタイズする
+      const sanitizedThemeDescriptionHtml = sanitize(
+        input.descriptionHtml,
+        themeDescriptionSanitizeOptions
+      );
+
       // 入力されたタグを全て付ける
       const attachTags = prisma.appTheme.update({
         where: { id: input.themeId },
         data: {
           title: input.title,
-          description: input.descriptionHtml,
+          description: sanitizedThemeDescriptionHtml,
           tags: { create: input.tags.map((tagId) => ({ tagId })) },
         },
       });

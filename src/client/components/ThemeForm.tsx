@@ -4,9 +4,9 @@ import { Controller, useForm } from "react-hook-form";
 import { MdPostAdd } from "react-icons/md";
 import { ThemeTag } from "../../server/models/themeTag";
 import { ThemeFormData, themeFormSchema } from "../../share/schema";
+import { OmitStrict } from "../../types/OmitStrict";
 import { AppForm } from "./AppForm";
 import { AppMultiSelect } from "./AppMultiSelect";
-import { AppTextarea } from "./AppTextarea";
 import { AppTextInput } from "./AppTextInput";
 import { ThemeDescriptionEditor } from "./ThemeDescriptionEditor/ThemeDescriptionEditor";
 import { useThemeDescriptionEditor } from "./ThemeDescriptionEditor/useThemeDescriptionEditor";
@@ -33,7 +33,7 @@ export const ThemeForm: React.FC<Props> = ({
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<ThemeFormData>({
+  } = useForm<OmitStrict<ThemeFormData, "descriptionHtml">>({
     defaultValues,
     resolver: zodResolver(themeFormSchema),
   });
@@ -42,7 +42,9 @@ export const ThemeForm: React.FC<Props> = ({
 
   return (
     <AppForm
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(({ title, tags }) => {
+        onSubmit({ title, tags, descriptionHtml: editor?.getHTML() ?? "" });
+      })}
       onCancel={onCancel}
       submitText={submitText}
       submitIcon={MdPostAdd}
@@ -74,22 +76,6 @@ export const ThemeForm: React.FC<Props> = ({
               searchable
               nothingFound="タグが見つかりませんでした"
               error={errors.tags?.message}
-              {...field}
-            />
-          );
-        }}
-      />
-      <Controller
-        control={control}
-        name="descriptionHtml"
-        render={({ field }) => {
-          return (
-            <AppTextarea
-              required
-              label="説明"
-              autosize
-              minRows={10}
-              error={errors.descriptionHtml?.message}
               {...field}
             />
           );

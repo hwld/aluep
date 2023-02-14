@@ -17,6 +17,7 @@ import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeJoin } from "../hooks/useThemeJoin";
 import { useThemeLike } from "../hooks/useThemeLike";
 import { ThemeComments } from "./ThemeComments";
+import { ThemeDescriptionView } from "./ThemeDescriptionView";
 import { ThemeJoinButton } from "./ThemeJoinButton";
 import { ThemeLikeButton } from "./ThemeLikeButton";
 import { ThemeOperationButton } from "./ThemeOperationButton";
@@ -96,14 +97,16 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
         {/* 中カラム */}
         <Box sx={{ flexGrow: 1 }}>
           <Card mih={300}>
-            <Flex gap={10} mb={10} wrap="wrap">
-              {theme.tags.map((tag) => (
-                <ThemeTagBadge tagId={tag.id} key={tag.id}>
-                  {tag.name}
-                </ThemeTagBadge>
-              ))}
-            </Flex>
-            <Text>{theme.descriptionHtml}</Text>
+            {theme.tags.length > 0 && (
+              <Flex gap={10} mb="md" wrap="wrap">
+                {theme.tags.map((tag) => (
+                  <ThemeTagBadge tagId={tag.id} key={tag.id}>
+                    {tag.name}
+                  </ThemeTagBadge>
+                ))}
+              </Flex>
+            )}
+            <ThemeDescriptionView descriptionHtml={theme.descriptionHtml} />
           </Card>
 
           <ThemeComments themeId={theme.id} themeOwnerId={theme.user.id} />
