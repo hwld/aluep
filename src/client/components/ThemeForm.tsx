@@ -45,7 +45,7 @@ export const ThemeForm: React.FC<Props> = ({
   const editor = useThemeDescriptionEditor({
     content: defaultValues.descriptionHtml,
     onUpdate: ({ editor }) => {
-      setValue("descriptionHtml", editor.getHTML());
+      setValue("descriptionHtml", editor.getHTML(), { shouldValidate: true });
     },
   });
 
@@ -88,7 +88,11 @@ export const ThemeForm: React.FC<Props> = ({
           );
         }}
       />
-      <Input.Wrapper label="お題の説明" error={errors.descriptionHtml?.message}>
+      <Input.Wrapper
+        label="お題の説明"
+        error={errors.descriptionHtml?.message}
+        required
+      >
         <ThemeDescriptionEditor
           editor={editor}
           error={!!errors.descriptionHtml}

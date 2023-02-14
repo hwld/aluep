@@ -30,6 +30,14 @@ export const ThemeDescriptionEditor: React.FC<Props> = ({
             borderWidth: "2px",
           }),
         })}
+        styles={{
+          content: {
+            // 新規作成時のSSRでレイアウトシフトが起きないように高さに合わせておく
+            // 更新のときにはレイアウトシフトが起こってしまう。
+            minHeight: "332px",
+            ".ProseMirror": { minHeight: "300px" },
+          },
+        }}
         withCodeHighlightStyles={false}
         withTypographyStyles={false}
       >
@@ -58,8 +66,6 @@ export const ThemeDescriptionEditor: React.FC<Props> = ({
             <RichTextEditor.Unlink />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
-        {/* 最小の高さを設定したいが、そうすると最初の行をクリックしないと
-      編集できなくなる・・・ */}
         <RichTextEditor.Content sx={themeDescriptionStyles} />
       </RichTextEditor>
     </Stack>
