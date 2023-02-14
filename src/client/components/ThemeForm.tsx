@@ -1,10 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Stack } from "@mantine/core";
+import { Input, Space } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { MdPostAdd } from "react-icons/md";
 import { ThemeTag } from "../../server/models/themeTag";
 import { ThemeFormData, themeFormSchema } from "../../share/schema";
-import { OmitStrict } from "../../types/OmitStrict";
 import { AppForm } from "./AppForm";
 import { AppMultiSelect } from "./AppMultiSelect";
 import { AppTextInput } from "./AppTextInput";
@@ -26,25 +25,33 @@ export const ThemeForm: React.FC<Props> = ({
   onSubmit,
   onCancel,
   submitText,
-  defaultValues = { title: "", descriptionHtml: "", tags: [] },
+  defaultValues = {
+    title: "",
+    descriptionHtml: "",
+    tags: [],
+  },
   isLoading,
 }) => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<OmitStrict<ThemeFormData, "descriptionHtml">>({
+  } = useForm<ThemeFormData>({
     defaultValues,
     resolver: zodResolver(themeFormSchema),
   });
 
-  const editor = useThemeDescriptionEditor(defaultValues.descriptionHtml);
+  const editor = useThemeDescriptionEditor({
+    content: defaultValues.descriptionHtml,
+    onUpdate: ({ editor }) => {
+      setValue("descriptionHtml", editor.getHTML());
+    },
+  });
 
   return (
     <AppForm
-      onSubmit={handleSubmit(({ title, tags }) => {
-        onSubmit({ title, tags, descriptionHtml: editor?.getHTML() ?? "" });
-      })}
+      onSubmit={handleSubmit(onSubmit)}
       onCancel={onCancel}
       submitText={submitText}
       submitIcon={MdPostAdd}
@@ -81,9 +88,13 @@ export const ThemeForm: React.FC<Props> = ({
           );
         }}
       />
-      <Stack spacing={3}>
-        <ThemeDescriptionEditor editor={editor} />
-      </Stack>
+      <Input.Wrapper label="お題の説明" error={errors.descriptionHtml?.message}>
+        <ThemeDescriptionEditor
+          editor={editor}
+          error={!!errors.descriptionHtml}
+        />
+        <Space mt="5px" />
+      </Input.Wrapper>
     </AppForm>
   );
 };

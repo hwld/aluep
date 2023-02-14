@@ -74,6 +74,15 @@ export const theme: MantineThemeOverride = {
         },
       }),
     },
+    InputWrapper: {
+      // TODO: Inputのタイトルのスタイルを手動で変えてるとこがまだあるので、そこを削除する
+      styles: (theme) => ({
+        label: {
+          color: theme.colors.gray[5],
+          error: theme.colors.blue[7],
+        },
+      }),
+    },
     Notification: {
       styles: (theme) => ({
         root: {

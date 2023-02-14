@@ -11,9 +11,10 @@ import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
-import { useEditor } from "@tiptap/react";
+import { EditorOptions, useEditor } from "@tiptap/react";
 import { lowlight } from "lowlight";
-import { IOptions } from "sanitize-html";
+import sanitize, { IOptions } from "sanitize-html";
+import { OmitStrict } from "../../../types/OmitStrict";
 
 export const themeDescriptionSanitizeOptions: IOptions = {
   allowedTags: [
@@ -38,9 +39,13 @@ export const themeDescriptionSanitizeOptions: IOptions = {
   allowedAttributes: {
     a: ["href", "target"],
   },
+  transformTags: { a: sanitize.simpleTransform("a", { target: "_blank" }) },
+  allowedSchemes: ["http", "https"],
 };
 
-export const useThemeDescriptionEditor = (defaultContent: string) => {
+export const useThemeDescriptionEditor = (
+  opts: OmitStrict<Partial<EditorOptions>, "extensions">
+) => {
   return useEditor({
     extensions: [
       Document,
@@ -61,6 +66,6 @@ export const useThemeDescriptionEditor = (defaultContent: string) => {
         validate: (href) => /^https?:\/\//.test(href),
       }),
     ],
-    content: defaultContent,
+    ...opts,
   });
 };

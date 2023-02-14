@@ -49,7 +49,7 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
         <MdPostAdd size="30px" color={mantineTheme.colors.red[7]} />
         <Title order={3}>お題の更新</Title>
       </Flex>
-      <Card mt="md">
+      <Card mt="md" sx={{ position: "static" }}>
         <ThemeForm
           submitText="更新する"
           allTags={allTags}

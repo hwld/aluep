@@ -46,7 +46,7 @@ export const ThemeCreatePage: React.FC = () => {
         <MdPostAdd size="30px" color={mantineTheme.colors.red[7]} />
         <Title order={3}>お題の投稿</Title>
       </Flex>
-      <Card mt="md">
+      <Card mt="md" sx={{ position: "static" }}>
         <ThemeForm
           submitText="投稿する"
           onSubmit={handleCreateTheme}
