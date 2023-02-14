@@ -15,6 +15,8 @@ type Props = {
   repoFormData?: RepositoryFormData;
   repository: string;
 };
+
+// TODO: お題の参加以外にも、お題の参加情報の更新にも使用しているのでThemeJoinFormっていう名前は微妙
 export const ThemeJoinForm: React.FC<Props> = ({
   defaultValues,
   themeId,
@@ -23,6 +25,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
   onCancel,
   submitText,
   repoFormData,
+  isLoading,
 }) => {
   //repository=already:リダイレクトしていない
   //repository=new:リダイレクトしている
@@ -86,6 +89,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
             onCancel={onCancel}
             themeId={themeId}
             submitText={submitText}
+            isLoading={isLoading}
           />
         </Box>
       )}
@@ -98,6 +102,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
             themeId={themeId}
             submitText={submitText}
             repoFormData={repoFormData}
+            isLoading={isLoading}
           />
         </Box>
       )}

@@ -71,7 +71,13 @@ export const ThemeJoinNewForm: React.FC<Props> = ({
       onCancel={onCancel}
       submitIcon={MdComputer}
       submitText={submitText}
-      isSubmitting={isLoading}
+      // ここのisLoadingは、お題への参加・開発情報の更新完了を待機するもので、
+      // それとは別にgithubリポジトリの作成を待機する必要がある。
+      isSubmitting={
+        isLoading ||
+        createRepositoryMutation.isLoading ||
+        createRepositoryMutation.isSuccess
+      }
     >
       <Controller
         control={control}
