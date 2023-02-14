@@ -41,16 +41,38 @@ const DeveloperUpdate: NextPage = () => {
   const router = useRouter();
   const themeId = router.query.id as string;
   const developerId = router.query.developerId as string;
+  const repoUrl = router.query.repoUrl;
+  const { repoName, repoDescription, comment, reRepo } = router.query;
 
   const { theme } = useThemeQuery(themeId);
   const { developer } = useDeveloperQuery(developerId);
 
   // テーマが取得できないときはサーバーでエラーが出るから
   // ここには到達しない
-  if (!theme || !developer) {
+  if (
+    !theme ||
+    !developer ||
+    typeof repoUrl === "object" ||
+    typeof repoName === "object" ||
+    typeof repoDescription === "object" ||
+    typeof reRepo === "object" ||
+    typeof comment === "object"
+  ) {
     return <div>Error</div>;
   }
 
-  return <DeveloperEditPage theme={theme} developer={developer} />;
+  return (
+    <DeveloperEditPage
+      theme={theme}
+      developer={developer}
+      repoUrl={repoUrl}
+      repoFormData={{
+        repoName: repoName ?? "",
+        repoDescription: repoDescription ?? "",
+        comment: comment ?? "",
+      }}
+      reRepo={reRepo}
+    />
+  );
 };
 export default DeveloperUpdate;

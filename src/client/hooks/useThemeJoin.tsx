@@ -32,6 +32,7 @@ export const useThemeJoin = (themeId: string) => {
       await queryClient.invalidateQueries(
         themeJoinQueryKey(themeId, session?.user.id)
       );
+
       showSuccessNotification({
         title: "お題の開発",
         message: "お題の開発を開始しました。",

@@ -29,7 +29,12 @@ export const UserLikeRankingItem: React.FC<Props> = ({
   return (
     <Flex align="center" justify="space-between">
       <Flex align="center" miw={0}>
-        <Flex w="30px" justify="center" sx={{ alignSelf: "flex-start" }}>
+        <Flex
+          w="30px"
+          miw="30px"
+          justify="center"
+          sx={{ alignSelf: "flex-start" }}
+        >
           {rank}
         </Flex>
         <Flex align="center" gap="xs" miw={0}>

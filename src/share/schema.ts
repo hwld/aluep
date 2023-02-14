@@ -96,6 +96,10 @@ export const repositoryFormSchema = z.object({
     .min(1, "リポジトリ名を入力して下さい。")
     .max(30, "リポジトリ名は30文字以下で入力してください。"),
   repoDescription: z.string().max(200, "説明は200文字以下で入力してください。"),
+  comment: z
+    .string()
+    .max(300, "コメントは300文字以下で入力してください。")
+    .optional(),
 });
 export type RepositoryFormData = z.infer<typeof repositoryFormSchema>;
 

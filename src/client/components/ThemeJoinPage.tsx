@@ -1,14 +1,24 @@
 import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { Theme } from "../../server/models/theme";
-import { ThemeJoinFormData } from "../../share/schema";
+import { RepositoryFormData, ThemeJoinFormData } from "../../share/schema";
 import { useThemeJoin } from "../hooks/useThemeJoin";
 import { ComputerIcon } from "./ComputerIcon";
 import { ThemeJoinForm } from "./ThemeJoinForm";
 import { ThemeSummaryCard } from "./ThemeSummaryCard";
 
-type Props = { theme: Theme; repoUrl?: string };
-export const ThemeJoinPage: React.FC<Props> = ({ theme, repoUrl }) => {
+type Props = {
+  theme: Theme;
+  repoUrl?: string;
+  repoFormData?: RepositoryFormData;
+  reRepo?: string;
+};
+export const ThemeJoinPage: React.FC<Props> = ({
+  theme,
+  repoUrl,
+  repoFormData,
+  reRepo,
+}) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
 
@@ -25,6 +35,9 @@ export const ThemeJoinPage: React.FC<Props> = ({ theme, repoUrl }) => {
   const handleBack = () => {
     router.back();
   };
+
+  const repository: string = reRepo ?? "already";
+
   return (
     <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
       <Flex align="center" gap="xs">
@@ -45,6 +58,8 @@ export const ThemeJoinPage: React.FC<Props> = ({ theme, repoUrl }) => {
             submitText="開発する"
             isLoading={joinMutation.isLoading || joinMutation.isSuccess}
             defaultValues={{ githubUrl: repoUrl ?? "", comment: "" }}
+            repoFormData={repoFormData}
+            repository={repository}
           />
         </Card>
       </Stack>
