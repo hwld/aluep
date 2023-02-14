@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import { MdComputer } from "react-icons/md";
-import { RepositoryFormData, repositoryFormSchema } from "../../share/schema";
+import {
+  RepositoryFormData,
+  repositoryFormSchema,
+  ThemeJoinFormData,
+} from "../../share/schema";
 import { useGitHubRepoCreate } from "../hooks/useGitHubRepoCreate";
-import { useThemeJoin } from "../hooks/useThemeJoin";
 import { AppForm } from "./AppForm";
 import { AppTextarea } from "./AppTextarea";
 import { AppTextInput } from "./AppTextInput";
@@ -13,6 +15,7 @@ type Props = {
   defaultValues?: RepositoryFormData;
   isLoading?: boolean;
   themeId: string;
+  onSubmit: (data: ThemeJoinFormData) => void;
   onCancel: () => void;
   submitText: string;
   repoFormData?: RepositoryFormData;
@@ -21,6 +24,7 @@ type Props = {
 export const ThemeJoinNewForm: React.FC<Props> = ({
   isLoading,
   themeId,
+  onSubmit,
   onCancel,
   submitText,
   repoFormData,
@@ -31,10 +35,6 @@ export const ThemeJoinNewForm: React.FC<Props> = ({
   },
 }) => {
   const createRepositoryMutation = useGitHubRepoCreate(themeId);
-  const router = useRouter();
-  const {
-    mutations: { joinMutation },
-  } = useThemeJoin(themeId);
 
   //開発するボタンを押したときの動作
   const handleCreateRepository = (data: RepositoryFormData) => {
@@ -52,9 +52,7 @@ export const ThemeJoinNewForm: React.FC<Props> = ({
           themeId: themeId,
           githubUrl: data.repoUrl,
         };
-        joinMutation.mutate(join, {
-          onSuccess: () => router.replace(`/themes/${themeId}`),
-        });
+        onSubmit(join);
       },
     });
   };

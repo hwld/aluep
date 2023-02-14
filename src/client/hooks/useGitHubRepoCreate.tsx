@@ -3,11 +3,7 @@ import { signIn } from "next-auth/react";
 import { GitHubErrors } from "../../share/errors";
 import { RepositoryFormData } from "../../share/schema";
 import { trpc } from "../trpc";
-import {
-  isTRPCClientError,
-  showErrorNotification,
-  showSuccessNotification,
-} from "../utils";
+import { isTRPCClientError, showErrorNotification } from "../utils";
 
 export const useGitHubRepoCreate = (themeId: string) => {
   const createRepositoryMutation = useMutation({
@@ -15,10 +11,10 @@ export const useGitHubRepoCreate = (themeId: string) => {
       return trpc.github.createRepo.mutate(data);
     },
     onSuccess: () => {
-      showSuccessNotification({
-        title: "リポジトリの作成",
-        message: "リポジトリを作成しました。",
-      });
+      // showSuccessNotification({
+      //   title: "リポジトリの作成",
+      //   message: "リポジトリを作成しました。",
+      // });
     },
     onError: (error, fieldValues) => {
       if (isTRPCClientError(error)) {
@@ -29,9 +25,10 @@ export const useGitHubRepoCreate = (themeId: string) => {
             message: "リポジトリの作成に失敗したため、再ログインを行います。",
           });
 
-          const url = new URL(
-            `${window.location.origin}/themes/${themeId}/join`
-          );
+          // const url = new URL(
+          //   `${window.location.origin}/themes/${themeId}/join`
+          // );
+          const url = new URL(window.location.href);
           url.searchParams.set("repoName", fieldValues.repoName);
           url.searchParams.set("repoDescription", fieldValues.repoDescription);
           url.searchParams.set("comment", fieldValues.comment ?? "");

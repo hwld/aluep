@@ -24,10 +24,17 @@ export const ThemeJoinForm: React.FC<Props> = ({
   submitText,
   repoFormData,
 }) => {
-  //repositoryにはリダイレクトしない限りalreadyが必ず渡される。
-  //flgでリダイレクトしてあるか判断
-  const flg: boolean = repository === "already";
-  const [val, setVal] = useState(repository);
+  //repository=already:リダイレクトしていない
+  //repository=new:リダイレクトしている
+  //repository=edit:お題を更新する
+  //radioでradioボタンの初期表示を指定
+  let radio: string;
+  if (repository === "already" || repository === "edit") {
+    radio = "already";
+  } else {
+    radio = "new";
+  }
+  const [val, setVal] = useState(radio);
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
     setVal(e.currentTarget.value);
   };
@@ -43,7 +50,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
         withAsterisk
         styles={(theme) => ({ label: { color: theme.colors.gray[5] } })}
       >
-        {flg ? (
+        {repository !== "new" && (
           <Radio
             value="already"
             label="既存のリポジトリを使用する"
@@ -52,11 +59,13 @@ export const ThemeJoinForm: React.FC<Props> = ({
               label: { color: theme.colors.gray[7] },
             })}
           />
-        ) : (
+        )}
+
+        {repository === "new" && (
           <Text mt={5} size="sm" color="red">
             GitHubリポジトリを作成することができなかったため、再ログインを行いました。
             <br />
-            もう一度「開発する」ボタンを押してください。
+            もう一度「{submitText}」ボタンを押してください。
           </Text>
         )}
 
@@ -84,6 +93,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
       {val === "new" && (
         <Box>
           <ThemeJoinNewForm
+            onSubmit={onSubmit}
             onCancel={onCancel}
             themeId={themeId}
             submitText={submitText}
