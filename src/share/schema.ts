@@ -6,10 +6,11 @@ export const themeFormSchema = z.object({
     .string()
     .min(1, "タイトルを入力してください。")
     .max(50, "タイトルは50文字以下で入力してください。"),
-  description: z
+  descriptionHtml: z
     .string()
     .min(1, "説明を入力してください。")
-    .max(5000, "説明は5000文字以下で入力してください。"),
+    // htmlを受け取るので、文字数を指定するのは難しそうなのでとりあえず
+    .max(10000, "説明が長すぎます。"),
   tags: z
     .array(z.string().min(1).max(100))
     .max(50, "タグは最大50個までしかつけることができません。"),

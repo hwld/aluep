@@ -98,7 +98,7 @@ export const themeRoute = router({
       const theme = await prisma.appTheme.create({
         data: {
           title: input.title,
-          description: input.description,
+          description: input.descriptionHtml,
           tags: { create: input.tags.map((id) => ({ tagId: id })) },
           userId: ctx.session.user.id,
         },
@@ -129,7 +129,7 @@ export const themeRoute = router({
         where: { id: input.themeId },
         data: {
           title: input.title,
-          description: input.description,
+          description: input.descriptionHtml,
           tags: { create: input.tags.map((tagId) => ({ tagId })) },
         },
       });

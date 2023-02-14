@@ -19,13 +19,13 @@ describe("server/routers/theme.ts", () => {
     const description = "test-description";
     const { themeId } = await caller.theme.create({
       title,
-      description,
+      descriptionHtml: description,
       tags: [],
     });
 
     const theme = await caller.theme.get({ themeId });
 
     expect(theme?.title).toStrictEqual(title);
-    expect(theme?.description).toStrictEqual(description);
+    expect(theme?.descriptionHtml).toStrictEqual(description);
   });
 });

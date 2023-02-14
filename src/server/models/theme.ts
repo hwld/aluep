@@ -9,7 +9,7 @@ import { prisma } from "../prismadb";
 export const themeSchema = z.object({
   id: z.string(),
   title: z.string(),
-  description: z.string(),
+  descriptionHtml: z.string(),
   tags: z.array(z.object({ id: z.string(), name: z.string() })),
   user: z.object({
     id: z.string(),
@@ -41,7 +41,7 @@ const convertTheme = (
     id: rawTheme.id,
     title: rawTheme.title,
     tags: rawTheme.tags.map(({ tag: { id, name } }) => ({ id, name })),
-    description: rawTheme.description,
+    descriptionHtml: rawTheme.description,
     createdAt: rawTheme.createdAt.toUTCString(),
     elapsedSinceCreation: formatDistanceStrict(rawTheme.createdAt, new Date(), {
       addSuffix: true,

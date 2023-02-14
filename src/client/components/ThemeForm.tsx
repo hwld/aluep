@@ -26,7 +26,7 @@ export const ThemeForm: React.FC<Props> = ({
   onSubmit,
   onCancel,
   submitText,
-  defaultValues = { title: "", description: "", tags: [] },
+  defaultValues = { title: "", descriptionHtml: "", tags: [] },
   isLoading,
 }) => {
   const {
@@ -38,7 +38,7 @@ export const ThemeForm: React.FC<Props> = ({
     resolver: zodResolver(themeFormSchema),
   });
 
-  const editor = useThemeDescriptionEditor(defaultValues.description);
+  const editor = useThemeDescriptionEditor(defaultValues.descriptionHtml);
 
   return (
     <AppForm
@@ -81,7 +81,7 @@ export const ThemeForm: React.FC<Props> = ({
       />
       <Controller
         control={control}
-        name="description"
+        name="descriptionHtml"
         render={({ field }) => {
           return (
             <AppTextarea
@@ -89,7 +89,7 @@ export const ThemeForm: React.FC<Props> = ({
               label="説明"
               autosize
               minRows={10}
-              error={errors.description?.message}
+              error={errors.descriptionHtml?.message}
               {...field}
             />
           );

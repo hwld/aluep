@@ -103,7 +103,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
                 </ThemeTagBadge>
               ))}
             </Flex>
-            <Text>{theme.description}</Text>
+            <Text>{theme.descriptionHtml}</Text>
           </Card>
 
           <ThemeComments themeId={theme.id} themeOwnerId={theme.user.id} />
