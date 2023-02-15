@@ -5,14 +5,26 @@ import { MdComputer } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { RouterInputs } from "../../server/trpc";
-import { ThemeJoinFormData } from "../../share/schema";
+import { RepositoryFormData, ThemeJoinFormData } from "../../share/schema";
 import { trpc } from "../trpc";
 import { showErrorNotification, showSuccessNotification } from "../utils";
 import { ThemeJoinForm } from "./ThemeJoinForm";
 import { ThemeSummaryCard } from "./ThemeSummaryCard";
 
-type Props = { theme: Theme; developer: ThemeDeveloper };
-export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
+type Props = {
+  theme: Theme;
+  developer: ThemeDeveloper;
+  repoUrl?: string;
+  repoFormData?: RepositoryFormData;
+  reRepo?: string;
+};
+export const DeveloperEditPage: React.FC<Props> = ({
+  theme,
+  developer,
+  repoUrl,
+  repoFormData,
+  reRepo,
+}) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const mantineTheme = useMantineTheme();
@@ -44,6 +56,9 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
   const handleBack = () => {
     router.back();
   };
+
+  const repository: string = reRepo ?? "edit";
+
   return (
     <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
       <Flex align="center" gap="xs">
@@ -68,6 +83,8 @@ export const DeveloperEditPage: React.FC<Props> = ({ theme, developer }) => {
             defaultValues={developer}
             submitText="更新する"
             isLoading={updateMutation.isLoading || updateMutation.isSuccess}
+            repository={repository}
+            repoFormData={repoFormData}
           />
         </Card>
       </Stack>
