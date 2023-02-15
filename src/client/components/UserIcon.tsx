@@ -41,11 +41,12 @@ export const UserIcon: React.FC<UserIconProps> = ({
     <>
       <Avatar
         ref={iconRef}
-        // スタイルを当てるのにも使用している
-        aria-label="user-icon"
+        // スタイルを当てるのに使用している
+        data-user-icon
         src={iconSrc}
         size={size}
         bg="gray.1"
+        imageProps={{ "aria-label": "ユーザーのアイコン" }}
         sx={(theme) => ({
           borderRadius: "100%",
           transition: "all 150ms",

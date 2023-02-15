@@ -15,6 +15,7 @@ export const SideMenuToggle: React.FC<Props> = ({
 
   return (
     <Burger
+      title={isOpen ? "サイドメニューを閉じる" : "サイドメニューを開く"}
       opened={isOpen}
       onClick={onToggle}
       color={mantineTheme.colors.gray[1]}

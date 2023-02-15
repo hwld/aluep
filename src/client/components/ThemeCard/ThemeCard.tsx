@@ -38,7 +38,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
         transition: "all 150ms",
         // アイコン、タグバッジをホバーしたときにスタイルを当てたくないのでaria-label='user-icon'|'tag-badge'の要素を使っているが、
         // UserIcon, ThemeTagBadgeが変わったときにスタイルが当たらなくなりそう
-        "&:not(:has(*[aria-label='user-icon']:hover,*[aria-label='tag-badge']:hover)):hover":
+        "&:not(:has(*[data-user-icon]:hover,*[aria-label='tag-badge']:hover)):hover":
           {
             boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
           },

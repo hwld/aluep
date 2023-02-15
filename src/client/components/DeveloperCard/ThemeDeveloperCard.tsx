@@ -58,7 +58,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
         position: "static",
         cursor: "pointer",
         transition: "all 150ms",
-        "&:not(:has(*[aria-label='user-icon']:hover)):hover": {
+        "&:not(:has(*[data-user-icon]:hover)):hover": {
           boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
         },
       })}

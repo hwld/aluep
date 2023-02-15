@@ -23,6 +23,8 @@ export const PopularThemeCarousel: React.FC<Props> = ({ themes, miw }) => {
         borderRadius: theme.radius.lg,
         boxShadow: `inset ${theme.shadows.lg}`,
       })}
+      nextControlLabel="次のお題に進める"
+      previousControlLabel="前のお題に戻る"
     >
       {themes && themes.length > 0 ? (
         themes.map((theme) => (

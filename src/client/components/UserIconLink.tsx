@@ -15,7 +15,12 @@ export const UserIconLink: React.FC<Props> = ({
   size = "md",
 }) => {
   return (
-    <Link href={`/users/${userId}`} onClick={stopPropagation} passHref>
+    <Link
+      href={`/users/${userId}`}
+      onClick={stopPropagation}
+      passHref
+      aria-label="ユーザー詳細画面を開く"
+    >
       <UserIcon iconSrc={iconSrc} interactive size={size} />
     </Link>
   );

@@ -35,6 +35,12 @@ export const AppNavigationProgress = () => {
   }, [router.asPath, router.events]);
 
   return (
-    <NavigationProgress autoReset color="red.7" stepInterval={100} size={3} />
+    <NavigationProgress
+      progressLabel="ページ読み込みのインジケータ"
+      autoReset
+      color="red.7"
+      stepInterval={100}
+      size={3}
+    />
   );
 };
