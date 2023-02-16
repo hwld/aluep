@@ -45,7 +45,7 @@ export const ThemeDescriptionEditor: React.FC<Props> = ({
         <RichTextEditor.Toolbar>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Bold title="太文字" />
-            <RichTextEditor.CodeBlock title="コード" />
+            <RichTextEditor.Strikethrough title="打ち消し" />
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.H2 />

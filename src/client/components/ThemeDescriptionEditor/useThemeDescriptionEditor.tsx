@@ -1,6 +1,5 @@
 import Bold from "@tiptap/extension-bold";
 import BulletList from "@tiptap/extension-bullet-list";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Document from "@tiptap/extension-document";
 import HardBreak from "@tiptap/extension-hard-break";
 import Heading from "@tiptap/extension-heading";
@@ -10,9 +9,9 @@ import Link from "@tiptap/extension-link";
 import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Paragraph from "@tiptap/extension-paragraph";
+import Strike from "@tiptap/extension-strike";
 import Text from "@tiptap/extension-text";
 import { EditorOptions, useEditor } from "@tiptap/react";
-import { lowlight } from "lowlight";
 import sanitize, { IOptions } from "sanitize-html";
 import { OmitStrict } from "../../../types/OmitStrict";
 
@@ -23,6 +22,7 @@ export const themeDescriptionSanitizeOptions: IOptions = {
     "per",
     "code",
     "span",
+    "s",
     "h1",
     "h2",
     "h3",
@@ -55,7 +55,7 @@ export const useThemeDescriptionEditor = (
       HardBreak.configure({ keepMarks: true }),
       History,
       Bold,
-      CodeBlockLowlight.configure({ lowlight }),
+      Strike,
       Heading,
       BulletList,
       OrderedList,
