@@ -156,11 +156,14 @@ model AppThemeDeveloperLike {
   @@index([userId])
 }
 
-model FavoriteUser{
-  userId              String
-  favoritedUserId     String
+//TODO: 外部キー制約をつける
+model FavoriteUser {
+  userId String
 
-  @@id([userId,favoritedUserId])
+  // お気に入り登録したユーザー
+  favoritedUserId String
+
+  @@id([userId, favoritedUserId])
 }
 
 model AppThemeComment {
@@ -174,7 +177,7 @@ model AppThemeComment {
 
   asParent AppThemeCommentParentChild[] @relation("asParent")
   // 親は一つなので、あるコメントが返信となるParentChildは一つ
-  asChild  AppThemeCommentParentChild? @relation("asChild")
+  asChild  AppThemeCommentParentChild?  @relation("asChild")
 
   createdAt DateTime @default(now())
 
@@ -188,7 +191,7 @@ model AppThemeCommentParentChild {
   parentComment   AppThemeComment? @relation("asParent", fields: [parentCommentId], references: [id], onDelete: SetNull)
 
   // 一つのコメントは最大で一つの返信元を持つので、childCommentIdを主キーにできる？
-  childCommentId String @id @default(cuid())
+  childCommentId String          @id @default(cuid())
   // 返信コメントが削除れたときに返信元コメントから見えなくしても問題ないため、行を削除する 
   childComment   AppThemeComment @relation("asChild", fields: [childCommentId], references: [id], onDelete: Cascade)
 

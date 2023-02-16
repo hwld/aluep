@@ -66,15 +66,9 @@ export function UserDetailCard({
     }
 
     if (!favorited) {
-      createFavoriteMutation.mutate({
-        userId: user.id,
-        favoriteUserId: sessionId,
-      });
+      createFavoriteMutation.mutate({ userId: user.id });
     } else {
-      deleteFavoriteMutation.mutate({
-        userId: user.id,
-        favoriteUserId: sessionId,
-      });
+      deleteFavoriteMutation.mutate({ userId: user.id });
     }
   };
 

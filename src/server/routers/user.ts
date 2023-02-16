@@ -121,25 +121,25 @@ export const userRoute = router({
 
   //お気に入りを登録
   crateFavorite: requireLoggedInProcedure
-    .input(z.object({ userId: z.string(), favoriteUserId: z.string() }))
-    .mutation(async ({ input }) => {
+    .input(z.object({ userId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
       await prisma.favoriteUser.create({
         data: {
           userId: input.userId,
-          favoritedUserId: input.favoriteUserId,
+          favoritedUserId: ctx.session.user.id,
         },
       });
     }),
 
   //お気に入りの解除
   deleteFavorite: requireLoggedInProcedure
-    .input(z.object({ userId: z.string(), favoriteUserId: z.string() }))
-    .mutation(async ({ input }) => {
+    .input(z.object({ userId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
       await prisma.favoriteUser.delete({
         where: {
           userId_favoritedUserId: {
             userId: input.userId,
-            favoritedUserId: input.favoriteUserId,
+            favoritedUserId: ctx.session.user.id,
           },
         },
       });
