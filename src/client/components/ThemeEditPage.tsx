@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { MdPostAdd } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { RouterInputs } from "../../server/trpc";
+import { Routes } from "../../share/routes";
 import { ThemeFormData } from "../../share/schema";
 import { useAllTagsQuery } from "../hooks/useAllTagsQuery";
 import { trpc } from "../trpc";
@@ -25,7 +26,7 @@ export const ThemeEditPage: React.FC<Props> = ({ theme }) => {
         title: "お題の更新",
         message: "お題を更新しました。",
       });
-      router.push(`/themes/${theme.id}`);
+      router.push(Routes.theme(theme.id));
     },
     onError: () => {
       showErrorNotification({

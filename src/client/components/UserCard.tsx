@@ -1,6 +1,7 @@
 import { Card, Stack, Text } from "@mantine/core";
 import { User } from "@prisma/client";
 import { useRouter } from "next/router";
+import { Routes } from "../../share/routes";
 import { TextLink } from "./TextLink";
 import { UserIcon } from "./UserIcon";
 
@@ -11,7 +12,7 @@ export const UserCard: React.FC<Props> = ({ user }) => {
   const router = useRouter();
 
   const handleGoUserDetail = () => {
-    router.push(`/users/${user.id}`);
+    router.push(Routes.user(user.id));
   };
 
   return (
@@ -33,7 +34,7 @@ export const UserCard: React.FC<Props> = ({ user }) => {
     >
       <UserIcon iconSrc={user.image} />
       <Stack spacing={3} sx={{ flexShrink: 1, minWidth: 0 }}>
-        <TextLink href={`/users/${user.id}`}>
+        <TextLink href={Routes.user(user.id)}>
           <Text
             sx={{
               flexShrink: 0,

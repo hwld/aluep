@@ -1,11 +1,12 @@
 import { UserEditPage } from "../../client/components/UserEditPage";
 import { useSessionQuery } from "../../client/hooks/useSessionQuery";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
+import { Routes } from "../../share/routes";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ session }) => {
     if (!session) {
-      return { redirect: { destination: "/", permanent: false } };
+      return { redirect: { destination: Routes.home, permanent: false } };
     }
   }
 );

@@ -1,5 +1,6 @@
 import { Box, Card, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
+import { Routes } from "../../share/routes";
 import { RepositoryFormData } from "../../share/schema";
 import { useGitHubRepoCreate } from "../hooks/useGitHubRepoCreate";
 import { RepositoryForm } from "./RepositoryForm";
@@ -17,13 +18,15 @@ export const RepoCreatePageAfterSignIn: React.FC<Props> = ({
   const createRepositoryMutation = useGitHubRepoCreate(themeId);
 
   const handleGoJoinPage = () => {
-    router.push(`/themes/${themeId}/join`);
+    router.push(Routes.joinTheme(themeId));
   };
 
   const handleCreateRepository = (data: RepositoryFormData) => {
     createRepositoryMutation.mutate(data, {
       onSuccess: (data) => {
-        const url = new URL(`${window.location.origin}/themes/${themeId}/join`);
+        const url = new URL(
+          `${window.location.origin}${Routes.joinTheme(themeId)}`
+        );
         url.searchParams.set("repoUrl", data.repoUrl);
         router.replace(url);
       },

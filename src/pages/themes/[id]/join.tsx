@@ -7,12 +7,13 @@ import {
 } from "../../../client/hooks/useThemeQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers/_app";
+import { Routes } from "../../../share/routes";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session, callerContext }) => {
     if (!session) {
-      return { redirect: { destination: "/", permanent: false } };
+      return { redirect: { destination: Routes.home, permanent: false } };
     }
 
     const { id: themeId } = query;
@@ -30,7 +31,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const joinData = await caller.theme.joined({ themeId: theme.id });
     if (joinData.joined) {
       return {
-        redirect: { destination: `/themes/${theme.id}`, permanent: false },
+        redirect: { destination: Routes.theme(themeId), permanent: false },
       };
     }
 

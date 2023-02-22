@@ -5,6 +5,7 @@ import { BiBookmarkHeart } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { RiAccountCircleLine } from "react-icons/ri";
+import { Routes } from "../../share/routes";
 import { OmitStrict } from "../../types/OmitStrict";
 import { AppMenu } from "./AppMenu/AppMenu";
 import { MenuDropdown } from "./AppMenu/MenuDropdown";
@@ -40,20 +41,20 @@ export const UserMenuButton: React.FC<Props> = ({ user, children }) => {
         <Space mt="xs" />
         <MenuLinkItem
           icon={<RiAccountCircleLine size={20} />}
-          href={`/users/${user.id}`}
+          href={Routes.user(user.id)}
         >
           プロフィール
         </MenuLinkItem>
         <MenuLinkItem
           icon={<BiBookmarkHeart size={20} />}
-          href={`/users/${user.id}/favorite-list`}
+          href={Routes.userFavorites(user.id)}
         >
           お気に入り
         </MenuLinkItem>
         <MenuItem icon={<MdLogout size={20} />} onClick={handleLogOut}>
           ログアウト
         </MenuItem>
-        <MenuLinkItem icon={<FaTrash size={16} />} href="/users/delete" red>
+        <MenuLinkItem icon={<FaTrash size={16} />} href={Routes.deleteUser} red>
           アカウント削除
         </MenuLinkItem>
       </MenuDropdown>

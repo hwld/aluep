@@ -2,6 +2,7 @@ import { Box, Button, Flex, Text, Title, useMantineTheme } from "@mantine/core";
 import { NextPage } from "next";
 import Link from "next/link";
 import { BiWrench } from "react-icons/bi";
+import { Routes } from "../share/routes";
 
 const ServerErrorPage: NextPage = () => {
   const theme = useMantineTheme();
@@ -47,7 +48,7 @@ const ServerErrorPage: NextPage = () => {
             <br />
             恐れ入りますが、再度時間をおいてアクセスしてください。
           </Text>
-          <Button mt={50} component={Link} href="/">
+          <Button mt={50} component={Link} href={Routes.home}>
             ホームへ戻る
           </Button>
         </Flex>

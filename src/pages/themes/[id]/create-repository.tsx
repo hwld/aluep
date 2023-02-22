@@ -2,12 +2,13 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { RepoCreatePageAfterSignIn } from "../../../client/components/RepoCreatePageAfterSignIn";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
+import { Routes } from "../../../share/routes";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ session }) => {
     if (!session) {
-      return { redirect: { destination: "/", permanent: false } };
+      return { redirect: { destination: Routes.home, permanent: false } };
     }
   }
 );

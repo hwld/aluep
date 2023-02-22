@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { MdPostAdd } from "react-icons/md";
 import { useAllTagsQuery } from "../../client/hooks/useAllTagsQuery";
 import { trpc } from "../../client/trpc";
+import { Routes } from "../../share/routes";
 import { ThemeFormData } from "../../share/schema";
 import { showErrorNotification, showSuccessNotification } from "../utils";
 import { ThemeForm } from "./ThemeForm";
@@ -22,7 +23,7 @@ export const ThemeCreatePage: React.FC = () => {
         title: "お題の投稿",
         message: "お題を投稿しました。",
       });
-      router.replace(`/themes/${themeId}`);
+      router.replace(Routes.theme(themeId));
     },
     onError: () => {
       showErrorNotification({

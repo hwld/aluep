@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
 import { Theme } from "../../../server/models/theme";
 import { ThemeDeveloper } from "../../../server/models/themeDeveloper";
+import { Routes } from "../../../share/routes";
 import { useRequireLoginModal } from "../../contexts/RequireLoginModalProvider";
 import { useSessionQuery } from "../../hooks/useSessionQuery";
 import { formatDate, stopPropagation } from "../../utils";
@@ -45,7 +46,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
   };
 
   const handleGoDeveloperDetail = () => {
-    router.push(`/themes/${theme.id}/developers/${developer.id}/detail`);
+    router.push(Routes.developer(theme.id, developer.id));
   };
 
   // 開発者自身でなければいいねできる
@@ -67,9 +68,7 @@ export const ThemeDeveloperCard: React.FC<Props> = ({
       <Flex justify="space-between">
         <Flex gap={10}>
           <UserIconLink iconSrc={developer.image} userId={developer.userId} />
-          <TextLink
-            href={`/themes/${theme.id}/developers/${developer.id}/detail`}
-          >
+          <TextLink href={Routes.developer(theme.id, developer.id)}>
             <Text fw="bold" size="lg">
               {developer.name}
             </Text>

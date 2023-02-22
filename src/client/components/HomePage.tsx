@@ -15,6 +15,7 @@ import { UserLikeRankingItem } from "./UserLikeRankingItem";
 import { IoSparkles } from "react-icons/io5";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
+import { Routes } from "../../share/routes";
 import { usePickedUpThemesQuery } from "../hooks/usePickedUpThemesQuery";
 import { NothingPopularThemes } from "./NothingPopularThemes";
 import { PopularThemeCarousel } from "./PopularThemeCarousel/PopularThemeCarousel";
@@ -57,7 +58,7 @@ export const HomePage: React.FC = () => {
             <IoSparkles size="25px" color={mantineTheme.colors.yellow[7]} />
           }
           title="最新のお題"
-          readMoreHref="/themes/search?order=createdDesc"
+          readMoreHref={Routes.searchTheme({ order: "createdDesc" })}
           themes={latestThemes}
         />
         <PickedUpThemes
@@ -69,13 +70,13 @@ export const HomePage: React.FC = () => {
             />
           }
           title="いいねが多かったお題"
-          readMoreHref="/themes/search?order=likeDesc"
+          readMoreHref={Routes.searchTheme({ order: "likeDesc" })}
           themes={manyLikesThemes}
         />
         <PickedUpThemes
           icon={<MdComputer size="30px" color={mantineTheme.colors.blue[7]} />}
           title="開発者が多かったお題"
-          readMoreHref="/themes/search?order=developerDesc"
+          readMoreHref={Routes.searchTheme({ order: "developerDesc" })}
           themes={manyDevelopersThemes}
         />
       </Stack>

@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import router from "next/router";
 import { RiEdit2Line } from "react-icons/ri";
+import { Routes } from "../../share/routes";
 import { CardActionIcon } from "../CardActionIcon";
 
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
@@ -33,7 +34,7 @@ export function UserDetailCard({
   user,
 }: Props) {
   if (githuburl === undefined) {
-    githuburl = "/";
+    githuburl = Routes.home;
   }
 
   const { session } = useSessionQuery();
@@ -73,7 +74,7 @@ export function UserDetailCard({
   };
 
   const handleFavoriteLiet = () => {
-    router.push(`/users/${user.id}/favorite-list`);
+    router.push(Routes.userFavorites(user.id));
   };
 
   return (
@@ -89,7 +90,7 @@ export function UserDetailCard({
         </Box>
 
         {sessionUser && (
-          <Link href="/users/profile" passHref>
+          <Link href={Routes.updateUser} passHref>
             <CardActionIcon style={{ position: "absolute", right: 0, top: 0 }}>
               <RiEdit2Line size={20} />
             </CardActionIcon>

@@ -12,6 +12,7 @@ import { FaRegComment } from "react-icons/fa";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
 import { Theme } from "../../../server/models/theme";
+import { Routes } from "../../../share/routes";
 import { TextLink } from "../TextLink";
 import { ThemeTagBadge } from "../ThemeTagBadge";
 import { UserIconLink } from "../UserIconLink";
@@ -24,7 +25,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
   const mantineTheme = useMantineTheme();
 
   const handleGoThemeDetail = () => {
-    router.push(`/themes/${theme.id}`);
+    router.push(Routes.theme(theme.id));
   };
 
   return (
@@ -48,7 +49,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
       <Stack spacing={10} miw={0}>
         {/* ヘッダ */}
         <Flex justify="space-between" align="flex-start" gap={10} miw={0}>
-          <TextLink href={`/themes/${theme.id}`}>
+          <TextLink href={Routes.theme(theme.id)}>
             <Title order={3} color="red.7" sx={{ lineHeight: 1.4 }}>
               {theme.title}
             </Title>

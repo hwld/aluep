@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
+import { Routes } from "../../share/routes";
 import { JoinData } from "../../share/schema";
 import { AppTooltip } from "./AppTooltip";
 import { ComputerIcon } from "./ComputerIcon";
@@ -33,9 +34,7 @@ export const ThemeJoinButton: React.FC<Props> = ({
   const handleClick = (e: SyntheticEvent) => {
     // すでに参加している場合は開発者情報へ遷移させる
     if (loggedInUserJoinData.joined) {
-      router.push(
-        `/themes/${themeId}/developers/${loggedInUserJoinData.developerId}/detail`
-      );
+      router.push(Routes.developer(themeId, loggedInUserJoinData.developerId));
       return;
     }
 
@@ -83,7 +82,7 @@ export const ThemeJoinButton: React.FC<Props> = ({
       <Tooltip label="このお題の開発者を表示する" position="right">
         <Anchor
           component={Link}
-          href={`/themes/${themeId}/developers`}
+          href={Routes.developers(themeId)}
           size="sm"
           sx={(theme) => ({
             pointerEvents: developers === 0 ? "none" : "auto",

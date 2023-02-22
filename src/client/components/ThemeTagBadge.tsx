@@ -1,5 +1,6 @@
 import { Badge, BadgeProps } from "@mantine/core";
 import Link from "next/link";
+import { Routes } from "../../share/routes";
 import { OmitStrict } from "../../types/OmitStrict";
 import { stopPropagation } from "../utils";
 
@@ -14,7 +15,7 @@ export const ThemeTagBadge: React.FC<Props> = ({
       // スタイルを当てるために使用している
       aria-label="tag-badge"
       component={Link}
-      href={`/themes/search?tagIds=${tagId}`}
+      href={Routes.searchTheme({ tagIds: tagId })}
       {...props}
       sx={(theme) => ({
         transition: "all 150ms",

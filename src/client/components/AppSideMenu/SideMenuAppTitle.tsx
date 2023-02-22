@@ -1,12 +1,13 @@
 import { Anchor, Box, Title } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
+import { Routes } from "../../../share/routes";
 
 export const SideMenuAppTitle: React.FC = () => {
   return (
     <Anchor
       component={Link}
-      href="/"
+      href={Routes.home}
       sx={{
         display: "flex",
         alignItems: "center",

@@ -57,7 +57,7 @@ export const DeveloperMenuButton: React.FC<Props> = ({
             message: "開発情報を削除しました。",
           });
           closeDeleteModal();
-          router.push(`/themes/${theme.id}`);
+          router.push(Routes.theme(theme.id));
         },
         onError: () => {
           showErrorNotification({
@@ -125,7 +125,7 @@ export const DeveloperMenuButton: React.FC<Props> = ({
             <>
               <MenuLinkItem
                 icon={<RiEdit2Fill size={20} />}
-                href={`/themes/${developer.themeId}/developers/${developer.id}/update`}
+                href={Routes.updateDeveloper(developer.themeId, developer.id)}
               >
                 開発情報を更新する
               </MenuLinkItem>

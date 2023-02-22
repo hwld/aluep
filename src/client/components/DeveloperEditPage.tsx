@@ -5,6 +5,7 @@ import { MdComputer } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
 import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { RouterInputs } from "../../server/trpc";
+import { Routes } from "../../share/routes";
 import { RepositoryFormData, ThemeJoinFormData } from "../../share/schema";
 import { trpc } from "../trpc";
 import { showErrorNotification, showSuccessNotification } from "../utils";
@@ -39,7 +40,7 @@ export const DeveloperEditPage: React.FC<Props> = ({
         message: "お題開発情報を更新しました。",
       });
       queryClient.invalidateQueries(["developers", developer.id]);
-      router.push(`/themes/${theme.id}/developers/${developer.id}/detail`);
+      router.push(Routes.developer(theme.id, developer.id));
     },
     onError: () => {
       showErrorNotification({

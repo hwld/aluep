@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { RiEdit2Line } from "react-icons/ri";
 import { RouterInputs } from "../../server/trpc";
+import { Routes } from "../../share/routes";
 import { ProfileFormData } from "../../share/schema";
 import { trpc } from "../trpc";
 import {
@@ -38,7 +39,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
       disallowClose: true,
     });
     try {
-      const response = await fetch("/api/upload-avatar", {
+      const response = await fetch(Routes.api.uploadAvatar, {
         method: "POST",
         body: formData,
       });
@@ -79,7 +80,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
         title: "プロフィールの更新",
         message: "プロフィールを更新しました。",
       });
-      router.push(`/users/${user.id}`);
+      router.push(Routes.user(user.id));
     },
     onError: () => {
       showErrorNotification({
