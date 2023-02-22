@@ -1,6 +1,7 @@
 import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { Theme } from "../../server/models/theme";
+import { Routes } from "../../share/routes";
 import { RepositoryFormData, ThemeJoinFormData } from "../../share/schema";
 import { useThemeJoin } from "../hooks/useThemeJoin";
 import { ComputerIcon } from "./ComputerIcon";
@@ -28,7 +29,7 @@ export const ThemeJoinPage: React.FC<Props> = ({
 
   const handleJoinTheme = (data: ThemeJoinFormData) => {
     joinMutation.mutate(data, {
-      onSuccess: () => router.replace(`/themes/${theme.id}`),
+      onSuccess: () => router.replace(Routes.theme(theme.id)),
     });
   };
 

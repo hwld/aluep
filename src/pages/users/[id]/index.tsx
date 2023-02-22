@@ -1,10 +1,17 @@
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
+import { Routes } from "../../../share/routes";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { resolvedUrl } }) => {
+  async ({ params: { query } }) => {
+    const userId = query.id;
+
+    if (typeof userId !== "string") {
+      return { notFound: true };
+    }
+
     return {
       redirect: {
-        destination: `${resolvedUrl}/posted-themes`,
+        destination: Routes.userWithPostedThemes(userId),
         permanent: true,
       },
     };

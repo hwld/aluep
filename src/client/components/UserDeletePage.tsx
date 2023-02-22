@@ -1,6 +1,7 @@
 import { Box, Button, List, Mark, Text, Title } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { Routes } from "../../share/routes";
 import { trpc } from "../trpc";
 import { showErrorNotification } from "../utils";
 
@@ -11,7 +12,7 @@ export const UserDeletepage: React.FC = () => {
       return trpc.me.delete.mutate();
     },
     onSuccess: () => {
-      router.replace("/");
+      router.replace(Routes.home);
     },
     onError: () => {
       showErrorNotification({

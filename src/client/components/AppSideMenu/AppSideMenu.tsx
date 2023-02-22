@@ -12,6 +12,7 @@ import {
   MdPostAdd,
   MdSearch,
 } from "react-icons/md";
+import { Routes } from "../../../share/routes";
 import { useRequireLoginModal } from "../../contexts/RequireLoginModalProvider";
 import { UserMenuButton } from "../UserMenuButton";
 import { AppLoginedSideMenu } from "./AppLoginedSideMenu";
@@ -36,7 +37,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
   const handleClickCreateTheme = (e: SyntheticEvent) => {
     if (!user) {
       e.preventDefault();
-      openLoginModal("/themes/create");
+      openLoginModal(Routes.createTheme);
       return;
     }
   };
@@ -94,8 +95,8 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               icon={MdOutlineHome}
               label="ホーム"
               asLink
-              href="/"
-              active={router.route === "/"}
+              href={Routes.home}
+              active={router.route === Routes.home}
               tooltip={!isMenuOpen}
             />
             <SideMenuItem
@@ -103,31 +104,31 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               label="お題を投稿"
               onClick={handleClickCreateTheme}
               asLink
-              href="/themes/create"
-              active={router.route === "/themes/create"}
+              href={Routes.createTheme}
+              active={router.route === Routes.createTheme}
               tooltip={!isMenuOpen}
             />
             <SideMenuItem
               icon={MdSearch}
               label="お題を検索"
               asLink
-              href="/themes/search"
-              active={router.route === "/themes/search"}
+              href={Routes.searchTheme()}
+              active={router.route === Routes.searchTheme()}
               tooltip={!isMenuOpen}
             />
             <SideMenuItem
               icon={MdOutlinePersonSearch}
               label="ユーザーを検索"
               asLink
-              href="/users/search"
-              active={router.route === "/users/search"}
+              href={Routes.searchUser}
+              active={router.route === Routes.searchUser}
               tooltip={!isMenuOpen}
             />
             <SideMenuItem
               icon={MdMailOutline}
               label="お問い合わせ"
               asLink
-              href={process.env.NEXT_PUBLIC_CONTACT_URL || "/500"}
+              href={process.env.NEXT_PUBLIC_CONTACT_URL || Routes.serverError}
               blank={true}
               tooltip={!isMenuOpen}
             />

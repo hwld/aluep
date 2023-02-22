@@ -12,11 +12,12 @@ import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { MdLogout } from "react-icons/md";
 import { withReactQueryGetServerSideProps } from "../server/lib/GetServerSidePropsWithReactQuery";
+import { Routes } from "../share/routes";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ session }) => {
     if (!session) {
-      return { redirect: { destination: "/", permanent: false } };
+      return { redirect: { destination: Routes.home, permanent: false } };
     }
   }
 );
@@ -25,7 +26,7 @@ const Signout: NextPage = () => {
   const mantineTheme = useMantineTheme();
 
   const handleSignOut = () => {
-    signOut({ callbackUrl: "/" });
+    signOut({ callbackUrl: Routes.home });
   };
 
   return (

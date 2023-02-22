@@ -2,6 +2,7 @@ import { Box, Button, Card, Flex, Text } from "@mantine/core";
 import { User } from "@prisma/client";
 import router from "next/router";
 import React from "react";
+import { Routes } from "../../../share/routes";
 import { useSumThemeLikesQuery } from "../../hooks/useSumThemeLikesQuery";
 import { useThemeDeveloperLikesQuery } from "../../hooks/useThemeDeveloperLikesQuery";
 import { UserDetailCard } from "../UserDetailCard";
@@ -21,13 +22,13 @@ export const UserDetail: React.FC<UserDetailProps> = ({ user, type }) => {
   githubUrl += user.name;
 
   const handleSwitchPost = () => {
-    router.push(`/users/${user.id}/posted-themes`);
+    router.push(Routes.userWithPostedThemes(user.id));
   };
   const handleSwitchJoin = () => {
-    router.push(`/users/${user.id}/joined-themes`);
+    router.push(Routes.userWithJoinedThemes(user.id));
   };
   const handleSwitchLike = () => {
-    router.push(`/users/${user.id}/liked-themes`);
+    router.push(Routes.userWithLikedThemes(user.id));
   };
 
   return (

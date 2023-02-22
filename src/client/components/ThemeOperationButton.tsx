@@ -48,7 +48,7 @@ export const ThemeOperationButton: React.FC<Props> = ({
         message: "お題を削除しました",
       });
       closeDeleteModal();
-      router.push("/");
+      router.push(Routes.home);
     },
     onError: () => {
       showErrorNotification({
@@ -116,7 +116,7 @@ export const ThemeOperationButton: React.FC<Props> = ({
             <>
               <MenuLinkItem
                 icon={<RiEdit2Fill size={20} />}
-                href={`/themes/${theme.id}/update`}
+                href={Routes.updateTheme(theme.id)}
               >
                 お題を更新する
               </MenuLinkItem>

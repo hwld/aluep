@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { Theme } from "../../server/models/theme";
+import { Routes } from "../../share/routes";
 import { useRequireLoginModal } from "../contexts/RequireLoginModalProvider";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { useThemeJoin } from "../hooks/useThemeJoin";
@@ -53,11 +54,11 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const handleClickJoin = (e: SyntheticEvent) => {
     // ログインしていなければログインモーダルを表示する
     if (!session) {
-      openLoginModal(`/themes/${theme.id}/join`);
+      openLoginModal(Routes.joinTheme(theme.id));
       return;
     }
 
-    router.push(`/themes/${theme.id}/join`);
+    router.push(Routes.joinTheme(theme.id));
   };
 
   // 自分の投稿かどうか

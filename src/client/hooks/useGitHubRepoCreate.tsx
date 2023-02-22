@@ -25,9 +25,6 @@ export const useGitHubRepoCreate = (themeId: string) => {
             message: "リポジトリの作成に失敗したため、再ログインを行います。",
           });
 
-          // const url = new URL(
-          //   `${window.location.origin}/themes/${themeId}/join`
-          // );
           const url = new URL(window.location.href);
           url.searchParams.set("repoName", fieldValues.repoName);
           url.searchParams.set("repoDescription", fieldValues.repoDescription);

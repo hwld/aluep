@@ -2,6 +2,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { prisma } from "../../../server/prismadb";
+import { Routes } from "../../../share/routes";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -9,7 +10,7 @@ export const authOptions: NextAuthOptions = {
   //csrfトークンを取得しないとここに飛べないっぽい？連続でやると飛べない理由はキャッシュが残っているから？
 
   pages: {
-    signOut: "/signout",
+    signOut: Routes.signout,
   },
   providers: [
     GithubProvider({

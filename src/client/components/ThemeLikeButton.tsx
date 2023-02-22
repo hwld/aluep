@@ -7,6 +7,7 @@ import {
 } from "@mantine/core";
 import Link from "next/link";
 import { TbHeart } from "react-icons/tb";
+import { Routes } from "../../share/routes";
 
 type Props = {
   likes: number;
@@ -68,7 +69,7 @@ export const ThemeLikeButton: React.FC<Props> = ({
       <Tooltip label="いいねしたユーザーを表示する" position="right">
         <Anchor
           component={Link}
-          href={`/themes/${themeId}/liking-users`}
+          href={Routes.themeLikingUsers(themeId)}
           size="sm"
           sx={(theme) => ({
             pointerEvents: likes === 0 ? "none" : "auto",

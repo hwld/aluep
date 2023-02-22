@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { Routes } from "../../share/routes";
 import { stopPropagation } from "../utils";
 import { UserIcon, UserIconProps } from "./UserIcon";
 
@@ -16,7 +17,7 @@ export const UserIconLink: React.FC<Props> = ({
 }) => {
   return (
     <Link
-      href={`/users/${userId}`}
+      href={Routes.user(userId)}
       onClick={stopPropagation}
       passHref
       aria-label="ユーザー詳細画面を開く"

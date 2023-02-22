@@ -2,6 +2,7 @@ import { Box, Button, Flex, Text, Title, useMantineTheme } from "@mantine/core";
 import { NextPage } from "next";
 import Link from "next/link";
 import { MdOutlineErrorOutline } from "react-icons/md";
+import { Routes } from "../share/routes";
 
 const NotFoundPage: NextPage = () => {
   const theme = useMantineTheme();
@@ -46,7 +47,7 @@ const NotFoundPage: NextPage = () => {
           <Text mt="sm" align="center" fw="bold">
             お探しのページはすでに削除されているか、URLが間違っている可能性があります。
           </Text>
-          <Button mt={50} component={Link} href="/">
+          <Button mt={50} component={Link} href={Routes.home}>
             ホームへ戻る
           </Button>
         </Flex>

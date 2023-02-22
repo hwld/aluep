@@ -7,6 +7,7 @@ import { FaKey } from "react-icons/fa";
 import { GoSearch } from "react-icons/go";
 import { MdPostAdd } from "react-icons/md";
 import { RiQuestionMark } from "react-icons/ri";
+import { Routes } from "../../share/routes";
 
 type Props = { page: "Home" | "Search" | "initial"; user?: Session["user"] };
 
@@ -14,7 +15,7 @@ export const NothingTheme: React.FC<Props> = ({ page, user }) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
   const handleCreateTheme = () => {
-    router.push("/themes/create");
+    router.push(Routes.createTheme);
   };
   const nothingHome = () => {
     return (

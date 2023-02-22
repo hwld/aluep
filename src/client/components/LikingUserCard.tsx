@@ -1,6 +1,7 @@
 import { Card, Flex, Text } from "@mantine/core";
 import { AppThemeLike, User } from "@prisma/client";
 import { useRouter } from "next/router";
+import { Routes } from "../../share/routes";
 import { formatDate } from "../utils";
 import { TextLink } from "./TextLink";
 import { UserIcon } from "./UserIcon";
@@ -15,7 +16,7 @@ export const LikingUserCard: React.FC<Props> = ({ user, appTheme }) => {
   const router = useRouter();
 
   const handleGoUserDetail = () => {
-    router.push(`/users/${user.id}`);
+    router.push(Routes.user(user.id));
   };
 
   //お題をいいねしたユーザーのカード
@@ -40,7 +41,7 @@ export const LikingUserCard: React.FC<Props> = ({ user, appTheme }) => {
           {/* アイコン　*/}
           <UserIcon iconSrc={user.image} />
           {/* 名前 */}
-          <TextLink href={`/users/${user.id}`}>
+          <TextLink href={Routes.user(user.id)}>
             <Text
               sx={{
                 flexShrink: 0,

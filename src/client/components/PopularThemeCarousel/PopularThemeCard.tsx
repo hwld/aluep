@@ -14,6 +14,7 @@ import { FaRegComment } from "react-icons/fa";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
 import { Theme } from "../../../server/models/theme";
+import { Routes } from "../../../share/routes";
 import { useSamePositionLeftClick } from "../../hooks/useSamePositionLeftClick";
 import { TextLink } from "../TextLink";
 import { UserIconLink } from "../UserIconLink";
@@ -31,7 +32,7 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
   const handleMouseUp: MouseEventHandler = (e) => {
     if (isSameLeftClickPosition(e)) {
       resetPosition();
-      router.push(`/themes/${theme.id}`);
+      router.push(Routes.theme(theme.id));
     }
     resetPosition();
   };
@@ -68,7 +69,7 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
             WebkitBoxOrient: "vertical",
           }}
         >
-          <TextLink href={`/themes/${theme.id}`}>
+          <TextLink href={Routes.theme(theme.id)}>
             <Title
               order={4}
               color="red.7"
