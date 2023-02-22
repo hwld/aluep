@@ -18,7 +18,7 @@ export const SideMenuAppTitle: React.FC = () => {
       }}
     >
       <Box
-        bg="red.3"
+        bg="red.2"
         sx={(theme) => ({
           borderRadius: theme.radius.md,
           display: "flex",
@@ -33,8 +33,8 @@ export const SideMenuAppTitle: React.FC = () => {
         <Image
           src="/logo.svg"
           alt="app-log"
-          width={35}
-          height={35}
+          width={40}
+          height={40}
           style={{ marginTop: "2px" }}
         />
       </Box>
