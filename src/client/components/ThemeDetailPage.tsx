@@ -54,11 +54,11 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const handleClickJoin = (e: SyntheticEvent) => {
     // ログインしていなければログインモーダルを表示する
     if (!session) {
-      openLoginModal(Routes.joinTheme(theme.id));
+      openLoginModal(Routes.themeJoin(theme.id));
       return;
     }
 
-    router.push(Routes.joinTheme(theme.id));
+    router.push(Routes.themeJoin(theme.id));
   };
 
   // 自分の投稿かどうか

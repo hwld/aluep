@@ -18,14 +18,14 @@ export const RepoCreatePageAfterSignIn: React.FC<Props> = ({
   const createRepositoryMutation = useGitHubRepoCreate(themeId);
 
   const handleGoJoinPage = () => {
-    router.push(Routes.joinTheme(themeId));
+    router.push(Routes.themeJoin(themeId));
   };
 
   const handleCreateRepository = (data: RepositoryFormData) => {
     createRepositoryMutation.mutate(data, {
       onSuccess: (data) => {
         const url = new URL(
-          `${window.location.origin}${Routes.joinTheme(themeId)}`
+          `${window.location.origin}${Routes.themeJoin(themeId)}`
         );
         url.searchParams.set("repoUrl", data.repoUrl);
         router.replace(url);

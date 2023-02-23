@@ -90,7 +90,7 @@ export function UserDetailCard({
         </Box>
 
         {sessionUser && (
-          <Link href={Routes.updateUser} passHref>
+          <Link href={Routes.userUpdate} passHref>
             <CardActionIcon style={{ position: "absolute", right: 0, top: 0 }}>
               <RiEdit2Line size={20} />
             </CardActionIcon>

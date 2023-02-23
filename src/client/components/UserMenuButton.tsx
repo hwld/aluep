@@ -54,7 +54,7 @@ export const UserMenuButton: React.FC<Props> = ({ user, children }) => {
         <MenuItem icon={<MdLogout size={20} />} onClick={handleLogOut}>
           ログアウト
         </MenuItem>
-        <MenuLinkItem icon={<FaTrash size={16} />} href={Routes.deleteUser} red>
+        <MenuLinkItem icon={<FaTrash size={16} />} href={Routes.userDelete} red>
           アカウント削除
         </MenuLinkItem>
       </MenuDropdown>

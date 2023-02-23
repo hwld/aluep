@@ -15,7 +15,7 @@ export const ThemeTagBadge: React.FC<Props> = ({
       // スタイルを当てるために使用している
       aria-label="tag-badge"
       component={Link}
-      href={Routes.searchTheme({ tagIds: tagId })}
+      href={Routes.themeSearch({ tagIds: tagId })}
       {...props}
       sx={(theme) => ({
         transition: "all 150ms",
