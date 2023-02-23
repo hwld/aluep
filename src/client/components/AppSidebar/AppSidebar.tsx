@@ -14,19 +14,19 @@ import {
 } from "react-icons/md";
 import { Routes } from "../../../share/routes";
 import { useRequireLoginModal } from "../../contexts/RequireLoginModalProvider";
-import { UserMenuButton } from "../UserMenuButton";
-import { AppLoginedSideMenu } from "./AppLoginedSideMenu";
-import { SideMenuAppTitle } from "./SideMenuAppTitle";
-import { SideMenuItem } from "./SideMenuItem";
-import { SideMenuToggle } from "./SideMenuToggle";
+import { LoggedInUserCard } from "./LoggedInUserCard";
+import { LoggedInUserMenu } from "./LoggedInUserMenu";
+import { SidebarAppTitle } from "./SidebarAppTitle";
+import { SidebarItem } from "./SidebarItem";
+import { SidebarToggle } from "./SidebarToggle";
 
-type Props = { user?: Session["user"] };
+type Props = { loggedInUser?: Session["user"] };
 
 const barMinWidth = 70;
 const barPadding = 12;
 const iconWidth = barMinWidth - barPadding * 2;
 
-export const AppSideMenu: React.FC<Props> = ({ user }) => {
+export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
   const router = useRouter();
   const [isOpen, { toggle }] = useDisclosure(false);
   const { openLoginModal } = useRequireLoginModal();
@@ -35,7 +35,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
   const isMenuOpen = isWideDisplay && isOpen;
 
   const handleClickCreateTheme = (e: SyntheticEvent) => {
-    if (!user) {
+    if (!loggedInUser) {
       e.preventDefault();
       openLoginModal(Routes.themeCreate);
       return;
@@ -80,10 +80,10 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
             justify="space-between"
             sx={{ overflow: "hidden", gap: isMenuOpen ? "5px" : "0px" }}
           >
-            <SideMenuAppTitle />
+            <SidebarAppTitle />
 
             {isWideDisplay && (
-              <SideMenuToggle
+              <SidebarToggle
                 isOpen={isOpen}
                 onToggle={handleToggle}
                 width={`${iconWidth}px`}
@@ -91,7 +91,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
             )}
           </Flex>
           <Stack spacing={10}>
-            <SideMenuItem
+            <SidebarItem
               icon={MdOutlineHome}
               label="ホーム"
               asLink
@@ -99,7 +99,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               active={router.route === Routes.home}
               tooltip={!isMenuOpen}
             />
-            <SideMenuItem
+            <SidebarItem
               icon={MdPostAdd}
               label="お題を投稿"
               onClick={handleClickCreateTheme}
@@ -108,7 +108,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               active={router.route === Routes.themeCreate}
               tooltip={!isMenuOpen}
             />
-            <SideMenuItem
+            <SidebarItem
               icon={MdSearch}
               label="お題を検索"
               asLink
@@ -116,7 +116,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               active={router.route === Routes.themeSearch()}
               tooltip={!isMenuOpen}
             />
-            <SideMenuItem
+            <SidebarItem
               icon={MdOutlinePersonSearch}
               label="ユーザーを検索"
               asLink
@@ -124,7 +124,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               active={router.route === Routes.userSearch}
               tooltip={!isMenuOpen}
             />
-            <SideMenuItem
+            <SidebarItem
               icon={MdMailOutline}
               label="お問い合わせ"
               asLink
@@ -134,23 +134,26 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
             />
           </Stack>
         </Stack>
-        {user ? (
-          <UserMenuButton user={user}>
-            <UnstyledButton
-              bg="red.8"
-              p={`20px ${barPadding}px 20px ${barPadding}px`}
-              m={`0 -${barPadding}px -${barPadding}px -${barPadding}px`}
-              sx={(theme) => ({
-                display: "flex",
-                borderBottomLeftRadius: theme.radius.lg,
-                borderBottomRightRadius: theme.radius.lg,
-              })}
-            >
-              <AppLoginedSideMenu iconWidth={iconWidth} user={user} />
-            </UnstyledButton>
-          </UserMenuButton>
+        {loggedInUser ? (
+          <LoggedInUserMenu
+            user={loggedInUser}
+            trigger={
+              <UnstyledButton
+                bg="red.8"
+                p={`20px ${barPadding}px 20px ${barPadding}px`}
+                m={`0 -${barPadding}px -${barPadding}px -${barPadding}px`}
+                sx={(theme) => ({
+                  display: "flex",
+                  borderBottomLeftRadius: theme.radius.lg,
+                  borderBottomRightRadius: theme.radius.lg,
+                })}
+              >
+                <LoggedInUserCard iconWidth={iconWidth} user={loggedInUser} />
+              </UnstyledButton>
+            }
+          />
         ) : (
-          <SideMenuItem
+          <SidebarItem
             icon={IoMdLogIn}
             label="ログイン"
             onClick={handleLogin}

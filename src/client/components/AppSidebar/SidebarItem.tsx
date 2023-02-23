@@ -12,7 +12,7 @@ type Props = {
   onClick?: MouseEventHandler<HTMLButtonElement>;
 } & ({ asLink?: false } | { asLink: true; href: string; blank?: boolean });
 
-export const SideMenuItem: React.FC<Props> = ({
+export const SidebarItem: React.FC<Props> = ({
   label,
   icon: Icon,
   active,

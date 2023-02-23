@@ -6,10 +6,8 @@ import { UserIcon } from "../UserIcon";
 
 type Props = { user: Session["user"]; iconWidth: number };
 
-export const AppLoginedSideMenu: React.FC<Props> = ({ user, iconWidth }) => {
+export const LoggedInUserCard: React.FC<Props> = ({ user, iconWidth }) => {
   const { colors } = useMantineTheme();
-  //  TODO: ユーザーの情報を取得するためにいろんなAPIを呼んでいる。
-  // 全ての情報を取得する一つのAPIを作ったほうがよさそう。
   const { loggedInUserInfo } = useLoggedInUserInfoQuery(user.id);
 
   return (

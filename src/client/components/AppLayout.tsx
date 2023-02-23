@@ -3,7 +3,7 @@ import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { ReactNode } from "react";
 import { useSessionQuery } from "../hooks/useSessionQuery";
 import { AppModal } from "./AppModal";
-import { AppSideMenu } from "./AppSideMenu/AppSideMenu";
+import { AppSidebar } from "./AppSidebar/AppSidebar";
 import { RequireLoginModal } from "./RequireLoginModal";
 
 type Props = { children: ReactNode };
@@ -23,7 +23,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
           display: "flex",
         })}
       >
-        <AppSideMenu user={session?.user} />
+        <AppSidebar loggedInUser={session?.user} />
         <Box
           component="main"
           p="xl"

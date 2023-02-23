@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Routes } from "../../../share/routes";
 
-export const SideMenuAppTitle: React.FC = () => {
+export const SidebarAppTitle: React.FC = () => {
   return (
     <Anchor
       component={Link}
