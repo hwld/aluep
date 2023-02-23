@@ -125,7 +125,7 @@ export const DeveloperMenuButton: React.FC<Props> = ({
             <>
               <MenuLinkItem
                 icon={<RiEdit2Fill size={20} />}
-                href={Routes.updateDeveloper(developer.themeId, developer.id)}
+                href={Routes.developerUpdate(developer.themeId, developer.id)}
               >
                 開発情報を更新する
               </MenuLinkItem>

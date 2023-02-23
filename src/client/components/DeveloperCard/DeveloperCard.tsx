@@ -26,7 +26,7 @@ type Props = {
   onLikeDeveloper: (developerId: string, like: boolean) => void;
 };
 
-export const ThemeDeveloperCard: React.FC<Props> = ({
+export const DeveloperCard: React.FC<Props> = ({
   theme,
   developer,
   onLikeDeveloper: onLike,

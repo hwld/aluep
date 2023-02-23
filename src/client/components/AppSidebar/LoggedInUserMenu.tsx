@@ -1,27 +1,31 @@
 import { BadgeProps, Divider, Menu, Space, Text } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
+import { ReactNode } from "react";
 import { BiBookmarkHeart } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { RiAccountCircleLine } from "react-icons/ri";
-import { Routes } from "../../share/routes";
-import { OmitStrict } from "../../types/OmitStrict";
-import { AppMenu } from "./AppMenu/AppMenu";
-import { MenuDropdown } from "./AppMenu/MenuDropdown";
-import { MenuItem } from "./AppMenu/MenuItem";
-import { MenuLinkItem } from "./AppMenu/MenuLinkItem";
+import { Routes } from "../../../share/routes";
+import { OmitStrict } from "../../../types/OmitStrict";
+import { AppMenu } from "../AppMenu/AppMenu";
+import { MenuDropdown } from "../AppMenu/MenuDropdown";
+import { MenuItem } from "../AppMenu/MenuItem";
+import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
 
-type Props = { user: Session["user"] } & OmitStrict<BadgeProps, "sx">;
+type Props = Omit<
+  { user: Session["user"]; trigger: ReactNode } & OmitStrict<BadgeProps, "sx">,
+  "children"
+>;
 
-export const UserMenuButton: React.FC<Props> = ({ user, children }) => {
+export const LoggedInUserMenu: React.FC<Props> = ({ user, trigger }) => {
   const handleLogOut = () => {
     signOut();
   };
 
   return (
     <AppMenu offset={10} position="right-end">
-      <Menu.Target>{children}</Menu.Target>
+      <Menu.Target>{trigger}</Menu.Target>
       <MenuDropdown maw={180} sx={{ zIndex: 1000 }}>
         <Menu.Label>
           <Text

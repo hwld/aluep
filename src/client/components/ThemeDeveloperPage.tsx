@@ -5,7 +5,7 @@ import { useLikeThemeDeveloper } from "../hooks/useLikeThemeDeveloper";
 import { usePaginatedDeveloperQuery } from "../hooks/usePaginatedDeveloperQueery";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { AppPagination } from "./AppPagination";
-import { ThemeDeveloperCard } from "./DeveloperCard/ThemeDeveloperCard";
+import { DeveloperCard } from "./DeveloperCard/DeveloperCard";
 import { ThemeSummaryCard } from "./ThemeSummaryCard";
 type Props = { theme: Theme };
 
@@ -35,7 +35,7 @@ export const ThemeDeveloperPage: React.FC<Props> = ({ theme }) => {
           <Stack spacing="xs">
             {data?.developers.map((developer) => {
               return (
-                <ThemeDeveloperCard
+                <DeveloperCard
                   key={developer.id}
                   theme={theme}
                   developer={developer}

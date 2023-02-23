@@ -6,11 +6,7 @@ type Props = {
   width: string;
 };
 
-export const SideMenuToggle: React.FC<Props> = ({
-  isOpen,
-  onToggle,
-  width,
-}) => {
+export const SidebarToggle: React.FC<Props> = ({ isOpen, onToggle, width }) => {
   const mantineTheme = useMantineTheme();
 
   return (
