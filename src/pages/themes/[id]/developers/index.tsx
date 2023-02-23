@@ -10,7 +10,7 @@ import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServ
 import { appRouter } from "../../../../server/routers/_app";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session, callerContext }) => {
+  async ({ params: { query }, queryClient, callerContext }) => {
     const { id: themeId, page } = query;
     if (typeof themeId !== "string") {
       return { notFound: true };
@@ -30,7 +30,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     );
     await queryClient.prefetchQuery(
       paginatedDevelopersQueryKey(themeId, Number(page)),
-      () => caller.theme.getDeveloperAllpage({ themeId, page })
+      () => caller.theme.getDevelopers({ themeId, page })
     );
   }
 );

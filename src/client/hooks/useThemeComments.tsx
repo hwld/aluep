@@ -15,7 +15,7 @@ export const useThemeComments = (themeId: string) => {
   const { data: themeComments } = useQuery({
     queryKey: themeCommentsQueryKey(themeId),
     queryFn: () => {
-      return trpc.theme.getManyComments.query({ themeId });
+      return trpc.theme.getAllComments.query({ themeId });
     },
   });
 
