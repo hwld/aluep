@@ -53,7 +53,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-export const ThemeDetail = () => {
+const ThemeDetail = () => {
   const router = useRouter();
   const themeId = router.query.id as string;
   const { theme } = useThemeQuery(themeId);

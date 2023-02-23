@@ -6,7 +6,7 @@ import { ThemeOrder, ThemePeriod } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
 import { prisma } from "../prismadb";
 
-export const themeSchema = z.object({
+const themeSchema = z.object({
   id: z.string(),
   title: z.string(),
   descriptionHtml: z.string(),

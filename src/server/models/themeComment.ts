@@ -3,7 +3,7 @@ import { z } from "zod";
 import { OmitStrict } from "../../types/OmitStrict";
 import { prisma } from "../prismadb";
 
-export const themeCommentSchema = z.object({
+const themeCommentSchema = z.object({
   id: z.string(),
   comment: z.string(),
   themeId: z.string(),

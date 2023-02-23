@@ -26,7 +26,7 @@ type TemplateArgs = ReportBaseForm & {
   title: string;
   fields: { name: string; value: string }[];
 };
-export const buildReportTemplate = ({
+const buildReportTemplate = ({
   title,
   reportDetail,
   reportedUser,

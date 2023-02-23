@@ -6,7 +6,7 @@ import { formatDate } from "../utils";
 import { TextLink } from "./TextLink";
 import { UserIcon } from "./UserIcon";
 
-export const userCardMinWidthPx = 350;
+export const likingUserCardMinWidthPx = 350;
 
 type Props = {
   user: User;
@@ -22,7 +22,7 @@ export const LikingUserCard: React.FC<Props> = ({ user, appTheme }) => {
   //お題をいいねしたユーザーのカード
   return (
     <Card
-      miw={userCardMinWidthPx}
+      miw={likingUserCardMinWidthPx}
       w="100%"
       sx={(theme) => ({
         gap: theme.spacing.sm,

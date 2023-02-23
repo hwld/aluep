@@ -32,7 +32,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-export const DeveloperDetail = () => {
+const DeveloperDetail = () => {
   const router = useRouter();
   const developerId = router.query.developerId as string;
   const themeId = router.query.id as string;

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { prisma } from "../prismadb";
 
-export const themeTagSchema = z.object({
+const themeTagSchema = z.object({
   id: z.string(),
   name: z.string(),
   createdAt: z.string(),

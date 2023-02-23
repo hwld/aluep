@@ -4,7 +4,7 @@ import { Theme } from "../../server/models/theme";
 import { usePaginationState } from "../hooks/usePaginationState";
 import { useThemeLikingUsersQuery } from "../hooks/useThemeLikingUsersQuery";
 import { AppPagination } from "./AppPagination";
-import { LikingUserCard } from "./LikingUserCard";
+import { LikingUserCard, likingUserCardMinWidthPx } from "./LikingUserCard";
 import { NothingThemeLikingUsers } from "./NothingThemeLikingUsers";
 import { ThemeSummaryCard } from "./ThemeSummaryCard";
 import { userCardMinWidthPx } from "./UserCard";
@@ -39,7 +39,7 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
           <Box
             sx={(theme) => ({
               display: "grid",
-              gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
+              gridTemplateColumns: `repeat(auto-fit, minmax(${likingUserCardMinWidthPx}px, 1fr))`,
               gap: theme.spacing.xs,
             })}
           >
