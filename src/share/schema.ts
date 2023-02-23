@@ -119,14 +119,10 @@ export type ReportBaseForm = z.infer<typeof reportBaseFormSchema>;
 export const reportThemeFormSchema = reportBaseFormSchema.and(
   z.object({ targetTheme: z.object({ url: z.string(), title: z.string() }) })
 );
-export type ReportThemeForm = z.infer<typeof reportThemeFormSchema>;
 
 export const reportThemeCommentFormSchema = reportBaseFormSchema.and(
   z.object({ targetCommentUrl: z.string() })
 );
-export type ReportThemeFormComment = z.infer<
-  typeof reportThemeCommentFormSchema
->;
 
 export const reportDeveloperFormSchema = reportBaseFormSchema.and(
   z.object({
@@ -136,7 +132,6 @@ export const reportDeveloperFormSchema = reportBaseFormSchema.and(
     }),
   })
 );
-export type ReportDeveloperForm = z.infer<typeof reportDeveloperFormSchema>;
 
 export const reportUserSchema = reportBaseFormSchema.and(
   z.object({
@@ -146,4 +141,3 @@ export const reportUserSchema = reportBaseFormSchema.and(
     }),
   })
 );
-export type ReportUserForm = z.infer<typeof reportUserSchema>;

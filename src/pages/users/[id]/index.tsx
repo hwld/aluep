@@ -22,7 +22,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
  *  ユーザーの詳細ページ
  *  リダイレクトするのでここには到達しない
  */
-export function UserDetail() {
+function UserDetail() {
   return null;
 }
 export default UserDetail;

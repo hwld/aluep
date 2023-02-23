@@ -3,7 +3,7 @@ import { ThemeDeveloper } from "../../server/models/themeDeveloper";
 import { trpc } from "../trpc";
 import { themeQueryKey } from "./useThemeQuery";
 
-export const themeDevelopersQueryKey = (themeId: string) =>
+const themeDevelopersQueryKey = (themeId: string) =>
   [...themeQueryKey(themeId), "developers"] as const;
 
 export const paginatedDevelopersQueryKey = (themeId: string, page: number) => {
