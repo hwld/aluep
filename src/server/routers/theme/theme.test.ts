@@ -1,7 +1,7 @@
 import { addYears } from "date-fns";
 import { createRequest } from "node-mocks-http";
-import { prisma } from "../prismadb";
-import { appRouter } from "./_app";
+import { appRouter } from "..";
+import { prisma } from "../../prismadb";
 
 describe("server/routers/theme.ts", () => {
   it("お題を作成し、作成したお題を取得することができる", async () => {

@@ -8,7 +8,7 @@ import { sumThemeLikesQueryKey } from "../../../client/hooks/useSumThemeLikesQue
 import { themeDeveloperLikesQueryKey } from "../../../client/hooks/useThemeDeveloperLikesQuery";
 import { userQueryKey, useUserQuery } from "../../../client/hooks/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../server/routers/_app";
+import { appRouter } from "../../../server/routers";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session, callerContext }) => {

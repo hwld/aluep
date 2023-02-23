@@ -2,7 +2,7 @@ import { inferRouterInputs, initTRPC, TRPCError } from "@trpc/server";
 import SuperJSON from "superjson";
 import { Context } from "./contexts";
 import { prisma } from "./prismadb";
-import { AppRouter } from "./routers/_app";
+import { AppRouter } from "./routers";
 
 const t = initTRPC.context<Context>().create({ transformer: SuperJSON });
 

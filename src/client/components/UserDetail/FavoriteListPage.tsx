@@ -1,6 +1,5 @@
 import { Box, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { User } from "@prisma/client";
-
 import React from "react";
 import { BiBookmarkHeart } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
