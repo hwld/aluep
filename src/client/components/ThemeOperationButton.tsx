@@ -116,7 +116,7 @@ export const ThemeOperationButton: React.FC<Props> = ({
             <>
               <MenuLinkItem
                 icon={<RiEdit2Fill size={20} />}
-                href={Routes.updateTheme(theme.id)}
+                href={Routes.themeUpdate(theme.id)}
               >
                 お題を更新する
               </MenuLinkItem>

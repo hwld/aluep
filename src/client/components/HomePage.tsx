@@ -58,7 +58,7 @@ export const HomePage: React.FC = () => {
             <IoSparkles size="25px" color={mantineTheme.colors.yellow[7]} />
           }
           title="最新のお題"
-          readMoreHref={Routes.searchTheme({ order: "createdDesc" })}
+          readMoreHref={Routes.themeSearch({ order: "createdDesc" })}
           themes={latestThemes}
         />
         <PickedUpThemes
@@ -70,13 +70,13 @@ export const HomePage: React.FC = () => {
             />
           }
           title="いいねが多かったお題"
-          readMoreHref={Routes.searchTheme({ order: "likeDesc" })}
+          readMoreHref={Routes.themeSearch({ order: "likeDesc" })}
           themes={manyLikesThemes}
         />
         <PickedUpThemes
           icon={<MdComputer size="30px" color={mantineTheme.colors.blue[7]} />}
           title="開発者が多かったお題"
-          readMoreHref={Routes.searchTheme({ order: "developerDesc" })}
+          readMoreHref={Routes.themeSearch({ order: "developerDesc" })}
           themes={manyDevelopersThemes}
         />
       </Stack>

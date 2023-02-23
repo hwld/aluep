@@ -37,7 +37,7 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
   const handleClickCreateTheme = (e: SyntheticEvent) => {
     if (!user) {
       e.preventDefault();
-      openLoginModal(Routes.createTheme);
+      openLoginModal(Routes.themeCreate);
       return;
     }
   };
@@ -104,24 +104,24 @@ export const AppSideMenu: React.FC<Props> = ({ user }) => {
               label="お題を投稿"
               onClick={handleClickCreateTheme}
               asLink
-              href={Routes.createTheme}
-              active={router.route === Routes.createTheme}
+              href={Routes.themeCreate}
+              active={router.route === Routes.themeCreate}
               tooltip={!isMenuOpen}
             />
             <SideMenuItem
               icon={MdSearch}
               label="お題を検索"
               asLink
-              href={Routes.searchTheme()}
-              active={router.route === Routes.searchTheme()}
+              href={Routes.themeSearch()}
+              active={router.route === Routes.themeSearch()}
               tooltip={!isMenuOpen}
             />
             <SideMenuItem
               icon={MdOutlinePersonSearch}
               label="ユーザーを検索"
               asLink
-              href={Routes.searchUser}
-              active={router.route === Routes.searchUser}
+              href={Routes.userSearch}
+              active={router.route === Routes.userSearch}
               tooltip={!isMenuOpen}
             />
             <SideMenuItem

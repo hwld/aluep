@@ -4,24 +4,27 @@ import { buildSearchParamsString } from "./utils";
 export const Routes = {
   home: "/",
 
+  /** アプリ開発のお題関連 */
   theme: (id: string) => `/themes/${id}`,
-  createTheme: "/themes/create",
-  updateTheme: (themeId: string) => `/themes/${themeId}/update`,
-  joinTheme: (themeId: string) => `/themes/${themeId}/join`,
-  themeLikingUsers: (themeId: string) => `/themes/${themeId}/liking-users`,
-  searchTheme: (query?: { order?: ThemeOrder; tagIds?: string }) =>
+  themeCreate: "/themes/create",
+  themeUpdate: (themeId: string) => `/themes/${themeId}/update`,
+  themeJoin: (themeId: string) => `/themes/${themeId}/join`,
+  themeSearch: (query?: { order?: ThemeOrder; tagIds?: string }) =>
     `/themes/search${buildSearchParamsString(query)}`,
+  themeLikingUsers: (themeId: string) => `/themes/${themeId}/liking-users`,
 
+  /** アプリ開発の開発者関連 */
   developers: (themeId: string) => `/themes/${themeId}/developers`,
   developer: (themeId: string, developerId: string) =>
     `${Routes.theme(themeId)}/developers/${developerId}/detail`,
-  updateDeveloper: (themeId: string, developerId: string) =>
+  developerUpdate: (themeId: string, developerId: string) =>
     `${Routes.theme(themeId)}/developers/${developerId}/update`,
 
+  /** ユーザー関連 */
   user: (id: string) => `/users/${id}`,
-  updateUser: "/users/profile",
-  deleteUser: "/users/delete",
-  searchUser: "/users/search",
+  userUpdate: "/users/profile",
+  userDelete: "/users/delete",
+  userSearch: "/users/search",
   userFavorites: (userId: string) => `/users/${userId}/favorite-list`,
   userWithPostedThemes: (userId: string) => `/users/${userId}/posted-themes`,
   userWithJoinedThemes: (userId: string) => `/users/${userId}/joined-themes`,

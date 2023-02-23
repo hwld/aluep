@@ -15,7 +15,7 @@ export const NothingTheme: React.FC<Props> = ({ page, user }) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
   const handleCreateTheme = () => {
-    router.push(Routes.createTheme);
+    router.push(Routes.themeCreate);
   };
   const nothingHome = () => {
     return (
