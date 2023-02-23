@@ -1,7 +1,6 @@
 import { TRPCError } from "@trpc/server";
-import sanitize from "sanitize-html";
+import sanitize, { IOptions, simpleTransform } from "sanitize-html";
 import { z } from "zod";
-import { themeDescriptionSanitizeOptions } from "../../client/components/ThemeDescriptionEditor/useThemeDescriptionEditor";
 import {
   JoinData,
   pageSchema,
@@ -27,9 +26,37 @@ import { UserAndDeveloperLikes, UserAndThemeLikes } from "../models/user";
 import { prisma } from "../prismadb";
 import { publicProcedure, requireLoggedInProcedure, router } from "../trpc";
 
+export const themeDescriptionSanitizeOptions: IOptions = {
+  allowedTags: [
+    "p",
+    "strong",
+    "per",
+    "code",
+    "span",
+    "s",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "ul",
+    "ol",
+    "li",
+    "a",
+    "hr",
+    "br",
+  ],
+  allowedAttributes: {
+    a: ["href", "target"],
+  },
+  transformTags: { a: simpleTransform("a", { target: "_blank" }) },
+  allowedSchemes: ["http", "https"],
+};
+
 export const themeRoute = router({
-  //ページを指定して、開発者を取得する
-  getDeveloperAllpage: publicProcedure
+  /** 開発者の一覧を取得する */
+  getDevelopers: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
     .query(async ({ input: { page }, input, ctx }) => {
       const { data: developers, allPages } = await paginate({
@@ -46,13 +73,13 @@ export const themeRoute = router({
       return { developers, allPages };
     }),
 
-  // すべてのタグを取得する
+  /** すべてのタグを取得する */
   getAllTags: publicProcedure.query(async (): Promise<ThemeTag[]> => {
     const allTags = await findAllThemeTags();
     return allTags;
   }),
 
-  // idを指定してテーマを取得する
+  /** idを指定してテーマを取得する */
   get: publicProcedure
     .input(z.object({ themeId: z.string() }))
     .query(async ({ input }): Promise<Theme | undefined> => {
@@ -60,7 +87,7 @@ export const themeRoute = router({
       return theme;
     }),
 
-  // お題を検索する
+  /** お題を検索する */
   search: publicProcedure
     .input(
       z.object({
@@ -86,6 +113,8 @@ export const themeRoute = router({
         return paginatedThemes;
       }
     ),
+
+  /** お題をいくつかピックアップする */
   pickUp: publicProcedure
     .input(z.object({ order: themeOrderSchema }))
     .query(async ({ input }) => {
@@ -93,7 +122,7 @@ export const themeRoute = router({
       return pickedUpThemes;
     }),
 
-  // お題を作成する
+  /** お題を作成する */
   create: requireLoggedInProcedure
     .input(themeFormSchema)
     .mutation(async ({ input, ctx }) => {
@@ -114,7 +143,7 @@ export const themeRoute = router({
       return { themeId: theme.id };
     }),
 
-  // お題を更新する
+  /** お題を更新する */
   update: requireLoggedInProcedure
     .input(themeUpdateFormSchema)
     .mutation(async ({ input, ctx }) => {
@@ -151,7 +180,7 @@ export const themeRoute = router({
       await prisma.$transaction([deleteAllTags, attachTags]);
     }),
 
-  // お題を削除する
+  /**　お題を削除する */
   delete: requireLoggedInProcedure
     .input(z.object({ themeId: z.string().min(1) }))
     .mutation(async ({ input, ctx }) => {
@@ -166,7 +195,7 @@ export const themeRoute = router({
       await prisma.appTheme.delete({ where: { id: input.themeId } });
     }),
 
-  // お題に参加する
+  /** お題に参加する */
   join: requireLoggedInProcedure
     .input(themeJoinFormSchema)
     .mutation(async ({ input, ctx }) => {
@@ -180,7 +209,7 @@ export const themeRoute = router({
       });
     }),
 
-  // ログインユーザーが指定されたお題に参加しているか
+  /** ログインユーザーが指定されたお題に参加しているか */
   joined: publicProcedure
     .input(z.object({ themeId: z.string() }))
     .query(async ({ input, ctx }): Promise<JoinData> => {
@@ -205,7 +234,7 @@ export const themeRoute = router({
       return { joined: true, developerId: developer.id };
     }),
 
-  // お題にいいねする
+  /** お題にいいね・いいね解除する */
   like: requireLoggedInProcedure
     .input(z.object({ themeId: z.string().min(1), like: z.boolean() }))
     .mutation(async ({ input, ctx }) => {
@@ -243,7 +272,7 @@ export const themeRoute = router({
       }
     }),
 
-  // ログインユーザーが指定されたidのお題をいいねしているか
+  /** ログインユーザーがお題をいいねしているか */
   liked: publicProcedure
     .input(z.object({ themeId: z.string().min(1) }))
     .query(async ({ input, ctx }): Promise<boolean> => {
@@ -264,7 +293,7 @@ export const themeRoute = router({
       return Boolean(like);
     }),
 
-  // 指定されたお題をいいねしたユーザーを取得する
+  /** 指定されたお題をいいねしたユーザーを取得する */
   getThemeLikingUsers: publicProcedure
     .input(z.object({ themeId: z.string(), page: pageSchema }))
     .query(async ({ input }) => {
@@ -299,7 +328,7 @@ export const themeRoute = router({
       return { users, allPages };
     }),
 
-  // 1カ月間でいいねが多かった投稿を取得する
+  /** 1ヶ月間でいいねが多かった投稿を取得する */
   getTop10LikesThemesInThisMonth: publicProcedure.query(async () => {
     const themes = await prisma.$transaction(async (tx) => {
       // お題のidのリストを取得する
@@ -341,7 +370,7 @@ export const themeRoute = router({
     return themes;
   }),
 
-  // 1カ月間でいいねが多かった開発者ユーザーTop10を取得する
+  /** 1ヶ月間でいいねが多かった開発者ユーザーTop10を取得する */
   getTop10LikesDevelopersInThisMonth: publicProcedure.query(async () => {
     const developerUsers: UserAndDeveloperLikes[] = await prisma.$transaction(
       async (tx) => {
@@ -398,7 +427,7 @@ export const themeRoute = router({
     return developerUsers;
   }),
 
-  // 1カ月間でいいねが多かった投稿者Top10を取得する
+  /** 1カ月間でいいねが多かった投稿者Top10を取得する */
   getTop10LikesPostersInThisMonth: publicProcedure.query(async () => {
     const posterUsers: UserAndThemeLikes[] = await prisma.$transaction(
       async (tx) => {
@@ -453,7 +482,7 @@ export const themeRoute = router({
     return posterUsers;
   }),
 
-  // お題にコメントを投稿する
+  /** お題にコメントを投稿する */
   comment: requireLoggedInProcedure
     .input(themeCommentFormSchema)
     .mutation(async ({ input, ctx }) => {
@@ -476,7 +505,7 @@ export const themeRoute = router({
       return { commentId: comment.id };
     }),
 
-  // お題につけたコメントを削除する
+  /** お題につけたコメントを削除する */
   deleteComment: requireLoggedInProcedure
     .input(z.object({ commentId: z.string().min(1) }))
     .mutation(async ({ input, ctx }) => {
@@ -491,7 +520,8 @@ export const themeRoute = router({
       await prisma.appThemeComment.delete({ where: { id: input.commentId } });
     }),
 
-  getManyComments: publicProcedure
+  /** お題についたコメントをすべて取得する */
+  getAllComments: publicProcedure
     .input(z.object({ themeId: z.string().min(1) }))
     .query(async ({ input }) => {
       const comments = await findManyThemeComments({
