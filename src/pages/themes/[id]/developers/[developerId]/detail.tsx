@@ -9,7 +9,7 @@ import {
   useThemeQuery,
 } from "../../../../../client/hooks/useThemeQuery";
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../../../server/routers/_app";
+import { appRouter } from "../../../../../server/routers";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {

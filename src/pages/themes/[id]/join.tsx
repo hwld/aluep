@@ -6,7 +6,7 @@ import {
   useThemeQuery,
 } from "../../../client/hooks/useThemeQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../server/routers/_app";
+import { appRouter } from "../../../server/routers";
 import { Routes } from "../../../share/routes";
 import NotFoundPage from "../../404";
 

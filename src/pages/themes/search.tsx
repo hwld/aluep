@@ -7,7 +7,7 @@ import {
   urlParamToString,
   urlParamToStringArray,
 } from "../../server/lib/urlParam";
-import { appRouter } from "../../server/routers/_app";
+import { appRouter } from "../../server/routers";
 import {
   ThemeOrder,
   themeOrderSchema,

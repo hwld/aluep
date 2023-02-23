@@ -4,7 +4,7 @@ import { searchedUsersQueryKey } from "../../client/hooks/useSearchedUsersQuery"
 
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { urlParamToString } from "../../server/lib/urlParam";
-import { appRouter } from "../../server/routers/_app";
+import { appRouter } from "../../server/routers";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {

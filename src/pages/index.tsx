@@ -7,7 +7,7 @@ import {
   top10LikesThemesInThisMonthQueryKey,
 } from "../client/hooks/useRankingQuery";
 import { withReactQueryGetServerSideProps } from "../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../server/routers/_app";
+import { appRouter } from "../server/routers";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ queryClient, callerContext }) => {
