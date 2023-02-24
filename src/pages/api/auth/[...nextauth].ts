@@ -1,11 +1,11 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import { prisma } from "../../../server/prismadb";
+import { db } from "../../../server/prismadb";
 import { Routes } from "../../../share/routes";
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   //ここでサインアウト時に飛べるページを指定できる
   //csrfトークンを取得しないとここに飛べないっぽい？連続でやると飛べない理由はキャッシュが残っているから？
 
@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
       //ログイン時にaccess_tokenが更新されないので、手動で更新する
       if (account) {
         try {
-          await prisma.$transaction(async (tx) => {
+          await db.$transaction(async (tx) => {
             // 既に存在するアカウントであれば
             const existingAccount = await tx.account.findUnique({
               where: {

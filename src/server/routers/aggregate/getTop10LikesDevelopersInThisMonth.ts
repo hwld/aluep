@@ -1,10 +1,10 @@
 import { UserAndDeveloperLikes } from "../../models/user";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const getTop10LikesDevelopersInThisMonth = publicProcedure.query(
   async () => {
-    const developerUsers: UserAndDeveloperLikes[] = await prisma.$transaction(
+    const developerUsers: UserAndDeveloperLikes[] = await db.$transaction(
       async (tx) => {
         // ユーザーidのリストを取得する
         type RawDeveloperUser = { userId: string; likeCount: BigInt }[];

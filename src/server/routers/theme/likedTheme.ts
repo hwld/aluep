@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const likedTheme = publicProcedure
@@ -10,7 +10,7 @@ export const likedTheme = publicProcedure
       return false;
     }
 
-    const like = await prisma.appThemeLike.findUnique({
+    const like = await db.appThemeLike.findUnique({
       where: {
         userId_appThemeId: {
           appThemeId: input.themeId,

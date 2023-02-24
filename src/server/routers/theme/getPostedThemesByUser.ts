@@ -2,7 +2,7 @@ import { z } from "zod";
 import { pageSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { findManyThemes } from "../../models/theme";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const getPostedThemesByUser = publicProcedure
@@ -11,7 +11,7 @@ export const getPostedThemesByUser = publicProcedure
     const { data: postThemes, allPages } = await paginate({
       finder: findManyThemes,
       finderInput: { where: { userId: input.userId } },
-      counter: prisma.appTheme.count,
+      counter: db.appTheme.count,
       pagingData: { page, limit: 18 },
     });
 

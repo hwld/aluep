@@ -2,7 +2,7 @@ import { z } from "zod";
 import { pageSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { findManyThemeDevelopers } from "../../models/themeDeveloper";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const getDevelopersByTheme = publicProcedure
@@ -15,7 +15,7 @@ export const getDevelopersByTheme = publicProcedure
       },
       finder: findManyThemeDevelopers,
       counter: ({ loggedInUserId, ...others }) =>
-        prisma.appThemeDeveloper.count(others),
+        db.appThemeDeveloper.count(others),
       pagingData: { page, limit: 20 },
     });
 

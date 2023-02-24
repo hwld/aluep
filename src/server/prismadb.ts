@@ -4,7 +4,7 @@ const prismaGlobal = global as typeof global & {
   prisma?: PrismaClient;
 };
 
-export const prisma: PrismaClient =
+export const db: PrismaClient =
   prismaGlobal.prisma ||
   new PrismaClient({
     // log:
@@ -14,5 +14,5 @@ export const prisma: PrismaClient =
   });
 
 if (process.env.NODE_ENV !== "production") {
-  prismaGlobal.prisma = prisma;
+  prismaGlobal.prisma = db;
 }

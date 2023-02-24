@@ -1,16 +1,16 @@
 import { z } from "zod";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const getDeveloperLikeCountByUser = publicProcedure
   .input(z.object({ userId: z.string() }))
   .query(async ({ input }) => {
-    const postThemeIds = await prisma.appThemeDeveloper.findMany({
+    const postThemeIds = await db.appThemeDeveloper.findMany({
       select: { id: true },
       where: { userId: input.userId },
     });
     const ids = postThemeIds.map((like) => like.id);
-    const likes = await prisma.appThemeDeveloperLike.count({
+    const likes = await db.appThemeDeveloperLike.count({
       where: { developerId: { in: ids } },
     });
     return likes;

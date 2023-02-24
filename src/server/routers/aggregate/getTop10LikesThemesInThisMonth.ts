@@ -1,10 +1,10 @@
 import { findManyThemes } from "../../models/theme";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const getTop10LikesThemesInThisMonth = publicProcedure.query(
   async () => {
-    const themes = await prisma.$transaction(async (tx) => {
+    const themes = await db.$transaction(async (tx) => {
       // お題のidのリストを取得する
       type ThemeIdObjs = { themeId: string }[];
       const themeIdObjs = await tx.$queryRaw<ThemeIdObjs>`

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { JoinData } from "../../../share/schema";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const joinedTheme = publicProcedure
@@ -11,7 +11,7 @@ export const joinedTheme = publicProcedure
       return { joined: false };
     }
 
-    const developer = await prisma.appThemeDeveloper.findUnique({
+    const developer = await db.appThemeDeveloper.findUnique({
       where: {
         userId_appThemeId: {
           userId: loggedInUser.id,

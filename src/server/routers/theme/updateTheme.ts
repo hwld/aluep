@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import sanitize from "sanitize-html";
 import { themeUpdateFormSchema } from "../../../share/schema";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { requireLoggedInProcedure } from "../../trpc";
 import { themeDescriptionSanitizeOptions } from "./themeDescriptionSanitizeOptions";
 
@@ -9,7 +9,7 @@ export const updateTheme = requireLoggedInProcedure
   .input(themeUpdateFormSchema)
   .mutation(async ({ input, ctx }) => {
     // ログインユーザーが投稿したお題が存在するか確認する
-    const existingTheme = await prisma.appTheme.findFirst({
+    const existingTheme = await db.appTheme.findFirst({
       where: { id: input.themeId, userId: ctx.session.user.id },
     });
     if (!existingTheme) {
@@ -17,7 +17,7 @@ export const updateTheme = requireLoggedInProcedure
     }
 
     // 更新前のタグを全部外す
-    const deleteAllTags = prisma.appThemeTagOnAppTheme.deleteMany({
+    const deleteAllTags = db.appThemeTagOnAppTheme.deleteMany({
       where: { themeId: input.themeId },
     });
 
@@ -28,7 +28,7 @@ export const updateTheme = requireLoggedInProcedure
     );
 
     // 入力されたタグを全て付ける
-    const attachTags = prisma.appTheme.update({
+    const attachTags = db.appTheme.update({
       where: { id: input.themeId },
       data: {
         title: input.title,
@@ -38,5 +38,5 @@ export const updateTheme = requireLoggedInProcedure
     });
 
     // トランザクションを使用する
-    await prisma.$transaction([deleteAllTags, attachTags]);
+    await db.$transaction([deleteAllTags, attachTags]);
   });

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const searchUser = publicProcedure
@@ -12,7 +12,7 @@ export const searchUser = publicProcedure
     if (input.userName === "") {
       return [];
     } else {
-      const searchUsers = await prisma.user.findMany({
+      const searchUsers = await db.user.findMany({
         where: { name: { contains: input.userName } },
         take: 30,
       });
