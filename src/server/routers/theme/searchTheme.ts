@@ -4,8 +4,8 @@ import {
   themeOrderSchema,
   themePeriodSchema,
 } from "../../../share/schema";
+import { publicProcedure } from "../../lib/trpc";
 import { searchThemes, Theme } from "../../models/theme";
-import { publicProcedure } from "../../trpc";
 
 export const searchTheme = publicProcedure
   .input(

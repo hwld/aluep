@@ -1,5 +1,5 @@
-import { db } from "../../prismadb";
-import { requireLoggedInProcedure } from "../../trpc";
+import { db } from "../../lib/prismadb";
+import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const getMySummary = requireLoggedInProcedure.query(async ({ ctx }) => {
   const loggedInUserId = ctx.session.user.id;

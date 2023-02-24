@@ -1,4 +1,4 @@
-import { router } from "../../trpc";
+import { router } from "../../lib/trpc";
 import { deleteMe } from "./deleteMe";
 import { getMySummary } from "./getMySummary";
 import { updateMe } from "./updateMe";

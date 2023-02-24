@@ -1,6 +1,6 @@
 import { z } from "zod";
+import { publicProcedure } from "../../lib/trpc";
 import { findManyThemeComments } from "../../models/themeComment";
-import { publicProcedure } from "../../trpc";
 
 export const getAllComments = publicProcedure
   .input(z.object({ themeId: z.string().min(1) }))

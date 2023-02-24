@@ -6,7 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import { TbLink } from "react-icons/tb";
-import { RouterInputs } from "../../server/trpc";
+import { RouterInputs } from "../../server/lib/trpc";
 import { Routes } from "../../share/routes";
 import { ReportBaseForm } from "../../share/schema";
 import { trpc } from "../trpc";

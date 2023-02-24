@@ -1,8 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import sanitize from "sanitize-html";
 import { themeUpdateFormSchema } from "../../../share/schema";
-import { db } from "../../prismadb";
-import { requireLoggedInProcedure } from "../../trpc";
+import { db } from "../../lib/prismadb";
+import { requireLoggedInProcedure } from "../../lib/trpc";
 import { themeDescriptionSanitizeOptions } from "./themeDescriptionSanitizeOptions";
 
 export const updateTheme = requireLoggedInProcedure

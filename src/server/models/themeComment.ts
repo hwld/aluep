@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { OmitStrict } from "../../types/OmitStrict";
-import { db } from "../prismadb";
+import { db } from "../lib/prismadb";
 
 const themeCommentSchema = z.object({
   id: z.string(),

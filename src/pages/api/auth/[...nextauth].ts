@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import { db } from "../../../server/prismadb";
+import { db } from "../../../server/lib/prismadb";
 import { Routes } from "../../../share/routes";
 
 export const authOptions: NextAuthOptions = {

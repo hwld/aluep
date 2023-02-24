@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { db } from "../prismadb";
+import { db } from "../lib/prismadb";
 
 const themeTagSchema = z.object({
   id: z.string(),

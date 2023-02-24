@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { pageSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
+import { db } from "../../lib/prismadb";
+import { publicProcedure } from "../../lib/trpc";
 import { findManyThemeDevelopers } from "../../models/themeDeveloper";
-import { db } from "../../prismadb";
-import { publicProcedure } from "../../trpc";
 
 export const getDevelopersByTheme = publicProcedure
   .input(z.object({ themeId: z.string(), page: pageSchema }))

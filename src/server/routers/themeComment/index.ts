@@ -1,4 +1,4 @@
-import { router } from "../../trpc";
+import { router } from "../../lib/trpc";
 import { commentTheme } from "./commentTheme";
 import { deleteComment } from "./deleteComment";
 import { getAllComments } from "./getAllComments";

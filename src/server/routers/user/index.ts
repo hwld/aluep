@@ -1,4 +1,4 @@
-import { router } from "../../trpc";
+import { router } from "../../lib/trpc";
 import { favorited } from "./favorited";
 import { favoritedUserCounts } from "./favoritedUserCounts";
 import { favoritedUserCountsAnother } from "./favoritedUserCountsAnother";

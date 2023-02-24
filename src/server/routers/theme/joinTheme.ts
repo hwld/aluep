@@ -1,6 +1,6 @@
 import { themeJoinFormSchema } from "../../../share/schema";
-import { db } from "../../prismadb";
-import { requireLoggedInProcedure } from "../../trpc";
+import { db } from "../../lib/prismadb";
+import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const joinTheme = requireLoggedInProcedure
   .input(themeJoinFormSchema)

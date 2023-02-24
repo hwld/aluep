@@ -1,4 +1,4 @@
-import { publicProcedure, router } from "../trpc";
+import { publicProcedure, router } from "../lib/trpc";
 import { aggregateRoute } from "./aggregate";
 import { developerRoute } from "./developer";
 import { githubRoute } from "./github";

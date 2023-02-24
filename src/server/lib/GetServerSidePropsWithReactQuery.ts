@@ -8,7 +8,7 @@ import { Session, unstable_getServerSession } from "next-auth";
 import superjson from "superjson";
 import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
-import { Context } from "../contexts";
+import { TRPCContext } from "./trpc";
 
 export type PageProps = { stringifiedDehydratedState?: string };
 
@@ -16,7 +16,7 @@ type Callback = (params: {
   params: GetServerSidePropsContext;
   queryClient: QueryClient;
   session: Session | null;
-  callerContext: Context;
+  callerContext: TRPCContext;
 }) => Promise<GetServerSidePropsResult<PageProps> | void>;
 
 export const withReactQueryGetServerSideProps = (

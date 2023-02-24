@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { themeOrderSchema } from "../../../share/schema";
+import { publicProcedure } from "../../lib/trpc";
 import { pickUpThemes as pickUp } from "../../models/theme";
-import { publicProcedure } from "../../trpc";
 
 // TODO
 export const pickUpThemes = publicProcedure

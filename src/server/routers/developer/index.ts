@@ -1,4 +1,4 @@
-import { router } from "../../trpc";
+import { router } from "../../lib/trpc";
 import { deleteDeveloper } from "./deleteDeveloper";
 import { getDeveloper } from "./getDeveloper";
 import { getDeveloperLikeCountByUser } from "./getDeveloperLikeCountByUser";
