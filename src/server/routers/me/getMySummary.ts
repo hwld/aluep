@@ -1,7 +1,7 @@
 import { prisma } from "../../prismadb";
 import { requireLoggedInProcedure } from "../../trpc";
 
-export const getInfo = requireLoggedInProcedure.query(async ({ ctx }) => {
+export const getMySummary = requireLoggedInProcedure.query(async ({ ctx }) => {
   const loggedInUserId = ctx.session.user.id;
 
   // ユーザーが投稿したお題のidを取得する

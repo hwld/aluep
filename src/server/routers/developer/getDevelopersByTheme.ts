@@ -5,7 +5,7 @@ import { findManyThemeDevelopers } from "../../models/themeDeveloper";
 import { prisma } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
-export const getDevelopers = publicProcedure
+export const getDevelopersByTheme = publicProcedure
   .input(z.object({ themeId: z.string(), page: pageSchema }))
   .query(async ({ input: { page }, input, ctx }) => {
     const { data: developers, allPages } = await paginate({

@@ -9,7 +9,7 @@ export const useSumThemeLikesQuery = (userId: string) => {
   const { data: sumThemeLikes, ...others } = useQuery({
     queryKey: sumThemeLikesQueryKey(userId),
     queryFn: () => {
-      return trpc.user.getThemeLike.query({ userId: userId });
+      return trpc.theme.getLikeCountByUser.query({ userId: userId });
     },
   });
   return { sumThemeLikes, ...others };

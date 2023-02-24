@@ -48,7 +48,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     // コメントのプリフェッチ
     await queryClient.prefetchQuery(themeCommentsQueryKey(themeId), () =>
-      caller.theme.getAllComments({ themeId })
+      caller.themeComment.getAllComments({ themeId })
     );
   }
 );

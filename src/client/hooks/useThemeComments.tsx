@@ -15,13 +15,13 @@ export const useThemeComments = (themeId: string) => {
   const { data: themeComments } = useQuery({
     queryKey: themeCommentsQueryKey(themeId),
     queryFn: () => {
-      return trpc.theme.getAllComments.query({ themeId });
+      return trpc.themeComment.getAllComments.query({ themeId });
     },
   });
 
   const postCommentMutation = useMutation({
     mutationFn: (data: OmitStrict<ThemeCommentFormData, "themeId">) => {
-      return trpc.theme.comment.mutate({ ...data, themeId });
+      return trpc.themeComment.comment.mutate({ ...data, themeId });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(themeCommentsQueryKey(themeId));
@@ -36,7 +36,7 @@ export const useThemeComments = (themeId: string) => {
 
   const deleteCommentMutation = useMutation({
     mutationFn: (commentId: string) => {
-      return trpc.theme.deleteComment.mutate({ commentId });
+      return trpc.themeComment.deleteComment.mutate({ commentId });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(themeCommentsQueryKey(themeId));

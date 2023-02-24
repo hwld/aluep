@@ -8,7 +8,7 @@ export const useLoggedInUserInfoQuery = (userId: string) => {
   const { data: loggedInUserInfo, ...others } = useQuery({
     queryKey: loggedInUserInfoQueryKey(userId),
     queryFn: () => {
-      return trpc.me.getInfo.query();
+      return trpc.me.getMySummary.query();
     },
   });
 

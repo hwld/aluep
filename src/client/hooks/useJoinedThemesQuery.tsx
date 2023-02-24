@@ -14,7 +14,7 @@ export const useJoinedThemesQuery = (userId: string, page: number) => {
   const { data: joinedThemes, ...others } = useQuery({
     queryKey: joinedThemesQueryKey(userId, page),
     queryFn: () => {
-      return trpc.user.getJoinTheme.query({
+      return trpc.theme.getJoinedThemesByUser.query({
         userId: userId,
         page: page.toString(),
       });

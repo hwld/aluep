@@ -30,7 +30,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     );
     await queryClient.prefetchQuery(
       themeLikingUsersQueryKey(themeId, Number(page)),
-      () => caller.theme.getThemeLikingUsers({ themeId, page })
+      () => caller.user.getThemeLikingUsers({ themeId, page })
     );
   }
 );

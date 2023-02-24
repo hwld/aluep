@@ -14,7 +14,7 @@ export const usePostedThemesQuery = (userId: string, page: number) => {
   const { data: postedThemes, ...others } = useQuery({
     queryKey: postedThemesQueryKey(userId, page),
     queryFn: () => {
-      return trpc.user.getPostTheme.query({
+      return trpc.theme.getPostedThemesByUser.query({
         userId: userId,
         page: page.toString(),
       });

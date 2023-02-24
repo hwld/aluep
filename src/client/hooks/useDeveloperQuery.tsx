@@ -10,7 +10,7 @@ export const useDeveloperQuery = (developerId: string) => {
   const { data: developer, ...others } = useQuery({
     queryKey: developerQuerykey(developerId),
     queryFn: () => {
-      return trpc.themeDeveloper.get.query({ developerId });
+      return trpc.developer.get.query({ developerId });
     },
   });
 

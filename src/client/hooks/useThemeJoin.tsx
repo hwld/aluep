@@ -49,7 +49,7 @@ export const useThemeJoin = (themeId: string) => {
   // お題への参加をキャンセルする
   const cancelJoinMutation = useMutation({
     mutationFn: ({ developerId }: { developerId: string }) => {
-      return trpc.themeDeveloper.delete.mutate({ developerId });
+      return trpc.developer.delete.mutate({ developerId });
     },
     onSuccess: async () => {
       // 特定のテーマのキャッシュを無効にする
