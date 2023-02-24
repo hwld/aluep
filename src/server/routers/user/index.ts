@@ -4,31 +4,12 @@ import { favoritedUserCounts } from "./favoritedUserCounts";
 import { favoritedUserCountsAnother } from "./favoritedUserCountsAnother";
 import { favoritedUsers } from "./favoritedUsers";
 import { favoriteUser } from "./favoriteUser";
-import { getJoinedTheme } from "./getJoinedTheme";
-import { getLikeThemes } from "./getLikeThemes";
-import { getPostedTheme } from "./getPostedTheme";
-import { getThemeDeveloperLikes } from "./getThemeDeveloperLikes";
-import { getThemeLikes } from "./getThemeLikes";
+import { getThemeLikingUsers } from "./getThemeLikingUsers";
 import { getUser } from "./getUser";
 import { searchUser } from "./searchUser";
 import { unfavoriteUser } from "./unfavoriteUser";
 
 export const userRoute = router({
-  /** 指定されたユーザーが投稿したお題を取得する */
-  getPostTheme: getPostedTheme,
-
-  /** 指定されたユーザが参加しているお題を取得する */
-  getJoinTheme: getJoinedTheme,
-
-  /** 指定されたユーザがいいねしたお題を取得する */
-  getLikeTheme: getLikeThemes,
-
-  /** 指定されたユーザーが投稿したお題についた「いいね」をすべて取得する */
-  getThemeLike: getThemeLikes,
-
-  /** 指定されたユーザーの開発情報についた「いいね」をすべて取得する */
-  getThemeDeveloperLike: getThemeDeveloperLikes,
-
   /** ユーザーを取得する */
   get: getUser,
 
@@ -52,4 +33,7 @@ export const userRoute = router({
 
   /** お気に入りリストの表示 */
   favoriteList: favoritedUsers,
+
+  /** 指定されたお題をいいねしたユーザーを取得する */
+  getThemeLikingUsers,
 });

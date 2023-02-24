@@ -1,6 +1,6 @@
 import { router } from "../../trpc";
 import { deleteMe } from "./deleteMe";
-import { getInfo } from "./getInfo";
+import { getMySummary } from "./getMySummary";
 import { updateMe } from "./updateMe";
 
 export const meRoute = router({
@@ -10,6 +10,6 @@ export const meRoute = router({
   /** ユーザーを削除する */
   delete: deleteMe,
 
-  /** ログインしているユーザーの詳細情報を取得する */
-  getInfo: getInfo,
+  /** ログインしているユーザーの情報を取得する */
+  getMySummary,
 });

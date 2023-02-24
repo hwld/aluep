@@ -13,8 +13,8 @@ export const useLikeThemeDeveloper = (themeId: string, page: number) => {
   const queryClient = useQueryClient();
 
   const likeDeveloperMutation = useMutation({
-    mutationFn: (data: RouterInputs["themeDeveloper"]["like"]) => {
-      return trpc.themeDeveloper.like.mutate(data);
+    mutationFn: (data: RouterInputs["developer"]["like"]) => {
+      return trpc.developer.like.mutate(data);
     },
     // 楽観的UIによって、成功する前にいいね・いいね解除を反映させる
     onMutate: async ({ developerId, like }) => {

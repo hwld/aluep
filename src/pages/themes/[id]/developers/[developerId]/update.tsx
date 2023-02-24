@@ -26,7 +26,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     const caller = appRouter.createCaller(callerContext);
     const theme = await caller.theme.get({ themeId });
-    const developer = await caller.themeDeveloper.get({ developerId });
+    const developer = await caller.developer.get({ developerId });
 
     //　お題か開発者が存在しない、または開発者とログインユーザーが異なれば404にする
     if (!theme || !developer || developer?.userId !== session.user.id) {

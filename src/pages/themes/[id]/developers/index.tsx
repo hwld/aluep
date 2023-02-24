@@ -30,7 +30,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     );
     await queryClient.prefetchQuery(
       paginatedDevelopersQueryKey(themeId, Number(page)),
-      () => caller.theme.getDevelopers({ themeId, page })
+      () => caller.developer.getManyByTheme({ themeId, page })
     );
   }
 );

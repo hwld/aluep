@@ -9,7 +9,7 @@ export const usePickedUpThemesQuery = (order: ThemeOrder) => {
   const { data: pickedUpThemes, ...others } = useQuery({
     queryKey: pickedUpThemesQueryKey(order),
     queryFn: () => {
-      return trpc.theme.pickUp.query({ order });
+      return trpc.aggregate.pickUpThemes.query({ order });
     },
     //　古いとみなさない
     staleTime: Infinity,

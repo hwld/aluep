@@ -22,7 +22,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     // お題、開発者が存在しない場合は404にする
     const theme = await caller.theme.get({ themeId });
-    const developer = await caller.themeDeveloper.get({ developerId });
+    const developer = await caller.developer.get({ developerId });
     if (!theme || !developer) {
       return { notFound: true };
     }

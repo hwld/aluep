@@ -31,8 +31,8 @@ export const DeveloperEditPage: React.FC<Props> = ({
   const mantineTheme = useMantineTheme();
 
   const updateMutation = useMutation({
-    mutationFn: (data: RouterInputs["themeDeveloper"]["update"]) => {
-      return trpc.themeDeveloper.update.mutate(data);
+    mutationFn: (data: RouterInputs["developer"]["update"]) => {
+      return trpc.developer.update.mutate(data);
     },
     onSuccess: () => {
       showSuccessNotification({

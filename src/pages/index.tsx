@@ -15,26 +15,26 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     // ランキング
     await queryClient.prefetchQuery(top10LikesThemesInThisMonthQueryKey, () =>
-      caller.theme.getTop10LikesThemesInThisMonth()
+      caller.aggregate.getTop10LikesThemesInThisMonth()
     );
     await queryClient.prefetchQuery(
       top10LikesDevelopersInThisMonthQueryKey,
-      () => caller.theme.getTop10LikesDevelopersInThisMonth()
+      () => caller.aggregate.getTop10LikesDevelopersInThisMonth()
     );
     await queryClient.prefetchQuery(top10LikesPostersInThisMonthQueryKey, () =>
-      caller.theme.getTop10LikesPostersInThisMonth()
+      caller.aggregate.getTop10LikesPostersInThisMonth()
     );
 
     //　ピックアップされたお題
     await queryClient.prefetchQuery(pickedUpThemesQueryKey("createdDesc"), () =>
-      caller.theme.pickUp({ order: "createdDesc" })
+      caller.aggregate.pickUpThemes({ order: "createdDesc" })
     );
     await queryClient.prefetchQuery(pickedUpThemesQueryKey("likeDesc"), () =>
-      caller.theme.pickUp({ order: "likeDesc" })
+      caller.aggregate.pickUpThemes({ order: "likeDesc" })
     );
     await queryClient.prefetchQuery(
       pickedUpThemesQueryKey("developerDesc"),
-      () => caller.theme.pickUp({ order: "developerDesc" })
+      () => caller.aggregate.pickUpThemes({ order: "developerDesc" })
     );
   }
 );

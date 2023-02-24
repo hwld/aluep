@@ -5,22 +5,22 @@ import { findManyThemes } from "../../models/theme";
 import { prisma } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
-export const getLikeThemes = publicProcedure
+export const getJoinedThemesByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pageSchema }))
   .query(async ({ input, input: { page } }) => {
-    //お題にいいねしてあるモデルの中から自分のIDを取得
-    const likeThemeIds = await prisma.appThemeLike.findMany({
-      select: { appThemeId: true },
+    //すべての開発者からユーザを抽出
+    const joinTheme = await prisma.appThemeDeveloper.findMany({
       where: { userId: input.userId },
     });
-    const likeThemeList = likeThemeIds.map((like) => like.appThemeId);
+    //テーマのidだけを抽出
+    const joinThemeList = joinTheme.map((theme) => theme.appThemeId);
 
-    const { data: likePostedTheme, allPages } = await paginate({
+    const { data: joinPostedTheme, allPages } = await paginate({
       finder: findManyThemes,
-      finderInput: { where: { id: { in: likeThemeList } } },
+      finderInput: { where: { id: { in: joinThemeList } } },
       counter: prisma.appTheme.count,
       pagingData: { page, limit: 18 },
     });
 
-    return { likePostedTheme, allPages };
+    return { joinPostedTheme, allPages };
   });

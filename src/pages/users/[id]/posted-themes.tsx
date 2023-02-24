@@ -33,15 +33,15 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     await queryClient.prefetchQuery(
       postedThemesQueryKey(userId, Number(page)),
-      () => caller.user.getPostTheme({ userId, page })
+      () => caller.theme.getPostedThemesByUser({ userId, page })
     );
 
     await queryClient.prefetchQuery(sumThemeLikesQueryKey(userId), () =>
-      caller.user.getThemeLike({ userId })
+      caller.theme.getLikeCountByUser({ userId })
     );
 
     await queryClient.prefetchQuery(themeDeveloperLikesQueryKey(userId), () =>
-      caller.user.getThemeDeveloperLike({ userId })
+      caller.developer.getLikeCountByUser({ userId })
     );
 
     //お気に入りのちらつきを無くす

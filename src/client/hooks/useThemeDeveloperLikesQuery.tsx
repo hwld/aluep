@@ -9,7 +9,9 @@ export const useThemeDeveloperLikesQuery = (userId: string) => {
   const { data: themeDeveloperLikes, ...others } = useQuery({
     queryKey: themeDeveloperLikesQueryKey(userId),
     queryFn: () => {
-      return trpc.user.getThemeDeveloperLike.query({ userId: userId });
+      return trpc.developer.getLikeCountByUser.query({
+        userId: userId,
+      });
     },
   });
 

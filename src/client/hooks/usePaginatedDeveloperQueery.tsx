@@ -19,7 +19,7 @@ export const usePaginatedDeveloperQuery = (themeId: string, page: number) => {
   const result = useQuery({
     queryKey: paginatedDevelopersQueryKey(themeId, page),
     queryFn: (): Promise<PaginatedDeveloperQueryData> => {
-      return trpc.theme.getDevelopers.query({
+      return trpc.developer.getManyByTheme.query({
         page: page.toString(),
         themeId,
       });
