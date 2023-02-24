@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { OmitStrict } from "../../types/OmitStrict";
-import { prisma } from "../prismadb";
+import { db } from "../prismadb";
 
 const themeDeveloperSchema = z.object({
   id: z.string(),
@@ -56,7 +56,7 @@ export const findManyThemeDevelopers = async ({
   loggedInUserId,
   ...args
 }: FindThemeDevelopersArgs): Promise<ThemeDeveloper[]> => {
-  const rawDevelopers = await prisma.appThemeDeveloper.findMany({
+  const rawDevelopers = await db.appThemeDeveloper.findMany({
     orderBy: { createdAt: "desc", ...orderBy },
     ...args,
     ...developerArgs,
@@ -73,7 +73,7 @@ export const findThemeDeveloper = async (
   developerId: string,
   loggedInUserId: string | undefined
 ): Promise<ThemeDeveloper | undefined> => {
-  const rawDeveloper = await prisma.appThemeDeveloper.findUnique({
+  const rawDeveloper = await db.appThemeDeveloper.findUnique({
     where: { id: developerId },
     ...developerArgs,
   });

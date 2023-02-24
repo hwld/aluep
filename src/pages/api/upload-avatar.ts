@@ -1,7 +1,7 @@
 import { NextApiHandler } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { uploadAvatar } from "../../server/lib/uploadAvatar";
-import { prisma } from "../../server/prismadb";
+import { db } from "../../server/prismadb";
 import { authOptions } from "./auth/[...nextauth]";
 
 export const config = {
@@ -17,7 +17,7 @@ const handler: NextApiHandler = async (req, res) => {
   }
 
   const avatarUrl = await uploadAvatar(req, session.user.id);
-  await prisma.user.update({
+  await db.user.update({
     where: { id: session.user.id },
     data: { image: avatarUrl },
   });

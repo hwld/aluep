@@ -1,4 +1,4 @@
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { requireLoggedInProcedure } from "../../trpc";
 
 export const getMySummary = requireLoggedInProcedure.query(async ({ ctx }) => {
@@ -6,7 +6,7 @@ export const getMySummary = requireLoggedInProcedure.query(async ({ ctx }) => {
 
   // ユーザーが投稿したお題のidを取得する
   const themeIds = (
-    await prisma.appTheme.findMany({
+    await db.appTheme.findMany({
       select: { id: true },
       where: { userId: loggedInUserId },
     })
@@ -14,19 +14,19 @@ export const getMySummary = requireLoggedInProcedure.query(async ({ ctx }) => {
 
   // ユーザーの開発情報のidを取得する
   const developerIds = (
-    await prisma.appThemeDeveloper.findMany({
+    await db.appThemeDeveloper.findMany({
       select: { id: true },
       where: { userId: loggedInUserId },
     })
   ).map((dev) => dev.id);
 
   // ユーザーが投稿したお題に貰ったいいねの数
-  const themeLikes = await prisma.appThemeLike.count({
+  const themeLikes = await db.appThemeLike.count({
     where: { appThemeId: { in: themeIds } },
   });
 
   // ユーザーの開発情報に貰ったいいねの数
-  const developLikes = await prisma.appThemeDeveloperLike.count({
+  const developLikes = await db.appThemeDeveloperLike.count({
     where: { developerId: { in: developerIds } },
   });
 

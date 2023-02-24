@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { prisma } from "../prismadb";
+import { db } from "../prismadb";
 
 const themeTagSchema = z.object({
   id: z.string(),
@@ -10,7 +10,7 @@ const themeTagSchema = z.object({
 export type ThemeTag = z.infer<typeof themeTagSchema>;
 
 export const findAllThemeTags = async (): Promise<ThemeTag[]> => {
-  const rawTags = await prisma.appThemeTag.findMany();
+  const rawTags = await db.appThemeTag.findMany();
 
   const tags: ThemeTag[] = rawTags.map((raw) => ({
     id: raw.id,

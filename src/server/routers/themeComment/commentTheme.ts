@@ -1,11 +1,11 @@
 import { themeCommentFormSchema } from "../../../share/schema";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { requireLoggedInProcedure } from "../../trpc";
 
 export const commentTheme = requireLoggedInProcedure
   .input(themeCommentFormSchema)
   .mutation(async ({ input, ctx }) => {
-    const comment = await prisma.appThemeComment.create({
+    const comment = await db.appThemeComment.create({
       data: {
         themeId: input.themeId,
         comment: input.comment,

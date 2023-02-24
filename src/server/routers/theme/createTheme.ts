@@ -1,6 +1,6 @@
 import sanitize from "sanitize-html";
 import { themeFormSchema } from "../../../share/schema";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { requireLoggedInProcedure } from "../../trpc";
 import { themeDescriptionSanitizeOptions } from "./themeDescriptionSanitizeOptions";
 
@@ -12,7 +12,7 @@ export const createTheme = requireLoggedInProcedure
       themeDescriptionSanitizeOptions
     );
 
-    const theme = await prisma.appTheme.create({
+    const theme = await db.appTheme.create({
       data: {
         title: input.title,
         description: sanitizedThemeDescriptionHtml,

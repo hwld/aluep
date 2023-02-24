@@ -4,7 +4,7 @@ import { ja } from "date-fns/locale";
 import { z } from "zod";
 import { ThemeOrder, ThemePeriod } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
-import { prisma } from "../prismadb";
+import { db } from "../prismadb";
 
 const themeSchema = z.object({
   id: z.string(),
@@ -64,7 +64,7 @@ const convertTheme = (
 export const findTheme = async (
   where: Prisma.AppThemeWhereUniqueInput
 ): Promise<Theme | undefined> => {
-  const rawTheme = await prisma.appTheme.findFirst({
+  const rawTheme = await db.appTheme.findFirst({
     where,
     ...themeArgs,
   });
@@ -84,7 +84,7 @@ export const findManyThemes = async (
   }: OmitStrict<Prisma.AppThemeFindManyArgs, "include" | "select">,
   transactionClient?: Prisma.TransactionClient
 ) => {
-  const client = transactionClient ?? prisma;
+  const client = transactionClient ?? db;
 
   const rawThemes = await client.appTheme.findMany({
     orderBy: { createdAt: "desc", ...orderBy },
@@ -109,7 +109,7 @@ export const pickUpThemes = async (
   order: ThemeOrder,
   limit: number
 ): Promise<Theme[]> => {
-  const paginatedThemes = await prisma.$transaction(async (tx) => {
+  const paginatedThemes = await db.$transaction(async (tx) => {
     // orderに対応するクエリや並び替え関数を宣言する
     const orderMap: {
       [T in typeof order]: {
@@ -191,7 +191,7 @@ export const searchThemes = async (
   pagingData: { page: number; limit: number }
 ): Promise<{ themes: Theme[]; allPages: number }> => {
   // トランザクションを使用する
-  const paginatedThemes = await prisma.$transaction(async (tx) => {
+  const paginatedThemes = await db.$transaction(async (tx) => {
     // orderに対応するクエリや並び替え関数を宣言する
     const orderMap: {
       [T in typeof order]: {

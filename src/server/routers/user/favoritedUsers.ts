@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { pageSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const favoritedUsers = publicProcedure
   .input(z.object({ favoriteUserId: z.string(), page: pageSchema }))
   .query(async ({ input, input: { page } }) => {
-    const favoriteList = await prisma.favoriteUser.findMany({
+    const favoriteList = await db.favoriteUser.findMany({
       select: { userId: true },
       where: { favoritedUserId: input.favoriteUserId },
     });
@@ -16,8 +16,8 @@ export const favoritedUsers = publicProcedure
 
     const { data: pagefavo, allPages } = await paginate({
       finderInput: { where: { id: { in: ids } } },
-      finder: prisma.user.findMany,
-      counter: prisma.user.count,
+      finder: db.user.findMany,
+      counter: db.user.count,
       pagingData: { page, limit: 50 },
     });
 

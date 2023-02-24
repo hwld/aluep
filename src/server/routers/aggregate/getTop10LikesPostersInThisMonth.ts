@@ -1,10 +1,10 @@
 import { UserAndThemeLikes } from "../../models/user";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const getTop10LikesPostersInThisMonth = publicProcedure.query(
   async () => {
-    const posterUsers: UserAndThemeLikes[] = await prisma.$transaction(
+    const posterUsers: UserAndThemeLikes[] = await db.$transaction(
       async (tx) => {
         type RawPosterUser = { userId: string; likeCount: BigInt }[];
         // このクエリが原因?

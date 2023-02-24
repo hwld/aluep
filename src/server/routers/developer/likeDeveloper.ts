@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { requireLoggedInProcedure } from "../../trpc";
 
 export const likeDeveloper = requireLoggedInProcedure
@@ -11,7 +11,7 @@ export const likeDeveloper = requireLoggedInProcedure
     })
   )
   .mutation(async ({ input, ctx }) => {
-    const developer = await prisma.appThemeDeveloper.findUnique({
+    const developer = await db.appThemeDeveloper.findUnique({
       where: { id: input.developerId },
     });
     // 指定されたdeveloperが存在しない場合
@@ -26,7 +26,7 @@ export const likeDeveloper = requireLoggedInProcedure
 
     if (input.like) {
       // いいね
-      await prisma.appThemeDeveloperLike.create({
+      await db.appThemeDeveloperLike.create({
         data: {
           developer: { connect: { id: developer.id } },
           user: { connect: { id: ctx.session.user.id } },
@@ -34,7 +34,7 @@ export const likeDeveloper = requireLoggedInProcedure
       });
     } else {
       // いいね解除
-      await prisma.appThemeDeveloperLike.delete({
+      await db.appThemeDeveloperLike.delete({
         where: {
           userId_developerId: {
             developerId: input.developerId,

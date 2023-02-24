@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { OmitStrict } from "../../types/OmitStrict";
-import { prisma } from "../prismadb";
+import { db } from "../prismadb";
 
 const themeCommentSchema = z.object({
   id: z.string(),
@@ -59,7 +59,7 @@ export const findManyThemeComments = async ({
   orderBy,
   ...args
 }: FindManyThemeCommentsArgs): Promise<ThemeComment[]> => {
-  const rawComments = await prisma.appThemeComment.findMany({
+  const rawComments = await db.appThemeComment.findMany({
     orderBy: { createdAt: "desc", ...orderBy },
     ...args,
     ...themeCommentArgs,

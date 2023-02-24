@@ -1,26 +1,26 @@
 import { z } from "zod";
 import { pageSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { publicProcedure } from "../../trpc";
 
 export const getThemeLikingUsers = publicProcedure
   .input(z.object({ themeId: z.string(), page: pageSchema }))
   .query(async ({ input }) => {
     const { data: use, allPages } = await paginate({
-      finder: prisma.appThemeLike.findMany,
+      finder: db.appThemeLike.findMany,
       finderInput: {
         where: { appThemeId: input.themeId },
         orderBy: { createdAt: "desc" as const },
       },
-      counter: prisma.appThemeLike.count,
+      counter: db.appThemeLike.count,
       pagingData: { page: input.page, limit: 20 },
     });
 
     const userIds = use.map(({ userId }) => userId);
 
     //ユーザーの情報を取得する
-    const usered = await prisma.user.findMany({
+    const usered = await db.user.findMany({
       where: { id: { in: userIds } },
     });
 

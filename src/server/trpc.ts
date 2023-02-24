@@ -1,7 +1,7 @@
 import { inferRouterInputs, initTRPC, TRPCError } from "@trpc/server";
 import SuperJSON from "superjson";
 import { Context } from "./contexts";
-import { prisma } from "./prismadb";
+import { db } from "./prismadb";
 import { AppRouter } from "./routers";
 
 const t = initTRPC.context<Context>().create({ transformer: SuperJSON });
@@ -16,7 +16,7 @@ const isLoggedIn = middleware(async ({ ctx, next }) => {
     throw new TRPCError({ code: "FORBIDDEN" });
   }
 
-  const loggedInUser = await prisma.user.findFirst({
+  const loggedInUser = await db.user.findFirst({
     where: { id: ctx.session.user.id },
   });
   if (!loggedInUser) {

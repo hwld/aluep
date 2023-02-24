@@ -1,12 +1,12 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { requireLoggedInProcedure } from "../../trpc";
 
 export const likeTheme = requireLoggedInProcedure
   .input(z.object({ themeId: z.string().min(1), like: z.boolean() }))
   .mutation(async ({ input, ctx }) => {
-    const theme = await prisma.appTheme.findUnique({
+    const theme = await db.appTheme.findUnique({
       where: { id: input.themeId },
     });
     // 指定されたthemeが存在しない場合
@@ -21,7 +21,7 @@ export const likeTheme = requireLoggedInProcedure
 
     if (input.like) {
       // いいね
-      await prisma.appThemeLike.create({
+      await db.appThemeLike.create({
         data: {
           appTheme: { connect: { id: theme.id } },
           user: { connect: { id: ctx.session.user.id } },
@@ -29,7 +29,7 @@ export const likeTheme = requireLoggedInProcedure
       });
     } else {
       // いいね解除
-      await prisma.appThemeLike.delete({
+      await db.appThemeLike.delete({
         where: {
           userId_appThemeId: {
             appThemeId: input.themeId,

@@ -1,14 +1,14 @@
 import { TRPCError } from "@trpc/server";
 import { GitHubErrors } from "../../../share/errors";
 import { repositoryFormSchema } from "../../../share/schema";
-import { prisma } from "../../prismadb";
+import { db } from "../../prismadb";
 import { requireLoggedInProcedure } from "../../trpc";
 
 export const createGitHubRepository = requireLoggedInProcedure
   .input(repositoryFormSchema)
   .mutation(async ({ input, ctx }) => {
     //認証済みユーザーのアカウント情報からアクセストークンを取得する、
-    const account = await prisma.account.findFirst({
+    const account = await db.account.findFirst({
       where: { userId: ctx.session.user.id, provider: "github" },
     });
     if (!account) {
