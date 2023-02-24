@@ -1,6 +1,6 @@
+import { db } from "../../lib/prismadb";
+import { publicProcedure } from "../../lib/trpc";
 import { findManyThemes } from "../../models/theme";
-import { db } from "../../prismadb";
-import { publicProcedure } from "../../trpc";
 
 export const getTop10LikesThemesInThisMonth = publicProcedure.query(
   async () => {

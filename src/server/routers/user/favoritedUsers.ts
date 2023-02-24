@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { pageSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
-import { db } from "../../prismadb";
-import { publicProcedure } from "../../trpc";
+import { db } from "../../lib/prismadb";
+import { publicProcedure } from "../../lib/trpc";
 
 export const favoritedUsers = publicProcedure
   .input(z.object({ favoriteUserId: z.string(), page: pageSchema }))

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { RouterInputs } from "../../server/trpc";
+import { RouterInputs } from "../../server/lib/trpc";
 import { trpc } from "../trpc";
 
 export const favoriteUserQueryKey = (

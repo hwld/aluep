@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { RouterInputs } from "../../server/lib/trpc";
 import { Theme } from "../../server/models/theme";
-import { RouterInputs } from "../../server/trpc";
 import { trpc } from "../trpc";
 import { showErrorNotification } from "../utils";
 import { useSessionQuery } from "./useSessionQuery";

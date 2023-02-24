@@ -1,4 +1,4 @@
-import { router } from "../../trpc";
+import { router } from "../../lib/trpc";
 import { createTheme } from "./createTheme";
 import { deleteTheme } from "./deleteTheme";
 import { getAllTags } from "./getAllTags";

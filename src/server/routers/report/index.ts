@@ -1,4 +1,4 @@
-import { router } from "../../trpc";
+import { router } from "../../lib/trpc";
 import { reportDeveloper } from "./reportDeveloper";
 import { reportTheme } from "./reportTheme";
 import { reportThemeComment } from "./reportThemeComment";

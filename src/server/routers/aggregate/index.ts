@@ -1,4 +1,4 @@
-import { router } from "../../trpc";
+import { router } from "../../lib/trpc";
 import { getTop10LikesDevelopersInThisMonth } from "./getTop10LikesDevelopersInThisMonth";
 import { getTop10LikesPostersInThisMonth } from "./getTop10LikesPostersInThisMonth";
 import { getTop10LikesThemesInThisMonth } from "./getTop10LikesThemesInThisMonth";

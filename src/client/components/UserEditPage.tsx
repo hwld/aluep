@@ -4,7 +4,7 @@ import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { RiEdit2Line } from "react-icons/ri";
-import { RouterInputs } from "../../server/trpc";
+import { RouterInputs } from "../../server/lib/trpc";
 import { Routes } from "../../share/routes";
 import { ProfileFormData } from "../../share/schema";
 import { trpc } from "../trpc";

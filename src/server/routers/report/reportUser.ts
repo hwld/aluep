@@ -1,6 +1,6 @@
 import { reportUserSchema } from "../../../share/schema";
 import { buildReportedUser, reportToSlack } from "../../lib/reportToSlack";
-import { publicProcedure } from "../../trpc";
+import { publicProcedure } from "../../lib/trpc";
 
 export const reportUser = publicProcedure
   .input(reportUserSchema)

@@ -1,6 +1,6 @@
 import { z } from "zod";
+import { publicProcedure } from "../../lib/trpc";
 import { findTheme, Theme } from "../../models/theme";
-import { publicProcedure } from "../../trpc";
 
 export const getTheme = publicProcedure
   .input(z.object({ themeId: z.string() }))

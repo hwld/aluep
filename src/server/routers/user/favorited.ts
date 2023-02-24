@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { db } from "../../prismadb";
-import { publicProcedure } from "../../trpc";
+import { db } from "../../lib/prismadb";
+import { publicProcedure } from "../../lib/trpc";
 
 export const favorited = publicProcedure
   .input(z.object({ userId: z.string(), favoriteUserId: z.string() }))

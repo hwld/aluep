@@ -1,8 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { GitHubErrors } from "../../../share/errors";
 import { repositoryFormSchema } from "../../../share/schema";
-import { db } from "../../prismadb";
-import { requireLoggedInProcedure } from "../../trpc";
+import { db } from "../../lib/prismadb";
+import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const createGitHubRepository = requireLoggedInProcedure
   .input(repositoryFormSchema)

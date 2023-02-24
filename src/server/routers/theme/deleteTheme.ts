@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { db } from "../../prismadb";
-import { requireLoggedInProcedure } from "../../trpc";
+import { db } from "../../lib/prismadb";
+import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const deleteTheme = requireLoggedInProcedure
   .input(z.object({ themeId: z.string().min(1) }))

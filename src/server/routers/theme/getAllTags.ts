@@ -1,5 +1,5 @@
+import { publicProcedure } from "../../lib/trpc";
 import { findAllThemeTags, ThemeTag } from "../../models/themeTag";
-import { publicProcedure } from "../../trpc";
 
 export const getAllTags = publicProcedure.query(
   async (): Promise<ThemeTag[]> => {

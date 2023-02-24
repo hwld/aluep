@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { themeJoinFormSchema } from "../../../share/schema";
-import { db } from "../../prismadb";
-import { requireLoggedInProcedure } from "../../trpc";
+import { db } from "../../lib/prismadb";
+import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const updateDeveloper = requireLoggedInProcedure
   .input(themeJoinFormSchema)

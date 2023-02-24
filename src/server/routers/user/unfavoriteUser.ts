@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { db } from "../../prismadb";
-import { requireLoggedInProcedure } from "../../trpc";
+import { db } from "../../lib/prismadb";
+import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const unfavoriteUser = requireLoggedInProcedure
   .input(z.object({ userId: z.string() }))

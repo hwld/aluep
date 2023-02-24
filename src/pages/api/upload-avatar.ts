@@ -1,7 +1,7 @@
 import { NextApiHandler } from "next";
 import { unstable_getServerSession } from "next-auth";
+import { db } from "../../server/lib/prismadb";
 import { uploadAvatar } from "../../server/lib/uploadAvatar";
-import { db } from "../../server/prismadb";
 import { authOptions } from "./auth/[...nextauth]";
 
 export const config = {

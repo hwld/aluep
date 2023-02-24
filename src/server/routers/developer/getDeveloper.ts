@@ -1,6 +1,6 @@
 import { z } from "zod";
+import { publicProcedure } from "../../lib/trpc";
 import { findThemeDeveloper } from "../../models/themeDeveloper";
-import { publicProcedure } from "../../trpc";
 
 export const getDeveloper = publicProcedure
   .input(z.object({ developerId: z.string().min(1).max(100) }))

@@ -4,7 +4,7 @@ import { ja } from "date-fns/locale";
 import { z } from "zod";
 import { ThemeOrder, ThemePeriod } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
-import { db } from "../prismadb";
+import { db } from "../lib/prismadb";
 
 const themeSchema = z.object({
   id: z.string(),

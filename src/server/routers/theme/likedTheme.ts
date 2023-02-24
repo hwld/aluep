@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { db } from "../../prismadb";
-import { publicProcedure } from "../../trpc";
+import { db } from "../../lib/prismadb";
+import { publicProcedure } from "../../lib/trpc";
 
 export const likedTheme = publicProcedure
   .input(z.object({ themeId: z.string().min(1) }))
