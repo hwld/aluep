@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { ThemeDeveloperPage } from "../../../../client/components/ThemeDeveloperPage";
-import { paginatedDevelopersQueryKey } from "../../../../client/hooks/usePaginatedDeveloperQueery";
+import { paginatedDevelopersQueryKey } from "../../../../client/features/developer/usePaginatedDeveloperQueery";
 import {
   themeQueryKey,
   useThemeQuery,
-} from "../../../../client/hooks/useThemeQuery";
+} from "../../../../client/features/theme/useThemeQuery";
+import { ThemeDeveloperPage } from "../../../../client/pageComponents/ThemeDeveloperPage";
 import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../server/routers";
 

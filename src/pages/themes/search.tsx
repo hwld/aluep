@@ -1,7 +1,7 @@
 import { NextPage } from "next";
-import { ThemeSearchPage } from "../../client/components/ThemeSearchPage";
-import { allTagsQueryKey } from "../../client/hooks/useAllTagsQuery";
-import { searchedThemesQueryKey } from "../../client/hooks/useSearchedThemesQuery";
+import { allTagsQueryKey } from "../../client/features/theme/useAllTagsQuery";
+import { searchedThemesQueryKey } from "../../client/features/theme/useSearchedThemesQuery";
+import { ThemeSearchPage } from "../../client/pageComponents/ThemeSearchPage";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import {
   urlParamToString,

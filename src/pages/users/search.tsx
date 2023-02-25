@@ -1,6 +1,6 @@
 import { NextPage } from "next";
-import { UserSearchPage } from "../../client/components/UserSearchPage";
-import { searchedUsersQueryKey } from "../../client/hooks/useSearchedUsersQuery";
+import { searchedUsersQueryKey } from "../../client/features/user/useSearchedUsersQuery";
+import { UserSearchPage } from "../../client/pageComponents/UserSearchPage";
 
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { urlParamToString } from "../../server/lib/urlParam";

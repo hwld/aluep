@@ -1,14 +1,14 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { DeveloperEditPage } from "../../../../../client/components/DeveloperEditPage";
 import {
   developerQuerykey,
   useDeveloperQuery,
-} from "../../../../../client/hooks/useDeveloperQuery";
+} from "../../../../../client/features/developer/useDeveloperQuery";
 import {
   themeQueryKey,
   useThemeQuery,
-} from "../../../../../client/hooks/useThemeQuery";
+} from "../../../../../client/features/theme/useThemeQuery";
+import { DeveloperEditPage } from "../../../../../client/pageComponents/DeveloperEditPage";
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../../server/routers";
 import { Routes } from "../../../../../share/routes";

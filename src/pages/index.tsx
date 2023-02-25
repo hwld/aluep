@@ -1,11 +1,11 @@
 import { NextPage } from "next";
-import { HomePage } from "../client/components/HomePage";
-import { pickedUpThemesQueryKey } from "../client/hooks/usePickedUpThemesQuery";
+import { pickedUpThemesQueryKey } from "../client/features/theme/usePickedUpThemesQuery";
 import {
   top10LikesDevelopersInThisMonthQueryKey,
   top10LikesPostersInThisMonthQueryKey,
   top10LikesThemesInThisMonthQueryKey,
-} from "../client/hooks/useRankingQuery";
+} from "../client/features/user/useRankingQuery";
+import { HomePage } from "../client/ui/HomePage";
 import { withReactQueryGetServerSideProps } from "../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../server/routers";
 
