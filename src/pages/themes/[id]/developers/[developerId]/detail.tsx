@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
-import { DeveloperDetailPage } from "../../../../../client/components/DeveloperDetailPage";
 import {
   developerQuerykey,
   useDeveloperQuery,
-} from "../../../../../client/hooks/useDeveloperQuery";
+} from "../../../../../client/features/developer/useDeveloperQuery";
 import {
   themeQueryKey,
   useThemeQuery,
-} from "../../../../../client/hooks/useThemeQuery";
+} from "../../../../../client/features/theme/useThemeQuery";
+import { DeveloperDetailPage } from "../../../../../client/pageComponents/DeveloperDetailPage";
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../../server/routers";
 

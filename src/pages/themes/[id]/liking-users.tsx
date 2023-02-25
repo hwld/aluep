@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { ThemeLikingUsersPage } from "../../../client/components/ThemeLikingUsersPage";
-import { themeLikingUsersQueryKey } from "../../../client/hooks/useThemeLikingUsersQuery";
 import {
   themeQueryKey,
   useThemeQuery,
-} from "../../../client/hooks/useThemeQuery";
+} from "../../../client/features/theme/useThemeQuery";
+import { themeLikingUsersQueryKey } from "../../../client/features/user/useThemeLikingUsersQuery";
+import { ThemeLikingUsersPage } from "../../../client/pageComponents/ThemeLikingUsersPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
 

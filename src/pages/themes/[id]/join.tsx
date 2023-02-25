@@ -1,10 +1,10 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { ThemeJoinPage } from "../../../client/components/ThemeJoinPage";
 import {
   themeQueryKey,
   useThemeQuery,
-} from "../../../client/hooks/useThemeQuery";
+} from "../../../client/features/theme/useThemeQuery";
+import { ThemeJoinPage } from "../../../client/pageComponents/ThemeJoinPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
 import { Routes } from "../../../share/routes";

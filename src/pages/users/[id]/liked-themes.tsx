@@ -1,12 +1,15 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { UserLikedThemesPage } from "../../../client/components/UserDetail/UserLikedThemesPage";
-import { favoriteAnotherSumQueryKey } from "../../../client/hooks/useFavoriteAnother";
-import { favoriteUserQueryKey } from "../../../client/hooks/useFavoriteUser";
-import { likedThemesQueryKey } from "../../../client/hooks/useLikedThemesQuery";
-import { sumThemeLikesQueryKey } from "../../../client/hooks/useSumThemeLikesQuery";
-import { themeDeveloperLikesQueryKey } from "../../../client/hooks/useThemeDeveloperLikesQuery";
-import { userQueryKey, useUserQuery } from "../../../client/hooks/useUserQuery";
+import { themeDeveloperLikesQueryKey } from "../../../client/features/developer/useThemeDeveloperLikesQuery";
+import { likedThemesQueryKey } from "../../../client/features/theme/useLikedThemesQuery";
+import { sumThemeLikesQueryKey } from "../../../client/features/theme/useSumThemeLikesQuery";
+import { favoriteAnotherSumQueryKey } from "../../../client/features/user/useFavoriteAnother";
+import { favoriteUserQueryKey } from "../../../client/features/user/useFavoriteUser";
+import {
+  userQueryKey,
+  useUserQuery,
+} from "../../../client/features/user/useUserQuery";
+import { UserLikedThemesPage } from "../../../client/pageComponents/UserLikedThemesPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
 

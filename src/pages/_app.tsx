@@ -11,10 +11,10 @@ import Head from "next/head";
 import Script from "next/script";
 import { useState } from "react";
 import superjson from "superjson";
-import { AppLayout } from "../client/components/AppLayout";
-import { AppNavigationProgress } from "../client/components/AppNavigationProgress";
-import { RequireLoginModalProvider } from "../client/contexts/RequireLoginModalProvider";
+import { RequireLoginModalProvider } from "../client/features/session/RequireLoginModalProvider";
 import { theme } from "../client/style/theme";
+import { AppLayout } from "../client/ui/AppLayout";
+import { AppNavigationProgress } from "../client/ui/AppNavigationProgress";
 import { PageProps } from "../server/lib/GetServerSidePropsWithReactQuery";
 
 export default function App(props: AppProps<PageProps>) {

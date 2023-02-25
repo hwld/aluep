@@ -1,5 +1,5 @@
-import { ThemeCreatePage } from "../../client/components/ThemeCreatePage";
-import { allTagsQueryKey } from "../../client/hooks/useAllTagsQuery";
+import { allTagsQueryKey } from "../../client/features/theme/useAllTagsQuery";
+import { ThemeCreatePage } from "../../client/pageComponents/ThemeCreatePage";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../server/routers";
 import { Routes } from "../../share/routes";

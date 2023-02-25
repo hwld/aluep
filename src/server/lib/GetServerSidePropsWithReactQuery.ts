@@ -6,7 +6,7 @@ import {
 } from "next";
 import { Session, unstable_getServerSession } from "next-auth";
 import superjson from "superjson";
-import { sessionQuerykey } from "../../client/hooks/useSessionQuery";
+import { sessionQuerykey } from "../../client/features/session/useSessionQuery";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { TRPCContext } from "./trpc";
 

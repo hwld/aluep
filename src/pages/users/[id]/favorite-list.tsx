@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { FavoriteListPage } from "../../../client/components/UserDetail/FavoriteListPage";
-import { favoriteListQueryKey } from "../../../client/hooks/useFavoriteListQuery";
+import { favoriteListQueryKey } from "../../../client/features/user/useFavoriteListQuery";
+import { FavoriteListPage } from "../../../client/pageComponents/FavoriteListPage";
 
-import { useUserQuery } from "../../../client/hooks/useUserQuery";
+import { useUserQuery } from "../../../client/features/user/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
 
