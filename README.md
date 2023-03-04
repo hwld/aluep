@@ -1,7 +1,8 @@
+<p align="center">
+  <img width="100px" src="https://raw.githubusercontent.com/hwld/aluep/main/public/logo.svg?raw=true" alt="aluep-logo" >
+</p>
+
 # Aluep
-
-## 概要
-
 Aluep は、アプリケーション案である「アプリ開発のお題」を投稿・検索できる Web アプリケーションです。
 
 ## 使用技術
