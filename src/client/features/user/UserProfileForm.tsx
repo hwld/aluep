@@ -1,10 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Textarea, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { RiEdit2Line } from "react-icons/ri";
 import { ProfileFormData, profileFormSchema } from "../../../share/schema";
 import { AppForm } from "../../ui/AppForm";
-import { AppTextarea } from "../../ui/AppTextarea";
-import { AppTextInput } from "../../ui/AppTextInput";
 
 type Props = {
   onSubmit: (data: ProfileFormData) => void;
@@ -41,7 +40,7 @@ export const UserProfileForm: React.FC<Props> = ({
         control={control}
         name="name"
         render={({ field }) => (
-          <AppTextInput
+          <TextInput
             required
             label="ユーザー名"
             error={errors.name?.message}
@@ -53,7 +52,7 @@ export const UserProfileForm: React.FC<Props> = ({
         control={control}
         name="profile"
         render={({ field }) => (
-          <AppTextarea
+          <Textarea
             label="自己紹介"
             error={errors.profile?.message}
             autosize

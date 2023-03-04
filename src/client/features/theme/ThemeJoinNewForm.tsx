@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Textarea, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { MdComputer } from "react-icons/md";
 import {
@@ -7,8 +8,6 @@ import {
   ThemeJoinFormData,
 } from "../../../share/schema";
 import { AppForm } from "../../ui/AppForm";
-import { AppTextarea } from "../../ui/AppTextarea";
-import { AppTextInput } from "../../ui/AppTextInput";
 import { useGitHubRepoCreate } from "../github/useGitHubRepoCreate";
 
 type Props = {
@@ -84,7 +83,7 @@ export const ThemeJoinNewForm: React.FC<Props> = ({
         name="repoName"
         render={({ field }) => {
           return (
-            <AppTextInput
+            <TextInput
               withAsterisk
               label="リポジトリ名"
               error={errors.repoName?.message}
@@ -98,7 +97,7 @@ export const ThemeJoinNewForm: React.FC<Props> = ({
         name="repoDescription"
         render={({ field }) => {
           return (
-            <AppTextarea
+            <Textarea
               label="リポジトリの説明"
               minRows={3}
               error={errors.repoDescription?.message}
@@ -112,7 +111,7 @@ export const ThemeJoinNewForm: React.FC<Props> = ({
         name="comment"
         render={({ field }) => {
           return (
-            <AppTextarea
+            <Textarea
               label="コメント"
               minRows={5}
               error={errors.comment?.message}
@@ -124,6 +123,3 @@ export const ThemeJoinNewForm: React.FC<Props> = ({
     </AppForm>
   );
 };
-function onSetRepositoryUrl(repoUrl: string) {
-  throw new Error("Function not implemented.");
-}

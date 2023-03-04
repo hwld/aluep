@@ -1,12 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Flex } from "@mantine/core";
+import { Box, Flex, Textarea, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { MdComputer } from "react-icons/md";
 import { ThemeJoinFormData, themeJoinFormSchema } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { AppForm } from "../../ui/AppForm";
-import { AppTextarea } from "../../ui/AppTextarea";
-import { AppTextInput } from "../../ui/AppTextInput";
 
 type Props = {
   defaultValues?: OmitStrict<ThemeJoinFormData, "themeId">;
@@ -48,7 +46,7 @@ export const ThemeJoinAlreadyForm: React.FC<Props> = ({
             control={control}
             render={({ field }) => {
               return (
-                <AppTextInput
+                <TextInput
                   required
                   label="開発に使用するGitHubリポジトリ"
                   error={errors.githubUrl?.message}
@@ -64,7 +62,7 @@ export const ThemeJoinAlreadyForm: React.FC<Props> = ({
         control={control}
         name="comment"
         render={({ field }) => (
-          <AppTextarea
+          <Textarea
             label="コメント"
             minRows={5}
             error={errors.comment?.message}

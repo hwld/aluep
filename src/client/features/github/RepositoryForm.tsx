@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Textarea, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { BsGithub } from "react-icons/bs";
 import {
@@ -6,8 +7,6 @@ import {
   repositoryFormSchema,
 } from "../../../share/schema";
 import { AppForm } from "../../ui/AppForm";
-import { AppTextarea } from "../../ui/AppTextarea";
-import { AppTextInput } from "../../ui/AppTextInput";
 
 type Props = {
   onSubmit: (data: RepositoryFormData) => void;
@@ -43,7 +42,7 @@ export const RepositoryForm: React.FC<Props> = ({
         name="repoName"
         render={({ field }) => {
           return (
-            <AppTextInput
+            <TextInput
               label="リポジトリ名"
               error={errors.repoName?.message}
               {...field}
@@ -56,7 +55,7 @@ export const RepositoryForm: React.FC<Props> = ({
         name="repoDescription"
         render={({ field }) => {
           return (
-            <AppTextarea
+            <Textarea
               label="説明"
               minRows={3}
               error={errors.repoDescription?.message}

@@ -3,7 +3,6 @@ import { MouseEventHandler, PropsWithChildren } from "react";
 
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
-  // TODO
   type: "post" | "join" | "like";
   activeType: "post" | "join" | "like";
 } & PropsWithChildren;

@@ -1,12 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input, Space } from "@mantine/core";
+import { Input, MultiSelect, Space, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { MdPostAdd } from "react-icons/md";
 import { ThemeTag } from "../../../server/models/themeTag";
 import { ThemeFormData, themeFormSchema } from "../../../share/schema";
 import { AppForm } from "../../ui/AppForm";
-import { AppMultiSelect } from "../../ui/AppMultiSelect";
-import { AppTextInput } from "../../ui/AppTextInput";
 import { ThemeDescriptionEditor } from "./ThemeDescriptionEditor/ThemeDescriptionEditor";
 import { useThemeDescriptionEditor } from "./ThemeDescriptionEditor/useThemeDescriptionEditor";
 
@@ -61,7 +59,7 @@ export const ThemeForm: React.FC<Props> = ({
         control={control}
         name="title"
         render={({ field }) => (
-          <AppTextInput
+          <TextInput
             required
             label="タイトル"
             error={errors.title?.message}
@@ -74,7 +72,7 @@ export const ThemeForm: React.FC<Props> = ({
         name="tags"
         render={({ field }) => {
           return (
-            <AppMultiSelect
+            <MultiSelect
               data={allTags.map((tag) => ({
                 value: tag.id,
                 label: tag.name,

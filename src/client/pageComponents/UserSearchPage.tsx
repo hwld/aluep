@@ -4,6 +4,7 @@ import {
   Flex,
   Stack,
   Text,
+  TextInput,
   Title,
   useMantineTheme,
 } from "@mantine/core";
@@ -14,7 +15,6 @@ import { RiQuestionMark } from "react-icons/ri";
 import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";
 import { useSearchedUsersQuery } from "../features/user/useSearchedUsersQuery";
 import { useURLParams } from "../lib/useURLParams";
-import { AppTextInput } from "../ui/AppTextInput";
 
 export const UserSearchPage: React.FC = () => {
   const [urlParam, setURLParams] = useURLParams({
@@ -49,7 +49,7 @@ export const UserSearchPage: React.FC = () => {
           <Stack>
             <Title order={5}>検索</Title>
 
-            <AppTextInput
+            <TextInput
               label="ユーザ名"
               value={userName}
               onChange={handleChangeUserName}
