@@ -3,7 +3,6 @@ import { themeOrderSchema } from "../../../share/schema";
 import { publicProcedure } from "../../lib/trpc";
 import { pickUpThemes as pickUp } from "../../models/theme";
 
-// TODO
 export const pickUpThemes = publicProcedure
   .input(z.object({ order: themeOrderSchema }))
   .query(async ({ input }) => {
