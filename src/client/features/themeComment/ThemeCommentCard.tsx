@@ -26,7 +26,6 @@ import { ThemeCommentReplyForm } from "./ThemeCommentReplyForm";
 type Props = {
   themeId: string;
   comment: ThemeComment;
-  inReplyToUserName?: string;
   onReplyComment: (
     data: OmitStrict<ThemeCommentFormData, "themeId">,
     onSuccess: () => void
@@ -41,7 +40,6 @@ type Props = {
 export const ThemeCommentCard: React.FC<Props> = ({
   themeId,
   comment,
-  inReplyToUserName,
   onReplyComment,
   onDeleteComment,
   isDeleting = false,
@@ -77,7 +75,6 @@ export const ThemeCommentCard: React.FC<Props> = ({
       closeReplyForm();
 
       // 一番下までスクロールさせる
-      // TODO: コメントが画面に反映される前にスクロールされてしまう。
       const element = document.documentElement;
       window.scroll(0, element.scrollHeight - element.clientHeight);
     });
@@ -85,8 +82,8 @@ export const ThemeCommentCard: React.FC<Props> = ({
 
   // このコメントの返信元コメントにスクロールする
   const handleScrollReplySource = async () => {
-    if (comment.inReplyToCommentId) {
-      await router.replace({ hash: comment.inReplyToCommentId }, undefined, {
+    if (comment.inReplyToComment) {
+      await router.replace({ hash: comment.inReplyToComment.id }, undefined, {
         shallow: true,
       });
     }
@@ -99,6 +96,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
           id={comment.id}
           pos="static"
           sx={(theme) => ({
+            // 現在いるページのURLフラグメントを手動で変えるとfocusedは変更されないので、スタイルが当たらないことがある。
             boxShadow: focused ? `0 0 0 2px ${theme.colors.red[7]}` : "",
           })}
         >
@@ -132,7 +130,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
               </Box>
             </Flex>
             {/* 返信コメントは返信元が削除されている場合はnullになる */}
-            {comment.inReplyToCommentId === null && (
+            {comment.inReplyToComment === null && (
               <Box
                 color="red.7"
                 sx={(theme) => ({
@@ -147,7 +145,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
                 削除されたコメント
               </Box>
             )}
-            {comment.inReplyToCommentId && inReplyToUserName !== undefined && (
+            {comment.inReplyToComment && (
               <Flex>
                 <UnstyledButton
                   onClick={handleScrollReplySource}
@@ -164,7 +162,7 @@ export const ThemeCommentCard: React.FC<Props> = ({
                   })}
                 >
                   <HiOutlineChevronDoubleRight />
-                  {inReplyToUserName}
+                  {comment.inReplyToComment.fromUserName ?? "不明なユーザー名"}
                 </UnstyledButton>
               </Flex>
             )}

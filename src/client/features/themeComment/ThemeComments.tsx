@@ -75,23 +75,10 @@ export const ThemeComments: React.FC<Props> = ({ themeId, themeOwnerId }) => {
     deleteCommentMutation.mutate(commentId);
   };
 
-  // TODO: サーバー側でThemeCommentに含めたほうが良い？
-  // commentIdからユーザー名を取得する
-  const getUserNameByCommentId = (
-    commentId: string | null | undefined
-  ): string => {
-    return (
-      themeComments?.find((comment) => comment.id === commentId)?.fromUser
-        .name ?? "不明なユーザー名"
-    );
-  };
-
   // フラグメントで指定されているコメントを設定する
   // SSRではフラグメントを取得できないので、クライアント側だけで設定されるように
   // useEffectを使用する
   useEffect(() => {
-    // ThemeCommentCardがid={comment.id}を設定しなければ
-    // 動かない
     const id = extractHash(router.asPath);
     setFocusedCommentId(id);
   }, [router.asPath]);
@@ -109,9 +96,6 @@ export const ThemeComments: React.FC<Props> = ({ themeId, themeOwnerId }) => {
                 key={comment.id}
                 comment={comment}
                 themeId={themeId}
-                inReplyToUserName={getUserNameByCommentId(
-                  comment.inReplyToCommentId
-                )}
                 onReplyComment={handleSubmitReply}
                 onDeleteComment={handleDeleteComment}
                 isDeleting={deleteCommentMutation.isLoading}
