@@ -1,21 +1,17 @@
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
-import { objectKeys } from "./utils";
 
 /**
- * TODO: もうちょっと型どうにかしたい
  * URLSearchParamsを操作するhook
- * @param initialData
- * @returns
  */
 export const useURLParams = <T extends Record<string, string | string[]>>(
   initialData: T
 ) => {
   const router = useRouter();
 
-  const queryParams: { [K in keyof T]: T[K] } = useMemo(() => {
-    return objectKeys(initialData).reduce((prev, key) => {
-      let value = router.query[key as string] ?? initialData[key];
+  const queryParams: T = useMemo(() => {
+    return Object.keys(initialData).reduce((prev, key) => {
+      let value = router.query[key] ?? initialData[key];
 
       // 初期データが配列だった場合、searchParamがstringでも配列に変換する
       if (typeof initialData[key] === "object" && typeof value === "string") {
@@ -23,7 +19,7 @@ export const useURLParams = <T extends Record<string, string | string[]>>(
       }
 
       return { ...prev, [key]: value };
-    }, {}) as any;
+    }, initialData);
   }, [initialData, router.query]);
 
   const setQueryParams = useCallback(
@@ -36,7 +32,7 @@ export const useURLParams = <T extends Record<string, string | string[]>>(
       });
 
       const mergedObj = { ...queryParams, ...newObj };
-      objectKeys(mergedObj).forEach((key) => {
+      Object.keys(mergedObj).forEach((key) => {
         const value = mergedObj[key];
 
         if (typeof value === "string") {
