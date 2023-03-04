@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Flex } from "@mantine/core";
+import { Button, Flex, Textarea } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { MouseEventHandler } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -9,7 +9,6 @@ import {
   themeCommentFormSchema,
 } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
-import { AppTextarea } from "../../ui/AppTextarea";
 
 type Props = {
   themeId: string;
@@ -46,7 +45,7 @@ export const ThemeCommentForm: React.FC<Props> = ({
         name="comment"
         render={({ field }) => {
           return (
-            <AppTextarea
+            <Textarea
               placeholder="コメントする"
               autosize
               minRows={5}

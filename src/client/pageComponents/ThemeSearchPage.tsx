@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Title } from "@mantine/core";
+import { Box, Card, Flex, Select, Title } from "@mantine/core";
 import React from "react";
 import {
   ThemeOrder,
@@ -17,7 +17,6 @@ import { useSearchedThemesQuery } from "../features/theme/useSearchedThemesQuery
 import { themeOrderItems, themePeriodItems } from "../lib/consts";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
-import { AppSelect } from "../ui/AppSelect";
 
 type ThemeSearchPageQueryParams = {
   keyword: string;
@@ -87,13 +86,13 @@ export const ThemeSearchPage: React.FC = () => {
         <Flex mt={30} align="center" justify="space-between" mb="xl">
           <Title order={4}>検索結果</Title>
           <Flex align="center" sx={(theme) => ({ gap: theme.spacing.md })}>
-            <AppSelect
+            <Select
               w={150}
               value={period}
               onChange={handleChangePeriod}
               data={themePeriodItems}
             />
-            <AppSelect
+            <Select
               w={150}
               value={order}
               onChange={handleChangeOrder}

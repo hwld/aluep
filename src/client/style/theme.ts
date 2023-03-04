@@ -64,10 +64,17 @@ export const theme: MantineThemeOverride = {
     Text: {
       defaultProps: { color: "gray.7" },
     },
-    Card: { defaultProps: { bg: "gray.1", radius: "md", shadow: "sm" } },
+    Card: {
+      defaultProps: { bg: "gray.1", radius: "md", shadow: "sm" },
+      styles: () => ({ root: { overflow: "unset" } }),
+    },
     Divider: { defaultProps: { color: "gray.3" } },
     Input: {
       styles: (theme) => ({
+        input: {
+          backgroundColor: theme.colors.gray[0],
+          color: theme.colors.gray[7],
+        },
         invalid: {
           borderColor: theme.colors.red[7],
           borderWidth: "2px",
@@ -75,11 +82,50 @@ export const theme: MantineThemeOverride = {
       }),
     },
     InputWrapper: {
-      // TODO: Inputのタイトルのスタイルを手動で変えてるとこがまだあるので、そこを削除する
       styles: (theme) => ({
         label: {
           color: theme.colors.gray[5],
           error: theme.colors.blue[7],
+        },
+      }),
+    },
+    TextInput: { defaultProps: { autoComplete: false } },
+    Select: {
+      styles: (theme) => ({
+        item: {
+          color: theme.colors.gray[7],
+          "&:hover": {
+            backgroundColor: theme.colors.gray[2],
+          },
+        },
+        dropdown: {
+          backgroundColor: theme.colors.gray[0],
+          border: "1px solid",
+          borderColor: theme.colors.gray[3],
+        },
+      }),
+    },
+    MultiSelect: {
+      defaultProps: { transitionDuration: 150, transition: "pop-top-left" },
+      styles: (theme) => ({
+        input: { backgroundColor: theme.colors.gray[0] },
+        label: { color: theme.colors.gray[5] },
+        item: {
+          color: theme.colors.gray[7],
+          "&[aria-selected='true']": {
+            backgroundColor: theme.colors.gray[2],
+          },
+        },
+        defaultValue: {
+          backgroundColor: theme.colors.gray[2],
+          color: theme.colors.gray[7],
+        },
+
+        dropdown: {
+          backgroundColor: theme.colors.gray[0],
+          borderWidth: "1px",
+          borderStyle: "solid",
+          borderColor: theme.colors.gray[3],
         },
       }),
     },

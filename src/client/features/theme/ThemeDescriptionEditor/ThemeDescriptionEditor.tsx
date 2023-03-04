@@ -1,11 +1,11 @@
 import { Stack, Sx } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import { Editor } from "@tiptap/react";
+import { useState } from "react";
 
 export const themeDescriptionStyles: Sx = (theme) => ({
   color: theme.colors.gray[7],
   "& p": { margin: 0, minHeight: "1rem" },
-  // TODO: 目立たないのでスタイルを考える
   "& strong": { color: theme.colors.red[7] },
   "& a": { color: theme.colors.blue[5] },
   "h1, h2, h3, h4, h5, h6": {
@@ -18,13 +18,19 @@ export const ThemeDescriptionEditor: React.FC<Props> = ({
   editor,
   error = false,
 }) => {
+  const [focused, setFocused] = useState(false);
+
   return (
     <Stack spacing={0}>
-      {/* // TODO: タブを入力できるようにしたい
-      // 柔軟性を考えるとmantineを使用しないでtiptapだけで自作するべきかも */}
       <RichTextEditor
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         editor={editor}
         sx={(theme) => ({
+          ...(focused && {
+            borderWidth: "1px",
+            borderColor: theme.colors.red[7],
+          }),
           ...(error && {
             borderColor: theme.colors.red[7],
             borderWidth: "2px",
@@ -41,8 +47,7 @@ export const ThemeDescriptionEditor: React.FC<Props> = ({
         withCodeHighlightStyles={false}
         withTypographyStyles={false}
       >
-        {/* TODO: sticky属性をつけただけではstickyにならない */}
-        <RichTextEditor.Toolbar>
+        <RichTextEditor.Toolbar sticky>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Bold title="太文字" />
             <RichTextEditor.Strikethrough title="打ち消し" />

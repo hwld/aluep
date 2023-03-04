@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Textarea } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { MdFlag } from "react-icons/md";
 import { ReportBaseForm, reportBaseFormSchema } from "../../../share/schema";
 import { AppForm } from "../../ui/AppForm";
-import { AppTextarea } from "../../ui/AppTextarea";
 
 type Props = {
   submitText: string;
@@ -40,7 +40,7 @@ export const ReportForm: React.FC<Props> = ({
         name="reportDetail"
         render={({ field }) => {
           return (
-            <AppTextarea
+            <Textarea
               required
               label="通報の内容"
               minRows={10}

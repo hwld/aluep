@@ -1,8 +1,15 @@
-import { Box, Button, Flex, Stack, Text, Title } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Flex,
+  MultiSelect,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import React, { SyntheticEvent, useState } from "react";
 import { ThemeTag } from "../../../server/models/themeTag";
-import { AppMultiSelect } from "../../ui/AppMultiSelect";
-import { AppTextInput } from "../../ui/AppTextInput";
 
 export type ThemeSearchParams = {
   keyword: string;
@@ -50,13 +57,13 @@ export const ThemeSearchForm: React.FC<Props> = ({
             },
           })}
         >
-          <AppTextInput
+          <TextInput
             label="キーワード"
             value={keyword}
             onChange={handleChangeKeyword}
           />
 
-          <AppMultiSelect
+          <MultiSelect
             label="タグ"
             data={allTags.map((tag) => ({
               value: tag.id,
