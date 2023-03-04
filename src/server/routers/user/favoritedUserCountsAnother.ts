@@ -7,7 +7,7 @@ export const favoritedUserCountsAnother = publicProcedure
   .query(async ({ input }) => {
     const favoritedSum = await db.favoriteUser.count({
       where: {
-        favoritedUserId: input.userId,
+        favoriteByUserId: input.userId,
       },
     });
     if (favoritedSum === 0) {

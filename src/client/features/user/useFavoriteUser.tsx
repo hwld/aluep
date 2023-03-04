@@ -4,27 +4,28 @@ import { trpc } from "../../lib/trpc";
 
 export const favoriteUserQueryKey = (
   userId: string,
-  favoriteUserId: string
-) => ["user", "favoriteUserId", userId, favoriteUserId];
+  loggedInUserId: string = ""
+) => ["user", "favoriteUserId", userId, loggedInUserId];
 
 export const favoriteSumQueryKey = (favoriteUserId: string) => [
   "favoriteUserId",
   favoriteUserId,
 ];
 
-export const useFavoriteUser = (userId: string, favoriteUserId: string) => {
+export const useFavoriteUser = (userId: string, loggedInUserId: string) => {
   const queryClient = useQueryClient();
+
   const { data: favorited } = useQuery({
-    queryKey: favoriteUserQueryKey(userId, favoriteUserId),
+    queryKey: favoriteUserQueryKey(userId, loggedInUserId),
     queryFn: () => {
-      return trpc.user.favorited.query({ userId, favoriteUserId });
+      return trpc.user.favorited.query({ userId });
     },
   });
 
   const { data: favoritedSum } = useQuery({
-    queryKey: favoriteSumQueryKey(favoriteUserId),
+    queryKey: favoriteSumQueryKey(loggedInUserId),
     queryFn: () => {
-      return trpc.user.favoritedSum.query({ favoriteUserId });
+      return trpc.user.favoritedSum.query({ favoriteUserId: loggedInUserId });
     },
   });
 
@@ -34,7 +35,7 @@ export const useFavoriteUser = (userId: string, favoriteUserId: string) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(
-        favoriteUserQueryKey(userId, favoriteUserId)
+        favoriteUserQueryKey(userId, loggedInUserId)
       );
     },
   });
@@ -45,7 +46,7 @@ export const useFavoriteUser = (userId: string, favoriteUserId: string) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(
-        favoriteUserQueryKey(userId, favoriteUserId)
+        favoriteUserQueryKey(userId, loggedInUserId)
       );
     },
   });

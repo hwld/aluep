@@ -47,19 +47,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.developer.getLikeCountByUser({ userId })
     );
 
-    //お気に入りのちらつきを無くす
-    if (!session) {
-      return;
-    }
-    const favoriteUserId = session.user.id;
-
     await queryClient.prefetchQuery(favoriteAnotherSumQueryKey(userId), () =>
       caller.user.favoritedAnotherSum({ userId })
     );
 
     await queryClient.prefetchQuery(
-      favoriteUserQueryKey(userId, favoriteUserId),
-      () => caller.user.favorited({ userId, favoriteUserId })
+      favoriteUserQueryKey(userId, session?.user.id),
+      () => caller.user.favorited({ userId })
     );
   }
 );

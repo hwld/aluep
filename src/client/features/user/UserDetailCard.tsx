@@ -103,6 +103,7 @@ export function UserDetailCard({
           <Text>{userName}</Text>
         </Flex>
 
+        {/* TODO: ログインしてないときにちらつく */}
         {sessionUser ? (
           <Flex justify={"center"}>
             <Button

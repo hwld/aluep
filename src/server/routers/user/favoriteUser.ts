@@ -7,8 +7,8 @@ export const favoriteUser = requireLoggedInProcedure
   .mutation(async ({ input, ctx }) => {
     await db.favoriteUser.create({
       data: {
-        userId: input.userId,
-        favoritedUserId: ctx.session.user.id,
+        favoriteByUserId: ctx.session.user.id,
+        favoritedUserId: input.userId,
       },
     });
   });
