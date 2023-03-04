@@ -7,9 +7,9 @@ export const unfavoriteUser = requireLoggedInProcedure
   .mutation(async ({ input, ctx }) => {
     await db.favoriteUser.delete({
       where: {
-        userId_favoritedUserId: {
-          userId: input.userId,
-          favoritedUserId: ctx.session.user.id,
+        favoriteByUserId_favoritedUserId: {
+          favoriteByUserId: ctx.session.user.id,
+          favoritedUserId: input.userId,
         },
       },
     });

@@ -57,6 +57,8 @@ model User {
   appThemeLikes    AppThemeLike[]
   developerLikes   AppThemeDeveloperLike[]
   appThemeComments AppThemeComment[]
+  favoriteByUsers FavoriteUser[] @relation("asFavoriteByUser")
+  faboritedUsers FavoriteUser[] @relation("asFavoritedUser")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -156,14 +158,18 @@ model AppThemeDeveloperLike {
   @@index([userId])
 }
 
-//TODO: 外部キー制約をつける
 model FavoriteUser {
-  userId String
-
   // お気に入り登録したユーザー
-  favoritedUserId String
+  favoriteByUserId String
+  favoriteByUser User @relation("asFavoriteByUser", fields: [favoriteByUserId], references: [id], onDelete: Cascade)
 
-  @@id([userId, favoritedUserId])
+  // お気に入り登録されたユーザー
+  favoritedUserId String
+  favoritedUser User @relation("asFavoritedUser", fields:[favoritedUserId], references: [id], onDelete: Cascade)
+
+  @@id([favoriteByUserId, favoritedUserId])
+  @@index([favoriteByUserId])
+  @@index([favoritedUserId])
 }
 
 model AppThemeComment {

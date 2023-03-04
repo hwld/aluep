@@ -3,13 +3,18 @@ import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 
 export const favorited = publicProcedure
-  .input(z.object({ userId: z.string(), favoriteUserId: z.string() }))
-  .query(async ({ input }): Promise<boolean> => {
+  .input(z.object({ userId: z.string() }))
+  .query(async ({ input, ctx }): Promise<boolean> => {
+    const loggedInUserId = ctx.session?.user.id;
+    if (!loggedInUserId) {
+      return false;
+    }
+
     const favorite = await db.favoriteUser.findUnique({
       where: {
-        userId_favoritedUserId: {
-          userId: input.userId,
-          favoritedUserId: input.favoriteUserId,
+        favoriteByUserId_favoritedUserId: {
+          favoriteByUserId: loggedInUserId,
+          favoritedUserId: input.userId,
         },
       },
     });

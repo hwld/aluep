@@ -13,6 +13,7 @@ import { UserJoinedThemesPage } from "../../../client/pageComponents/UserJoinedT
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
 
+// TODO: 他のuser詳細ページと共通化したい
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session, callerContext }) => {
     const caller = appRouter.createCaller(callerContext);
@@ -47,19 +48,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.developer.getLikeCountByUser({ userId })
     );
 
-    //お気に入りのちらつきを無くす
-    if (!session) {
-      return;
-    }
-    const favoriteUserId = session.user.id;
-
     await queryClient.prefetchQuery(favoriteAnotherSumQueryKey(userId), () =>
       caller.user.favoritedAnotherSum({ userId })
     );
 
     await queryClient.prefetchQuery(
-      favoriteUserQueryKey(userId, favoriteUserId),
-      () => caller.user.favorited({ userId, favoriteUserId })
+      favoriteUserQueryKey(userId, session?.user.id),
+      () => caller.user.favorited({ userId })
     );
   }
 );

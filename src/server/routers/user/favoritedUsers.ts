@@ -8,11 +8,13 @@ export const favoritedUsers = publicProcedure
   .input(z.object({ favoriteUserId: z.string(), page: pageSchema }))
   .query(async ({ input, input: { page } }) => {
     const favoriteList = await db.favoriteUser.findMany({
-      select: { userId: true },
-      where: { favoritedUserId: input.favoriteUserId },
+      select: { favoritedUserId: true },
+      where: {
+        favoriteByUserId: input.favoriteUserId,
+      },
     });
 
-    const ids = favoriteList.map((favorite) => favorite.userId);
+    const ids = favoriteList.map((favorite) => favorite.favoritedUserId);
 
     const { data: pagefavo, allPages } = await paginate({
       finderInput: { where: { id: { in: ids } } },
