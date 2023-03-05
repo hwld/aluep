@@ -1,8 +1,8 @@
-import { Box } from "@mantine/core";
-import React, { MouseEventHandler, useMemo } from "react";
+import { Box, Button } from "@mantine/core";
+import React, { MouseEventHandler } from "react";
 import { IconType } from "react-icons";
-import { AppButton } from "../AppButton";
 import { AppTooltip } from "../AppTooltip";
+import { WrapperLink } from "../WrapperLink";
 
 type Props = {
   icon: IconType;
@@ -10,7 +10,10 @@ type Props = {
   label: string;
   tooltip?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-} & ({ asLink?: false } | { asLink: true; href: string; blank?: boolean });
+} & (
+  | { asLink?: false }
+  | { asLink: true; href: string; target?: React.HTMLAttributeAnchorTarget }
+);
 
 export const SidebarItem: React.FC<Props> = ({
   label,
@@ -18,15 +21,11 @@ export const SidebarItem: React.FC<Props> = ({
   active,
   tooltip = false,
   onClick,
-  ...linkProps
+  ...others
 }) => {
-  // リンク用のprops
-  const props = useMemo(() => {
-    if (linkProps.asLink) {
-      return linkProps;
-    }
-    return {};
-  }, [linkProps]);
+  const linkProps = others.asLink
+    ? ({ noWrap: false, href: others.href, target: others.target } as const)
+    : ({ noWrap: true } as const);
 
   return (
     <AppTooltip
@@ -35,37 +34,38 @@ export const SidebarItem: React.FC<Props> = ({
       color="gray.7"
       position="right-start"
     >
-      <AppButton
-        {...props}
-        onClick={onClick}
-        w="100%"
-        h="45px"
-        bg={active ? "gray.1" : "transparent"}
-        sx={(theme) => ({
-          transition: "all 150ms",
-          pointerEvents: active ? "none" : "auto",
-          "&:hover": {
-            backgroundColor: theme.colors.red[5],
-            transform: "scale(1.02)",
-          },
-          "& svg": {
-            color: active ? theme.colors.red[7] : theme.colors.gray[1],
-          },
-        })}
-        styles={(theme) => ({
-          root: { padding: "0px 7px", overflow: "hidden" },
-          inner: { justifyContent: "flex-start" },
-          label: {
-            gap: "7px",
-            color: active ? theme.colors.red[7] : theme.colors.gray[1],
-          },
-        })}
-      >
-        <Box w={30} h={30} sx={{ flexShrink: 0 }}>
-          <Icon size="100%" />
-        </Box>
-        {label}
-      </AppButton>
+      <WrapperLink {...linkProps}>
+        <Button
+          onClick={onClick}
+          w="100%"
+          h="45px"
+          bg={active ? "gray.1" : "transparent"}
+          sx={(theme) => ({
+            transition: "all 150ms",
+            pointerEvents: active ? "none" : "auto",
+            "&:hover": {
+              backgroundColor: theme.colors.red[5],
+              transform: "scale(1.02)",
+            },
+            "& svg": {
+              color: active ? theme.colors.red[7] : theme.colors.gray[1],
+            },
+          })}
+          styles={(theme) => ({
+            root: { padding: "0px 7px", overflow: "hidden" },
+            inner: { justifyContent: "flex-start" },
+            label: {
+              gap: "7px",
+              color: active ? theme.colors.red[7] : theme.colors.gray[1],
+            },
+          })}
+        >
+          <Box w={30} h={30} sx={{ flexShrink: 0 }}>
+            <Icon size="100%" />
+          </Box>
+          {label}
+        </Button>
+      </WrapperLink>
     </AppTooltip>
   );
 };

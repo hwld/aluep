@@ -89,7 +89,7 @@ export const theme: MantineThemeOverride = {
         },
       }),
     },
-    TextInput: { defaultProps: { autoComplete: false } },
+    TextInput: { defaultProps: { autoComplete: "off" } },
     Select: {
       styles: (theme) => ({
         item: {

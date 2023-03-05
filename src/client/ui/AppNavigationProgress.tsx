@@ -13,6 +13,8 @@ export const AppNavigationProgress = () => {
   useEffect(() => {
     const handleStart = (url: string) => {
       if (url !== router.asPath) {
+        // resetしないと、画面遷移->プログレスバーが消える直前に2画面に遷移でプログレスバーが表示されなくなることがある。
+        resetNavigationProgress();
         startNavigationProgress();
       }
     };
@@ -36,8 +38,8 @@ export const AppNavigationProgress = () => {
 
   return (
     <NavigationProgress
-      progressLabel="ページ読み込みのインジケータ"
       autoReset
+      progressLabel="ページ読み込みのインジケータ"
       color="red.7"
       stepInterval={100}
       size={3}
