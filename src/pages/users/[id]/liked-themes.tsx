@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import { themeDeveloperLikesQueryKey } from "../../../client/features/developer/useThemeDeveloperLikesQuery";
 import { likedThemesQueryKey } from "../../../client/features/theme/useLikedThemesQuery";
 import { sumThemeLikesQueryKey } from "../../../client/features/theme/useSumThemeLikesQuery";
-import { favoriteAnotherSumQueryKey } from "../../../client/features/user/useFavoriteAnother";
-import { favoriteUserQueryKey } from "../../../client/features/user/useFavoriteUser";
+import { favoritedUserQueryKey } from "../../../client/features/user/useFavoriteUser";
+import { favoriteUsersCountQueryKey } from "../../../client/features/user/useFavoriteUsersCountQuery";
 import {
   userQueryKey,
   useUserQuery,
@@ -47,13 +47,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.developer.getLikeCountByUser({ userId })
     );
 
-    await queryClient.prefetchQuery(favoriteAnotherSumQueryKey(userId), () =>
-      caller.user.favoritedAnotherSum({ userId })
+    await queryClient.prefetchQuery(
+      favoritedUserQueryKey(userId, session?.user.id),
+      () => caller.user.favorited({ userId })
     );
 
-    await queryClient.prefetchQuery(
-      favoriteUserQueryKey(userId, session?.user.id),
-      () => caller.user.favorited({ userId })
+    await queryClient.prefetchQuery(favoriteUsersCountQueryKey(userId), () =>
+      caller.user.favoriteUsersCount({ userId })
     );
   }
 );
