@@ -129,7 +129,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
               label="お問い合わせ"
               asLink
               href={process.env.NEXT_PUBLIC_CONTACT_URL || Routes.serverError}
-              blank={true}
+              target="_blank"
               tooltip={!isMenuOpen}
             />
           </Stack>
