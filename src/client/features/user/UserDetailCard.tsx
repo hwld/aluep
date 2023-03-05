@@ -11,8 +11,8 @@ import { LikeDeveloperIcon } from "../developer/LikeDeveloperIcon";
 import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../session/useSessionQuery";
 import { LikeThemeIcon } from "../theme/LikeThemeIcon";
-import { useFavoriteAnother } from "./useFavoriteAnother";
 import { useFavoriteUser } from "./useFavoriteUser";
+import { useFavoriteUsersCountQuery } from "./useFavoriteUsersCountQuery";
 import { UserFavoriteButton } from "./UserDetail/UserFavoriteButton";
 import { UserDetailMenuButton } from "./UserDetailMenuButton";
 import { UserIcon } from "./UserIcon";
@@ -51,14 +51,10 @@ export function UserDetailCard({
     sessionId = session.user.id;
   }
 
-  const {
-    createFavoriteMutation,
-    deleteFavoriteMutation,
-    favorited,
-    favoritedSum,
-  } = useFavoriteUser(user.id, sessionId);
+  const { createFavoriteMutation, deleteFavoriteMutation, favorited } =
+    useFavoriteUser(user.id, sessionId);
 
-  const favoritedAnotherSum = useFavoriteAnother(user.id);
+  const { favoriteUsersCount } = useFavoriteUsersCountQuery(user.id);
 
   const handleFavoriteUser = () => {
     if (!session) {
@@ -103,35 +99,23 @@ export function UserDetailCard({
           <Text>{userName}</Text>
         </Flex>
 
-        {/* TODO: ログインしてないときにちらつく */}
-        {sessionUser ? (
-          <Flex justify={"center"}>
-            <Button
-              leftIcon={favoritedSum === 0 ? "0" : favoritedSum}
-              variant="subtle"
-              compact
-              onClick={handleFavoriteLiet}
-            >
-              favorite
-            </Button>
-          </Flex>
-        ) : (
-          <Flex justify={"center"}>
+        <Flex justify={"center"}>
+          {!sessionUser && (
             <UserFavoriteButton
               onFavorite={handleFavoriteUser}
               favorited={favorited}
               userName={userName}
             />
-            <Button
-              leftIcon={favoritedAnotherSum === 0 ? "0" : favoritedAnotherSum}
-              variant="subtle"
-              compact
-              onClick={handleFavoriteLiet}
-            >
-              favorite
-            </Button>
-          </Flex>
-        )}
+          )}
+          <Button
+            leftIcon={favoriteUsersCount === 0 ? "0" : favoriteUsersCount}
+            variant="subtle"
+            compact
+            onClick={handleFavoriteLiet}
+          >
+            favorite
+          </Button>
+        </Flex>
 
         <Flex gap={40} mt={10} wrap="wrap" justify={"center"}>
           <Box>
