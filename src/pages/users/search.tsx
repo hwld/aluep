@@ -12,13 +12,12 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     const userName = urlParamToString(query.userName, "");
 
-    await queryClient.prefetchQuery(searchedUsersQueryKey(userName), () => {
-      caller.user.searchUser({ userName });
-    });
+    await queryClient.prefetchQuery(searchedUsersQueryKey(userName), () =>
+      caller.user.searchUser({ userName })
+    );
   }
 );
 
-// TODO: なんかエラー出てる
 const UserSearch: NextPage = () => {
   return <UserSearchPage />;
 };
