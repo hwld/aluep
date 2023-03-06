@@ -8,7 +8,6 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { useState } from "react";
 import { BsDot } from "react-icons/bs";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { RiQuestionMark } from "react-icons/ri";
@@ -17,18 +16,17 @@ import { useSearchedUsersQuery } from "../features/user/useSearchedUsersQuery";
 import { useURLParams } from "../lib/useURLParams";
 
 export const UserSearchPage: React.FC = () => {
-  const [urlParam, setURLParams] = useURLParams({
+  const [{ userName }, setURLParams] = useURLParams({
     userName: "",
   });
-  const [userName, setUserName] = useState(urlParam.userName);
 
   const handleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setURLParams({ userName: e.target.value });
-    setUserName(e.target.value);
   };
   const mantineTheme = useMantineTheme();
 
   const { resultUserNames } = useSearchedUsersQuery(userName);
+
   return (
     <Box>
       <Flex
