@@ -23,10 +23,6 @@ export const SidebarItem: React.FC<Props> = ({
   onClick,
   ...others
 }) => {
-  const linkProps = others.asLink
-    ? ({ noWrap: false, href: others.href, target: others.target } as const)
-    : ({ noWrap: true } as const);
-
   return (
     <AppTooltip
       label={label}
@@ -34,7 +30,11 @@ export const SidebarItem: React.FC<Props> = ({
       color="gray.7"
       position="right-start"
     >
-      <WrapperLink {...linkProps}>
+      <WrapperLink
+        {...(others.asLink
+          ? { noWrap: false, href: others.href, target: others.target }
+          : { noWrap: true })}
+      >
         <Button
           onClick={onClick}
           w="100%"
