@@ -8,12 +8,12 @@ import { findManyThemes } from "../../models/theme";
 export const getPostedThemesByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pageSchema }))
   .query(async ({ input, input: { page } }) => {
-    const { data: postThemes, allPages } = await paginate({
+    const [postedThemesPerPage, { allPages }] = await paginate({
       finder: findManyThemes,
       finderInput: { where: { userId: input.userId } },
       counter: db.appTheme.count,
       pagingData: { page, limit: 18 },
     });
 
-    return { postThemes, allPages };
+    return { list: postedThemesPerPage, allPages };
   });

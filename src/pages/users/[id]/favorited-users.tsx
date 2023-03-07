@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { favoritedUsersQueryKey } from "../../../client/features/user/useFavoriteListQuery";
-import { FavoriteListPage } from "../../../client/pageComponents/FavoriteListPage";
+import { favoritedUsersPerPageQueryKey } from "../../../client/features/user/useFavoritedUsersPerPage";
+import { FavoritedUsersPage } from "../../../client/pageComponents/FavoriteListPage";
 
 import {
   userQueryKey,
@@ -26,8 +26,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     await queryClient.prefetchQuery(
-      favoritedUsersQueryKey(userId, Number(page)),
-      () => caller.user.favoritedUsers({ favoriteByUserId: userId })
+      favoritedUsersPerPageQueryKey(userId, Number(page)),
+      () => caller.user.getFavoritedUsers({ favoriteByUserId: userId })
     );
 
     await queryClient.prefetchQuery(userQueryKey(userId), () => user);
@@ -45,6 +45,6 @@ const UserDetail: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return <FavoriteListPage user={user} />;
+  return <FavoritedUsersPage user={user} />;
 };
 export default UserDetail;

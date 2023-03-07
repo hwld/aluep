@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
 import { userQueryKey } from "../user/useUserQuery";
 
-export const joinedThemesQueryKey = (userId: string, page: number) =>
+export const joinedThemesPerPageQueryKey = (userId: string, page: number) =>
   [
     ...userQueryKey(userId),
     "joined-themes",
@@ -10,9 +10,9 @@ export const joinedThemesQueryKey = (userId: string, page: number) =>
   ] as const;
 
 /** ユーザーが参加しているお題一覧を取得する */
-export const useJoinedThemesQuery = (userId: string, page: number) => {
-  const { data: joinedThemes, ...others } = useQuery({
-    queryKey: joinedThemesQueryKey(userId, page),
+export const useJoinedThemesPerPage = (userId: string, page: number) => {
+  const { data: joinedThemesPerPage, ...others } = useQuery({
+    queryKey: joinedThemesPerPageQueryKey(userId, page),
     queryFn: () => {
       return trpc.theme.getJoinedThemesByUser.query({
         userId: userId,
@@ -22,5 +22,5 @@ export const useJoinedThemesQuery = (userId: string, page: number) => {
     keepPreviousData: true,
   });
 
-  return { joinedThemes, ...others };
+  return { joinedThemesPerPage, ...others };
 };

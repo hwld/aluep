@@ -36,14 +36,15 @@ export const ThemeDescriptionEditor: React.FC<Props> = ({
             borderWidth: "2px",
           }),
         })}
-        styles={{
+        styles={(theme) => ({
           content: {
             // 新規作成時のSSRでレイアウトシフトが起きないように高さに合わせておく
             // 更新のときにはレイアウトシフトが起こってしまう。
             minHeight: "332px",
             ".ProseMirror": { minHeight: "300px" },
+            backgroundColor: theme.colors.gray[0],
           },
-        }}
+        })}
         withCodeHighlightStyles={false}
         withTypographyStyles={false}
       >

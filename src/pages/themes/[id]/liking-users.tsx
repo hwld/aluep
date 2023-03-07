@@ -4,7 +4,7 @@ import {
   themeQueryKey,
   useThemeQuery,
 } from "../../../client/features/theme/useThemeQuery";
-import { themeLikingUsersQueryKey } from "../../../client/features/user/useThemeLikingUsersQuery";
+import { themeLikingUsersPerPageQueryKey } from "../../../client/features/user/useThemeLikingUsersQuery";
 import { ThemeLikingUsersPage } from "../../../client/pageComponents/ThemeLikingUsersPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { urlParamToString } from "../../../server/lib/urlParam";
@@ -27,7 +27,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.theme.get({ themeId })
     );
     await queryClient.prefetchQuery(
-      themeLikingUsersQueryKey(themeId, Number(page)),
+      themeLikingUsersPerPageQueryKey(themeId, Number(page)),
       () => caller.user.getThemeLikingUsers({ themeId, page })
     );
   }

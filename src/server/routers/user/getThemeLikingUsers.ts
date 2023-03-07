@@ -4,10 +4,11 @@ import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 
+// TODO
 export const getThemeLikingUsers = publicProcedure
   .input(z.object({ themeId: z.string(), page: pageSchema }))
   .query(async ({ input }) => {
-    const { data: use, allPages } = await paginate({
+    const [themeLikesPerPage, { allPages }] = await paginate({
       finder: db.appThemeLike.findMany,
       finderInput: {
         where: { appThemeId: input.themeId },
@@ -17,7 +18,7 @@ export const getThemeLikingUsers = publicProcedure
       pagingData: { page: input.page, limit: 20 },
     });
 
-    const userIds = use.map(({ userId }) => userId);
+    const userIds = themeLikesPerPage.map(({ userId }) => userId);
 
     //ユーザーの情報を取得する
     const usered = await db.user.findMany({
@@ -32,8 +33,8 @@ export const getThemeLikingUsers = publicProcedure
     //usersにceratedAt(いいねをした日)をつける
     const users = sortusers.map((user, i) => ({
       ...user,
-      themeLikeCreated: new Date(use[i]?.createdAt) ?? 0,
+      themeLikeCreated: new Date(themeLikesPerPage[i]?.createdAt) ?? 0,
     }));
 
-    return { users, allPages };
+    return { list: users, allPages };
   });

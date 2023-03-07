@@ -3,9 +3,9 @@ import { RouterInputs } from "../../../server/lib/trpc";
 import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
 import {
-  PaginatedDeveloperQueryData,
-  paginatedDevelopersQueryKey,
-} from "../developer/usePaginatedDeveloperQueery";
+  DevelopersPerPageData,
+  developersPerPageQueryKey,
+} from "../developer/useDevelopersPerPage";
 
 // 開発情報のいいねは、ページングされた開発情報のリストに対して行うので、
 // ページ番号を取得して、そのページの開発情報のみを扱えるようにする
@@ -18,25 +18,22 @@ export const useLikeThemeDeveloper = (themeId: string, page: number) => {
     },
     // 楽観的UIによって、成功する前にいいね・いいね解除を反映させる
     onMutate: async ({ developerId, like }) => {
-      await queryClient.cancelQueries(
-        paginatedDevelopersQueryKey(themeId, page)
-      );
+      await queryClient.cancelQueries(developersPerPageQueryKey(themeId, page));
 
       const previousDevelopers =
-        queryClient.getQueryData<PaginatedDeveloperQueryData>(
-          paginatedDevelopersQueryKey(themeId, page)
+        queryClient.getQueryData<DevelopersPerPageData>(
+          developersPerPageQueryKey(themeId, page)
         );
 
       // 指定されたdeveloperの状態だけを書き換える
-      queryClient.setQueryData<PaginatedDeveloperQueryData>(
-        paginatedDevelopersQueryKey(themeId, page),
-        (old) => {
-          if (!old) {
+      queryClient.setQueryData<DevelopersPerPageData>(
+        developersPerPageQueryKey(themeId, page),
+        (oldPaginatedDevelopers) => {
+          if (!oldPaginatedDevelopers) {
             return undefined;
           }
 
-          const oldDevelopers = old.developers;
-          const newDevelopers = oldDevelopers.map((developer) => {
+          const newDevelopers = oldPaginatedDevelopers.list.map((developer) => {
             if (developerId !== developer.id) {
               return { ...developer };
             }
@@ -47,7 +44,7 @@ export const useLikeThemeDeveloper = (themeId: string, page: number) => {
             };
           });
 
-          return { ...old, developers: newDevelopers };
+          return { ...oldPaginatedDevelopers, list: newDevelopers };
         }
       );
 
@@ -55,7 +52,7 @@ export const useLikeThemeDeveloper = (themeId: string, page: number) => {
     },
     onError: (_, newLiked, contexts) => {
       queryClient.setQueryData(
-        paginatedDevelopersQueryKey(themeId, page),
+        developersPerPageQueryKey(themeId, page),
         contexts?.previousDevelopers
       );
 
@@ -67,7 +64,7 @@ export const useLikeThemeDeveloper = (themeId: string, page: number) => {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(paginatedDevelopersQueryKey(themeId, page));
+      queryClient.invalidateQueries(developersPerPageQueryKey(themeId, page));
     },
   });
 

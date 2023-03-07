@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { themeDeveloperLikesQueryKey } from "../../../client/features/developer/useThemeDeveloperLikesQuery";
-import { joinedThemesQueryKey } from "../../../client/features/theme/useJoinedThemesQuery";
+import { joinedThemesPerPageQueryKey } from "../../../client/features/theme/useJoinedThemesPerPage";
 import { sumThemeLikesQueryKey } from "../../../client/features/theme/useSumThemeLikesQuery";
 import { favoritedUserQueryKey } from "../../../client/features/user/useFavoriteUser";
 import { favoriteUsersCountQueryKey } from "../../../client/features/user/useFavoriteUsersCountQuery";
@@ -32,7 +32,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     await queryClient.prefetchQuery(userQueryKey(userId), () => user);
 
     await queryClient.prefetchQuery(
-      joinedThemesQueryKey(userId, Number(page)),
+      joinedThemesPerPageQueryKey(userId, Number(page)),
       () => caller.theme.getJoinedThemesByUser({ userId, page })
     );
 

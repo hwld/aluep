@@ -2,7 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
 import { themesQueryKey } from "../theme/useThemeQuery";
 
-export const themeLikingUsersQueryKey = (themeId: string, page: number) => {
+export const themeLikingUsersPerPageQueryKey = (
+  themeId: string,
+  page: number
+) => {
   const p = isNaN(page) ? 1 : page;
   return [...themesQueryKey, themeId, "liking-users", { page: p }] as const;
 };
@@ -10,9 +13,9 @@ export const themeLikingUsersQueryKey = (themeId: string, page: number) => {
 /**
  * 指定されたお題をいいねしたユーザー一覧を返す
  */
-export const useThemeLikingUsersQuery = (themeId: string, page: number) => {
-  const result = useQuery({
-    queryKey: themeLikingUsersQueryKey(themeId, page),
+export const useThemeLikingUsersPerPage = (themeId: string, page: number) => {
+  const { data: themeLikingUsersPerPage, ...others } = useQuery({
+    queryKey: themeLikingUsersPerPageQueryKey(themeId, page),
     queryFn: () => {
       return trpc.user.getThemeLikingUsers.query({
         themeId,
@@ -22,5 +25,5 @@ export const useThemeLikingUsersQuery = (themeId: string, page: number) => {
     keepPreviousData: true,
   });
 
-  return result;
+  return { themeLikingUsersPerPage, ...others };
 };
