@@ -30,7 +30,6 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       query.period,
       "all" satisfies ThemePeriod
     );
-    // TODO: query.pageを直接使ってる部分でこれを使用する
     const page = urlParamToString(query.page, "1");
 
     // orderが正しくない場合は404にする

@@ -14,14 +14,7 @@ import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session, callerContext }) => {
-    // TODO
-    const { page } = query;
-
     const themeId = assertString(query.id);
-
-    if (typeof page === "object") {
-      throw new Error();
-    }
 
     const caller = appRouter.createCaller(callerContext);
 
