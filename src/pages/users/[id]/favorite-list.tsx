@@ -6,20 +6,21 @@ import { FavoriteListPage } from "../../../client/pageComponents/FavoriteListPag
 import { useUserQuery } from "../../../client/features/user/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
+import { assertString } from "../../../share/utils";
+import NotFoundPage from "../../404";
 
+// TODO
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session, callerContext }) => {
     const caller = appRouter.createCaller(callerContext);
     const { page } = query;
 
-    const { id: userId } = query;
+    const userId = assertString(query.id);
 
-    if (typeof userId !== "string") {
-      return;
-    }
     if (typeof page === "object") {
       throw new Error();
     }
+
     if (!session) {
       return;
     }
@@ -42,13 +43,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
 const UserDetail: NextPage = () => {
   const router = useRouter();
-  const userId = router.query.id as string;
+  const userId = assertString(router.query.id);
   const { user } = useUserQuery(userId);
 
-  if (user) {
-    return <FavoriteListPage user={user} />;
+  if (!user) {
+    return <NotFoundPage />;
   }
 
-  return null;
+  return <FavoriteListPage user={user} />;
 };
 export default UserDetail;

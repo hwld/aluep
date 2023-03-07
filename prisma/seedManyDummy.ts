@@ -76,11 +76,11 @@ async function main() {
   }
 
   const developerIds = [];
-  const userDeveloperMap = new Map(
-    userIds.map((_, userIndex) => [userIndex, [] as string[]])
+  const userDeveloperMap = new Map<number, string[]>(
+    userIds.map((_, userIndex) => [userIndex, []])
   );
-  const themeDeveloperMap = new Map(
-    themeIds.map((_, themeIndex) => [themeIndex, [] as string[]])
+  const themeDeveloperMap = new Map<number, string[]>(
+    themeIds.map((_, themeIndex) => [themeIndex, []])
   );
 
   // お題に参加する

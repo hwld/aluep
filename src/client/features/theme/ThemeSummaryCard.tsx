@@ -13,6 +13,8 @@ import { UserIconLink } from "../user/UserIconLink";
 
 /**　アプリ開発のお題の概要カード */
 type Props = { theme: Theme };
+
+// TODO: クリックでお題に戻れるようにする
 export const ThemeSummaryCard: React.FC<Props> = ({ theme }) => {
   const mantineTheme = useMantineTheme();
   return (

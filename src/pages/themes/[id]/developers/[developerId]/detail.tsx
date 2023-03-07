@@ -10,13 +10,13 @@ import {
 import { DeveloperDetailPage } from "../../../../../client/pageComponents/DeveloperDetailPage";
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../../server/routers";
+import { assertString } from "../../../../../share/utils";
+import NotFoundPage from "../../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {
-    const { id: themeId, developerId } = query;
-    if (typeof themeId !== "string" || typeof developerId !== "string") {
-      return { notFound: true };
-    }
+    const themeId = assertString(query.id);
+    const developerId = assertString(query.developerId);
 
     const caller = appRouter.createCaller(callerContext);
 
@@ -34,13 +34,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
 const DeveloperDetail = () => {
   const router = useRouter();
-  const developerId = router.query.developerId as string;
-  const themeId = router.query.id as string;
+  const developerId = assertString(router.query.developerId);
+  const themeId = assertString(router.query.id);
   const { developer } = useDeveloperQuery(developerId);
   const { theme } = useThemeQuery(themeId);
 
   if (!developer || !theme) {
-    return <div>Error</div>;
+    return <NotFoundPage />;
   }
 
   return <DeveloperDetailPage developer={developer} theme={theme} />;

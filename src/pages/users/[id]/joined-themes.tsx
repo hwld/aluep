@@ -12,6 +12,8 @@ import {
 import { UserJoinedThemesPage } from "../../../client/pageComponents/UserJoinedThemesPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
+import { assertString } from "../../../share/utils";
+import NotFoundPage from "../../404";
 
 // TODO: 他のuser詳細ページと共通化したい
 export const getServerSideProps = withReactQueryGetServerSideProps(
@@ -19,11 +21,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const caller = appRouter.createCaller(callerContext);
     const { page } = query;
 
-    const { id: userId } = query;
+    const userId = assertString(query.id);
 
-    if (typeof userId !== "string") {
-      return { notFound: true };
-    }
     if (typeof page === "object") {
       throw new Error();
     }
@@ -65,13 +64,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
  */
 const UserDetail: NextPage = () => {
   const router = useRouter();
-  const userId = router.query.id as string;
+  const userId = assertString(router.query.id);
   const { user } = useUserQuery(userId);
 
   if (!user) {
-    return null;
-  } else {
-    return <UserJoinedThemesPage user={user} />;
+    return <NotFoundPage />;
   }
+
+  return <UserJoinedThemesPage user={user} />;
 };
 export default UserDetail;

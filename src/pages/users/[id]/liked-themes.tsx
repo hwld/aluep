@@ -12,17 +12,16 @@ import {
 import { UserLikedThemesPage } from "../../../client/pageComponents/UserLikedThemesPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
+import { assertString } from "../../../share/utils";
+import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session, callerContext }) => {
     const caller = appRouter.createCaller(callerContext);
     const { page } = query;
 
-    const { id: userId } = query;
+    const userId = assertString(query.id);
 
-    if (typeof userId !== "string") {
-      return { notFound: true };
-    }
     if (typeof page === "object") {
       throw new Error();
     }
@@ -64,13 +63,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
  */
 const UserDetail: NextPage = () => {
   const router = useRouter();
-  const userId = router.query.id as string;
+  const userId = assertString(router.query.id);
   const { user } = useUserQuery(userId);
 
   if (!user) {
-    return null;
-  } else {
-    return <UserLikedThemesPage user={user} />;
+    return <NotFoundPage />;
   }
+
+  return <UserLikedThemesPage user={user} />;
 };
 export default UserDetail;

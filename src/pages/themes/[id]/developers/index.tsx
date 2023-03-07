@@ -8,13 +8,15 @@ import {
 import { ThemeDeveloperPage } from "../../../../client/pageComponents/ThemeDeveloperPage";
 import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../server/routers";
+import { assertString } from "../../../../share/utils";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {
-    const { id: themeId, page } = query;
-    if (typeof themeId !== "string") {
-      return { notFound: true };
-    }
+    //TODO
+    const { page } = query;
+
+    const themeId = assertString(query.id);
+
     if (typeof page === "object") {
       throw new Error();
     }
@@ -37,7 +39,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
 const DeveloperPage: NextPage = () => {
   const router = useRouter();
-  const themeId = router.query.id as string;
+  const themeId = assertString(router.query.id);
   const { theme } = useThemeQuery(themeId);
 
   if (!theme) {
