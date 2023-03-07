@@ -25,7 +25,7 @@ export const Routes = {
   userUpdate: "/users/profile",
   userDelete: "/users/delete",
   userSearch: "/users/search",
-  userFavorites: (userId: string) => `/users/${userId}/favorite-list`,
+  userFavorites: (userId: string) => `/users/${userId}/favorited-users`,
   userWithPostedThemes: (userId: string) => `/users/${userId}/posted-themes`,
   userWithJoinedThemes: (userId: string) => `/users/${userId}/joined-themes`,
   userWithLikedThemes: (userId: string) => `/users/${userId}/liked-themes`,

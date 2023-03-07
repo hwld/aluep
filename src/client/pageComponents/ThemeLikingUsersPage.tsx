@@ -8,14 +8,17 @@ import {
 } from "../features/user/LikingUserCard";
 import { NothingThemeLikingUsers } from "../features/user/NothingThemeLikingUsers";
 import { userCardMinWidthPx } from "../features/user/UserCard";
-import { useThemeLikingUsersQuery } from "../features/user/useThemeLikingUsersQuery";
+import { useThemeLikingUsersPerPage } from "../features/user/useThemeLikingUsersQuery";
 import { usePaginationState } from "../lib/usePaginationState";
 import { AppPagination } from "../ui/AppPagination";
 
 type Props = { theme: Theme };
 export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
   const [page, setPage] = usePaginationState({});
-  const { data } = useThemeLikingUsersQuery(theme.id, page);
+  const { themeLikingUsersPerPage } = useThemeLikingUsersPerPage(
+    theme.id,
+    page
+  );
   const mantineTheme = useMantineTheme();
 
   return (
@@ -46,7 +49,7 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
               gap: theme.spacing.xs,
             })}
           >
-            {data?.users.map((user) => {
+            {themeLikingUsersPerPage?.list.map((user) => {
               return (
                 <LikingUserCard
                   key={user.id}
@@ -66,7 +69,7 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
       <AppPagination
         page={page}
         onChange={setPage}
-        total={data?.allPages ?? 0}
+        total={themeLikingUsersPerPage?.allPages ?? 0}
       />
     </Stack>
   );

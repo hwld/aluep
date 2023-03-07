@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
 import { userQueryKey } from "../user/useUserQuery";
 
-export const postedThemesQueryKey = (userId: string, page: number) =>
+export const postedThemesPerPageQueryKey = (userId: string, page: number) =>
   [
     ...userQueryKey(userId),
     "posted-themes",
@@ -10,9 +10,9 @@ export const postedThemesQueryKey = (userId: string, page: number) =>
   ] as const;
 
 /** ユーザーが投稿したお題一覧を取得する */
-export const usePostedThemesQuery = (userId: string, page: number) => {
-  const { data: postedThemes, ...others } = useQuery({
-    queryKey: postedThemesQueryKey(userId, page),
+export const usePostedThemesPerPageQuery = (userId: string, page: number) => {
+  const { data: postedThemesPerPage, ...others } = useQuery({
+    queryKey: postedThemesPerPageQueryKey(userId, page),
     queryFn: () => {
       return trpc.theme.getPostedThemesByUser.query({
         userId: userId,
@@ -22,5 +22,5 @@ export const usePostedThemesQuery = (userId: string, page: number) => {
     keepPreviousData: true,
   });
 
-  return { postedThemes, ...others };
+  return { postedThemesPerPage, ...others };
 };

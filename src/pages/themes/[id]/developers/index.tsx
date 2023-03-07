@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { paginatedDevelopersQueryKey } from "../../../../client/features/developer/usePaginatedDeveloperQueery";
+import { developersPerPageQueryKey } from "../../../../client/features/developer/useDevelopersPerPage";
 import {
   themeQueryKey,
   useThemeQuery,
@@ -27,7 +27,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.theme.get({ themeId })
     );
     await queryClient.prefetchQuery(
-      paginatedDevelopersQueryKey(themeId, Number(page)),
+      developersPerPageQueryKey(themeId, Number(page)),
       () => caller.developer.getManyByTheme({ themeId, page })
     );
   }

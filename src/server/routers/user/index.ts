@@ -1,6 +1,6 @@
 import { router } from "../../lib/trpc";
 import { favorited } from "./favorited";
-import { favoritedUsers } from "./favoritedUsers";
+import { getFavoritedUsers } from "./favoritedUsers";
 import { favoriteUser } from "./favoriteUser";
 import { favoriteUsersCount } from "./favoriteUsersCount";
 import { getThemeLikingUsers } from "./getThemeLikingUsers";
@@ -28,7 +28,7 @@ export const userRoute = router({
   favoriteUsersCount,
 
   /** お気に入りユーザーを取得する */
-  favoritedUsers: favoritedUsers,
+  getFavoritedUsers: getFavoritedUsers,
 
   /** 指定されたお題をいいねしたユーザーを取得する */
   getThemeLikingUsers,

@@ -5,7 +5,7 @@ type PaginateArgs<FinderInput, FinderResult> = {
   finder: (
     input: FinderInput & { take: number; skip: number }
   ) => Promise<FinderResult>;
-  // 前ページ数を取得するために、finderInputを受け取って全データの数を数える関数が必要になる
+  // 全ページ数を取得するために、finderInputを受け取って全データの数を数える関数が必要になる
   counter: (input: FinderInput) => Promise<number>;
   pagingData: { page: number; limit: number };
 };
@@ -14,7 +14,9 @@ export const paginate = async <FinderInput, FinderResult>({
   finder,
   counter,
   pagingData: { page, limit },
-}: PaginateArgs<FinderInput, FinderResult>) => {
+}: PaginateArgs<FinderInput, FinderResult>): Promise<
+  [FinderResult, { allPages: number }]
+> => {
   const allDataCount = await counter(finderInput);
   const allPages = Math.ceil(allDataCount / limit);
 
@@ -24,5 +26,5 @@ export const paginate = async <FinderInput, FinderResult>({
     take: limit,
   });
 
-  return { data, allPages };
+  return [data, { allPages }];
 };

@@ -15,12 +15,12 @@ export const getLikedThemesByUser = publicProcedure
     });
     const likeThemeList = likeThemeIds.map((like) => like.appThemeId);
 
-    const { data: likePostedTheme, allPages } = await paginate({
+    const [likedThemesPerPage, { allPages }] = await paginate({
       finder: findManyThemes,
       finderInput: { where: { id: { in: likeThemeList } } },
       counter: db.appTheme.count,
       pagingData: { page, limit: 18 },
     });
 
-    return { likePostedTheme, allPages };
+    return { list: likedThemesPerPage, allPages };
   });

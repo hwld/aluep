@@ -2,19 +2,21 @@ import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
 import { userQueryKey } from "./useUserQuery";
 
-export const favoritedUsersQueryKey = (favoriteUserId: string, page: number) =>
+export const favoritedUsersPerPageQueryKey = (
+  favoriteUserId: string,
+  page: number
+) =>
   [
     ...userQueryKey(favoriteUserId),
     "favoriteUserId",
     { page: isNaN(page) ? 1 : page },
   ] as const;
 
-export const useFavoritedUsersQuery = (userId: string, page: number) => {
-  // TODO: allPagesを含むオブジェクト全部に言えるけど、変数名どうしたらいいんだろうなぁ・・・
+export const useFavoritedUsersPerPage = (userId: string, page: number) => {
   const { data: favoritedUsersPerPage, ...others } = useQuery({
-    queryKey: favoritedUsersQueryKey(userId, page),
+    queryKey: favoritedUsersPerPageQueryKey(userId, page),
     queryFn: () => {
-      return trpc.user.favoritedUsers.query({
+      return trpc.user.getFavoritedUsers.query({
         favoriteByUserId: userId,
         page: page.toString(),
       });

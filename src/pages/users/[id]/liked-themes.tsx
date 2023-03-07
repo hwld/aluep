@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { themeDeveloperLikesQueryKey } from "../../../client/features/developer/useThemeDeveloperLikesQuery";
-import { likedThemesQueryKey } from "../../../client/features/theme/useLikedThemesQuery";
+import { likedThemesPerPageQueryKey } from "../../../client/features/theme/useLikedThemesPerPage";
 import { sumThemeLikesQueryKey } from "../../../client/features/theme/useSumThemeLikesQuery";
 import { favoritedUserQueryKey } from "../../../client/features/user/useFavoriteUser";
 import { favoriteUsersCountQueryKey } from "../../../client/features/user/useFavoriteUsersCountQuery";
@@ -31,7 +31,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     await queryClient.prefetchQuery(userQueryKey(userId), () => user);
 
     await queryClient.prefetchQuery(
-      likedThemesQueryKey(userId, Number(page)),
+      likedThemesPerPageQueryKey(userId, Number(page)),
       () => caller.theme.getLikedThemesByUser({ userId, page })
     );
 

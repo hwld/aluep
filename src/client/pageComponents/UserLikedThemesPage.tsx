@@ -3,7 +3,7 @@ import { User } from "@prisma/client";
 import React from "react";
 import { TbHeart } from "react-icons/tb";
 import { ThemeCardContainer } from "../features/theme/ThemeCardContainer";
-import { useLikedThemesQuery } from "../features/theme/useLikedThemesQuery";
+import { useLikedThemesPerPage } from "../features/theme/useLikedThemesPerPage";
 import { UserDetailLayout } from "../features/user/UserDetail/UserDetailLayout";
 import { usePaginationState } from "../lib/usePaginationState";
 
@@ -11,7 +11,7 @@ type Props = { user: User };
 
 export const UserLikedThemesPage: React.FC<Props> = ({ user }) => {
   const [likePage, setLikePage] = usePaginationState({});
-  const { likedThemes } = useLikedThemesQuery(user.id, likePage);
+  const { likedThemesPerPage } = useLikedThemesPerPage(user.id, likePage);
   const mantineTheme = useMantineTheme();
 
   return (
@@ -20,9 +20,9 @@ export const UserLikedThemesPage: React.FC<Props> = ({ user }) => {
       user={user}
       page={likePage}
       onChangePostPage={setLikePage}
-      totalPages={likedThemes?.allPages ?? 0}
+      totalPages={likedThemesPerPage?.allPages ?? 0}
     >
-      {likedThemes?.likePostedTheme.length === 0 ? (
+      {likedThemesPerPage?.list.length === 0 ? (
         <Flex align="center" direction="column" gap={10}>
           <TbHeart
             size={200}
@@ -35,7 +35,7 @@ export const UserLikedThemesPage: React.FC<Props> = ({ user }) => {
           </Text>
         </Flex>
       ) : (
-        <ThemeCardContainer themes={likedThemes?.likePostedTheme ?? []} />
+        <ThemeCardContainer themes={likedThemesPerPage?.list ?? []} />
       )}
     </UserDetailLayout>
   );

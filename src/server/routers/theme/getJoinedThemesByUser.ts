@@ -15,12 +15,12 @@ export const getJoinedThemesByUser = publicProcedure
     //テーマのidだけを抽出
     const joinThemeList = joinTheme.map((theme) => theme.appThemeId);
 
-    const { data: joinPostedTheme, allPages } = await paginate({
+    const [joinPostedThemePerPage, { allPages }] = await paginate({
       finder: findManyThemes,
       finderInput: { where: { id: { in: joinThemeList } } },
       counter: db.appTheme.count,
       pagingData: { page, limit: 18 },
     });
 
-    return { joinPostedTheme, allPages };
+    return { list: joinPostedThemePerPage, allPages };
   });
