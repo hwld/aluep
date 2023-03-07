@@ -6,7 +6,6 @@ type UsePaginationStateArgs = {
 };
 
 // ページの情報を管理する。
-// React StateとURLパラメータに保存する。
 export const usePaginationState = ({
   initialPage = 1,
 }: UsePaginationStateArgs) => {

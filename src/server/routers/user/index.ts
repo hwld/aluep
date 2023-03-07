@@ -27,8 +27,8 @@ export const userRoute = router({
   /** お気に入りしたユーザーの数を取得する */
   favoriteUsersCount,
 
-  /** お気に入りリストの表示 */
-  favoriteList: favoritedUsers,
+  /** お気に入りユーザーを取得する */
+  favoritedUsers: favoritedUsers,
 
   /** 指定されたお題をいいねしたユーザーを取得する */
   getThemeLikingUsers,
