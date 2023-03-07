@@ -7,19 +7,14 @@ import {
 } from "../../../../client/features/theme/useThemeQuery";
 import { ThemeDeveloperPage } from "../../../../client/pageComponents/ThemeDeveloperPage";
 import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServerSidePropsWithReactQuery";
+import { urlParamToString } from "../../../../server/lib/urlParam";
 import { appRouter } from "../../../../server/routers";
 import { assertString } from "../../../../share/utils";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {
-    //TODO
-    const { page } = query;
-
+    const page = urlParamToString(query.page, "1");
     const themeId = assertString(query.id);
-
-    if (typeof page === "object") {
-      throw new Error();
-    }
 
     const caller = appRouter.createCaller(callerContext);
     const theme = await caller.theme.get({ themeId });

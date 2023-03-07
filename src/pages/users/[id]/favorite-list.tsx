@@ -5,6 +5,7 @@ import { FavoriteListPage } from "../../../client/pageComponents/FavoriteListPag
 
 import { useUserQuery } from "../../../client/features/user/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
+import { urlParamToString } from "../../../server/lib/urlParam";
 import { appRouter } from "../../../server/routers";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
@@ -13,18 +14,15 @@ import NotFoundPage from "../../404";
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session, callerContext }) => {
     const caller = appRouter.createCaller(callerContext);
-    const { page } = query;
+    const page = urlParamToString(query.page, "1");
 
     const userId = assertString(query.id);
-
-    if (typeof page === "object") {
-      throw new Error();
-    }
 
     if (!session) {
       return;
     }
 
+    // TODO: ?
     let favoriteUserId = session.user.id;
 
     await queryClient.prefetchQuery(

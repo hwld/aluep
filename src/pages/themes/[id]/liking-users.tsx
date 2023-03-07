@@ -7,19 +7,15 @@ import {
 import { themeLikingUsersQueryKey } from "../../../client/features/user/useThemeLikingUsersQuery";
 import { ThemeLikingUsersPage } from "../../../client/pageComponents/ThemeLikingUsersPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
+import { urlParamToString } from "../../../server/lib/urlParam";
 import { appRouter } from "../../../server/routers";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {
-    // TODO
-    const { page } = query;
+    const page = urlParamToString(query.page, "1");
     const themeId = assertString(query.id);
-
-    if (typeof page === "object") {
-      throw new Error();
-    }
 
     const caller = appRouter.createCaller(callerContext);
     const theme = await caller.theme.get({ themeId });
