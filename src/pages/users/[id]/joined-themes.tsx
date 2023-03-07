@@ -62,9 +62,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 const UserDetail: NextPage = () => {
   const router = useRouter();
   const userId = assertString(router.query.id);
-  const { user } = useUserQuery(userId);
+  const { user, isLoading } = useUserQuery(userId);
 
-  if (!user) {
+  if (isLoading) {
+    return <></>;
+  } else if (!user) {
     return <NotFoundPage />;
   }
 

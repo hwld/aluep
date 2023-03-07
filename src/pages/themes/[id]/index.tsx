@@ -49,9 +49,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 const ThemeDetail = () => {
   const router = useRouter();
   const themeId = assertString(router.query.id);
-  const { theme } = useThemeQuery(themeId);
+  const { theme, isLoading } = useThemeQuery(themeId);
 
-  if (!theme) {
+  if (isLoading) {
+    return <></>;
+  } else if (!theme) {
     return <NotFoundPage />;
   }
 

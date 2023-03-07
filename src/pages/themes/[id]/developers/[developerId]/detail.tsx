@@ -36,10 +36,13 @@ const DeveloperDetail = () => {
   const router = useRouter();
   const developerId = assertString(router.query.developerId);
   const themeId = assertString(router.query.id);
-  const { developer } = useDeveloperQuery(developerId);
-  const { theme } = useThemeQuery(themeId);
+  const { developer, isLoading: loadingDeveloper } =
+    useDeveloperQuery(developerId);
+  const { theme, isLoading: loadingTheme } = useThemeQuery(themeId);
 
-  if (!developer || !theme) {
+  if (loadingDeveloper || loadingTheme) {
+    return <></>;
+  } else if (!developer || !theme) {
     return <NotFoundPage />;
   }
 
