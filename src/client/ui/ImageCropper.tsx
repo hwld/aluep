@@ -7,11 +7,6 @@ export const imageCropperStep = 0.01;
 export type ImageInfo = { image: HTMLImageElement; defaultScale?: number };
 type Props = { info: ImageInfo; onCompleteCrop: (objectURL: string) => void };
 
-// TODO: 汚い
-// contextを操作するときは順番が重要になってくるが、
-// 共通化などを行わずにべた書きしてるところが多いので、ちょっと変更したときに
-// いろんなところが壊れてしまう可能性がありそう。
-// あと、thumbをクリックしてもスライダーがちょっと動いてしまう。
 export const ImageCropper: React.FC<Props> = ({
   info: { image, defaultScale = 1 },
   onCompleteCrop,
@@ -64,6 +59,7 @@ export const ImageCropper: React.FC<Props> = ({
     ctx.save();
     drawClippingLayer(ctx);
 
+    // 原点を中央に設定する
     ctx.translate(imageCropperSize / 2, imageCropperSize / 2);
     ctx.scale(value, value);
     ctx.globalCompositeOperation = "destination-over";
@@ -91,7 +87,7 @@ export const ImageCropper: React.FC<Props> = ({
       return;
     }
 
-    let { currentX, currentY, dragStartX, dragStartY } = dragInfo.current;
+    const { currentX, currentY, dragStartX, dragStartY } = dragInfo.current;
 
     const scale = scaleRef.current;
     dragInfo.current.diffX = currentX + (e.clientX - dragStartX) / scale;

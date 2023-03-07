@@ -15,6 +15,7 @@ import { RequireLoginModalProvider } from "../client/features/session/RequireLog
 import { theme } from "../client/style/theme";
 import { AppLayout } from "../client/ui/AppLayout";
 import { AppNavigationProgress } from "../client/ui/AppNavigationProgress";
+import { ErrorBoundary } from "../client/ui/ErrorBoundary";
 import { PageProps } from "../server/lib/GetServerSidePropsWithReactQuery";
 
 export default function App(props: AppProps<PageProps>) {
@@ -32,7 +33,7 @@ export default function App(props: AppProps<PageProps>) {
   );
 
   return (
-    <>
+    <ErrorBoundary>
       {/* idは環境変数で付けたほうが柔軟性があるけど、めんどくさいのでとりあえず・・・ */}
       {/* また、next.jsではクライアントサイドのルーティングが多いので、これだけだと正しく測定できない。 */}
       {/* 参考:(https://github.com/vercel/next.js/tree/canary/examples/with-google-analytics) */}
@@ -82,6 +83,6 @@ export default function App(props: AppProps<PageProps>) {
           </MantineProvider>
         </Hydrate>
       </QueryClientProvider>
-    </>
+    </ErrorBoundary>
   );
 }
