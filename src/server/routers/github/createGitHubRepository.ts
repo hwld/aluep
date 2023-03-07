@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { z } from "zod";
 import { GitHubErrors } from "../../../share/errors";
 import { repositoryFormSchema } from "../../../share/schema";
 import { db } from "../../lib/prismadb";
@@ -40,5 +41,9 @@ export const createGitHubRepository = requireLoggedInProcedure
     }
 
     const json = await result.json();
-    return { repoUrl: json.html_url as string };
+    const parseResult = z.string().safeParse(json.html_url);
+    if (!parseResult.success) {
+      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+    }
+    return { repoUrl: parseResult.data };
   });

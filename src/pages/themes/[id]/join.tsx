@@ -8,6 +8,7 @@ import { ThemeJoinPage } from "../../../client/pageComponents/ThemeJoinPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
 import { Routes } from "../../../share/routes";
+import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
@@ -16,10 +17,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { redirect: { destination: Routes.home, permanent: false } };
     }
 
-    const { id: themeId } = query;
-    if (typeof themeId !== "string") {
-      return { notFound: true };
-    }
+    const themeId = assertString(query.id);
 
     const caller = appRouter.createCaller(callerContext);
     const theme = await caller.theme.get({ themeId });
@@ -39,9 +37,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
+//TODO
 const JoinTheme: NextPage = () => {
   const router = useRouter();
-  const themeId = router.query.id as string;
+  const themeId = assertString(router.query.id);
   const repoUrl = router.query.repoUrl;
   const { repoName, repoDescription, comment, reRepo } = router.query;
 

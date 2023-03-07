@@ -64,8 +64,3 @@ export const formatDate = (date: Date) => {
 export const extractHash = (path: string) => {
   return path.split("#")[1] ?? "";
 };
-
-// TODO:
-// GSSPでqueryからデータを取得する際にas stringみたいなのを多用してるので
-// ファイル名が変わったときに変なところでエラーが起こる可能性がる。
-// そこを何とかするutilを作ってそれを使う。

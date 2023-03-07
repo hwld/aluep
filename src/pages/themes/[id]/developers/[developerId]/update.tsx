@@ -12,6 +12,8 @@ import { DeveloperEditPage } from "../../../../../client/pageComponents/Develope
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../../server/routers";
 import { Routes } from "../../../../../share/routes";
+import { assertString } from "../../../../../share/utils";
+import NotFoundPage from "../../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session, callerContext }) => {
@@ -19,10 +21,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { redirect: { destination: Routes.home, permanent: false } };
     }
 
-    const { id: themeId, developerId } = query;
-    if (typeof themeId !== "string" || typeof developerId !== "string") {
-      return { notFound: true };
-    }
+    const themeId = assertString(query.id);
+    const developerId = assertString(query.developerId);
 
     const caller = appRouter.createCaller(callerContext);
     const theme = await caller.theme.get({ themeId });
@@ -38,10 +38,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
+// TODO
 const DeveloperUpdate: NextPage = () => {
   const router = useRouter();
-  const themeId = router.query.id as string;
-  const developerId = router.query.developerId as string;
+  const themeId = assertString(router.query.id);
+  const developerId = assertString(router.query.developerId);
   const repoUrl = router.query.repoUrl;
   const { repoName, repoDescription, comment, reRepo } = router.query;
 
@@ -59,7 +60,7 @@ const DeveloperUpdate: NextPage = () => {
     typeof reRepo === "object" ||
     typeof comment === "object"
   ) {
-    return <div>Error</div>;
+    return <NotFoundPage />;
   }
 
   return (
