@@ -102,9 +102,6 @@ type SearchThemesArgs = {
   period: ThemePeriod;
 };
 
-// TODO: 共通化
-// 以前はsearchを使っていたが、無駄なSELECT COUNT(*)や、LEFT JOINが発生するので
-// 必要な部分だけ切り出した。
 export const pickUpThemes = async (
   order: ThemeOrder,
   limit: number
