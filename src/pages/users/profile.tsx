@@ -13,9 +13,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 );
 
 export default function Profile() {
-  const { session } = useSessionQuery();
+  const { session, isLoading } = useSessionQuery();
 
-  if (!session?.user) {
+  if (isLoading) {
+    return <></>;
+  } else if (!session?.user) {
     return <NotFoundPage />;
   }
 

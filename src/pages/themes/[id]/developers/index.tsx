@@ -10,6 +10,7 @@ import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServ
 import { urlParamToString } from "../../../../server/lib/urlParam";
 import { appRouter } from "../../../../server/routers";
 import { assertString } from "../../../../share/utils";
+import NotFoundPage from "../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {
@@ -35,10 +36,12 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 const DeveloperPage: NextPage = () => {
   const router = useRouter();
   const themeId = assertString(router.query.id);
-  const { theme } = useThemeQuery(themeId);
+  const { theme, isLoading } = useThemeQuery(themeId);
 
-  if (!theme) {
+  if (isLoading) {
     return <></>;
+  } else if (!theme) {
+    return <NotFoundPage />;
   }
 
   return <ThemeDeveloperPage theme={theme} />;
