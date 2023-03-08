@@ -26,3 +26,7 @@ export const assertString = (value: unknown): string => {
   }
   return value;
 };
+
+export const assertNever = (value: never): never => {
+  throw new Error();
+};

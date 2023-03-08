@@ -1,56 +1,66 @@
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
+import { z, ZodTypeDef } from "zod";
+import { assertNever } from "../../share/utils";
 
 /**
  * URLSearchParamsを操作するhook
+ * @param schema Record<string, string | string[] | number>となるZodスキーマ
  */
-export const useURLParams = <T extends Record<string, string | string[]>>(
-  initialData: T
+export const useURLParams = <
+  Output extends Record<string, string | string[] | number>,
+  Def extends ZodTypeDef = ZodTypeDef,
+  Input = Output
+>(
+  schema: z.ZodSchema<Output, Def, Input>
 ) => {
   const router = useRouter();
 
-  const queryParams: T = useMemo(() => {
-    return Object.keys(initialData).reduce((prev, key) => {
-      let value = router.query[key] ?? initialData[key];
-
-      // 初期データが配列だった場合、searchParamがstringでも配列に変換する
-      if (typeof initialData[key] === "object" && typeof value === "string") {
-        value = [value];
-      }
-
-      return { ...prev, [key]: value };
-    }, initialData);
-  }, [initialData, router.query]);
+  const queryParams: z.infer<typeof schema> = useMemo(() => {
+    const queryObj = router.query;
+    return schema.parse(queryObj);
+  }, [router.query, schema]);
 
   const setQueryParams = useCallback(
-    async (newObj: Partial<T>, options?: Parameters<typeof router.push>[2]) => {
-      const url = new URL(window.location.href);
+    async (
+      newObj: Partial<Output>,
+      options?: Parameters<typeof router.push>[2]
+    ) => {
+      const currentUrl = new URL(window.location.href);
 
       // queryParamsをすべて削除する
-      Array.from(url.searchParams.keys()).forEach((key) => {
-        url.searchParams.delete(key);
+      Array.from(currentUrl.searchParams.keys()).forEach((key) => {
+        currentUrl.searchParams.delete(key);
       });
 
-      const mergedObj = { ...queryParams, ...newObj };
+      const mergedObj = schema.parse({ ...queryParams, ...newObj });
       Object.keys(mergedObj).forEach((key) => {
         const value = mergedObj[key];
 
-        if (typeof value === "string") {
-          if (value === "") {
-            url.searchParams.delete(key.toString());
-          } else {
-            url.searchParams.set(key.toString(), value);
-          }
-        } else if (typeof value === "object") {
-          value.forEach((v) => {
-            url.searchParams.append(key.toString(), v);
-          });
+        switch (typeof value) {
+          case "string":
+            if (value === "") {
+              currentUrl.searchParams.delete(key.toString());
+            } else {
+              currentUrl.searchParams.set(key.toString(), value.toString());
+            }
+            return;
+          case "object":
+            value.forEach((v) =>
+              currentUrl.searchParams.append(key.toString(), v)
+            );
+            return;
+          case "number":
+            currentUrl.searchParams.set(key.toString(), value.toString());
+            return;
+          default:
+            assertNever(value);
         }
       });
 
-      await router.push(url, undefined, options);
+      await router.push(currentUrl, undefined, options);
     },
-    [queryParams, router]
+    [queryParams, router, schema]
   );
 
   return [queryParams, setQueryParams] as const;

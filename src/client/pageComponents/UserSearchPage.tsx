@@ -11,14 +11,15 @@ import {
 import { BsDot } from "react-icons/bs";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { RiQuestionMark } from "react-icons/ri";
+import { z } from "zod";
 import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";
 import { useSearchedUsersQuery } from "../features/user/useSearchedUsersQuery";
 import { useURLParams } from "../lib/useURLParams";
 
 export const UserSearchPage: React.FC = () => {
-  const [{ userName }, setURLParams] = useURLParams({
-    userName: "",
-  });
+  const [{ userName }, setURLParams] = useURLParams(
+    z.object({ userName: z.string().default("") })
+  );
 
   const handleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setURLParams({ userName: e.target.value });

@@ -1,9 +1,8 @@
 import { Box, Card, Flex, Select, Title } from "@mantine/core";
 import React from "react";
 import {
-  ThemeOrder,
+  searchThemeSchema,
   themeOrderSchema,
-  ThemePeriod,
   themePeriodSchema,
 } from "../../share/schema";
 import { NothingTheme } from "../features/theme/NothingTheme";
@@ -18,54 +17,40 @@ import { themeOrderItems, themePeriodItems } from "../lib/consts";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
 
-type ThemeSearchPageQueryParams = {
-  keyword: string;
-  tagIds: string[];
-  order: ThemeOrder;
-  period: ThemePeriod;
-  page: string;
-};
-
 export const ThemeSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
 
   const [{ keyword, tagIds, order, period, page }, setQueryParams] =
-    useURLParams<ThemeSearchPageQueryParams>({
-      keyword: "",
-      tagIds: [],
-      order: "createdDesc",
-      period: "all",
-      page: "1",
-    });
+    useURLParams(searchThemeSchema);
 
   const { searchedThemesResult } = useSearchedThemesQuery({
     keyword,
     tagIds,
     order,
     period,
-    page: Number(page),
+    page,
   });
 
   const handleSearch = async (param: ThemeSearchParams) => {
     setQueryParams({
       keyword: param.keyword,
       tagIds: param.tagIds,
-      page: "1",
+      page: 1,
     });
   };
 
   const handleChangeOrder = (value: string) => {
     const order = themeOrderSchema.parse(value);
-    setQueryParams({ order, page: "1" });
+    setQueryParams({ order, page: 1 });
   };
 
   const handleChangePeriod = (value: string) => {
     const period = themePeriodSchema.parse(value);
-    setQueryParams({ period, page: "1" });
+    setQueryParams({ period, page: 1 });
   };
 
   const handleChangePage = (value: number) => {
-    setQueryParams({ page: value.toString() });
+    setQueryParams({ page: value });
   };
 
   return (
@@ -106,7 +91,7 @@ export const ThemeSearchPage: React.FC = () => {
           <ThemeCardContainer themes={searchedThemesResult?.themes ?? []} />
         )}
         <AppPagination
-          page={Number(page)}
+          page={page}
           onChange={handleChangePage}
           total={searchedThemesResult?.allPages ?? 0}
           mt="md"

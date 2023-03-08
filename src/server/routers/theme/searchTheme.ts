@@ -1,22 +1,9 @@
-import { z } from "zod";
-import {
-  pageSchema,
-  themeOrderSchema,
-  themePeriodSchema,
-} from "../../../share/schema";
+import { searchThemeSchema } from "../../../share/schema";
 import { publicProcedure } from "../../lib/trpc";
 import { searchThemes, Theme } from "../../models/theme";
 
 export const searchTheme = publicProcedure
-  .input(
-    z.object({
-      keyword: z.string(),
-      tagIds: z.array(z.string().min(1)),
-      order: themeOrderSchema,
-      period: themePeriodSchema,
-      page: pageSchema,
-    })
-  )
+  .input(searchThemeSchema)
   .query(async ({ input }): Promise<{ themes: Theme[]; allPages: number }> => {
     const paginatedThemes = await searchThemes(
       {
