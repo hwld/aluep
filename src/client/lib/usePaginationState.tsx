@@ -1,4 +1,6 @@
 import { useCallback, useMemo } from "react";
+import { z } from "zod";
+import { pageSchema } from "../../share/schema";
 import { useURLParams } from "./useURLParams";
 
 type UsePaginationStateArgs = {
@@ -9,9 +11,9 @@ type UsePaginationStateArgs = {
 export const usePaginationState = ({
   initialPage = 1,
 }: UsePaginationStateArgs) => {
-  const [urlParams, setURLParams] = useURLParams({
-    page: initialPage.toString(),
-  });
+  const [urlParams, setURLParams] = useURLParams(
+    z.object({ page: pageSchema.default(initialPage) })
+  );
 
   const page = useMemo(() => {
     const p = Number(urlParams.page);
@@ -23,7 +25,7 @@ export const usePaginationState = ({
 
   const setPage = useCallback(
     async (page: number) => {
-      setURLParams({ page: page.toString() });
+      setURLParams({ page });
     },
     [setURLParams]
   );

@@ -83,14 +83,27 @@ export type ProfileFormData = z.infer<typeof profileFormSchema>;
 
 export const pageSchema = z
   .string()
+  .or(z.number())
   .optional()
   .transform((page) => {
     const p = Number(page);
-    if (isNaN(p)) {
+    if (isNaN(p) || p < 0) {
       return 1;
     }
     return p;
   });
+
+export const searchThemeSchema = z.object({
+  keyword: z.string().default(""),
+  tagIds: z
+    .string()
+    .or(z.array(z.string()))
+    .transform((v) => (typeof v === "string" ? [v] : v))
+    .default([]),
+  order: themeOrderSchema.default("createdDesc"),
+  period: themePeriodSchema.default("all"),
+  page: pageSchema.default(1),
+});
 
 export const repositoryFormSchema = z.object({
   repoName: z
