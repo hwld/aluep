@@ -17,6 +17,7 @@ export const WrapperLink = forwardRef<HTMLElement, WrapperLinkProps>(
       const { noWrap, ...outerProps } = props;
       return React.cloneElement(children as ReactElement, {
         ...outerProps,
+        ...(children as any)?.props,
         ref,
       });
     } else {
