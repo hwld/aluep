@@ -1,7 +1,7 @@
 import { Box, Card, Flex, Select, Title } from "@mantine/core";
 import React from "react";
 import {
-  searchThemeSchema,
+  searchThemePageSchema,
   themeOrderSchema,
   themePeriodSchema,
 } from "../../share/schema";
@@ -21,7 +21,7 @@ export const ThemeSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
 
   const [{ keyword, tagIds, order, period, page }, setQueryParams] =
-    useURLParams(searchThemeSchema);
+    useURLParams(searchThemePageSchema);
 
   const { searchedThemesResult } = useSearchedThemesQuery({
     keyword,

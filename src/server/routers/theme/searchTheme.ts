@@ -1,9 +1,9 @@
-import { searchThemeSchema } from "../../../share/schema";
+import { searchThemePageSchema } from "../../../share/schema";
 import { publicProcedure } from "../../lib/trpc";
 import { searchThemes, Theme } from "../../models/theme";
 
 export const searchTheme = publicProcedure
-  .input(searchThemeSchema)
+  .input(searchThemePageSchema)
   .query(async ({ input }): Promise<{ themes: Theme[]; allPages: number }> => {
     const paginatedThemes = await searchThemes(
       {

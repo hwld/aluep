@@ -4,7 +4,7 @@ import React from "react";
 import { BiBookmarkHeart } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { TbHeart } from "react-icons/tb";
-import { pageObjSchema } from "../../share/schema";
+import { paginatedPageSchema } from "../../share/schema";
 import { useFavoritedUsersPerPage } from "../features/user/useFavoritedUsersPerPage";
 import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";
 import { UserSummaryCard } from "../features/user/UserSummaryCard";
@@ -14,7 +14,7 @@ import { AppPagination } from "../ui/AppPagination";
 type Props = { user: User };
 
 export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
-  const [{ page }, setURLParams] = useURLParams(pageObjSchema);
+  const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { favoritedUsersPerPage } = useFavoritedUsersPerPage(user.id, page);
   const { colors } = useMantineTheme();
 

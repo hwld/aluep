@@ -1,7 +1,7 @@
 import { Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { MdComputer } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
-import { pageObjSchema } from "../../share/schema";
+import { paginatedPageSchema } from "../../share/schema";
 import { DeveloperCard } from "../features/developer/DeveloperCard/DeveloperCard";
 import { useDevelopersPerPage } from "../features/developer/useDevelopersPerPage";
 import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
@@ -11,7 +11,7 @@ import { AppPagination } from "../ui/AppPagination";
 type Props = { theme: Theme };
 
 export const ThemeDeveloperPage: React.FC<Props> = ({ theme }) => {
-  const [{ page }, setURLParams] = useURLParams(pageObjSchema);
+  const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { developersPerPage } = useDevelopersPerPage(theme.id, page);
   const { likeDeveloperMutation } = useLikeThemeDeveloper(theme.id, page);
   const mantineTheme = useMantineTheme();

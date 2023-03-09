@@ -1,7 +1,7 @@
 import { Box, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
 import { Theme } from "../../server/models/theme";
-import { pageObjSchema } from "../../share/schema";
+import { paginatedPageSchema } from "../../share/schema";
 import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
 import {
   LikingUserCard,
@@ -15,7 +15,7 @@ import { AppPagination } from "../ui/AppPagination";
 
 type Props = { theme: Theme };
 export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
-  const [{ page }, setURLParams] = useURLParams(pageObjSchema);
+  const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { themeLikingUsersPerPage } = useThemeLikingUsersPerPage(
     theme.id,
     page

@@ -8,13 +8,13 @@ import { themeLikingUsersPerPageQueryKey } from "../../../client/features/user/u
 import { ThemeLikingUsersPage } from "../../../client/pageComponents/ThemeLikingUsersPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
-import { pageObjSchema } from "../../../share/schema";
+import { paginatedPageSchema } from "../../../share/schema";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {
-    const parsePageResult = pageObjSchema.safeParse(query);
+    const parsePageResult = paginatedPageSchema.safeParse(query);
     if (!parsePageResult.success) {
       return { notFound: true };
     }

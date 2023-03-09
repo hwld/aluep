@@ -9,7 +9,7 @@ import {
 } from "../../../client/features/user/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
-import { pageObjSchema } from "../../../share/schema";
+import { paginatedPageSchema } from "../../../share/schema";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
@@ -17,7 +17,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {
     const caller = appRouter.createCaller(callerContext);
 
-    const parsePageObjResult = pageObjSchema.safeParse(query);
+    const parsePageObjResult = paginatedPageSchema.safeParse(query);
     if (!parsePageObjResult.success) {
       return { notFound: true };
     }

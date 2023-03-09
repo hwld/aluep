@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { pageSchema } from "../../../share/schema";
+import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 import { findManyThemes } from "../../models/theme";
 
 export const getJoinedThemesByUser = publicProcedure
-  .input(z.object({ userId: z.string(), page: pageSchema }))
+  .input(z.object({ userId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page } }) => {
     //すべての開発者からユーザを抽出
     const joinTheme = await db.appThemeDeveloper.findMany({

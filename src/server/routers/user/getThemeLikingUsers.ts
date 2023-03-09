@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { pageSchema } from "../../../share/schema";
+import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 
 export const getThemeLikingUsers = publicProcedure
-  .input(z.object({ themeId: z.string(), page: pageSchema }))
+  .input(z.object({ themeId: z.string(), page: pagingSchema }))
   .query(async ({ input }) => {
     const [themeLikesPerPage, { allPages }] = await paginate({
       finder: db.appThemeLike.findMany,
