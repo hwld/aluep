@@ -160,7 +160,7 @@ export const reportDeveloperFormSchema = reportBaseFormSchema.and(
   })
 );
 
-export const reportUserSchema = reportBaseFormSchema.and(
+export const reportUserFormSchema = reportBaseFormSchema.and(
   z.object({
     targetUser: z.object({
       url: z.string(),

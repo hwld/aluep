@@ -26,11 +26,14 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
         <Box
           component="main"
           p="xl"
-          sx={(theme) => ({
+          sx={{
             width: "100%",
             minWidth: "0",
             margin: "0 auto",
-          })}
+            height: "100dvh",
+            overflow: "auto",
+            scrollbarGutter: "stable",
+          }}
         >
           {children}
         </Box>
