@@ -4,18 +4,23 @@ import React from "react";
 import { BiBookmarkHeart } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { TbHeart } from "react-icons/tb";
+import { pageObjSchema } from "../../share/schema";
 import { useFavoritedUsersPerPage } from "../features/user/useFavoritedUsersPerPage";
 import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";
 import { UserSummaryCard } from "../features/user/UserSummaryCard";
-import { usePaginationState } from "../lib/usePaginationState";
+import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
 
 type Props = { user: User };
 
 export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
-  const [page, setPage] = usePaginationState({});
+  const [{ page }, setURLParams] = useURLParams(pageObjSchema);
   const { favoritedUsersPerPage } = useFavoritedUsersPerPage(user.id, page);
   const { colors } = useMantineTheme();
+
+  const handleChangePage = (page: number) => {
+    setURLParams({ page });
+  };
 
   return (
     <Stack maw={800} m="auto" spacing="lg">
@@ -64,8 +69,8 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
         </Stack>
       )}
       <AppPagination
-        page={Number(page)}
-        onChange={setPage}
+        page={page}
+        onChange={handleChangePage}
         total={favoritedUsersPerPage?.allPages ?? 0}
       />
     </Stack>

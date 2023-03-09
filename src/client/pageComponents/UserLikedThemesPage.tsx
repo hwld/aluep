@@ -2,24 +2,29 @@ import { Flex, Text, useMantineTheme } from "@mantine/core";
 import { User } from "@prisma/client";
 import React from "react";
 import { TbHeart } from "react-icons/tb";
+import { pageObjSchema } from "../../share/schema";
 import { ThemeCardContainer } from "../features/theme/ThemeCardContainer";
 import { useLikedThemesPerPage } from "../features/theme/useLikedThemesPerPage";
 import { UserDetailLayout } from "../features/user/UserDetail/UserDetailLayout";
-import { usePaginationState } from "../lib/usePaginationState";
+import { useURLParams } from "../lib/useURLParams";
 
 type Props = { user: User };
 
 export const UserLikedThemesPage: React.FC<Props> = ({ user }) => {
-  const [likePage, setLikePage] = usePaginationState({});
-  const { likedThemesPerPage } = useLikedThemesPerPage(user.id, likePage);
+  const [{ page }, setURLParams] = useURLParams(pageObjSchema);
+  const { likedThemesPerPage } = useLikedThemesPerPage(user.id, page);
   const mantineTheme = useMantineTheme();
+
+  const handleChangePage = (page: number) => {
+    setURLParams({ page });
+  };
 
   return (
     <UserDetailLayout
       pageType="like"
       user={user}
-      page={likePage}
-      onChangePostPage={setLikePage}
+      page={page}
+      onChangePostPage={handleChangePage}
       totalPages={likedThemesPerPage?.allPages ?? 0}
     >
       {likedThemesPerPage?.list.length === 0 ? (

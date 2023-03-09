@@ -1,6 +1,7 @@
 import { Box, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
 import { Theme } from "../../server/models/theme";
+import { pageObjSchema } from "../../share/schema";
 import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
 import {
   LikingUserCard,
@@ -9,17 +10,21 @@ import {
 import { NothingThemeLikingUsers } from "../features/user/NothingThemeLikingUsers";
 import { userCardMinWidthPx } from "../features/user/UserCard";
 import { useThemeLikingUsersPerPage } from "../features/user/useThemeLikingUsersQuery";
-import { usePaginationState } from "../lib/usePaginationState";
+import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
 
 type Props = { theme: Theme };
 export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
-  const [page, setPage] = usePaginationState({});
+  const [{ page }, setURLParams] = useURLParams(pageObjSchema);
   const { themeLikingUsersPerPage } = useThemeLikingUsersPerPage(
     theme.id,
     page
   );
   const mantineTheme = useMantineTheme();
+
+  const handleChangePage = (page: number) => {
+    setURLParams({ page });
+  };
 
   return (
     <Stack w="100%" miw={userCardMinWidthPx} maw={800} m="auto" spacing="lg">
@@ -68,7 +73,7 @@ export const ThemeLikingUsersPage: React.FC<Props> = ({ theme }) => {
       )}
       <AppPagination
         page={page}
-        onChange={setPage}
+        onChange={handleChangePage}
         total={themeLikingUsersPerPage?.allPages ?? 0}
       />
     </Stack>

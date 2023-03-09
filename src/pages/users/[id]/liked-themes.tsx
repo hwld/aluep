@@ -11,15 +11,20 @@ import {
 } from "../../../client/features/user/useUserQuery";
 import { UserLikedThemesPage } from "../../../client/pageComponents/UserLikedThemesPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
-import { urlParamToString } from "../../../server/lib/urlParam";
 import { appRouter } from "../../../server/routers";
+import { pageObjSchema } from "../../../share/schema";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, session, callerContext }) => {
     const caller = appRouter.createCaller(callerContext);
-    const page = urlParamToString(query.page, "1");
+
+    const parsePageObjResult = pageObjSchema.safeParse(query);
+    if (!parsePageObjResult.success) {
+      return { notFound: true };
+    }
+    const { page } = parsePageObjResult.data;
 
     const userId = assertString(query.id);
 
@@ -31,7 +36,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     await queryClient.prefetchQuery(userQueryKey(userId), () => user);
 
     await queryClient.prefetchQuery(
-      likedThemesPerPageQueryKey(userId, Number(page)),
+      likedThemesPerPageQueryKey(userId, page),
       () => caller.theme.getLikedThemesByUser({ userId, page })
     );
 

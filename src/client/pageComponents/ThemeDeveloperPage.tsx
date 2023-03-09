@@ -1,19 +1,24 @@
 import { Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { MdComputer } from "react-icons/md";
 import { Theme } from "../../server/models/theme";
+import { pageObjSchema } from "../../share/schema";
 import { DeveloperCard } from "../features/developer/DeveloperCard/DeveloperCard";
 import { useDevelopersPerPage } from "../features/developer/useDevelopersPerPage";
 import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
 import { useLikeThemeDeveloper } from "../features/theme/useLikeThemeDeveloper";
-import { usePaginationState } from "../lib/usePaginationState";
+import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
 type Props = { theme: Theme };
 
 export const ThemeDeveloperPage: React.FC<Props> = ({ theme }) => {
-  const [page, setPage] = usePaginationState({});
+  const [{ page }, setURLParams] = useURLParams(pageObjSchema);
   const { developersPerPage } = useDevelopersPerPage(theme.id, page);
   const { likeDeveloperMutation } = useLikeThemeDeveloper(theme.id, page);
   const mantineTheme = useMantineTheme();
+
+  const handleChangePage = (page: number) => {
+    setURLParams({ page });
+  };
 
   return (
     <>
@@ -49,7 +54,7 @@ export const ThemeDeveloperPage: React.FC<Props> = ({ theme }) => {
         </Stack>
         <AppPagination
           page={page}
-          onChange={setPage}
+          onChange={handleChangePage}
           total={developersPerPage?.allPages ?? 0}
         />
       </Stack>

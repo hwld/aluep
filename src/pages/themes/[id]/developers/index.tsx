@@ -7,14 +7,19 @@ import {
 } from "../../../../client/features/theme/useThemeQuery";
 import { ThemeDeveloperPage } from "../../../../client/pageComponents/ThemeDeveloperPage";
 import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServerSidePropsWithReactQuery";
-import { urlParamToString } from "../../../../server/lib/urlParam";
 import { appRouter } from "../../../../server/routers";
+import { pageObjSchema } from "../../../../share/schema";
 import { assertString } from "../../../../share/utils";
 import NotFoundPage from "../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {
-    const page = urlParamToString(query.page, "1");
+    const parsePageResult = pageObjSchema.safeParse(query);
+    if (!parsePageResult.success) {
+      return { notFound: true };
+    }
+    const { page } = parsePageResult.data;
+
     const themeId = assertString(query.id);
 
     const caller = appRouter.createCaller(callerContext);
@@ -27,7 +32,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.theme.get({ themeId })
     );
     await queryClient.prefetchQuery(
-      developersPerPageQueryKey(themeId, Number(page)),
+      developersPerPageQueryKey(themeId, page),
       () => caller.developer.getManyByTheme({ themeId, page })
     );
   }
