@@ -25,6 +25,7 @@ type Props = {
   githuburl?: string;
   user: User;
 };
+//TODO
 export function UserDetailCard({
   userImage,
   userName,

@@ -119,6 +119,19 @@ export const repositoryFormSchema = z.object({
 });
 export type RepositoryFormData = z.infer<typeof repositoryFormSchema>;
 
+const userDetailPageTabSchema = z.union([
+  z.literal("postedThemes"),
+  z.literal("joinedThemes"),
+  z.literal("likedThemes"),
+]);
+export type UserDetailPageTab = z.infer<typeof userDetailPageTabSchema>;
+
+// TODO: スキーマの名前を考える
+export const userDetailSchame = z.object({
+  tab: userDetailPageTabSchema.default("postedThemes"),
+  page: pageSchema.default(1),
+});
+
 ///////////////////////////////////////////////////////////////////////////////////
 // 通報関連
 
