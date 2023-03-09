@@ -1,4 +1,4 @@
-import { Box, Flex, Text, useMantineTheme } from "@mantine/core";
+import { Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { User } from "@prisma/client";
 import { TbFileText } from "react-icons/tb";
 import { AppPagination } from "../../../ui/AppPagination";
@@ -15,7 +15,7 @@ export const UserPostedThemes: React.FC<Props> = ({
   const { colors } = useMantineTheme();
 
   return (
-    <Box w="100%">
+    <Stack w="100%">
       {postedThemesPerPage?.list.length === 0 ? (
         <Flex align="center" direction="column">
           <TbFileText size="200" color={colors.red[7]} />
@@ -32,6 +32,6 @@ export const UserPostedThemes: React.FC<Props> = ({
         onChange={onChangePage}
         total={postedThemesPerPage?.allPages ?? 0}
       />
-    </Box>
+    </Stack>
   );
 };
