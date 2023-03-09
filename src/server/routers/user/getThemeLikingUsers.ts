@@ -4,7 +4,6 @@ import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 
-// TODO
 export const getThemeLikingUsers = publicProcedure
   .input(z.object({ themeId: z.string(), page: pageSchema }))
   .query(async ({ input }) => {

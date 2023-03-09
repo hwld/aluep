@@ -182,7 +182,6 @@ export const pickUpThemes = async (
   return paginatedThemes;
 };
 
-// TODO: :(
 export const searchThemes = async (
   { keyword, tagIds, order, period }: SearchThemesArgs,
   pagingData: { page: number; limit: number }
