@@ -52,7 +52,7 @@ export const themeRoute = router({
   getPostedThemesByUser,
 
   /** 指定されたユーザーが参加しているお題を取得する */
-  getJoinedThemesByUser,
+  getJoinedThemesByUser: getJoinedThemesByUser,
 
   /** 指定されたユーザーがいいねしたお題を取得する */
   getLikedThemesByUser,

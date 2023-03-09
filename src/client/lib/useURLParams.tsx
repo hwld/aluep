@@ -42,7 +42,7 @@ export const useURLParams = <
             if (value === "") {
               currentUrl.searchParams.delete(key.toString());
             } else {
-              currentUrl.searchParams.set(key.toString(), value.toString());
+              currentUrl.searchParams.set(key.toString(), value);
             }
             return;
           case "object":

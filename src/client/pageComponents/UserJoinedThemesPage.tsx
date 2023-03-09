@@ -2,24 +2,29 @@ import { Flex, Text, useMantineTheme } from "@mantine/core";
 import { User } from "@prisma/client";
 import React from "react";
 import { TbFileText } from "react-icons/tb";
+import { pageObjSchema } from "../../share/schema";
 import { ThemeCardContainer } from "../features/theme/ThemeCardContainer";
 import { useJoinedThemesPerPage } from "../features/theme/useJoinedThemesPerPage";
 import { UserDetailLayout } from "../features/user/UserDetail/UserDetailLayout";
-import { usePaginationState } from "../lib/usePaginationState";
+import { useURLParams } from "../lib/useURLParams";
 
 type Props = { user: User };
 
 export const UserJoinedThemesPage: React.FC<Props> = ({ user }) => {
-  const [joinPage, setJoinPage] = usePaginationState({});
-  const { joinedThemesPerPage } = useJoinedThemesPerPage(user.id, joinPage);
+  const [{ page }, setURLParams] = useURLParams(pageObjSchema);
+  const { joinedThemesPerPage } = useJoinedThemesPerPage(user.id, page);
   const mantineTheme = useMantineTheme();
+
+  const handleChangePage = (page: number) => {
+    setURLParams({ page });
+  };
 
   return (
     <UserDetailLayout
       pageType="join"
       user={user}
-      page={joinPage}
-      onChangePostPage={setJoinPage}
+      page={page}
+      onChangePostPage={handleChangePage}
       totalPages={joinedThemesPerPage?.allPages ?? 0}
     >
       {joinedThemesPerPage?.list.length === 0 ? (

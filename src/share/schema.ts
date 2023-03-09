@@ -84,7 +84,6 @@ export type ProfileFormData = z.infer<typeof profileFormSchema>;
 export const pageSchema = z
   .string()
   .or(z.number())
-  .optional()
   .transform((page) => {
     const p = Number(page);
     if (isNaN(p) || p < 0) {
@@ -92,6 +91,8 @@ export const pageSchema = z
     }
     return p;
   });
+
+export const pageObjSchema = z.object({ page: pageSchema.default(1) });
 
 export const searchThemeSchema = z.object({
   keyword: z.string().default(""),

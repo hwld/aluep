@@ -22,6 +22,7 @@ export const getFavoritedUsers = publicProcedure
       finderInput: { where: { id: { in: favoritedUserIds } } },
       finder: db.user.findMany,
       counter: db.user.count,
+      // TODO: 他のAPIもそうだが、ページごとのアイテム数を定数ファイルに分けたい
       pagingData: { page, limit: 50 },
     });
 
