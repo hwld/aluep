@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+///////////////////////////////////////////////////////////////////////////////////
+// フォーム
+
 // お題のフォームデータ
 export const themeFormSchema = z.object({
   title: z
@@ -81,7 +84,7 @@ export const profileFormSchema = z.object({
 
 export type ProfileFormData = z.infer<typeof profileFormSchema>;
 
-export const pageSchema = z
+export const pagingSchema = z
   .string()
   .or(z.number())
   .transform((page) => {
@@ -91,20 +94,6 @@ export const pageSchema = z
     }
     return p;
   });
-
-export const pageObjSchema = z.object({ page: pageSchema.default(1) });
-
-export const searchThemeSchema = z.object({
-  keyword: z.string().default(""),
-  tagIds: z
-    .string()
-    .or(z.array(z.string()))
-    .transform((v) => (typeof v === "string" ? [v] : v))
-    .default([]),
-  order: themeOrderSchema.default("createdDesc"),
-  period: themePeriodSchema.default("all"),
-  page: pageSchema.default(1),
-});
 
 export const repositoryFormSchema = z.object({
   repoName: z
@@ -126,14 +115,33 @@ const userDetailPageTabSchema = z.union([
 ]);
 export type UserDetailPageTab = z.infer<typeof userDetailPageTabSchema>;
 
-// TODO: スキーマの名前を考える
-export const userDetailSchame = z.object({
+///////////////////////////////////////////////////////////////////////////////////
+// ページスキーマ - ページのURLSearchParamsのためのスキーマ
+
+/** ページングのある画面用のスキーマ */
+export const paginatedPageSchema = z.object({ page: pagingSchema.default(1) });
+
+/** お題検索画面用のスキーマ */
+export const searchThemePageSchema = z.object({
+  keyword: z.string().default(""),
+  tagIds: z
+    .string()
+    .or(z.array(z.string()))
+    .transform((v) => (typeof v === "string" ? [v] : v))
+    .default([]),
+  order: themeOrderSchema.default("createdDesc"),
+  period: themePeriodSchema.default("all"),
+  page: pagingSchema.default(1),
+});
+
+/** ユーザー詳細画面用のスキーマ */
+export const userDetailPageSchame = z.object({
   tab: userDetailPageTabSchema.default("postedThemes"),
-  page: pageSchema.default(1),
+  page: pagingSchema.default(1),
 });
 
 ///////////////////////////////////////////////////////////////////////////////////
-// 通報関連
+// 通報フォーム
 
 export const reportBaseFormSchema = z.object({
   reportDetail: z

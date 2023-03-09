@@ -13,7 +13,7 @@ import {
 import { UserDetailPage } from "../../../client/pageComponents/UserDetailPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
-import { userDetailSchame } from "../../../share/schema";
+import { userDetailPageSchame } from "../../../share/schema";
 import { assertNever, assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
@@ -22,7 +22,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const caller = appRouter.createCaller(callerContext);
 
     //　TODO: dynamic routesのパラメータもスキーマに含めて、パースに失敗したら404を返すようにする
-    const parseUserDetailResult = userDetailSchame.safeParse(query);
+    const parseUserDetailResult = userDetailPageSchame.safeParse(query);
     if (!parseUserDetailResult.success) {
       return { notFound: true };
     }

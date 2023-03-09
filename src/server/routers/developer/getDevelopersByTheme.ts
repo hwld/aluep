@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { pageSchema } from "../../../share/schema";
+import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 import { findManyThemeDevelopers } from "../../models/themeDeveloper";
 
 export const getDevelopersByTheme = publicProcedure
-  .input(z.object({ themeId: z.string(), page: pageSchema }))
+  .input(z.object({ themeId: z.string(), page: pagingSchema }))
   .query(async ({ input: { page }, input, ctx }) => {
     const [developersPerPage, { allPages }] = await paginate({
       finderInput: {

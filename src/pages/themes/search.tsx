@@ -4,13 +4,13 @@ import { searchedThemesQueryKey } from "../../client/features/theme/useSearchedT
 import { ThemeSearchPage } from "../../client/pageComponents/ThemeSearchPage";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../server/routers";
-import { searchThemeSchema } from "../../share/schema";
+import { searchThemePageSchema } from "../../share/schema";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {
     const caller = appRouter.createCaller(callerContext);
 
-    const parseQueryResult = searchThemeSchema.safeParse(query);
+    const parseQueryResult = searchThemePageSchema.safeParse(query);
     if (!parseQueryResult.success) {
       return { notFound: true };
     }

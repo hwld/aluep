@@ -1,7 +1,7 @@
 import { Box, Button, Card, Flex, Stack, Text } from "@mantine/core";
 import { User } from "@prisma/client";
 import { useMemo } from "react";
-import { UserDetailPageTab, userDetailSchame } from "../../share/schema";
+import { userDetailPageSchame, UserDetailPageTab } from "../../share/schema";
 import { assertNever } from "../../share/utils";
 import { useThemeDeveloperLikesQuery } from "../features/developer/useThemeDeveloperLikesQuery";
 import { useSumThemeLikesQuery } from "../features/theme/useSumThemeLikesQuery";
@@ -18,7 +18,7 @@ type Props = { user: User };
 // TODO: レイアウトを見直す
 export const UserDetailPage: React.FC<Props> = ({ user }) => {
   const [{ tab: activeTab, page }, setURLParam] =
-    useURLParams(userDetailSchame);
+    useURLParams(userDetailPageSchame);
   const { sumThemeLikes } = useSumThemeLikesQuery(user.id);
   const { themeDeveloperLikes } = useThemeDeveloperLikesQuery(user.id);
 

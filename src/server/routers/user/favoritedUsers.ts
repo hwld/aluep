@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { pageSchema } from "../../../share/schema";
+import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 
 export const getFavoritedUsers = publicProcedure
-  .input(z.object({ favoriteByUserId: z.string(), page: pageSchema }))
+  .input(z.object({ favoriteByUserId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page } }) => {
     const favoritedUserObj = await db.favoriteUser.findMany({
       select: { favoritedUserId: true },
