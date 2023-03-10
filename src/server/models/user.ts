@@ -12,6 +12,17 @@ const userArgs = {
   select: { id: true, name: true, image: true, profile: true },
 } satisfies Prisma.UserArgs;
 
+export const convertUser = (
+  rawUser: Prisma.UserGetPayload<typeof userArgs>
+): User => {
+  return {
+    id: rawUser.id,
+    image: rawUser.image,
+    name: rawUser.name,
+    profile: rawUser.profile,
+  };
+};
+
 type FindUserArgs = Omit<Prisma.UserFindFirstArgs, keyof Prisma.UserArgs>;
 export const findUser = async (
   args: FindUserArgs
