@@ -21,13 +21,12 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, callerContext, queryClient, session }) => {
     const caller = appRouter.createCaller(callerContext);
 
-    //　TODO: dynamic routesのパラメータもスキーマに含めて、パースに失敗したら404を返すようにする
     const parseUserDetailResult = userDetailPageSchame.safeParse(query);
     if (!parseUserDetailResult.success) {
       return { notFound: true };
     }
-    const { tab, page } = parseUserDetailResult.data;
 
+    const { tab, page } = parseUserDetailResult.data;
     const userId = assertString(query.id);
 
     const user = await caller.user.get({ userId });

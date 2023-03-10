@@ -62,7 +62,7 @@ export const UserDeletepage: React.FC = () => {
             placeItems: "center",
           })}
         >
-          <Button color={"red"} onClick={handleDeleteUser}>
+          <Button color="red" onClick={handleDeleteUser}>
             ユーザーを削除する
           </Button>
         </Box>

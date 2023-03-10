@@ -18,47 +18,28 @@ import { UserDetailMenuButton } from "./UserDetailMenuButton";
 import { UserIcon } from "./UserIcon";
 
 type Props = {
-  userImage?: string | null;
-  userName?: string | null;
   sumThemeLikes?: number;
   themeDeveloperLikes?: number;
-  githuburl?: string;
   user: User;
 };
-//TODO
 export function UserDetailCard({
-  userImage,
-  userName,
   sumThemeLikes,
   themeDeveloperLikes,
-  githuburl,
   user,
 }: Props) {
-  if (githuburl === undefined) {
-    githuburl = Routes.home;
-  }
-
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
 
   //現在見ている自分のページか
-  const sessionUser = session?.user.id === user.id;
-
-  let sessionId: string;
-  if (!session) {
-    //sessionがなければ、ログインのモーダルが出るから""でも問題がないと思う。
-    sessionId = "";
-  } else {
-    sessionId = session.user.id;
-  }
+  const isLogedInUserPage = session?.user.id === user.id;
 
   const { createFavoriteMutation, deleteFavoriteMutation, favorited } =
-    useFavoriteUser(user.id, sessionId);
+    useFavoriteUser(user.id, session?.user.id);
 
   const { favoriteUsersCount } = useFavoriteUsersCountQuery(user.id);
 
   const handleFavoriteUser = () => {
-    if (!session) {
+    if (session?.user.id === undefined) {
       openLoginModal();
       return;
     }
@@ -77,8 +58,8 @@ export function UserDetailCard({
   return (
     <Card h={300} w={250} sx={{ flexShrink: 0 }}>
       <Flex
-        direction={"column"}
-        justify={"space-between"}
+        direction="column"
+        justify="space-between"
         h="100%"
         style={{ position: "relative" }}
       >
@@ -86,26 +67,26 @@ export function UserDetailCard({
           <UserDetailMenuButton user={user} />
         </Box>
 
-        {sessionUser && (
+        {isLogedInUserPage && (
           <Link href={Routes.userUpdate} passHref>
             <CardActionIcon style={{ position: "absolute", right: 0, top: 0 }}>
               <RiEdit2Line size={20} />
             </CardActionIcon>
           </Link>
         )}
-        <Flex align={"center"} gap={20} wrap="wrap" direction={"column"}>
-          <UserIcon iconSrc={userImage} size="xl" />
+        <Flex align="center" gap={20} wrap="wrap" direction="column">
+          <UserIcon iconSrc={user.image} size="xl" />
         </Flex>
-        <Flex align={"center"} justify={"center"}>
-          <Text>{userName}</Text>
+        <Flex align="center" justify="center">
+          <Text>{user.name}</Text>
         </Flex>
 
-        <Flex justify={"center"}>
-          {!sessionUser && (
+        <Flex justify="center">
+          {!isLogedInUserPage && (
             <UserFavoriteButton
               onFavorite={handleFavoriteUser}
               favorited={favorited}
-              userName={userName}
+              userName={user.name}
             />
           )}
           <Button
@@ -118,7 +99,7 @@ export function UserDetailCard({
           </Button>
         </Flex>
 
-        <Flex gap={40} mt={10} wrap="wrap" justify={"center"}>
+        <Flex gap={40} mt={10} wrap="wrap" justify="center">
           <Box>
             <Tooltip
               label="投稿したお題のいいねの合計"
@@ -126,7 +107,7 @@ export function UserDetailCard({
               withArrow
               transition="pop"
             >
-              <Flex align={"center"} wrap="wrap" direction={"column"}>
+              <Flex align="center" wrap="wrap" direction="column">
                 <LikeThemeIcon />
                 <Text>{sumThemeLikes}</Text>
               </Flex>
@@ -139,7 +120,7 @@ export function UserDetailCard({
               withArrow
               transition="pop"
             >
-              <Flex align={"center"} wrap="wrap" direction={"column"}>
+              <Flex align="center" wrap="wrap" direction="column">
                 <LikeDeveloperIcon />
                 <Text>{themeDeveloperLikes}</Text>
               </Flex>

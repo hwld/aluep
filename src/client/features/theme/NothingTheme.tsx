@@ -19,11 +19,11 @@ export const NothingTheme: React.FC<Props> = ({ page, user }) => {
   };
   const nothingHome = () => {
     return (
-      <Flex direction={"column"} gap={10}>
+      <Flex direction="column" gap={10}>
         <Text color="gray.5">お題はまだ投稿されていません。</Text>
         {user ? (
           <Button
-            bg={"red.7"}
+            bg="red.7"
             leftIcon={<MdPostAdd size={25} />}
             onClick={handleCreateTheme}
           >
@@ -38,8 +38,8 @@ export const NothingTheme: React.FC<Props> = ({ page, user }) => {
 
   const initialPage = () => {
     return (
-      <Flex direction={"column"} gap={30}>
-        <Flex justify={"center"} align={"center"} gap={20}>
+      <Flex direction="column" gap={30}>
+        <Flex justify="center" align="center" gap={20}>
           <FaKey size={70} color={mantineTheme.colors.red[7]} />
           <Text size={50} c="red.7">
             or
@@ -55,8 +55,8 @@ export const NothingTheme: React.FC<Props> = ({ page, user }) => {
 
   const nothigSearch = () => {
     return (
-      <Flex direction={"column"} gap={30}>
-        <Flex justify={"center"} align={"center"}>
+      <Flex direction="column" gap={30}>
+        <Flex justify="center" align="center">
           <GoSearch size={70} color={mantineTheme.colors.red[7]} />
           <BsDot size={40} color={mantineTheme.colors.red[3]} />
           <BsDot size={40} color={mantineTheme.colors.red[4]} />
@@ -87,7 +87,7 @@ export const NothingTheme: React.FC<Props> = ({ page, user }) => {
 
   return (
     <Flex
-      justify={"center"}
+      justify="center"
       sx={() => {
         return { margin: 40 };
       }}

@@ -14,8 +14,6 @@ import { useURLParams } from "../lib/useURLParams";
 
 type Props = { user: User };
 
-// TODO: べたがきをどうにかする
-// TODO: レイアウトを見直す
 export const UserDetailPage: React.FC<Props> = ({ user }) => {
   const [{ tab: activeTab, page }, setURLParam] =
     useURLParams(userDetailPageSchame);
@@ -65,8 +63,6 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
     <Flex maw={1200} direction="column" align="center" m="auto">
       <Flex w="100%" mih={300} gap="md" mt={60}>
         <UserDetailCard
-          userImage={user.image}
-          userName={user.name}
           sumThemeLikes={sumThemeLikes ?? 0}
           themeDeveloperLikes={themeDeveloperLikes ?? 0}
           user={user}

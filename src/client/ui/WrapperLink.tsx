@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 
-export type WrapperLinkProps = { children?: ReactNode } & (
+type WrapperLinkProps = { children?: ReactNode } & (
   | { noWrap: true }
   | ({ noWrap?: false; target?: HTMLAttributeAnchorTarget } & LinkProps)
 );

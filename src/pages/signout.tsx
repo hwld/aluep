@@ -42,7 +42,7 @@ const Signout: NextPage = () => {
             <Text>ログアウトしてもよろしいですか？</Text>
             <Button
               leftIcon={<MdLogout size={25} />}
-              color={"red"}
+              color="red"
               onClick={handleSignOut}
               w="fit-content"
             >
