@@ -1,8 +1,9 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { User } from "@prisma/client";
+import { User as PrismaUser } from "@prisma/client";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { db } from "../../../server/lib/prismadb";
+import { convertUser } from "../../../server/models/user";
 import { Routes } from "../../../share/routes";
 
 export const authOptions: NextAuthOptions = {
@@ -21,13 +22,14 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, user }) => {
       // PrismaAdapterを使用すると、ここのuserにはPrismaのUserモデルが入ってくる。
       // それを推論できないので強制的にキャストする。
-      const prismaUser = user as User;
+      const prismaUser = user as PrismaUser;
 
-      session.user.id = prismaUser.id;
-      session.user.profile = prismaUser.profile;
+      const appUser = convertUser(prismaUser);
+      session.user = appUser;
+
       return session;
     },
-    signIn: async ({ account, profile, user }) => {
+    signIn: async ({ account }) => {
       //ログイン時にaccess_tokenが更新されないので、手動で更新する
       if (account) {
         try {
@@ -42,15 +44,6 @@ export const authOptions: NextAuthOptions = {
               },
             });
             if (!existingAccount) {
-              // const githubName = await tx.user.update({
-              //   where: {
-              //     id: user.id,
-              //   },
-              //   data: {
-              //     githubname: user.name,
-              //   },
-              // });
-
               return;
             }
 
