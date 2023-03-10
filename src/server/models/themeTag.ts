@@ -1,13 +1,11 @@
-import { z } from "zod";
 import { db } from "../lib/prismadb";
 
-const themeTagSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-});
-export type ThemeTag = z.infer<typeof themeTagSchema>;
+export type ThemeTag = {
+  id: string;
+  createdAt: string;
+  name: string;
+  updatedAt: string;
+};
 
 export const findAllThemeTags = async (): Promise<ThemeTag[]> => {
   const rawTags = await db.appThemeTag.findMany();

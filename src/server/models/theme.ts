@@ -1,30 +1,31 @@
 import { Prisma } from "@prisma/client";
 import { formatDistanceStrict } from "date-fns";
 import { ja } from "date-fns/locale";
-import { z } from "zod";
 import { ThemeOrder, ThemePeriod } from "../../share/schema";
 import { OmitStrict } from "../../types/OmitStrict";
 import { db } from "../lib/prismadb";
 
-const themeSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  descriptionHtml: z.string(),
-  tags: z.array(z.object({ id: z.string(), name: z.string() })),
-  user: z.object({
-    id: z.string(),
-    image: z.string().nullable(),
-    name: z.string().nullable(),
-  }),
-  likes: z.number(),
-  developers: z.number(),
-  comments: z.number(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  // 作成してからの取得するまでの経過時間
-  elapsedSinceCreation: z.string(),
-});
-export type Theme = z.infer<typeof themeSchema>;
+export type Theme = {
+  user: {
+    id: string;
+    name: string | null;
+    image: string | null;
+  };
+  likes: number;
+  id: string;
+  title: string;
+  descriptionHtml: string;
+  tags: {
+    id: string;
+    name: string;
+  }[];
+  developers: number;
+  comments: number;
+  createdAt: string;
+  updatedAt: string;
+  /** 作成してから取得するまでの経過時間 */
+  elapsedSinceCreation: string;
+};
 
 const themeArgs = {
   include: {
