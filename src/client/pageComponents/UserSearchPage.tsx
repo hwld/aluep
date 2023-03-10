@@ -58,8 +58,8 @@ export const UserSearchPage: React.FC = () => {
         <Stack mt={30}>
           {/* 検索ボックスが空 */}
           {userName === "" ? (
-            <Flex direction={"column"} gap={30}>
-              <Flex justify={"center"} align={"center"}>
+            <Flex direction="column" gap={30}>
+              <Flex justify="center" align="center">
                 <MdOutlinePersonSearch
                   size={100}
                   color={mantineTheme.colors.red[7]}
@@ -106,8 +106,8 @@ export const UserSearchPage: React.FC = () => {
               )}
             </>
           ) : (
-            <Flex direction={"column"} gap={30}>
-              <Flex justify={"center"} align={"center"}>
+            <Flex direction="column" gap={30}>
+              <Flex justify="center" align="center">
                 <MdOutlinePersonSearch
                   size={70}
                   color={mantineTheme.colors.red[7]}

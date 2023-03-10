@@ -127,7 +127,7 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
           </Flex>
 
           {/* いいね数 */}
-          <Flex justify="flex-end" align="flex-end" gap={"xs"}>
+          <Flex justify="flex-end" align="flex-end" gap="xs">
             <Flex align="center" gap={5}>
               <TbHeart
                 size="55px"

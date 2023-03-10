@@ -4,10 +4,10 @@ import { trpc } from "../../lib/trpc";
 
 export const favoritedUserQueryKey = (
   userId: string,
-  loggedInUserId: string = ""
+  loggedInUserId?: string
 ) => ["user", "favoriteUserId", userId, loggedInUserId];
 
-export const useFavoriteUser = (userId: string, loggedInUserId: string) => {
+export const useFavoriteUser = (userId: string, loggedInUserId?: string) => {
   const queryClient = useQueryClient();
 
   const { data: favorited } = useQuery({

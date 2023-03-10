@@ -47,7 +47,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
           <Text c="gray.5">開発者の情報</Text>
           <Flex direction="row" gap={10} h={300}>
             <Card w={250} sx={{ flexShrink: 0 }}>
-              <Flex direction={"column"} justify={"space-between"} h="100%">
+              <Flex direction="column" justify="space-between" h="100%">
                 <Flex mt={-5}>
                   <DeveloperMenuButton
                     developer={developer}
@@ -56,11 +56,11 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                   />
                 </Flex>
                 <Flex
-                  align={"center"}
+                  align="center"
                   mt={-40}
                   gap={20}
                   wrap="wrap"
-                  direction={"column"}
+                  direction="column"
                 >
                   <UserIconLink
                     size="xl"
@@ -68,11 +68,11 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                     userId={developer.userId}
                   />
                 </Flex>
-                <Flex align={"center"} justify={"center"}>
+                <Flex align="center" justify="center">
                   <Text>{developer.name}</Text>
                 </Flex>
 
-                <Flex gap={40} mt={10} wrap="wrap" justify={"center"}>
+                <Flex gap={40} mt={10} wrap="wrap" justify="center">
                   <Box>
                     <Tooltip
                       label="開発者に対するいいねの合計"
@@ -80,7 +80,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                       withArrow
                       transition="pop"
                     >
-                      <Flex align={"center"} wrap="wrap" gap="3px">
+                      <Flex align="center" wrap="wrap" gap="3px">
                         <TbHeart
                           color="transparent"
                           fill={mantineTheme.colors.red[7]}
@@ -98,7 +98,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                       withArrow
                       transition="pop"
                     >
-                      <Flex align={"center"} wrap="wrap" direction={"column"}>
+                      <Flex align="center" wrap="wrap" direction="column">
                         <ActionIcon
                           size={30}
                           component={Link}
