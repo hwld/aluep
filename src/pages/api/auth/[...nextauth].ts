@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { User } from "@prisma/client";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { db } from "../../../server/lib/prismadb";
@@ -6,9 +7,6 @@ import { Routes } from "../../../share/routes";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
-  //ここでサインアウト時に飛べるページを指定できる
-  //csrfトークンを取得しないとここに飛べないっぽい？連続でやると飛べない理由はキャッシュが残っているから？
-
   pages: {
     signOut: Routes.signout,
   },
@@ -21,9 +19,12 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     session: async ({ session, user }) => {
-      session.user.id = user.id;
-      // TODO
-      session.user.profile = (user as any)?.profile;
+      // PrismaAdapterを使用すると、ここのuserにはPrismaのUserモデルが入ってくる。
+      // それを推論できないので強制的にキャストする。
+      const prismaUser = user as User;
+
+      session.user.id = prismaUser.id;
+      session.user.profile = prismaUser.profile;
       return session;
     },
     signIn: async ({ account, profile, user }) => {
