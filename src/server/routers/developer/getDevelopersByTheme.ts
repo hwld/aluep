@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { pageLimit } from "../../../share/consts";
 import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
@@ -16,7 +17,7 @@ export const getDevelopersByTheme = publicProcedure
       finder: findManyThemeDevelopers,
       counter: ({ loggedInUserId, ...others }) =>
         db.appThemeDeveloper.count(others),
-      pagingData: { page, limit: 20 },
+      pagingData: { page, limit: pageLimit.developers },
     });
 
     return { list: developersPerPage, allPages };

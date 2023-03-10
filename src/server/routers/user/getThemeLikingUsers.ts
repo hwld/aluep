@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { pageLimit } from "../../../share/consts";
 import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
@@ -15,7 +16,7 @@ export const getThemeLikingUsers = publicProcedure
         orderBy: { createdAt: "desc" as const },
       },
       counter: db.appThemeLike.count,
-      pagingData: { page: input.page, limit: 20 },
+      pagingData: { page: input.page, limit: pageLimit.themeLikingUsers },
     });
 
     const userIds = themeLikesPerPage.map(({ userId }) => userId);

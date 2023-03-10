@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { pageLimit } from "../../../share/consts";
 import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
@@ -23,8 +24,7 @@ export const getFavoritedUsers = publicProcedure
       finderInput: { where: { id: { in: favoritedUserIds } } },
       finder: findManyUsers,
       counter: db.user.count,
-      // TODO: 他のAPIもそうだが、ページごとのアイテム数を定数ファイルに分けたい
-      pagingData: { page, limit: 50 },
+      pagingData: { page, limit: pageLimit.favoritedUsers },
     });
 
     return { list: favoritedUsersPerPage, allPages };

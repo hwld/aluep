@@ -1,3 +1,4 @@
+import { pageLimit } from "../../../share/consts";
 import { searchThemePageSchema } from "../../../share/schema";
 import { publicProcedure } from "../../lib/trpc";
 import { searchThemes, Theme } from "../../models/theme";
@@ -12,7 +13,7 @@ export const searchTheme = publicProcedure
         order: input.order,
         period: input.period,
       },
-      { page: input.page, limit: 24 }
+      { page: input.page, limit: pageLimit.searchedThemes }
     );
 
     return paginatedThemes;
