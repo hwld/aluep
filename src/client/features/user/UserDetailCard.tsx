@@ -1,12 +1,10 @@
 import { Box, Button, Card, Flex, Text, Tooltip } from "@mantine/core";
-import { User } from "@prisma/client";
 import Link from "next/link";
-
 import router from "next/router";
 import { RiEdit2Line } from "react-icons/ri";
+import { User } from "../../../server/models/user";
 import { Routes } from "../../../share/routes";
 import { CardActionIcon } from "../../ui/CardActionIcon";
-
 import { LikeDeveloperIcon } from "../developer/LikeDeveloperIcon";
 import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../session/useSessionQuery";

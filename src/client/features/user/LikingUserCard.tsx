@@ -1,6 +1,7 @@
 import { Card, Flex, Text } from "@mantine/core";
-import { AppThemeLike, User } from "@prisma/client";
+import { AppThemeLike } from "@prisma/client";
 import { useRouter } from "next/router";
+import { User } from "../../../server/models/user";
 import { Routes } from "../../../share/routes";
 import { formatDate } from "../../lib/utils";
 import { TextLink } from "../../ui/TextLink";

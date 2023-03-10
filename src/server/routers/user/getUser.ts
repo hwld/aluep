@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
+import { findUser } from "../../models/user";
 
 export const getUser = publicProcedure
   .input(z.object({ userId: z.string() }))
   .query(async ({ input }) => {
-    const user = await db.user.findFirst({ where: { id: input.userId } });
+    const user = await findUser({ where: { id: input.userId } });
     return user;
   });

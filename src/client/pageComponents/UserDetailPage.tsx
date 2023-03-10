@@ -1,6 +1,6 @@
 import { Box, Button, Card, Flex, Stack, Text } from "@mantine/core";
-import { User } from "@prisma/client";
 import { useMemo } from "react";
+import { User } from "../../server/models/user";
 import { userDetailPageSchame, UserDetailPageTab } from "../../share/schema";
 import { assertNever } from "../../share/utils";
 import { useThemeDeveloperLikesQuery } from "../features/developer/useThemeDeveloperLikesQuery";

@@ -1,9 +1,9 @@
 import { Box, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
-import { User } from "@prisma/client";
 import React from "react";
 import { BiBookmarkHeart } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { TbHeart } from "react-icons/tb";
+import { User } from "../../server/models/user";
 import { paginatedPageSchema } from "../../share/schema";
 import { useFavoritedUsersPerPage } from "../features/user/useFavoritedUsersPerPage";
 import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";

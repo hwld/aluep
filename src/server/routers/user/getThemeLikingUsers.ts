@@ -3,6 +3,7 @@ import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
+import { findManyUsers } from "../../models/user";
 
 export const getThemeLikingUsers = publicProcedure
   .input(z.object({ themeId: z.string(), page: pagingSchema }))
@@ -20,20 +21,18 @@ export const getThemeLikingUsers = publicProcedure
     const userIds = themeLikesPerPage.map(({ userId }) => userId);
 
     //ユーザーの情報を取得する
-    const usered = await db.user.findMany({
-      where: { id: { in: userIds } },
-    });
+    const users = await findManyUsers({ where: { id: { in: userIds } } });
 
     //userIdsに並び順を合わせる
-    const sortusers = usered.sort((a, b) => {
+    const sortusers = users.sort((a, b) => {
       return userIds.indexOf(a.id) - userIds.indexOf(b.id);
     });
 
     //usersにceratedAt(いいねをした日)をつける
-    const users = sortusers.map((user, i) => ({
+    const userWithCreatedAts = sortusers.map((user, i) => ({
       ...user,
       themeLikeCreated: new Date(themeLikesPerPage[i]?.createdAt) ?? 0,
     }));
 
-    return { list: users, allPages };
+    return { list: userWithCreatedAts, allPages };
   });
