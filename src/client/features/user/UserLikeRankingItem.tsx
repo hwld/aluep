@@ -1,8 +1,8 @@
 import { Flex, Text, useMantineTheme } from "@mantine/core";
-import { User } from "@prisma/client";
 import { useMemo } from "react";
 import { BiMedal } from "react-icons/bi";
 import { TbHeart } from "react-icons/tb";
+import { User } from "../../../server/models/user";
 import { UserIconLink } from "./UserIconLink";
 
 type Props = { ranking: number; user: User; likeCount: number };

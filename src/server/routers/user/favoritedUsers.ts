@@ -3,6 +3,7 @@ import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
+import { findManyUsers } from "../../models/user";
 
 export const getFavoritedUsers = publicProcedure
   .input(z.object({ favoriteByUserId: z.string(), page: pagingSchema }))
@@ -20,7 +21,7 @@ export const getFavoritedUsers = publicProcedure
 
     const [favoritedUsersPerPage, { allPages }] = await paginate({
       finderInput: { where: { id: { in: favoritedUserIds } } },
-      finder: db.user.findMany,
+      finder: findManyUsers,
       counter: db.user.count,
       // TODO: 他のAPIもそうだが、ページごとのアイテム数を定数ファイルに分けたい
       pagingData: { page, limit: 50 },

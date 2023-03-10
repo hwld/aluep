@@ -1,14 +1,35 @@
-import { User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { db } from "../lib/prismadb";
 
-export type AppUser = {
+export type User = {
   id: string;
   name: string | null;
-  email: string | null;
-  emailVerified: Date | null;
   image: string | null;
   profile: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+};
+
+const userArgs = {
+  select: { id: true, name: true, image: true, profile: true },
+} satisfies Prisma.UserArgs;
+
+type FindUserArgs = Omit<Prisma.UserFindFirstArgs, keyof Prisma.UserArgs>;
+export const findUser = async (
+  args: FindUserArgs
+): Promise<User | undefined> => {
+  const rawUser = await db.user.findFirst({ ...args, ...userArgs });
+  if (!rawUser) {
+    return undefined;
+  }
+
+  return rawUser;
+};
+
+type FindManyUsersArgs = Omit<Prisma.UserFindManyArgs, keyof Prisma.UserArgs>;
+export const findManyUsers = async (
+  args: FindManyUsersArgs
+): Promise<User[]> => {
+  const rawUsers = await db.user.findMany({ ...args, ...userArgs });
+  return rawUsers;
 };
 
 // ユーザー情報と投稿したお題のいいね数

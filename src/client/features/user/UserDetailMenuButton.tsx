@@ -1,10 +1,10 @@
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { User } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import { BsThreeDots } from "react-icons/bs";
 import { MdFlag } from "react-icons/md";
 import { RouterInputs } from "../../../server/lib/trpc";
+import { User } from "../../../server/models/user";
 import { Routes } from "../../../share/routes";
 import { ReportBaseForm } from "../../../share/schema";
 import { trpc } from "../../lib/trpc";

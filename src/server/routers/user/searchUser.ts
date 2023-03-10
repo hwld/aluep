@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
+import { findManyUsers } from "../../models/user";
 
 export const searchUser = publicProcedure
   .input(z.object({ userName: z.string() }))
@@ -8,7 +8,7 @@ export const searchUser = publicProcedure
     if (input.userName === "") {
       return [];
     } else {
-      const searchUsers = await db.user.findMany({
+      const searchUsers = await findManyUsers({
         where: { name: { contains: input.userName } },
         take: 30,
       });

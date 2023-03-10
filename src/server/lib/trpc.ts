@@ -9,8 +9,8 @@ import { IncomingMessage } from "http";
 import { Session, unstable_getServerSession } from "next-auth";
 import SuperJSON from "superjson";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
+import { findUser } from "../models/user";
 import { AppRouter } from "../routers";
-import { db } from "./prismadb";
 
 export async function createTRPCContext(
   opts: CreateNextContextOptions
@@ -45,9 +45,7 @@ const isLoggedIn = middleware(async ({ ctx, next }) => {
     throw new TRPCError({ code: "FORBIDDEN" });
   }
 
-  const loggedInUser = await db.user.findFirst({
-    where: { id: ctx.session.user.id },
-  });
+  const loggedInUser = await findUser({ where: { id: ctx.session.user.id } });
   if (!loggedInUser) {
     throw new TRPCError({ code: "FORBIDDEN" });
   }

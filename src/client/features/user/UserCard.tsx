@@ -1,6 +1,6 @@
 import { Card, Stack, Text } from "@mantine/core";
-import { User } from "@prisma/client";
 import { useRouter } from "next/router";
+import { User } from "../../../server/models/user";
 import { Routes } from "../../../share/routes";
 import { TextLink } from "../../ui/TextLink";
 import { UserIcon } from "./UserIcon";
