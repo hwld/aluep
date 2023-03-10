@@ -1,21 +1,19 @@
 import { Prisma } from "@prisma/client";
-import { z } from "zod";
 import { OmitStrict } from "../../types/OmitStrict";
 import { db } from "../lib/prismadb";
 
-const themeDeveloperSchema = z.object({
-  id: z.string(),
-  themeId: z.string(),
-  userId: z.string(),
-  name: z.string().nullable(),
-  image: z.string().nullable(),
-  githubUrl: z.string(),
-  comment: z.string(),
-  likes: z.number(),
-  likedByLoggedInUser: z.boolean(),
-  createdAt: z.string(),
-});
-export type ThemeDeveloper = z.infer<typeof themeDeveloperSchema>;
+export type ThemeDeveloper = {
+  id: string;
+  themeId: string;
+  userId: string;
+  name: string | null;
+  image: string | null;
+  githubUrl: string;
+  comment: string;
+  likes: number;
+  likedByLoggedInUser: boolean;
+  createdAt: string;
+};
 
 const developerArgs = Prisma.validator<Prisma.AppThemeDeveloperArgs>()({
   include: { user: true, likes: true },

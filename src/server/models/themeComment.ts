@@ -1,30 +1,28 @@
 import { Prisma } from "@prisma/client";
-import { z } from "zod";
 import { OmitStrict } from "../../types/OmitStrict";
 import { db } from "../lib/prismadb";
 
-const themeCommentSchema = z.object({
-  id: z.string(),
-  comment: z.string(),
-  themeId: z.string(),
-  fromUser: z.object({
-    id: z.string(),
-    name: z.string().nullable(),
-    image: z.string().nullable(),
-  }),
-
-  /** nullのときは返信元が削除されていること、undefinedのときは返信コメントではないことを表す */
-  inReplyToComment: z
-    .object({ id: z.string(), fromUserName: z.string().nullable() })
-    .nullable()
-    .optional(),
-  createdAt: z.date(),
-});
-// 返信元が存在しない -> undefined
-// 返信元が削除された -> { isDeleted: true }
-// 返信元が存在する -> { commentId:string, fromUserName:string }
-
-export type ThemeComment = z.infer<typeof themeCommentSchema>;
+export type ThemeComment = {
+  /** nullのときは返信元が削除されている
+   *  undefinedのときは返信コメントではない
+   */
+  inReplyToComment?:
+    | {
+        id: string;
+        fromUserName: string | null;
+      }
+    | null
+    | undefined;
+  id: string;
+  comment: string;
+  themeId: string;
+  fromUser: {
+    id: string;
+    name: string | null;
+    image: string | null;
+  };
+  createdAt: Date;
+};
 
 const themeCommentArgs = {
   select: {
