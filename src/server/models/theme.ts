@@ -172,6 +172,7 @@ export const pickUpThemes = async (
       tx
     );
 
+    // TODO: utilsに切り出す
     // searchedThemeIdsの並び順が保持されないので、並び替え直す。
     const sortedThemes = themes.sort((a, b) => {
       return pickUpedThemeIds.indexOf(a.id) - pickUpedThemeIds.indexOf(b.id);

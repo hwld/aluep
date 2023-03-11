@@ -9,21 +9,20 @@ import { findManyThemes } from "../../models/theme";
 export const getJoinedThemesByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page } }) => {
-    // TODO: joinThemeをpaginateする
-
-    //すべての開発者からユーザを抽出
-    const joinTheme = await db.appThemeDeveloper.findMany({
-      where: { userId: input.userId },
-    });
-    //テーマのidだけを抽出
-    const joinThemeList = joinTheme.map((theme) => theme.appThemeId);
-
-    const [joinedThemesPerPage, { allPages }] = await paginate({
-      finder: findManyThemes,
-      finderInput: { where: { id: { in: joinThemeList } } },
-      counter: db.appTheme.count,
+    const [developers, { allPages }] = await paginate({
+      finder: db.appThemeDeveloper.findMany,
+      finderInput: { where: { userId: input.userId } },
+      counter: db.appThemeDeveloper.count,
       pagingData: { page, limit: pageLimit.joinedThemes },
     });
 
-    return { list: joinedThemesPerPage, allPages };
+    const joinedThemeIds = developers.map((t) => t.appThemeId);
+
+    const joinedThemes = await findManyThemes({
+      where: { id: { in: joinedThemeIds } },
+    });
+
+    // TODO: joinedThemesをjoinedThemeIdsの並び順に合わせる
+
+    return { list: joinedThemes, allPages };
   });
