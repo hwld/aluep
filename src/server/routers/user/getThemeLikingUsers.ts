@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { pageLimit } from "../../../share/consts";
 import { pagingSchema } from "../../../share/schema";
+import { sortedInSameOrder } from "../../../share/utils";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
@@ -25,12 +26,14 @@ export const getThemeLikingUsers = publicProcedure
     const users = await findManyUsers({ where: { id: { in: userIds } } });
 
     //userIdsに並び順を合わせる
-    const sortusers = users.sort((a, b) => {
-      return userIds.indexOf(a.id) - userIds.indexOf(b.id);
+    const sortedUsers = sortedInSameOrder({
+      target: users,
+      base: userIds,
+      getKey: (t) => t.id,
     });
 
     //usersにceratedAt(いいねをした日)をつける
-    const userWithCreatedAts = sortusers.map((user, i) => ({
+    const userWithCreatedAts = sortedUsers.map((user, i) => ({
       ...user,
       themeLikeCreated: new Date(themeLikesPerPage[i]?.createdAt) ?? 0,
     }));

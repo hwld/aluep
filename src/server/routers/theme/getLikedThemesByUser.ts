@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { pageLimit } from "../../../share/consts";
 import { pagingSchema } from "../../../share/schema";
+import { sortedInSameOrder } from "../../../share/utils";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
@@ -26,7 +27,11 @@ export const getLikedThemesByUser = publicProcedure
       where: { id: { in: likedThemeIds } },
     });
 
-    // TODO: likedThemeIdsとlikedThemesの並び順を合わせる
+    const sortedLikedThemes = sortedInSameOrder({
+      target: likedThemes,
+      base: likedThemeIds,
+      getKey: (t) => t.id,
+    });
 
-    return { list: likedThemes, allPages };
+    return { list: sortedLikedThemes, allPages };
   });

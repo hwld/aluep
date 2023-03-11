@@ -27,6 +27,24 @@ export const assertString = (value: unknown): string => {
   return value;
 };
 
-export const assertNever = (value: never): never => {
+export const assertNever = (_: never): never => {
   throw new Error();
+};
+
+type SortedInSameOrderParams<T, K> = {
+  target: T[];
+  base: K[];
+  getKey: (value: T) => K;
+};
+export const sortedInSameOrder = <T, K>({
+  target,
+  base,
+  getKey,
+}: SortedInSameOrderParams<T, K>): T[] => {
+  const targetClone = structuredClone(target);
+  const baseClone = structuredClone(base);
+
+  return targetClone.sort((a, b) => {
+    return baseClone.indexOf(getKey(a)) - baseClone.indexOf(getKey(b));
+  });
 };

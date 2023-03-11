@@ -1,3 +1,4 @@
+import { sortedInSameOrder } from "../../../share/utils";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 import { findManyThemes } from "../../models/theme";
@@ -34,8 +35,10 @@ export const getTop10LikesThemesInThisMonth = publicProcedure.query(
       );
 
       // themeIdsに並び順を合わせる
-      const sortedThemes = themes.sort((a, b) => {
-        return themeIds.indexOf(a.id) - themeIds.indexOf(b.id);
+      const sortedThemes = sortedInSameOrder({
+        target: themes,
+        base: themeIds,
+        getKey: (t) => t.id,
       });
 
       return sortedThemes;

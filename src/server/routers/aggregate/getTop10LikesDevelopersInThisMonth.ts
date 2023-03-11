@@ -1,3 +1,4 @@
+import { sortedInSameOrder } from "../../../share/utils";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 import { UserAndDeveloperLikes } from "../../models/user";
@@ -38,10 +39,10 @@ export const getTop10LikesDevelopersInThisMonth = publicProcedure.query(
 
         // developerUserIdsはランキング順どおりになっているが、prismaでinを通すと順番が不定になるので、
         // developeruserIdsの順に並び変える
-        const sortedUsers = users.sort((a, b) => {
-          return (
-            developerUserIds.indexOf(a.id) - developerUserIds.indexOf(b.id)
-          );
+        const sortedUsers = sortedInSameOrder({
+          target: users,
+          base: developerUserIds,
+          getKey: (t) => t.id,
         });
 
         // sortedUsersにlikeCountをつける
