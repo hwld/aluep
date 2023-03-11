@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: "standalone",
-  // scrollRestorationが動いてない？
+  // ブラウザバックしたときに以前のスクロール位置を保持する
   experimental: { scrollRestoration: true },
 };
 

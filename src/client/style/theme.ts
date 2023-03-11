@@ -2,6 +2,8 @@ import { MantineThemeOverride } from "@mantine/core";
 
 export const theme: MantineThemeOverride = {
   globalStyles: (theme) => ({
+    html: { scrollbarGutter: "stable" },
+    body: { backgroundColor: theme.colors.gray[2] },
     div: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
     "h1,h2,h3,h4,h5,h6": { wordBreak: "break-all", whiteSpace: "pre-wrap" },
   }),

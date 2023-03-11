@@ -17,7 +17,6 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
     <>
       <Box
         sx={(theme) => ({
-          backgroundColor: theme.colors.gray[2],
           minHeight: "100dvh",
           display: "flex",
         })}
@@ -30,9 +29,6 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
             width: "100%",
             minWidth: "0",
             margin: "0 auto",
-            height: "100dvh",
-            overflow: "auto",
-            scrollbarGutter: "stable",
           }}
         >
           {children}
