@@ -9,21 +9,24 @@ import { findManyThemes } from "../../models/theme";
 export const getLikedThemesByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page } }) => {
-    // TODO: likeThemeIdsの段階でpaginateする
-
-    //お題にいいねしてあるモデルの中から自分のIDを取得
-    const likeThemeIds = await db.appThemeLike.findMany({
-      select: { appThemeId: true },
-      where: { userId: input.userId },
-    });
-    const likeThemeList = likeThemeIds.map((like) => like.appThemeId);
-
-    const [likedThemesPerPage, { allPages }] = await paginate({
-      finder: findManyThemes,
-      finderInput: { where: { id: { in: likeThemeList } } },
-      counter: db.appTheme.count,
+    // 指定されたユーザーがいいねしたお題のidを取得する
+    const [likedThemeIdObjs, { allPages }] = await paginate({
+      finder: db.appThemeLike.findMany,
+      finderInput: {
+        select: { appThemeId: true },
+        where: { userId: input.userId },
+      },
+      counter: ({ select, ...args }) => db.appThemeLike.count(args),
       pagingData: { page, limit: pageLimit.likedThemes },
     });
+    const likedThemeIds = likedThemeIdObjs.map((l) => l.appThemeId);
 
-    return { list: likedThemesPerPage, allPages };
+    //お題にいいねしてあるモデルの中から自分のIDを取得
+    const likedThemes = await findManyThemes({
+      where: { id: { in: likedThemeIds } },
+    });
+
+    // TODO: likedThemeIdsとlikedThemesの並び順を合わせる
+
+    return { list: likedThemes, allPages };
   });

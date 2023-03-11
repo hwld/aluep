@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: "standalone",
+  // scrollRestorationが動いてない？
   experimental: { scrollRestoration: true },
 };
 
