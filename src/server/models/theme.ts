@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { formatDistanceStrict } from "date-fns";
 import { ja } from "date-fns/locale";
 import { ThemeOrder, ThemePeriod } from "../../share/schema";
+import { sortedInSameOrder } from "../../share/utils";
 import { OmitStrict } from "../../types/OmitStrict";
 import { db } from "../lib/prismadb";
 
@@ -172,10 +173,10 @@ export const pickUpThemes = async (
       tx
     );
 
-    // TODO: utilsに切り出す
-    // searchedThemeIdsの並び順が保持されないので、並び替え直す。
-    const sortedThemes = themes.sort((a, b) => {
-      return pickUpedThemeIds.indexOf(a.id) - pickUpedThemeIds.indexOf(b.id);
+    const sortedThemes = sortedInSameOrder({
+      target: themes,
+      base: pickUpedThemeIds,
+      getKey: (t) => t.id,
     });
 
     return sortedThemes;
@@ -289,8 +290,10 @@ export const searchThemes = async (
     );
 
     // searchedThemeIdsの並び順が保持されないので、並び替え直す。
-    const sortedThemes = themes.sort((a, b) => {
-      return searchedThemeIds.indexOf(a.id) - searchedThemeIds.indexOf(b.id);
+    const sortedThemes = sortedInSameOrder({
+      target: themes,
+      base: searchedThemeIds,
+      getKey: (t) => t.id,
     });
 
     return { themes: sortedThemes, allPages };
