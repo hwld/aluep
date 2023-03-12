@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { MdComputer } from "react-icons/md";
 import { RouterInputs } from "../../server/lib/trpc";
 import { Theme } from "../../server/models/theme";
-import { ThemeDeveloper } from "../../server/models/themeDeveloper";
+import { ThemeDevelopment } from "../../server/models/themeDevelopment";
 import { Routes } from "../../share/routes";
 import { RepositoryFormData, ThemeJoinFormData } from "../../share/schema";
 import { ThemeJoinForm } from "../features/theme/ThemeJoinForm";
@@ -14,14 +14,14 @@ import { showErrorNotification, showSuccessNotification } from "../lib/utils";
 
 type Props = {
   theme: Theme;
-  developer: ThemeDeveloper;
+  development: ThemeDevelopment;
   repoUrl?: string;
   repoFormData?: RepositoryFormData;
   reRepo?: string;
 };
-export const DeveloperEditPage: React.FC<Props> = ({
+export const DevelopmentEditPage: React.FC<Props> = ({
   theme,
-  developer,
+  development,
   repoUrl,
   repoFormData,
   reRepo,
@@ -31,16 +31,16 @@ export const DeveloperEditPage: React.FC<Props> = ({
   const mantineTheme = useMantineTheme();
 
   const updateMutation = useMutation({
-    mutationFn: (data: RouterInputs["developer"]["update"]) => {
-      return trpc.developer.update.mutate(data);
+    mutationFn: (data: RouterInputs["development"]["update"]) => {
+      return trpc.development.update.mutate(data);
     },
     onSuccess: () => {
       showSuccessNotification({
         title: "お題開発情報の更新",
         message: "お題開発情報を更新しました。",
       });
-      queryClient.invalidateQueries(["developers", developer.id]);
-      router.push(Routes.developer(theme.id, developer.id));
+      queryClient.invalidateQueries(["developments", development.id]);
+      router.push(Routes.development(theme.id, development.id));
     },
     onError: () => {
       showErrorNotification({
@@ -50,7 +50,7 @@ export const DeveloperEditPage: React.FC<Props> = ({
     },
   });
 
-  const handleUpdateDeveloper = (data: ThemeJoinFormData) => {
+  const handleUpdateDevelopment = (data: ThemeJoinFormData) => {
     updateMutation.mutate(data);
   };
 
@@ -78,10 +78,10 @@ export const DeveloperEditPage: React.FC<Props> = ({
         <Text c="gray.5">開発情報</Text>
         <Card>
           <ThemeJoinForm
-            onSubmit={handleUpdateDeveloper}
+            onSubmit={handleUpdateDevelopment}
             onCancel={handleBack}
             themeId={theme.id}
-            defaultValues={developer}
+            defaultValues={development}
             submitText="更新する"
             isLoading={updateMutation.isLoading || updateMutation.isSuccess}
             repository={repository}

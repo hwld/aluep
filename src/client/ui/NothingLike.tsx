@@ -3,12 +3,12 @@ import { AiOutlineUser } from "react-icons/ai";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
 
-type Props = { page: "Developers" | "Posters" };
+type Props = { page: "Developments" | "Posters" };
 
 export const NothingLike: React.FC<Props> = ({ page }) => {
   const mantineTheme = useMantineTheme();
 
-  const changeDeveloper = () => {
+  const changeDevelopment = () => {
     return (
       <Flex direction="column" align="center" gap={15}>
         <Flex align="flex-end">
@@ -16,10 +16,10 @@ export const NothingLike: React.FC<Props> = ({ page }) => {
           <TbHeart size={80} color={mantineTheme.colors.red[7]} />
         </Flex>
         <Text fz="xl" align="center" c="gray.5">
-          開発者へいいねしてみよう！
+          開発へいいねしてみよう！
         </Text>
         <Text fz="xs" c="gray.4" align="center">
-          開発者へのいいねのランキングがここに表示されます。
+          開発へのいいねのランキングがここに表示されます。
         </Text>
       </Flex>
     );
@@ -43,8 +43,8 @@ export const NothingLike: React.FC<Props> = ({ page }) => {
   };
 
   const changeNothing = () => {
-    if (page === "Developers") {
-      return changeDeveloper();
+    if (page === "Developments") {
+      return changeDevelopment();
     } else if (page === "Posters") {
       return changePoster();
     } else {

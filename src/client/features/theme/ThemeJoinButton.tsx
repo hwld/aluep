@@ -16,14 +16,14 @@ import { AppTooltip } from "../../ui/AppTooltip";
 import { ComputerIcon } from "../../ui/ComputerIcon";
 
 type Props = {
-  developers: number;
+  developments: number;
   loggedInUserJoinData: JoinData | undefined;
   onJoinTheme: (e: SyntheticEvent) => void;
   themeId: string;
 };
 
 export const ThemeJoinButton: React.FC<Props> = ({
-  developers,
+  developments,
   loggedInUserJoinData = { joined: false },
   onJoinTheme,
   themeId,
@@ -32,9 +32,11 @@ export const ThemeJoinButton: React.FC<Props> = ({
   const mantineTheme = useMantineTheme();
 
   const handleClick = (e: SyntheticEvent) => {
-    // すでに参加している場合は開発者情報へ遷移させる
+    // すでに参加している場合は自身の開発情報へ遷移させる
     if (loggedInUserJoinData.joined) {
-      router.push(Routes.developer(themeId, loggedInUserJoinData.developerId));
+      router.push(
+        Routes.development(themeId, loggedInUserJoinData.developmentId)
+      );
       return;
     }
 
@@ -79,19 +81,19 @@ export const ThemeJoinButton: React.FC<Props> = ({
           </ActionIcon>
         </AppTooltip>
       </Flex>
-      <Tooltip label="このお題の開発者を表示する" position="right">
+      <Tooltip label="開発情報の一覧を表示する" position="right">
         <Anchor
           component={Link}
-          href={Routes.developers(themeId)}
+          href={Routes.developments(themeId)}
           size="sm"
           sx={(theme) => ({
-            pointerEvents: developers === 0 ? "none" : "auto",
-            textDecoration: developers === 0 ? "none" : "underline",
+            pointerEvents: developments === 0 ? "none" : "auto",
+            textDecoration: developments === 0 ? "none" : "underline",
             color: theme.colors.red[7],
             "&:hover": { color: theme.colors.red[7] },
           })}
         >
-          {developers}
+          {developments}
         </Anchor>
       </Tooltip>
     </Stack>

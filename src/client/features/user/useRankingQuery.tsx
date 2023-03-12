@@ -3,21 +3,21 @@ import { trpc } from "../../lib/trpc";
 
 // 名前が長すぎる...
 
-export const top10LikesDevelopersInThisMonthQueryKey = [
-  "top10LikesDevelopersInThisMonth",
+export const top10LikesDevelopmentsInThisMonthQueryKey = [
+  "top10LikesDevelopmentsInThisMonth",
 ];
-export const useTop10LikesDeveloperInThisMonth = () => {
-  const { data: top10LikesDevelopersInThisMonth, ...others } = useQuery({
-    queryKey: top10LikesDevelopersInThisMonthQueryKey,
+export const useTop10LikesDevelopmentInThisMonth = () => {
+  const { data: top10LikesDevelopmentsInThisMonth, ...others } = useQuery({
+    queryKey: top10LikesDevelopmentsInThisMonthQueryKey,
     queryFn: () => {
-      return trpc.aggregate.getTop10LikesDevelopersInThisMonth.query();
+      return trpc.aggregate.getTop10LikesDevelopmentsInThisMonth.query();
     },
     // ランキングは最新のデータでなくても問題ないので、できる限りキャッシュから取ってこれるようにする
     // これをやらないと再レンダリングのたびにデータを持ってくるようになってしまう？
     staleTime: Infinity,
   });
 
-  return { top10LikesDevelopersInThisMonth, ...others };
+  return { top10LikesDevelopmentsInThisMonth, ...others };
 };
 
 export const top10LikesPostersInThisMonthQueryKey = [

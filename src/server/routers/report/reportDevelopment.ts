@@ -1,9 +1,9 @@
-import { reportDeveloperFormSchema } from "../../../share/schema";
+import { reportDevelopmentFormSchema } from "../../../share/schema";
 import { buildReportedUser, reportToSlack } from "../../lib/reportToSlack";
 import { publicProcedure } from "../../lib/trpc";
 
-export const reportDeveloper = publicProcedure
-  .input(reportDeveloperFormSchema)
+export const reportDevelopment = publicProcedure
+  .input(reportDevelopmentFormSchema)
   .mutation(async ({ input, ctx }) => {
     const loggedInUser = ctx.session?.user;
     const request = ctx.req;

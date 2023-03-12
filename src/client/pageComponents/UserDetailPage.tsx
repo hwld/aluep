@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { User } from "../../server/models/user";
 import { userDetailPageSchame, UserDetailPageTab } from "../../share/schema";
 import { assertNever } from "../../share/utils";
-import { useThemeDeveloperLikesQuery } from "../features/developer/useThemeDeveloperLikesQuery";
+import { useThemeDevelopmentLikesQuery } from "../features/development/useThemeDevelopmentLikesQuery";
 import { useSumThemeLikesQuery } from "../features/theme/useSumThemeLikesQuery";
 import { UserDetailTab } from "../features/user/UserDetail/UserDetailTab";
 import { UserJoinedThemes } from "../features/user/UserDetail/UserJoinedThemes";
@@ -18,7 +18,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
   const [{ tab: activeTab, page }, setURLParam] =
     useURLParams(userDetailPageSchame);
   const { sumThemeLikes } = useSumThemeLikesQuery(user.id);
-  const { themeDeveloperLikes } = useThemeDeveloperLikesQuery(user.id);
+  const { themeDevelopmentLikes } = useThemeDevelopmentLikesQuery(user.id);
 
   const handleChangeTab = (tab: UserDetailPageTab) => {
     setURLParam({ tab, page: 1 });
@@ -64,7 +64,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
       <Flex w="100%" mih={300} gap="md" mt={60}>
         <UserDetailCard
           sumThemeLikes={sumThemeLikes ?? 0}
-          themeDeveloperLikes={themeDeveloperLikes ?? 0}
+          themeDevelopmentLikes={themeDevelopmentLikes ?? 0}
           user={user}
         />
         <Card mih={20} sx={{ flexGrow: 1 }}>

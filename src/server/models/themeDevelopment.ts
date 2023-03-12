@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { OmitStrict } from "../../types/OmitStrict";
 import { db } from "../lib/prismadb";
 
-export type ThemeDeveloper = {
+export type ThemeDevelopment = {
   id: string;
   themeId: string;
   userId: string;
@@ -15,14 +15,14 @@ export type ThemeDeveloper = {
   createdAt: string;
 };
 
-const developerArgs = Prisma.validator<Prisma.AppThemeDeveloperArgs>()({
+const developmentArgs = Prisma.validator<Prisma.AppThemeDevelopmentArgs>()({
   include: { user: true, likes: true },
 });
-const convertDeveloper = (
-  raw: Prisma.AppThemeDeveloperGetPayload<typeof developerArgs>,
+const convertDevelopment = (
+  raw: Prisma.AppThemeDevelopmentGetPayload<typeof developmentArgs>,
   loggedInUserId: string | undefined
-): ThemeDeveloper => {
-  const developer: ThemeDeveloper = {
+): ThemeDevelopment => {
+  const development: ThemeDevelopment = {
     id: raw.id,
     themeId: raw.appThemeId,
     userId: raw.user.id,
@@ -40,46 +40,46 @@ const convertDeveloper = (
     createdAt: raw.createdAt.toUTCString(),
   };
 
-  return developer;
+  return development;
 };
 
-type FindThemeDevelopersArgs = OmitStrict<
-  Prisma.AppThemeDeveloperFindManyArgs,
+type FindThemeDevelopmentsArgs = OmitStrict<
+  Prisma.AppThemeDevelopmentFindManyArgs,
   "include" | "select"
 > & {
   loggedInUserId: string | undefined;
 };
-export const findManyThemeDevelopers = async ({
+export const findManyThemeDevelopments = async ({
   orderBy,
   loggedInUserId,
   ...args
-}: FindThemeDevelopersArgs): Promise<ThemeDeveloper[]> => {
-  const rawDevelopers = await db.appThemeDeveloper.findMany({
+}: FindThemeDevelopmentsArgs): Promise<ThemeDevelopment[]> => {
+  const rawDevelopments = await db.appThemeDevelopment.findMany({
     orderBy: { createdAt: "desc", ...orderBy },
     ...args,
-    ...developerArgs,
+    ...developmentArgs,
   });
 
-  const developers = rawDevelopers.map((raw) => {
-    return convertDeveloper(raw, loggedInUserId);
+  const developments = rawDevelopments.map((raw) => {
+    return convertDevelopment(raw, loggedInUserId);
   });
 
-  return developers;
+  return developments;
 };
 
-export const findThemeDeveloper = async (
-  developerId: string,
+export const findThemeDevelopment = async (
+  developmentId: string,
   loggedInUserId: string | undefined
-): Promise<ThemeDeveloper | undefined> => {
-  const rawDeveloper = await db.appThemeDeveloper.findUnique({
-    where: { id: developerId },
-    ...developerArgs,
+): Promise<ThemeDevelopment | undefined> => {
+  const rawDevelopment = await db.appThemeDevelopment.findUnique({
+    where: { id: developmentId },
+    ...developmentArgs,
   });
 
-  if (!rawDeveloper) {
+  if (!rawDevelopment) {
     return undefined;
   }
 
-  const developer = convertDeveloper(rawDeveloper, loggedInUserId);
-  return developer;
+  const development = convertDevelopment(rawDevelopment, loggedInUserId);
+  return development;
 };

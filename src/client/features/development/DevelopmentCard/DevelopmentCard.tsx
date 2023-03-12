@@ -11,50 +11,50 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
 import { Theme } from "../../../../server/models/theme";
-import { ThemeDeveloper } from "../../../../server/models/themeDeveloper";
+import { ThemeDevelopment } from "../../../../server/models/themeDevelopment";
 import { Routes } from "../../../../share/routes";
 import { formatDate, stopPropagation } from "../../../lib/utils";
 import { TextLink } from "../../../ui/TextLink";
 import { useRequireLoginModal } from "../../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../../session/useSessionQuery";
 import { UserIconLink } from "../../user/UserIconLink";
-import { DeveloperLikeButton } from "./DeveloperLikeButton";
+import { DevelopmentLikeButton } from "./DevelopmentLikeButton";
 
 type Props = {
   theme: Theme;
-  developer: ThemeDeveloper;
-  onLikeDeveloper: (developerId: string, like: boolean) => void;
+  development: ThemeDevelopment;
+  onLikeDevelopment: (developmentId: string, like: boolean) => void;
 };
 
-export const DeveloperCard: React.FC<Props> = ({
+export const DevelopmentCard: React.FC<Props> = ({
   theme,
-  developer,
-  onLikeDeveloper: onLike,
+  development,
+  onLikeDevelopment: onLike,
 }) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
 
-  const handleLikeDeveloper = () => {
+  const handleLikeDevelopment = () => {
     //ログインしていなければログインモーダルを表示させる
     if (!session) {
       openLoginModal();
       return;
     }
-    onLike(developer.id, !developer.likedByLoggedInUser);
+    onLike(development.id, !development.likedByLoggedInUser);
   };
 
-  const handleGoDeveloperDetail = () => {
-    router.push(Routes.developer(theme.id, developer.id));
+  const handleGoDevelopmentDetail = () => {
+    router.push(Routes.development(theme.id, development.id));
   };
 
   // 開発者自身でなければいいねできる
-  const canLike = developer.userId !== session?.user.id;
+  const canLike = development.userId !== session?.user.id;
 
   return (
     <Card
-      key={developer.userId}
+      key={development.userId}
       sx={(theme) => ({
         position: "static",
         cursor: "pointer",
@@ -63,14 +63,20 @@ export const DeveloperCard: React.FC<Props> = ({
           boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
         },
       })}
-      onClick={handleGoDeveloperDetail}
+      onClick={handleGoDevelopmentDetail}
     >
       <Flex justify="space-between">
         <Flex gap={10}>
-          <UserIconLink iconSrc={developer.image} userId={developer.userId} />
-          <TextLink href={Routes.developer(theme.id, developer.id)}>
+          <UserIconLink
+            iconSrc={development.image}
+            userId={development.userId}
+          />
+          <TextLink href={Routes.development(theme.id, development.id)}>
             <Text fw="bold" size="lg">
-              {developer.name}
+              {development.name}
+              <Text span c="gray.5" size="sm" fw="normal">
+                の開発
+              </Text>
             </Text>
           </TextLink>
         </Flex>
@@ -85,7 +91,7 @@ export const DeveloperCard: React.FC<Props> = ({
               size={30}
               component={Link}
               // githubのURLをgithub1sに変換
-              href={developer.githubUrl.replace(
+              href={development.githubUrl.replace(
                 /^(https:\/\/github)(.com)/,
                 "$11s$2"
               )}
@@ -104,13 +110,13 @@ export const DeveloperCard: React.FC<Props> = ({
       </Flex>
       <Flex align="center" justify="space-between" mt={10}>
         <Text size="sm" color="gray.5">
-          開発開始日: {formatDate(new Date(developer.createdAt))}
+          開発開始日: {formatDate(new Date(development.createdAt))}
         </Text>
         <Box>
-          <DeveloperLikeButton
-            likes={developer.likes}
-            likedByLoggedInUser={developer.likedByLoggedInUser}
-            onClick={handleLikeDeveloper}
+          <DevelopmentLikeButton
+            likes={development.likes}
+            likedByLoggedInUser={development.likedByLoggedInUser}
+            onClick={handleLikeDevelopment}
             disabled={!canLike}
           />
         </Box>

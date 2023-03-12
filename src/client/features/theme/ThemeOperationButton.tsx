@@ -145,7 +145,7 @@ export const ThemeOperationButton: React.FC<Props> = ({
           <>
             お題を削除してもよろしいですか？
             <br />
-            お題を削除すると、もらった「いいね」、開発者の情報が完全に削除されます。
+            お題を削除すると、もらった「いいね」、他のユーザーの開発情報が完全に削除されます。
           </>
         }
         opened={isDeleteModalOpen}

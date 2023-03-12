@@ -35,24 +35,24 @@ async function main() {
     maxThemeLikeCounts: 10,
   });
 
-  // 開発者の作成
-  const developerIds = await createDevelopers({
+  // 開発情報の作成
+  const developmentIds = await createDevelopments({
     userIds,
     themeIds,
     // 開発されるお題の数
     developThemeCounts: 25,
     // 開発に参加するユーザーの最大数
-    maxDeveloperCounts: 15,
+    maxDevelopmentCounts: 15,
   });
 
   // 開発者へのいいねを追加
-  await createDeveloperLikes({
+  await createDevelopmentLikes({
     userIds,
-    developerIds,
+    developmentIds: developmentIds,
     // いいねされる開発者の数
-    likeDeveloperCounts: 25,
+    likeDevelopmentCounts: 25,
     // 開発者へのいいねの最大数 (自分にいいねができないので(ユーザー数 - 一つのお題の最大開発者) < いいねの最大数　の場合にはエラーになる可能性がある)
-    maxDeveloperLikeCounts: 10,
+    maxDevelopmentLikeCounts: 10,
   });
 }
 
@@ -181,21 +181,21 @@ async function createThemeLike({
   console.log("");
 }
 
-type CreateDevelopersParams = {
+type CreateDevelopmentParams = {
   themeIds: string[];
   userIds: string[];
   /** 開発されるお題の数 */
   developThemeCounts: number;
   /** 一つのお題に最大何人開発できるか */
-  maxDeveloperCounts: number;
+  maxDevelopmentCounts: number;
 };
-/** 開発者を作成 */
-async function createDevelopers({
+/** 開発情報を作成 */
+async function createDevelopments({
   themeIds,
   userIds,
   developThemeCounts,
-  maxDeveloperCounts,
-}: CreateDevelopersParams): Promise<string[]> {
+  maxDevelopmentCounts,
+}: CreateDevelopmentParams): Promise<string[]> {
   console.log("開発者の作成");
 
   // 開発されるお題をランダムで選択する
@@ -204,28 +204,28 @@ async function createDevelopers({
     developThemeCounts
   );
   // お題それぞれに何人参加するかを決めておく
-  const themeDeveloperCountList = [...new Array(developThemeIds.length)].map(
-    () => faker.datatype.number({ min: 1, max: maxDeveloperCounts })
+  const themeDevelopmentCountList = [...new Array(developThemeIds.length)].map(
+    () => faker.datatype.number({ min: 1, max: maxDevelopmentCounts })
   );
 
   // 開発者の総数を求める
-  const sumDevelopers = themeDeveloperCountList.reduce(
+  const sumDevelopments = themeDevelopmentCountList.reduce(
     (prev, curr) => prev + curr,
     0
   );
-  bar.start(sumDevelopers, 0);
+  bar.start(sumDevelopments, 0);
 
-  const developerIds = [];
+  const developmentIds = [];
   for (let i = 0; i < developThemeIds.length; i++) {
     // 開発されるお題のインデックス
     const themeId = developThemeIds[i];
     // 何人開発するか
-    const developerCounts = themeDeveloperCountList[i];
+    const developmentCounts = themeDevelopmentCountList[i];
 
     // ユーザーを先頭から走査して開発に参加させる。
-    for (let userIndex = 0; userIndex < developerCounts; userIndex++) {
+    for (let userIndex = 0; userIndex < developmentCounts; userIndex++) {
       const id = faker.datatype.uuid();
-      const developer = await prisma.appThemeDeveloper.upsert({
+      const development = await prisma.appThemeDevelopment.upsert({
         where: { id },
         create: {
           id,
@@ -236,65 +236,66 @@ async function createDevelopers({
         },
         update: { createdAt: new Date() },
       });
-      developerIds.push(developer.id);
+      developmentIds.push(development.id);
       bar.increment();
     }
   }
   bar.stop();
   console.log("");
 
-  return developerIds;
+  return developmentIds;
 }
 
-type CreateDeveloperLikesParam = {
+type CreateDevelopmentLikesParam = {
   userIds: string[];
-  developerIds: string[];
+  developmentIds: string[];
   // 何人の開発者がいいねされるか
-  likeDeveloperCounts: number;
+  likeDevelopmentCounts: number;
   // 一人の開発者に最大何いいねされるか
-  maxDeveloperLikeCounts: number;
+  maxDevelopmentLikeCounts: number;
 };
 /** 開発者へのいいねを追加する */
-async function createDeveloperLikes({
+async function createDevelopmentLikes({
   userIds,
-  developerIds,
-  likeDeveloperCounts,
-  maxDeveloperLikeCounts,
-}: CreateDeveloperLikesParam) {
+  developmentIds,
+  likeDevelopmentCounts,
+  maxDevelopmentLikeCounts,
+}: CreateDevelopmentLikesParam) {
   console.log("開発者へのいいねを追加");
 
   //　いいねされる開発者をランダムで選択する
-  const likeDeveloperIds = faker.helpers.arrayElements(
-    developerIds,
-    likeDeveloperCounts
+  const likeDevelopmentIds = faker.helpers.arrayElements(
+    developmentIds,
+    likeDevelopmentCounts
   );
   // 開発者それぞれに何個いいねをつけるかを決めておく
-  const developerLikeCountsList = [...new Array(likeDeveloperIds.length)].map(
-    () =>
-      faker.datatype.number({
-        min: 1,
-        max: maxDeveloperLikeCounts,
-      })
+  const developmentLikeCountsList = [
+    ...new Array(likeDevelopmentIds.length),
+  ].map(() =>
+    faker.datatype.number({
+      min: 1,
+      max: maxDevelopmentLikeCounts,
+    })
   );
-  const sumDeveloperLikes = developerLikeCountsList.reduce(
+  const sumDevelopmentLikes = developmentLikeCountsList.reduce(
     (prev, curr) => prev + curr,
     0
   );
-  bar.start(sumDeveloperLikes, 0);
-  for (let i = 0; i < likeDeveloperIds.length; i++) {
+  bar.start(sumDevelopmentLikes, 0);
+  for (let i = 0; i < likeDevelopmentIds.length; i++) {
     // いいねをつける開発者のid
-    const developerId = likeDeveloperIds[i];
+    const developmentId = likeDevelopmentIds[i];
     // いいねを何個つけるか
-    const likeCounts = developerLikeCountsList[i];
+    const likeCounts = developmentLikeCountsList[i];
 
     // ユーザーを後ろから走査していいねをつけていく
     for (let userIndex = 0; userIndex < likeCounts; userIndex++) {
       const id = faker.datatype.uuid();
-      await prisma.appThemeDeveloperLike.upsert({
+      await prisma.appThemeDevelopmentLike.upsert({
         where: { id },
         create: {
           id,
-          developerId,
+          developmentId,
           userId: userIds[userIds.length - 1 - userIndex],
         },
         update: { createdAt: new Date() },

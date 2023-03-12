@@ -5,7 +5,7 @@ import { RiEdit2Line } from "react-icons/ri";
 import { User } from "../../../server/models/user";
 import { Routes } from "../../../share/routes";
 import { CardActionIcon } from "../../ui/CardActionIcon";
-import { LikeDeveloperIcon } from "../developer/LikeDeveloperIcon";
+import { LikeDevelopmentIcon } from "../development/LikeDevelopmentIcon";
 import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../session/useSessionQuery";
 import { LikeThemeIcon } from "../theme/LikeThemeIcon";
@@ -17,12 +17,12 @@ import { UserIcon } from "./UserIcon";
 
 type Props = {
   sumThemeLikes?: number;
-  themeDeveloperLikes?: number;
+  themeDevelopmentLikes?: number;
   user: User;
 };
 export function UserDetailCard({
   sumThemeLikes,
-  themeDeveloperLikes,
+  themeDevelopmentLikes,
   user,
 }: Props) {
   const { session } = useSessionQuery();
@@ -119,8 +119,8 @@ export function UserDetailCard({
               transition="pop"
             >
               <Flex align="center" wrap="wrap" direction="column">
-                <LikeDeveloperIcon />
-                <Text>{themeDeveloperLikes}</Text>
+                <LikeDevelopmentIcon />
+                <Text>{themeDevelopmentLikes}</Text>
               </Flex>
             </Tooltip>
           </Box>

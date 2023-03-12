@@ -1,14 +1,14 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import {
-  developerQuerykey,
-  useDeveloperQuery,
-} from "../../../../../client/features/developer/useDeveloperQuery";
+  developmentQuerykey,
+  useDevelopmentQuery,
+} from "../../../../../client/features/development/useDevelopmentQuery";
 import {
   themeQueryKey,
   useThemeQuery,
 } from "../../../../../client/features/theme/useThemeQuery";
-import { DeveloperEditPage } from "../../../../../client/pageComponents/DeveloperEditPage";
+import { DevelopmentEditPage } from "../../../../../client/pageComponents/DevelopmentEditPage";
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../../server/routers";
 import { Routes } from "../../../../../share/routes";
@@ -22,38 +22,40 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     const themeId = assertString(query.id);
-    const developerId = assertString(query.developerId);
+    const developmentId = assertString(query.developmentId);
 
     const caller = appRouter.createCaller(callerContext);
     const theme = await caller.theme.get({ themeId });
-    const developer = await caller.developer.get({ developerId });
+    const development = await caller.development.get({
+      developmentId: developmentId,
+    });
 
     //　お題か開発者が存在しない、または開発者とログインユーザーが異なれば404にする
-    if (!theme || !developer || developer?.userId !== session.user.id) {
+    if (!theme || !development || development?.userId !== session.user.id) {
       return { notFound: true };
     }
 
     queryClient.setQueryData(themeQueryKey(themeId), theme);
-    queryClient.setQueryData(developerQuerykey(developerId), developer);
+    queryClient.setQueryData(developmentQuerykey(developmentId), development);
   }
 );
 
 // TODO
-const DeveloperUpdate: NextPage = () => {
+const DevelopmentUpdate: NextPage = () => {
   const router = useRouter();
   const themeId = assertString(router.query.id);
-  const developerId = assertString(router.query.developerId);
+  const developmentId = assertString(router.query.developmentId);
   const repoUrl = router.query.repoUrl;
   const { repoName, repoDescription, comment, reRepo } = router.query;
 
   const { theme } = useThemeQuery(themeId);
-  const { developer } = useDeveloperQuery(developerId);
+  const { development: development } = useDevelopmentQuery(developmentId);
 
   // テーマが取得できないときはサーバーでエラーが出るから
   // ここには到達しない
   if (
     !theme ||
-    !developer ||
+    !development ||
     typeof repoUrl === "object" ||
     typeof repoName === "object" ||
     typeof repoDescription === "object" ||
@@ -64,9 +66,9 @@ const DeveloperUpdate: NextPage = () => {
   }
 
   return (
-    <DeveloperEditPage
+    <DevelopmentEditPage
       theme={theme}
-      developer={developer}
+      development={development}
       repoUrl={repoUrl}
       repoFormData={{
         repoName: repoName ?? "",
@@ -77,4 +79,4 @@ const DeveloperUpdate: NextPage = () => {
     />
   );
 };
-export default DeveloperUpdate;
+export default DevelopmentUpdate;

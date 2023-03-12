@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { developersPerPageQueryKey } from "../../../../client/features/developer/useDevelopersPerPage";
+import { developmentsPerPageQueryKey } from "../../../../client/features/development/useDevelopmentsPerPage";
 import {
   themeQueryKey,
   useThemeQuery,
 } from "../../../../client/features/theme/useThemeQuery";
-import { ThemeDeveloperPage } from "../../../../client/pageComponents/ThemeDeveloperPage";
+import { ThemeDevelopmentPage } from "../../../../client/pageComponents/ThemeDevelopmentPage";
 import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../server/routers";
 import { paginatedPageSchema } from "../../../../share/schema";
@@ -32,13 +32,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.theme.get({ themeId })
     );
     await queryClient.prefetchQuery(
-      developersPerPageQueryKey(themeId, page),
-      () => caller.developer.getManyByTheme({ themeId, page })
+      developmentsPerPageQueryKey(themeId, page),
+      () => caller.development.getManyByTheme({ themeId, page })
     );
   }
 );
 
-const DeveloperPage: NextPage = () => {
+const DevelopmentPage: NextPage = () => {
   const router = useRouter();
   const themeId = assertString(router.query.id);
   const { theme, isLoading } = useThemeQuery(themeId);
@@ -49,6 +49,6 @@ const DeveloperPage: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return <ThemeDeveloperPage theme={theme} />;
+  return <ThemeDevelopmentPage theme={theme} />;
 };
-export default DeveloperPage;
+export default DevelopmentPage;

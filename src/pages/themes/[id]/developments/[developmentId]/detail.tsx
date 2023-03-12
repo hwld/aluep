@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 import {
-  developerQuerykey,
-  useDeveloperQuery,
-} from "../../../../../client/features/developer/useDeveloperQuery";
+  developmentQuerykey,
+  useDevelopmentQuery,
+} from "../../../../../client/features/development/useDevelopmentQuery";
 import {
   themeQueryKey,
   useThemeQuery,
 } from "../../../../../client/features/theme/useThemeQuery";
-import { DeveloperDetailPage } from "../../../../../client/pageComponents/DeveloperDetailPage";
+import { DevelopmentDetailPage } from "../../../../../client/pageComponents/DevelopmentDetailPage";
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../../server/routers";
 import { assertString } from "../../../../../share/utils";
@@ -16,36 +16,38 @@ import NotFoundPage from "../../../../404";
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {
     const themeId = assertString(query.id);
-    const developerId = assertString(query.developerId);
+    const developmentId = assertString(query.developmentId);
 
     const caller = appRouter.createCaller(callerContext);
 
-    // お題、開発者が存在しない場合は404にする
+    // お題と開発情報が存在しない場合は404にする
     const theme = await caller.theme.get({ themeId });
-    const developer = await caller.developer.get({ developerId });
-    if (!theme || !developer) {
+    const development = await caller.development.get({
+      developmentId: developmentId,
+    });
+    if (!theme || !development) {
       return { notFound: true };
     }
 
     queryClient.setQueryData(themeQueryKey(themeId), theme);
-    queryClient.setQueryData(developerQuerykey(developerId), developer);
+    queryClient.setQueryData(developmentQuerykey(developmentId), development);
   }
 );
 
-const DeveloperDetail = () => {
+const DevelopmentDetail = () => {
   const router = useRouter();
-  const developerId = assertString(router.query.developerId);
+  const developmentId = assertString(router.query.developmentId);
   const themeId = assertString(router.query.id);
-  const { developer, isLoading: loadingDeveloper } =
-    useDeveloperQuery(developerId);
+  const { development: development, isLoading: loadingDevelopment } =
+    useDevelopmentQuery(developmentId);
   const { theme, isLoading: loadingTheme } = useThemeQuery(themeId);
 
-  if (loadingDeveloper || loadingTheme) {
+  if (loadingDevelopment || loadingTheme) {
     return <></>;
-  } else if (!developer || !theme) {
+  } else if (!development || !theme) {
     return <NotFoundPage />;
   }
 
-  return <DeveloperDetailPage developer={developer} theme={theme} />;
+  return <DevelopmentDetailPage development={development} theme={theme} />;
 };
-export default DeveloperDetail;
+export default DevelopmentDetail;

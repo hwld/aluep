@@ -46,4 +46,4 @@ export const findManyUsers = async (
 // ユーザー情報と投稿したお題のいいね数
 export type UserAndThemeLikes = User & { themeLikes: number };
 // ユーザー情報と開発者としてのいいね数
-export type UserAndDeveloperLikes = User & { developerLikes: number };
+export type UserAndDevelopmentLikes = User & { developmentLikes: number };

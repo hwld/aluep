@@ -55,14 +55,14 @@ export const themeJoinFormSchema = z.object({
 
 export type JoinData =
   | { joined: false }
-  | { joined: true; developerId: string };
+  | { joined: true; developmentId: string };
 
 // お題の並び順
 export const themeOrderSchema = z.union([
   z.literal("createdDesc"),
   z.literal("createdAsc"),
   z.literal("likeDesc"),
-  z.literal("developerDesc"),
+  z.literal("developmentDesc"),
 ]);
 export type ThemeOrder = z.infer<typeof themeOrderSchema>;
 
@@ -159,7 +159,7 @@ export const reportThemeCommentFormSchema = reportBaseFormSchema.and(
   z.object({ targetCommentUrl: z.string() })
 );
 
-export const reportDeveloperFormSchema = reportBaseFormSchema.and(
+export const reportDevelopmentFormSchema = reportBaseFormSchema.and(
   z.object({
     targetDeveloepr: z.object({
       url: z.string(),

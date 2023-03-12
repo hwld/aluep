@@ -75,11 +75,11 @@ async function main() {
     }
   }
 
-  const developerIds = [];
-  const userDeveloperMap = new Map<number, string[]>(
+  const developmentIds = [];
+  const userDevelopmentMap = new Map<number, string[]>(
     userIds.map((_, userIndex) => [userIndex, []])
   );
-  const themeDeveloperMap = new Map<number, string[]>(
+  const themeDevelopmentMap = new Map<number, string[]>(
     themeIds.map((_, themeIndex) => [themeIndex, []])
   );
 
@@ -88,7 +88,7 @@ async function main() {
     // 自分よりindexが小さいユーザーが投稿したお題すべてに参加する
     for (let themeIndex = 0; themeIndex < userIndex; themeIndex++) {
       const id = faker.datatype.uuid();
-      const developer = await prisma.appThemeDeveloper.upsert({
+      const development = await prisma.appThemeDevelopment.upsert({
         where: { id },
         create: {
           id,
@@ -101,14 +101,14 @@ async function main() {
       });
       console.log(`お題に参加 ユーザー:${userIndex} お題:${themeIndex}`);
 
-      developerIds.push(developer.id);
-      userDeveloperMap.set(userIndex, [
-        ...(userDeveloperMap.get(userIndex) ?? []),
-        developer.id,
+      developmentIds.push(development.id);
+      userDevelopmentMap.set(userIndex, [
+        ...(userDevelopmentMap.get(userIndex) ?? []),
+        development.id,
       ]);
-      themeDeveloperMap.set(themeIndex, [
-        ...(themeDeveloperMap.get(themeIndex) ?? []),
-        developer.id,
+      themeDevelopmentMap.set(themeIndex, [
+        ...(themeDevelopmentMap.get(themeIndex) ?? []),
+        development.id,
       ]);
     }
   }
@@ -117,28 +117,28 @@ async function main() {
   for (let userIndex = 0; userIndex < userIds.length; userIndex++) {
     for (let themeIndex = 0; themeIndex < userIndex; themeIndex++) {
       // お題の最初の開発者のidを取得する
-      const firstDeveloperId =
-        themeDeveloperMap.get(themeIndex)?.[0] ?? undefined;
+      const firstDevelopmentId =
+        themeDevelopmentMap.get(themeIndex)?.[0] ?? undefined;
       // 最初の開発者が存在しないか、自分が開発者だった場合は何もしない
       if (
-        firstDeveloperId === undefined ||
-        userDeveloperMap.get(userIndex)?.includes(firstDeveloperId)
+        firstDevelopmentId === undefined ||
+        userDevelopmentMap.get(userIndex)?.includes(firstDevelopmentId)
       ) {
         continue;
       }
 
       const id = faker.datatype.uuid();
-      await prisma.appThemeDeveloperLike.upsert({
+      await prisma.appThemeDevelopmentLike.upsert({
         where: { id },
         create: {
           id,
           userId: userIds[userIndex],
-          developerId: firstDeveloperId,
+          developmentId: firstDevelopmentId,
         },
         update: { createdAt: new Date() },
       });
       console.log(
-        `開発者へのいいねを追加 ユーザー:${userIndex} 開発者:${firstDeveloperId}`
+        `開発者へのいいねを追加 ユーザー:${userIndex} 開発者:${firstDevelopmentId}`
       );
     }
   }

@@ -11,7 +11,7 @@ export const joinedTheme = publicProcedure
       return { joined: false };
     }
 
-    const developer = await db.appThemeDeveloper.findUnique({
+    const development = await db.appThemeDevelopment.findUnique({
       where: {
         userId_appThemeId: {
           userId: loggedInUser.id,
@@ -20,9 +20,9 @@ export const joinedTheme = publicProcedure
       },
       select: { id: true },
     });
-    if (!developer) {
+    if (!development) {
       return { joined: false };
     }
 
-    return { joined: true, developerId: developer.id };
+    return { joined: true, developmentId: development.id };
   });

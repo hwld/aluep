@@ -6,7 +6,7 @@ const styles = {
 };
 
 type Props = { size?: "sm" | "md" };
-export const LikeDeveloperIcon: React.FC<Props> = ({ size = "md" }) => {
+export const LikeDevelopmentIcon: React.FC<Props> = ({ size = "md" }) => {
   const { colors } = useMantineTheme();
 
   const borderColor = colors.gray[7];

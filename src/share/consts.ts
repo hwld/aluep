@@ -1,6 +1,6 @@
 export const pageLimit = {
   favoritedUsers: 50,
-  developers: 20,
+  developments: 20,
   searchedThemes: 24,
   themeLikingUsers: 20,
   joinedThemes: 18,
