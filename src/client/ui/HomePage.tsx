@@ -1,7 +1,7 @@
 import { Flex, MediaQuery, Stack, Title, useMantineTheme } from "@mantine/core";
 
 import {
-  useTop10LikesDeveloperInThisMonth,
+  useTop10LikesDevelopmentInThisMonth,
   useTop10LikesPostersInThisMonth,
   useTop10LikesThemesInThisMonth,
 } from "../features/user/useRankingQuery";
@@ -26,8 +26,8 @@ export const HomePage: React.FC = () => {
 
   // ランキング
   const { top10LikesThemesInThisMonth } = useTop10LikesThemesInThisMonth();
-  const { top10LikesDevelopersInThisMonth } =
-    useTop10LikesDeveloperInThisMonth();
+  const { top10LikesDevelopmentsInThisMonth } =
+    useTop10LikesDevelopmentInThisMonth();
   const { top10LikesPostersInThisMonth } = useTop10LikesPostersInThisMonth();
 
   // ピックアップされたお題
@@ -35,8 +35,8 @@ export const HomePage: React.FC = () => {
     usePickedUpThemesQuery("createdDesc");
   const { pickedUpThemes: manyLikesThemes } =
     usePickedUpThemesQuery("likeDesc");
-  const { pickedUpThemes: manyDevelopersThemes } =
-    usePickedUpThemesQuery("developerDesc");
+  const { pickedUpThemes: manyDevelopmentsThemes } =
+    usePickedUpThemesQuery("developmentDesc");
 
   return (
     <Flex w="100%" gap="xl">
@@ -76,22 +76,22 @@ export const HomePage: React.FC = () => {
         <PickedUpThemes
           icon={<MdComputer size="30px" color={mantineTheme.colors.blue[7]} />}
           title="開発者が多かったお題"
-          readMoreHref={Routes.themeSearch({ order: "developerDesc" })}
-          themes={manyDevelopersThemes}
+          readMoreHref={Routes.themeSearch({ order: "developmentDesc" })}
+          themes={manyDevelopmentsThemes}
         />
       </Stack>
       <MediaQuery smallerThan="lg" styles={{ display: "none" }}>
         <Flex direction="column" gap={30}>
           <RankingCard title="今月のいいねが多かった開発者">
-            {top10LikesDevelopersInThisMonth?.length === 0 ? (
-              <NothingLike page="Developers" />
+            {top10LikesDevelopmentsInThisMonth?.length === 0 ? (
+              <NothingLike page="Developments" />
             ) : (
-              top10LikesDevelopersInThisMonth?.map((developer, i) => (
+              top10LikesDevelopmentsInThisMonth?.map((development, i) => (
                 <UserLikeRankingItem
                   ranking={i + 1}
-                  key={developer.id}
-                  user={developer}
-                  likeCount={developer.developerLikes}
+                  key={development.id}
+                  user={development}
+                  likeCount={development.developmentLikes}
                 />
               ))
             )}

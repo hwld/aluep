@@ -3,41 +3,41 @@ import { z } from "zod";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 
-export const likeDeveloper = requireLoggedInProcedure
+export const likeDevelopment = requireLoggedInProcedure
   .input(
     z.object({
-      developerId: z.string().min(1).max(100),
+      developmentId: z.string().min(1).max(100),
       like: z.boolean(),
     })
   )
   .mutation(async ({ input, ctx }) => {
-    const developer = await db.appThemeDeveloper.findUnique({
-      where: { id: input.developerId },
+    const development = await db.appThemeDevelopment.findUnique({
+      where: { id: input.developmentId },
     });
-    // 指定されたdeveloperが存在しない場合
-    if (!developer) {
+    // 指定されたdevelopmentが存在しない場合
+    if (!development) {
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
     // 開発者自身が自分にいいねすることはできない
-    if (developer.userId == ctx.session.user.id) {
+    if (development.userId == ctx.session.user.id) {
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
     if (input.like) {
       // いいね
-      await db.appThemeDeveloperLike.create({
+      await db.appThemeDevelopmentLike.create({
         data: {
-          developer: { connect: { id: developer.id } },
+          development: { connect: { id: development.id } },
           user: { connect: { id: ctx.session.user.id } },
         },
       });
     } else {
       // いいね解除
-      await db.appThemeDeveloperLike.delete({
+      await db.appThemeDevelopmentLike.delete({
         where: {
-          userId_developerId: {
-            developerId: input.developerId,
+          userId_developmentId: {
+            developmentId: input.developmentId,
             userId: ctx.session.user.id,
           },
         },

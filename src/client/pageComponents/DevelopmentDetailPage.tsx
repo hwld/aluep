@@ -15,18 +15,21 @@ import { BsGithub } from "react-icons/bs";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
 import { Theme } from "../../server/models/theme";
-import { ThemeDeveloper } from "../../server/models/themeDeveloper";
-import { DeveloperMenuButton } from "../features/developer/DeveloperCard/DeveloperMenuButton";
+import { ThemeDevelopment } from "../../server/models/themeDevelopment";
+import { DevelopmentMenuButton } from "../features/development/DevelopmentCard/DevelopmentMenuButton";
 import { useSessionQuery } from "../features/session/useSessionQuery";
 import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
 import { UserIconLink } from "../features/user/UserIconLink";
 
-type Props = { developer: ThemeDeveloper; theme: Theme };
+type Props = { development: ThemeDevelopment; theme: Theme };
 
-export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
+export const DevelopmentDetailPage: React.FC<Props> = ({
+  development,
+  theme,
+}) => {
   const { session } = useSessionQuery();
   const mantineTheme = useMantineTheme();
-  const isDeveloper = developer.userId === session?.user.id;
+  const isDevelopment = development.userId === session?.user.id;
 
   return (
     <>
@@ -49,10 +52,10 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
             <Card w={250} sx={{ flexShrink: 0 }}>
               <Flex direction="column" justify="space-between" h="100%">
                 <Flex mt={-5}>
-                  <DeveloperMenuButton
-                    developer={developer}
+                  <DevelopmentMenuButton
+                    development={development}
                     theme={theme}
-                    isOwner={isDeveloper}
+                    isOwner={isDevelopment}
                   />
                 </Flex>
                 <Flex
@@ -64,18 +67,18 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                 >
                   <UserIconLink
                     size="xl"
-                    iconSrc={developer.image}
-                    userId={developer.userId}
+                    iconSrc={development.image}
+                    userId={development.userId}
                   />
                 </Flex>
                 <Flex align="center" justify="center">
-                  <Text>{developer.name}</Text>
+                  <Text>{development.name}</Text>
                 </Flex>
 
                 <Flex gap={40} mt={10} wrap="wrap" justify="center">
                   <Box>
                     <Tooltip
-                      label="開発者に対するいいねの合計"
+                      label="開発に対するいいねの合計"
                       position="top"
                       withArrow
                       transition="pop"
@@ -86,7 +89,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                           fill={mantineTheme.colors.red[7]}
                           size="30"
                         />
-                        <Text>{developer.likes}</Text>
+                        <Text>{development.likes}</Text>
                       </Flex>
                     </Tooltip>
                   </Box>
@@ -103,7 +106,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                           size={30}
                           component={Link}
                           // githubのURLをgithub1sに変換
-                          href={developer.githubUrl.replace(
+                          href={development.githubUrl.replace(
                             /^(https:\/\/github)(.com)/,
                             "$11s$2"
                           )}
@@ -141,7 +144,7 @@ export const DeveloperDetailPage: React.FC<Props> = ({ developer, theme }) => {
                   mah={200}
                   sx={{ overflow: "auto" }}
                 >
-                  {developer.comment}
+                  {development.comment}
                 </Text>
               </Card.Section>
             </Card>

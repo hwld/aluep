@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { pickedUpThemesQueryKey } from "../client/features/theme/usePickedUpThemesQuery";
 import {
-  top10LikesDevelopersInThisMonthQueryKey,
+  top10LikesDevelopmentsInThisMonthQueryKey,
   top10LikesPostersInThisMonthQueryKey,
   top10LikesThemesInThisMonthQueryKey,
 } from "../client/features/user/useRankingQuery";
@@ -18,8 +18,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.aggregate.getTop10LikesThemesInThisMonth()
     );
     await queryClient.prefetchQuery(
-      top10LikesDevelopersInThisMonthQueryKey,
-      () => caller.aggregate.getTop10LikesDevelopersInThisMonth()
+      top10LikesDevelopmentsInThisMonthQueryKey,
+      () => caller.aggregate.getTop10LikesDevelopmentsInThisMonth()
     );
     await queryClient.prefetchQuery(top10LikesPostersInThisMonthQueryKey, () =>
       caller.aggregate.getTop10LikesPostersInThisMonth()
@@ -33,8 +33,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       caller.aggregate.pickUpThemes({ order: "likeDesc" })
     );
     await queryClient.prefetchQuery(
-      pickedUpThemesQueryKey("developerDesc"),
-      () => caller.aggregate.pickUpThemes({ order: "developerDesc" })
+      pickedUpThemesQueryKey("developmentDesc"),
+      () => caller.aggregate.pickUpThemes({ order: "developmentDesc" })
     );
   }
 );

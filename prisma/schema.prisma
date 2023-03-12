@@ -53,9 +53,9 @@ model User {
   accounts         Account[]
   sessions         Session[]
   appThemes        AppTheme[]
-  developers       AppThemeDeveloper[]
+  developments      AppThemeDevelopment[]
   appThemeLikes    AppThemeLike[]
-  developerLikes   AppThemeDeveloperLike[]
+  developmentLikes   AppThemeDevelopmentLike[]
   appThemeComments AppThemeComment[]
   favoriteByUsers FavoriteUser[] @relation("asFavoriteByUser")
   faboritedUsers FavoriteUser[] @relation("asFavoritedUser")
@@ -81,7 +81,7 @@ model AppTheme {
   // とりあえずお題も削除されるようにする
   user        User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  developers AppThemeDeveloper[]
+  developments AppThemeDevelopment[]
 
   likes AppThemeLike[]
 
@@ -127,7 +127,7 @@ model AppThemeLike {
   @@index([userId])
 }
 
-model AppThemeDeveloper {
+model AppThemeDevelopment {
   id         String                  @id @default(cuid())
   userId     String
   user       User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -135,7 +135,7 @@ model AppThemeDeveloper {
   appTheme   AppTheme                @relation(fields: [appThemeId], references: [id], onDelete: Cascade)
   githubUrl  String
   comment    String                  @db.Text
-  likes      AppThemeDeveloperLike[]
+  likes      AppThemeDevelopmentLike[]
 
   createdAt DateTime @default(now())
 
@@ -144,17 +144,17 @@ model AppThemeDeveloper {
   @@index([appThemeId])
 }
 
-model AppThemeDeveloperLike {
+model AppThemeDevelopmentLike {
   id          String            @id @default(cuid())
-  developerId String
-  developer   AppThemeDeveloper @relation(fields: [developerId], references: [id], onDelete: Cascade)
+  developmentId String
+  development   AppThemeDevelopment @relation(fields: [developmentId], references: [id], onDelete: Cascade)
   userId      String
   user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
-  @@unique([userId, developerId])
-  @@index([developerId])
+  @@unique([userId, developmentId])
+  @@index([developmentId])
   @@index([userId])
 }
 

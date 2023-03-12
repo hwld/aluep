@@ -13,8 +13,8 @@ export const getMySummary = requireLoggedInProcedure.query(async ({ ctx }) => {
   ).map((theme) => theme.id);
 
   // ユーザーの開発情報のidを取得する
-  const developerIds = (
-    await db.appThemeDeveloper.findMany({
+  const developmentIds = (
+    await db.appThemeDevelopment.findMany({
       select: { id: true },
       where: { userId: loggedInUserId },
     })
@@ -26,15 +26,15 @@ export const getMySummary = requireLoggedInProcedure.query(async ({ ctx }) => {
   });
 
   // ユーザーの開発情報に貰ったいいねの数
-  const developLikes = await db.appThemeDeveloperLike.count({
-    where: { developerId: { in: developerIds } },
+  const developLikes = await db.appThemeDevelopmentLike.count({
+    where: { developmentId: { in: developmentIds } },
   });
 
   return {
     // ユーザーが投稿したお題の数
     themes: themeIds.length,
     // ユーザーが参加したお題の数
-    developers: developerIds.length,
+    developments: developmentIds.length,
     // ユーザーが貰ったすべてのいいねの数
     allLikes: themeLikes + developLikes,
   };

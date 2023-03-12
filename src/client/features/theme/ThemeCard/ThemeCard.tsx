@@ -96,7 +96,7 @@ export const ThemeCard: React.FC<Props> = ({ theme }) => {
                       color={mantineTheme.colors.red[7]}
                     />
                     <Text size="xs" c="red.7">
-                      {theme.developers}
+                      {theme.developments}
                     </Text>
                   </Flex>
                   <Flex align="center" gap={3}>

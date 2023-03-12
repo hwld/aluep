@@ -20,7 +20,7 @@ export type Theme = {
     id: string;
     name: string;
   }[];
-  developers: number;
+  developments: number;
   comments: number;
   createdAt: string;
   updatedAt: string;
@@ -32,7 +32,7 @@ const themeArgs = {
   include: {
     tags: { include: { tag: true, theme: true } },
     user: true,
-    _count: { select: { likes: true, developers: true, comments: true } },
+    _count: { select: { likes: true, developments: true, comments: true } },
   },
 } satisfies Prisma.AppThemeArgs;
 
@@ -56,7 +56,7 @@ const convertTheme = (
       image: rawTheme.user.image,
     },
     likes: rawTheme._count.likes,
-    developers: rawTheme._count.developers,
+    developments: rawTheme._count.developments,
     comments: rawTheme._count.comments,
   };
 
@@ -133,10 +133,10 @@ export const pickUpThemes = async (
         from: Prisma.sql`LEFT JOIN AppThemeLike ON (AppTheme.id = AppThemeLike.appThemeId)`,
         orderBy: Prisma.sql`likeCounts desc`,
       },
-      developerDesc: {
-        select: Prisma.sql`, COUNT(AppThemeDeveloper.id) as developerCounts`,
-        from: Prisma.sql`LEFT JOIN AppThemeDeveloper ON (AppTheme.id = AppThemeDeveloper.appThemeId)`,
-        orderBy: Prisma.sql`developerCounts desc`,
+      developmentDesc: {
+        select: Prisma.sql`, COUNT(AppThemeDevelopment.id) as developmentCounts`,
+        from: Prisma.sql`LEFT JOIN AppThemeDevelopment ON (AppTheme.id = AppThemeDevelopment.appThemeId)`,
+        orderBy: Prisma.sql`developmentCounts desc`,
       },
     };
 
@@ -215,10 +215,10 @@ export const searchThemes = async (
         from: Prisma.sql`LEFT JOIN AppThemeLike ON (AppTheme.id = AppThemeLike.appThemeId)`,
         orderBy: Prisma.sql`likeCounts desc`,
       },
-      developerDesc: {
-        select: Prisma.sql`, COUNT(AppThemeDeveloper.id) as developerCounts`,
-        from: Prisma.sql`LEFT JOIN AppThemeDeveloper ON (AppTheme.id = AppThemeDeveloper.appThemeId)`,
-        orderBy: Prisma.sql`developerCounts desc`,
+      developmentDesc: {
+        select: Prisma.sql`, COUNT(AppThemeDevelopment.id) as developmentCounts`,
+        from: Prisma.sql`LEFT JOIN AppThemeDevelopment ON (AppTheme.id = AppThemeDevelopment.appThemeId)`,
+        orderBy: Prisma.sql`developmentCounts desc`,
       },
     };
 

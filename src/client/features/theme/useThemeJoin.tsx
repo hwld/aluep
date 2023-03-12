@@ -51,8 +51,8 @@ export const useThemeJoin = (themeId: string) => {
 
   // お題への参加をキャンセルする
   const cancelJoinMutation = useMutation({
-    mutationFn: ({ developerId }: { developerId: string }) => {
-      return trpc.developer.delete.mutate({ developerId });
+    mutationFn: ({ developmentId }: { developmentId: string }) => {
+      return trpc.development.delete.mutate({ developmentId: developmentId });
     },
     onSuccess: async () => {
       // 特定のテーマのキャッシュを無効にする

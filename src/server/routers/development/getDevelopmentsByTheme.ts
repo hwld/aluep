@@ -4,21 +4,21 @@ import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
-import { findManyThemeDevelopers } from "../../models/themeDeveloper";
+import { findManyThemeDevelopments } from "../../models/themeDevelopment";
 
-export const getDevelopersByTheme = publicProcedure
+export const getDevelopmentsByTheme = publicProcedure
   .input(z.object({ themeId: z.string(), page: pagingSchema }))
   .query(async ({ input: { page }, input, ctx }) => {
-    const [developersPerPage, { allPages }] = await paginate({
+    const [developmentsPerPage, { allPages }] = await paginate({
       finderInput: {
         where: { appThemeId: input.themeId },
         loggedInUserId: ctx.session?.user.id,
       },
-      finder: findManyThemeDevelopers,
+      finder: findManyThemeDevelopments,
       counter: ({ loggedInUserId, ...others }) =>
-        db.appThemeDeveloper.count(others),
-      pagingData: { page, limit: pageLimit.developers },
+        db.appThemeDevelopment.count(others),
+      pagingData: { page, limit: pageLimit.developments },
     });
 
-    return { list: developersPerPage, allPages };
+    return { list: developmentsPerPage, allPages };
   });

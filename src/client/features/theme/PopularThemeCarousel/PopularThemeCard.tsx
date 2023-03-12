@@ -110,7 +110,7 @@ export const PopularThemeCard: React.FC<{ theme: Theme }> = ({ theme }) => {
                 <Flex align="center" gap={3}>
                   <MdComputer size="15px" color={mantineTheme.colors.red[7]} />
                   <Text size="xs" c="red.7">
-                    {theme.developers}
+                    {theme.developments}
                   </Text>
                 </Flex>
                 <Flex align="center" gap={3}>

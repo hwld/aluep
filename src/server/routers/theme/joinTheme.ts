@@ -5,7 +5,7 @@ import { requireLoggedInProcedure } from "../../lib/trpc";
 export const joinTheme = requireLoggedInProcedure
   .input(themeJoinFormSchema)
   .mutation(async ({ input, ctx }) => {
-    await db.appThemeDeveloper.create({
+    await db.appThemeDevelopment.create({
       data: {
         appTheme: { connect: { id: input.themeId } },
         user: { connect: { id: ctx.session.user.id } },

@@ -13,12 +13,12 @@ export const Routes = {
     `/themes/search${buildSearchParamsString(query)}`,
   themeLikingUsers: (themeId: string) => `/themes/${themeId}/liking-users`,
 
-  /** アプリ開発の開発者関連 */
-  developers: (themeId: string) => `/themes/${themeId}/developers`,
-  developer: (themeId: string, developerId: string) =>
-    `${Routes.theme(themeId)}/developers/${developerId}/detail`,
-  developerUpdate: (themeId: string, developerId: string) =>
-    `${Routes.theme(themeId)}/developers/${developerId}/update`,
+  /** アプリ開発の開発関連 */
+  developments: (themeId: string) => `/themes/${themeId}/developments`,
+  development: (themeId: string, developmentId: string) =>
+    `${Routes.theme(themeId)}/developments/${developmentId}/detail`,
+  developmentUpdate: (themeId: string, developmentId: string) =>
+    `${Routes.theme(themeId)}/developments/${developmentId}/update`,
 
   /** ユーザー関連 */
   user: (id: string) => `/users/${id}`,

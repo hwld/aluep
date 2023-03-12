@@ -81,7 +81,7 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
         >
           <ThemeJoinButton
             themeId={theme.id}
-            developers={theme.developers}
+            developments={theme.developments}
             loggedInUserJoinData={joinData}
             onJoinTheme={handleClickJoin}
           />

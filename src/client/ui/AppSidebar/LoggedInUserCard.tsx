@@ -86,7 +86,7 @@ export const LoggedInUserCard: React.FC<Props> = ({ user, iconWidth }) => {
                   textOverflow: "ellipsis",
                 })}
               >
-                {loggedInUserInfo?.developers ?? 0}
+                {loggedInUserInfo?.developments ?? 0}
               </Text>
             </Flex>
           </Flex>

@@ -1,6 +1,6 @@
 import { publicProcedure, router } from "../lib/trpc";
 import { aggregateRoute } from "./aggregate";
-import { developerRoute } from "./developer";
+import { developmentRoute } from "./development";
 import { githubRoute } from "./github";
 import { meRoute } from "./me";
 import { reportRouter } from "./report";
@@ -14,7 +14,7 @@ export const appRouter = router({
   user: userRoute,
   theme: themeRoute,
   themeComment: themeCommentRoute,
-  developer: developerRoute,
+  development: developmentRoute,
   github: githubRoute,
   session: publicProcedure.query(async ({ ctx }) => {
     return ctx.session;

@@ -3,19 +3,19 @@ import { themeJoinFormSchema } from "../../../share/schema";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 
-export const updateDeveloper = requireLoggedInProcedure
+export const updateDevelopment = requireLoggedInProcedure
   .input(themeJoinFormSchema)
   .mutation(async ({ input, ctx }) => {
     // ログインユーザーが開発者か確認する
-    const developer = await db.appThemeDeveloper.findFirst({
+    const development = await db.appThemeDevelopment.findFirst({
       where: { appThemeId: input.themeId, userId: ctx.session.user.id },
     });
-    if (!developer) {
+    if (!development) {
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
-    await db.appThemeDeveloper.update({
-      where: { id: developer.id },
+    await db.appThemeDevelopment.update({
+      where: { id: development.id },
       data: { githubUrl: input.githubUrl, comment: input.comment },
     });
   });

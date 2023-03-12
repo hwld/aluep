@@ -9,7 +9,7 @@ import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import { RouterInputs } from "../../../../server/lib/trpc";
 import { Theme } from "../../../../server/models/theme";
-import { ThemeDeveloper } from "../../../../server/models/themeDeveloper";
+import { ThemeDevelopment } from "../../../../server/models/themeDevelopment";
 import { Routes } from "../../../../share/routes";
 import { ReportBaseForm } from "../../../../share/schema";
 import { trpc } from "../../../lib/trpc";
@@ -27,9 +27,9 @@ import { AppModal } from "../../../ui/AppModal";
 import { ReportForm } from "../../report/ReportForm";
 import { useThemeJoin } from "../../theme/useThemeJoin";
 
-type Props = { developer: ThemeDeveloper; theme: Theme; isOwner: boolean };
-export const DeveloperMenuButton: React.FC<Props> = ({
-  developer,
+type Props = { development: ThemeDevelopment; theme: Theme; isOwner: boolean };
+export const DevelopmentMenuButton: React.FC<Props> = ({
+  development,
   theme,
   isOwner,
 }) => {
@@ -45,11 +45,11 @@ export const DeveloperMenuButton: React.FC<Props> = ({
 
   const {
     mutations: { cancelJoinMutation },
-  } = useThemeJoin(developer.themeId);
+  } = useThemeJoin(development.themeId);
 
-  const handleDeleteDeveloper = () => {
+  const handleDeleteDevelopment = () => {
     cancelJoinMutation.mutate(
-      { developerId: developer.id },
+      { developmentId: development.id },
       {
         onSuccess: () => {
           showSuccessNotification({
@@ -69,9 +69,9 @@ export const DeveloperMenuButton: React.FC<Props> = ({
     );
   };
 
-  const reportDeveloperMutation = useMutation({
-    mutationFn: (data: RouterInputs["report"]["developer"]) => {
-      return trpc.report.developer.mutate(data);
+  const reportDevelopmentMutation = useMutation({
+    mutationFn: (data: RouterInputs["report"]["development"]) => {
+      return trpc.report.development.mutate(data);
     },
     onSuccess: () => {
       showSuccessNotification({
@@ -88,15 +88,15 @@ export const DeveloperMenuButton: React.FC<Props> = ({
     },
   });
 
-  const handleSubmitReportDeveloper = (data: ReportBaseForm) => {
-    reportDeveloperMutation.mutate({
+  const handleSubmitReportDevelopment = (data: ReportBaseForm) => {
+    reportDevelopmentMutation.mutate({
       reportDetail: data.reportDetail,
       targetDeveloepr: {
-        url: `${window.location.origin}${Routes.developer(
+        url: `${window.location.origin}${Routes.development(
           theme.id,
-          developer.id
+          development.id
         )}`,
-        name: developer.name,
+        name: development.name,
       },
     });
   };
@@ -125,7 +125,10 @@ export const DeveloperMenuButton: React.FC<Props> = ({
             <>
               <MenuLinkItem
                 icon={<RiEdit2Fill size={20} />}
-                href={Routes.developerUpdate(developer.themeId, developer.id)}
+                href={Routes.developmentUpdate(
+                  development.themeId,
+                  development.id
+                )}
               >
                 開発情報を更新する
               </MenuLinkItem>
@@ -155,7 +158,7 @@ export const DeveloperMenuButton: React.FC<Props> = ({
         }
         opened={isDeleteModalOpen}
         onClose={closeDeleteModal}
-        onConfirm={handleDeleteDeveloper}
+        onConfirm={handleDeleteDevelopment}
         isConfirming={cancelJoinMutation.isLoading}
         confirmIcon={BiTrashAlt}
         confirmText="削除する"
@@ -167,9 +170,9 @@ export const DeveloperMenuButton: React.FC<Props> = ({
       >
         <ReportForm
           submitText="開発情報を通報する"
-          onSubmit={handleSubmitReportDeveloper}
+          onSubmit={handleSubmitReportDevelopment}
           onCancel={closeReportModal}
-          isLoading={reportDeveloperMutation.isLoading}
+          isLoading={reportDevelopmentMutation.isLoading}
         />
       </AppModal>
     </>
