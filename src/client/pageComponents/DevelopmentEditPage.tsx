@@ -6,8 +6,8 @@ import { RouterInputs } from "../../server/lib/trpc";
 import { Theme } from "../../server/models/theme";
 import { ThemeDevelopment } from "../../server/models/themeDevelopment";
 import { Routes } from "../../share/routes";
-import { RepositoryFormData, ThemeJoinFormData } from "../../share/schema";
-import { ThemeJoinForm } from "../features/theme/ThemeJoinForm";
+import { RepositoryFormData, ThemeDevelopFormData } from "../../share/schema";
+import { ThemeDevelopForm } from "../features/theme/ThemeDevelopForm";
 import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
 import { trpc } from "../lib/trpc";
 import { showErrorNotification, showSuccessNotification } from "../lib/utils";
@@ -50,7 +50,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
     },
   });
 
-  const handleUpdateDevelopment = (data: ThemeJoinFormData) => {
+  const handleUpdateDevelopment = (data: ThemeDevelopFormData) => {
     updateMutation.mutate(data);
   };
 
@@ -77,7 +77,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
       <Stack spacing="xs">
         <Text c="gray.5">開発情報</Text>
         <Card>
-          <ThemeJoinForm
+          <ThemeDevelopForm
             onSubmit={handleUpdateDevelopment}
             onCancel={handleBack}
             themeId={theme.id}

@@ -35,9 +35,9 @@ export type ThemeCommentFormData = z.infer<typeof themeCommentFormSchema>;
 export const themeUpdateFormSchema = z
   .object({ themeId: z.string().min(1).max(100) })
   .and(themeFormSchema);
-export type ThemeJoinFormData = z.infer<typeof themeJoinFormSchema>;
+export type ThemeDevelopFormData = z.infer<typeof themeDevelopFormSchema>;
 
-export const themeJoinFormSchema = z.object({
+export const themeDevelopFormSchema = z.object({
   themeId: z.string().min(1).max(100),
   githubUrl: z
     .string()
@@ -53,9 +53,9 @@ export const themeJoinFormSchema = z.object({
     .optional(),
 });
 
-export type JoinData =
-  | { joined: false }
-  | { joined: true; developmentId: string };
+export type DevelopedData =
+  | { developed: false }
+  | { developed: true; developmentId: string };
 
 // お題の並び順
 export const themeOrderSchema = z.union([
@@ -110,7 +110,7 @@ export type RepositoryFormData = z.infer<typeof repositoryFormSchema>;
 
 const userDetailPageTabSchema = z.union([
   z.literal("postedThemes"),
-  z.literal("joinedThemes"),
+  z.literal("developedThemes"),
   z.literal("likedThemes"),
 ]);
 export type UserDetailPageTab = z.infer<typeof userDetailPageTabSchema>;

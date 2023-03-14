@@ -8,7 +8,7 @@ export const Routes = {
   theme: (id: string) => `/themes/${id}`,
   themeCreate: "/themes/create",
   themeUpdate: (themeId: string) => `/themes/${themeId}/update`,
-  themeJoin: (themeId: string) => `/themes/${themeId}/join`,
+  themeDevelop: (themeId: string) => `/themes/${themeId}/develop`,
   themeSearch: (query?: { order?: ThemeOrder; tagIds?: string }) =>
     `/themes/search${buildSearchParamsString(query)}`,
   themeLikingUsers: (themeId: string) => `/themes/${themeId}/liking-users`,
@@ -27,7 +27,8 @@ export const Routes = {
   userSearch: "/users/search",
   userFavorites: (userId: string) => `/users/${userId}/favorited-users`,
   userWithPostedThemes: (userId: string) => `/users/${userId}/posted-themes`,
-  userWithJoinedThemes: (userId: string) => `/users/${userId}/joined-themes`,
+  userWithDevelopedThemes: (userId: string) =>
+    `/users/${userId}/developed-themes`,
   userWithLikedThemes: (userId: string) => `/users/${userId}/liked-themes`,
 
   signout: "/signout",

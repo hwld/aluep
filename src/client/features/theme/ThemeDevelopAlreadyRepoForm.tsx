@@ -2,20 +2,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Flex, Textarea, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { MdComputer } from "react-icons/md";
-import { ThemeJoinFormData, themeJoinFormSchema } from "../../../share/schema";
+import {
+  ThemeDevelopFormData,
+  themeDevelopFormSchema,
+} from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { AppForm } from "../../ui/AppForm";
 
 type Props = {
-  defaultValues?: OmitStrict<ThemeJoinFormData, "themeId">;
+  defaultValues?: OmitStrict<ThemeDevelopFormData, "themeId">;
   isLoading?: boolean;
   themeId: string;
-  onSubmit: (data: ThemeJoinFormData) => void;
+  onSubmit: (data: ThemeDevelopFormData) => void;
   onCancel: () => void;
   submitText: string;
 };
 
-export const ThemeJoinAlreadyForm: React.FC<Props> = ({
+export const ThemeDevelopAlreadyRepoForm: React.FC<Props> = ({
   defaultValues = { githubUrl: "", message: "" },
   themeId,
   onSubmit,
@@ -27,9 +30,9 @@ export const ThemeJoinAlreadyForm: React.FC<Props> = ({
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<ThemeJoinFormData>({
+  } = useForm<ThemeDevelopFormData>({
     defaultValues: { ...defaultValues, themeId },
-    resolver: zodResolver(themeJoinFormSchema),
+    resolver: zodResolver(themeDevelopFormSchema),
   });
   return (
     <AppForm

@@ -41,7 +41,7 @@ async function main() {
     themeIds,
     // 開発されるお題の数
     developThemeCounts: 25,
-    // 開発に参加するユーザーの最大数
+    // 開発するユーザーの最大数
     maxDevelopmentCounts: 15,
   });
 
@@ -203,7 +203,7 @@ async function createDevelopments({
     themeIds,
     developThemeCounts
   );
-  // お題それぞれに何人参加するかを決めておく
+  // お題それぞれに何人開発するかを決めておく
   const themeDevelopmentCountList = [...new Array(developThemeIds.length)].map(
     () => faker.datatype.number({ min: 1, max: maxDevelopmentCounts })
   );
@@ -222,7 +222,7 @@ async function createDevelopments({
     // 何人開発するか
     const developmentCounts = themeDevelopmentCountList[i];
 
-    // ユーザーを先頭から走査して開発に参加させる。
+    // ユーザーを先頭から走査して開発させる。
     for (let userIndex = 0; userIndex < developmentCounts; userIndex++) {
       const id = faker.datatype.uuid();
       const development = await prisma.appThemeDevelopment.upsert({

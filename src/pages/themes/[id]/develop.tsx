@@ -4,7 +4,7 @@ import {
   themeQueryKey,
   useThemeQuery,
 } from "../../../client/features/theme/useThemeQuery";
-import { ThemeJoinPage } from "../../../client/pageComponents/ThemeJoinPage";
+import { ThemeDevelopPage } from "../../../client/pageComponents/ThemeDevelopPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
 import { Routes } from "../../../share/routes";
@@ -25,9 +25,9 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    // すでに参加している場合はお題にリダイレクトする
-    const joinData = await caller.theme.joined({ themeId: theme.id });
-    if (joinData.joined) {
+    // すでに開発している場合はお題にリダイレクトする
+    const developedData = await caller.theme.developed({ themeId: theme.id });
+    if (developedData.developed) {
       return {
         redirect: { destination: Routes.theme(themeId), permanent: false },
       };
@@ -38,7 +38,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 );
 
 //TODO
-const JoinTheme: NextPage = () => {
+const ThemeDevelop: NextPage = () => {
   const router = useRouter();
   const themeId = assertString(router.query.id);
   const repoUrl = router.query.repoUrl;
@@ -58,7 +58,7 @@ const JoinTheme: NextPage = () => {
   }
 
   return (
-    <ThemeJoinPage
+    <ThemeDevelopPage
       theme={theme}
       repoUrl={repoUrl}
       repoFormData={{
@@ -70,4 +70,4 @@ const JoinTheme: NextPage = () => {
     />
   );
 };
-export default JoinTheme;
+export default ThemeDevelop;

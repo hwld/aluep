@@ -8,32 +8,37 @@ import {
 import { useSessionQuery } from "../session/useSessionQuery";
 import { themeQueryKey } from "./useThemeQuery";
 
-export const themeJoinQueryKey = (
+export const themeDevelopedQueryKey = (
   themeId: string,
   loggedInUserId: string | undefined
 ) =>
-  [...themeQueryKey(themeId), "user", loggedInUserId ?? "", "joined"] as const;
+  [
+    ...themeQueryKey(themeId),
+    "user",
+    loggedInUserId ?? "",
+    "developed",
+  ] as const;
 
-export const useThemeJoin = (themeId: string) => {
+export const useThemeDevelop = (themeId: string) => {
   const queryClient = useQueryClient();
   const { session } = useSessionQuery();
 
-  const { data: joinData, ...others } = useQuery({
-    queryKey: themeJoinQueryKey(themeId, session?.user.id),
+  const { data: developedData, ...others } = useQuery({
+    queryKey: themeDevelopedQueryKey(themeId, session?.user.id),
     queryFn: () => {
-      return trpc.theme.joined.query({ themeId });
+      return trpc.theme.developed.query({ themeId });
     },
   });
 
-  // お題に参加する
-  const joinMutation = useMutation({
-    mutationFn: (data: RouterInputs["theme"]["join"]) => {
-      return trpc.theme.join.mutate(data);
+  // お題を開発する
+  const developMutation = useMutation({
+    mutationFn: (data: RouterInputs["theme"]["develop"]) => {
+      return trpc.theme.develop.mutate(data);
     },
     onSuccess: async () => {
-      // 参加状況のキャッシュを無効にする
+      // 開発状況のキャッシュを無効にする
       await queryClient.invalidateQueries(
-        themeJoinQueryKey(themeId, session?.user.id)
+        themeDevelopedQueryKey(themeId, session?.user.id)
       );
 
       showSuccessNotification({
@@ -49,8 +54,8 @@ export const useThemeJoin = (themeId: string) => {
     },
   });
 
-  // お題への参加をキャンセルする
-  const cancelJoinMutation = useMutation({
+  // お題の開発をキャンセルする
+  const cancelDevelopMutation = useMutation({
     mutationFn: ({ developmentId }: { developmentId: string }) => {
       return trpc.development.delete.mutate({ developmentId: developmentId });
     },
@@ -61,7 +66,7 @@ export const useThemeJoin = (themeId: string) => {
   });
 
   return {
-    data: { joinData, ...others },
-    mutations: { joinMutation, cancelJoinMutation },
+    data: { developedData, ...others },
+    mutations: { developMutation, cancelDevelopMutation },
   };
 };

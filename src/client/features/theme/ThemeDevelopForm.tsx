@@ -1,14 +1,17 @@
 import { Box, Radio, Stack, Text } from "@mantine/core";
 import React, { useState } from "react";
-import { RepositoryFormData, ThemeJoinFormData } from "../../../share/schema";
+import {
+  RepositoryFormData,
+  ThemeDevelopFormData,
+} from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
-import { ThemeJoinAlreadyForm } from "./ThemeJoinAlreadyForm";
-import { ThemeJoinNewForm } from "./ThemeJoinNewForm";
+import { ThemeDevelopAlreadyRepoForm } from "./ThemeDevelopAlreadyRepoForm";
+import { ThemeDevelopNewRepoForm } from "./ThemeDevelopNewRepoForm";
 
 type Props = {
-  defaultValues?: OmitStrict<ThemeJoinFormData, "themeId">;
+  defaultValues?: OmitStrict<ThemeDevelopFormData, "themeId">;
   themeId: string;
-  onSubmit: (data: ThemeJoinFormData) => void;
+  onSubmit: (data: ThemeDevelopFormData) => void;
   onCancel: () => void;
   submitText: string;
   isLoading?: boolean;
@@ -16,8 +19,8 @@ type Props = {
   repository: string;
 };
 
-// TODO: お題の参加以外にも、お題の参加情報の更新にも使用しているのでThemeJoinFormっていう名前は微妙
-export const ThemeJoinForm: React.FC<Props> = ({
+// TODO: リポジトリの新規作成と選択でFormを切り替えてるところをなくしたい？
+export const ThemeDevelopForm: React.FC<Props> = ({
   defaultValues,
   themeId,
   repository,
@@ -83,7 +86,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
       </Radio.Group>
       {val === "already" && (
         <Box>
-          <ThemeJoinAlreadyForm
+          <ThemeDevelopAlreadyRepoForm
             defaultValues={defaultValues}
             onSubmit={onSubmit}
             onCancel={onCancel}
@@ -96,7 +99,7 @@ export const ThemeJoinForm: React.FC<Props> = ({
 
       {val === "new" && (
         <Box>
-          <ThemeJoinNewForm
+          <ThemeDevelopNewRepoForm
             onSubmit={onSubmit}
             onCancel={onCancel}
             themeId={themeId}

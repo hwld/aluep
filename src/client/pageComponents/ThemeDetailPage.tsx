@@ -16,11 +16,11 @@ import { Routes } from "../../share/routes";
 import { useRequireLoginModal } from "../features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "../features/session/useSessionQuery";
 import { ThemeDescriptionView } from "../features/theme/ThemeDescriptionView";
-import { ThemeJoinButton } from "../features/theme/ThemeJoinButton";
+import { ThemeDevelopButton } from "../features/theme/ThemeDevelopButton";
 import { ThemeLikeButton } from "../features/theme/ThemeLikeButton";
 import { ThemeOperationButton } from "../features/theme/ThemeOperationButton";
 import { ThemeTagBadge } from "../features/theme/ThemeTagBadge";
-import { useThemeJoin } from "../features/theme/useThemeJoin";
+import { useThemeDevelop } from "../features/theme/useThemeDevelop";
 import { useThemeLike } from "../features/theme/useThemeLike";
 import { ThemeComments } from "../features/themeComment/ThemeComments";
 import { UserIconLink } from "../features/user/UserIconLink";
@@ -35,8 +35,8 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const { openLoginModal } = useRequireLoginModal();
   const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(theme.id);
   const {
-    data: { joinData },
-  } = useThemeJoin(theme.id);
+    data: { developedData },
+  } = useThemeDevelop(theme.id);
 
   const handleLikeTheme = () => {
     //ログインしていなければログインモーダルを表示する
@@ -51,14 +51,14 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
     });
   };
 
-  const handleClickJoin = (e: SyntheticEvent) => {
+  const handleClickDevelop = (e: SyntheticEvent) => {
     // ログインしていなければログインモーダルを表示する
     if (!session) {
-      openLoginModal(Routes.themeJoin(theme.id));
+      openLoginModal(Routes.themeDevelop(theme.id));
       return;
     }
 
-    router.push(Routes.themeJoin(theme.id));
+    router.push(Routes.themeDevelop(theme.id));
   };
 
   // 自分の投稿かどうか
@@ -79,11 +79,11 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
           // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
           sx={{ position: "sticky", top: 10, zIndex: 1 }}
         >
-          <ThemeJoinButton
+          <ThemeDevelopButton
             themeId={theme.id}
             developments={theme.developments}
-            loggedInUserJoinData={joinData}
-            onJoinTheme={handleClickJoin}
+            loggedInUserDevelopedData={developedData}
+            onDevelopTheme={handleClickDevelop}
           />
           <ThemeLikeButton
             themeId={theme.id}

@@ -6,10 +6,10 @@
  * ・お題の数: 50
  * ・お題へのいいね総数: 1225
  *   ・各お題に0~49のいいね
- * ・お題の参加者総数: 1225
- *   ・各お題に0~49の参加者
- * ・お題の参加者へのいいね総数: 1176
- *   ・各お題の参加者一人に0~49のいいね
+ * ・お題の開発者総数: 1225
+ *   ・各お題に0~49の開発者
+ * ・お題の開発者へのいいね総数: 1176
+ *   ・各お題の開発者一人に0~49のいいね
  */
 
 import { faker } from "@faker-js/faker/locale/ja";
@@ -83,9 +83,9 @@ async function main() {
     themeIds.map((_, themeIndex) => [themeIndex, []])
   );
 
-  // お題に参加する
+  // お題を開発する
   for (let userIndex = 0; userIndex < userIds.length; userIndex++) {
-    // 自分よりindexが小さいユーザーが投稿したお題すべてに参加する
+    // 自分よりindexが小さいユーザーが投稿したお題すべてを開発する
     for (let themeIndex = 0; themeIndex < userIndex; themeIndex++) {
       const id = faker.datatype.uuid();
       const development = await prisma.appThemeDevelopment.upsert({
@@ -99,7 +99,7 @@ async function main() {
         },
         update: { createdAt: new Date() },
       });
-      console.log(`お題に参加 ユーザー:${userIndex} お題:${themeIndex}`);
+      console.log(`お題を開発 ユーザー:${userIndex} お題:${themeIndex}`);
 
       developmentIds.push(development.id);
       userDevelopmentMap.set(userIndex, [

@@ -1,14 +1,14 @@
 import { router } from "../../lib/trpc";
 import { createTheme } from "./createTheme";
 import { deleteTheme } from "./deleteTheme";
+import { developedTheme } from "./developedTheme";
+import { developTheme } from "./developTheme";
 import { getAllTags } from "./getAllTags";
-import { getJoinedThemesByUser } from "./getJoinedThemesByUser";
+import { getDevelopedThemesByUser } from "./getDevelopedThemesByUser";
 import { getLikedThemesByUser } from "./getLikedThemesByUser";
 import { getPostedThemesByUser } from "./getPostedThemesByUser";
 import { getTheme } from "./getTheme";
 import { getThemeLikeCountByUser } from "./getThemeLikeCountByUser";
-import { joinedTheme } from "./joinedTheme";
-import { joinTheme } from "./joinTheme";
 import { likedTheme } from "./likedTheme";
 import { likeTheme } from "./likeTheme";
 import { searchTheme } from "./searchTheme";
@@ -33,11 +33,11 @@ export const themeRoute = router({
   /**　お題を削除する */
   delete: deleteTheme,
 
-  /** お題に参加する */
-  join: joinTheme,
+  /** お題を開発する */
+  develop: developTheme,
 
-  /** ログインユーザーが指定されたお題に参加しているか */
-  joined: joinedTheme,
+  /** ログインユーザーが指定されたお題を開発しているか */
+  developed: developedTheme,
 
   /** お題にいいね・いいね解除する */
   like: likeTheme,
@@ -51,8 +51,8 @@ export const themeRoute = router({
   /** 指定されたユーザーが投稿されたお題を取得する */
   getPostedThemesByUser,
 
-  /** 指定されたユーザーが参加しているお題を取得する */
-  getJoinedThemesByUser: getJoinedThemesByUser,
+  /** 指定されたユーザーが開発しているお題を取得する */
+  getDevelopedThemesByUser: getDevelopedThemesByUser,
 
   /** 指定されたユーザーがいいねしたお題を取得する */
   getLikedThemesByUser,
