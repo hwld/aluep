@@ -1,14 +1,14 @@
 import { z } from "zod";
-import { JoinData } from "../../../share/schema";
+import { DevelopedData } from "../../../share/schema";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 
-export const joinedTheme = publicProcedure
+export const developedTheme = publicProcedure
   .input(z.object({ themeId: z.string() }))
-  .query(async ({ input, ctx }): Promise<JoinData> => {
+  .query(async ({ input, ctx }): Promise<DevelopedData> => {
     const loggedInUser = ctx.session?.user;
     if (!loggedInUser) {
-      return { joined: false };
+      return { developed: false };
     }
 
     const development = await db.appThemeDevelopment.findUnique({
@@ -21,8 +21,8 @@ export const joinedTheme = publicProcedure
       select: { id: true },
     });
     if (!development) {
-      return { joined: false };
+      return { developed: false };
     }
 
-    return { joined: true, developmentId: development.id };
+    return { developed: true, developmentId: development.id };
   });

@@ -7,27 +7,27 @@ import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 import { findManyThemes } from "../../models/theme";
 
-export const getJoinedThemesByUser = publicProcedure
+export const getDevelopedThemesByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page } }) => {
     const [developments, { allPages }] = await paginate({
       finder: db.appThemeDevelopment.findMany,
       finderInput: { where: { userId: input.userId } },
       counter: db.appThemeDevelopment.count,
-      pagingData: { page, limit: pageLimit.joinedThemes },
+      pagingData: { page, limit: pageLimit.developedThemes },
     });
 
-    const joinedThemeIds = developments.map((t) => t.appThemeId);
+    const developedThemeIds = developments.map((t) => t.appThemeId);
 
-    const joinedThemes = await findManyThemes({
-      where: { id: { in: joinedThemeIds } },
+    const developedThemes = await findManyThemes({
+      where: { id: { in: developedThemeIds } },
     });
 
-    const sortedJoinedThemes = sortedInSameOrder({
-      target: joinedThemes,
-      base: joinedThemeIds,
+    const sortedDevelopedThemes = sortedInSameOrder({
+      target: developedThemes,
+      base: developedThemeIds,
       getKey: (t) => t.id,
     });
 
-    return { list: sortedJoinedThemes, allPages };
+    return { list: sortedDevelopedThemes, allPages };
   });

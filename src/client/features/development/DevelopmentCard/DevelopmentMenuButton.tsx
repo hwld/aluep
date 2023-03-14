@@ -25,7 +25,7 @@ import { MenuItem } from "../../../ui/AppMenu/MenuItem";
 import { MenuLinkItem } from "../../../ui/AppMenu/MenuLinkItem";
 import { AppModal } from "../../../ui/AppModal";
 import { ReportForm } from "../../report/ReportForm";
-import { useThemeJoin } from "../../theme/useThemeJoin";
+import { useThemeDevelop } from "../../theme/useThemeDevelop";
 
 type Props = { development: ThemeDevelopment; theme: Theme; isOwner: boolean };
 export const DevelopmentMenuButton: React.FC<Props> = ({
@@ -44,11 +44,11 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
   ] = useDisclosure(false);
 
   const {
-    mutations: { cancelJoinMutation },
-  } = useThemeJoin(development.themeId);
+    mutations: { cancelDevelopMutation },
+  } = useThemeDevelop(development.themeId);
 
   const handleDeleteDevelopment = () => {
-    cancelJoinMutation.mutate(
+    cancelDevelopMutation.mutate(
       { developmentId: development.id },
       {
         onSuccess: () => {
@@ -159,7 +159,7 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
         opened={isDeleteModalOpen}
         onClose={closeDeleteModal}
         onConfirm={handleDeleteDevelopment}
-        isConfirming={cancelJoinMutation.isLoading}
+        isConfirming={cancelDevelopMutation.isLoading}
         confirmIcon={BiTrashAlt}
         confirmText="削除する"
       />

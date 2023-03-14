@@ -6,7 +6,7 @@ import { assertNever } from "../../share/utils";
 import { useThemeDevelopmentLikesQuery } from "../features/development/useThemeDevelopmentLikesQuery";
 import { useSumThemeLikesQuery } from "../features/theme/useSumThemeLikesQuery";
 import { UserDetailTab } from "../features/user/UserDetail/UserDetailTab";
-import { UserJoinedThemes } from "../features/user/UserDetail/UserJoinedThemes";
+import { UserDevelopedThemes } from "../features/user/UserDetail/UserDevelopedThemes";
 import { UserLikedThemes } from "../features/user/UserDetail/UserLikedThemes";
 import { UserPostedThemes } from "../features/user/UserDetail/UserPostedThemes";
 import { UserDetailCard } from "../features/user/UserDetailCard";
@@ -38,9 +38,9 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
             onChangePage={handleChangePage}
           />
         );
-      case "joinedThemes":
+      case "developedThemes":
         return (
-          <UserJoinedThemes
+          <UserDevelopedThemes
             user={user}
             page={page}
             onChangePage={handleChangePage}
@@ -94,7 +94,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
             投稿したお題
           </UserDetailTab>
           <UserDetailTab
-            tab="joinedThemes"
+            tab="developedThemes"
             activeTab={activeTab}
             onChangeTab={handleChangeTab}
           >

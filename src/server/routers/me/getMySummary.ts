@@ -33,7 +33,7 @@ export const getMySummary = requireLoggedInProcedure.query(async ({ ctx }) => {
   return {
     // ユーザーが投稿したお題の数
     themes: themeIds.length,
-    // ユーザーが参加したお題の数
+    // ユーザーが開発したお題の数
     developments: developmentIds.length,
     // ユーザーが貰ったすべてのいいねの数
     allLikes: themeLikes + developLikes,

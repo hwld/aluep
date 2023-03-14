@@ -11,47 +11,47 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 import { Routes } from "../../../share/routes";
-import { JoinData } from "../../../share/schema";
+import { DevelopedData } from "../../../share/schema";
 import { AppTooltip } from "../../ui/AppTooltip";
 import { ComputerIcon } from "../../ui/ComputerIcon";
 
 type Props = {
   developments: number;
-  loggedInUserJoinData: JoinData | undefined;
-  onJoinTheme: (e: SyntheticEvent) => void;
+  loggedInUserDevelopedData: DevelopedData | undefined;
+  onDevelopTheme: (e: SyntheticEvent) => void;
   themeId: string;
 };
 
-export const ThemeJoinButton: React.FC<Props> = ({
+export const ThemeDevelopButton: React.FC<Props> = ({
   developments,
-  loggedInUserJoinData = { joined: false },
-  onJoinTheme,
+  loggedInUserDevelopedData = { developed: false },
+  onDevelopTheme,
   themeId,
 }) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
 
   const handleClick = (e: SyntheticEvent) => {
-    // すでに参加している場合は自身の開発情報へ遷移させる
-    if (loggedInUserJoinData.joined) {
+    // すでに開発している場合は自身の開発情報へ遷移させる
+    if (loggedInUserDevelopedData.developed) {
       router.push(
-        Routes.development(themeId, loggedInUserJoinData.developmentId)
+        Routes.development(themeId, loggedInUserDevelopedData.developmentId)
       );
       return;
     }
 
-    onJoinTheme(e);
+    onDevelopTheme(e);
   };
 
   return (
     <Stack align="center" spacing={3}>
       <Flex direction="column" justify="center" align="center" gap="5px">
         <Text color="gray.5" size="sm">
-          {loggedInUserJoinData.joined ? "開発中" : "開発する"}
+          {loggedInUserDevelopedData.developed ? "開発中" : "開発する"}
         </Text>
         <AppTooltip
           label={
-            loggedInUserJoinData.joined
+            loggedInUserDevelopedData.developed
               ? "自分の開発情報を表示する"
               : "お題を開発する"
           }
@@ -69,7 +69,7 @@ export const ThemeJoinButton: React.FC<Props> = ({
                 0.5
               )}`,
               transition: "all 200ms",
-              backgroundColor: loggedInUserJoinData.joined
+              backgroundColor: loggedInUserDevelopedData.developed
                 ? theme.colors.red[7]
                 : theme.colors.red[7],
               "&:hover": {

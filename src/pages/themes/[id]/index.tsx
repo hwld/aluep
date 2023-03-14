@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { themeJoinQueryKey } from "../../../client/features/theme/useThemeJoin";
+import { themeDevelopedQueryKey } from "../../../client/features/theme/useThemeDevelop";
 import { themeLikedQueryKey } from "../../../client/features/theme/useThemeLike";
 import {
   themeQueryKey,
@@ -33,10 +33,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       () => caller.theme.liked({ themeId })
     );
 
-    // ログインユーザーの参加情報のプリフェッチ
+    // ログインユーザーの開発情報のプリフェッチ
     await queryClient.prefetchQuery(
-      themeJoinQueryKey(themeId, session?.user.id),
-      () => caller.theme.joined({ themeId })
+      themeDevelopedQueryKey(themeId, session?.user.id),
+      () => caller.theme.developed({ themeId })
     );
 
     // コメントのプリフェッチ

@@ -1,10 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { themeJoinFormSchema } from "../../../share/schema";
+import { themeDevelopFormSchema } from "../../../share/schema";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const updateDevelopment = requireLoggedInProcedure
-  .input(themeJoinFormSchema)
+  .input(themeDevelopFormSchema)
   .mutation(async ({ input, ctx }) => {
     // ログインユーザーが開発者か確認する
     const development = await db.appThemeDevelopment.findFirst({

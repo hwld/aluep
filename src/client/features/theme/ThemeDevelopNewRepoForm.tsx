@@ -5,7 +5,7 @@ import { MdComputer } from "react-icons/md";
 import {
   RepositoryFormData,
   repositoryFormSchema,
-  ThemeJoinFormData,
+  ThemeDevelopFormData,
 } from "../../../share/schema";
 import { AppForm } from "../../ui/AppForm";
 import { useGitHubRepoCreate } from "../github/useGitHubRepoCreate";
@@ -14,13 +14,13 @@ type Props = {
   defaultValues?: RepositoryFormData;
   isLoading?: boolean;
   themeId: string;
-  onSubmit: (data: ThemeJoinFormData) => void;
+  onSubmit: (data: ThemeDevelopFormData) => void;
   onCancel: () => void;
   submitText: string;
   repoFormData?: RepositoryFormData;
 };
 
-export const ThemeJoinNewForm: React.FC<Props> = ({
+export const ThemeDevelopNewRepoForm: React.FC<Props> = ({
   isLoading,
   themeId,
   onSubmit,
@@ -40,9 +40,9 @@ export const ThemeJoinNewForm: React.FC<Props> = ({
     const comment: string | undefined = data.comment;
 
     createRepositoryMutation.mutate(data, {
-      //リポジトリが作成に成功したら、お題に参加する
+      //リポジトリが作成に成功したら、お題を開発する
       onSuccess: (data) => {
-        const join: {
+        const developData: {
           comment: string | undefined;
           themeId: string;
           githubUrl: string;
@@ -51,7 +51,7 @@ export const ThemeJoinNewForm: React.FC<Props> = ({
           themeId: themeId,
           githubUrl: data.repoUrl,
         };
-        onSubmit(join);
+        onSubmit(developData);
       },
     });
   };
@@ -70,7 +70,7 @@ export const ThemeJoinNewForm: React.FC<Props> = ({
       onCancel={onCancel}
       submitIcon={MdComputer}
       submitText={submitText}
-      // ここのisLoadingは、お題への参加・開発情報の更新完了を待機するもので、
+      // ここのisLoadingは、お題の開発・開発情報の更新完了を待機するもので、
       // それとは別にgithubリポジトリの作成を待機する必要がある。
       isSubmitting={
         isLoading ||

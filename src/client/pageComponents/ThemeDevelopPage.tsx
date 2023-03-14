@@ -2,10 +2,10 @@ import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { Theme } from "../../server/models/theme";
 import { Routes } from "../../share/routes";
-import { RepositoryFormData, ThemeJoinFormData } from "../../share/schema";
-import { ThemeJoinForm } from "../features/theme/ThemeJoinForm";
+import { RepositoryFormData, ThemeDevelopFormData } from "../../share/schema";
+import { ThemeDevelopForm } from "../features/theme/ThemeDevelopForm";
 import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
-import { useThemeJoin } from "../features/theme/useThemeJoin";
+import { useThemeDevelop } from "../features/theme/useThemeDevelop";
 import { ComputerIcon } from "../ui/ComputerIcon";
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
   repoFormData?: RepositoryFormData;
   reRepo?: string;
 };
-export const ThemeJoinPage: React.FC<Props> = ({
+export const ThemeDevelopPage: React.FC<Props> = ({
   theme,
   repoUrl,
   repoFormData,
@@ -24,11 +24,11 @@ export const ThemeJoinPage: React.FC<Props> = ({
   const mantineTheme = useMantineTheme();
 
   const {
-    mutations: { joinMutation },
-  } = useThemeJoin(theme.id);
+    mutations: { developMutation },
+  } = useThemeDevelop(theme.id);
 
-  const handleJoinTheme = (data: ThemeJoinFormData) => {
-    joinMutation.mutate(data, {
+  const handleDevelopTheme = (data: ThemeDevelopFormData) => {
+    developMutation.mutate(data, {
       onSuccess: () => router.replace(Routes.theme(theme.id)),
     });
   };
@@ -52,12 +52,12 @@ export const ThemeJoinPage: React.FC<Props> = ({
       <Stack spacing="xs">
         <Text c="gray.5">開発情報</Text>
         <Card>
-          <ThemeJoinForm
-            onSubmit={handleJoinTheme}
+          <ThemeDevelopForm
+            onSubmit={handleDevelopTheme}
             onCancel={handleBack}
             themeId={theme.id}
             submitText="開発する"
-            isLoading={joinMutation.isLoading || joinMutation.isSuccess}
+            isLoading={developMutation.isLoading || developMutation.isSuccess}
             defaultValues={{ githubUrl: repoUrl ?? "", comment: "" }}
             repoFormData={repoFormData}
             repository={repository}
