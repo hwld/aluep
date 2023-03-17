@@ -8,6 +8,7 @@ import { ThemeDevelopPage } from "../../../client/pageComponents/ThemeDevelopPag
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/routers";
 import { Routes } from "../../../share/routes";
+import { createRepositoryURLParamSchema } from "../../../share/schema";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
@@ -37,37 +38,22 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-//TODO
 const ThemeDevelop: NextPage = () => {
   const router = useRouter();
   const themeId = assertString(router.query.id);
-  const repoUrl = router.query.repoUrl;
-  const { repoName, repoDescription, comment, reRepo } = router.query;
+
+  const createRepositoryData = createRepositoryURLParamSchema.parse(
+    router.query
+  );
 
   const { theme } = useThemeQuery(themeId);
 
-  if (
-    !theme ||
-    typeof repoUrl === "object" ||
-    typeof repoName === "object" ||
-    typeof repoDescription === "object" ||
-    typeof reRepo === "object" ||
-    typeof comment === "object"
-  ) {
+  if (!theme) {
     return <NotFoundPage />;
   }
 
   return (
-    <ThemeDevelopPage
-      theme={theme}
-      repoUrl={repoUrl}
-      repoFormData={{
-        repoName: repoName ?? "",
-        repoDescription: repoDescription ?? "",
-        comment: comment ?? "",
-      }}
-      reRepo={reRepo}
-    />
+    <ThemeDevelopPage theme={theme} restoredValues={createRepositoryData} />
   );
 };
 export default ThemeDevelop;

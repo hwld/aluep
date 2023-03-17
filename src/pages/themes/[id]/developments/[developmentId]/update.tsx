@@ -12,6 +12,7 @@ import { DevelopmentEditPage } from "../../../../../client/pageComponents/Develo
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../../server/routers";
 import { Routes } from "../../../../../share/routes";
+import { createRepositoryURLParamSchema } from "../../../../../share/schema";
 import { assertString } from "../../../../../share/utils";
 import NotFoundPage from "../../../../404";
 
@@ -40,28 +41,20 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-// TODO
 const DevelopmentUpdate: NextPage = () => {
   const router = useRouter();
   const themeId = assertString(router.query.id);
   const developmentId = assertString(router.query.developmentId);
-  const repoUrl = router.query.repoUrl;
-  const { repoName, repoDescription, comment, reRepo } = router.query;
+  const createRepositoryData = createRepositoryURLParamSchema.parse(
+    router.query
+  );
 
   const { theme } = useThemeQuery(themeId);
   const { development: development } = useDevelopmentQuery(developmentId);
 
   // テーマが取得できないときはサーバーでエラーが出るから
   // ここには到達しない
-  if (
-    !theme ||
-    !development ||
-    typeof repoUrl === "object" ||
-    typeof repoName === "object" ||
-    typeof repoDescription === "object" ||
-    typeof reRepo === "object" ||
-    typeof comment === "object"
-  ) {
+  if (!theme || !development) {
     return <NotFoundPage />;
   }
 
@@ -69,13 +62,7 @@ const DevelopmentUpdate: NextPage = () => {
     <DevelopmentEditPage
       theme={theme}
       development={development}
-      repoUrl={repoUrl}
-      repoFormData={{
-        repoName: repoName ?? "",
-        repoDescription: repoDescription ?? "",
-        comment: comment ?? "",
-      }}
-      reRepo={reRepo}
+      restoredValues={createRepositoryData}
     />
   );
 };

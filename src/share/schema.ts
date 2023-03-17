@@ -35,23 +35,60 @@ export type ThemeCommentFormData = z.infer<typeof themeCommentFormSchema>;
 export const themeUpdateFormSchema = z
   .object({ themeId: z.string().min(1).max(100) })
   .and(themeFormSchema);
-export type ThemeDevelopFormData = z.infer<typeof themeDevelopFormSchema>;
 
-export const themeDevelopFormSchema = z.object({
-  themeId: z.string().min(1).max(100),
-  githubUrl: z
-    .string()
-    .min(1, "リポジトリのURLを入力してください。")
-    .max(120, "リポジトリのURLは120文字以下で入力してください。")
-    .regex(
-      /^https:\/\/github.com\/[^\/]+\/[^\/\?&]+$/,
-      "https://から始まる有効なGitHubリポジトリのURLを入力してください。"
-    ),
-  comment: z
-    .string()
-    .max(300, "コメントは300文字以下で入力してください。")
-    .optional(),
-});
+export type ThemeDevelopFormData = z.infer<typeof themeDevelopFormSchema>;
+export const themeDevelopFormSchema = z
+  .object({
+    themeId: z.string().min(1).max(100),
+    comment: z
+      .string()
+      .max(300, "コメントは300文字以下で入力してください。")
+      .optional(),
+  })
+  .and(
+    z.union([
+      // 同時にGitHubリポジトリを作成する
+      z.object({
+        type: z.literal("createRepository"),
+        githubRepositoryName: z
+          .string({ required_error: "リポジトリ名を入力してください。" })
+          .min(1, "リポジトリ名を入力して下さい。")
+          .max(30, "リポジトリ名は30文字以下で入力してください。"),
+        githubRepositoryDescription: z
+          .string()
+          .max(200, "説明は200文字以下で入力してください。")
+          .optional(),
+      }),
+      // すでにあるGitHubリポジトリを入力する
+      z.object({
+        type: z.literal("referenceRepository"),
+        githubRepositoryUrl: z
+          .string({ required_error: "リポジトリのURLを入力してください。" })
+          .min(1, "リポジトリのURLを入力してください。")
+          .max(120, "リポジトリのURLは120文字以下で入力してください。")
+          .regex(
+            /^https:\/\/github.com\/[^\/]+\/[^\/\?&]+$/,
+            "https://から始まる有効なGitHubリポジトリのURLを入力してください。"
+          ),
+      }),
+    ])
+  );
+
+export const updateThemeDevelopFormSchema = themeDevelopFormSchema.and(
+  z.object({ developmentId: z.string() })
+);
+
+/** DevelopFormのtype="createRepository"情報をURLパラメータに持たせたときに使う */
+export const createRepositoryURLParamSchema = z
+  .object({
+    developmentComment: z.string(),
+    repositoryName: z.string(),
+    repositoryDesc: z.string(),
+  })
+  .partial();
+export type CreateRepositoryData = z.infer<
+  typeof createRepositoryURLParamSchema
+>;
 
 export type DevelopedData =
   | { developed: false }

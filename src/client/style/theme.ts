@@ -91,6 +91,7 @@ export const theme: MantineThemeOverride = {
         },
       }),
     },
+    Radio: { styles: (theme) => ({ label: { color: theme.colors.gray[7] } }) },
     TextInput: { defaultProps: { autoComplete: "off" } },
     Select: {
       styles: (theme) => ({

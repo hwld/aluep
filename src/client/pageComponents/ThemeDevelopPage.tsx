@@ -2,7 +2,7 @@ import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { Theme } from "../../server/models/theme";
 import { Routes } from "../../share/routes";
-import { RepositoryFormData, ThemeDevelopFormData } from "../../share/schema";
+import { CreateRepositoryData, ThemeDevelopFormData } from "../../share/schema";
 import { ThemeDevelopForm } from "../features/theme/ThemeDevelopForm";
 import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
 import { useThemeDevelop } from "../features/theme/useThemeDevelop";
@@ -10,15 +10,11 @@ import { ComputerIcon } from "../ui/ComputerIcon";
 
 type Props = {
   theme: Theme;
-  repoUrl?: string;
-  repoFormData?: RepositoryFormData;
-  reRepo?: string;
+  restoredValues: CreateRepositoryData;
 };
 export const ThemeDevelopPage: React.FC<Props> = ({
   theme,
-  repoUrl,
-  repoFormData,
-  reRepo,
+  restoredValues,
 }) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
@@ -36,8 +32,6 @@ export const ThemeDevelopPage: React.FC<Props> = ({
   const handleBack = () => {
     router.back();
   };
-
-  const repository: string = reRepo ?? "already";
 
   return (
     <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
@@ -58,9 +52,13 @@ export const ThemeDevelopPage: React.FC<Props> = ({
             themeId={theme.id}
             submitText="開発する"
             isLoading={developMutation.isLoading || developMutation.isSuccess}
-            defaultValues={{ githubUrl: repoUrl ?? "", comment: "" }}
-            repoFormData={repoFormData}
-            repository={repository}
+            isRelogined={Object.keys(restoredValues).length > 0}
+            defaultValues={{
+              type: "createRepository",
+              comment: restoredValues?.developmentComment ?? "",
+              githubRepositoryName: restoredValues?.repositoryName ?? "",
+              githubRepositoryDescription: restoredValues?.repositoryDesc ?? "",
+            }}
           />
         </Card>
       </Stack>
