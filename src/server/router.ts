@@ -1,6 +1,5 @@
 import { aggregateRoute } from "./features/aggregate/router";
 import { developmentRoute } from "./features/development/router";
-import { githubRoute } from "./features/github/router";
 import { meRoute } from "./features/me/router";
 import { reportRouter } from "./features/report/router";
 import { themeRoute } from "./features/theme/router";
@@ -15,7 +14,6 @@ export const appRouter = router({
   theme: themeRoute,
   themeComment: themeCommentRoute,
   development: developmentRoute,
-  github: githubRoute,
   session: publicProcedure.query(async ({ ctx }) => {
     return ctx.session;
   }),
