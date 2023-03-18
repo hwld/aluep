@@ -7,7 +7,7 @@ import {
 } from "../../../../client/features/theme/useThemeQuery";
 import { ThemeDevelopmentPage } from "../../../../client/pageComponents/ThemeDevelopmentPage";
 import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../../server/routers";
+import { appRouter } from "../../../../server/router";
 import { paginatedPageSchema } from "../../../../share/schema";
 import { assertString } from "../../../../share/utils";
 import NotFoundPage from "../../../404";

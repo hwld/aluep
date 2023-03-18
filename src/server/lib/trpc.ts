@@ -10,7 +10,7 @@ import { Session, unstable_getServerSession } from "next-auth";
 import SuperJSON from "superjson";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { findUser } from "../models/user";
-import { AppRouter } from "../routers";
+import { AppRouter } from "../router";
 
 export async function createTRPCContext(
   opts: CreateNextContextOptions

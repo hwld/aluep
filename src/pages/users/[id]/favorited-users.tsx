@@ -8,7 +8,7 @@ import {
   useUserQuery,
 } from "../../../client/features/user/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../server/routers";
+import { appRouter } from "../../../server/router";
 import { paginatedPageSchema } from "../../../share/schema";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";

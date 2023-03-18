@@ -4,7 +4,7 @@ import { UserSearchPage } from "../../client/pageComponents/UserSearchPage";
 
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { urlParamToString } from "../../server/lib/urlParam";
-import { appRouter } from "../../server/routers";
+import { appRouter } from "../../server/router";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ params: { query }, queryClient, callerContext }) => {

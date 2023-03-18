@@ -7,7 +7,7 @@ import {
 } from "../../../client/features/theme/useThemeQuery";
 import { ThemeEditPage } from "../../../client/pageComponents/ThemeEditPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../server/routers";
+import { appRouter } from "../../../server/router";
 import { Routes } from "../../../share/routes";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";

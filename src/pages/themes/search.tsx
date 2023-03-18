@@ -3,7 +3,7 @@ import { allTagsQueryKey } from "../../client/features/theme/useAllTagsQuery";
 import { searchedThemesQueryKey } from "../../client/features/theme/useSearchedThemesQuery";
 import { ThemeSearchPage } from "../../client/pageComponents/ThemeSearchPage";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../server/routers";
+import { appRouter } from "../../server/router";
 import { searchThemePageSchema } from "../../share/schema";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(

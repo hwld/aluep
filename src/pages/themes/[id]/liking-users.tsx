@@ -7,7 +7,7 @@ import {
 import { themeLikingUsersPerPageQueryKey } from "../../../client/features/user/useThemeLikingUsersQuery";
 import { ThemeLikingUsersPage } from "../../../client/pageComponents/ThemeLikingUsersPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../server/routers";
+import { appRouter } from "../../../server/router";
 import { paginatedPageSchema } from "../../../share/schema";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";

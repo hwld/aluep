@@ -12,7 +12,7 @@ import {
 } from "../../../client/features/user/useUserQuery";
 import { UserDetailPage } from "../../../client/pageComponents/UserDetailPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../server/routers";
+import { appRouter } from "../../../server/router";
 import { userDetailPageSchame } from "../../../share/schema";
 import { assertNever, assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";

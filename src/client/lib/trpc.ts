@@ -1,6 +1,6 @@
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import SuperJSON from "superjson";
-import { AppRouter } from "../../server/routers";
+import { AppRouter } from "../../server/router";
 
 function getBaseUrl() {
   if (process.env.NODE_ENV === "production") {

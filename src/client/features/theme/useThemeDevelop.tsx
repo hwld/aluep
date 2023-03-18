@@ -3,7 +3,7 @@ import { TRPCClientError } from "@trpc/client";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { RouterInputs } from "../../../server/lib/trpc";
-import { AppRouter } from "../../../server/routers";
+import { AppRouter } from "../../../server/router";
 import { GitHubErrors } from "../../../share/errors";
 import { Routes } from "../../../share/routes";
 import {

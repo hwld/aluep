@@ -6,7 +6,7 @@ import {
 } from "../../../client/features/theme/useThemeQuery";
 import { ThemeDevelopPage } from "../../../client/pageComponents/ThemeDevelopPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../server/routers";
+import { appRouter } from "../../../server/router";
 import { Routes } from "../../../share/routes";
 import { createRepositoryURLParamSchema } from "../../../share/schema";
 import { assertString } from "../../../share/utils";

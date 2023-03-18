@@ -8,7 +8,7 @@ import {
 import { themeCommentsQueryKey } from "../../../client/features/themeComment/useThemeComments";
 import { ThemeDetailPage } from "../../../client/pageComponents/ThemeDetailPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../server/routers";
+import { appRouter } from "../../../server/router";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 

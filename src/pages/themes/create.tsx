@@ -1,7 +1,7 @@
 import { allTagsQueryKey } from "../../client/features/theme/useAllTagsQuery";
 import { ThemeCreatePage } from "../../client/pageComponents/ThemeCreatePage";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../server/routers";
+import { appRouter } from "../../server/router";
 import { Routes } from "../../share/routes";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(

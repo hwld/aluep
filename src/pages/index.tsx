@@ -7,7 +7,7 @@ import {
 } from "../client/features/user/useRankingQuery";
 import { HomePage } from "../client/ui/HomePage";
 import { withReactQueryGetServerSideProps } from "../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../server/routers";
+import { appRouter } from "../server/router";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ queryClient, callerContext }) => {

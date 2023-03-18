@@ -9,7 +9,7 @@ import {
 } from "../../../../../client/features/theme/useThemeQuery";
 import { DevelopmentDetailPage } from "../../../../../client/pageComponents/DevelopmentDetailPage";
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../../../server/routers";
+import { appRouter } from "../../../../../server/router";
 import { assertString } from "../../../../../share/utils";
 import NotFoundPage from "../../../../404";
 
