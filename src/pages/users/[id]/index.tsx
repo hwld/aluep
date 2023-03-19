@@ -67,10 +67,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     );
     await queryClient.prefetchQuery(
       favoritedUserQueryKey(userId, session?.user.id),
-      () => caller.user.favorited({ userId })
+      () => caller.user.isFavoritedByLoggedInUser({ userId })
     );
     await queryClient.prefetchQuery(favoriteUsersCountQueryKey(userId), () =>
-      caller.user.favoriteUsersCount({ userId })
+      caller.user.getFavoriteCountByUser({ userId })
     );
   }
 );

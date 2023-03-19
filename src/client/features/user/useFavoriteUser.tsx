@@ -13,13 +13,13 @@ export const useFavoriteUser = (userId: string, loggedInUserId?: string) => {
   const { data: favorited } = useQuery({
     queryKey: favoritedUserQueryKey(userId, loggedInUserId),
     queryFn: () => {
-      return trpc.user.favorited.query({ userId });
+      return trpc.user.isFavoritedByLoggedInUser.query({ userId });
     },
   });
 
   const createFavoriteMutation = useMutation({
-    mutationFn: (data: RouterInputs["user"]["crateFavorite"]) => {
-      return trpc.user.crateFavorite.mutate(data);
+    mutationFn: (data: RouterInputs["user"]["favorite"]) => {
+      return trpc.user.favorite.mutate(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(
@@ -29,8 +29,8 @@ export const useFavoriteUser = (userId: string, loggedInUserId?: string) => {
   });
 
   const deleteFavoriteMutation = useMutation({
-    mutationFn: (data: RouterInputs["user"]["deleteFavorite"]) => {
-      return trpc.user.deleteFavorite.mutate(data);
+    mutationFn: (data: RouterInputs["user"]["unfavorite"]) => {
+      return trpc.user.unfavorite.mutate(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(

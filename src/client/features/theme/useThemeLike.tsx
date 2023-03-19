@@ -20,7 +20,7 @@ export const useThemeLike = (themeId: string) => {
   const { data: likedByLoggedInUser } = useQuery({
     queryKey: themeLikedQueryKey(themeId, session?.user.id),
     queryFn: () => {
-      return trpc.theme.liked.query({ themeId });
+      return trpc.theme.isLikedByLoggedInUser.query({ themeId });
     },
   });
 

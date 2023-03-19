@@ -30,7 +30,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     // ログインユーザーのいいね状況のプリフェッチ
     await queryClient.prefetchQuery(
       themeLikedQueryKey(themeId, session?.user.id),
-      () => caller.theme.liked({ themeId })
+      () => caller.theme.isLikedByLoggedInUser({ themeId })
     );
 
     // ログインユーザーの開発情報のプリフェッチ

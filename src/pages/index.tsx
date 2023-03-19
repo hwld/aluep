@@ -27,14 +27,14 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     //　ピックアップされたお題
     await queryClient.prefetchQuery(pickedUpThemesQueryKey("createdDesc"), () =>
-      caller.aggregate.pickUpThemes({ order: "createdDesc" })
+      caller.aggregate.getPickedThemes({ order: "createdDesc" })
     );
     await queryClient.prefetchQuery(pickedUpThemesQueryKey("likeDesc"), () =>
-      caller.aggregate.pickUpThemes({ order: "likeDesc" })
+      caller.aggregate.getPickedThemes({ order: "likeDesc" })
     );
     await queryClient.prefetchQuery(
       pickedUpThemesQueryKey("developmentDesc"),
-      () => caller.aggregate.pickUpThemes({ order: "developmentDesc" })
+      () => caller.aggregate.getPickedThemes({ order: "developmentDesc" })
     );
   }
 );

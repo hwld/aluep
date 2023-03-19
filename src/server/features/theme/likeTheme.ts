@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 
+// TODO: いいねといいね解除でAPIを分ける
 export const likeTheme = requireLoggedInProcedure
   .input(z.object({ themeId: z.string().min(1), like: z.boolean() }))
   .mutation(async ({ input, ctx }) => {

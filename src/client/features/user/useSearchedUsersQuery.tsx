@@ -10,7 +10,7 @@ export const useSearchedUsersQuery = (userName: string) => {
   const { data: resultUserNames, ...others } = useQuery({
     queryKey: searchedUsersQueryKey(userName),
     queryFn: () => {
-      return trpc.user.searchUser.query({ userName: userName });
+      return trpc.user.search.query({ userName: userName });
     },
     keepPreviousData: true,
   });

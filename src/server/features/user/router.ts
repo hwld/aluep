@@ -1,10 +1,10 @@
 import { router } from "../../lib/trpc";
-import { favorited } from "./favorited";
 import { getFavoritedUsers } from "./favoritedUsers";
 import { favoriteUser } from "./favoriteUser";
-import { favoriteUsersCount } from "./favoriteUsersCount";
+import { getFavoriteCountByUser } from "./favoriteUsersCount";
 import { getThemeLikingUsers } from "./getThemeLikingUsers";
 import { getUser } from "./getUser";
+import { isFavoritedByLoggedInUser } from "./isFavoritedByLoggedInUser";
 import { searchUser } from "./searchUser";
 import { unfavoriteUser } from "./unfavoriteUser";
 
@@ -13,23 +13,23 @@ export const userRoute = router({
   get: getUser,
 
   /** ユーザーを検索する */
-  searchUser,
+  search: searchUser,
 
   /** お気に入りを登録 */
-  crateFavorite: favoriteUser,
+  favorite: favoriteUser,
 
   /** お気に入りの解除 */
-  deleteFavorite: unfavoriteUser,
+  unfavorite: unfavoriteUser,
 
   /** ログインユーザーがお気に入りしているか */
-  favorited,
+  isFavoritedByLoggedInUser: isFavoritedByLoggedInUser,
 
   /** お気に入りしたユーザーの数を取得する */
-  favoriteUsersCount,
+  getFavoriteCountByUser: getFavoriteCountByUser,
 
   /** お気に入りユーザーを取得する */
   getFavoritedUsers: getFavoritedUsers,
 
   /** 指定されたお題をいいねしたユーザーを取得する */
-  getThemeLikingUsers,
+  getThemeLikingUsers: getThemeLikingUsers,
 });

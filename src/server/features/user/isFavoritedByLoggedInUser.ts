@@ -2,7 +2,7 @@ import { z } from "zod";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 
-export const favorited = publicProcedure
+export const isFavoritedByLoggedInUser = publicProcedure
   .input(z.object({ userId: z.string() }))
   .query(async ({ input, ctx }): Promise<boolean> => {
     const loggedInUserId = ctx.session?.user.id;

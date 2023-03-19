@@ -9,20 +9,20 @@ import { getLikedThemesByUser } from "./getLikedThemesByUser";
 import { getPostedThemesByUser } from "./getPostedThemesByUser";
 import { getTheme } from "./getTheme";
 import { getThemeLikeCountByUser } from "./getThemeLikeCountByUser";
-import { likedTheme } from "./likedTheme";
+import { isLikedByLoggedInUser } from "./isLikedByLoggedInUser";
 import { likeTheme } from "./likeTheme";
-import { searchTheme } from "./searchTheme";
+import { search } from "./search";
 import { updateTheme } from "./updateTheme";
 
 export const themeRoute = router({
   /** すべてのタグを取得する */
-  getAllTags,
+  getAllTags: getAllTags,
 
   /** idを指定してテーマを取得する */
   get: getTheme,
 
   /** お題を検索する */
-  search: searchTheme,
+  search: search,
 
   /** お題を作成する */
   create: createTheme,
@@ -43,17 +43,17 @@ export const themeRoute = router({
   like: likeTheme,
 
   /** ログインユーザーがお題をいいねしているか */
-  liked: likedTheme,
+  isLikedByLoggedInUser: isLikedByLoggedInUser,
 
   /** 指定されたユーザーが投稿したお題についたすべての「いいね」を取得する */
   getLikeCountByUser: getThemeLikeCountByUser,
 
   /** 指定されたユーザーが投稿されたお題を取得する */
-  getPostedThemesByUser,
+  getPostedThemesByUser: getPostedThemesByUser,
 
   /** 指定されたユーザーが開発しているお題を取得する */
   getDevelopedThemesByUser: getDevelopedThemesByUser,
 
   /** 指定されたユーザーがいいねしたお題を取得する */
-  getLikedThemesByUser,
+  getLikedThemesByUser: getLikedThemesByUser,
 });

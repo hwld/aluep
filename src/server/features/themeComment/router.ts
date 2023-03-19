@@ -8,8 +8,8 @@ export const themeCommentRoute = router({
   comment: commentTheme,
 
   /** お題につけたコメントを削除する */
-  deleteComment,
+  deleteComment: deleteComment,
 
   /** お題についたコメントをすべて取得する */
-  getAllComments,
+  getAllComments: getAllComments,
 });

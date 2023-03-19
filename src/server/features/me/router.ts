@@ -11,5 +11,5 @@ export const meRoute = router({
   delete: deleteMe,
 
   /** ログインしているユーザーの情報を取得する */
-  getMySummary,
+  getMySummary: getMySummary,
 });

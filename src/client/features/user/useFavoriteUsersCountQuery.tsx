@@ -8,7 +8,7 @@ export const useFavoriteUsersCountQuery = (userId: string) => {
   const { data: favoriteUsersCount, ...others } = useQuery({
     queryKey: favoriteUsersCountQueryKey(userId),
     queryFn: () => {
-      return trpc.user.favoriteUsersCount.query({ userId });
+      return trpc.user.getFavoriteCountByUser.query({ userId });
     },
   });
 
