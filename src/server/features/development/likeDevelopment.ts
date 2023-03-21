@@ -3,11 +3,11 @@ import { z } from "zod";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 
+// TODO: いいねといいね解除で分ける
 export const likeDevelopment = requireLoggedInProcedure
   .input(
     z.object({
       developmentId: z.string().min(1).max(100),
-      like: z.boolean(),
     })
   )
   .mutation(async ({ input, ctx }) => {
@@ -24,23 +24,12 @@ export const likeDevelopment = requireLoggedInProcedure
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
-    if (input.like) {
-      // いいね
-      await db.appThemeDevelopmentLike.create({
-        data: {
-          development: { connect: { id: development.id } },
-          user: { connect: { id: ctx.session.user.id } },
-        },
-      });
-    } else {
-      // いいね解除
-      await db.appThemeDevelopmentLike.delete({
-        where: {
-          userId_developmentId: {
-            developmentId: input.developmentId,
-            userId: ctx.session.user.id,
-          },
-        },
-      });
-    }
+    const createdLike = await db.appThemeDevelopmentLike.create({
+      data: {
+        development: { connect: { id: development.id } },
+        user: { connect: { id: ctx.session.user.id } },
+      },
+    });
+
+    return { likedDevelopmentId: createdLike.developmentId };
   });

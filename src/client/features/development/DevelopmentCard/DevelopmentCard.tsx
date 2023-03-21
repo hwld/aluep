@@ -23,13 +23,15 @@ import { DevelopmentLikeButton } from "./DevelopmentLikeButton";
 type Props = {
   theme: Theme;
   development: ThemeDevelopment;
-  onLikeDevelopment: (developmentId: string, like: boolean) => void;
+  onLikeDevelopment: (developmentId: string) => void;
+  onUnlikeDevelopment: (developmentId: string) => void;
 };
 
 export const DevelopmentCard: React.FC<Props> = ({
   theme,
   development,
   onLikeDevelopment: onLike,
+  onUnlikeDevelopment: onUnlike,
 }) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
@@ -42,7 +44,12 @@ export const DevelopmentCard: React.FC<Props> = ({
       openLoginModal();
       return;
     }
-    onLike(development.id, !development.likedByLoggedInUser);
+
+    if (development.likedByLoggedInUser) {
+      onUnlike(development.id);
+    } else {
+      onLike(development.id);
+    }
   };
 
   const handleGoDevelopmentDetail = () => {

@@ -16,8 +16,8 @@ export const useLikeThemeDevelopment = (themeId: string, page: number) => {
     mutationFn: (data: RouterInputs["development"]["like"]) => {
       return trpc.development.like.mutate(data);
     },
-    // 楽観的UIによって、成功する前にいいね・いいね解除を反映させる
-    onMutate: async ({ developmentId, like }) => {
+    // 楽観的UIによって、成功する前にいいねを反映させる
+    onMutate: async ({ developmentId }) => {
       await queryClient.cancelQueries(
         developmentsPerPageQueryKey(themeId, page)
       );
@@ -42,8 +42,8 @@ export const useLikeThemeDevelopment = (themeId: string, page: number) => {
               }
               return {
                 ...development,
-                likes: development.likes + (like ? 1 : -1),
-                likedByLoggedInUser: like,
+                likes: development.likes + 1,
+                likedByLoggedInUser: true,
               };
             }
           );
@@ -54,17 +54,15 @@ export const useLikeThemeDevelopment = (themeId: string, page: number) => {
 
       return { previousDevelopments };
     },
-    onError: (_, newLiked, contexts) => {
+    onError: (_, __, contexts) => {
       queryClient.setQueryData(
         developmentsPerPageQueryKey(themeId, page),
         contexts?.previousDevelopments
       );
 
       showErrorNotification({
-        title: `開発への${newLiked.like ? "いいね" : "いいね解除"}`,
-        message: `開発への${
-          newLiked.like ? "いいね" : "いいね解除"
-        }ができませんでした。`,
+        title: `開発へのいいね`,
+        message: `開発へいいねができませんでした。`,
       });
     },
     onSettled: () => {
@@ -72,5 +70,64 @@ export const useLikeThemeDevelopment = (themeId: string, page: number) => {
     },
   });
 
-  return { likeDevelopmentMutation };
+  // TODO: 共通化について考える
+  const unlikeDevelopmentMutation = useMutation({
+    mutationFn: (data: RouterInputs["development"]["unlike"]) => {
+      return trpc.development.unlike.mutate(data);
+    },
+    // 楽観的UIによって、成功する前にいいね解除を反映させる
+    onMutate: async ({ developmentId }) => {
+      await queryClient.cancelQueries(
+        developmentsPerPageQueryKey(themeId, page)
+      );
+
+      const previousDevelopments =
+        queryClient.getQueryData<DevelopmentsPerPageData>(
+          developmentsPerPageQueryKey(themeId, page)
+        );
+
+      // 指定されたdevelopmentの状態だけを書き換える
+      queryClient.setQueryData<DevelopmentsPerPageData>(
+        developmentsPerPageQueryKey(themeId, page),
+        (oldPaginatedDevelopments) => {
+          if (!oldPaginatedDevelopments) {
+            return undefined;
+          }
+
+          const newDevelopments = oldPaginatedDevelopments.list.map(
+            (development) => {
+              if (developmentId !== development.id) {
+                return { ...development };
+              }
+              return {
+                ...development,
+                likes: development.likes - 1,
+                likedByLoggedInUser: false,
+              };
+            }
+          );
+
+          return { ...oldPaginatedDevelopments, list: newDevelopments };
+        }
+      );
+
+      return { previousDevelopments };
+    },
+    onError: (_, __, contexts) => {
+      queryClient.setQueryData(
+        developmentsPerPageQueryKey(themeId, page),
+        contexts?.previousDevelopments
+      );
+
+      showErrorNotification({
+        title: `開発へのいいね解除`,
+        message: `開発へのいいね解除ができませんでした。`,
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(developmentsPerPageQueryKey(themeId, page));
+    },
+  });
+
+  return { likeDevelopmentMutation, unlikeDevelopmentMutation };
 };

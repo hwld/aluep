@@ -13,7 +13,8 @@ type Props = { theme: Theme };
 export const ThemeDevelopmentPage: React.FC<Props> = ({ theme }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { developmentsPerPage } = useDevelopmentsPerPage(theme.id, page);
-  const { likeDevelopmentMutation } = useLikeThemeDevelopment(theme.id, page);
+  const { likeDevelopmentMutation, unlikeDevelopmentMutation } =
+    useLikeThemeDevelopment(theme.id, page);
   const mantineTheme = useMantineTheme();
 
   const handleChangePage = (page: number) => {
@@ -44,8 +45,11 @@ export const ThemeDevelopmentPage: React.FC<Props> = ({ theme }) => {
                   key={development.id}
                   theme={theme}
                   development={development}
-                  onLikeDevelopment={(developmentId, like) => {
-                    likeDevelopmentMutation.mutate({ developmentId, like });
+                  onLikeDevelopment={(developmentId) => {
+                    likeDevelopmentMutation.mutate({ developmentId });
+                  }}
+                  onUnlikeDevelopment={(developmentId) => {
+                    unlikeDevelopmentMutation.mutate({ developmentId });
                   }}
                 />
               );

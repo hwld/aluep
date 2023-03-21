@@ -4,6 +4,7 @@ import { getDevelopment } from "./getDevelopment";
 import { getDevelopmentLikeCountByUser } from "./getDevelopmentLikeCountByUser";
 import { getDevelopmentsByTheme } from "./getDevelopmentsByTheme";
 import { likeDevelopment } from "./likeDevelopment";
+import { unlikeDevelopment } from "./unlikeDevelopment";
 import { updateDevelopment } from "./updateDevelopment";
 
 export const developmentRoute = router({
@@ -21,6 +22,9 @@ export const developmentRoute = router({
 
   /** 開発情報にいいねする */
   like: likeDevelopment,
+
+  /** 開発情報のいいねを解除する */
+  unlike: unlikeDevelopment,
 
   /** 指定されたユーザーの開発情報についたすべての「いいね」を取得する */
   getLikeCountByUser: getDevelopmentLikeCountByUser,
