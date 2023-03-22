@@ -1,5 +1,5 @@
 import { Card, Flex, Text } from "@mantine/core";
-import { AppThemeLike } from "@prisma/client";
+import { IdeaLike } from "@prisma/client";
 import { useRouter } from "next/router";
 import { User } from "../../../server/models/user";
 import { Routes } from "../../../share/routes";
@@ -11,9 +11,9 @@ export const likingUserCardMinWidthPx = 350;
 
 type Props = {
   user: User;
-  appTheme: AppThemeLike;
+  ideaLike: IdeaLike;
 };
-export const LikingUserCard: React.FC<Props> = ({ user, appTheme }) => {
+export const LikingUserCard: React.FC<Props> = ({ user, ideaLike }) => {
   const router = useRouter();
 
   const handleGoUserDetail = () => {
@@ -61,7 +61,7 @@ export const LikingUserCard: React.FC<Props> = ({ user, appTheme }) => {
       {/* いいねをした日付 */}
       <Flex align="center" justify="flex-start" mt={10}>
         <Text size="sm" color="gray.5">
-          いいねした日: {formatDate(new Date(appTheme.createdAt))}
+          いいねした日: {formatDate(new Date(ideaLike.createdAt))}
         </Text>
       </Flex>
     </Card>

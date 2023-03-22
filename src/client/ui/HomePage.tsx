@@ -2,66 +2,64 @@ import { Flex, MediaQuery, Stack, Title, useMantineTheme } from "@mantine/core";
 
 import {
   useTop10LikesDevelopmentInThisMonth,
+  useTop10LikesIdeasInThisMonth,
   useTop10LikesPostersInThisMonth,
-  useTop10LikesThemesInThisMonth,
 } from "../features/user/useRankingQuery";
 import { NothingLike } from "./NothingLike";
 
 import { RankingCard } from "./RankingCard";
 
-import { PickedUpThemes } from "../features/theme/PickedUpThemes";
+import { PickedUpIdeas } from "../features/idea/PickedUpIdeas";
 import { UserLikeRankingItem } from "../features/user/UserLikeRankingItem";
 
 import { IoSparkles } from "react-icons/io5";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
 import { Routes } from "../../share/routes";
-import { NothingPopularThemes } from "../features/theme/NothingPopularThemes";
-import { PopularThemeCarousel } from "../features/theme/PopularThemeCarousel/PopularThemeCarousel";
-import { themeCardMinWidthPx } from "../features/theme/ThemeCard/ThemeCard";
-import { usePickedUpThemesQuery } from "../features/theme/usePickedUpThemesQuery";
+import { ideaCardMinWidthPx } from "../features/idea/IdeaCard/IdeaCard";
+import { NothingPopularIdeas } from "../features/idea/NothingPopularIdeas";
+import { PopularIdeaCarousel } from "../features/idea/PopularIdeaCarousel/PopularIdeaCarousel";
+import { usePickedUpIdeasQuery } from "../features/idea/usePickedUpIdeasQuery";
 
 export const HomePage: React.FC = () => {
   const mantineTheme = useMantineTheme();
 
   // ランキング
-  const { top10LikesThemesInThisMonth } = useTop10LikesThemesInThisMonth();
+  const { top10LikesIdeasInThisMonth } = useTop10LikesIdeasInThisMonth();
   const { top10LikesDevelopmentsInThisMonth } =
     useTop10LikesDevelopmentInThisMonth();
   const { top10LikesPostersInThisMonth } = useTop10LikesPostersInThisMonth();
 
   // ピックアップされたお題
-  const { pickedUpThemes: latestThemes } =
-    usePickedUpThemesQuery("createdDesc");
-  const { pickedUpThemes: manyLikesThemes } =
-    usePickedUpThemesQuery("likeDesc");
-  const { pickedUpThemes: manyDevelopmentsThemes } =
-    usePickedUpThemesQuery("developmentDesc");
+  const { pickedUpIdeas: latestIdeas } = usePickedUpIdeasQuery("createdDesc");
+  const { pickedUpIdeas: manyLikesIdeas } = usePickedUpIdeasQuery("likeDesc");
+  const { pickedUpIdeas: manyDevelopmentsIdeas } =
+    usePickedUpIdeasQuery("developmentDesc");
 
   return (
     <Flex w="100%" gap="xl">
       <Stack miw={0} sx={{ flexGrow: 1, flexShrink: 1 }} spacing={35}>
         <Stack spacing="sm">
           <Title order={4}>人気のお題</Title>
-          {top10LikesThemesInThisMonth?.length === 0 ? (
-            <NothingPopularThemes />
+          {top10LikesIdeasInThisMonth?.length === 0 ? (
+            <NothingPopularIdeas />
           ) : (
-            <PopularThemeCarousel
-              themes={top10LikesThemesInThisMonth}
-              miw={`${themeCardMinWidthPx}px`}
+            <PopularIdeaCarousel
+              ideas={top10LikesIdeasInThisMonth}
+              miw={`${ideaCardMinWidthPx}px`}
             />
           )}
         </Stack>
 
-        <PickedUpThemes
+        <PickedUpIdeas
           icon={
             <IoSparkles size="25px" color={mantineTheme.colors.yellow[7]} />
           }
           title="最新のお題"
-          readMoreHref={Routes.themeSearch({ order: "createdDesc" })}
-          themes={latestThemes}
+          readMoreHref={Routes.ideaSearch({ order: "createdDesc" })}
+          ideas={latestIdeas}
         />
-        <PickedUpThemes
+        <PickedUpIdeas
           icon={
             <TbHeart
               size="30px"
@@ -70,14 +68,14 @@ export const HomePage: React.FC = () => {
             />
           }
           title="いいねが多かったお題"
-          readMoreHref={Routes.themeSearch({ order: "likeDesc" })}
-          themes={manyLikesThemes}
+          readMoreHref={Routes.ideaSearch({ order: "likeDesc" })}
+          ideas={manyLikesIdeas}
         />
-        <PickedUpThemes
+        <PickedUpIdeas
           icon={<MdComputer size="30px" color={mantineTheme.colors.blue[7]} />}
           title="開発者が多かったお題"
-          readMoreHref={Routes.themeSearch({ order: "developmentDesc" })}
-          themes={manyDevelopmentsThemes}
+          readMoreHref={Routes.ideaSearch({ order: "developmentDesc" })}
+          ideas={manyDevelopmentsIdeas}
         />
       </Stack>
       <MediaQuery smallerThan="lg" styles={{ display: "none" }}>
@@ -106,7 +104,7 @@ export const HomePage: React.FC = () => {
                   ranking={i + 1}
                   key={poster.id}
                   user={poster}
-                  likeCount={poster.themeLikes}
+                  likeCount={poster.ideaLikes}
                 />
               ))
             )}

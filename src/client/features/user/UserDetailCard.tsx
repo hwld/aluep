@@ -6,9 +6,9 @@ import { User } from "../../../server/models/user";
 import { Routes } from "../../../share/routes";
 import { CardActionIcon } from "../../ui/CardActionIcon";
 import { LikeDevelopmentIcon } from "../development/LikeDevelopmentIcon";
+import { LikeIdeaIcon } from "../idea/LikeIdeaIcon";
 import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../session/useSessionQuery";
-import { LikeThemeIcon } from "../theme/LikeThemeIcon";
 import { useFavoriteUser } from "./useFavoriteUser";
 import { useFavoriteUsersCountQuery } from "./useFavoriteUsersCountQuery";
 import { UserFavoriteButton } from "./UserDetail/UserFavoriteButton";
@@ -16,13 +16,13 @@ import { UserDetailMenuButton } from "./UserDetailMenuButton";
 import { UserIcon } from "./UserIcon";
 
 type Props = {
-  sumThemeLikes?: number;
-  themeDevelopmentLikes?: number;
+  sumIdeaLikes?: number;
+  developmentLikes?: number;
   user: User;
 };
 export function UserDetailCard({
-  sumThemeLikes,
-  themeDevelopmentLikes,
+  sumIdeaLikes,
+  developmentLikes,
   user,
 }: Props) {
   const { session } = useSessionQuery();
@@ -106,8 +106,8 @@ export function UserDetailCard({
               transition="pop"
             >
               <Flex align="center" wrap="wrap" direction="column">
-                <LikeThemeIcon />
-                <Text>{sumThemeLikes}</Text>
+                <LikeIdeaIcon />
+                <Text>{sumIdeaLikes}</Text>
               </Flex>
             </Tooltip>
           </Box>
@@ -120,7 +120,7 @@ export function UserDetailCard({
             >
               <Flex align="center" wrap="wrap" direction="column">
                 <LikeDevelopmentIcon />
-                <Text>{themeDevelopmentLikes}</Text>
+                <Text>{developmentLikes}</Text>
               </Flex>
             </Tooltip>
           </Box>

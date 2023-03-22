@@ -10,7 +10,7 @@ export const likeDevelopment = requireLoggedInProcedure
     })
   )
   .mutation(async ({ input, ctx }) => {
-    const development = await db.appThemeDevelopment.findUnique({
+    const development = await db.development.findUnique({
       where: { id: input.developmentId },
     });
     // 指定されたdevelopmentが存在しない場合
@@ -23,7 +23,7 @@ export const likeDevelopment = requireLoggedInProcedure
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
-    const createdLike = await db.appThemeDevelopmentLike.create({
+    const createdLike = await db.developmentLike.create({
       data: {
         development: { connect: { id: development.id } },
         user: { connect: { id: ctx.session.user.id } },

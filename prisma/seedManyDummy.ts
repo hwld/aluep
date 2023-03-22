@@ -37,10 +37,10 @@ async function main() {
   }
 
   // 各ユーザーがテーマを作成する
-  const themeIds = [];
+  const ideaIds = [];
   for (let i = 0; i < userIds.length; i++) {
     const id = faker.datatype.uuid();
-    const theme1 = await prisma.appTheme.upsert({
+    const idea1 = await prisma.idea.upsert({
       where: { id },
       create: {
         id,
@@ -52,25 +52,25 @@ async function main() {
     });
     console.log(`お題を追加 ${i}`);
 
-    themeIds.push(theme1.id);
+    ideaIds.push(idea1.id);
   }
 
   // お題に良いねする
   for (let userIndex = 0; userIndex < userIds.length; userIndex++) {
     // 自分よりindexが小さいユーザーが投稿したお題すべてにいいねして、いいね数に差をつける
-    for (let themeIndex = 0; themeIndex < userIndex; themeIndex++) {
+    for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
       const id = faker.datatype.uuid();
-      await prisma.appThemeLike.upsert({
+      await prisma.ideaLike.upsert({
         where: { id },
         create: {
           id,
-          appThemeId: themeIds[themeIndex],
+          ideaId: ideaIds[ideaIndex],
           userId: userIds[userIndex],
         },
         update: { createdAt: new Date() },
       });
       console.log(
-        `お題へのいいねを追加 ユーザー:${userIndex} お題:${themeIndex}`
+        `お題へのいいねを追加 ユーザー:${userIndex} お題:${ideaIndex}`
       );
     }
   }
@@ -79,35 +79,35 @@ async function main() {
   const userDevelopmentMap = new Map<number, string[]>(
     userIds.map((_, userIndex) => [userIndex, []])
   );
-  const themeDevelopmentMap = new Map<number, string[]>(
-    themeIds.map((_, themeIndex) => [themeIndex, []])
+  const developmentMap = new Map<number, string[]>(
+    ideaIds.map((_, ideaIndex) => [ideaIndex, []])
   );
 
   // お題を開発する
   for (let userIndex = 0; userIndex < userIds.length; userIndex++) {
     // 自分よりindexが小さいユーザーが投稿したお題すべてを開発する
-    for (let themeIndex = 0; themeIndex < userIndex; themeIndex++) {
+    for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
       const id = faker.datatype.uuid();
-      const development = await prisma.appThemeDevelopment.upsert({
+      const development = await prisma.development.upsert({
         where: { id },
         create: {
           id,
           githubUrl: "",
           comment: faker.lorem.words(3),
-          appThemeId: themeIds[themeIndex],
+          ideaId: ideaIds[ideaIndex],
           userId: userIds[userIndex],
         },
         update: { createdAt: new Date() },
       });
-      console.log(`お題を開発 ユーザー:${userIndex} お題:${themeIndex}`);
+      console.log(`お題を開発 ユーザー:${userIndex} お題:${ideaIndex}`);
 
       developmentIds.push(development.id);
       userDevelopmentMap.set(userIndex, [
         ...(userDevelopmentMap.get(userIndex) ?? []),
         development.id,
       ]);
-      themeDevelopmentMap.set(themeIndex, [
-        ...(themeDevelopmentMap.get(themeIndex) ?? []),
+      developmentMap.set(ideaIndex, [
+        ...(developmentMap.get(ideaIndex) ?? []),
         development.id,
       ]);
     }
@@ -115,10 +115,10 @@ async function main() {
 
   // 自分よりindexが小さいユーザーが投稿したお題の自分以外の最初の開発者にいいねする。
   for (let userIndex = 0; userIndex < userIds.length; userIndex++) {
-    for (let themeIndex = 0; themeIndex < userIndex; themeIndex++) {
+    for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
       // お題の最初の開発者のidを取得する
       const firstDevelopmentId =
-        themeDevelopmentMap.get(themeIndex)?.[0] ?? undefined;
+        developmentMap.get(ideaIndex)?.[0] ?? undefined;
       // 最初の開発者が存在しないか、自分が開発者だった場合は何もしない
       if (
         firstDevelopmentId === undefined ||
@@ -128,7 +128,7 @@ async function main() {
       }
 
       const id = faker.datatype.uuid();
-      await prisma.appThemeDevelopmentLike.upsert({
+      await prisma.developmentLike.upsert({
         where: { id },
         create: {
           id,

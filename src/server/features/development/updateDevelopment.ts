@@ -1,17 +1,17 @@
 import { TRPCError } from "@trpc/server";
-import { updateThemeDevelopFormSchema } from "../../../share/schema";
+import { updateDevelopFormSchema } from "../../../share/schema";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 import { createGitHubRepository } from "../github/createGitHubRepository";
 
 export const updateDevelopment = requireLoggedInProcedure
-  .input(updateThemeDevelopFormSchema)
+  .input(updateDevelopFormSchema)
   .mutation(async ({ input, ctx }) => {
     // ログインユーザーが開発者か確認する
-    const development = await db.appThemeDevelopment.findFirst({
+    const development = await db.development.findFirst({
       where: {
         id: input.developmentId,
-        appThemeId: input.themeId,
+        ideaId: input.ideaId,
         userId: ctx.session.user.id,
       },
     });
@@ -30,7 +30,7 @@ export const updateDevelopment = requireLoggedInProcedure
       githubRepositoryUrl = input.githubRepositoryUrl;
     }
 
-    await db.appThemeDevelopment.update({
+    await db.development.update({
       where: { id: development.id },
       data: { githubUrl: githubRepositoryUrl, comment: input.comment },
     });

@@ -15,8 +15,8 @@ export const getTop10LikesDevelopmentsInThisMonth = publicProcedure.query(
         , COUNT(DevLike.id) as likeCount
         , MIN(Development.createdAt) as firstDevelopDatetime
       FROM
-        AppThemeDevelopmentLike as DevLike
-        LEFT JOIN AppThemeDevelopment as Development
+        DevelopmentLike as DevLike
+        LEFT JOIN Development as Development
           ON (DevLike.developmentId = Development.id)
         LEFT JOIN User
           ON (Development.userId = User.id)

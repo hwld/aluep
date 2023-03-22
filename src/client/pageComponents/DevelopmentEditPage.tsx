@@ -1,20 +1,20 @@
 import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { MdComputer } from "react-icons/md";
-import { Theme } from "../../server/models/theme";
-import { ThemeDevelopment } from "../../server/models/themeDevelopment";
-import { CreateRepositoryData, ThemeDevelopFormData } from "../../share/schema";
-import { ThemeDevelopForm } from "../features/theme/ThemeDevelopForm";
-import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
-import { useThemeDevelop } from "../features/theme/useThemeDevelop";
+import { Development } from "../../server/models/development";
+import { Idea } from "../../server/models/idea";
+import { CreateRepositoryData, DevelopFormData } from "../../share/schema";
+import { DevelopForm } from "../features/idea/DevelopForm";
+import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
+import { useDevelop } from "../features/idea/useDevelop";
 
 type Props = {
-  theme: Theme;
-  development: ThemeDevelopment;
+  idea: Idea;
+  development: Development;
   restoredValues: CreateRepositoryData;
 };
 export const DevelopmentEditPage: React.FC<Props> = ({
-  theme,
+  idea,
   development,
   restoredValues,
 }) => {
@@ -23,9 +23,9 @@ export const DevelopmentEditPage: React.FC<Props> = ({
 
   const {
     mutations: { updateDevelopmentMutation },
-  } = useThemeDevelop(theme.id);
+  } = useDevelop(idea.id);
 
-  const handleUpdateDevelopment = (data: ThemeDevelopFormData) => {
+  const handleUpdateDevelopment = (data: DevelopFormData) => {
     updateDevelopmentMutation.mutate({
       ...data,
       developmentId: development.id,
@@ -48,15 +48,15 @@ export const DevelopmentEditPage: React.FC<Props> = ({
       </Flex>
       <Stack spacing="xs">
         <Text c="gray.5">開発しているお題</Text>
-        <ThemeSummaryCard theme={theme} />
+        <IdeaSummaryCard idea={idea} />
       </Stack>
       <Stack spacing="xs">
         <Text c="gray.5">開発情報</Text>
         <Card>
-          <ThemeDevelopForm
+          <DevelopForm
             onSubmit={handleUpdateDevelopment}
             onCancel={handleBack}
-            themeId={theme.id}
+            ideaId={idea.id}
             isRelogined={Object.keys(restoredValues).length > 0}
             defaultValues={{
               comment: restoredValues.developmentComment ?? development.comment,

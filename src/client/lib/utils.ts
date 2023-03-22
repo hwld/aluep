@@ -20,7 +20,7 @@ export const isTRPCClientError = (
 export const showLoadingNotification = (props: NotificationProps) => {
   showNotification({
     color: "blue",
-    styles: (theme) => ({ title: { color: theme.colors.blue[7] } }),
+    styles: (idea) => ({ title: { color: idea.colors.blue[7] } }),
     ...props,
   });
 };
@@ -36,7 +36,7 @@ export const showSuccessNotification = (
 
   notification({
     color: "green",
-    styles: (theme) => ({ title: { color: theme.colors.green[7] } }),
+    styles: (idea) => ({ title: { color: idea.colors.green[7] } }),
     ...props,
   });
 };
@@ -52,7 +52,7 @@ export const showErrorNotification = (
 
   notification({
     color: "red",
-    styles: (theme) => ({ title: { color: theme.colors.red[7] } }),
+    styles: (idea) => ({ title: { color: idea.colors.red[7] } }),
     ...props,
   });
 };

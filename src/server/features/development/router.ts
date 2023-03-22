@@ -2,7 +2,7 @@ import { router } from "../../lib/trpc";
 import { deleteDevelopment } from "./deleteDevelopment";
 import { getDevelopment } from "./getDevelopment";
 import { getDevelopmentLikeCountByUser } from "./getDevelopmentLikeCountByUser";
-import { getDevelopmentsByTheme } from "./getDevelopmentsByTheme";
+import { getDevelopmentsByIdea } from "./getDevelopmentsByIdea";
 import { likeDevelopment } from "./likeDevelopment";
 import { unlikeDevelopment } from "./unlikeDevelopment";
 import { updateDevelopment } from "./updateDevelopment";
@@ -12,7 +12,7 @@ export const developmentRoute = router({
   get: getDevelopment,
 
   /** 指定されたお題の開発情報一覧を取得する */
-  getManyByTheme: getDevelopmentsByTheme,
+  getManyByIdea: getDevelopmentsByIdea,
 
   /** 開発情報を削除する */
   delete: deleteDevelopment,

@@ -14,18 +14,18 @@ import React from "react";
 import { BsGithub } from "react-icons/bs";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
-import { Theme } from "../../server/models/theme";
-import { ThemeDevelopment } from "../../server/models/themeDevelopment";
+import { Development } from "../../server/models/development";
+import { Idea } from "../../server/models/idea";
 import { DevelopmentMenuButton } from "../features/development/DevelopmentCard/DevelopmentMenuButton";
+import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import { useSessionQuery } from "../features/session/useSessionQuery";
-import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
 import { UserIconLink } from "../features/user/UserIconLink";
 
-type Props = { development: ThemeDevelopment; theme: Theme };
+type Props = { development: Development; idea: Idea };
 
 export const DevelopmentDetailPage: React.FC<Props> = ({
   development,
-  theme,
+  idea,
 }) => {
   const { session } = useSessionQuery();
   const mantineTheme = useMantineTheme();
@@ -44,7 +44,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
         </Flex>
         <Stack spacing="xs">
           <Text c="gray.5">開発しているお題</Text>
-          <ThemeSummaryCard theme={theme} />
+          <IdeaSummaryCard idea={idea} />
         </Stack>
         <Stack spacing="xs">
           <Text c="gray.5">開発者の情報</Text>
@@ -54,7 +54,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
                 <Flex mt={-5}>
                   <DevelopmentMenuButton
                     development={development}
-                    theme={theme}
+                    idea={idea}
                     isOwner={isDevelopment}
                   />
                 </Flex>

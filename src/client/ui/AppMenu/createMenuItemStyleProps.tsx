@@ -4,10 +4,10 @@ export const createMenuItemStyleProps: (red?: boolean) => MenuItemProps = (
   red
 ) => ({
   color: red ? "red.7" : "gray.7",
-  sx: (theme) => ({
+  sx: (idea) => ({
     padding: "5px 8px",
     "&[data-hovered]": {
-      backgroundColor: red ? theme.colors.red[1] : theme.colors.gray[2],
+      backgroundColor: red ? idea.colors.red[1] : idea.colors.gray[2],
     },
   }),
 });

@@ -5,7 +5,7 @@ import { requireLoggedInProcedure } from "../../lib/trpc";
 export const unlikeDevelopment = requireLoggedInProcedure
   .input(z.object({ developmentId: z.string() }))
   .mutation(async ({ input, ctx }) => {
-    const deletedLike = await db.appThemeDevelopmentLike.delete({
+    const deletedLike = await db.developmentLike.delete({
       where: {
         userId_developmentId: {
           developmentId: input.developmentId,

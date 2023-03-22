@@ -8,8 +8,8 @@ import { FaTrash } from "react-icons/fa";
 import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import { RouterInputs } from "../../../../server/lib/trpc";
-import { Theme } from "../../../../server/models/theme";
-import { ThemeDevelopment } from "../../../../server/models/themeDevelopment";
+import { Development } from "../../../../server/models/development";
+import { Idea } from "../../../../server/models/idea";
 import { Routes } from "../../../../share/routes";
 import { ReportBaseForm } from "../../../../share/schema";
 import { trpc } from "../../../lib/trpc";
@@ -24,13 +24,13 @@ import { MenuDropdown } from "../../../ui/AppMenu/MenuDropdown";
 import { MenuItem } from "../../../ui/AppMenu/MenuItem";
 import { MenuLinkItem } from "../../../ui/AppMenu/MenuLinkItem";
 import { AppModal } from "../../../ui/AppModal";
+import { useDevelop } from "../../idea/useDevelop";
 import { ReportForm } from "../../report/ReportForm";
-import { useThemeDevelop } from "../../theme/useThemeDevelop";
 
-type Props = { development: ThemeDevelopment; theme: Theme; isOwner: boolean };
+type Props = { development: Development; idea: Idea; isOwner: boolean };
 export const DevelopmentMenuButton: React.FC<Props> = ({
   development,
-  theme,
+  idea,
   isOwner,
 }) => {
   const [
@@ -45,7 +45,7 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
 
   const {
     mutations: { cancelDevelopMutation },
-  } = useThemeDevelop(development.themeId);
+  } = useDevelop(development.ideaId);
 
   const handleDeleteDevelopment = () => {
     cancelDevelopMutation.mutate(
@@ -57,7 +57,7 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
             message: "開発情報を削除しました。",
           });
           closeDeleteModal();
-          router.push(Routes.theme(theme.id));
+          router.push(Routes.idea(idea.id));
         },
         onError: () => {
           showErrorNotification({
@@ -93,7 +93,7 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
       reportDetail: data.reportDetail,
       targetDeveloepr: {
         url: `${window.location.origin}${Routes.development(
-          theme.id,
+          idea.id,
           development.id
         )}`,
         name: development.name,
@@ -126,7 +126,7 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
               <MenuLinkItem
                 icon={<RiEdit2Fill size={20} />}
                 href={Routes.developmentUpdate(
-                  development.themeId,
+                  development.ideaId,
                   development.id
                 )}
               >

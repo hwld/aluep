@@ -4,7 +4,7 @@ import { z } from "zod";
 // フォーム
 
 // お題のフォームデータ
-export const themeFormSchema = z.object({
+export const ideaFormSchema = z.object({
   title: z
     .string()
     .min(1, "タイトルを入力してください。")
@@ -19,27 +19,27 @@ export const themeFormSchema = z.object({
     .array(z.string().min(1).max(100))
     .max(50, "タグは最大50個までしかつけることができません。"),
 });
-export type ThemeFormData = z.infer<typeof themeFormSchema>;
+export type IdeaFormData = z.infer<typeof ideaFormSchema>;
 
-export const themeCommentFormSchema = z.object({
-  themeId: z.string().min(1),
+export const ideaCommentFormSchema = z.object({
+  ideaId: z.string().min(1),
   comment: z
     .string()
     .min(1, "コメントを入力してください。")
     .max(2000, "コメントは2000文字以下で入力してください"),
   inReplyToCommentId: z.string().min(1).optional(),
 });
-export type ThemeCommentFormData = z.infer<typeof themeCommentFormSchema>;
+export type IdeaCommentFormData = z.infer<typeof ideaCommentFormSchema>;
 
 // 更新するときにはidが必要なのでお題のフォームにそれを追加する
-export const themeUpdateFormSchema = z
-  .object({ themeId: z.string().min(1).max(100) })
-  .and(themeFormSchema);
+export const ideaUpdateFormSchema = z
+  .object({ ideaId: z.string().min(1).max(100) })
+  .and(ideaFormSchema);
 
-export type ThemeDevelopFormData = z.infer<typeof themeDevelopFormSchema>;
-export const themeDevelopFormSchema = z
+export type DevelopFormData = z.infer<typeof developFormSchema>;
+export const developFormSchema = z
   .object({
-    themeId: z.string().min(1).max(100),
+    ideaId: z.string().min(1).max(100),
     comment: z
       .string()
       .max(300, "コメントは300文字以下で入力してください。")
@@ -74,7 +74,7 @@ export const themeDevelopFormSchema = z
     ])
   );
 
-export const updateThemeDevelopFormSchema = themeDevelopFormSchema.and(
+export const updateDevelopFormSchema = developFormSchema.and(
   z.object({ developmentId: z.string() })
 );
 
@@ -95,20 +95,20 @@ export type DevelopedData =
   | { developed: true; developmentId: string };
 
 // お題の並び順
-export const themeOrderSchema = z.union([
+export const ideaOrderSchema = z.union([
   z.literal("createdDesc"),
   z.literal("createdAsc"),
   z.literal("likeDesc"),
   z.literal("developmentDesc"),
 ]);
-export type ThemeOrder = z.infer<typeof themeOrderSchema>;
+export type IdeaOrder = z.infer<typeof ideaOrderSchema>;
 
 // お題の期間
-export const themePeriodSchema = z.union([
+export const ideaPeriodSchema = z.union([
   z.literal("all"),
   z.literal("monthly"),
 ]);
-export type ThemePeriod = z.infer<typeof themePeriodSchema>;
+export type IdeaPeriod = z.infer<typeof ideaPeriodSchema>;
 
 // プロフィールのフォームデータ
 export const profileFormSchema = z.object({
@@ -146,9 +146,9 @@ export const repositoryFormSchema = z.object({
 export type RepositoryFormData = z.infer<typeof repositoryFormSchema>;
 
 const userDetailPageTabSchema = z.union([
-  z.literal("postedThemes"),
-  z.literal("developedThemes"),
-  z.literal("likedThemes"),
+  z.literal("postedIdeas"),
+  z.literal("developedIdeas"),
+  z.literal("likedIdeas"),
 ]);
 export type UserDetailPageTab = z.infer<typeof userDetailPageTabSchema>;
 
@@ -159,21 +159,21 @@ export type UserDetailPageTab = z.infer<typeof userDetailPageTabSchema>;
 export const paginatedPageSchema = z.object({ page: pagingSchema.default(1) });
 
 /** お題検索画面用のスキーマ */
-export const searchThemePageSchema = z.object({
+export const searchIdeaPageSchema = z.object({
   keyword: z.string().default(""),
   tagIds: z
     .string()
     .or(z.array(z.string()))
     .transform((v) => (typeof v === "string" ? [v] : v))
     .default([]),
-  order: themeOrderSchema.default("createdDesc"),
-  period: themePeriodSchema.default("all"),
+  order: ideaOrderSchema.default("createdDesc"),
+  period: ideaPeriodSchema.default("all"),
   page: pagingSchema.default(1),
 });
 
 /** ユーザー詳細画面用のスキーマ */
 export const userDetailPageSchame = z.object({
-  tab: userDetailPageTabSchema.default("postedThemes"),
+  tab: userDetailPageTabSchema.default("postedIdeas"),
   page: pagingSchema.default(1),
 });
 
@@ -188,11 +188,11 @@ export const reportBaseFormSchema = z.object({
 });
 export type ReportBaseForm = z.infer<typeof reportBaseFormSchema>;
 
-export const reportThemeFormSchema = reportBaseFormSchema.and(
-  z.object({ targetTheme: z.object({ url: z.string(), title: z.string() }) })
+export const reportIdeaFormSchema = reportBaseFormSchema.and(
+  z.object({ targetIdea: z.object({ url: z.string(), title: z.string() }) })
 );
 
-export const reportThemeCommentFormSchema = reportBaseFormSchema.and(
+export const reportIdeaCommentFormSchema = reportBaseFormSchema.and(
   z.object({ targetCommentUrl: z.string() })
 );
 

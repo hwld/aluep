@@ -1,9 +1,9 @@
 import { NextPage } from "next";
-import { pickedUpThemesQueryKey } from "../client/features/theme/usePickedUpThemesQuery";
+import { pickedUpIdeasQueryKey } from "../client/features/idea/usePickedUpIdeasQuery";
 import {
   top10LikesDevelopmentsInThisMonthQueryKey,
+  top10LikesIdeasInThisMonthQueryKey,
   top10LikesPostersInThisMonthQueryKey,
-  top10LikesThemesInThisMonthQueryKey,
 } from "../client/features/user/useRankingQuery";
 import { HomePage } from "../client/ui/HomePage";
 import { withReactQueryGetServerSideProps } from "../server/lib/GetServerSidePropsWithReactQuery";
@@ -14,8 +14,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const caller = appRouter.createCaller(callerContext);
 
     // ランキング
-    await queryClient.prefetchQuery(top10LikesThemesInThisMonthQueryKey, () =>
-      caller.aggregate.getTop10LikesThemesInThisMonth()
+    await queryClient.prefetchQuery(top10LikesIdeasInThisMonthQueryKey, () =>
+      caller.aggregate.getTop10LikesIdeasInThisMonth()
     );
     await queryClient.prefetchQuery(
       top10LikesDevelopmentsInThisMonthQueryKey,
@@ -26,15 +26,15 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     );
 
     //　ピックアップされたお題
-    await queryClient.prefetchQuery(pickedUpThemesQueryKey("createdDesc"), () =>
-      caller.aggregate.getPickedThemes({ order: "createdDesc" })
+    await queryClient.prefetchQuery(pickedUpIdeasQueryKey("createdDesc"), () =>
+      caller.aggregate.getPickedIdeas({ order: "createdDesc" })
     );
-    await queryClient.prefetchQuery(pickedUpThemesQueryKey("likeDesc"), () =>
-      caller.aggregate.getPickedThemes({ order: "likeDesc" })
+    await queryClient.prefetchQuery(pickedUpIdeasQueryKey("likeDesc"), () =>
+      caller.aggregate.getPickedIdeas({ order: "likeDesc" })
     );
     await queryClient.prefetchQuery(
-      pickedUpThemesQueryKey("developmentDesc"),
-      () => caller.aggregate.getPickedThemes({ order: "developmentDesc" })
+      pickedUpIdeasQueryKey("developmentDesc"),
+      () => caller.aggregate.getPickedIdeas({ order: "developmentDesc" })
     );
   }
 );

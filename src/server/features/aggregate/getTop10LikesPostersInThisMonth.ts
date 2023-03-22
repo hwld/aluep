@@ -1,27 +1,27 @@
 import { sortedInSameOrder } from "../../../share/utils";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
-import { UserAndThemeLikes } from "../../models/user";
+import { UserAndIdeaLikes } from "../../models/user";
 
 export const getTop10LikesPostersInThisMonth = publicProcedure.query(
   async () => {
-    const posterUsers: UserAndThemeLikes[] = await db.$transaction(
+    const posterUsers: UserAndIdeaLikes[] = await db.$transaction(
       async (tx) => {
         type RawPosterUser = { userId: string; likeCount: BigInt }[];
         // このクエリが原因?
         const rawPosterUser = await tx.$queryRaw<RawPosterUser>`
         SELECT
           User.id as userId
-          , COUNT(ThemeLike.id) as likeCount
-          , MIN(Theme.createdAt) as firstPostDatetime
+          , COUNT(IdeaLike.id) as likeCount
+          , MIN(Idea.createdAt) as firstPostDatetime
         FROM
-          AppThemeLike as ThemeLike
-          LEFT JOIN AppTheme as Theme
-            ON (ThemeLike.appThemeId = Theme.id)
+          IdeaLike as IdeaLike
+          LEFT JOIN Idea as Idea
+            ON (IdeaLike.ideaId = Idea.id)
           LEFT JOIN User
-            ON (Theme.userId = User.id)
+            ON (Idea.userId = User.id)
         WHERE
-          ThemeLike.createdAt > (NOW() - INTERVAL 1 MONTH)
+          IdeaLike.createdAt > (NOW() - INTERVAL 1 MONTH)
         GROUP BY
           User.id
         ORDER BY
@@ -46,14 +46,14 @@ export const getTop10LikesPostersInThisMonth = publicProcedure.query(
           getKey: (t) => t.id,
         });
 
-        const usersAndThemeLikes = sortedUsers.map(
-          (user, i): UserAndThemeLikes => ({
+        const usersAndIdeaLikes = sortedUsers.map(
+          (user, i): UserAndIdeaLikes => ({
             ...user,
-            themeLikes: Number(rawPosterUser[i]?.likeCount) ?? 0,
+            ideaLikes: Number(rawPosterUser[i]?.likeCount) ?? 0,
           })
         );
 
-        return usersAndThemeLikes;
+        return usersAndIdeaLikes;
       }
     );
 

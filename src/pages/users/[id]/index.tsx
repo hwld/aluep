@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import { themeDevelopmentLikesQueryKey } from "../../../client/features/development/useThemeDevelopmentLikesQuery";
-import { developedThemesPerPageQueryKey } from "../../../client/features/theme/useDevelopedThemesPerPage";
-import { likedThemesPerPageQueryKey } from "../../../client/features/theme/useLikedThemesPerPage";
-import { postedThemesPerPageQueryKey } from "../../../client/features/theme/usePostedThemesQuery";
-import { sumThemeLikesQueryKey } from "../../../client/features/theme/useSumThemeLikesQuery";
+import { developmentLikesQueryKey } from "../../../client/features/development/useDevelopmentLikesQuery";
+import { developedIdeasPerPageQueryKey } from "../../../client/features/idea/useDevelopedIdeasPerPage";
+import { likedIdeasPerPageQueryKey } from "../../../client/features/idea/useLikedIdeasPerPage";
+import { postedIdeasPerPageQueryKey } from "../../../client/features/idea/usePostedIdeasQuery";
+import { sumIdeaLikesQueryKey } from "../../../client/features/idea/useSumIdeaLikesQuery";
 import { favoritedUserQueryKey } from "../../../client/features/user/useFavoriteUser";
 import { favoriteUsersCountQueryKey } from "../../../client/features/user/useFavoriteUsersCountQuery";
 import {
@@ -36,22 +36,22 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     // タブに応じたデータをプリフェッチする
     switch (tab) {
-      case "postedThemes":
+      case "postedIdeas":
         await queryClient.prefetchQuery(
-          postedThemesPerPageQueryKey(userId, page),
-          () => caller.theme.getPostedThemesByUser({ userId, page })
+          postedIdeasPerPageQueryKey(userId, page),
+          () => caller.idea.getPostedIdeasByUser({ userId, page })
         );
         break;
-      case "developedThemes":
+      case "developedIdeas":
         await queryClient.prefetchQuery(
-          developedThemesPerPageQueryKey(userId, page),
-          () => caller.theme.getDevelopedThemesByUser({ userId, page })
+          developedIdeasPerPageQueryKey(userId, page),
+          () => caller.idea.getDevelopedIdeasByUser({ userId, page })
         );
         break;
-      case "likedThemes":
+      case "likedIdeas":
         await queryClient.prefetchQuery(
-          likedThemesPerPageQueryKey(userId, page),
-          () => caller.theme.getLikedThemesByUser({ userId, page })
+          likedIdeasPerPageQueryKey(userId, page),
+          () => caller.idea.getLikedIdeasByUser({ userId, page })
         );
         break;
       default:
@@ -59,10 +59,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     await queryClient.prefetchQuery(userQueryKey(userId), () => user);
-    await queryClient.prefetchQuery(sumThemeLikesQueryKey(userId), () =>
-      caller.theme.getLikeCountByUser({ userId })
+    await queryClient.prefetchQuery(sumIdeaLikesQueryKey(userId), () =>
+      caller.idea.getLikeCountByUser({ userId })
     );
-    await queryClient.prefetchQuery(themeDevelopmentLikesQueryKey(userId), () =>
+    await queryClient.prefetchQuery(developmentLikesQueryKey(userId), () =>
       caller.development.getLikeCountByUser({ userId })
     );
     await queryClient.prefetchQuery(

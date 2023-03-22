@@ -34,10 +34,10 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
   const isWideDisplay = useMediaQuery("(min-width: 1200px)", true);
   const isMenuOpen = isWideDisplay && isOpen;
 
-  const handleClickCreateTheme = (e: SyntheticEvent) => {
+  const handleClickCreateIdea = (e: SyntheticEvent) => {
     if (!loggedInUser) {
       e.preventDefault();
-      openLoginModal(Routes.themeCreate);
+      openLoginModal(Routes.ideaCreate);
       return;
     }
   };
@@ -102,18 +102,18 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
             <SidebarItem
               icon={MdPostAdd}
               label="お題を投稿"
-              onClick={handleClickCreateTheme}
+              onClick={handleClickCreateIdea}
               asLink
-              href={Routes.themeCreate}
-              active={router.route === Routes.themeCreate}
+              href={Routes.ideaCreate}
+              active={router.route === Routes.ideaCreate}
               tooltip={!isMenuOpen}
             />
             <SidebarItem
               icon={MdSearch}
               label="お題を検索"
               asLink
-              href={Routes.themeSearch()}
-              active={router.route === Routes.themeSearch()}
+              href={Routes.ideaSearch()}
+              active={router.route === Routes.ideaSearch()}
               tooltip={!isMenuOpen}
             />
             <SidebarItem

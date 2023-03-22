@@ -10,8 +10,8 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
-import { Theme } from "../../../../server/models/theme";
-import { ThemeDevelopment } from "../../../../server/models/themeDevelopment";
+import { Development } from "../../../../server/models/development";
+import { Idea } from "../../../../server/models/idea";
 import { Routes } from "../../../../share/routes";
 import { formatDate, stopPropagation } from "../../../lib/utils";
 import { TextLink } from "../../../ui/TextLink";
@@ -21,20 +21,20 @@ import { UserIconLink } from "../../user/UserIconLink";
 import { DevelopmentLikeButton } from "./DevelopmentLikeButton";
 
 type Props = {
-  theme: Theme;
-  development: ThemeDevelopment;
+  idea: Idea;
+  development: Development;
   onLikeDevelopment: (developmentId: string) => void;
   onUnlikeDevelopment: (developmentId: string) => void;
 };
 
 export const DevelopmentCard: React.FC<Props> = ({
-  theme,
+  idea,
   development,
   onLikeDevelopment: onLike,
   onUnlikeDevelopment: onUnlike,
 }) => {
   const router = useRouter();
-  const mantineTheme = useMantineTheme();
+  const { colors } = useMantineTheme();
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
 
@@ -53,7 +53,7 @@ export const DevelopmentCard: React.FC<Props> = ({
   };
 
   const handleGoDevelopmentDetail = () => {
-    router.push(Routes.development(theme.id, development.id));
+    router.push(Routes.development(idea.id, development.id));
   };
 
   // 開発者自身でなければいいねできる
@@ -78,7 +78,7 @@ export const DevelopmentCard: React.FC<Props> = ({
             iconSrc={development.image}
             userId={development.userId}
           />
-          <TextLink href={Routes.development(theme.id, development.id)}>
+          <TextLink href={Routes.development(idea.id, development.id)}>
             <Text fw="bold" size="lg">
               {development.name}
               <Text span c="gray.5" size="sm" fw="normal">
@@ -110,7 +110,7 @@ export const DevelopmentCard: React.FC<Props> = ({
                 },
               })}
             >
-              <BsGithub size="80%" fill={mantineTheme.colors.gray[7]} />
+              <BsGithub size="80%" fill={colors.gray[7]} />
             </ActionIcon>
           </Tooltip>
         </Flex>

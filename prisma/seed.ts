@@ -40,7 +40,7 @@ async function main() {
   ];
 
   const promises = tags.map((tag) =>
-    prisma.appThemeTag.upsert({
+    prisma.ideaTag.upsert({
       where: { name: tag },
       create: { name: tag },
       update: {},

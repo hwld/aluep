@@ -36,18 +36,18 @@ export const useTop10LikesPostersInThisMonth = () => {
   return { top10LikesPostersInThisMonth, ...others };
 };
 
-export const top10LikesThemesInThisMonthQueryKey = [
-  "top10LikesThemesInThisMonth",
+export const top10LikesIdeasInThisMonthQueryKey = [
+  "top10LikesIdeasInThisMonth",
 ];
-export const useTop10LikesThemesInThisMonth = () => {
-  const { data: top10LikesThemesInThisMonth, ...others } = useQuery({
-    queryKey: top10LikesThemesInThisMonthQueryKey,
+export const useTop10LikesIdeasInThisMonth = () => {
+  const { data: top10LikesIdeasInThisMonth, ...others } = useQuery({
+    queryKey: top10LikesIdeasInThisMonthQueryKey,
     queryFn: () => {
-      return trpc.aggregate.getTop10LikesThemesInThisMonth.query();
+      return trpc.aggregate.getTop10LikesIdeasInThisMonth.query();
     },
     // ランキングは最新のデータではなくても問題ないので、できる限りキャッシュから取ってこれるようにする
     staleTime: Infinity,
   });
 
-  return { top10LikesThemesInThisMonth, ...others };
+  return { top10LikesIdeasInThisMonth, ...others };
 };

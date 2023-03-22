@@ -1,24 +1,25 @@
-import { ThemeOrder } from "./schema";
+import { IdeaOrder } from "./schema";
 import { buildSearchParamsString } from "./utils";
 
 export const Routes = {
   home: "/",
 
   /** アプリ開発のお題関連 */
-  theme: (id: string) => `/themes/${id}`,
-  themeCreate: "/themes/create",
-  themeUpdate: (themeId: string) => `/themes/${themeId}/update`,
-  themeDevelop: (themeId: string) => `/themes/${themeId}/develop`,
-  themeSearch: (query?: { order?: ThemeOrder; tagIds?: string }) =>
-    `/themes/search${buildSearchParamsString(query)}`,
-  themeLikingUsers: (themeId: string) => `/themes/${themeId}/liking-users`,
+  ideas: `/ideas`,
+  idea: (id: string) => `${Routes.ideas}/${id}`,
+  ideaCreate: "/ideas/create",
+  ideaUpdate: (ideaId: string) => `${Routes.ideas}/${ideaId}/update`,
+  ideaSearch: (query?: { order?: IdeaOrder; tagIds?: string }) =>
+    `${Routes.ideas}/search${buildSearchParamsString(query)}`,
+  ideaLikingUsers: (ideaId: string) => `${Routes.ideas}/${ideaId}/liking-users`,
 
-  /** アプリ開発の開発関連 */
-  developments: (themeId: string) => `/themes/${themeId}/developments`,
-  development: (themeId: string, developmentId: string) =>
-    `${Routes.theme(themeId)}/developments/${developmentId}/detail`,
-  developmentUpdate: (themeId: string, developmentId: string) =>
-    `${Routes.theme(themeId)}/developments/${developmentId}/update`,
+  /** アプリ開発のお題の開発関連 */
+  develop: (ideaId: string) => `${Routes.ideas}/${ideaId}/develop`,
+  developments: (ideaId: string) => `${Routes.ideas}/${ideaId}/developments`,
+  development: (ideaId: string, developmentId: string) =>
+    `${Routes.idea(ideaId)}/developments/${developmentId}/detail`,
+  developmentUpdate: (ideaId: string, developmentId: string) =>
+    `${Routes.idea(ideaId)}/developments/${developmentId}/update`,
 
   /** ユーザー関連 */
   user: (id: string) => `/users/${id}`,
@@ -26,10 +27,6 @@ export const Routes = {
   userDelete: "/users/delete",
   userSearch: "/users/search",
   userFavorites: (userId: string) => `/users/${userId}/favorited-users`,
-  userWithPostedThemes: (userId: string) => `/users/${userId}/posted-themes`,
-  userWithDevelopedThemes: (userId: string) =>
-    `/users/${userId}/developed-themes`,
-  userWithLikedThemes: (userId: string) => `/users/${userId}/liked-themes`,
 
   signout: "/signout",
   serverError: "/505",
