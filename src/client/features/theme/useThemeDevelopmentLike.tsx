@@ -7,10 +7,9 @@ import {
   developmentsPerPageQueryKey,
 } from "../development/useDevelopmentsPerPage";
 
-// TODO: useThemeLikeとuseLikeThemeDevelopmentsの名前をどっちかに寄せる
 // 開発情報のいいねは、ページングされた開発情報のリストに対して行うので、
 // ページ番号を取得して、そのページの開発情報のみを扱えるようにする
-export const useLikeThemeDevelopment = (themeId: string, page: number) => {
+export const useThemeDevelopmentLike = (themeId: string, page: number) => {
   const queryClient = useQueryClient();
 
   const likeDevelopmentMutation = useMutation({

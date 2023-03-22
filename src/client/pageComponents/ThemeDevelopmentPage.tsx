@@ -5,7 +5,7 @@ import { paginatedPageSchema } from "../../share/schema";
 import { DevelopmentCard } from "../features/development/DevelopmentCard/DevelopmentCard";
 import { useDevelopmentsPerPage } from "../features/development/useDevelopmentsPerPage";
 import { ThemeSummaryCard } from "../features/theme/ThemeSummaryCard";
-import { useLikeThemeDevelopment } from "../features/theme/useLikeThemeDevelopment";
+import { useThemeDevelopmentLike } from "../features/theme/useThemeDevelopmentLike";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
 type Props = { theme: Theme };
@@ -14,7 +14,7 @@ export const ThemeDevelopmentPage: React.FC<Props> = ({ theme }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { developmentsPerPage } = useDevelopmentsPerPage(theme.id, page);
   const { likeDevelopmentMutation, unlikeDevelopmentMutation } =
-    useLikeThemeDevelopment(theme.id, page);
+    useThemeDevelopmentLike(theme.id, page);
   const mantineTheme = useMantineTheme();
 
   const handleChangePage = (page: number) => {
