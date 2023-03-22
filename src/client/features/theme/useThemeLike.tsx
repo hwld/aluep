@@ -28,47 +28,13 @@ export const useThemeLike = (themeId: string) => {
     mutationFn: (data: RouterInputs["theme"]["like"]) => {
       return trpc.theme.like.mutate(data);
     },
-    //　楽観的UIによって、いいねが成功する前に状態を変えてしまう。
     onMutate: async () => {
-      await queryClient.cancelQueries(themeQueryKey(themeId));
-
-      // ユーザーがいいねしているかどうかの状況
-      const previousLiked = queryClient.getQueryData<boolean>(
-        themeLikedQueryKey(themeId, session?.user.id)
-      );
-      // お題(いいね数を含む)
-      const previousTheme = queryClient.getQueryData<Theme>(
-        themeQueryKey(themeId)
-      );
-
-      // いいねを反映させる
-      queryClient.setQueryData<boolean>(
-        themeLikedQueryKey(themeId, session?.user.id),
-        () => true
-      );
-
-      // いいね数を変える
-      queryClient.setQueryData<Theme>(themeQueryKey(themeId), (old) => {
-        if (!old) {
-          return old;
-        }
-
-        return { ...old, likes: old.likes + 1 };
-      });
-
-      return { previousLiked, previousTheme };
+      return await optimisticUpdate({ like: true });
     },
     onError: (_, __, context) => {
-      //楽観的に更新した処理をもとに戻す
-      queryClient.setQueryData(
-        themeLikedQueryKey(themeId, session?.user.id),
-        context?.previousLiked
-      );
-      queryClient.setQueryData(themeQueryKey(themeId), context?.previousTheme);
-
-      showErrorNotification({
-        title: "お題へのいいね",
-        message: `お題をいいねできませんでした。`,
+      cancelOptimisticUpdate({
+        like: true,
+        previousTheme: context?.previousTheme,
       });
     },
     onSettled: () => {
@@ -79,52 +45,17 @@ export const useThemeLike = (themeId: string) => {
     },
   });
 
-  // TODO: 共通化を考える
   const unlikeThemeMutation = useMutation({
     mutationFn: (data: RouterInputs["theme"]["unlike"]) => {
       return trpc.theme.unlike.mutate(data);
     },
-    //　楽観的UIによって、いいね解除が成功する前に状態を変えてしまう。
     onMutate: async () => {
-      await queryClient.cancelQueries(themeQueryKey(themeId));
-
-      // ユーザーがいいねしているかどうかの状況
-      const previousLiked = queryClient.getQueryData<boolean>(
-        themeLikedQueryKey(themeId, session?.user.id)
-      );
-      // お題(いいね数を含む)
-      const previousTheme = queryClient.getQueryData<Theme>(
-        themeQueryKey(themeId)
-      );
-
-      // いいね解除を反映させる
-      queryClient.setQueryData<boolean>(
-        themeLikedQueryKey(themeId, session?.user.id),
-        () => false
-      );
-
-      // いいね数を変える
-      queryClient.setQueryData<Theme>(themeQueryKey(themeId), (old) => {
-        if (!old) {
-          return old;
-        }
-
-        return { ...old, likes: old.likes - 1 };
-      });
-
-      return { previousLiked, previousTheme };
+      return await optimisticUpdate({ like: false });
     },
     onError: (_, __, context) => {
-      //楽観的に更新した処理をもとに戻す
-      queryClient.setQueryData(
-        themeLikedQueryKey(themeId, session?.user.id),
-        context?.previousLiked
-      );
-      queryClient.setQueryData(themeQueryKey(themeId), context?.previousTheme);
-
-      showErrorNotification({
-        title: "お題へのいいね解除",
-        message: `お題をいいね解除できませんでした。`,
+      cancelOptimisticUpdate({
+        like: false,
+        previousTheme: context?.previousTheme,
       });
     },
     onSettled: () => {
@@ -134,6 +65,55 @@ export const useThemeLike = (themeId: string) => {
       queryClient.invalidateQueries(themeQueryKey(themeId));
     },
   });
+
+  /** 楽観的更新のためにキャッシュを操作する */
+  const optimisticUpdate = async ({ like }: { like: boolean }) => {
+    await queryClient.cancelQueries(themeQueryKey(themeId));
+
+    // お題(いいね数を含む)
+    const previousTheme = queryClient.getQueryData<Theme>(
+      themeQueryKey(themeId)
+    );
+
+    // いいねを反映させる
+    queryClient.setQueryData<boolean>(
+      themeLikedQueryKey(themeId, session?.user.id),
+      () => like
+    );
+
+    // いいね数を変える
+    queryClient.setQueryData<Theme>(themeQueryKey(themeId), (old) => {
+      if (!old) {
+        return old;
+      }
+
+      return { ...old, likes: old.likes + (like ? 1 : -1) };
+    });
+
+    return { previousTheme };
+  };
+
+  /** 楽観的更新を取り消す */
+  const cancelOptimisticUpdate = ({
+    like,
+    previousTheme,
+  }: {
+    like: boolean;
+    previousTheme: Theme | undefined;
+  }) => {
+    queryClient.setQueryData(
+      themeLikedQueryKey(themeId, session?.user.id),
+      !like
+    );
+    queryClient.setQueryData(themeQueryKey(themeId), previousTheme);
+
+    const action = like ? "いいね" : "いいね解除";
+
+    showErrorNotification({
+      title: `お題への${action}`,
+      message: `お題への${action}ができませんでした。`,
+    });
+  };
 
   return {
     likedByLoggedInUser: likedByLoggedInUser ?? false,
