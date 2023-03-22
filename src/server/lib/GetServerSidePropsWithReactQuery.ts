@@ -4,7 +4,7 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from "next";
-import { Session, unstable_getServerSession } from "next-auth";
+import { getServerSession, Session } from "next-auth";
 import superjson from "superjson";
 import { sessionQuerykey } from "../../client/features/session/useSessionQuery";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
@@ -24,11 +24,7 @@ export const withReactQueryGetServerSideProps = (
 ): GetServerSideProps<PageProps> => {
   return async (params) => {
     const queryClient = new QueryClient();
-    const session = await unstable_getServerSession(
-      params.req,
-      params.res,
-      authOptions
-    );
+    const session = await getServerSession(params.req, params.res, authOptions);
 
     // セッション情報をプリフェッチする
     queryClient.setQueryData(sessionQuerykey, session);

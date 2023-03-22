@@ -6,7 +6,7 @@ import {
 } from "@trpc/server";
 import { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { IncomingMessage } from "http";
-import { Session, unstable_getServerSession } from "next-auth";
+import { getServerSession, Session } from "next-auth";
 import SuperJSON from "superjson";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { findUser } from "../models/user";
@@ -22,11 +22,7 @@ export async function createTRPCContext(
     }>;
   };
 }> {
-  const session = await unstable_getServerSession(
-    opts.req,
-    opts.res,
-    authOptions
-  );
+  const session = await getServerSession(opts.req, opts.res, authOptions);
 
   return { session, req: opts.req };
 }

@@ -68,7 +68,7 @@
     "https-proxy-agent": "^5.0.1",
     "lowlight": "^2.8.1",
     "next": "13.0.2",
-    "next-auth": "^4.16.4",
+    "next-auth": "^4.20.1",
     "node-mocks-http": "^1.12.1",
     "prisma": "^4.7.0",
     "react": "18.2.0",
