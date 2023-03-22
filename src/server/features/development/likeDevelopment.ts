@@ -3,7 +3,6 @@ import { z } from "zod";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 
-// TODO: いいねといいね解除で分ける
 export const likeDevelopment = requireLoggedInProcedure
   .input(
     z.object({

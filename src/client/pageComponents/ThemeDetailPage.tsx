@@ -33,7 +33,8 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
   const { session } = useSessionQuery();
   const router = useRouter();
   const { openLoginModal } = useRequireLoginModal();
-  const { likeThemeMutation, likedByLoggedInUser } = useThemeLike(theme.id);
+  const { likeThemeMutation, unlikeThemeMutation, likedByLoggedInUser } =
+    useThemeLike(theme.id);
   const {
     data: { developedData },
   } = useThemeDevelop(theme.id);
@@ -45,10 +46,11 @@ export const ThemeDetailPage: React.FC<Props> = ({ theme }) => {
       return;
     }
 
-    likeThemeMutation.mutate({
-      themeId: theme.id,
-      like: !likedByLoggedInUser,
-    });
+    if (likedByLoggedInUser) {
+      unlikeThemeMutation.mutate({ themeId: theme.id });
+    } else {
+      likeThemeMutation.mutate({ themeId: theme.id });
+    }
   };
 
   const handleClickDevelop = (e: SyntheticEvent) => {

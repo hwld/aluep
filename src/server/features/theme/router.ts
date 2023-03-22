@@ -12,6 +12,7 @@ import { getThemeLikeCountByUser } from "./getThemeLikeCountByUser";
 import { isLikedByLoggedInUser } from "./isLikedByLoggedInUser";
 import { likeTheme } from "./likeTheme";
 import { search } from "./search";
+import { unlikeTheme } from "./unlikeTheme";
 import { updateTheme } from "./updateTheme";
 
 export const themeRoute = router({
@@ -39,8 +40,11 @@ export const themeRoute = router({
   /** ログインユーザーが指定されたお題を開発しているか */
   developed: developedTheme,
 
-  /** お題にいいね・いいね解除する */
+  /** お題にいいねする */
   like: likeTheme,
+
+  /** お題の言い値を解除する */
+  unlike: unlikeTheme,
 
   /** ログインユーザーがお題をいいねしているか */
   isLikedByLoggedInUser: isLikedByLoggedInUser,
