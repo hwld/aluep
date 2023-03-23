@@ -16,16 +16,16 @@ describe("server/routers/idea.ts", () => {
     });
 
     const title = "test-title";
-    const description = "test-description";
+    const descriptionHtml = "<p>test-description</p>";
     const { ideaId } = await caller.idea.create({
       title,
-      descriptionHtml: description,
+      descriptionHtml: descriptionHtml,
       tags: [],
     });
 
     const idea = await caller.idea.get({ ideaId: ideaId });
 
     expect(idea?.title).toStrictEqual(title);
-    expect(idea?.descriptionHtml).toStrictEqual(description);
+    expect(idea?.descriptionHtml).toStrictEqual(descriptionHtml);
   });
 });
