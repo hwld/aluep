@@ -1,0 +1,46 @@
+name: "deploy-to-cloudrun"
+
+on:
+  push:
+    branches:
+      - "main"
+
+env:
+  IMAGE_NAME: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/aluep:${{ github.sha }}
+
+jobs:
+  deploy:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout the repository"
+        uses: "actions/checkout@v3"
+
+      - uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GCP_SERVICE_ACCOUNT_CREDENTIALS }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+        with:
+          version: ">= 363.0.0"
+
+      - name: "Configure docker to use the gcloud cli"
+        run: gcloud auth configure-docker --quiet
+
+      - name: "Build docker image"
+        run: >
+          docker build
+          -t ${{ env.IMAGE_NAME }}
+          --build-arg NEXT_PUBLIC_URL=${{ vars.NEXT_PUBLIC_URL }}
+          --build-arg NEXT_PUBLIC_CONTACT_URL=${{ vars.NEXT_PUBLIC_CONTACT_URL }}
+          .
+
+      - name: "Push docker image"
+        run: docker push ${{ env.IMAGE_NAME }}
+
+      - name: "Deploy to Cloud Run"
+        uses: "google-github-actions/deploy-cloudrun@v1"
+        with:
+          service: "aluep"
+          image: ${{ env.IMAGE_NAME }}
+          region: ${{ secrets.CLOUDRUN_REGION }}
