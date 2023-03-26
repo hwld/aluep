@@ -5,10 +5,8 @@ type Props = { title: string } & PropsWithChildren;
 export const RankingCard: React.FC<Props> = ({ title, children }) => {
   return (
     <Card
-      p="sm"
-      mt={10}
+      p={0}
       w={300}
-      mih={300}
       withBorder
       sx={(theme) => ({
         flexShrink: 0,
@@ -21,7 +19,7 @@ export const RankingCard: React.FC<Props> = ({ title, children }) => {
           {title}
         </Text>
       </Card.Section>
-      <Stack spacing="sm" mt="md">
+      <Stack spacing="sm" p="md">
         {children}
       </Stack>
     </Card>

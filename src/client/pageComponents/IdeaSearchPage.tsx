@@ -5,12 +5,12 @@ import {
   ideaPeriodSchema,
   searchIdeaPageSchema,
 } from "../../share/schema";
+import { EmptyIdeaSearchResult } from "../features/idea/EmptyIdeaSearchResult";
 import { IdeaCardContainer } from "../features/idea/IdeaCardContainer";
 import {
   IdeaSearchForm,
   IdeaSearchParams,
 } from "../features/idea/IdeaSearchForm";
-import { NothingIdea } from "../features/idea/NothingIdea";
 import { useAllTagsQuery } from "../features/idea/useAllTagsQuery";
 import { useSearchedIdeasQuery } from "../features/idea/useSearchedIdeasQuery";
 import { ideaOrderItems, ideaPeriodItems } from "../lib/consts";
@@ -85,8 +85,9 @@ export const IdeaSearchPage: React.FC = () => {
             />
           </Flex>
         </Flex>
+        {/* 検索する前の画面も作りたい */}
         {searchedIdeasResult?.ideas.length === 0 ? (
-          <NothingIdea page="Search" />
+          <EmptyIdeaSearchResult />
         ) : (
           <IdeaCardContainer ideas={searchedIdeasResult?.ideas ?? []} />
         )}

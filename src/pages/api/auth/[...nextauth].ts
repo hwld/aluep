@@ -10,6 +10,7 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
   pages: {
     signOut: Routes.signout,
+    error: Routes.serverError,
   },
   providers: [
     GithubProvider({

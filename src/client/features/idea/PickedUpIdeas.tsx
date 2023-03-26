@@ -5,7 +5,6 @@ import { HiArrowRight } from "react-icons/hi";
 import { Idea } from "../../../server/models/idea";
 import { useSessionQuery } from "../session/useSessionQuery";
 import { IdeaCardContainer } from "./IdeaCardContainer";
-import { NothingIdea } from "./NothingIdea";
 
 type Props = {
   title: string;
@@ -37,13 +36,7 @@ export const PickedUpIdeas: React.FC<Props> = ({
           もっと見る
         </Button>
       </Flex>
-      {ideas.length === 0 ? (
-        <NothingIdea page="Home" user={session?.user} />
-      ) : (
-        <>
-          <IdeaCardContainer ideas={ideas ?? []} />
-        </>
-      )}
+      <IdeaCardContainer ideas={ideas ?? []} />
     </Stack>
   );
 };
