@@ -1,12 +1,12 @@
 import { pageLimit } from "../../../share/consts";
 import { searchIdeaPageSchema } from "../../../share/schema";
 import { publicProcedure } from "../../lib/trpc";
-import { Idea, searchIdeas } from "../../models/idea";
+import { findSearchedIdeas, Idea } from "../../models/idea";
 
-export const search = publicProcedure
+export const searchIdeas = publicProcedure
   .input(searchIdeaPageSchema)
   .query(async ({ input }): Promise<{ ideas: Idea[]; allPages: number }> => {
-    const paginatedIdeas = await searchIdeas(
+    const paginatedIdeas = await findSearchedIdeas(
       {
         keyword: input.keyword,
         tagIds: input.tagIds,

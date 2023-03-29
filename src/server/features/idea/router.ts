@@ -1,17 +1,15 @@
 import { router } from "../../lib/trpc";
 import { createIdea } from "./createIdea";
 import { deleteIdea } from "./deleteIdea";
-import { isDevelopedByLoggedInUser } from "./developedIdea";
-import { developIdea } from "./developIdea";
 import { getAllTags } from "./getAllTags";
 import { getDevelopedIdeasByUser } from "./getDevelopedIdeasByUser";
 import { getIdea } from "./getIdea";
 import { getIdeaLikeCountByUser } from "./getIdeaLikeCountByUser";
 import { getLikedIdeasByUser } from "./getLikedIdeasByUser";
 import { getPostedIdeasByUser } from "./getPostedIdeasByUser";
-import { isLikedByLoggedInUser } from "./isLikedByLoggedInUser";
+import { isLikedByUser } from "./isLikedByUser";
 import { likeIdea } from "./likeIdea";
-import { search } from "./search";
+import { searchIdeas } from "./searchIdeas";
 import { unlikeIdea } from "./unlikeIdea";
 import { updateIdea } from "./updateIdea";
 
@@ -23,7 +21,7 @@ export const ideaRoute = router({
   get: getIdea,
 
   /** お題を検索する */
-  search: search,
+  search: searchIdeas,
 
   /** お題を作成する */
   create: createIdea,
@@ -34,25 +32,19 @@ export const ideaRoute = router({
   /**　お題を削除する */
   delete: deleteIdea,
 
-  /** お題を開発する */
-  develop: developIdea,
-
-  /** ログインユーザーが指定されたお題を開発しているか */
-  isDevelopedByLoggedInUser: isDevelopedByLoggedInUser,
-
   /** お題にいいねする */
   like: likeIdea,
 
-  /** お題の言い値を解除する */
+  /** お題のいいねを解除する */
   unlike: unlikeIdea,
 
   /** ログインユーザーがお題をいいねしているか */
-  isLikedByLoggedInUser: isLikedByLoggedInUser,
+  isLikedByUser: isLikedByUser,
 
   /** 指定されたユーザーが投稿したお題についたすべての「いいね」を取得する */
   getLikeCountByUser: getIdeaLikeCountByUser,
 
-  /** 指定されたユーザーが投稿されたお題を取得する */
+  /** 指定されたユーザーが投稿したお題を取得する */
   getPostedIdeasByUser: getPostedIdeasByUser,
 
   /** 指定されたユーザーが開発しているお題を取得する */

@@ -24,7 +24,6 @@ import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
 import { Routes } from "../../share/routes";
 import { EmptyHomeIdeas } from "../features/idea/EmptyHomeIdeas";
-import { EmptyPopularIdeas } from "../features/idea/EmptyPopularIdeas";
 import { ideaCardMinWidthPx } from "../features/idea/IdeaCard/IdeaCard";
 import { PopularIdeaCarousel } from "../features/idea/PopularIdeaCarousel/PopularIdeaCarousel";
 import { usePickedUpIdeasQuery } from "../features/idea/usePickedUpIdeasQuery";
@@ -52,17 +51,15 @@ export const HomePage: React.FC = () => {
   return (
     <Flex w="100%" gap="xl">
       <Stack miw={0} sx={{ flexGrow: 1, flexShrink: 1 }} spacing={35}>
-        <Stack spacing="sm">
-          <Title order={4}>人気のお題</Title>
-          {top10LikesIdeasInThisMonth?.length === 0 ? (
-            <EmptyPopularIdeas />
-          ) : (
+        {top10LikesIdeasInThisMonth.length > 0 && (
+          <Stack spacing="sm">
+            <Title order={4}>人気のお題</Title>
             <PopularIdeaCarousel
               ideas={top10LikesIdeasInThisMonth}
               miw={`${ideaCardMinWidthPx}px`}
             />
-          )}
-        </Stack>
+          </Stack>
+        )}
 
         {isEmptyIdeas ? (
           <Center>

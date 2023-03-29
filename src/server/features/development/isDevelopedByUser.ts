@@ -3,18 +3,18 @@ import { DevelopedData } from "../../../share/schema";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 
-export const isDevelopedByLoggedInUser = publicProcedure
-  .input(z.object({ ideaId: z.string() }))
-  .query(async ({ input, ctx }): Promise<DevelopedData> => {
-    const loggedInUser = ctx.session?.user;
-    if (!loggedInUser) {
+export const isDevelopedByUser = publicProcedure
+  .input(z.object({ ideaId: z.string(), userId: z.string().nullable() }))
+  .query(async ({ input }): Promise<DevelopedData> => {
+    const loginUserId = input.userId;
+    if (!loginUserId) {
       return { developed: false };
     }
 
     const development = await db.development.findUnique({
       where: {
         userId_ideaId: {
-          userId: loggedInUser.id,
+          userId: loginUserId,
           ideaId: input.ideaId,
         },
       },

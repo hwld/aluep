@@ -30,13 +30,18 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     // ログインユーザーのいいね状況のプリフェッチ
     await queryClient.prefetchQuery(
       ideaLikedQueryKey(ideaId, session?.user.id),
-      () => caller.idea.isLikedByLoggedInUser({ ideaId })
+      () =>
+        caller.idea.isLikedByUser({ ideaId, userId: session?.user.id ?? null })
     );
 
     // ログインユーザーの開発情報のプリフェッチ
     await queryClient.prefetchQuery(
       developedQueryKey(ideaId, session?.user.id),
-      () => caller.idea.isDevelopedByLoggedInUser({ ideaId: ideaId })
+      () =>
+        caller.development.isDevelopedByUser({
+          ideaId: ideaId,
+          userId: session?.user.id ?? null,
+        })
     );
 
     // コメントのプリフェッチ

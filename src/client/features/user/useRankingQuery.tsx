@@ -49,5 +49,8 @@ export const useTop10LikesIdeasInThisMonth = () => {
     staleTime: Infinity,
   });
 
-  return { top10LikesIdeasInThisMonth, ...others };
+  return {
+    top10LikesIdeasInThisMonth: top10LikesIdeasInThisMonth ?? [],
+    ...others,
+  };
 };

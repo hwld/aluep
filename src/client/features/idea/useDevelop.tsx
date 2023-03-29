@@ -30,13 +30,16 @@ export const useDevelop = (ideaId: string) => {
   const { data: developedData, ...others } = useQuery({
     queryKey: developedQueryKey(ideaId, session?.user.id),
     queryFn: () => {
-      return trpc.idea.isDevelopedByLoggedInUser.query({ ideaId });
+      return trpc.development.isDevelopedByUser.query({
+        ideaId,
+        userId: session?.user.id ?? null,
+      });
     },
   });
 
   const developMutation = useMutation({
-    mutationFn: (data: RouterInputs["idea"]["develop"]) => {
-      return trpc.idea.develop.mutate(data);
+    mutationFn: (data: RouterInputs["development"]["create"]) => {
+      return trpc.development.create.mutate(data);
     },
     onSuccess: async (_, fields) => {
       await queryClient.invalidateQueries(

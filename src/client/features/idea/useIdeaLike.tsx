@@ -20,7 +20,10 @@ export const useIdeaLike = (ideaId: string) => {
   const { data: likedByLoggedInUser } = useQuery({
     queryKey: ideaLikedQueryKey(ideaId, session?.user.id),
     queryFn: () => {
-      return trpc.idea.isLikedByLoggedInUser.query({ ideaId });
+      return trpc.idea.isLikedByUser.query({
+        ideaId,
+        userId: session?.user.id ?? null,
+      });
     },
   });
 

@@ -27,8 +27,9 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     // すでに開発している場合はお題にリダイレクトする
-    const developedData = await caller.idea.isDevelopedByLoggedInUser({
+    const developedData = await caller.development.isDevelopedByUser({
       ideaId: idea.id,
+      userId: session.user.id,
     });
     if (developedData.developed) {
       return {

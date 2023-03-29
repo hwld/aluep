@@ -183,7 +183,8 @@ export const pickUpIdeas = async (
   return paginatedIdeas;
 };
 
-export const searchIdeas = async (
+/** 条件を指定してお題を取得する */
+export const findSearchedIdeas = async (
   { keyword, tagIds, order, period }: SearchIdeasArgs,
   pagingData: { page: number; limit: number }
 ): Promise<{ ideas: Idea[]; allPages: number }> => {
