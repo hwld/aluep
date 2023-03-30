@@ -10,7 +10,7 @@ const customJestConfig = {
   testEnvironment: "@quramy/jest-prisma-node/environment",
   // サーバーのコードだけ含める。
   testMatch: ["<rootDir>/src/server/**/*.test.ts"],
-  setupFilesAfterEnv: ["<rootDir>/jest-setup-prisma.js"],
+  setupFilesAfterEnv: ["<rootDir>/jest-server-setup.js"],
 };
 
 module.exports = createJestConfig(customJestConfig);
