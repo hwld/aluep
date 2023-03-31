@@ -14,11 +14,22 @@ export const TestHelpers = {
         ? await db.user.create({ data: { name: args.userName } })
         : undefined;
 
-    return appRouter.createCaller({
+    const caller = appRouter.createCaller({
       session: loginUser
         ? { user: loginUser, expires: addYears(new Date(), 1).toUTCString() }
         : null,
       req: createRequest(),
     });
+
+    return { caller, loginUserId: loginUser?.id };
+  },
+
+  createUserAndIdea: async () => {
+    const ideator = await db.user.create({ data: { name: "ideator" } });
+    const idea = await db.idea.create({
+      data: { title: "title", description: "<p>body</p>", userId: ideator.id },
+    });
+
+    return idea;
   },
 };

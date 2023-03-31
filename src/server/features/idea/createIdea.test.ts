@@ -1,8 +1,12 @@
+import { faker } from "@faker-js/faker";
+import { db } from "../../lib/prismadb";
 import { TestHelpers } from "../../tests/helper";
 
-describe("server/features/idea/createIdea.ts", () => {
+describe("お題の作成API", () => {
   it("ログインしていないとお題を作成することはできない", async () => {
-    const caller = await TestHelpers.createCaller({ isLoginSession: false });
+    const { caller } = await TestHelpers.createCaller({
+      isLoginSession: false,
+    });
 
     const promise = caller.idea.create({
       title: "test-title",
@@ -14,7 +18,7 @@ describe("server/features/idea/createIdea.ts", () => {
   });
 
   it("お題を作成し、作成したお題を取得することができる", async () => {
-    const caller = await TestHelpers.createCaller({
+    const { caller } = await TestHelpers.createCaller({
       isLoginSession: true,
       userName: "user",
     });
@@ -40,7 +44,7 @@ describe("server/features/idea/createIdea.ts", () => {
         '<a target="_blank">link</a>',
       ],
     ])('"%s" -> "%s"', async (input, expected) => {
-      const caller = await TestHelpers.createCaller({
+      const { caller } = await TestHelpers.createCaller({
         isLoginSession: true,
         userName: "user",
       });
@@ -52,6 +56,57 @@ describe("server/features/idea/createIdea.ts", () => {
 
       const idea = await caller.idea.get({ ideaId });
       expect(idea?.descriptionHtml).toStrictEqual(expected);
+    });
+  });
+
+  describe("バリデーションが失敗する入力", () => {
+    it.each([
+      ["未入力のタイトル", { title: "", body: "<p>body</p>", tags: [] }],
+      [
+        "51文字のタイトル",
+        { title: faker.datatype.string(51), body: "<p>body</p>", tags: [] },
+      ],
+      ["未入力の説明", { title: "title", body: "<p>body</p>", tags: [] }],
+      [
+        "10001文字の説明",
+        {
+          title: "title",
+          body: `<p>${faker.datatype.string(10001 - 7)}</p>`,
+          tags: [],
+        },
+      ],
+      [
+        "101文字のタグID",
+        {
+          title: "title",
+          body: "<p>body</p>",
+          tags: [faker.datatype.string(101)],
+        },
+      ],
+      [
+        "51個のタグ",
+        {
+          title: "title",
+          body: "<p>body</p>",
+          tags: [...new Array(51)].map((_) => faker.datatype.string(10)),
+        },
+      ],
+    ])("%s", async (_, { title, body, tags }) => {
+      const { caller } = await TestHelpers.createCaller({
+        isLoginSession: true,
+        userName: "user",
+      });
+      await db.ideaTag.createMany({
+        data: tags.map((t) => ({ id: t, name: t })),
+      });
+
+      const promise = caller.idea.create({
+        title,
+        descriptionHtml: body,
+        tags,
+      });
+
+      expect(promise).rejects.toThrow();
     });
   });
 });
