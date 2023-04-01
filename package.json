@@ -14,8 +14,6 @@
     "test-db-dbpush": "npm run test-dotenv  -- prisma db push --accept-data-loss",
     "test-db-seed": "npm run test-dotenv -- prisma db seed",
     "setup:test-db": "npm run test-db-dbpush && npm run test-db-seed",
-    "test:server": "jest -i -c jest.server.config.js",
-    "test:client": "jest -i -c jest.client.config.js",
     "ts-prune:next": "ts-prune | grep -v default | grep -v getServerSideProps"
   },
   "prisma": {

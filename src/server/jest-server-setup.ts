@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 
 // prismaのディレクトリが変わるたびに書き換えなくちゃいけない
-jest.mock("./src/server/lib/prismadb", () => {
+jest.mock("./lib/prismadb", () => {
   return {
     db: jestPrisma.client,
   };

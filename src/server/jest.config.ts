@@ -1,16 +1,15 @@
-const nextJest = require("next/jest");
+import { Config } from "jest";
+import nextJest from "next/jest";
 
 const createJestConfig = nextJest({
   dir: "./",
 });
-
-/** @type {import('jest').Config} */
-const customJestConfig = {
+const customJestConfig: Config = {
   moduleDirectories: ["node_modules"],
   testEnvironment: "@quramy/jest-prisma-node/environment",
   // サーバーのコードだけ含める。
-  testMatch: ["<rootDir>/src/server/**/*.test.ts"],
-  setupFilesAfterEnv: ["<rootDir>/jest-server-setup.js"],
+  testMatch: ["<rootDir>/**/*.test.ts"],
+  setupFilesAfterEnv: ["<rootDir>/jest-server-setup.ts"],
 };
 
 module.exports = createJestConfig(customJestConfig);
