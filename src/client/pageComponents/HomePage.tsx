@@ -12,9 +12,9 @@ import {
   useTop10LikesIdeasInThisMonth,
   useTop10LikesPostersInThisMonth,
 } from "../features/user/useRankingQuery";
-import { EmptyRankingContent } from "./EmptyRankingContent";
+import { EmptyRankingContent } from "../ui/EmptyRankingContent";
 
-import { RankingCard } from "./RankingCard";
+import { RankingCard } from "../ui/RankingCard";
 
 import { PickedUpIdeas } from "../features/idea/PickedUpIdeas";
 import { UserLikeRankingItem } from "../features/user/UserLikeRankingItem";

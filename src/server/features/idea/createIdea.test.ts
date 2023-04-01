@@ -4,9 +4,7 @@ import { TestHelpers } from "../../tests/helper";
 
 describe("お題の作成API", () => {
   it("ログインしていないとお題を作成することはできない", async () => {
-    const { caller } = await TestHelpers.createCaller({
-      isLoginSession: false,
-    });
+    const { caller } = await TestHelpers.createPublicCaller();
 
     const promise = caller.idea.create({
       title: "test-title",
@@ -14,12 +12,11 @@ describe("お題の作成API", () => {
       tags: [],
     });
 
-    expect(promise).rejects.toThrow();
+    await expect(promise).rejects.toThrow();
   });
 
   it("お題を作成し、作成したお題を取得することができる", async () => {
-    const { caller } = await TestHelpers.createCaller({
-      isLoginSession: true,
+    const { caller } = await TestHelpers.createSessionCaller({
       userName: "user",
     });
     const title = "test-title";
@@ -32,7 +29,7 @@ describe("お題の作成API", () => {
     });
 
     const idea = await caller.idea.get({ ideaId: ideaId });
-    expect(idea?.title).toStrictEqual(title);
+    expect(idea?.title).toBe(title);
     expect(idea?.descriptionHtml).toStrictEqual(descriptionHtml);
   });
 
@@ -44,8 +41,7 @@ describe("お題の作成API", () => {
         '<a target="_blank">link</a>',
       ],
     ])('"%s" -> "%s"', async (input, expected) => {
-      const { caller } = await TestHelpers.createCaller({
-        isLoginSession: true,
+      const { caller } = await TestHelpers.createSessionCaller({
         userName: "user",
       });
       const { ideaId } = await caller.idea.create({
@@ -66,7 +62,7 @@ describe("お題の作成API", () => {
         "51文字のタイトル",
         { title: faker.datatype.string(51), body: "<p>body</p>", tags: [] },
       ],
-      ["未入力の説明", { title: "title", body: "<p>body</p>", tags: [] }],
+      ["未入力の説明", { title: "title", body: "<p></p>", tags: [] }],
       [
         "10001文字の説明",
         {
@@ -92,8 +88,7 @@ describe("お題の作成API", () => {
         },
       ],
     ])("%s", async (_, { title, body, tags }) => {
-      const { caller } = await TestHelpers.createCaller({
-        isLoginSession: true,
+      const { caller } = await TestHelpers.createSessionCaller({
         userName: "user",
       });
       await db.ideaTag.createMany({
@@ -106,7 +101,7 @@ describe("お題の作成API", () => {
         tags,
       });
 
-      expect(promise).rejects.toThrow();
+      await expect(promise).rejects.toThrow();
     });
   });
 });

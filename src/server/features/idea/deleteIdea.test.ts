@@ -2,31 +2,27 @@ import { TestHelpers } from "../../tests/helper";
 
 describe("お題の削除API", () => {
   it("他人が投稿したお題を削除することはできない", async () => {
-    const { caller } = await TestHelpers.createCaller({
-      isLoginSession: true,
+    const { caller } = await TestHelpers.createSessionCaller({
       userName: "user",
     });
-    const idea = await TestHelpers.createUserAndIdea();
+    const { idea } = await TestHelpers.createIdeaAndUser();
 
     const promise = caller.idea.delete({ ideaId: idea.id });
 
-    expect(promise).rejects.toThrow();
+    await expect(promise).rejects.toThrow();
   });
 
   it("未ログインユーザーはお題を削除することはできない", async () => {
-    const { caller } = await TestHelpers.createCaller({
-      isLoginSession: false,
-    });
-    const idea = await TestHelpers.createUserAndIdea();
+    const { caller } = await TestHelpers.createPublicCaller();
+    const { idea } = await TestHelpers.createIdeaAndUser();
 
     const promise = caller.idea.delete({ ideaId: idea.id });
 
-    expect(promise).rejects.toThrow();
+    await expect(promise).rejects.toThrow();
   });
 
   it("存在するお題を削除することができる", async () => {
-    const { caller } = await TestHelpers.createCaller({
-      isLoginSession: true,
+    const { caller } = await TestHelpers.createSessionCaller({
       userName: "user",
     });
     const { ideaId } = await caller.idea.create({

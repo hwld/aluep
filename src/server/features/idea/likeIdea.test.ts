@@ -2,24 +2,22 @@ import { TestHelpers } from "../../tests/helper";
 
 describe("お題へのいいねAPI", () => {
   it("いいねができる", async () => {
-    const { caller, loginUserId } = await TestHelpers.createCaller({
-      isLoginSession: true,
+    const { caller, loginUserId } = await TestHelpers.createSessionCaller({
       userName: "user",
     });
-    const createdIdea = await TestHelpers.createUserAndIdea();
+    const { idea } = await TestHelpers.createIdeaAndUser();
 
-    await caller.idea.like({ ideaId: createdIdea.id });
+    await caller.idea.like({ ideaId: idea.id });
 
     const liked = await caller.idea.isLikedByUser({
       userId: loginUserId ?? null,
-      ideaId: createdIdea.id,
+      ideaId: idea.id,
     });
     expect(liked).toBe(true);
   });
 
   it("自分が投稿したお題にいいねはできない", async () => {
-    const { caller } = await TestHelpers.createCaller({
-      isLoginSession: true,
+    const { caller } = await TestHelpers.createSessionCaller({
       userName: "user",
     });
     const createdIdea = await caller.idea.create({
@@ -30,6 +28,6 @@ describe("お題へのいいねAPI", () => {
 
     const promise = caller.idea.like({ ideaId: createdIdea.ideaId });
 
-    expect(promise).rejects.toThrow();
+    await expect(promise).rejects.toThrow();
   });
 });

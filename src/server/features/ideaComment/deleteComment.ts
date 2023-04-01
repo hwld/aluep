@@ -14,5 +14,5 @@ export const deleteComment = requireLoggedInProcedure
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
-    await db.ideaComment.delete({ where: { id: input.commentId } });
+    return await db.ideaComment.delete({ where: { id: input.commentId } });
   });

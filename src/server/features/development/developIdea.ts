@@ -19,7 +19,7 @@ export const developIdea = requireLoggedInProcedure
     }
 
     // 開発情報を登録する
-    await db.development.create({
+    const development = await db.development.create({
       data: {
         idea: { connect: { id: input.ideaId } },
         user: { connect: { id: ctx.session.user.id } },
@@ -27,4 +27,6 @@ export const developIdea = requireLoggedInProcedure
         comment: input.comment ?? "",
       },
     });
+
+    return { developmentId: development.id };
   });

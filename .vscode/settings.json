@@ -8,5 +8,7 @@
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "typescript.referencesCodeLens.enabled": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.tsserver.experimental.enableProjectDiagnostics": true
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+
+  "jest.autoRun": { "watch": false, "onSave": "test-file" }
 }
