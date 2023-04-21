@@ -38,7 +38,7 @@ export default function App(props: AppProps<PageProps>) {
       {/* また、next.jsではクライアントサイドのルーティングが多いので、これだけだと正しく測定できない。 */}
       {/* 参考:(https://github.com/vercel/next.js/tree/canary/examples/with-google-analytics) */}
       {/* Google tag (gtag.js)  */}
-      <Script src="https://www.googletagmanager.com/gtag/js?id=G-Q6CPPR70ZM" />
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-5PXXNW44WY" />
       <Script
         id="gtag-init"
         dangerouslySetInnerHTML={{
@@ -47,7 +47,7 @@ export default function App(props: AppProps<PageProps>) {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
           
-            gtag('config', 'G-Q6CPPR70ZM');
+            gtag('config', 'G-5PXXNW44WY');
           `,
         }}
       />
