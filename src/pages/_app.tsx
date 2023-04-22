@@ -8,7 +8,6 @@ import {
 } from "@tanstack/react-query";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import Script from "next/script";
 import { useState } from "react";
 import superjson from "superjson";
 import { RequireLoginModalProvider } from "../client/features/session/RequireLoginModalProvider";
@@ -34,23 +33,6 @@ export default function App(props: AppProps<PageProps>) {
 
   return (
     <ErrorBoundary>
-      {/* idは環境変数で付けたほうが柔軟性があるけど、めんどくさいのでとりあえず・・・ */}
-      {/* また、next.jsではクライアントサイドのルーティングが多いので、これだけだと正しく測定できない。 */}
-      {/* 参考:(https://github.com/vercel/next.js/tree/canary/examples/with-google-analytics) */}
-      {/* Google tag (gtag.js)  */}
-      <Script src="https://www.googletagmanager.com/gtag/js?id=G-5PXXNW44WY" />
-      <Script
-        id="gtag-init"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-          
-            gtag('config', 'G-5PXXNW44WY');
-          `,
-        }}
-      />
       <Head>
         <title>Aluep</title>
         <meta
@@ -63,7 +45,7 @@ export default function App(props: AppProps<PageProps>) {
         />
         <meta
           name="google-site-verification"
-          content="_asspesaHdXrFgIrOfHxy_aSen_ECuxyphxcl-TqBtI"
+          content="G0JQ3h-VhmlLPCpmRn_9QWm60jiSIVy9F6UGjxnb_cc"
         />
       </Head>
 
