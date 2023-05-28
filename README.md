@@ -3,6 +3,7 @@
 </p>
 
 # Aluep
+
 Aluep は、アプリケーション案である「アプリ開発のお題」を投稿・検索できる Web アプリケーションです。
 
 ## 使用技術
@@ -25,3 +26,33 @@ Aluep は、アプリケーション案である「アプリ開発のお題」�
 - [Cloud Run](https://cloud.google.com/run?hl=ja)
 - [Cloud Storage](https://cloud.google.com/storage?hl=ja)
 - [PlanetScale](https://planetscale.com/)
+
+## ディレクトリ構成
+
+<pre>
+.
+├── .github
+│   └── workflows: 📚Github ActionsでのCI/CD
+│ 
+├── prisma: 📚DBのスキーマやシーディング
+│ 
+└── src
+    ├── client: 📚フロント側のコード
+    │   ├── features: 📚機能別のコンポーネントやHooks
+    │   ├── lib: 📚汎用的なコード
+    │   ├── pageComponents: 📚実際に画面に表示されるページコンポーネント
+    │   ├── style: 📚アプリのテーマ
+    │   └── ui: 📚汎用的なコンポーネント
+    │ 
+    ├── pages: 📚APIの設定や、実際に表示されるページ、SSRなど
+    │ 
+    ├── server: 📚サーバー側のコード
+    │   ├── features: 📚機能別のAPI実装
+    │   ├── lib: 📚汎用的なコード
+    │   ├── models: 📚モデルの型定義や、RDBとモデルの変換など
+    │   └── tests: 📚テストの用のヘルパー
+    │ 
+    ├── share: 📚フロント・サーバー両方で使用されるコード
+    │ 
+    └── types: 📚型定義
+</pre>
