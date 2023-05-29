@@ -1,7 +1,8 @@
 import { Button, Flex, Stack } from "@mantine/core";
-import { useDebouncedValue, useId } from "@mantine/hooks";
+import { useId } from "@mantine/hooks";
 import { FormEventHandler, PropsWithChildren } from "react";
 import { IconType } from "react-icons/lib";
+import { useDebouncedSubmitting } from "../lib/useDebouncedSubmitting";
 
 type Props = {
   onSubmit: FormEventHandler<HTMLFormElement>;
@@ -21,23 +22,8 @@ export const AppForm: React.FC<Props> = ({
 }) => {
   const formId = useId();
 
-  // すぐに終わる操作で一瞬インジケータが表示されるのを防ぐために、
-  // isSubmittingが変更されてから250ms経過した後に反映させる。
-  // ただ、その間にキャンセルボタンやSubmitボタンを押されたくないので、
-  // スタイルには反映させないが、内部的には押しても何も起こらないようにする。
-  const [debouncedSubmitting] = useDebouncedValue(isSubmitting, 250);
-
-  const handleCancel = () => {
-    if (!isSubmitting) {
-      onCancel();
-    }
-  };
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    if (!isSubmitting) {
-      onSubmit(e);
-    }
-  };
+  const { debouncedSubmitting, handleCancel, handleSubmit } =
+    useDebouncedSubmitting({ isSubmitting, onCancel, onSubmit });
 
   return (
     <>

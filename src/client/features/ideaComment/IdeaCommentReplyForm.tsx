@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Textarea } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
 import {
@@ -8,6 +7,7 @@ import {
   ideaCommentFormSchema,
 } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
+import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
 
 type Props = {
   inReplyToCommentId: string;
@@ -22,7 +22,7 @@ export const IdeaCommentReplyForm: React.FC<Props> = ({
   inReplyToCommentId,
   onSubmit,
   onCancel,
-  isSubmitting,
+  isSubmitting = false,
 }) => {
   const {
     control,
@@ -33,10 +33,15 @@ export const IdeaCommentReplyForm: React.FC<Props> = ({
     resolver: zodResolver(ideaCommentFormSchema),
   });
 
-  const [debouncedSubmitting] = useDebouncedValue(isSubmitting, 250);
+  const { debouncedSubmitting, handleSubmit, handleCancel } =
+    useDebouncedSubmitting({
+      isSubmitting,
+      onCancel,
+      onSubmit: innerHandleSubmit(onSubmit),
+    });
 
   return (
-    <form onSubmit={innerHandleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit}>
       <Controller
         control={control}
         name="comment"
@@ -55,7 +60,7 @@ export const IdeaCommentReplyForm: React.FC<Props> = ({
       <Flex mt="xs" justify="flex-end" gap="sm">
         <Button
           variant="outline"
-          onClick={onCancel}
+          onClick={handleCancel}
           disabled={debouncedSubmitting}
         >
           キャンセル

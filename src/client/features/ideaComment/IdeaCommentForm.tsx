@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Textarea } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
 import { MouseEventHandler } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
@@ -9,6 +8,7 @@ import {
   ideaCommentFormSchema,
 } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
+import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
 
 type Props = {
   ideaId: string;
@@ -21,7 +21,7 @@ export const IdeaCommentForm: React.FC<Props> = ({
   ideaId,
   onSubmit,
   onClickSubmitButton,
-  isSubmitting,
+  isSubmitting = false,
 }) => {
   const {
     control,
@@ -32,11 +32,10 @@ export const IdeaCommentForm: React.FC<Props> = ({
     resolver: zodResolver(ideaCommentFormSchema),
   });
 
-  const [debouncedSubmitting] = useDebouncedValue(isSubmitting, 250);
-
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    innerHandleSubmit(onSubmit)(e);
-  };
+  const { debouncedSubmitting, handleSubmit } = useDebouncedSubmitting({
+    isSubmitting,
+    onSubmit: innerHandleSubmit(onSubmit),
+  });
 
   return (
     <form onSubmit={handleSubmit}>
