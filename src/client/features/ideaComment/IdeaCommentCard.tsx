@@ -22,14 +22,11 @@ import { useSessionQuery } from "../session/useSessionQuery";
 import { UserIconLink } from "../user/UserIconLink";
 import { IdeaCommentMenuButton } from "./IdeaCommentMenuButton";
 import { IdeaCommentReplyForm } from "./IdeaCommentReplyForm";
+import { useIdeaCommentReply } from "./useIdeaCommentReply";
 
 type Props = {
   ideaId: string;
   comment: IdeaComment;
-  onReplyComment: (
-    data: OmitStrict<IdeaCommentFormData, "ideaId">,
-    onSuccess: () => void
-  ) => void;
   onDeleteComment: (id: string) => void;
   isDeleting?: boolean;
   isOwner: boolean;
@@ -40,7 +37,6 @@ type Props = {
 export const IdeaCommentCard: React.FC<Props> = ({
   ideaId,
   comment,
-  onReplyComment,
   onDeleteComment,
   isDeleting = false,
   isOwner,
@@ -54,6 +50,14 @@ export const IdeaCommentCard: React.FC<Props> = ({
 
   const [isReplyFormOpen, { close: closeReplyForm, open: openReplyForm }] =
     useDisclosure(false);
+
+  const { replyMutation } = useIdeaCommentReply({
+    ideaId,
+    closeReplyForm,
+    onSuccess: () => {
+      closeReplyForm();
+    },
+  });
 
   const handleDelete = () => {
     onDeleteComment(comment.id);
@@ -70,14 +74,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
   const handleSubmitReply = (
     data: OmitStrict<IdeaCommentFormData, "ideaId">
   ) => {
-    // 返信が成功した場合、ReplyFormを削除する
-    onReplyComment(data, () => {
-      closeReplyForm();
-
-      // 一番下までスクロールさせる
-      const element = document.documentElement;
-      window.scroll(0, element.scrollHeight - element.clientHeight);
-    });
+    replyMutation.mutate(data);
   };
 
   // このコメントの返信元コメントにスクロールする
@@ -189,7 +186,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
               ideaId={comment.ideaId}
               onCancel={closeReplyForm}
               onSubmit={handleSubmitReply}
-              isSubmitting={false}
+              isSubmitting={replyMutation.isLoading}
             />
           </Card>
         )}

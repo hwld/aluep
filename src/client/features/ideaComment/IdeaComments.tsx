@@ -1,7 +1,7 @@
 import { Card, Stack, Title } from "@mantine/core";
 import { useClickOutside } from "@mantine/hooks";
 import { useRouter } from "next/router";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { IdeaCommentFormData } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { useCyclicRandom } from "../../lib/useCyclicRandom";
@@ -64,13 +64,6 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
     });
   };
 
-  const handleSubmitReply = (
-    data: OmitStrict<IdeaCommentFormData, "ideaId">,
-    onSuccess: () => void
-  ) => {
-    postCommentMutation.mutate(data, { onSuccess });
-  };
-
   const handleDeleteComment = (commentId: string) => {
     deleteCommentMutation.mutate(commentId);
   };
@@ -82,6 +75,27 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
     const id = extractHash(router.asPath);
     setFocusedCommentId(id);
   }, [router.asPath]);
+
+  // コメントが追加されたときにのみスクロールしたいので、
+  // 一つ前のレンダリングのコメント数を保持しておくrefを作成する
+  const prevComments = useRef(ideaComments?.length ?? 0);
+  useEffect(() => {
+    const comments = ideaComments?.length ?? 0;
+
+    // 前のレンダリングよりもコメント数が増えていればスクロールさせる
+    if (comments > prevComments.current) {
+      // 一番下までスクロールさせる
+      // #__nextのheightを100dvhにしているので、この要素をスクロールさせる
+      const element = document.querySelector("#__next");
+      if (!element) {
+        return;
+      }
+      element.scroll(0, element.scrollHeight - element.clientHeight);
+    }
+
+    // 前のレンダリングのコメント数を更新する
+    prevComments.current = comments;
+  }, [commentsRef, ideaComments?.length]);
 
   return (
     <Stack>
@@ -96,7 +110,6 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
                 key={comment.id}
                 comment={comment}
                 ideaId={ideaId}
-                onReplyComment={handleSubmitReply}
                 onDeleteComment={handleDeleteComment}
                 isDeleting={deleteCommentMutation.isLoading}
                 isOwner={session?.user.id === comment.fromUser.id}
