@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { HiArrowRight } from "react-icons/hi";
 import { Idea } from "../../../server/models/idea";
-import { useSessionQuery } from "../session/useSessionQuery";
 import { IdeaCardContainer } from "./IdeaCardContainer";
 
 type Props = {
@@ -19,7 +18,6 @@ export const PickedUpIdeas: React.FC<Props> = ({
   readMoreHref,
   icon,
 }) => {
-  const { session } = useSessionQuery();
   return (
     <Stack spacing="sm">
       <Flex align="center" justify="space-between">

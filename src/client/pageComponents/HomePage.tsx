@@ -19,6 +19,7 @@ import { RankingCard } from "../ui/RankingCard";
 import { PickedUpIdeas } from "../features/idea/PickedUpIdeas";
 import { UserLikeRankingItem } from "../features/user/UserLikeRankingItem";
 
+import { AiFillFire } from "react-icons/ai";
 import { IoSparkles } from "react-icons/io5";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
@@ -53,7 +54,10 @@ export const HomePage: React.FC = () => {
       <Stack miw={0} sx={{ flexGrow: 1, flexShrink: 1 }} spacing={35}>
         {top10LikesIdeasInThisMonth.length > 0 && (
           <Stack spacing="sm">
-            <Title order={4}>人気のお題</Title>
+            <Flex gap="5px">
+              <AiFillFire size="25px" color={colors.red[6]} />
+              <Title order={4}>人気のお題</Title>
+            </Flex>
             <PopularIdeaCarousel
               ideas={top10LikesIdeasInThisMonth}
               miw={`${ideaCardMinWidthPx}px`}
@@ -95,7 +99,7 @@ export const HomePage: React.FC = () => {
         )}
       </Stack>
       <MediaQuery smallerThan="lg" styles={{ display: "none" }}>
-        <Flex direction="column" gap={30}>
+        <Flex direction="column" gap={30} mt={35}>
           <RankingCard title="今月のいいねが多かった開発者">
             {top10LikesDevelopmentsInThisMonth?.length === 0 ? (
               <EmptyRankingContent page="developments" />

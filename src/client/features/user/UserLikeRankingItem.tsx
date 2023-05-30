@@ -33,7 +33,7 @@ export const UserLikeRankingItem: React.FC<Props> = ({
           w="30px"
           miw="30px"
           justify="center"
-          sx={{ alignSelf: "flex-start" }}
+          sx={{ alignSelf: ranking <= 3 ? "flex-start" : "auto" }}
         >
           {rank}
         </Flex>
