@@ -20,6 +20,7 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
   const router = useRouter();
   const { openLoginModal } = useRequireLoginModal();
   const [focusedCommentId, setFocusedCommentId] = useState("");
+  const commentFormRef = useRef<HTMLFormElement | null>(null);
 
   const commentsRef = useClickOutside(async () => {
     if (focusedCommentId !== "") {
@@ -84,13 +85,7 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
 
     // 前のレンダリングよりもコメント数が増えていればスクロールさせる
     if (comments > prevComments.current) {
-      // 一番下までスクロールさせる
-      // #__nextのheightを100dvhにしているので、この要素をスクロールさせる
-      const element = document.querySelector("#__next");
-      if (!element) {
-        return;
-      }
-      element.scroll(0, element.scrollHeight - element.clientHeight);
+      commentFormRef.current?.scrollIntoView();
     }
 
     // 前のレンダリングのコメント数を更新する
@@ -122,6 +117,7 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
       )}
       <Card>
         <IdeaCommentForm
+          ref={commentFormRef}
           key={formKey}
           ideaId={ideaId}
           onSubmit={handleSubmitComment}
