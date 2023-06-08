@@ -5,6 +5,8 @@ import { PopularIdeaCard, popularIdeaCardWidthPx } from "./PopularIdeaCard";
 
 type Props = { ideas: Idea[] | undefined; miw?: string };
 export const PopularIdeaCarousel: React.FC<Props> = ({ ideas, miw }) => {
+  const carouselControlClass = `controls-vcb4f`;
+
   return (
     <Carousel
       align="center"
@@ -14,11 +16,32 @@ export const PopularIdeaCarousel: React.FC<Props> = ({ ideas, miw }) => {
       slideGap="md"
       bg="red.7"
       withIndicators
-      height={250}
+      height={300}
       dragFree
-      styles={{
+      styles={(theme) => ({
         indicators: { bottom: "10px" },
-      }}
+        control: {
+          ref: carouselControlClass,
+          "&>svg": { width: "30px", height: "30px" },
+          width: "50px",
+          height: "50px",
+          borderRadius: "50%",
+          opacity: 0,
+          transition: "opacity 400ms, background-color 250ms",
+          backgroundColor: theme.fn.rgba(theme.colors.gray[0], 0.6),
+          "&:hover": {
+            backgroundColor: theme.fn.rgba(theme.colors.gray[0], 1),
+          },
+        },
+        controls: { top: "calc(50% - 25px)" },
+        root: {
+          "&:hover": {
+            [`& .${carouselControlClass}`]: {
+              opacity: 0.7,
+            },
+          },
+        },
+      })}
       sx={(theme) => ({
         borderRadius: theme.radius.lg,
         boxShadow: `inset ${theme.shadows.lg}`,
@@ -30,7 +53,7 @@ export const PopularIdeaCarousel: React.FC<Props> = ({ ideas, miw }) => {
         ideas.map((idea) => (
           <Carousel.Slide key={idea.id}>
             <Flex h="100%" w={`${popularIdeaCardWidthPx}px`} align="center">
-              <Box w="100%" h="80%">
+              <Box w="100%" h="200px">
                 <PopularIdeaCard idea={idea} />
               </Box>
             </Flex>

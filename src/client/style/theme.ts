@@ -10,8 +10,6 @@ export const theme: MantineThemeOverride = {
       overflow: "auto",
     },
     body: { backgroundColor: theme.colors.gray[2] },
-    div: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
-    "h1,h2,h3,h4,h5,h6": { wordBreak: "break-all", whiteSpace: "pre-wrap" },
   }),
   fontFamily: `'Noto Sans JP', sans-serif`,
   headings: {
@@ -71,6 +69,14 @@ export const theme: MantineThemeOverride = {
     Paper: { defaultProps: { bg: "gray.1" } },
     Text: {
       defaultProps: { color: "gray.7" },
+      styles: () => ({
+        root: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
+      }),
+    },
+    Headers: {
+      styles: () => ({
+        root: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
+      }),
     },
     Card: {
       defaultProps: { bg: "gray.1", radius: "md", shadow: "sm" },
