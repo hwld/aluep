@@ -17,12 +17,14 @@ import { TbHeart } from "react-icons/tb";
 import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
 import { DevelopmentMenuButton } from "../features/development/DevelopmentCard/DevelopmentMenuButton";
+import { DevelopmentStatusBadge } from "../features/development/DevelopmentCard/DevelopmentStatusBadge";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import { useSessionQuery } from "../features/session/useSessionQuery";
 import { UserIconLink } from "../features/user/UserIconLink";
 
 type Props = { development: Development; idea: Idea };
 
+// TODO: UI
 export const DevelopmentDetailPage: React.FC<Props> = ({
   development,
   idea,
@@ -42,6 +44,9 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
           />
           <Title order={3}>お題開発情報</Title>
         </Flex>
+        <Stack spacing="xs">
+          <DevelopmentStatusBadge status={development.status} size="xl" />
+        </Stack>
         <Stack spacing="xs">
           <Text c="gray.5">開発しているお題</Text>
           <IdeaSummaryCard idea={idea} />

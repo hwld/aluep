@@ -1,3 +1,4 @@
+import { DevelopmentStatuses } from "../../../share/consts";
 import { developFormSchema } from "../../../share/schema";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
@@ -25,6 +26,7 @@ export const developIdea = requireLoggedInProcedure
         user: { connect: { id: ctx.session.user.id } },
         githubUrl: githubRepositoryUrl,
         comment: input.comment ?? "",
+        status: { connect: { id: DevelopmentStatuses.IN_PROGRESS } },
       },
     });
 

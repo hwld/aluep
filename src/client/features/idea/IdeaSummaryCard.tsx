@@ -48,6 +48,7 @@ export const IdeaSummaryCard: React.FC<Props> = ({ idea }) => {
                 textOverflow: "ellipsis",
               }}
             >
+              {/* TODO: ここもリンクにしたい */}
               {idea?.user.name}
             </Text>
           </Flex>

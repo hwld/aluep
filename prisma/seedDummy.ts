@@ -1,10 +1,10 @@
 /**
  * ダミーデータを生成
  */
-
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
 import { Presets, SingleBar } from "cli-progress";
+import { DevelopmentStatuses } from "../src/share/consts";
 
 const prisma = new PrismaClient();
 
@@ -233,6 +233,7 @@ async function createDevelopments({
           comment: faker.lorem.words(3),
           ideaId,
           userId: userIds[userIndex],
+          statusId: DevelopmentStatuses.IN_PROGRESS,
         },
         update: { createdAt: new Date() },
       });

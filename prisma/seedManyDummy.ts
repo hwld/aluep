@@ -14,6 +14,7 @@
 
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
+import { DevelopmentStatuses } from "../src/share/consts";
 
 const prisma = new PrismaClient();
 
@@ -96,6 +97,7 @@ async function main() {
           comment: faker.lorem.words(3),
           ideaId: ideaIds[ideaIndex],
           userId: userIds[userIndex],
+          statusId: DevelopmentStatuses.IN_PROGRESS,
         },
         update: { createdAt: new Date() },
       });

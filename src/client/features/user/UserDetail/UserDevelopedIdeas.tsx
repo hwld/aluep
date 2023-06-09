@@ -10,6 +10,7 @@ type Props = {
   page: number;
   onChangePage: (page: number) => void;
 };
+// TODO: 開発状況とかも合わせて表示させたい
 export const UserDevelopedIdeas: React.FC<Props> = ({
   user,
   page,

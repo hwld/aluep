@@ -2,6 +2,8 @@ import { Prisma } from "@prisma/client";
 import { OmitStrict } from "../../types/OmitStrict";
 import { db } from "../lib/prismadb";
 
+export type DevelopmentStatus = { id: number; name: string };
+
 export type Development = {
   id: string;
   ideaId: string;
@@ -13,11 +15,13 @@ export type Development = {
   likes: number;
   likedByLoggedInUser: boolean;
   createdAt: string;
+  status: DevelopmentStatus;
 };
 
-const developmentArgs = Prisma.validator<Prisma.DevelopmentArgs>()({
-  include: { user: true, likes: true },
-});
+const developmentArgs = {
+  include: { user: true, likes: true, status: true },
+} satisfies Prisma.DevelopmentArgs;
+
 const convertDevelopment = (
   raw: Prisma.DevelopmentGetPayload<typeof developmentArgs>,
   loggedInUserId: string | undefined
@@ -38,6 +42,7 @@ const convertDevelopment = (
       ? true
       : false,
     createdAt: raw.createdAt.toUTCString(),
+    status: { id: raw.status.id, name: raw.status.name },
   };
 
   return development;

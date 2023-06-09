@@ -19,6 +19,7 @@ import { useRequireLoginModal } from "../../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../../session/useSessionQuery";
 import { UserIconLink } from "../../user/UserIconLink";
 import { DevelopmentLikeButton } from "./DevelopmentLikeButton";
+import { DevelopmentStatusBadge } from "./DevelopmentStatusBadge";
 
 type Props = {
   idea: Idea;
@@ -62,6 +63,7 @@ export const DevelopmentCard: React.FC<Props> = ({
   return (
     <Card
       key={development.userId}
+      p="sm"
       sx={(theme) => ({
         position: "static",
         cursor: "pointer",
@@ -72,7 +74,8 @@ export const DevelopmentCard: React.FC<Props> = ({
       })}
       onClick={handleGoDevelopmentDetail}
     >
-      <Flex justify="space-between">
+      <DevelopmentStatusBadge status={development.status} />
+      <Flex justify="space-between" mt="sm">
         <Flex gap={10}>
           <UserIconLink
             iconSrc={development.image}
@@ -115,7 +118,7 @@ export const DevelopmentCard: React.FC<Props> = ({
           </Tooltip>
         </Flex>
       </Flex>
-      <Flex align="center" justify="space-between" mt={10}>
+      <Flex align="center" justify="space-between" mt={5}>
         <Text size="sm" color="gray.5">
           開発開始日: {formatDate(new Date(development.createdAt))}
         </Text>

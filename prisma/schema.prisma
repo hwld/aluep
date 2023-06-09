@@ -138,11 +138,14 @@ model Development {
   githubUrl String
   comment   String            @db.Text
   likes     DevelopmentLike[]
+  statusId  Int
+  status    DevelopmentStatus @relation(fields: [statusId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
   @@unique([userId, ideaId])
   @@index([userId])
+  @@index([statusId])
   @@index([ideaId])
 }
 
@@ -158,6 +161,14 @@ model DevelopmentLike {
   @@unique([userId, developmentId])
   @@index([developmentId])
   @@index([userId])
+}
+
+model DevelopmentStatus {
+  // 1: 開発中, 2: 開発中止, 3: 開発済み
+  // このidの意味合いを変えたら色んなところに影響が出る
+  id   Int        @id
+  name String
+  idea Development[]
 }
 
 model FavoriteUser {

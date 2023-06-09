@@ -4,6 +4,8 @@ const nextConfig = {
   swcMinify: true,
   output: "standalone",
   // ブラウザバックしたときに以前のスクロール位置を保持する
+  // TODO: 動かなくなってるし、一番下までスクロールしたあとに遷移すると、
+  // 次のページでもスクロールが保持されてしまう？
   experimental: { scrollRestoration: true },
 };
 
