@@ -117,24 +117,24 @@ export const pickUpIdeas = async (
     } = {
       // 古い順
       createdAsc: {
-        select: Prisma.sql`, MAX(Idea.createdAt) as ideaCreatedAt`,
+        select: Prisma.sql`, MAX(ideas."createdAt") as "ideaCreatedAt"`,
         from: Prisma.empty,
-        orderBy: Prisma.sql`ideaCreatedAt asc`,
+        orderBy: Prisma.sql`"ideaCreatedAt" asc`,
       },
       createdDesc: {
-        select: Prisma.sql`, MAX(Idea.createdAt) as ideaCreatedAt`,
+        select: Prisma.sql`, MAX(ideas."createdAt") as "ideaCreatedAt"`,
         from: Prisma.empty,
-        orderBy: Prisma.sql`ideaCreatedAt desc`,
+        orderBy: Prisma.sql`"ideaCreatedAt" desc`,
       },
       likeDesc: {
-        select: Prisma.sql`, COUNT(IdeaLike.id) as likeCounts`,
-        from: Prisma.sql`LEFT JOIN IdeaLike ON (Idea.id = IdeaLike.ideaId)`,
-        orderBy: Prisma.sql`likeCounts desc`,
+        select: Prisma.sql`, COUNT(idea_likes.id) as "likeCounts"`,
+        from: Prisma.sql`LEFT JOIN idea_likes ON (ideas.id = idea_likes."ideaId")`,
+        orderBy: Prisma.sql`"likeCounts" desc`,
       },
       developmentDesc: {
-        select: Prisma.sql`, COUNT(Development.id) as developmentCounts`,
-        from: Prisma.sql`LEFT JOIN Development ON (Idea.id = Development.ideaId)`,
-        orderBy: Prisma.sql`developmentCounts desc`,
+        select: Prisma.sql`, COUNT(developments.id) as "developmentCounts"`,
+        from: Prisma.sql`LEFT JOIN developments ON (ideas.id = developments."ideaId")`,
+        orderBy: Prisma.sql`"developmentCounts" desc`,
       },
     };
 
@@ -142,13 +142,13 @@ export const pickUpIdeas = async (
     const master = Prisma.sql`
       (
         SELECT
-          Idea.id as ideaId
+          ideas.id as "ideaId"
           ${orderMap[order].select}
         FROM
-          Idea
+          ideas
           ${orderMap[order].from}
         GROUP BY
-          Idea.id
+          ideas.id
         ORDER BY
           ${orderMap[order].orderBy}
       ) master
@@ -200,24 +200,24 @@ export const findSearchedIdeas = async (
     } = {
       // 古い順
       createdAsc: {
-        select: Prisma.sql`, MAX(Idea.createdAt) as ideaCreatedAt`,
+        select: Prisma.sql`, MAX(ideas."createdAt") as "ideaCreatedAt"`,
         from: Prisma.empty,
-        orderBy: Prisma.sql`ideaCreatedAt asc`,
+        orderBy: Prisma.sql`"ideaCreatedAt" asc`,
       },
       createdDesc: {
-        select: Prisma.sql`, MAX(Idea.createdAt) as ideaCreatedAt`,
+        select: Prisma.sql`, MAX(ideas."createdAt") as "ideaCreatedAt"`,
         from: Prisma.empty,
-        orderBy: Prisma.sql`ideaCreatedAt desc`,
+        orderBy: Prisma.sql`"ideaCreatedAt" desc`,
       },
       likeDesc: {
-        select: Prisma.sql`, COUNT(IdeaLike.id) as likeCounts`,
-        from: Prisma.sql`LEFT JOIN IdeaLike ON (Idea.id = IdeaLike.ideaId)`,
-        orderBy: Prisma.sql`likeCounts desc`,
+        select: Prisma.sql`, COUNT(idea_likes.id) as "likeCounts"`,
+        from: Prisma.sql`LEFT JOIN idea_likes ON (ideas.id = idea_likes."ideaId")`,
+        orderBy: Prisma.sql`"likeCounts" desc`,
       },
       developmentDesc: {
-        select: Prisma.sql`, COUNT(Development.id) as developmentCounts`,
-        from: Prisma.sql`LEFT JOIN Development ON (Idea.id = Development.ideaId)`,
-        orderBy: Prisma.sql`developmentCounts desc`,
+        select: Prisma.sql`, COUNT(developments.id) as "developmentCounts"`,
+        from: Prisma.sql`LEFT JOIN developments ON (ideas.id = developments."ideaId")`,
+        orderBy: Prisma.sql`"developmentCounts" desc`,
       },
     };
 
@@ -225,34 +225,34 @@ export const findSearchedIdeas = async (
     const master = Prisma.sql`
       (
         SELECT
-          Idea.id as ideaId
+          ideas.id as "ideaId"
           ${orderMap[order].select}
         FROM
-          Idea
-          LEFT JOIN IdeaTagOnIdea
-            ON (Idea.id = IdeaTagOnIdea.ideaId)
+          ideas
+          LEFT JOIN idea_tag_on_ideas
+            ON (ideas.id = idea_tag_on_ideas."ideaId")
           ${orderMap[order].from}
         WHERE
-          Idea.title LIKE ${"%" + keyword + "%"}
+          ideas.title LIKE ${"%" + keyword + "%"}
           ${
             period === "monthly"
               ? Prisma.sql`
-          AND Idea.createdAt > (NOW() - INTERVAL 1 MONTH)`
+          AND ideas."createdAt" > (NOW() - INTERVAL '1 MONTH')`
               : Prisma.empty
           }
           ${
             tagIds.length > 0
               ? Prisma.sql`
-          AND tagId IN (${Prisma.join(tagIds)})`
+          AND "tagId" IN (${Prisma.join(tagIds)})`
               : Prisma.empty
           }
         GROUP BY
-          Idea.id
+          ideas.id
         ${
           tagIds.length > 0
             ? Prisma.sql`
         HAVING
-          COUNT(ideaId) = ${tagIds.length}`
+          COUNT("ideaId") = ${tagIds.length}`
             : Prisma.empty
         }
         ORDER BY
@@ -277,7 +277,7 @@ export const findSearchedIdeas = async (
     // 検索結果の合計数を求める
     const allItemsArray = await tx.$queryRaw<[{ allItems: BigInt }]>`
       SELECT
-        COUNT(*) as allItems
+        COUNT(*) as "allItems"
       FROM ${master}
     `;
     const allItems = Number(allItemsArray[0].allItems);

@@ -11,22 +11,22 @@ export const getTop10LikesDevelopmentsInThisMonth = publicProcedure.query(
         type RawDevelopmentUser = { userId: string; likeCount: BigInt }[];
         const rawDevelopmentUser = await tx.$queryRaw<RawDevelopmentUser>`
       SELECT
-        User.id as userId
-        , COUNT(DevLike.id) as likeCount
-        , MIN(Development.createdAt) as firstDevelopDatetime
+        users.id as "userId"
+        , COUNT(development_likes.id) as "likeCount"
+        , MIN(developments."createdAt") as "firstDevelopDatetime"
       FROM
-        DevelopmentLike as DevLike
-        LEFT JOIN Development as Development
-          ON (DevLike.developmentId = Development.id)
-        LEFT JOIN User
-          ON (Development.userId = User.id)
+        development_likes
+        LEFT JOIN developments
+          ON (development_likes."developmentId" = developments.id)
+        LEFT JOIN users
+          ON (developments."userId" = users.id)
       WHERE
-        DevLike.createdAt > (NOW() - INTERVAL 1 MONTH)
+        development_likes."createdAt" > (NOW() - INTERVAL '1 MONTH')
       GROUP BY
-        User.id
+        users.id
       ORDER BY
-        likeCount DESC
-        , firstDevelopDatetime ASC
+        "likeCount" DESC
+        , "firstDevelopDatetime" ASC
       LIMIT
         10
     `;

@@ -11,22 +11,22 @@ export const getTop10LikesPostersInThisMonth = publicProcedure.query(
         // このクエリが原因?
         const rawPosterUser = await tx.$queryRaw<RawPosterUser>`
         SELECT
-          User.id as userId
-          , COUNT(IdeaLike.id) as likeCount
-          , MIN(Idea.createdAt) as firstPostDatetime
+          users.id as "userId"
+          , COUNT(idea_likes.id) as "likeCount"
+          , MIN(ideas."createdAt") as "firstPostDatetime"
         FROM
-          IdeaLike as IdeaLike
-          LEFT JOIN Idea as Idea
-            ON (IdeaLike.ideaId = Idea.id)
-          LEFT JOIN User
-            ON (Idea.userId = User.id)
+          idea_likes
+          LEFT JOIN ideas
+            ON (idea_likes."ideaId" = ideas.id)
+          LEFT JOIN users
+            ON (ideas."userId" = users.id)
         WHERE
-          IdeaLike.createdAt > (NOW() - INTERVAL 1 MONTH)
+          idea_likes."createdAt" > (NOW() - INTERVAL '1 MONTH')
         GROUP BY
-          User.id
+          users.id
         ORDER BY
-          likeCount DESC
-          , firstPostDatetime ASC
+          "likeCount" DESC
+          , "firstPostDatetime" ASC
         LIMIT
           10
       `;

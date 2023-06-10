@@ -9,20 +9,20 @@ export const getTop10LikesIdeasInThisMonth = publicProcedure.query(async () => {
     type IdeaIdObjs = { ideaId: string }[];
     const ideaIdObjs = await tx.$queryRaw<IdeaIdObjs>`
       SELECT
-        Idea.id as ideaId
-        , COUNT(IdeaLike.id) as likeCount
-        , MIN(Idea.createdAt) as firstPostDatetime
+        ideas.id as "ideaId"
+        , COUNT(idea_likes.id) as "likeCount"
+        , MIN(ideas."createdAt") as "firstPostDatetime"
       FROM
-        IdeaLike as IdeaLike
-        LEFT JOIN Idea as Idea
-          ON (IdeaLike.ideaId = Idea.id)
+        idea_likes
+        LEFT JOIN ideas
+          ON (idea_likes."ideaId" = ideas.id)
       WHERE
-        Idea.createdAt > (NOW() - INTERVAL 1 MONTh)
+        ideas."createdAt" > (NOW() - INTERVAL '1 MONTH')
       GROUP BY
-        Idea.id
+        ideas.id
       ORDER BY
-        likeCount DESC
-        , firstPostDatetime ASC
+        "likeCount" DESC
+        , "firstPostDatetime" ASC
       LIMIT
         10
     `;

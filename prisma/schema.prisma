@@ -5,16 +5,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// PlanetScaleを使用しており、外部キー制約をサポートしてないのでrelationModeを変更する
-// prisma relatin modeは更新の際には外部キー制約によってエラーが出るが、
-// データ作成時にはエラーが出ないため、不正なデータが作成される恐れがある。
-// (参考: https://www.prisma.io/docs/concepts/components/prisma-schema/relations/relation-mode#which-foreign-key-constraints-are-emulated)
-// これめちゃくちゃ重要だと思うのにサラッと書いてある・・・
-// TODO: supabsaeを使用してみたい
+// TODO: 本番環境でsupabsaeを使用する
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
-  relationMode = "prisma"
 }
 
 model Account {
@@ -35,7 +29,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@index([userId])
+  @@map("accounts")
 }
 
 model Session {
@@ -45,7 +39,7 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId])
+  @@map("sessions")
 }
 
 model User {
@@ -67,6 +61,8 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("users")
 }
 
 model VerificationToken {
@@ -75,6 +71,7 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+  @@map("verification_tokens")
 }
 
 // アプリ開発のお題を表す
@@ -96,7 +93,7 @@ model Idea {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId])
+  @@map("ideas")
 }
 
 model IdeaTag {
@@ -106,6 +103,8 @@ model IdeaTag {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("idea_tags")
 }
 
 model IdeaTagOnIdea {
@@ -115,8 +114,7 @@ model IdeaTagOnIdea {
   tag    IdeaTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@id([ideaId, tagId])
-  @@index([ideaId])
-  @@index([tagId])
+  @@map("idea_tag_on_ideas")
 }
 
 model IdeaLike {
@@ -129,8 +127,7 @@ model IdeaLike {
   createdAt DateTime @default(now())
 
   @@unique([userId, ideaId])
-  @@index([ideaId])
-  @@index([userId])
+  @@map("idea_likes")
 }
 
 // アプリ開発のお題の開発情報
@@ -149,9 +146,7 @@ model Development {
   createdAt DateTime @default(now())
 
   @@unique([userId, ideaId])
-  @@index([userId])
-  @@index([statusId])
-  @@index([ideaId])
+  @@map("developments")
 }
 
 model DevelopmentLike {
@@ -164,8 +159,7 @@ model DevelopmentLike {
   createdAt DateTime @default(now())
 
   @@unique([userId, developmentId])
-  @@index([developmentId])
-  @@index([userId])
+  @@map("development_likes")
 }
 
 model DevelopmentStatus {
@@ -174,6 +168,8 @@ model DevelopmentStatus {
   id   String        @id
   name String
   idea Development[]
+
+  @@map("development_statuses")
 }
 
 model FavoriteUser {
@@ -186,8 +182,7 @@ model FavoriteUser {
   favoritedUser   User   @relation("asFavoritedUser", fields: [favoritedUserId], references: [id], onDelete: Cascade)
 
   @@id([favoriteByUserId, favoritedUserId])
-  @@index([favoriteByUserId])
-  @@index([favoritedUserId])
+  @@map("favorite_users")
 }
 
 model IdeaComment {
@@ -205,8 +200,7 @@ model IdeaComment {
 
   createdAt DateTime @default(now())
 
-  @@index([fromUserId])
-  @@index([ideaId])
+  @@map("idea_comments")
 }
 
 model IdeaCommentParentChild {
@@ -221,6 +215,5 @@ model IdeaCommentParentChild {
 
   createdAt DateTime @default(now())
 
-  @@index([parentCommentId])
-  @@index([childCommentId])
+  @@map("idea_comment_parent_childs")
 }
