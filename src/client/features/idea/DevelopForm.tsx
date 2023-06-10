@@ -1,16 +1,25 @@
+import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Radio, Select, Text, Textarea, TextInput } from "@mantine/core";
+import { UnionToIntersection } from "@tiptap/react";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdComputer } from "react-icons/md";
 import { DevelopmentStatus } from "../../../server/models/developmentStatus";
 import { DevelopFormData, developFormSchema } from "../../../share/schema";
-import { OmitStrict } from "../../../types/OmitStrict";
 import { AppForm } from "../../ui/AppForm";
 
 type Props = {
   developmentStatuses: DevelopmentStatus[];
-  defaultValues?: OmitStrict<DevelopFormData, "ideaId">;
+  // formのtypeと、それ以外のプロパティを一括で渡せるようにする。
+  // 指定されたtypeに必要のないプロパティも渡せるように、Union型をIntersection型に変換する処理を書いた
+  defaultValues?: Partial<
+    UnionToIntersection<
+      DistributiveOmit<DevelopFormData, "type" | "ideaId">
+    > & {
+      type: DevelopFormData["type"];
+    }
+  >;
   ideaId: string;
   onSubmit: (data: DevelopFormData) => void;
   onCancel: () => void;
@@ -20,7 +29,6 @@ type Props = {
   isRelogined?: boolean;
 };
 
-// TODO: 既存のリポジトリを使用して開発を開始できない
 export const DevelopForm: React.FC<Props> = ({
   developmentStatuses,
   defaultValues,
@@ -153,7 +161,9 @@ export const DevelopForm: React.FC<Props> = ({
                     value: s.id.toString(),
                     label: s.name,
                   }))}
+                  error={getFieldState("developmentStatusId").error?.message}
                   {...field}
+                  value={field.value ?? ""}
                 />
               );
             }}

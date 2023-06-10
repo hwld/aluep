@@ -1,6 +1,7 @@
 import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { Idea } from "../../server/models/idea";
+import { DevelopmentStatusIds } from "../../share/consts";
 import { Routes } from "../../share/routes";
 import { CreateRepositoryData, DevelopFormData } from "../../share/schema";
 import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
@@ -59,6 +60,8 @@ export const DevelopPage: React.FC<Props> = ({ idea, restoredValues }) => {
               comment: restoredValues?.developmentComment ?? "",
               githubRepositoryName: restoredValues?.repositoryName ?? "",
               githubRepositoryDescription: restoredValues?.repositoryDesc ?? "",
+              developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
+              githubRepositoryUrl: "",
             }}
           />
         </Card>

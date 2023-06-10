@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { MdComputer } from "react-icons/md";
 import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
+import { DevelopmentStatusIds } from "../../share/consts";
 import { CreateRepositoryData, DevelopFormData } from "../../share/schema";
 import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
 import { DevelopForm } from "../features/idea/DevelopForm";
@@ -64,6 +65,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
             isRelogined={Object.keys(restoredValues).length > 0}
             defaultValues={{
               comment: restoredValues.developmentComment ?? development.comment,
+              developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
               // 復元されたフィールドが1つ以上あれば、リポジトリの作成を選択していたと解釈する。
               ...(Object.keys(restoredValues).length > 0
                 ? {

@@ -71,7 +71,11 @@ export const developFormSchema = z
             /^https:\/\/github.com\/[^\/]+\/[^\/\?&]+$/,
             "https://から始まる有効なGitHubリポジトリのURLを入力してください。"
           ),
-        developmentStatusId: z.string(),
+        developmentStatusId: z
+          .string({
+            required_error: "開発状況を入力してください。",
+          })
+          .min(1, "開発状況を入力してください。"),
       }),
     ])
   );
