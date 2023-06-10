@@ -2,13 +2,6 @@ import { MantineThemeOverride } from "@mantine/core";
 
 export const theme: MantineThemeOverride = {
   globalStyles: (theme) => ({
-    // もともとはhtmlに当てていたが、mantineのOverlayを貫通してスクロールバーが表示されてしまうため、
-    // next.jsのルートにあてる
-    "#__next": {
-      scrollbarGutter: "stable",
-      height: "100dvh",
-      overflow: "auto",
-    },
     body: { backgroundColor: theme.colors.gray[2] },
   }),
   fontFamily: `'Noto Sans JP', sans-serif`,

@@ -85,7 +85,7 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
 
     // 前のレンダリングよりもコメント数が増えていればスクロールさせる
     if (comments > prevComments.current) {
-      commentFormRef.current?.scrollIntoView();
+      commentFormRef.current?.scrollIntoView({ behavior: "smooth" });
     }
 
     // 前のレンダリングのコメント数を更新する
