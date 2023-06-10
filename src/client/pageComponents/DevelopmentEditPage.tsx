@@ -4,6 +4,7 @@ import { MdComputer } from "react-icons/md";
 import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
 import { CreateRepositoryData, DevelopFormData } from "../../share/schema";
+import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
 import { DevelopForm } from "../features/idea/DevelopForm";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import { useDevelop } from "../features/idea/useDevelop";
@@ -20,6 +21,8 @@ export const DevelopmentEditPage: React.FC<Props> = ({
 }) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
+
+  const { developmentStatuses } = useDevelopmentStatusesQuery();
 
   const {
     mutations: { updateDevelopmentMutation },
@@ -54,6 +57,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
         <Text c="gray.5">開発情報</Text>
         <Card>
           <DevelopForm
+            developmentStatuses={developmentStatuses}
             onSubmit={handleUpdateDevelopment}
             onCancel={handleBack}
             ideaId={idea.id}
@@ -71,6 +75,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
                 : {
                     type: "referenceRepository",
                     githubRepositoryUrl: development.githubUrl,
+                    developmentStatusId: development.status.id,
                   }),
             }}
             submitText="更新する"

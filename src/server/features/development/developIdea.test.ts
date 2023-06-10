@@ -1,3 +1,4 @@
+import { DevelopmentStatusIds } from "../../../share/consts";
 import { TestHelpers } from "../../tests/helper";
 
 describe("お題開発API", () => {
@@ -12,9 +13,11 @@ describe("お題開発API", () => {
       type: "referenceRepository",
       ideaId: idea.id,
       githubRepositoryUrl: repositoryUrl,
+      developmentStatusId: DevelopmentStatusIds.COMPLETED,
     });
 
     const development = await caller.development.get({ developmentId });
     expect(development?.githubUrl).toBe(repositoryUrl);
+    expect(development?.status.id).toBe(DevelopmentStatusIds.COMPLETED);
   });
 });

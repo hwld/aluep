@@ -3,6 +3,7 @@ import { deleteDevelopment } from "./deleteDevelopment";
 import { developIdea } from "./developIdea";
 import { getDevelopment } from "./getDevelopment";
 import { getDevelopmentLikeCountByUser } from "./getDevelopmentLikeCountByUser";
+import { getDevelopmentStatuses } from "./getDevelopmentStatuses";
 import { getDevelopmentsByIdea } from "./getDevelopmentsByIdea";
 import { isDevelopedByUser } from "./isDevelopedByUser";
 import { likeDevelopment } from "./likeDevelopment";
@@ -36,4 +37,7 @@ export const developmentRoute = router({
 
   /** 指定されたユーザーの開発情報についたすべての「いいね」を取得する */
   getLikeCountByUser: getDevelopmentLikeCountByUser,
+
+  /** 開発状況の一覧を取得する */
+  getDevelopmentStatuses: getDevelopmentStatuses,
 });

@@ -1,13 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Radio, Text, Textarea, TextInput } from "@mantine/core";
+import { Radio, Select, Text, Textarea, TextInput } from "@mantine/core";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdComputer } from "react-icons/md";
+import { DevelopmentStatus } from "../../../server/models/developmentStatus";
 import { DevelopFormData, developFormSchema } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { AppForm } from "../../ui/AppForm";
 
 type Props = {
+  developmentStatuses: DevelopmentStatus[];
   defaultValues?: OmitStrict<DevelopFormData, "ideaId">;
   ideaId: string;
   onSubmit: (data: DevelopFormData) => void;
@@ -19,6 +21,7 @@ type Props = {
 };
 
 export const DevelopForm: React.FC<Props> = ({
+  developmentStatuses,
   defaultValues,
   ideaId,
   isRelogined = false,
@@ -122,21 +125,39 @@ export const DevelopForm: React.FC<Props> = ({
       )}
 
       {watch("type") === "referenceRepository" && (
-        <Controller
-          control={control}
-          name="githubRepositoryUrl"
-          render={({ field }) => {
-            return (
-              <TextInput
-                required
-                label="開発に使用するGitHubリポジトリ"
-                error={getFieldState("githubRepositoryUrl").error?.message}
-                {...field}
-                value={field.value ?? ""}
-              />
-            );
-          }}
-        />
+        <>
+          <Controller
+            control={control}
+            name="githubRepositoryUrl"
+            render={({ field }) => {
+              return (
+                <TextInput
+                  required
+                  label="開発に使用するGitHubリポジトリ"
+                  error={getFieldState("githubRepositoryUrl").error?.message}
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              );
+            }}
+          />
+          <Controller
+            control={control}
+            name="developmentStatusId"
+            render={({ field }) => {
+              return (
+                <Select
+                  label="開発状況"
+                  data={developmentStatuses.map((s) => ({
+                    value: s.id.toString(),
+                    label: s.name,
+                  }))}
+                  {...field}
+                />
+              );
+            }}
+          />
+        </>
       )}
       <Controller
         control={control}

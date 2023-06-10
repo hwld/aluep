@@ -1,23 +1,20 @@
-import { DevelopmentStatuses } from "../../../share/consts";
+import { DevelopmentStatusIds } from "../../../share/consts";
 import { developFormSchema } from "../../../share/schema";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
-import { createGitHubRepository } from "../github/createGitHubRepository";
+import { createOrExtractGithubRepositoryUrl } from "./utils";
 
 export const developIdea = requireLoggedInProcedure
   .input(developFormSchema)
   .mutation(async ({ input, ctx }) => {
-    let githubRepositoryUrl = "";
-
-    if (input.type === "createRepository") {
-      githubRepositoryUrl = await createGitHubRepository({
-        repositoryName: input.githubRepositoryName,
-        repositoryDescription: input.githubRepositoryDescription ?? "",
-        userId: ctx.session.user.id,
-      });
-    } else if (input.type === "referenceRepository") {
-      githubRepositoryUrl = input.githubRepositoryUrl;
-    }
+    const githubRepositoryUrl = await createOrExtractGithubRepositoryUrl(
+      input,
+      ctx.session.user.id
+    );
+    const developmentStatusId =
+      input.type === "referenceRepository"
+        ? input.developmentStatusId
+        : DevelopmentStatusIds.IN_PROGRESS;
 
     // 開発情報を登録する
     const development = await db.development.create({
@@ -26,7 +23,7 @@ export const developIdea = requireLoggedInProcedure
         user: { connect: { id: ctx.session.user.id } },
         githubUrl: githubRepositoryUrl,
         comment: input.comment ?? "",
-        status: { connect: { id: DevelopmentStatuses.IN_PROGRESS } },
+        status: { connect: { id: developmentStatusId } },
       },
     });
 

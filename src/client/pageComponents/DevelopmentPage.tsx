@@ -8,8 +8,10 @@ import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import { useDevelopmentLike } from "../features/idea/useDevelopmentLike";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
+
 type Props = { idea: Idea };
 
+// TODO: DevelopmentPageっていうより、DevelopmentsPage？
 export const DevelopmentPage: React.FC<Props> = ({ idea }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { developmentsPerPage } = useDevelopmentsPerPage(idea.id, page);

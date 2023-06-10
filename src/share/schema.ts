@@ -36,6 +36,7 @@ export const ideaUpdateFormSchema = z
   .object({ ideaId: z.string().min(1).max(100) })
   .and(ideaFormSchema);
 
+// TODO: なんでDevelopmentじゃなくてDevelopにしているんだ？
 export type DevelopFormData = z.infer<typeof developFormSchema>;
 export const developFormSchema = z
   .object({
@@ -70,6 +71,7 @@ export const developFormSchema = z
             /^https:\/\/github.com\/[^\/]+\/[^\/\?&]+$/,
             "https://から始まる有効なGitHubリポジトリのURLを入力してください。"
           ),
+        developmentStatusId: z.string(),
       }),
     ])
   );

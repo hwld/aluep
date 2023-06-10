@@ -1,7 +1,7 @@
 import { Badge, DefaultMantineColor, MantineSize } from "@mantine/core";
 import { useMemo } from "react";
-import { DevelopmentStatus } from "../../../../server/models/development";
-import { DevelopmentStatuses } from "../../../../share/consts";
+import { DevelopmentStatus } from "../../../../server/models/developmentStatus";
+import { DevelopmentStatusIds } from "../../../../share/consts";
 
 type Props = { status: DevelopmentStatus; size?: MantineSize };
 export const DevelopmentStatusBadge: React.FC<Props> = ({
@@ -10,14 +10,14 @@ export const DevelopmentStatusBadge: React.FC<Props> = ({
 }) => {
   const color = useMemo((): DefaultMantineColor => {
     switch (status.id) {
-      case DevelopmentStatuses.IN_PROGRESS:
+      case DevelopmentStatusIds.IN_PROGRESS:
         return "blue";
-      case DevelopmentStatuses.ABORTED:
+      case DevelopmentStatusIds.ABORTED:
         return "red";
-      case DevelopmentStatuses.COMPLETED:
+      case DevelopmentStatusIds.COMPLETED:
         return "green";
       default:
-        throw new Error();
+        throw new Error(`${status.id} is not DevelopmentStatusId`);
     }
   }, [status.id]);
 

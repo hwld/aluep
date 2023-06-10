@@ -1,8 +1,9 @@
 import { TRPCError } from "@trpc/server";
+import { DevelopmentStatusIds } from "../../../share/consts";
 import { updateDevelopFormSchema } from "../../../share/schema";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
-import { createGitHubRepository } from "../github/createGitHubRepository";
+import { createOrExtractGithubRepositoryUrl } from "./utils";
 
 export const updateDevelopment = requireLoggedInProcedure
   .input(updateDevelopFormSchema)
@@ -19,19 +20,21 @@ export const updateDevelopment = requireLoggedInProcedure
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
-    let githubRepositoryUrl = "";
-    if (input.type === "createRepository") {
-      githubRepositoryUrl = await createGitHubRepository({
-        repositoryName: input.githubRepositoryName,
-        repositoryDescription: input.githubRepositoryDescription ?? "",
-        userId: ctx.session.user.id,
-      });
-    } else if (input.type === "referenceRepository") {
-      githubRepositoryUrl = input.githubRepositoryUrl;
-    }
+    const githubRepositoryUrl = await createOrExtractGithubRepositoryUrl(
+      input,
+      ctx.session.user.id
+    );
+    const developmentStatusId =
+      input.type === "referenceRepository"
+        ? input.developmentStatusId
+        : DevelopmentStatusIds.IN_PROGRESS;
 
     await db.development.update({
       where: { id: development.id },
-      data: { githubUrl: githubRepositoryUrl, comment: input.comment },
+      data: {
+        githubUrl: githubRepositoryUrl,
+        comment: input.comment,
+        statusId: developmentStatusId,
+      },
     });
   });

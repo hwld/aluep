@@ -5,7 +5,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// MySQLに変える
+// PlanetScaleを使用しており、外部キー制約をサポートしてないのでrelationModeを変更する
+// prisma relatin modeは更新の際には外部キー制約によってエラーが出るが、
+// データ作成時にはエラーが出ないため、不正なデータが作成される恐れがある。
+// (参考: https://www.prisma.io/docs/concepts/components/prisma-schema/relations/relation-mode#which-foreign-key-constraints-are-emulated)
+// これめちゃくちゃ重要だと思うのにサラッと書いてある・・・
+// TODO: supabsaeを使用してみたい
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
@@ -138,7 +143,7 @@ model Development {
   githubUrl String
   comment   String            @db.Text
   likes     DevelopmentLike[]
-  statusId  Int
+  statusId  String
   status    DevelopmentStatus @relation(fields: [statusId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -166,7 +171,7 @@ model DevelopmentLike {
 model DevelopmentStatus {
   // 1: 開発中, 2: 開発中止, 3: 開発済み
   // このidの意味合いを変えたら色んなところに影響が出る
-  id   Int        @id
+  id   String        @id
   name String
   idea Development[]
 }

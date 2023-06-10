@@ -1,8 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { OmitStrict } from "../../types/OmitStrict";
 import { db } from "../lib/prismadb";
-
-export type DevelopmentStatus = { id: number; name: string };
+import { DevelopmentStatus } from "./developmentStatus";
 
 export type Development = {
   id: string;

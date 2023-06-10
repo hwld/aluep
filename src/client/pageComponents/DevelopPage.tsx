@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Idea } from "../../server/models/idea";
 import { Routes } from "../../share/routes";
 import { CreateRepositoryData, DevelopFormData } from "../../share/schema";
+import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
 import { DevelopForm } from "../features/idea/DevelopForm";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import { useDevelop } from "../features/idea/useDevelop";
@@ -15,6 +16,8 @@ type Props = {
 export const DevelopPage: React.FC<Props> = ({ idea, restoredValues }) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
+
+  const { developmentStatuses } = useDevelopmentStatusesQuery();
 
   const {
     mutations: { developMutation },
@@ -44,6 +47,7 @@ export const DevelopPage: React.FC<Props> = ({ idea, restoredValues }) => {
         <Text c="gray.5">開発情報</Text>
         <Card>
           <DevelopForm
+            developmentStatuses={developmentStatuses}
             onSubmit={handleDevelopIdea}
             onCancel={handleBack}
             ideaId={idea.id}

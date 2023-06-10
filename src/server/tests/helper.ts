@@ -1,6 +1,6 @@
 import { addYears } from "date-fns";
 import { createRequest } from "node-mocks-http";
-import { DevelopmentStatuses } from "../../share/consts";
+import { DevelopmentStatusIds } from "../../share/consts";
 import { db } from "../lib/prismadb";
 import { appRouter } from "../router";
 
@@ -58,7 +58,7 @@ export const TestHelpers = {
         userId: developer.id,
         comment: "",
         githubUrl: "https://github.com/hwld/aluep",
-        statusId: DevelopmentStatuses.IN_PROGRESS,
+        statusId: DevelopmentStatusIds.IN_PROGRESS,
       },
     });
 

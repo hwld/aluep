@@ -53,9 +53,9 @@ function upsertIdeaTags() {
 function upsertDevelopmentStatuses() {
   // ID変えるとプログラムが壊れちゃう
   const statuses = [
-    { id: 1, name: "開発中" },
-    { id: 2, name: "開発中止" },
-    { id: 3, name: "開発済み" },
+    { id: "1", name: "開発中" },
+    { id: "2", name: "開発中止" },
+    { id: "3", name: "開発済み" },
   ];
 
   const promises = statuses.map((status) => {
