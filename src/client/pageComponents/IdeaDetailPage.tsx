@@ -24,6 +24,7 @@ import { IdeaComments } from "../features/ideaComment/IdeaComments";
 import { useRequireLoginModal } from "../features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "../features/session/useSessionQuery";
 import { UserIconLink } from "../features/user/UserIconLink";
+import { TextLink } from "../ui/TextLink";
 
 type Props = { idea: Idea };
 
@@ -138,7 +139,9 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
               </Flex>
               <Flex gap={5} mt={5}>
                 <UserIconLink iconSrc={idea.user.image} userId={idea.user.id} />
-                <Text size={13}>{idea.user.name}</Text>
+                <TextLink href={Routes.user(idea.user.id)}>
+                  <Text size={13}>{idea.user.name}</Text>
+                </TextLink>
               </Flex>
             </Card>
           </Stack>

@@ -65,20 +65,22 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
             <Flex
               direction="column"
               justify="center"
+              align="flex-start"
               sx={{ overflow: "hidden" }}
               miw={0}
             >
-              <Text
-                size="sm"
-                sx={{
-                  flexShrink: 1,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {idea.user.name}
-              </Text>
+              <TextLink href={Routes.idea(idea.id)} width="100%">
+                <Text
+                  size="sm"
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {idea.user.name}
+                </Text>
+              </TextLink>
               <Flex align="center" gap="lg">
                 <Text color="gray.5" size="sm" sx={{ whiteSpace: "nowrap" }}>
                   {idea.elapsedSinceCreation}

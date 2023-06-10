@@ -84,7 +84,7 @@ export const DevelopmentCard: React.FC<Props> = ({
           <TextLink href={Routes.development(idea.id, development.id)}>
             <Text fw="bold" size="lg">
               {development.name}
-              <Text span c="gray.5" size="sm" fw="normal">
+              <Text span c="gray.5" size="sm" fw="normal" ml={5}>
                 の開発
               </Text>
             </Text>

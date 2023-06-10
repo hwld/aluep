@@ -40,17 +40,18 @@ export const IdeaSummaryCard: React.FC<Props> = ({ idea }) => {
           </TextLink>
           <Flex gap={5} align="center">
             <UserIconLink userId={idea.user.id} iconSrc={idea.user.image} />
-            <Text
-              size="sm"
-              sx={{
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {/* TODO: ここもリンクにしたい */}
-              {idea?.user.name}
-            </Text>
+            <TextLink href={Routes.user(idea.user.id)}>
+              <Text
+                size="sm"
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {idea.user.name}
+              </Text>
+            </TextLink>
           </Flex>
         </Stack>
       </Flex>

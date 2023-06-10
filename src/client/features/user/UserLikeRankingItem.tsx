@@ -3,6 +3,8 @@ import { useMemo } from "react";
 import { BiMedal } from "react-icons/bi";
 import { TbHeart } from "react-icons/tb";
 import { User } from "../../../server/models/user";
+import { Routes } from "../../../share/routes";
+import { TextLink } from "../../ui/TextLink";
 import { UserIconLink } from "./UserIconLink";
 
 type Props = { ranking: number; user: User; likeCount: number };
@@ -40,16 +42,18 @@ export const UserLikeRankingItem: React.FC<Props> = ({
         <Flex align="center" gap="xs" miw={0}>
           <UserIconLink userId={user.id} iconSrc={user.image} />
           <Flex miw={0} direction="column">
-            <Text
-              size="xs"
-              sx={{
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {user.name}
-            </Text>
+            <TextLink href={Routes.user(user.id)}>
+              <Text
+                size="xs"
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {user.name}
+              </Text>
+            </TextLink>
             <Flex align="center" gap={5}>
               <TbHeart
                 size="20px"

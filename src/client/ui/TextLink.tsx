@@ -2,13 +2,15 @@ import { Box } from "@mantine/core";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
 import { stopPropagation } from "../lib/utils";
-type Props = { href: string } & PropsWithChildren;
+type Props = { href: string; width?: string } & PropsWithChildren;
 
-export const TextLink: React.FC<Props> = ({ href, children }) => {
+export const TextLink: React.FC<Props> = ({ href, width, children }) => {
   return (
     <Box
       component={Link}
       href={href}
+      miw={0}
+      w={width}
       sx={(theme) => ({
         textDecoration: "none",
         "&:hover": {

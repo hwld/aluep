@@ -87,16 +87,18 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
           <Flex miw={0} gap={5} sx={{ alignSelf: "flex-end", flexShrink: 1 }}>
             <UserIconLink userId={idea.user.id} iconSrc={idea.user.image} />
             <Flex direction="column" miw={0} sx={{ flexShrink: 1 }}>
-              <Text
-                size="xs"
-                sx={{
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
-                }}
-              >
-                {idea.user.name}
-              </Text>
+              <TextLink href={Routes.user(idea.user.id)}>
+                <Text
+                  size="xs"
+                  sx={{
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                  }}
+                >
+                  {idea.user.name}
+                </Text>
+              </TextLink>
               <Flex align="center" gap="sm">
                 <Text
                   color="gray.5"
