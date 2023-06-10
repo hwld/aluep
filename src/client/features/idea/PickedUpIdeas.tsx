@@ -3,7 +3,8 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { HiArrowRight } from "react-icons/hi";
 import { Idea } from "../../../server/models/idea";
-import { IdeaCardContainer } from "./IdeaCardContainer";
+import { GridContainer } from "../../ui/GridContainer";
+import { IdeaCard, ideaCardMinWidthPx } from "./IdeaCard/IdeaCard";
 
 type Props = {
   title: string;
@@ -34,7 +35,11 @@ export const PickedUpIdeas: React.FC<Props> = ({
           もっと見る
         </Button>
       </Flex>
-      <IdeaCardContainer ideas={ideas ?? []} />
+      <GridContainer minItemWidthPx={ideaCardMinWidthPx}>
+        {ideas.map((idea) => (
+          <IdeaCard key={idea.id} idea={idea} />
+        ))}
+      </GridContainer>
     </Stack>
   );
 };

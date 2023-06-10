@@ -2,7 +2,8 @@ import { Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { TbCode } from "react-icons/tb";
 import { User } from "../../../../server/models/user";
 import { AppPagination } from "../../../ui/AppPagination";
-import { IdeaCardContainer } from "../../idea/IdeaCardContainer";
+import { GridContainer } from "../../../ui/GridContainer";
+import { IdeaCard, ideaCardMinWidthPx } from "../../idea/IdeaCard/IdeaCard";
 import { useDevelopedIdeasPerPage } from "../../idea/useDevelopedIdeasPerPage";
 
 type Props = {
@@ -29,7 +30,11 @@ export const UserDevelopedIdeas: React.FC<Props> = ({
           </Text>
         </Flex>
       ) : (
-        <IdeaCardContainer ideas={developedIdeasPerPage?.list ?? []} />
+        <GridContainer minItemWidthPx={ideaCardMinWidthPx}>
+          {developedIdeasPerPage?.list.map((idea) => (
+            <IdeaCard key={idea.id} idea={idea} />
+          ))}
+        </GridContainer>
       )}
 
       <AppPagination

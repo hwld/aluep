@@ -6,7 +6,10 @@ import {
   searchIdeaPageSchema,
 } from "../../share/schema";
 import { EmptyIdeaSearchResult } from "../features/idea/EmptyIdeaSearchResult";
-import { IdeaCardContainer } from "../features/idea/IdeaCardContainer";
+import {
+  IdeaCard,
+  ideaCardMinWidthPx,
+} from "../features/idea/IdeaCard/IdeaCard";
 import {
   IdeaSearchForm,
   IdeaSearchParams,
@@ -16,6 +19,7 @@ import { useSearchedIdeasQuery } from "../features/idea/useSearchedIdeasQuery";
 import { ideaOrderItems, ideaPeriodItems } from "../lib/consts";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
+import { GridContainer } from "../ui/GridContainer";
 
 export const IdeaSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
@@ -89,7 +93,11 @@ export const IdeaSearchPage: React.FC = () => {
         {searchedIdeasResult?.ideas.length === 0 ? (
           <EmptyIdeaSearchResult />
         ) : (
-          <IdeaCardContainer ideas={searchedIdeasResult?.ideas ?? []} />
+          <GridContainer minItemWidthPx={ideaCardMinWidthPx}>
+            {searchedIdeasResult?.ideas.map((idea) => (
+              <IdeaCard key={idea.id} idea={idea} />
+            ))}
+          </GridContainer>
         )}
         <AppPagination
           page={page}

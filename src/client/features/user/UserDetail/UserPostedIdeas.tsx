@@ -2,7 +2,8 @@ import { Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { TbFileText } from "react-icons/tb";
 import { User } from "../../../../server/models/user";
 import { AppPagination } from "../../../ui/AppPagination";
-import { IdeaCardContainer } from "../../idea/IdeaCardContainer";
+import { GridContainer } from "../../../ui/GridContainer";
+import { IdeaCard, ideaCardMinWidthPx } from "../../idea/IdeaCard/IdeaCard";
 import { usePostedIdeasPerPageQuery } from "../../idea/usePostedIdeasQuery";
 
 type Props = {
@@ -28,7 +29,11 @@ export const UserPostedIdeas: React.FC<Props> = ({
           </Text>
         </Flex>
       ) : (
-        <IdeaCardContainer ideas={postedIdeasPerPage?.list ?? []} />
+        <GridContainer minItemWidthPx={ideaCardMinWidthPx}>
+          {postedIdeasPerPage?.list.map((idea) => (
+            <IdeaCard key={idea.id} idea={idea} />
+          ))}
+        </GridContainer>
       )}
 
       <AppPagination

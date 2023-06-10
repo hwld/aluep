@@ -74,22 +74,8 @@ export const DevelopmentCard: React.FC<Props> = ({
       })}
       onClick={handleGoDevelopmentDetail}
     >
-      <DevelopmentStatusBadge status={development.status} />
-      <Flex justify="space-between" mt="sm">
-        <Flex gap={10}>
-          <UserIconLink
-            iconSrc={development.image}
-            userId={development.userId}
-          />
-          <TextLink href={Routes.development(idea.id, development.id)}>
-            <Text fw="bold" size="lg">
-              {development.name}
-              <Text span c="gray.5" size="sm" fw="normal">
-                の開発
-              </Text>
-            </Text>
-          </TextLink>
-        </Flex>
+      <Flex justify="space-between">
+        <DevelopmentStatusBadge status={development.status} />
         <Flex onClick={stopPropagation}>
           <Tooltip
             label="コードを見に行く"
@@ -98,7 +84,7 @@ export const DevelopmentCard: React.FC<Props> = ({
             transition="pop"
           >
             <ActionIcon
-              size={30}
+              size={40}
               component={Link}
               // githubのURLをgithub1sに変換
               href={development.githubUrl.replace(
@@ -116,6 +102,22 @@ export const DevelopmentCard: React.FC<Props> = ({
               <BsGithub size="80%" fill={colors.gray[7]} />
             </ActionIcon>
           </Tooltip>
+        </Flex>
+      </Flex>
+      <Flex justify="space-between">
+        <Flex gap={10}>
+          <UserIconLink
+            iconSrc={development.image}
+            userId={development.userId}
+          />
+          <TextLink href={Routes.development(idea.id, development.id)}>
+            <Text fw="bold" size="lg">
+              {development.name}
+              <Text span c="gray.5" size="sm" fw="normal">
+                の開発
+              </Text>
+            </Text>
+          </TextLink>
         </Flex>
       </Flex>
       <Flex align="center" justify="space-between" mt={5}>
