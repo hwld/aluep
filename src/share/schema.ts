@@ -138,22 +138,9 @@ export const pagingSchema = z
     return p;
   });
 
-export const repositoryFormSchema = z.object({
-  repoName: z
-    .string()
-    .min(1, "リポジトリ名を入力して下さい。")
-    .max(30, "リポジトリ名は30文字以下で入力してください。"),
-  repoDescription: z.string().max(200, "説明は200文字以下で入力してください。"),
-  comment: z
-    .string()
-    .max(300, "コメントは300文字以下で入力してください。")
-    .optional(),
-});
-export type RepositoryFormData = z.infer<typeof repositoryFormSchema>;
-
 const userDetailPageTabSchema = z.union([
   z.literal("postedIdeas"),
-  z.literal("developedIdeas"),
+  z.literal("developments"),
   z.literal("likedIdeas"),
 ]);
 export type UserDetailPageTab = z.infer<typeof userDetailPageTabSchema>;

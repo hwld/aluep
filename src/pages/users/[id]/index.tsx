@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { developmentLikesQueryKey } from "../../../client/features/development/useDevelopmentLikesQuery";
-import { developedIdeasPerPageQueryKey } from "../../../client/features/idea/useDevelopedIdeasPerPage";
+import { userDevelopmentsPerPageQueryKey } from "../../../client/features/development/useUserDevelopmentsPerPage";
 import { likedIdeasPerPageQueryKey } from "../../../client/features/idea/useLikedIdeasPerPage";
 import { postedIdeasPerPageQueryKey } from "../../../client/features/idea/usePostedIdeasQuery";
 import { sumIdeaLikesQueryKey } from "../../../client/features/idea/useSumIdeaLikesQuery";
@@ -42,10 +42,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
           () => caller.idea.getPostedIdeasByUser({ userId, page })
         );
         break;
-      case "developedIdeas":
+      case "developments":
         await queryClient.prefetchQuery(
-          developedIdeasPerPageQueryKey(userId, page),
-          () => caller.idea.getDevelopedIdeasByUser({ userId, page })
+          userDevelopmentsPerPageQueryKey(userId, page),
+          () => caller.development.getUserDevelopments({ userId, page })
         );
         break;
       case "likedIdeas":

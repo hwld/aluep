@@ -5,6 +5,7 @@ import { getDevelopment } from "./getDevelopment";
 import { getDevelopmentLikeCountByUser } from "./getDevelopmentLikeCountByUser";
 import { getDevelopmentStatuses } from "./getDevelopmentStatuses";
 import { getDevelopmentsByIdea } from "./getDevelopmentsByIdea";
+import { getUserDevelopments } from "./getUserDevelopments";
 import { isDevelopedByUser } from "./isDevelopedByUser";
 import { likeDevelopment } from "./likeDevelopment";
 import { unlikeDevelopment } from "./unlikeDevelopment";
@@ -40,4 +41,7 @@ export const developmentRoute = router({
 
   /** 開発状況の一覧を取得する */
   getDevelopmentStatuses: getDevelopmentStatuses,
+
+  /** 指定したユーザーが開発しているお題と開発情報の概要を取得する */
+  getUserDevelopments: getUserDevelopments,
 });

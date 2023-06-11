@@ -1,12 +1,12 @@
 import { Box, Button, Card, Flex, Stack, Text } from "@mantine/core";
 import { useMemo } from "react";
 import { User } from "../../server/models/user";
-import { userDetailPageSchame, UserDetailPageTab } from "../../share/schema";
+import { UserDetailPageTab, userDetailPageSchame } from "../../share/schema";
 import { assertNever } from "../../share/utils";
 import { useDevelopmentLikesQuery } from "../features/development/useDevelopmentLikesQuery";
 import { useSumIdeaLikesQuery } from "../features/idea/useSumIdeaLikesQuery";
 import { UserDetailTab } from "../features/user/UserDetail/UserDetailTab";
-import { UserDevelopedIdeas } from "../features/user/UserDetail/UserDevelopedIdeas";
+import { UserDevelopments } from "../features/user/UserDetail/UserDevelopments";
 import { UserLikedIdeas } from "../features/user/UserDetail/UserLikedIdeas";
 import { UserPostedIdeas } from "../features/user/UserDetail/UserPostedIdeas";
 import { UserDetailCard } from "../features/user/UserDetailCard";
@@ -40,9 +40,9 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
             onChangePage={handleChangePage}
           />
         );
-      case "developedIdeas":
+      case "developments":
         return (
-          <UserDevelopedIdeas
+          <UserDevelopments
             user={user}
             page={page}
             onChangePage={handleChangePage}
@@ -96,11 +96,11 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
             投稿したお題
           </UserDetailTab>
           <UserDetailTab
-            tab="developedIdeas"
+            tab="developments"
             activeTab={activeTab}
             onChangeTab={handleChangeTab}
           >
-            開発したお題
+            お題の開発情報
           </UserDetailTab>
           <UserDetailTab
             tab="likedIdeas"

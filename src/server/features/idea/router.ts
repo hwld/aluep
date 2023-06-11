@@ -2,7 +2,6 @@ import { router } from "../../lib/trpc";
 import { createIdea } from "./createIdea";
 import { deleteIdea } from "./deleteIdea";
 import { getAllTags } from "./getAllTags";
-import { getDevelopedIdeasByUser } from "./getDevelopedIdeasByUser";
 import { getIdea } from "./getIdea";
 import { getIdeaLikeCountByUser } from "./getIdeaLikeCountByUser";
 import { getLikedIdeasByUser } from "./getLikedIdeasByUser";
@@ -46,9 +45,6 @@ export const ideaRoute = router({
 
   /** 指定されたユーザーが投稿したお題を取得する */
   getPostedIdeasByUser: getPostedIdeasByUser,
-
-  /** 指定されたユーザーが開発しているお題を取得する */
-  getDevelopedIdeasByUser: getDevelopedIdeasByUser,
 
   /** 指定されたユーザーがいいねしたお題を取得する */
   getLikedIdeasByUser: getLikedIdeasByUser,

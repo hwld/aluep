@@ -1,12 +1,4 @@
-import {
-  Box,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { FaRegComment } from "react-icons/fa";
 import { MdComputer } from "react-icons/md";
@@ -57,63 +49,55 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
         </Flex>
 
         {/* ユーザー情報 */}
-        <Flex gap={5} direction="column" miw={0}>
-          <Box
-            sx={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 10 }}
+        <Flex gap={10}>
+          <UserIconLink iconSrc={idea.user.image} userId={idea.user.id} />
+          <Flex
+            direction="column"
+            justify="center"
+            sx={{ overflow: "hidden" }}
+            miw={0}
           >
-            <UserIconLink iconSrc={idea.user.image} userId={idea.user.id} />
-            <Flex
-              direction="column"
-              justify="center"
-              align="flex-start"
-              sx={{ overflow: "hidden" }}
-              miw={0}
-            >
-              <TextLink href={Routes.idea(idea.id)} width="100%">
-                <Text
-                  size="sm"
-                  sx={{
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {idea.user.name}
-                </Text>
-              </TextLink>
-              <Flex align="center" gap="lg">
-                <Text color="gray.5" size="sm" sx={{ whiteSpace: "nowrap" }}>
-                  {idea.elapsedSinceCreation}
-                </Text>
-                <Flex align="center" gap="sm">
-                  <Flex align="center" gap={3}>
-                    <TbHeart size="16px" color={mantineTheme.colors.red[7]} />
-                    <Text size="xs" c="red.7">
-                      {idea.likes}
-                    </Text>
-                  </Flex>
-                  <Flex align="center" gap={3}>
-                    <MdComputer
-                      size="15px"
-                      color={mantineTheme.colors.red[7]}
-                    />
-                    <Text size="xs" c="red.7">
-                      {idea.developments}
-                    </Text>
-                  </Flex>
-                  <Flex align="center" gap={3}>
-                    <FaRegComment
-                      size="15px"
-                      color={mantineTheme.colors.red[7]}
-                    />
-                    <Text size="xs" c="red.7">
-                      {idea.comments}
-                    </Text>
-                  </Flex>
+            <TextLink href={Routes.idea(idea.id)}>
+              <Text
+                size="sm"
+                sx={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {idea.user.name}
+              </Text>
+            </TextLink>
+            <Flex align="center" gap="lg">
+              <Text color="gray.5" size="sm" sx={{ whiteSpace: "nowrap" }}>
+                {idea.elapsedSinceCreation}
+              </Text>
+              <Flex align="center" gap="sm">
+                <Flex align="center" gap={3}>
+                  <TbHeart size="16px" color={mantineTheme.colors.red[7]} />
+                  <Text size="xs" c="red.7">
+                    {idea.likes}
+                  </Text>
+                </Flex>
+                <Flex align="center" gap={3}>
+                  <MdComputer size="15px" color={mantineTheme.colors.red[7]} />
+                  <Text size="xs" c="red.7">
+                    {idea.developments}
+                  </Text>
+                </Flex>
+                <Flex align="center" gap={3}>
+                  <FaRegComment
+                    size="15px"
+                    color={mantineTheme.colors.red[7]}
+                  />
+                  <Text size="xs" c="red.7">
+                    {idea.comments}
+                  </Text>
                 </Flex>
               </Flex>
             </Flex>
-          </Box>
+          </Flex>
         </Flex>
 
         {/* タグ */}
