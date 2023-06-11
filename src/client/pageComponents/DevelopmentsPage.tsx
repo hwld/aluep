@@ -11,8 +11,7 @@ import { AppPagination } from "../ui/AppPagination";
 
 type Props = { idea: Idea };
 
-// TODO: DevelopmentPageっていうより、DevelopmentsPage？
-export const DevelopmentPage: React.FC<Props> = ({ idea }) => {
+export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { developmentsPerPage } = useDevelopmentsPerPage(idea.id, page);
   const { likeDevelopmentMutation, unlikeDevelopmentMutation } =

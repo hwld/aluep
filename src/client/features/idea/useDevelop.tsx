@@ -6,7 +6,10 @@ import { RouterInputs } from "../../../server/lib/trpc";
 import { AppRouter } from "../../../server/router";
 import { GitHubErrors } from "../../../share/errors";
 import { Routes } from "../../../share/routes";
-import { CreateRepositoryData, DevelopFormData } from "../../../share/schema";
+import {
+  CreateRepositoryData,
+  DevelopmentFormData,
+} from "../../../share/schema";
 import { trpc } from "../../lib/trpc";
 import {
   isTRPCClientError,
@@ -115,7 +118,7 @@ export const useDevelop = (ideaId: string) => {
   // リポジトリの作成段階で発生したエラーをハンドリングする
   const handleCreateRepositoryError = (
     error: TRPCClientError<AppRouter>,
-    fields: Extract<DevelopFormData, { type: "createRepository" }>
+    fields: Extract<DevelopmentFormData, { type: "createRepository" }>
   ) => {
     // 認証エラーで失敗した場合、自動ログインのあとに入力情報をURLパラメータに保存して
     // 画面を更新する

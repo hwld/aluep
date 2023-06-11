@@ -3,6 +3,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 import { BsThreeDots } from "react-icons/bs";
 import { MdFlag } from "react-icons/md";
+import { RiEdit2Line } from "react-icons/ri";
 import { RouterInputs } from "../../../server/lib/trpc";
 import { User } from "../../../server/models/user";
 import { Routes } from "../../../share/routes";
@@ -16,11 +17,16 @@ import {
 import { AppMenu } from "../../ui/AppMenu/AppMenu";
 import { MenuDropdown } from "../../ui/AppMenu/MenuDropdown";
 import { MenuItem } from "../../ui/AppMenu/MenuItem";
+import { MenuLinkItem } from "../../ui/AppMenu/MenuLinkItem";
 import { AppModal } from "../../ui/AppModal";
 import { ReportForm } from "../report/ReportForm";
 
-type Props = { user: User };
-export const UserDetailMenuButton: React.FC<Props> = ({ user }) => {
+type Props = {
+  user: User;
+  /** ログインしているユーザーのプロフィールかどうか */
+  isOwner: boolean;
+};
+export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
   const [
     isReportModalOpen,
     { close: closeReportModal, open: openReportModal },
@@ -60,7 +66,7 @@ export const UserDetailMenuButton: React.FC<Props> = ({ user }) => {
       <AppMenu>
         <Menu.Target>
           <ActionIcon
-            size={30}
+            size={35}
             color="gray"
             sx={(theme) => ({
               transition: "all 150ms",
@@ -78,6 +84,14 @@ export const UserDetailMenuButton: React.FC<Props> = ({ user }) => {
           <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
             通報する
           </MenuItem>
+          {isOwner && (
+            <MenuLinkItem
+              icon={<RiEdit2Line size={18} />}
+              href={Routes.userUpdate}
+            >
+              プロフィールを更新する
+            </MenuLinkItem>
+          )}
         </MenuDropdown>
       </AppMenu>
       <AppModal

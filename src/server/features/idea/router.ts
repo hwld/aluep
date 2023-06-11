@@ -3,7 +3,6 @@ import { createIdea } from "./createIdea";
 import { deleteIdea } from "./deleteIdea";
 import { getAllTags } from "./getAllTags";
 import { getIdea } from "./getIdea";
-import { getIdeaLikeCountByUser } from "./getIdeaLikeCountByUser";
 import { getLikedIdeasByUser } from "./getLikedIdeasByUser";
 import { getPostedIdeasByUser } from "./getPostedIdeasByUser";
 import { isLikedByUser } from "./isLikedByUser";
@@ -39,9 +38,6 @@ export const ideaRoute = router({
 
   /** ログインユーザーがお題をいいねしているか */
   isLikedByUser: isLikedByUser,
-
-  /** 指定されたユーザーが投稿したお題についたすべての「いいね」を取得する */
-  getLikeCountByUser: getIdeaLikeCountByUser,
 
   /** 指定されたユーザーが投稿したお題を取得する */
   getPostedIdeasByUser: getPostedIdeasByUser,

@@ -4,7 +4,7 @@ import {
   ideaQueryKey,
   useIdeaQuery,
 } from "../../../client/features/idea/useIdeaQuery";
-import { DevelopPage } from "../../../client/pageComponents/DevelopPage";
+import { DevelopIdeaPage } from "../../../client/pageComponents/DevelopPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
 import { Routes } from "../../../share/routes";
@@ -41,7 +41,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const Develop: NextPage = () => {
+const DevelopIdea: NextPage = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.id);
   const createRepositoryData = createRepositoryURLParamSchema.parse(
@@ -53,6 +53,6 @@ const Develop: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return <DevelopPage idea={idea} restoredValues={createRepositoryData} />;
+  return <DevelopIdeaPage idea={idea} restoredValues={createRepositoryData} />;
 };
-export default Develop;
+export default DevelopIdea;

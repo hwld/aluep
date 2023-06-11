@@ -16,6 +16,8 @@ import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";
 import { useSearchedUsersQuery } from "../features/user/useSearchedUsersQuery";
 import { useURLParams } from "../lib/useURLParams";
 
+// TODO: 重くて使えない
+// こっちもリアルタイム検索じゃないほうが良いかもしれない
 export const UserSearchPage: React.FC = () => {
   const [{ userName }, setURLParams] = useURLParams(
     z.object({ userName: z.string().default("") })

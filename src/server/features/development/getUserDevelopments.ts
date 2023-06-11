@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
-import { UserDevelopment } from "../../../client/features/user/UserDetail/UserDevelopmentCard";
+import { UserDevelopment } from "../../../client/features/user/UserDevelopmentCard";
 import { pageLimit } from "../../../share/consts";
 import { pagingSchema } from "../../../share/schema";
 import { paginate } from "../../lib/paginate";

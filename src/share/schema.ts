@@ -36,9 +36,8 @@ export const ideaUpdateFormSchema = z
   .object({ ideaId: z.string().min(1).max(100) })
   .and(ideaFormSchema);
 
-// TODO: なんでDevelopmentじゃなくてDevelopにしているんだ？
-export type DevelopFormData = z.infer<typeof developFormSchema>;
-export const developFormSchema = z
+export type DevelopmentFormData = z.infer<typeof developmentFormSchema>;
+export const developmentFormSchema = z
   .object({
     ideaId: z.string().min(1).max(100),
     comment: z
@@ -80,7 +79,7 @@ export const developFormSchema = z
     ])
   );
 
-export const updateDevelopFormSchema = developFormSchema.and(
+export const updateDevelopFormSchema = developmentFormSchema.and(
   z.object({ developmentId: z.string() })
 );
 

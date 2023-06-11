@@ -1,9 +1,9 @@
 import { Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { TbCode } from "react-icons/tb";
-import { User } from "../../../../server/models/user";
-import { AppPagination } from "../../../ui/AppPagination";
-import { GridContainer } from "../../../ui/GridContainer";
-import { useUserDevelopmentsPerPage } from "../../development/useUserDevelopmentsPerPage";
+import { User } from "../../../server/models/user";
+import { AppPagination } from "../../ui/AppPagination";
+import { GridContainer } from "../../ui/GridContainer";
+import { useUserDevelopmentsPerPage } from "../development/useUserDevelopmentsPerPage";
 import {
   UserDevelopmentCard,
   userDevelopmentCardMinWidthPx,

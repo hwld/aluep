@@ -1,10 +1,10 @@
 import { Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
-import { User } from "../../../../server/models/user";
-import { AppPagination } from "../../../ui/AppPagination";
-import { GridContainer } from "../../../ui/GridContainer";
-import { IdeaCard, ideaCardMinWidthPx } from "../../idea/IdeaCard/IdeaCard";
-import { useLikedIdeasPerPage } from "../../idea/useLikedIdeasPerPage";
+import { User } from "../../../server/models/user";
+import { AppPagination } from "../../ui/AppPagination";
+import { GridContainer } from "../../ui/GridContainer";
+import { IdeaCard, ideaCardMinWidthPx } from "../idea/IdeaCard/IdeaCard";
+import { useLikedIdeasPerPage } from "../idea/useLikedIdeasPerPage";
 
 type Props = {
   user: User;

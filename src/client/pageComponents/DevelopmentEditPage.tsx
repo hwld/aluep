@@ -4,9 +4,9 @@ import { MdComputer } from "react-icons/md";
 import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
 import { DevelopmentStatusIds } from "../../share/consts";
-import { CreateRepositoryData, DevelopFormData } from "../../share/schema";
+import { CreateRepositoryData, DevelopmentFormData } from "../../share/schema";
 import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
-import { DevelopForm } from "../features/idea/DevelopForm";
+import { DevelopmentForm } from "../features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import { useDevelop } from "../features/idea/useDevelop";
 
@@ -29,7 +29,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
     mutations: { updateDevelopmentMutation },
   } = useDevelop(idea.id);
 
-  const handleUpdateDevelopment = (data: DevelopFormData) => {
+  const handleUpdateDevelopment = (data: DevelopmentFormData) => {
     updateDevelopmentMutation.mutate({
       ...data,
       developmentId: development.id,
@@ -57,7 +57,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
       <Stack spacing="xs">
         <Text c="gray.5">開発情報</Text>
         <Card>
-          <DevelopForm
+          <DevelopmentForm
             developmentStatuses={developmentStatuses}
             onSubmit={handleUpdateDevelopment}
             onCancel={handleBack}

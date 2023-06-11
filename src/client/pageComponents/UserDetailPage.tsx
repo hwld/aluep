@@ -1,15 +1,15 @@
-import { Box, Button, Card, Flex, Stack, Text } from "@mantine/core";
+import { Box, Button, Flex, Stack } from "@mantine/core";
 import { useMemo } from "react";
 import { User } from "../../server/models/user";
 import { UserDetailPageTab, userDetailPageSchame } from "../../share/schema";
 import { assertNever } from "../../share/utils";
-import { useDevelopmentLikesQuery } from "../features/development/useDevelopmentLikesQuery";
-import { useSumIdeaLikesQuery } from "../features/idea/useSumIdeaLikesQuery";
-import { UserDetailTab } from "../features/user/UserDetail/UserDetailTab";
-import { UserDevelopments } from "../features/user/UserDetail/UserDevelopments";
-import { UserLikedIdeas } from "../features/user/UserDetail/UserLikedIdeas";
-import { UserPostedIdeas } from "../features/user/UserDetail/UserPostedIdeas";
-import { UserDetailCard } from "../features/user/UserDetailCard";
+import { UserDetailTab } from "../features/user/UserDetailTab";
+import { UserDevelopments } from "../features/user/UserDevelopments";
+import { UserLikedIdeas } from "../features/user/UserLikedIdeas";
+import { UserPostedIdeas } from "../features/user/UserPostedIdeas";
+import { UserProfileCard } from "../features/user/UserProfileCard/UserProfileCard";
+import { useReceivedLikeCountQuery } from "../features/user/useReceivedLikeCountQuery";
+import { useUserActivityQuery } from "../features/user/useUserActivityQuery";
 import { useURLParams } from "../lib/useURLParams";
 
 type Props = { user: User };
@@ -17,10 +17,9 @@ type Props = { user: User };
 export const UserDetailPage: React.FC<Props> = ({ user }) => {
   const [{ tab: activeTab, page }, setURLParam] =
     useURLParams(userDetailPageSchame);
-  const { sumIdeaLikes } = useSumIdeaLikesQuery(user.id);
-  const { developmentLikes: developmentLikes } = useDevelopmentLikesQuery(
-    user.id
-  );
+
+  const { recievedLikeCount } = useReceivedLikeCountQuery(user.id);
+  const { userActivity } = useUserActivityQuery(user.id);
 
   const handleChangeTab = (tab: UserDetailPageTab) => {
     setURLParam({ tab, page: 1 });
@@ -63,30 +62,12 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
-      <Flex w="100%" mih={300} gap="md" mt={60}>
-        <UserDetailCard
-          sumIdeaLikes={sumIdeaLikes ?? 0}
-          developmentLikes={developmentLikes ?? 0}
-          user={user}
-        />
-        <Card mih={20} sx={{ flexGrow: 1 }}>
-          <Card.Section withBorder inheritPadding py="md">
-            <Text c="gray.5">自己紹介</Text>
-          </Card.Section>
-
-          <Card.Section inheritPadding mt="sm" pb="md">
-            <Text
-              mah={200}
-              sx={() => {
-                return { overflow: "auto" };
-              }}
-            >
-              {user.profile}
-            </Text>
-          </Card.Section>
-        </Card>
-      </Flex>
-      <Stack mt={30} w="100%" align="center" spacing="xl">
+      <UserProfileCard
+        user={user}
+        receivedLikeCount={recievedLikeCount}
+        userActivity={userActivity}
+      />
+      <Stack mt={40} w="100%" align="flex-start" spacing="xl">
         <Button.Group>
           <UserDetailTab
             tab="postedIdeas"

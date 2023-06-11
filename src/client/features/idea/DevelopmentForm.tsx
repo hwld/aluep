@@ -6,7 +6,10 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdComputer } from "react-icons/md";
 import { DevelopmentStatus } from "../../../server/models/developmentStatus";
-import { DevelopFormData, developFormSchema } from "../../../share/schema";
+import {
+  DevelopmentFormData,
+  developmentFormSchema,
+} from "../../../share/schema";
 import { AppForm } from "../../ui/AppForm";
 
 type Props = {
@@ -15,13 +18,13 @@ type Props = {
   // 指定されたtypeに必要のないプロパティも渡せるように、Union型をIntersection型に変換する処理を書いた
   defaultValues?: Partial<
     UnionToIntersection<
-      DistributiveOmit<DevelopFormData, "type" | "ideaId">
+      DistributiveOmit<DevelopmentFormData, "type" | "ideaId">
     > & {
-      type: DevelopFormData["type"];
+      type: DevelopmentFormData["type"];
     }
   >;
   ideaId: string;
-  onSubmit: (data: DevelopFormData) => void;
+  onSubmit: (data: DevelopmentFormData) => void;
   onCancel: () => void;
   submitText: string;
   isLoading?: boolean;
@@ -29,7 +32,7 @@ type Props = {
   isRelogined?: boolean;
 };
 
-export const DevelopForm: React.FC<Props> = ({
+export const DevelopmentForm: React.FC<Props> = ({
   developmentStatuses,
   defaultValues,
   ideaId,
@@ -45,12 +48,12 @@ export const DevelopForm: React.FC<Props> = ({
     formState: { errors },
     watch,
     getFieldState,
-  } = useForm<DevelopFormData>({
+  } = useForm<DevelopmentFormData>({
     defaultValues: {
       ...defaultValues,
       ideaId,
     },
-    resolver: zodResolver(developFormSchema),
+    resolver: zodResolver(developmentFormSchema),
   });
 
   return (
@@ -82,11 +85,13 @@ export const DevelopForm: React.FC<Props> = ({
             >
               <Radio
                 label="新しいリポジトリを作成する"
-                value={"createRepository" satisfies DevelopFormData["type"]}
+                value={"createRepository" satisfies DevelopmentFormData["type"]}
               />
               <Radio
                 label="既存のリポジトリを使用する"
-                value={"referenceRepository" satisfies DevelopFormData["type"]}
+                value={
+                  "referenceRepository" satisfies DevelopmentFormData["type"]
+                }
               />
             </Radio.Group>
           );

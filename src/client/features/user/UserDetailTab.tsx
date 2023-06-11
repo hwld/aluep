@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
 import { PropsWithChildren } from "react";
-import { UserDetailPageTab } from "../../../../share/schema";
+import { UserDetailPageTab } from "../../../share/schema";
 
 type Props = {
   onChangeTab: (tab: UserDetailPageTab) => void;

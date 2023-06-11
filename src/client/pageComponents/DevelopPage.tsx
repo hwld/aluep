@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { Idea } from "../../server/models/idea";
 import { DevelopmentStatusIds } from "../../share/consts";
 import { Routes } from "../../share/routes";
-import { CreateRepositoryData, DevelopFormData } from "../../share/schema";
+import { CreateRepositoryData, DevelopmentFormData } from "../../share/schema";
 import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
-import { DevelopForm } from "../features/idea/DevelopForm";
+import { DevelopmentForm } from "../features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import { useDevelop } from "../features/idea/useDevelop";
 import { ComputerIcon } from "../ui/ComputerIcon";
@@ -14,7 +14,7 @@ type Props = {
   idea: Idea;
   restoredValues: CreateRepositoryData;
 };
-export const DevelopPage: React.FC<Props> = ({ idea, restoredValues }) => {
+export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
   const router = useRouter();
   const mantineTheme = useMantineTheme();
 
@@ -24,7 +24,7 @@ export const DevelopPage: React.FC<Props> = ({ idea, restoredValues }) => {
     mutations: { developMutation },
   } = useDevelop(idea.id);
 
-  const handleDevelopIdea = (data: DevelopFormData) => {
+  const handleDevelopIdea = (data: DevelopmentFormData) => {
     developMutation.mutate(data, {
       onSuccess: () => router.replace(Routes.idea(idea.id)),
     });
@@ -47,7 +47,7 @@ export const DevelopPage: React.FC<Props> = ({ idea, restoredValues }) => {
       <Stack spacing="xs">
         <Text c="gray.5">開発情報</Text>
         <Card>
-          <DevelopForm
+          <DevelopmentForm
             developmentStatuses={developmentStatuses}
             onSubmit={handleDevelopIdea}
             onCancel={handleBack}

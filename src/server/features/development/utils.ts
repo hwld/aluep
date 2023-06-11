@@ -1,4 +1,4 @@
-import { DevelopFormData } from "../../../share/schema";
+import { DevelopmentFormData } from "../../../share/schema";
 import { createGitHubRepository } from "../github/createGitHubRepository";
 
 /**
@@ -6,7 +6,7 @@ import { createGitHubRepository } from "../github/createGitHubRepository";
  * typeがcreateRepositoryだったらGitHubリポジトリを作成してからURLを返す
  */
 export const createOrExtractGithubRepositoryUrl = async (
-  form: DevelopFormData,
+  form: DevelopmentFormData,
   userId: string
 ): Promise<string> => {
   if (form.type === "createRepository") {

@@ -11,6 +11,8 @@ datasource db {
   url          = env("DATABASE_URL")
 }
 
+// TODO: 思考停止でuserIdとかって命名しているけど、どんなユーザーidかも名前に入れたほうがいい気がする
+
 model Account {
   id                       String  @id @default(cuid())
   userId                   String

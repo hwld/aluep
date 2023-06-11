@@ -10,11 +10,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
 import { TbHeart } from "react-icons/tb";
-import { DevelopmentStatus } from "../../../../server/models/developmentStatus";
-import { Routes } from "../../../../share/routes";
-import { formatDate, stopPropagation } from "../../../lib/utils";
-import { TextLink } from "../../../ui/TextLink";
-import { DevelopmentStatusBadge } from "../../development/DevelopmentCard/DevelopmentStatusBadge";
+import { DevelopmentStatus } from "../../../server/models/developmentStatus";
+import { Routes } from "../../../share/routes";
+import { formatDate, stopPropagation } from "../../lib/utils";
+import { TextLink } from "../../ui/TextLink";
+import { DevelopmentStatusBadge } from "../development/DevelopmentCard/DevelopmentStatusBadge";
 
 export const userDevelopmentCardMinWidthPx = 450;
 

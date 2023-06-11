@@ -5,7 +5,7 @@ import {
   ideaQueryKey,
   useIdeaQuery,
 } from "../../../../client/features/idea/useIdeaQuery";
-import { DevelopmentPage as DevelopmentPageComponent } from "../../../../client/pageComponents/DevelopmentPage";
+import { DevelopmentsPage as DevelopmentsPageComponent } from "../../../../client/pageComponents/DevelopmentsPage";
 import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../server/router";
 import { paginatedPageSchema } from "../../../../share/schema";
@@ -38,7 +38,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const DevelopmentPage: NextPage = () => {
+const DevelopmentsPage: NextPage = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.id);
   const { idea, isLoading } = useIdeaQuery(ideaId);
@@ -49,6 +49,6 @@ const DevelopmentPage: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return <DevelopmentPageComponent idea={idea} />;
+  return <DevelopmentsPageComponent idea={idea} />;
 };
-export default DevelopmentPage;
+export default DevelopmentsPage;
