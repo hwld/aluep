@@ -80,12 +80,24 @@ export const IdeaSearchPage: React.FC = () => {
               value={period}
               onChange={handleChangePeriod}
               data={ideaPeriodItems}
+              styles={(theme) => ({
+                input: {
+                  backgroundColor: theme.colors.gray[1],
+                  "&:hover": { backgroundColor: theme.colors.gray[2] },
+                },
+              })}
             />
             <Select
               w={150}
               value={order}
               onChange={handleChangeOrder}
               data={ideaOrderItems}
+              styles={(theme) => ({
+                input: {
+                  backgroundColor: theme.colors.gray[1],
+                  "&:hover": { backgroundColor: theme.colors.gray[2] },
+                },
+              })}
             />
           </Flex>
         </Flex>

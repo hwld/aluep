@@ -31,8 +31,8 @@ export const IdeaLikeButton: React.FC<Props> = ({
         disabled={disabled}
         color={likedByLoggedInUser ? "pink" : undefined}
         size={50}
-        radius="xl"
         sx={(theme) => ({
+          borderRadius: "50%",
           boxShadow: theme.shadows.md,
           transition: "all 200ms",
           backgroundColor: likedByLoggedInUser

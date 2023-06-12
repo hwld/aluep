@@ -98,8 +98,8 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
         <Menu.Target>
           <ActionIcon
             size={35}
-            radius="xl"
             sx={(theme) => ({
+              borderRadius: "50%",
               boxShadow: theme.shadows.md,
               transition: "all 200ms",
               backgroundColor: theme.colors.gray[1],

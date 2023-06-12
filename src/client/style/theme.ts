@@ -14,6 +14,13 @@ export const theme: MantineThemeOverride = {
     lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
     xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
   },
+  radius: {
+    xs: 2,
+    sm: 4,
+    md: 6,
+    lg: 8,
+    xl: 12,
+  },
   primaryColor: "red",
   primaryShade: 7,
   colors: {
@@ -31,17 +38,18 @@ export const theme: MantineThemeOverride = {
       "#0f172a",
     ],
     // tailwindのstone
+    // TODO: もっと青っぽいgrayにする
     gray: [
-      "#fafaf9",
-      "#f5f5f4",
-      "#e7e5e4",
-      "#d6d3d1",
-      "#a8a29e",
-      "#78716c",
-      "#57534e",
-      "#44403c",
-      "#292524",
-      "#1c1917",
+      "#fafafa",
+      "#f4f4f5",
+      "#e4e4e7",
+      "#d4d4d8",
+      "#a1a1aa",
+      "#71717a",
+      "#52525b",
+      "#3f3f46",
+      "#27272a",
+      "#18181b",
     ],
     // tailwindのred
     red: [
@@ -56,6 +64,11 @@ export const theme: MantineThemeOverride = {
       "#991b1b",
       "#7f1d1d",
     ],
+  },
+  focusRingStyles: {
+    inputStyles: (theme) => {
+      return { outline: "none" };
+    },
   },
   components: {
     Tooltip: { defaultProps: { color: "gray.7" } },
@@ -72,15 +85,28 @@ export const theme: MantineThemeOverride = {
       }),
     },
     Card: {
-      defaultProps: { bg: "gray.1", radius: "md", shadow: "sm" },
+      defaultProps: { bg: "gray.1", radius: "lg", shadow: "sm" },
       styles: () => ({ root: { overflow: "unset" } }),
     },
     Divider: { defaultProps: { color: "gray.3" } },
     Input: {
       styles: (theme) => ({
         input: {
-          backgroundColor: theme.colors.gray[0],
+          backgroundColor: "transparent",
           color: theme.colors.gray[7],
+          borderRadius: theme.radius.md,
+        },
+        // フォーカスされたときにリングスタイルを当てたい。
+        // theme.focusRingStylesを上書きすることでやろうと考えたが、
+        // MultiSelectのinputのwrapperにoverflow:hiddenが設定されているため、
+        // 影が表示されない。なんのためのhiddenなのかわからないため、とりあえずinputのwrapper
+        // に影を表示させる
+        wrapper: {
+          "&:focus-within": {
+            borderRadius: theme.radius.md,
+            outline: `${theme.colors.gray[4]} solid 2px`,
+            outlineOffset: "2px",
+          },
         },
         invalid: {
           borderColor: theme.colors.red[7],
@@ -93,6 +119,7 @@ export const theme: MantineThemeOverride = {
         label: {
           color: theme.colors.gray[5],
           error: theme.colors.blue[7],
+          marginBottom: theme.radius.md,
         },
       }),
     },
@@ -100,6 +127,12 @@ export const theme: MantineThemeOverride = {
     TextInput: { defaultProps: { autoComplete: "off" } },
     Select: {
       styles: (theme) => ({
+        input: {
+          transition: "background-color 250ms",
+          "&:hover": {
+            backgroundColor: theme.colors.gray[2],
+          },
+        },
         item: {
           color: theme.colors.gray[7],
           "&:hover": {
@@ -107,6 +140,7 @@ export const theme: MantineThemeOverride = {
           },
         },
         dropdown: {
+          borderRadius: theme.radius.md,
           backgroundColor: theme.colors.gray[0],
           border: "1px solid",
           borderColor: theme.colors.gray[3],
@@ -116,7 +150,6 @@ export const theme: MantineThemeOverride = {
     MultiSelect: {
       defaultProps: { transitionDuration: 150, transition: "pop-top-left" },
       styles: (theme) => ({
-        input: { backgroundColor: theme.colors.gray[0] },
         label: { color: theme.colors.gray[5] },
         item: {
           color: theme.colors.gray[7],
@@ -130,6 +163,7 @@ export const theme: MantineThemeOverride = {
         },
 
         dropdown: {
+          borderRadius: theme.radius.md,
           backgroundColor: theme.colors.gray[0],
           borderWidth: "1px",
           borderStyle: "solid",
@@ -145,6 +179,38 @@ export const theme: MantineThemeOverride = {
         },
         description: {
           color: theme.colors.gray[5],
+        },
+      }),
+    },
+    RichTextEditor: {
+      styles: (theme) => ({
+        root: {
+          borderRadius: theme.radius.md,
+          "&:focus-within": {
+            outline: `${theme.colors.gray[4]} solid 2px`,
+            outlineOffset: "2px",
+          },
+        },
+        toolbar: {
+          backgroundColor: theme.colors.gray[1],
+          borderColor: theme.colors.gray[3],
+          borderTopLeftRadius: theme.radius.md,
+          borderTopRightRadius: theme.radius.md,
+        },
+        control: {
+          backgroundColor: "transparent",
+          borderColor: theme.colors.gray[3],
+          "&:focus": {
+            outline: `${theme.colors.gray[4]} solid 2px`,
+            outlineOffset: "2px",
+          },
+        },
+        content: {
+          // 新規作成時のSSRでレイアウトシフトが起きないように高さに合わせておく
+          // 更新のときにはレイアウトシフトが起こってしまう。
+          minHeight: "332px",
+          ".ProseMirror": { minHeight: "300px" },
+          backgroundColor: "transparent",
         },
       }),
     },

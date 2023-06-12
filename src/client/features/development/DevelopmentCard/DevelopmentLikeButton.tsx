@@ -22,9 +22,9 @@ export const DevelopmentLikeButton: React.FC<Props> = ({
         disabled={disabled}
         color={likedByLoggedInUser ? "pink" : undefined}
         size={30}
-        radius="xl"
         onClick={onClick}
         sx={(theme) => ({
+          borderRadius: "50%",
           transition: "all 200ms",
           "&:hover": {
             backgroundColor: likedByLoggedInUser

@@ -1,7 +1,6 @@
 import { Stack, Sx } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import { Editor } from "@tiptap/react";
-import { useState } from "react";
 
 export const ideaDescriptionStyles: Sx = (theme) => ({
   color: theme.colors.gray[7],
@@ -18,32 +17,15 @@ export const IdeaDescriptionEditor: React.FC<Props> = ({
   editor,
   error = false,
 }) => {
-  const [focused, setFocused] = useState(false);
-
   return (
     <Stack spacing={0}>
       <RichTextEditor
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
         editor={editor}
         sx={(theme) => ({
-          ...(focused && {
-            borderWidth: "1px",
-            borderColor: theme.colors.red[7],
-          }),
           ...(error && {
             borderColor: theme.colors.red[7],
             borderWidth: "2px",
           }),
-        })}
-        styles={(theme) => ({
-          content: {
-            // 新規作成時のSSRでレイアウトシフトが起きないように高さに合わせておく
-            // 更新のときにはレイアウトシフトが起こってしまう。
-            minHeight: "332px",
-            ".ProseMirror": { minHeight: "300px" },
-            backgroundColor: theme.colors.gray[0],
-          },
         })}
         withCodeHighlightStyles={false}
         withTypographyStyles={false}
