@@ -14,7 +14,7 @@
     "test-db-dbpush": "npm run test-dotenv  -- prisma db push --accept-data-loss",
     "test-db-seed": "npm run test-dotenv -- prisma db seed",
     "setup:test-db": "npm run test-db-dbpush && npm run test-db-seed",
-    "ts-prune:next": "ts-prune | grep -v default | grep -v getServerSideProps"
+    "ts-prune:next": "ts-prune | grep -v default | grep -v getServerSideProps | grep -v config | grep -v __sleep"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -61,6 +61,7 @@
     "@types/react-dom": "18.0.8",
     "cli-progress": "^3.11.2",
     "date-fns": "^2.29.3",
+    "discord.js": "^14.11.0",
     "embla-carousel-react": "^7.0.5",
     "formidable": "^2.1.1",
     "https-proxy-agent": "^5.0.1",

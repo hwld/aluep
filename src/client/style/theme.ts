@@ -37,8 +37,7 @@ export const theme: MantineThemeOverride = {
       "#1e293b",
       "#0f172a",
     ],
-    // tailwindのstone
-    // TODO: もっと青っぽいgrayにする
+    // tailwindのZinc
     gray: [
       "#fafafa",
       "#f4f4f5",
