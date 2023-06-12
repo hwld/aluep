@@ -68,8 +68,9 @@ export const DevelopmentCard: React.FC<Props> = ({
         position: "static",
         cursor: "pointer",
         transition: "all 150ms",
-        "&:not(:has(*[data-user-icon]:hover)):hover": {
-          boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
+        "&:not(:has(a:not(.development-link):hover, button:hover)):hover": {
+          outline: `${theme.colors.red[6]} solid 2px`,
+          outlineOffset: "3px",
         },
       })}
       onClick={handleGoDevelopmentDetail}
@@ -110,7 +111,10 @@ export const DevelopmentCard: React.FC<Props> = ({
             iconSrc={development.image}
             userId={development.userId}
           />
-          <TextLink href={Routes.development(idea.id, development.id)}>
+          <TextLink
+            href={Routes.development(idea.id, development.id)}
+            className="development-link"
+          >
             <Text fw="bold" size="lg">
               {development.name}
               <Text span c="gray.5" size="sm" fw="normal">

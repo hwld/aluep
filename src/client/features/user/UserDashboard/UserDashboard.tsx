@@ -31,7 +31,7 @@ export const UserDashboard: React.FC<Props> = ({
           />
         </Box>
       </MediaQuery>
-      <MediaQuery smallerThan={1200} styles={{ display: "none" }}>
+      <MediaQuery smallerThan={1400} styles={{ display: "none" }}>
         <Box>
           <UserActivityCard userActivity={userActivity} width={250} />
         </Box>

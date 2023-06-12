@@ -27,7 +27,8 @@ export const UserCard: React.FC<Props> = ({ user }) => {
         position: "static",
         transition: "all 150ms",
         "&:hover": {
-          boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
+          outline: `${theme.colors.red[6]} solid 2px`,
+          outlineOffset: "2px",
         },
       })}
       onClick={handleGoUserDetail}

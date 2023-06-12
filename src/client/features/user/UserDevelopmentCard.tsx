@@ -63,8 +63,9 @@ export const UserDevelopmentCard: React.FC<Props> = ({
         position: "static",
         cursor: "pointer",
         transition: "all 150ms",
-        "&:not(:has(*[data-user-icon]:hover)):hover": {
-          boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
+        "&:not(:has(a:not(.development-link):hover, button:hover)):hover": {
+          outline: `${theme.colors.red[6]} solid 2px`,
+          outlineOffset: "2px",
         },
       })}
       onClick={handleGoDevelopmentDetail}
@@ -98,7 +99,10 @@ export const UserDevelopmentCard: React.FC<Props> = ({
       </Flex>
       <Flex justify="space-between" mt="xs">
         <Flex gap={10}>
-          <TextLink href={Routes.development(ideaId, developmentId)}>
+          <TextLink
+            href={Routes.development(ideaId, developmentId)}
+            className="development-link"
+          >
             <Text c="red.7" fw="bold" size="lg">
               {ideaTitle}
               <Text span c="gray.5" size="sm" fw="normal">

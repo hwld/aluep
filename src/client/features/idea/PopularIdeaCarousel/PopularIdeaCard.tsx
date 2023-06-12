@@ -46,8 +46,9 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
         cursor: "pointer",
         position: "static",
         transition: "all 150ms",
-        "&:hover": {
-          boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
+        "&:not(:has(a:not(.idea-link):hover, button:hover)):hover": {
+          outline: `${theme.colors.gray[1]} solid 2px`,
+          outlineOffset: "4px",
         },
       })}
       onMouseDown={setLeftClickPosition}
@@ -60,7 +61,6 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
           sx={{
             flexShrink: 1,
             minHeight: 0,
-            overflow: "hidden",
             textOverflow: "ellipsis",
           }}
           style={{
@@ -69,7 +69,7 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
             WebkitBoxOrient: "vertical",
           }}
         >
-          <TextLink href={Routes.idea(idea.id)}>
+          <TextLink href={Routes.idea(idea.id)} className="idea-link">
             <Title
               order={4}
               color="red.7"

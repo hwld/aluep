@@ -41,8 +41,6 @@ export const UserIcon: React.FC<UserIconProps> = ({
     <>
       <Avatar
         ref={iconRef}
-        // スタイルを当てるのに使用している
-        data-user-icon
         src={iconSrc}
         size={size}
         bg="gray.1"
@@ -58,7 +56,12 @@ export const UserIcon: React.FC<UserIconProps> = ({
               }
             : {}),
           ...(interactive
-            ? { "&:hover": { borderColor: theme.colors.red[8] } }
+            ? {
+                "&:hover": {
+                  outline: `${theme.colors.red[6]} solid 2px`,
+                  outlineOffset: "2px",
+                },
+              }
             : {}),
         })}
       />

@@ -32,13 +32,14 @@ export const LikingUserCard: React.FC<Props> = ({ user, ideaLike }) => {
         position: "static",
         transition: "all 150ms",
         "&:hover": {
-          boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
+          outline: `${theme.colors.red[6]} solid 2px`,
+          outlineOffset: "2px",
         },
       })}
       onClick={handleGoUserDetail}
     >
       <Flex justify="space-between">
-        <Flex gap={10}>
+        <Flex gap={10} miw={0}>
           {/* アイコン　*/}
           <UserIcon iconSrc={user.image} />
           {/* 名前 */}

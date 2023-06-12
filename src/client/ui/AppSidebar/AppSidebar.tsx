@@ -28,7 +28,7 @@ const iconWidth = barMinWidth - barPadding * 2;
 
 export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
   const router = useRouter();
-  const [isOpen, { toggle }] = useDisclosure(false);
+  const [isOpen, { toggle }] = useDisclosure(true);
   const { openLoginModal } = useRequireLoginModal();
 
   const isWideDisplay = useMediaQuery("(min-width: 1200px)", true);
@@ -69,7 +69,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          borderRadius: theme.radius.lg,
+          borderRadius: theme.radius.xl,
           transition: "all 200ms",
           overflow: "auto",
         })}

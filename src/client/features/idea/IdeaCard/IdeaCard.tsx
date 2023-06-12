@@ -29,19 +29,17 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
         cursor: "pointer",
         position: "static",
         transition: "all 150ms",
-        // アイコン、タグバッジをホバーしたときにスタイルを当てたくないのでaria-label='user-icon'|'tag-badge'の要素を使っているが、
-        // UserIcon, IdeaTagBadgeが変わったときにスタイルが当たらなくなりそう
-        "&:not(:has(*[data-user-icon]:hover,*[aria-label='tag-badge']:hover)):hover":
-          {
-            boxShadow: `${theme.shadows.lg}, 0 0 0 2px ${theme.colors.red[7]}`,
-          },
+        "&:not(:has(a:not(.idea-link):hover, button:hover)):hover": {
+          outline: `${theme.colors.red[6]} solid 2px`,
+          outlineOffset: "3px",
+        },
       })}
       onClick={handleGoIdeaDetail}
     >
       <Stack spacing={10} miw={0}>
         {/* ヘッダ */}
         <Flex justify="space-between" align="flex-start" gap={10} miw={0}>
-          <TextLink href={Routes.idea(idea.id)}>
+          <TextLink href={Routes.idea(idea.id)} className="idea-link">
             <Title order={3} color="red.7" sx={{ lineHeight: 1.4 }}>
               {idea.title}
             </Title>

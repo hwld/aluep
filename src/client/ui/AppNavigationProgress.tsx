@@ -40,7 +40,7 @@ export const AppNavigationProgress = () => {
     <NavigationProgress
       autoReset
       progressLabel="ページ読み込みのインジケータ"
-      color="red.7"
+      color="red.6"
       stepInterval={100}
       size={3}
     />
