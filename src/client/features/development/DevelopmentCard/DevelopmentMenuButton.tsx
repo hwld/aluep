@@ -133,9 +133,9 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
                 開発情報を更新する
               </MenuLinkItem>
               <MenuItem
+                red
                 icon={<FaTrash size={18} />}
                 onClick={openDeleteModal}
-                red
               >
                 開発情報を削除する
               </MenuItem>

@@ -1,4 +1,4 @@
-import { BadgeProps, Divider, Menu, Space, Text } from "@mantine/core";
+import { BadgeProps, Menu } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { ReactNode } from "react";
@@ -27,22 +27,6 @@ export const LoggedInUserMenu: React.FC<Props> = ({ user, trigger }) => {
     <AppMenu offset={10} position="right-end">
       <Menu.Target>{trigger}</Menu.Target>
       <MenuDropdown maw={180} sx={{ zIndex: 1000 }}>
-        <Menu.Label>
-          <Text
-            align="center"
-            sx={() => {
-              return {
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              };
-            }}
-          >
-            {user.name}
-          </Text>
-        </Menu.Label>
-        <Divider color="gray.3" my="xs" />
-        <Space mt="xs" />
         <MenuLinkItem
           icon={<RiAccountCircleLine size={20} />}
           href={Routes.user(user.id)}

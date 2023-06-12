@@ -8,6 +8,7 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
+import { useRef, useState } from "react";
 import { BsDot } from "react-icons/bs";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { RiQuestionMark } from "react-icons/ri";
@@ -16,19 +17,27 @@ import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";
 import { useSearchedUsersQuery } from "../features/user/useSearchedUsersQuery";
 import { useURLParams } from "../lib/useURLParams";
 
-// TODO: 重くて使えない
-// こっちもリアルタイム検索じゃないほうが良いかもしれない
 export const UserSearchPage: React.FC = () => {
-  const [{ userName }, setURLParams] = useURLParams(
+  const [{ userName: userNameFromURLParams }, setURLParams] = useURLParams(
     z.object({ userName: z.string().default("") })
   );
+  const [userName, setUsername] = useState(userNameFromURLParams);
 
+  const timerRef = useRef<undefined | number>(undefined);
   const handleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setURLParams({ userName: e.target.value });
+    const value = e.target.value;
+    setUsername(value);
+
+    // 最後に文字が入力されてから200ms後にURLParamを更新する
+    window.clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => {
+      setURLParams({ userName: value });
+    }, 200);
   };
+
   const mantineTheme = useMantineTheme();
 
-  const { resultUserNames } = useSearchedUsersQuery(userName);
+  const { resultUserNames } = useSearchedUsersQuery(userNameFromURLParams);
 
   return (
     <Box>
@@ -59,7 +68,7 @@ export const UserSearchPage: React.FC = () => {
         </Card>
         <Stack mt={30}>
           {/* 検索ボックスが空 */}
-          {userName === "" ? (
+          {userNameFromURLParams === "" ? (
             <Flex direction="column" gap={30}>
               <Flex justify="center" align="center">
                 <MdOutlinePersonSearch

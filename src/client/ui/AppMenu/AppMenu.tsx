@@ -8,14 +8,23 @@ export const AppMenu: React.FC<Props> = ({ children, ...props }) => {
 
   return (
     <MantineMenu
+      transition="pop"
       opened={opened}
       onChange={setOpened}
       position="bottom-end"
+      radius="md"
       styles={(theme) => ({
-        item: { transition: "all 200ms" },
+        item: {
+          transition: "all 200ms",
+        },
         dropdown: {
+          minWidth: "200px",
           backgroundColor: theme.colors.gray[1],
           boxShadow: theme.shadows.md,
+          padding: "8px 5px !important",
+          borderWidth: "1px",
+          borderStyle: "solid",
+          borderColor: theme.colors.gray[2],
         },
       })}
       {...props}

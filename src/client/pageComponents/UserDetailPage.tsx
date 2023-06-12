@@ -3,11 +3,11 @@ import { useMemo } from "react";
 import { User } from "../../server/models/user";
 import { UserDetailPageTab, userDetailPageSchame } from "../../share/schema";
 import { assertNever } from "../../share/utils";
+import { UserDashboard } from "../features/user/UserDashboard/UserDashboard";
 import { UserDetailTab } from "../features/user/UserDetailTab";
 import { UserDevelopments } from "../features/user/UserDevelopments";
 import { UserLikedIdeas } from "../features/user/UserLikedIdeas";
 import { UserPostedIdeas } from "../features/user/UserPostedIdeas";
-import { UserProfileCard } from "../features/user/UserProfileCard/UserProfileCard";
 import { useReceivedLikeCountQuery } from "../features/user/useReceivedLikeCountQuery";
 import { useUserActivityQuery } from "../features/user/useUserActivityQuery";
 import { useURLParams } from "../lib/useURLParams";
@@ -62,7 +62,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
 
   return (
     <Flex maw={1200} direction="column" align="center" m="auto">
-      <UserProfileCard
+      <UserDashboard
         user={user}
         receivedLikeCount={recievedLikeCount}
         userActivity={userActivity}

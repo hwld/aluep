@@ -3,11 +3,13 @@ import { MenuItemProps } from "@mantine/core";
 export const createMenuItemStyleProps: (red?: boolean) => MenuItemProps = (
   red
 ) => ({
-  color: red ? "red.7" : "gray.7",
-  sx: (idea) => ({
-    padding: "5px 8px",
+  color: red ? "red.7" : "#676767",
+  sx: (theme) => ({
+    borderRadius: theme.radius.sm,
+    padding: "5px 12px",
     "&[data-hovered]": {
-      backgroundColor: red ? idea.colors.red[1] : idea.colors.gray[2],
+      backgroundColor: red ? theme.colors.red[1] : theme.colors.gray[2],
+      color: red ? theme.colors.red[8] : theme.colors.gray[8],
     },
   }),
 });
