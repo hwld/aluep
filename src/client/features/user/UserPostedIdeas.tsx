@@ -22,11 +22,13 @@ export const UserPostedIdeas: React.FC<Props> = ({
   return (
     <Stack w="100%">
       {postedIdeasPerPage?.list.length === 0 ? (
-        <Flex align="center" direction="column">
-          <TbFileText size="200" color={colors.red[7]} />
-          <Text size="xl" color="gray.5">
-            投稿したお題がありません。
-          </Text>
+        <Flex align="flex-start" direction="column">
+          <Stack align="center" spacing={0}>
+            <TbFileText size="200" color={colors.red[7]} />
+            <Text size="xl" color="gray.5">
+              まだお題がありません。
+            </Text>
+          </Stack>
         </Flex>
       ) : (
         <GridContainer minItemWidthPx={ideaCardMinWidthPx}>

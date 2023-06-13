@@ -141,6 +141,7 @@ const userDetailPageTabSchema = z.union([
   z.literal("postedIdeas"),
   z.literal("developments"),
   z.literal("likedIdeas"),
+  z.literal("likedDevelopments"),
 ]);
 export type UserDetailPageTab = z.infer<typeof userDetailPageTabSchema>;
 

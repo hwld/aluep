@@ -62,7 +62,8 @@ export const UserDevelopmentCard: React.FC<Props> = ({
       sx={(theme) => ({
         position: "static",
         cursor: "pointer",
-        transition: "all 150ms",
+        transition: "all 100ms",
+        outline: "transparent solid 0px",
         "&:not(:has(a:not(.development-link):hover, button:hover)):hover": {
           outline: `${theme.colors.red[6]} solid 2px`,
           outlineOffset: "2px",

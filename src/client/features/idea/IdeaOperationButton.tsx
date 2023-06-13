@@ -101,10 +101,11 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
             sx={(theme) => ({
               borderRadius: "50%",
               boxShadow: theme.shadows.md,
-              transition: "all 150ms",
+              transition: "all 100ms",
               backgroundColor: theme.colors.gray[1],
+              outline: "transparent solid 0px",
               "&:hover": {
-                outline: `${theme.colors.red[7]} solid 2px`,
+                outline: `${theme.colors.red[6]} solid 2px`,
                 outlineOffset: "2px",
               },
             })}

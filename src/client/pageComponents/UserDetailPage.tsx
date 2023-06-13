@@ -1,20 +1,22 @@
-import { Box, Button, Flex, Stack } from "@mantine/core";
+import { Box, Flex, Stack, useMantineTheme } from "@mantine/core";
 import { useMemo } from "react";
+import { TbCode, TbFileText, TbHeart } from "react-icons/tb";
 import { User } from "../../server/models/user";
 import { UserDetailPageTab, userDetailPageSchame } from "../../share/schema";
 import { assertNever } from "../../share/utils";
 import { UserDashboard } from "../features/user/UserDashboard/UserDashboard";
-import { UserDetailTab } from "../features/user/UserDetailTab";
 import { UserDevelopments } from "../features/user/UserDevelopments";
 import { UserLikedIdeas } from "../features/user/UserLikedIdeas";
 import { UserPostedIdeas } from "../features/user/UserPostedIdeas";
 import { useReceivedLikeCountQuery } from "../features/user/useReceivedLikeCountQuery";
 import { useUserActivityQuery } from "../features/user/useUserActivityQuery";
 import { useURLParams } from "../lib/useURLParams";
+import { TabControl } from "../ui/TabControl";
 
 type Props = { user: User };
 
 export const UserDetailPage: React.FC<Props> = ({ user }) => {
+  const { colors } = useMantineTheme();
   const [{ tab: activeTab, page }, setURLParam] =
     useURLParams(userDetailPageSchame);
 
@@ -55,6 +57,8 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
             onChangePage={handleChangePage}
           />
         );
+      case "likedDevelopments":
+        return <div>no impl</div>;
       default:
         assertNever(activeTab);
     }
@@ -68,29 +72,27 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
         userActivity={userActivity}
       />
       <Stack mt={40} w="100%" align="flex-start" spacing="xl">
-        <Button.Group>
-          <UserDetailTab
-            tab="postedIdeas"
-            activeTab={activeTab}
-            onChangeTab={handleChangeTab}
-          >
-            投稿したお題
-          </UserDetailTab>
-          <UserDetailTab
-            tab="developments"
-            activeTab={activeTab}
-            onChangeTab={handleChangeTab}
-          >
-            お題の開発情報
-          </UserDetailTab>
-          <UserDetailTab
-            tab="likedIdeas"
-            activeTab={activeTab}
-            onChangeTab={handleChangeTab}
-          >
-            いいねしたお題
-          </UserDetailTab>
-        </Button.Group>
+        <TabControl
+          activeTab={activeTab}
+          onChange={handleChangeTab}
+          data={[
+            {
+              value: "postedIdeas",
+              label: "投稿したお題",
+              icon: TbFileText,
+            },
+            {
+              value: "developments",
+              label: "お題の開発情報",
+              icon: TbCode,
+            },
+            {
+              value: "likedIdeas",
+              label: "いいねしたお題",
+              icon: TbHeart,
+            },
+          ]}
+        />
         <Box w="100%">{tabContent}</Box>
       </Stack>
     </Flex>

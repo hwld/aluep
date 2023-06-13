@@ -22,16 +22,18 @@ export const UserLikedIdeas: React.FC<Props> = ({
   return (
     <Stack w="100%">
       {likedIdeasPerPage?.list.length === 0 ? (
-        <Flex align="center" direction="column">
-          <TbHeart
-            size="200"
-            color="transparent"
-            fill={colors.red[7]}
-            style={{ position: "relative", top: "10px" }}
-          />
-          <Text size="xl" color="gray.5">
-            いいねしたお題がありません。
-          </Text>
+        <Flex align="flex-start" direction="column">
+          <Stack align="center" spacing={0}>
+            <TbHeart
+              size="200"
+              color="transparent"
+              fill={colors.red[7]}
+              style={{ position: "relative", top: "10px" }}
+            />
+            <Text size="xl" color="gray.5">
+              まだお題へのいいねがありません。
+            </Text>
+          </Stack>
         </Flex>
       ) : (
         <GridContainer minItemWidthPx={ideaCardMinWidthPx}>

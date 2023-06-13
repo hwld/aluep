@@ -47,7 +47,8 @@ export const UserIcon: React.FC<UserIconProps> = ({
         imageProps={{ "aria-label": "ユーザーのアイコン" }}
         sx={(theme) => ({
           borderRadius: "100%",
-          transition: "all 150ms",
+          transition: "all 50ms",
+          outline: "transparent solid 0px",
           ...(withBorder
             ? {
                 borderWidth: "2px",

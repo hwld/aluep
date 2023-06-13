@@ -45,7 +45,8 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
       sx={(theme) => ({
         cursor: "pointer",
         position: "static",
-        transition: "all 150ms",
+        transition: "all 100ms",
+        outline: "transparent solid 0px",
         "&:not(:has(a:not(.idea-link):hover, button:hover)):hover": {
           outline: `${theme.colors.gray[1]} solid 2px`,
           outlineOffset: "4px",

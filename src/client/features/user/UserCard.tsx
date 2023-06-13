@@ -25,7 +25,8 @@ export const UserCard: React.FC<Props> = ({ user }) => {
         maxHeight: "100px",
         cursor: "pointer",
         position: "static",
-        transition: "all 150ms",
+        transition: "all 100ms",
+        outline: "transparent solid 0px",
         "&:hover": {
           outline: `${theme.colors.red[6]} solid 2px`,
           outlineOffset: "2px",

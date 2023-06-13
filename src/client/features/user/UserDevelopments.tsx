@@ -25,11 +25,13 @@ export const UserDevelopments: React.FC<Props> = ({
   return (
     <Stack w="100%">
       {userDevelopmentsPerPage?.list.length === 0 ? (
-        <Flex align="center" direction="column">
-          <TbCode size="200" color={colors.red[7]} />
-          <Text size="xl" color="gray.5">
-            開発したお題がありません。
-          </Text>
+        <Flex align="flex-start" direction="column">
+          <Stack align="center" spacing={0}>
+            <TbCode size="200" color={colors.red[7]} />
+            <Text size="xl" color="gray.5">
+              まだお題の開発情報がありません。
+            </Text>
+          </Stack>
         </Flex>
       ) : (
         <GridContainer minItemWidthPx={userDevelopmentCardMinWidthPx}>
