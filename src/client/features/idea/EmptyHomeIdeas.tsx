@@ -31,8 +31,14 @@ export const EmptyHomeIdeas: React.FC<Props> = ({ isLoggedIn }) => {
         textAlign: "center",
       })}
     >
-      <TbFileText size={80} color={colors.red[7]} />
-      <Text size="xl">まだお題が投稿されていません</Text>
+      <TbFileText size={100} color={colors.red[7]} />
+      <Text size="lg" color="gray.5" fw="bold" mt="sm">
+        お題が投稿されていません
+      </Text>
+      <Text align="center" color="gray.4" mt={5}>
+        ユーザーによってお題が投稿されると、<br></br>
+        人気のお題や最新のお題などが表示されます。
+      </Text>
       <Button mt="xl" onClick={handleCreateIdea}>
         お題を投稿する
       </Button>

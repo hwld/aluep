@@ -1,19 +1,10 @@
-import {
-  ActionIcon,
-  Box,
-  Card,
-  Flex,
-  Text,
-  Tooltip,
-  useMantineTheme,
-} from "@mantine/core";
-import Link from "next/link";
+import { Box, Card, Flex, Text, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
-import { BsGithub } from "react-icons/bs";
 import { Development } from "../../../../server/models/development";
 import { Idea } from "../../../../server/models/idea";
 import { Routes } from "../../../../share/routes";
-import { formatDate, stopPropagation } from "../../../lib/utils";
+import { formatDate } from "../../../lib/utils";
+import { GitHubCodeButton } from "../../../ui/GitHubCodeButton";
 import { TextLink } from "../../../ui/TextLink";
 import { useRequireLoginModal } from "../../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../../session/useSessionQuery";
@@ -58,7 +49,7 @@ export const DevelopmentCard: React.FC<Props> = ({
   };
 
   // 開発者自身でなければいいねできる
-  const canLike = development.userId !== session?.user.id;
+  const canLike = development.developerUserId !== session?.user.id;
 
   return (
     <Card
@@ -77,46 +68,20 @@ export const DevelopmentCard: React.FC<Props> = ({
     >
       <Flex justify="space-between">
         <DevelopmentStatusBadge status={development.status} />
-        <Flex onClick={stopPropagation}>
-          <Tooltip
-            label="コードを見に行く"
-            position="top"
-            withArrow
-            transition="pop"
-          >
-            <ActionIcon
-              size={40}
-              component={Link}
-              // githubのURLをgithub1sに変換
-              href={development.githubUrl.replace(
-                /^(https:\/\/github)(.com)/,
-                "$11s$2"
-              )}
-              target="_blank"
-              sx={(theme) => ({
-                transition: "all 200ms",
-                "&:hover": {
-                  backgroundColor: theme.fn.rgba(theme.colors.gray[7], 0.1),
-                },
-              })}
-            >
-              <BsGithub size="80%" fill={colors.gray[7]} />
-            </ActionIcon>
-          </Tooltip>
-        </Flex>
+        <GitHubCodeButton gitHubUrl={development.githubUrl} />
       </Flex>
       <Flex justify="space-between">
         <Flex gap={10}>
           <UserIconLink
-            iconSrc={development.image}
-            userId={development.userId}
+            iconSrc={development.developerUserImage}
+            userId={development.developerUserId}
           />
           <TextLink
             href={Routes.development(idea.id, development.id)}
             className="development-link"
           >
             <Text fw="bold" size="lg">
-              {development.name}
+              {development.developerUserName}
               <Text span c="gray.5" size="sm" fw="normal">
                 {" の開発"}
               </Text>

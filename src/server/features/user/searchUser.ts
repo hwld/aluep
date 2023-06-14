@@ -10,7 +10,6 @@ export const searchUser = publicProcedure
     } else {
       const searchUsers = await findManyUsers({
         where: { name: { contains: input.userName } },
-        take: 30,
       });
 
       return searchUsers;

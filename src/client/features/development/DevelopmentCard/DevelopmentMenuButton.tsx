@@ -96,7 +96,7 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
           idea.id,
           development.id
         )}`,
-        name: development.name,
+        name: development.developerUserName,
       },
     });
   };

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
-import { z, ZodTypeDef } from "zod";
+import { ZodTypeDef, z } from "zod";
 import { assertNever } from "../../share/utils";
 
 /**
@@ -26,6 +26,7 @@ export const useURLParams = <
       newObj: Partial<Output>,
       options?: Parameters<typeof router.push>[2]
     ) => {
+      console.log("setQueryParams前");
       const currentUrl = new URL(window.location.href);
 
       // queryParamsをすべて削除する

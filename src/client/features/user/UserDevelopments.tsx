@@ -28,8 +28,13 @@ export const UserDevelopments: React.FC<Props> = ({
       onChangePage={onChangePage}
       totalPages={userDevelopmentsPerPage?.allPages ?? 0}
       isEmpty={userDevelopmentsPerPage?.list.length === 0}
-      emptyIcon={<TbCode size="200" color={colors.red[7]} />}
-      emptyText="まだお題の開発情報がありません。"
+      emptyIcon={<TbCode size="100" color={colors.red[7]} />}
+      emptyText="お題の開発情報がありません"
+      emptyDescription={
+        <>
+          ユーザーがお題を開発すると、<br></br>ここに表示されます。
+        </>
+      }
     >
       {userDevelopmentsPerPage?.list.map((dev) => (
         <UserDevelopmentCard key={dev.developmentId} userDevelopment={dev} />

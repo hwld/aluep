@@ -32,7 +32,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     });
 
     //　お題か開発者が存在しない、または開発者とログインユーザーが異なれば404にする
-    if (!idea || !development || development?.userId !== session.user.id) {
+    if (
+      !idea ||
+      !development ||
+      development?.developerUserId !== session.user.id
+    ) {
       return { notFound: true };
     }
 

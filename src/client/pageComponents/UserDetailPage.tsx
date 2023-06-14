@@ -77,7 +77,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
         receivedLikeCount={recievedLikeCount}
         userActivity={userActivity}
       />
-      <Stack mt={40} w="100%" align="flex-start" spacing="xl">
+      <Stack mt={40} w="100%" align="center" spacing="xl">
         <TabControl
           activeTab={activeTab}
           onChange={handleChangeTab}

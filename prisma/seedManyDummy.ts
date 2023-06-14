@@ -97,7 +97,11 @@ async function main() {
           comment: faker.lorem.words(3),
           ideaId: ideaIds[ideaIndex],
           userId: userIds[userIndex],
-          statusId: DevelopmentStatusIds.IN_PROGRESS,
+          statusId: faker.helpers.arrayElement([
+            DevelopmentStatusIds.IN_PROGRESS,
+            DevelopmentStatusIds.ABORTED,
+            DevelopmentStatusIds.COMPLETED,
+          ]),
         },
         update: { createdAt: new Date() },
       });

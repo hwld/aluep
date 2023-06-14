@@ -27,13 +27,19 @@ export const UserLikedIdeas: React.FC<Props> = ({
       isEmpty={likedIdeasPerPage?.list.length === 0}
       emptyIcon={
         <TbHeart
-          size="200"
+          size="100"
           color="transparent"
           fill={colors.red[7]}
           style={{ position: "relative", top: "10px" }}
         />
       }
-      emptyText="まだお題へのいいねがありません。"
+      emptyText="お題のいいねがありません"
+      emptyDescription={
+        <>
+          ユーザーがお題にいいねすると、<br></br>
+          ここに表示されます。
+        </>
+      }
     >
       {likedIdeasPerPage?.list.map((idea) => (
         <IdeaCard key={idea.id} idea={idea} />

@@ -1,18 +1,9 @@
-import {
-  ActionIcon,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  Tooltip,
-  useMantineTheme,
-} from "@mantine/core";
-import Link from "next/link";
+import { Card, Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
-import { BsGithub } from "react-icons/bs";
 import { TbFileText, TbHeart } from "react-icons/tb";
 import { Development } from "../../../server/models/development";
 import { Routes } from "../../../share/routes";
+import { GitHubCodeButton } from "../../ui/GitHubCodeButton";
 import { TextLink } from "../../ui/TextLink";
 import { UserIconLink } from "../user/UserIconLink";
 import { DevelopmentStatusBadge } from "./DevelopmentCard/DevelopmentStatusBadge";
@@ -46,38 +37,13 @@ export const LikedDevelopmentCard: React.FC<Props> = ({ development }) => {
     >
       <Flex justify="space-between">
         <DevelopmentStatusBadge status={development.status} />
-        <Tooltip
-          label="コードを見に行く"
-          position="top"
-          withArrow
-          transition="pop"
-        >
-          {/* TODO: 共通化できないかな */}
-          <ActionIcon
-            size={40}
-            component={Link}
-            // githubのURLをgithub1sに変換
-            href={development.githubUrl.replace(
-              /^(https:\/\/github)(.com)/,
-              "$11s$2"
-            )}
-            target="_blank"
-            sx={(theme) => ({
-              transition: "all 200ms",
-              "&:hover": {
-                backgroundColor: theme.fn.rgba(theme.colors.gray[7], 0.1),
-              },
-            })}
-          >
-            <BsGithub size="80%" fill={colors.gray[7]} />
-          </ActionIcon>
-        </Tooltip>
+        <GitHubCodeButton gitHubUrl={development.githubUrl} />
       </Flex>
       <Flex gap="xs" justify="space-between" align="flex-end">
-        <Flex>
+        <Flex gap="xs">
           <UserIconLink
-            iconSrc={development.image}
-            userId={development.userId}
+            iconSrc={development.developerUserImage}
+            userId={development.developerUserId}
           />
           <Stack spacing={0}>
             <TextLink
@@ -85,7 +51,7 @@ export const LikedDevelopmentCard: React.FC<Props> = ({ development }) => {
               className="development-link"
             >
               <Text fw="bold" size="lg">
-                {development.name}
+                {development.developerUserName}
                 <Text span c="gray.5" size="sm" fw="normal">
                   {" の開発"}
                 </Text>

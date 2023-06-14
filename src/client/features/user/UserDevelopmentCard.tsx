@@ -1,18 +1,10 @@
-import {
-  ActionIcon,
-  Card,
-  Flex,
-  Text,
-  Tooltip,
-  useMantineTheme,
-} from "@mantine/core";
-import Link from "next/link";
+import { Card, Flex, Text, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
-import { BsGithub } from "react-icons/bs";
 import { TbHeart } from "react-icons/tb";
 import { DevelopmentStatus } from "../../../server/models/developmentStatus";
 import { Routes } from "../../../share/routes";
-import { formatDate, stopPropagation } from "../../lib/utils";
+import { formatDate } from "../../lib/utils";
+import { GitHubCodeButton } from "../../ui/GitHubCodeButton";
 import { TextLink } from "../../ui/TextLink";
 import { DevelopmentStatusBadge } from "../development/DevelopmentCard/DevelopmentStatusBadge";
 
@@ -73,30 +65,7 @@ export const UserDevelopmentCard: React.FC<Props> = ({
     >
       <Flex justify="space-between" align="center">
         <DevelopmentStatusBadge status={developmentStatus} />
-        <Flex onClick={stopPropagation}>
-          <Tooltip
-            label="コードを見に行く"
-            position="top"
-            withArrow
-            transition="pop"
-          >
-            <ActionIcon
-              size={40}
-              component={Link}
-              // githubのURLをgithub1sに変換
-              href={githubUrl.replace(/^(https:\/\/github)(.com)/, "$11s$2")}
-              target="_blank"
-              sx={(theme) => ({
-                transition: "all 200ms",
-                "&:hover": {
-                  backgroundColor: theme.fn.rgba(theme.colors.gray[7], 0.1),
-                },
-              })}
-            >
-              <BsGithub size="80%" fill={colors.gray[7]} />
-            </ActionIcon>
-          </Tooltip>
-        </Flex>
+        <GitHubCodeButton gitHubUrl={githubUrl} />
       </Flex>
       <Flex justify="space-between" mt="xs">
         <Flex gap={10}>

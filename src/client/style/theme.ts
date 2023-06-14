@@ -101,6 +101,8 @@ export const theme: MantineThemeOverride = {
         // 影が表示されない。なんのためのhiddenなのかわからないため、とりあえずinputのwrapper
         // に影を表示させる
         wrapper: {
+          outline: "transparent solid 0px",
+          transition: "outline 100ms",
           "&:focus-within": {
             borderRadius: theme.radius.md,
             outline: `${theme.colors.gray[4]} solid 2px`,
@@ -185,6 +187,8 @@ export const theme: MantineThemeOverride = {
       styles: (theme) => ({
         root: {
           borderRadius: theme.radius.md,
+          outline: "transparent solid 0px",
+          transition: "outline 100ms",
           "&:focus-within": {
             outline: `${theme.colors.gray[4]} solid 2px`,
             outlineOffset: "2px",
@@ -199,6 +203,8 @@ export const theme: MantineThemeOverride = {
         control: {
           backgroundColor: "transparent",
           borderColor: theme.colors.gray[3],
+          outline: "transparent solid 0px",
+          transition: "outline 100ms",
           "&:focus": {
             outline: `${theme.colors.gray[4]} solid 2px`,
             outlineOffset: "2px",

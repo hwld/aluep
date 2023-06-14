@@ -101,7 +101,7 @@ export const IdeaSearchPage: React.FC = () => {
             />
           </Flex>
         </Flex>
-        {/* 検索する前の画面も作りたい */}
+        {/* TODO: 検索する前の画面も作りたい */}
         {searchedIdeasResult?.ideas.length === 0 ? (
           <EmptyIdeaSearchResult />
         ) : (

@@ -1,6 +1,4 @@
 import {
-  ActionIcon,
-  Box,
   Card,
   Flex,
   Stack,
@@ -9,9 +7,7 @@ import {
   Tooltip,
   useMantineTheme,
 } from "@mantine/core";
-import Link from "next/link";
 import React from "react";
-import { BsGithub } from "react-icons/bs";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
 import { Development } from "../../server/models/development";
@@ -21,6 +17,7 @@ import { DevelopmentStatusBadge } from "../features/development/DevelopmentCard/
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import { useSessionQuery } from "../features/session/useSessionQuery";
 import { UserIconLink } from "../features/user/UserIconLink";
+import { GitHubCodeButton } from "../ui/GitHubCodeButton";
 
 type Props = { development: Development; idea: Idea };
 
@@ -31,7 +28,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
 }) => {
   const { session } = useSessionQuery();
   const mantineTheme = useMantineTheme();
-  const isDevelopment = development.userId === session?.user.id;
+  const isDevelopment = development.developerUserId === session?.user.id;
 
   return (
     <>
@@ -72,68 +69,30 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
                 >
                   <UserIconLink
                     size="xl"
-                    iconSrc={development.image}
-                    userId={development.userId}
+                    iconSrc={development.developerUserImage}
+                    userId={development.developerUserId}
                   />
                 </Flex>
                 <Flex align="center" justify="center">
-                  <Text>{development.name}</Text>
+                  <Text>{development.developerUserName}</Text>
                 </Flex>
-
                 <Flex gap={40} mt={10} wrap="wrap" justify="center">
-                  <Box>
-                    <Tooltip
-                      label="開発に対するいいねの合計"
-                      position="top"
-                      withArrow
-                      transition="pop"
-                    >
-                      <Flex align="center" wrap="wrap" gap="3px">
-                        <TbHeart
-                          color="transparent"
-                          fill={mantineTheme.colors.red[7]}
-                          size="30"
-                        />
-                        <Text>{development.likes}</Text>
-                      </Flex>
-                    </Tooltip>
-                  </Box>
-
-                  <Box>
-                    <Tooltip
-                      label="GitHubへのアクセス"
-                      position="top"
-                      withArrow
-                      transition="pop"
-                    >
-                      <Flex align="center" wrap="wrap" direction="column">
-                        <ActionIcon
-                          size={30}
-                          component={Link}
-                          // githubのURLをgithub1sに変換
-                          href={development.githubUrl.replace(
-                            /^(https:\/\/github)(.com)/,
-                            "$11s$2"
-                          )}
-                          target="_blank"
-                          sx={(theme) => ({
-                            transition: "all 200ms",
-                            "&:hover": {
-                              backgroundColor: theme.fn.rgba(
-                                theme.colors.gray[7],
-                                0.1
-                              ),
-                            },
-                          })}
-                        >
-                          <BsGithub
-                            size="90%"
-                            fill={mantineTheme.colors.gray[7]}
-                          />
-                        </ActionIcon>
-                      </Flex>
-                    </Tooltip>
-                  </Box>
+                  <Tooltip
+                    label="開発に対するいいねの合計"
+                    position="top"
+                    withArrow
+                    transition="pop"
+                  >
+                    <Flex align="center" wrap="wrap" gap="3px">
+                      <TbHeart
+                        color="transparent"
+                        fill={mantineTheme.colors.red[7]}
+                        size="30"
+                      />
+                      <Text>{development.likes}</Text>
+                    </Flex>
+                  </Tooltip>
+                  <GitHubCodeButton gitHubUrl={development.githubUrl} />
                 </Flex>
               </Flex>
             </Card>

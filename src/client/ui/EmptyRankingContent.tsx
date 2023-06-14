@@ -35,10 +35,10 @@ export const EmptyRankingContent: React.FC<Props> = ({ page }) => {
   return (
     <Flex direction="column" align="center">
       <Flex align="flex-end">{pageData[page].icon}</Flex>
-      <Text mt="md" size="xl" align="center" c="gray.5">
+      <Text mt="sm" size="lg" align="center" c="gray.5" fw="bold">
         いいねがありません
       </Text>
-      <Text size="sm" c="gray.4" align="center">
+      <Text c="gray.4" align="center">
         {`${pageData[page].target}へのいいねのランキングがここに表示されます。`}
       </Text>
     </Flex>

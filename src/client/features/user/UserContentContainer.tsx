@@ -13,6 +13,7 @@ type Props = {
   isEmpty: boolean;
   emptyIcon: ReactNode;
   emptyText: string;
+  emptyDescription: ReactNode;
 };
 export const UserContentContainer: React.FC<Props> = ({
   children,
@@ -23,12 +24,17 @@ export const UserContentContainer: React.FC<Props> = ({
   isEmpty,
   emptyIcon,
   emptyText,
+  emptyDescription,
 }) => {
   return (
     <Stack w="100%">
       {isEmpty ? (
-        <Flex align="flex-start" direction="column">
-          <EmptyUserContentItem icon={emptyIcon} text={emptyText} />
+        <Flex align="center" direction="column">
+          <EmptyUserContentItem
+            icon={emptyIcon}
+            text={emptyText}
+            description={emptyDescription}
+          />
         </Flex>
       ) : (
         <GridContainer minItemWidthPx={itemMinWidthPx}>

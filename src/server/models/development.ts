@@ -3,14 +3,13 @@ import { OmitStrict } from "../../types/OmitStrict";
 import { db } from "../lib/prismadb";
 import { DevelopmentStatus } from "./developmentStatus";
 
-//TODO: nameとかimageで毎回混乱する
 export type Development = {
   id: string;
   ideaId: string;
   ideaTitle: string;
-  userId: string;
-  name: string | null;
-  image: string | null;
+  developerUserId: string;
+  developerUserName: string | null;
+  developerUserImage: string | null;
   githubUrl: string;
   comment: string;
   likes: number;
@@ -36,9 +35,9 @@ const convertDevelopment = (
     id: raw.id,
     ideaId: raw.ideaId,
     ideaTitle: raw.idea.title,
-    userId: raw.user.id,
-    name: raw.user.name,
-    image: raw.user.image,
+    developerUserId: raw.user.id,
+    developerUserName: raw.user.name,
+    developerUserImage: raw.user.image,
     githubUrl: raw.githubUrl,
     comment: raw.comment,
     likes: raw.likes.length,

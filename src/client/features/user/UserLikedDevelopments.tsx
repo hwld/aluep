@@ -27,13 +27,18 @@ export const UserLikedDevelopments: React.FC<Props> = ({
       isEmpty={likedDevelopmentsPerPage?.list.length === 0}
       emptyIcon={
         <TbHeart
-          size="200"
+          size="100"
           color="transparent"
           fill={colors.red[7]}
           style={{ position: "relative", top: "10px" }}
         />
       }
-      emptyText="まだ開発情報へのいいねがありません。"
+      emptyText="開発情報のいいねがありません"
+      emptyDescription={
+        <>
+          ユーザーが開発情報にいいねすると、<br></br>ここに表示されます。
+        </>
+      }
     >
       {likedDevelopmentsPerPage?.list.map((dev) => (
         <LikedDevelopmentCard key={dev.id} development={dev} />

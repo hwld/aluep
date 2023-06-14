@@ -1,19 +1,8 @@
-import {
-  Box,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  TextInput,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Box, Card, Flex, Stack, TextInput, Title } from "@mantine/core";
 import { useRef, useState } from "react";
-import { BsDot } from "react-icons/bs";
-import { MdOutlinePersonSearch } from "react-icons/md";
-import { RiQuestionMark } from "react-icons/ri";
 import { z } from "zod";
-import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";
+import { userCardMinWidthPx } from "../features/user/UserCard";
+import { UserSearchResultContent } from "../features/user/UserSearchResultContent";
 import { useSearchedUsersQuery } from "../features/user/useSearchedUsersQuery";
 import { useURLParams } from "../lib/useURLParams";
 
@@ -35,9 +24,7 @@ export const UserSearchPage: React.FC = () => {
     }, 200);
   };
 
-  const mantineTheme = useMantineTheme();
-
-  const { resultUserNames } = useSearchedUsersQuery(userNameFromURLParams);
+  const { searchedUserResult } = useSearchedUsersQuery(userNameFromURLParams);
 
   return (
     <Box>
@@ -67,76 +54,14 @@ export const UserSearchPage: React.FC = () => {
           </Stack>
         </Card>
         <Stack mt={30}>
-          {/* 検索ボックスが空 */}
-          {userNameFromURLParams === "" ? (
-            <Flex direction="column" gap={30}>
-              <Flex justify="center" align="center">
-                <MdOutlinePersonSearch
-                  size={100}
-                  color={mantineTheme.colors.red[7]}
-                />
-              </Flex>
-              <Text align="center" c="gray.5">
-                ユーザを検索してみよう!
-              </Text>
-            </Flex>
-          ) : resultUserNames?.length !== 0 ? (
-            //検索結果がn件以上の場合
-            <>
-              {resultUserNames?.length === 30 ? (
-                <>
-                  <Box
-                    sx={(theme) => ({
-                      display: "grid",
-                      gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
-                      gap: theme.spacing.md,
-                    })}
-                  >
-                    {resultUserNames?.map((user) => {
-                      return <UserCard key={user.id} user={user} />;
-                    })}
-                  </Box>
-
-                  <Text align="center" c="gray.5">
-                    ユーザの検索結果が30件以上見つかったため、30件のみ表示しています。
-                  </Text>
-                </>
-              ) : (
-                //検索結果がn件未満の場合
-                <Box
-                  sx={(theme) => ({
-                    display: "grid",
-                    gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
-                    gap: theme.spacing.md,
-                  })}
-                >
-                  {resultUserNames?.map((user) => {
-                    return <UserCard key={user.id} user={user} />;
-                  })}
-                </Box>
-              )}
-            </>
-          ) : (
-            <Flex direction="column" gap={30}>
-              <Flex justify="center" align="center">
-                <MdOutlinePersonSearch
-                  size={70}
-                  color={mantineTheme.colors.red[7]}
-                />
-                <BsDot size={40} color={mantineTheme.colors.red[3]} />
-                <BsDot size={40} color={mantineTheme.colors.red[4]} />
-                <BsDot size={40} color={mantineTheme.colors.red[5]} />
-                <BsDot size={40} color={mantineTheme.colors.red[6]} />
-                <RiQuestionMark size={80} color={mantineTheme.colors.red[7]} />
-              </Flex>
-              <Text align="center" c="gray.5">
-                ユーザがいません<br></br>
-                <Text align="center" c="gray.5">
-                  別の条件をお試しください。
-                </Text>
-              </Text>
-            </Flex>
-          )}
+          <UserSearchResultContent
+            userSearchResult={searchedUserResult ?? []}
+            // URLParamsにあるuserNameが空のときに専用のUIを表示させる
+            // userNameを直接使用すると、空文字から文字を入力したときの再レンダリングで
+            // ここがfalseになってしまい、検索結果が存在しないというUIが一瞬表示されてしまう
+            // そのちらつきを防ぐために、遅延された入力を使用する
+            isEmptyKeyword={userNameFromURLParams === ""}
+          />
         </Stack>
       </Flex>
     </Box>
