@@ -1,17 +1,17 @@
 // ページング用のラッパー
 
 type PaginateArgs<FinderInput, FinderResult> = {
-  finderInput: FinderInput;
   finder: (
     input: FinderInput & { take: number; skip: number }
   ) => Promise<FinderResult>;
+  finderInput: FinderInput;
   // 全ページ数を取得するために、finderInputを受け取って全データの数を数える関数が必要になる
   counter: (input: FinderInput) => Promise<number>;
   pagingData: { page: number; limit: number };
 };
 export const paginate = async <FinderInput, FinderResult>({
-  finderInput,
   finder,
+  finderInput,
   counter,
   pagingData: { page, limit },
 }: PaginateArgs<FinderInput, FinderResult>): Promise<

@@ -62,7 +62,6 @@ export const DevelopmentCard: React.FC<Props> = ({
 
   return (
     <Card
-      key={development.userId}
       p="sm"
       sx={(theme) => ({
         position: "static",
@@ -119,7 +118,7 @@ export const DevelopmentCard: React.FC<Props> = ({
             <Text fw="bold" size="lg">
               {development.name}
               <Text span c="gray.5" size="sm" fw="normal">
-                の開発
+                {" の開発"}
               </Text>
             </Text>
           </TextLink>

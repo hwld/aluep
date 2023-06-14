@@ -3,9 +3,11 @@ import { OmitStrict } from "../../types/OmitStrict";
 import { db } from "../lib/prismadb";
 import { DevelopmentStatus } from "./developmentStatus";
 
+//TODO: nameとかimageで毎回混乱する
 export type Development = {
   id: string;
   ideaId: string;
+  ideaTitle: string;
   userId: string;
   name: string | null;
   image: string | null;
@@ -18,7 +20,12 @@ export type Development = {
 };
 
 const developmentArgs = {
-  include: { user: true, likes: true, status: true },
+  include: {
+    user: true,
+    likes: true,
+    status: true,
+    idea: { select: { title: true } },
+  },
 } satisfies Prisma.DevelopmentArgs;
 
 const convertDevelopment = (
@@ -28,6 +35,7 @@ const convertDevelopment = (
   const development: Development = {
     id: raw.id,
     ideaId: raw.ideaId,
+    ideaTitle: raw.idea.title,
     userId: raw.user.id,
     name: raw.user.name,
     image: raw.user.image,

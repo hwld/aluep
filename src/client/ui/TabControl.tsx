@@ -1,4 +1,4 @@
-import { Box, Center, SegmentedControl, useMantineTheme } from "@mantine/core";
+import { Box, Center, SegmentedControl } from "@mantine/core";
 import { useMemo } from "react";
 import { IconType } from "react-icons/lib";
 
@@ -12,8 +12,6 @@ export const TabControl = <T extends string>({
   onChange,
   data,
 }: Props<T>) => {
-  const { colors } = useMantineTheme();
-
   const innerData = useMemo(() => {
     return data.map(({ label, icon: Icon, value }) => {
       return {
@@ -38,7 +36,6 @@ export const TabControl = <T extends string>({
         root: { backgroundColor: theme.colors.gray[1] },
         control: {
           borderRadius: "4px",
-          width: "150px",
           transition: "background-color 150ms",
           "&:hover": {
             backgroundColor: theme.fn.rgba(theme.colors.gray[2], 0.5),

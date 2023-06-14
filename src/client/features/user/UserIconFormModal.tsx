@@ -3,9 +3,9 @@ import { useRef, useState } from "react";
 import { AppModal } from "../../ui/AppModal";
 import {
   ImageCropper,
+  ImageInfo,
   imageCropperSize,
   imageCropperStep,
-  ImageInfo,
 } from "../../ui/ImageCropper";
 import { UserIcon } from "./UserIcon";
 

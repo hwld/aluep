@@ -5,6 +5,7 @@ export const pageLimit = {
   ideaLikingUsers: 20,
   userDevelopments: 18,
   likedIdeas: 18,
+  likedDevelopments: 18,
   postedIdeas: 18,
 } as const;
 

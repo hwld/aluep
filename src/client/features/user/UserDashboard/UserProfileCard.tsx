@@ -75,7 +75,7 @@ export const UserProfileCard: React.FC<Props> = ({ user, maxWidth }) => {
               )}
               <TextLink href={Routes.userFavorites(user.id)}>
                 <Flex align="flex-end">
-                  <Text size="md" fw="bold" sx={{ letterSpacing: "0.3rem" }}>
+                  <Text size="md" fw="bold">
                     {favoriteUserCount ?? 0}
                     <Text
                       span
@@ -83,7 +83,7 @@ export const UserProfileCard: React.FC<Props> = ({ user, maxWidth }) => {
                       c="gray.5"
                       sx={{ letterSpacing: "normal" }}
                     >
-                      favorites
+                      {" favorites"}
                     </Text>
                   </Text>
                 </Flex>

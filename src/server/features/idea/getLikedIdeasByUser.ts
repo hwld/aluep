@@ -22,7 +22,7 @@ export const getLikedIdeasByUser = publicProcedure
     });
     const likedIdeaIds = likedIdeaIdObjs.map((l) => l.ideaId);
 
-    //お題にいいねしてあるモデルの中から自分のIDを取得
+    // いいねしたお題の情報を取得
     const likedIdeas = await findManyIdeas({
       where: { id: { in: likedIdeaIds } },
     });

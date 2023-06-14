@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { likedDevelopmentsPerPageQueryKey } from "../../../client/features/development/useLikedDevelopmentsPerPage";
 import { userDevelopmentsPerPageQueryKey } from "../../../client/features/development/useUserDevelopmentsPerPage";
 import { likedIdeasPerPageQueryKey } from "../../../client/features/idea/useLikedIdeasPerPage";
 import { postedIdeasPerPageQueryKey } from "../../../client/features/idea/usePostedIdeasQuery";
@@ -58,8 +59,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
         );
         break;
       case "likedDevelopments":
-        // TODO
-        console.error("not impl");
+        // ユーザーがいいねいた開発情報
+        await queryClient.prefetchQuery(
+          likedDevelopmentsPerPageQueryKey(userId, page),
+          () => caller.development.getLikedDevelopmentsByUser({ userId, page })
+        );
         break;
       default:
         assertNever(tab);

@@ -6,6 +6,7 @@ import { UserDetailPageTab, userDetailPageSchame } from "../../share/schema";
 import { assertNever } from "../../share/utils";
 import { UserDashboard } from "../features/user/UserDashboard/UserDashboard";
 import { UserDevelopments } from "../features/user/UserDevelopments";
+import { UserLikedDevelopments } from "../features/user/UserLikedDevelopments";
 import { UserLikedIdeas } from "../features/user/UserLikedIdeas";
 import { UserPostedIdeas } from "../features/user/UserPostedIdeas";
 import { useReceivedLikeCountQuery } from "../features/user/useReceivedLikeCountQuery";
@@ -57,8 +58,13 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
           />
         );
       case "likedDevelopments":
-        // TODO
-        return <div>no impl</div>;
+        return (
+          <UserLikedDevelopments
+            user={user}
+            page={page}
+            onChangePage={handleChangePage}
+          />
+        );
       default:
         assertNever(activeTab);
     }
@@ -89,6 +95,11 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
             {
               value: "likedIdeas",
               label: "いいねしたお題",
+              icon: TbHeart,
+            },
+            {
+              value: "likedDevelopments",
+              label: "いいねした開発情報",
               icon: TbHeart,
             },
           ]}

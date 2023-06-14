@@ -36,6 +36,12 @@ type SortedInSameOrderParams<T, K> = {
   base: K[];
   getKey: (value: T) => K;
 };
+
+/**
+ * targetをbaseと同じ並び順にした配列を返す。
+ *
+ * getKey(target)とbase[number]を比較する
+ */
 export const sortedInSameOrder = <T, K>({
   target,
   base,
