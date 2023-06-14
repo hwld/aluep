@@ -57,6 +57,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
           () => caller.idea.getLikedIdeasByUser({ userId, page })
         );
         break;
+      case "likedDevelopments":
+        // TODO
+        console.error("not impl");
+        break;
       default:
         assertNever(tab);
     }

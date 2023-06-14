@@ -1,10 +1,9 @@
-import { Flex, Stack, Text, useMantineTheme } from "@mantine/core";
+import { useMantineTheme } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
 import { User } from "../../../server/models/user";
-import { AppPagination } from "../../ui/AppPagination";
-import { GridContainer } from "../../ui/GridContainer";
 import { IdeaCard, ideaCardMinWidthPx } from "../idea/IdeaCard/IdeaCard";
 import { useLikedIdeasPerPage } from "../idea/useLikedIdeasPerPage";
+import { UserContentContainer } from "./UserContentContainer";
 
 type Props = {
   user: User;
@@ -20,35 +19,25 @@ export const UserLikedIdeas: React.FC<Props> = ({
   const { colors } = useMantineTheme();
 
   return (
-    <Stack w="100%">
-      {likedIdeasPerPage?.list.length === 0 ? (
-        <Flex align="flex-start" direction="column">
-          <Stack align="center" spacing={0}>
-            <TbHeart
-              size="200"
-              color="transparent"
-              fill={colors.red[7]}
-              style={{ position: "relative", top: "10px" }}
-            />
-            <Text size="xl" color="gray.5">
-              まだお題へのいいねがありません。
-            </Text>
-          </Stack>
-        </Flex>
-      ) : (
-        <GridContainer minItemWidthPx={ideaCardMinWidthPx}>
-          {likedIdeasPerPage?.list.map((idea) => (
-            <IdeaCard key={idea.id} idea={idea} />
-          ))}
-        </GridContainer>
-      )}
-
-      <AppPagination
-        page={page}
-        onChange={onChangePage}
-        total={likedIdeasPerPage?.allPages ?? 0}
-        w="min-content"
-      />
-    </Stack>
+    <UserContentContainer
+      itemMinWidthPx={ideaCardMinWidthPx}
+      page={page}
+      onChangePage={onChangePage}
+      totalPages={likedIdeasPerPage?.allPages ?? 0}
+      isEmpty={likedIdeasPerPage?.list.length === 0}
+      emptyIcon={
+        <TbHeart
+          size="200"
+          color="transparent"
+          fill={colors.red[7]}
+          style={{ position: "relative", top: "10px" }}
+        />
+      }
+      emptyText="まだお題へのいいねがありません。"
+    >
+      {likedIdeasPerPage?.list.map((idea) => (
+        <IdeaCard key={idea.id} idea={idea} />
+      ))}
+    </UserContentContainer>
   );
 };

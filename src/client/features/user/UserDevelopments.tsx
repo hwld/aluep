@@ -1,9 +1,8 @@
-import { Flex, Stack, Text, useMantineTheme } from "@mantine/core";
+import { useMantineTheme } from "@mantine/core";
 import { TbCode } from "react-icons/tb";
 import { User } from "../../../server/models/user";
-import { AppPagination } from "../../ui/AppPagination";
-import { GridContainer } from "../../ui/GridContainer";
 import { useUserDevelopmentsPerPage } from "../development/useUserDevelopmentsPerPage";
+import { UserContentContainer } from "./UserContentContainer";
 import {
   UserDevelopmentCard,
   userDevelopmentCardMinWidthPx,
@@ -23,32 +22,18 @@ export const UserDevelopments: React.FC<Props> = ({
   const { colors } = useMantineTheme();
 
   return (
-    <Stack w="100%">
-      {userDevelopmentsPerPage?.list.length === 0 ? (
-        <Flex align="flex-start" direction="column">
-          <Stack align="center" spacing={0}>
-            <TbCode size="200" color={colors.red[7]} />
-            <Text size="xl" color="gray.5">
-              まだお題の開発情報がありません。
-            </Text>
-          </Stack>
-        </Flex>
-      ) : (
-        <GridContainer minItemWidthPx={userDevelopmentCardMinWidthPx}>
-          {userDevelopmentsPerPage?.list.map((dev) => (
-            <UserDevelopmentCard
-              key={dev.developmentId}
-              userDevelopment={dev}
-            />
-          ))}
-        </GridContainer>
-      )}
-
-      <AppPagination
-        page={page}
-        onChange={onChangePage}
-        total={userDevelopmentsPerPage?.allPages ?? 0}
-      />
-    </Stack>
+    <UserContentContainer
+      itemMinWidthPx={userDevelopmentCardMinWidthPx}
+      page={page}
+      onChangePage={onChangePage}
+      totalPages={userDevelopmentsPerPage?.allPages ?? 0}
+      isEmpty={userDevelopmentsPerPage?.list.length === 0}
+      emptyIcon={<TbCode size="200" color={colors.red[7]} />}
+      emptyText="まだお題の開発情報がありません。"
+    >
+      {userDevelopmentsPerPage?.list.map((dev) => (
+        <UserDevelopmentCard key={dev.developmentId} userDevelopment={dev} />
+      ))}
+    </UserContentContainer>
   );
 };

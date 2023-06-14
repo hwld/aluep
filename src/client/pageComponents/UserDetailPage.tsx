@@ -1,4 +1,4 @@
-import { Box, Flex, Stack, useMantineTheme } from "@mantine/core";
+import { Box, Flex, Stack } from "@mantine/core";
 import { useMemo } from "react";
 import { TbCode, TbFileText, TbHeart } from "react-icons/tb";
 import { User } from "../../server/models/user";
@@ -16,7 +16,6 @@ import { TabControl } from "../ui/TabControl";
 type Props = { user: User };
 
 export const UserDetailPage: React.FC<Props> = ({ user }) => {
-  const { colors } = useMantineTheme();
   const [{ tab: activeTab, page }, setURLParam] =
     useURLParams(userDetailPageSchame);
 
@@ -58,6 +57,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
           />
         );
       case "likedDevelopments":
+        // TODO
         return <div>no impl</div>;
       default:
         assertNever(activeTab);
