@@ -1,17 +1,16 @@
-import { Box, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
 import { Idea } from "../../server/models/idea";
 import { paginatedPageSchema } from "../../share/schema";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import {
-  LikingUserCard,
-  likingUserCardMinWidthPx,
-} from "../features/user/LikingUserCard";
-import { NothingIdeaLikingUsers } from "../features/user/NothingIdeaLikingUsers";
+  IdeaLikingUserCard,
+  ideaLikingUserCardMinWidthPx,
+} from "../features/user/IdeaLikingUserCard";
 import { useIdeaLikingUsersPerPage } from "../features/user/useIdeaLikingUsersQuery";
-import { userCardMinWidthPx } from "../features/user/UserCard";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
+import { GridContainer } from "../ui/GridContainer";
 
 type Props = { idea: Idea };
 export const IdeaLikingUsersPage: React.FC<Props> = ({ idea }) => {
@@ -24,7 +23,7 @@ export const IdeaLikingUsersPage: React.FC<Props> = ({ idea }) => {
   };
 
   return (
-    <Stack w="100%" miw={userCardMinWidthPx} maw={800} m="auto" spacing="lg">
+    <Stack w="100%" maw={1200} m="auto" spacing="lg">
       <Flex align="center" gap="sm">
         <TbHeart
           size="35px"
@@ -37,37 +36,17 @@ export const IdeaLikingUsersPage: React.FC<Props> = ({ idea }) => {
         <Text c="gray.5">いいねされたお題</Text>
         <IdeaSummaryCard idea={idea} />
       </Stack>
-      {idea.likes === 0 ? (
-        <NothingIdeaLikingUsers />
-      ) : (
-        <Stack spacing="sm">
-          <Text c="gray.5" align="left">
-            いいねしたユーザー
-          </Text>
-          <Box
-            sx={(theme) => ({
-              display: "grid",
-              gridTemplateColumns: `repeat(auto-fit, minmax(${likingUserCardMinWidthPx}px, 1fr))`,
-              gap: theme.spacing.xs,
-            })}
-          >
-            {ideaLikingUsersPerPage?.list.map((user) => {
-              return (
-                <LikingUserCard
-                  key={user.id}
-                  user={user}
-                  ideaLike={{
-                    id: "",
-                    ideaId: "",
-                    userId: "",
-                    createdAt: user.ideaLikeCreated,
-                  }}
-                />
-              );
-            })}
-          </Box>
-        </Stack>
-      )}
+
+      <Stack spacing="sm">
+        <Text c="gray.5" align="left">
+          いいねしたユーザー
+        </Text>
+        <GridContainer minItemWidthPx={ideaLikingUserCardMinWidthPx}>
+          {ideaLikingUsersPerPage?.list.map((user) => {
+            return <IdeaLikingUserCard key={user.id} likingUser={user} />;
+          })}
+        </GridContainer>
+      </Stack>
       <AppPagination
         page={page}
         onChange={handleChangePage}

@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Text, useMantineTheme } from "@mantine/core";
+import { Box, Card, Flex, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { Development } from "../../../../server/models/development";
 import { Idea } from "../../../../server/models/idea";
@@ -19,6 +19,8 @@ type Props = {
   onUnlikeDevelopment: (developmentId: string) => void;
 };
 
+export const developmentCardMinWidthPx = 450;
+
 export const DevelopmentCard: React.FC<Props> = ({
   idea,
   development,
@@ -26,7 +28,6 @@ export const DevelopmentCard: React.FC<Props> = ({
   onUnlikeDevelopment: onUnlike,
 }) => {
   const router = useRouter();
-  const { colors } = useMantineTheme();
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
 
@@ -54,6 +55,7 @@ export const DevelopmentCard: React.FC<Props> = ({
   return (
     <Card
       p="sm"
+      miw={developmentCardMinWidthPx}
       sx={(theme) => ({
         position: "static",
         cursor: "pointer",
