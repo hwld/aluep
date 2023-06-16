@@ -9,7 +9,7 @@ import { TextLink } from "../../../ui/TextLink";
 import { useRequireLoginModal } from "../../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../../session/useSessionQuery";
 import { UserIconLink } from "../../user/UserIconLink";
-import { DevelopmentLikeButton } from "./DevelopmentLikeButton";
+import { DevelopmentMiniLikeButton } from "./DevelopmentMiniLikeButton";
 import { DevelopmentStatusBadge } from "./DevelopmentStatusBadge";
 
 type Props = {
@@ -97,7 +97,7 @@ export const DevelopmentCard: React.FC<Props> = ({
         </Text>
         <Box>
           {/* TODO:  いいねボタンを詳細画面に移動させる*/}
-          <DevelopmentLikeButton
+          <DevelopmentMiniLikeButton
             likes={development.likes}
             likedByLoggedInUser={development.likedByLoggedInUser}
             onClick={handleLikeDevelopment}

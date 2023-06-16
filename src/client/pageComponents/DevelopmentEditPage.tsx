@@ -5,10 +5,10 @@ import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
 import { DevelopmentStatusIds } from "../../share/consts";
 import { CreateRepositoryData, DevelopmentFormData } from "../../share/schema";
+import { useDevelop } from "../features/development/useDevelop";
 import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
 import { DevelopmentForm } from "../features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
-import { useDevelop } from "../features/idea/useDevelop";
 
 type Props = {
   idea: Idea;

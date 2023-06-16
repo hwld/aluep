@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { developedQueryKey } from "../../../client/features/idea/useDevelop";
+import { developedQueryKey } from "../../../client/features/development/useDevelop";
 import { ideaLikedQueryKey } from "../../../client/features/idea/useIdeaLike";
 import {
   ideaQueryKey,

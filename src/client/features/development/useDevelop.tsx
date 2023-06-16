@@ -16,8 +16,8 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "../../lib/utils";
+import { ideaQueryKey } from "../idea/useIdeaQuery";
 import { useSessionQuery } from "../session/useSessionQuery";
-import { ideaQueryKey } from "./useIdeaQuery";
 
 export const developedQueryKey = (
   ideaId: string,

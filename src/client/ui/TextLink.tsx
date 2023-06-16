@@ -5,12 +5,14 @@ import { stopPropagation } from "../lib/utils";
 type Props = {
   href: string;
   width?: string;
+  height?: string;
   className?: string;
 } & PropsWithChildren;
 
 export const TextLink: React.FC<Props> = ({
   href,
   width,
+  height,
   className,
   children,
 }) => {
@@ -21,6 +23,7 @@ export const TextLink: React.FC<Props> = ({
       href={href}
       miw={0}
       w={width}
+      h={height}
       sx={(theme) => ({
         textDecoration: "none",
         "&:hover": {

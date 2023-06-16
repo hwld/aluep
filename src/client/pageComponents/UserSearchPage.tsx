@@ -31,7 +31,7 @@ export const UserSearchPage: React.FC = () => {
       <Flex
         direction="column"
         w="100%"
-        maw={750}
+        maw={1200}
         miw={userCardMinWidthPx}
         sx={() => ({
           marginLeft: "auto",
@@ -57,9 +57,8 @@ export const UserSearchPage: React.FC = () => {
           <UserSearchResultContent
             userSearchResult={searchedUserResult ?? []}
             // URLParamsにあるuserNameが空のときに専用のUIを表示させる
-            // userNameを直接使用すると、空文字から文字を入力したときの再レンダリングで
-            // ここがfalseになってしまい、検索結果が存在しないというUIが一瞬表示されてしまう
-            // そのちらつきを防ぐために、遅延された入力を使用する
+            // userNameが変更されてから検索が実行されるまでに遅延があるので、
+            // userNameではなく遅延されたuserNameFromURLParamsを使用する。
             isEmptyKeyword={userNameFromURLParams === ""}
           />
         </Stack>

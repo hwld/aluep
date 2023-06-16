@@ -9,7 +9,6 @@ import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import { RouterInputs } from "../../../../server/lib/trpc";
 import { Development } from "../../../../server/models/development";
-import { Idea } from "../../../../server/models/idea";
 import { Routes } from "../../../../share/routes";
 import { ReportBaseForm } from "../../../../share/schema";
 import { trpc } from "../../../lib/trpc";
@@ -24,13 +23,12 @@ import { MenuDropdown } from "../../../ui/AppMenu/MenuDropdown";
 import { MenuItem } from "../../../ui/AppMenu/MenuItem";
 import { MenuLinkItem } from "../../../ui/AppMenu/MenuLinkItem";
 import { AppModal } from "../../../ui/AppModal";
-import { useDevelop } from "../../idea/useDevelop";
 import { ReportForm } from "../../report/ReportForm";
+import { useDevelop } from "../useDevelop";
 
-type Props = { development: Development; idea: Idea; isOwner: boolean };
+type Props = { development: Development; isOwner: boolean };
 export const DevelopmentMenuButton: React.FC<Props> = ({
   development,
-  idea,
   isOwner,
 }) => {
   const [
@@ -57,7 +55,7 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
             message: "開発情報を削除しました。",
           });
           closeDeleteModal();
-          router.push(Routes.idea(idea.id));
+          router.push(Routes.idea(development.ideaId));
         },
         onError: () => {
           showErrorNotification({
@@ -93,7 +91,7 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
       reportDetail: data.reportDetail,
       targetDeveloepr: {
         url: `${window.location.origin}${Routes.development(
-          idea.id,
+          development.ideaId,
           development.id
         )}`,
         name: development.developerUserName,

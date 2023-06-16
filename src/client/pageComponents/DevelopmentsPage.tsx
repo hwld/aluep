@@ -6,9 +6,9 @@ import {
   DevelopmentCard,
   developmentCardMinWidthPx,
 } from "../features/development/DevelopmentCard/DevelopmentCard";
+import { useDevelopmentLikeOnList } from "../features/development/useDevelopmentLikeOnList";
 import { useDevelopmentsPerPage } from "../features/development/useDevelopmentsPerPage";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
-import { useDevelopmentLike } from "../features/idea/useDevelopmentLike";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
 import { GridContainer } from "../ui/GridContainer";
@@ -18,9 +18,9 @@ type Props = { idea: Idea };
 export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { developmentsPerPage } = useDevelopmentsPerPage(idea.id, page);
+  const { colors } = useMantineTheme();
   const { likeDevelopmentMutation, unlikeDevelopmentMutation } =
-    useDevelopmentLike(idea.id, page);
-  const mantineTheme = useMantineTheme();
+    useDevelopmentLikeOnList(idea.id, page);
 
   const handleChangePage = (page: number) => {
     setURLParams({ page });
@@ -31,7 +31,7 @@ export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
       <Flex align="center" gap="sm">
         <MdComputer
           size="30px"
-          color={mantineTheme.colors.red[7]}
+          color={colors.red[7]}
           style={{ marginTop: "3px" }}
         />
         <Title order={3}>お題の開発情報</Title>

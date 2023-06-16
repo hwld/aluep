@@ -25,11 +25,11 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
         <Box
           component="main"
           p="xl"
-          sx={{
+          sx={(theme) => ({
             width: "100%",
             minWidth: "0",
             margin: "0 auto",
-          }}
+          })}
         >
           {children}
         </Box>

@@ -5,11 +5,14 @@ import { showErrorNotification } from "../../lib/utils";
 import {
   DevelopmentsPerPageData,
   developmentsPerPageQueryKey,
-} from "../development/useDevelopmentsPerPage";
+} from "./useDevelopmentsPerPage";
 
-// 開発情報のいいねは、ページングされた開発情報のリストに対して行うので、
-// ページ番号を取得して、そのページの開発情報のみを扱えるようにする
-export const useDevelopmentLike = (ideaId: string, page: number) => {
+/**
+ * ページングされた開発情報のリスト上で開発情報にいいねを行う。
+ *
+ *  pageは楽観的更新で特定のページのクエリキャッシュを書き換えるために使う
+ */
+export const useDevelopmentLikeOnList = (ideaId: string, page: number) => {
   const queryClient = useQueryClient();
 
   const likeDevelopmentMutation = useMutation({

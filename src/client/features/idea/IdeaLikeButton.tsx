@@ -23,7 +23,7 @@ export const IdeaLikeButton: React.FC<Props> = ({
   disabled,
   ideaId,
 }) => {
-  const mantineTheme = useMantineTheme();
+  const { colors } = useMantineTheme();
 
   return (
     <Stack align="center" spacing={3}>
@@ -51,20 +51,12 @@ export const IdeaLikeButton: React.FC<Props> = ({
         })}
         onClick={onLikeIdea}
       >
-        {likedByLoggedInUser ? (
-          <TbHeart
-            size="75%"
-            color="transparent"
-            fill={mantineTheme.colors.pink[7]}
-            style={{ marginTop: "4px" }}
-          />
-        ) : (
-          <TbHeart
-            size="70%"
-            color={mantineTheme.colors.gray[5]}
-            style={{ marginTop: "4px" }}
-          />
-        )}
+        <TbHeart
+          {...(likedByLoggedInUser
+            ? { size: "75%", color: "transparent", fill: colors.pink[7] }
+            : { size: "70%", color: colors.gray[5] })}
+          style={{ marginTop: "4px" }}
+        />
       </ActionIcon>
       <Tooltip label="いいねしたユーザーを表示する" position="right">
         <Anchor
