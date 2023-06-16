@@ -89,7 +89,7 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
               icon={<RiEdit2Line size={18} />}
               href={Routes.userUpdate}
             >
-              プロフィールを更新する
+              プロフィールを編集する
             </MenuLinkItem>
           )}
         </MenuDropdown>

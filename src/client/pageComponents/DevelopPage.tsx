@@ -1,5 +1,6 @@
-import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { Card, Stack, Text, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
+import { MdComputer } from "react-icons/md";
 import { Idea } from "../../server/models/idea";
 import { DevelopmentStatusIds } from "../../share/consts";
 import { Routes } from "../../share/routes";
@@ -8,7 +9,7 @@ import { useDevelop } from "../features/development/useDevelop";
 import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
 import { DevelopmentForm } from "../features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
-import { ComputerIcon } from "../ui/ComputerIcon";
+import { PageHeader } from "../ui/PageHeader";
 
 type Props = {
   idea: Idea;
@@ -35,37 +36,37 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
   };
 
   return (
-    <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
-      <Flex align="center" gap="xs">
-        <ComputerIcon size="30px" fill={mantineTheme.colors.red[7]} />
-        <Title order={3}>お題を開発</Title>
-      </Flex>
-      <Stack spacing="xs">
-        <Text c="gray.5">開発するお題</Text>
-        <IdeaSummaryCard idea={idea} />
+    <>
+      <PageHeader icon={MdComputer} pageName="お題の開発" />
+      <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
+        <Stack spacing="xs">
+          <Text c="gray.5">開発するお題</Text>
+          <IdeaSummaryCard idea={idea} />
+        </Stack>
+        <Stack spacing="xs">
+          <Text c="gray.5">開発情報</Text>
+          <Card>
+            <DevelopmentForm
+              developmentStatuses={developmentStatuses}
+              onSubmit={handleDevelopIdea}
+              onCancel={handleBack}
+              ideaId={idea.id}
+              submitText="開発する"
+              isLoading={developMutation.isLoading || developMutation.isSuccess}
+              isRelogined={Object.keys(restoredValues).length > 0}
+              defaultValues={{
+                type: "createRepository",
+                comment: restoredValues?.developmentComment ?? "",
+                githubRepositoryName: restoredValues?.repositoryName ?? "",
+                githubRepositoryDescription:
+                  restoredValues?.repositoryDesc ?? "",
+                developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
+                githubRepositoryUrl: "",
+              }}
+            />
+          </Card>
+        </Stack>
       </Stack>
-      <Stack spacing="xs">
-        <Text c="gray.5">開発情報</Text>
-        <Card>
-          <DevelopmentForm
-            developmentStatuses={developmentStatuses}
-            onSubmit={handleDevelopIdea}
-            onCancel={handleBack}
-            ideaId={idea.id}
-            submitText="開発する"
-            isLoading={developMutation.isLoading || developMutation.isSuccess}
-            isRelogined={Object.keys(restoredValues).length > 0}
-            defaultValues={{
-              type: "createRepository",
-              comment: restoredValues?.developmentComment ?? "",
-              githubRepositoryName: restoredValues?.repositoryName ?? "",
-              githubRepositoryDescription: restoredValues?.repositoryDesc ?? "",
-              developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
-              githubRepositoryUrl: "",
-            }}
-          />
-        </Card>
-      </Stack>
-    </Stack>
+    </>
   );
 };

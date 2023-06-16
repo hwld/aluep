@@ -128,7 +128,7 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
                   development.id
                 )}
               >
-                開発情報を更新する
+                開発情報を編集する
               </MenuLinkItem>
               <MenuItem
                 red

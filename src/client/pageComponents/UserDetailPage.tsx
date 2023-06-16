@@ -1,5 +1,6 @@
 import { Box, Flex, Stack } from "@mantine/core";
 import { useMemo } from "react";
+import { MdOutlinePerson } from "react-icons/md";
 import { TbCode, TbFileText, TbHeart } from "react-icons/tb";
 import { User } from "../../server/models/user";
 import { UserDetailPageTab, userDetailPageSchame } from "../../share/schema";
@@ -12,6 +13,7 @@ import { UserPostedIdeas } from "../features/user/UserPostedIdeas";
 import { useReceivedLikeCountQuery } from "../features/user/useReceivedLikeCountQuery";
 import { useUserActivityQuery } from "../features/user/useUserActivityQuery";
 import { useURLParams } from "../lib/useURLParams";
+import { PageHeader } from "../ui/PageHeader";
 import { TabControl } from "../ui/TabControl";
 
 type Props = { user: User };
@@ -71,41 +73,44 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
   }, [activeTab, page, setURLParam, user]);
 
   return (
-    <Flex maw={1200} direction="column" align="center" m="auto">
-      <UserDashboard
-        user={user}
-        receivedLikeCount={recievedLikeCount}
-        userActivity={userActivity}
-      />
-      <Stack mt={40} w="100%" align="center" spacing="xl">
-        <TabControl
-          activeTab={activeTab}
-          onChange={handleChangeTab}
-          data={[
-            {
-              value: "postedIdeas",
-              label: "投稿したお題",
-              icon: TbFileText,
-            },
-            {
-              value: "developments",
-              label: "お題の開発情報",
-              icon: TbCode,
-            },
-            {
-              value: "likedIdeas",
-              label: "いいねしたお題",
-              icon: TbHeart,
-            },
-            {
-              value: "likedDevelopments",
-              label: "いいねした開発情報",
-              icon: TbHeart,
-            },
-          ]}
+    <>
+      <PageHeader icon={MdOutlinePerson} pageName="ユーザーの詳細" />
+      <Flex maw={1200} direction="column" align="center" m="auto">
+        <UserDashboard
+          user={user}
+          receivedLikeCount={recievedLikeCount}
+          userActivity={userActivity}
         />
-        <Box w="100%">{tabContent}</Box>
-      </Stack>
-    </Flex>
+        <Stack mt={40} w="100%" align="center" spacing="xl">
+          <TabControl
+            activeTab={activeTab}
+            onChange={handleChangeTab}
+            data={[
+              {
+                value: "postedIdeas",
+                label: "投稿したお題",
+                icon: TbFileText,
+              },
+              {
+                value: "developments",
+                label: "お題の開発情報",
+                icon: TbCode,
+              },
+              {
+                value: "likedIdeas",
+                label: "いいねしたお題",
+                icon: TbHeart,
+              },
+              {
+                value: "likedDevelopments",
+                label: "いいねした開発情報",
+                icon: TbHeart,
+              },
+            ]}
+          />
+          <Box w="100%">{tabContent}</Box>
+        </Stack>
+      </Flex>
+    </>
   );
 };

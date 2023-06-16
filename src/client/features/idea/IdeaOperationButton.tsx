@@ -120,7 +120,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
                 icon={<RiEdit2Fill size={20} />}
                 href={Routes.ideaUpdate(idea.id)}
               >
-                お題を更新する
+                お題を編集する
               </MenuLinkItem>
               <MenuItem
                 icon={<FaTrash size={18} />}

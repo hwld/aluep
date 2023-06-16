@@ -1,6 +1,6 @@
-import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { Card, Stack, Text, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
-import { MdComputer } from "react-icons/md";
+import { MdOutlineEdit } from "react-icons/md";
 import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
 import { DevelopmentStatusIds } from "../../share/consts";
@@ -9,6 +9,7 @@ import { useDevelop } from "../features/development/useDevelop";
 import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
 import { DevelopmentForm } from "../features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
+import { PageHeader } from "../ui/PageHeader";
 
 type Props = {
   idea: Idea;
@@ -41,53 +42,49 @@ export const DevelopmentEditPage: React.FC<Props> = ({
   };
 
   return (
-    <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
-      <Flex align="center" gap="xs">
-        <MdComputer
-          size="30px"
-          color={mantineTheme.colors.red[7]}
-          style={{ marginTop: "3px" }}
-        />
-        <Title order={3}>お題開発情報の更新</Title>
-      </Flex>
-      <Stack spacing="xs">
-        <Text c="gray.5">開発しているお題</Text>
-        <IdeaSummaryCard idea={idea} />
+    <>
+      <PageHeader icon={MdOutlineEdit} pageName="開発情報の編集" />
+      <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
+        <Stack spacing="xs">
+          <Text c="gray.5">開発しているお題</Text>
+          <IdeaSummaryCard idea={idea} />
+        </Stack>
+        <Stack spacing="xs">
+          <Text c="gray.5">開発情報</Text>
+          <Card>
+            <DevelopmentForm
+              developmentStatuses={developmentStatuses}
+              onSubmit={handleUpdateDevelopment}
+              onCancel={handleBack}
+              ideaId={idea.id}
+              isRelogined={Object.keys(restoredValues).length > 0}
+              defaultValues={{
+                comment:
+                  restoredValues.developmentComment ?? development.comment,
+                developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
+                // 復元されたフィールドが1つ以上あれば、リポジトリの作成を選択していたと解釈する。
+                ...(Object.keys(restoredValues).length > 0
+                  ? {
+                      type: "createRepository",
+                      githubRepositoryName: restoredValues.repositoryName ?? "",
+                      githubRepositoryDescription:
+                        restoredValues.repositoryDesc ?? "",
+                    }
+                  : {
+                      type: "referenceRepository",
+                      githubRepositoryUrl: development.githubUrl,
+                      developmentStatusId: development.status.id,
+                    }),
+              }}
+              submitText="更新する"
+              isLoading={
+                updateDevelopmentMutation.isLoading ||
+                updateDevelopmentMutation.isSuccess
+              }
+            />
+          </Card>
+        </Stack>
       </Stack>
-      <Stack spacing="xs">
-        <Text c="gray.5">開発情報</Text>
-        <Card>
-          <DevelopmentForm
-            developmentStatuses={developmentStatuses}
-            onSubmit={handleUpdateDevelopment}
-            onCancel={handleBack}
-            ideaId={idea.id}
-            isRelogined={Object.keys(restoredValues).length > 0}
-            defaultValues={{
-              comment: restoredValues.developmentComment ?? development.comment,
-              developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
-              // 復元されたフィールドが1つ以上あれば、リポジトリの作成を選択していたと解釈する。
-              ...(Object.keys(restoredValues).length > 0
-                ? {
-                    type: "createRepository",
-                    githubRepositoryName: restoredValues.repositoryName ?? "",
-                    githubRepositoryDescription:
-                      restoredValues.repositoryDesc ?? "",
-                  }
-                : {
-                    type: "referenceRepository",
-                    githubRepositoryUrl: development.githubUrl,
-                    developmentStatusId: development.status.id,
-                  }),
-            }}
-            submitText="更新する"
-            isLoading={
-              updateDevelopmentMutation.isLoading ||
-              updateDevelopmentMutation.isSuccess
-            }
-          />
-        </Card>
-      </Stack>
-    </Stack>
+    </>
   );
 };

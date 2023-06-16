@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Title, useMantineTheme } from "@mantine/core";
+import { Box, Card, useMantineTheme } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { MdPostAdd } from "react-icons/md";
@@ -8,6 +8,7 @@ import { IdeaForm } from "../features/idea/IdeaForm";
 import { useAllTagsQuery } from "../features/idea/useAllTagsQuery";
 import { trpc } from "../lib/trpc";
 import { showErrorNotification, showSuccessNotification } from "../lib/utils";
+import { PageHeader } from "../ui/PageHeader";
 
 export const IdeaCreatePage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
@@ -42,21 +43,20 @@ export const IdeaCreatePage: React.FC = () => {
   };
 
   return (
-    <Box w="100%" maw={800} miw={300} m="auto">
-      <Flex align="center" gap="xs">
-        <MdPostAdd size="30px" color={mantineTheme.colors.red[7]} />
-        <Title order={3}>お題の投稿</Title>
-      </Flex>
-      <Card mt="md" sx={{ position: "static" }}>
-        <IdeaForm
-          submitText="投稿する"
-          onSubmit={handleCreateIdea}
-          onCancel={handleCancel}
-          allTags={allTags}
-          // お題の投稿に成功したら遷移するので、isSuccessがtrueでも遷移するまでloading状態にさせる
-          isLoading={createMutate.isLoading || createMutate.isSuccess}
-        />
-      </Card>
-    </Box>
+    <>
+      <PageHeader icon={MdPostAdd} pageName="お題の投稿" />
+      <Box w="100%" maw={800} miw={300} m="auto">
+        <Card mt="md" sx={{ position: "static" }}>
+          <IdeaForm
+            submitText="投稿する"
+            onSubmit={handleCreateIdea}
+            onCancel={handleCancel}
+            allTags={allTags}
+            // お題の投稿に成功したら遷移するので、isSuccessがtrueでも遷移するまでloading状態にさせる
+            isLoading={createMutate.isLoading || createMutate.isSuccess}
+          />
+        </Card>
+      </Box>
+    </>
   );
 };

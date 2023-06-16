@@ -1,5 +1,6 @@
 import { Box, Flex, Stack } from "@mantine/core";
 import React from "react";
+import { MdComputer } from "react-icons/md";
 import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
 import { DeveloperCard } from "../features/development/DeveloperCard";
@@ -7,6 +8,7 @@ import { DevelopmentDetailCard } from "../features/development/DevelopmentDetail
 import { useDevelopmentLikeOnDetail } from "../features/development/useDevelopLikeOnDetail";
 import { useRequireLoginModal } from "../features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "../features/session/useSessionQuery";
+import { PageHeader } from "../ui/PageHeader";
 
 type Props = { development: Development; idea: Idea };
 
@@ -32,25 +34,26 @@ export const DevelopmentDetailPage: React.FC<Props> = ({ development }) => {
   };
 
   return (
-    // TODO:
-    // ipadの768pxには対応したい
-    // 狭くなったら2行にしたい
-    <Stack maw={1200} w="100%" m="auto" spacing="lg">
-      <Flex w="100%" gap="md">
-        <Box miw={350} sx={() => ({ flexGrow: 1, flexShrink: 1 })}>
-          <DevelopmentDetailCard
-            development={development}
-            onToggleDevelopmentLike={handleToggleDevelopmentLike}
-            isLoggedInUserDeveloper={isLoggedInUserDeveloper}
-          />
-        </Box>
-        <Box w={500} miw={350} sx={() => ({ flexShrink: 1 })}>
-          <DeveloperCard
-            development={development}
-            isLoggedInUserDeveloper={isLoggedInUserDeveloper}
-          />
-        </Box>
-      </Flex>
-    </Stack>
+    <>
+      <PageHeader icon={MdComputer} pageName="開発情報の詳細" />
+      {/* TODO: ipadの768pxには対応したい. 狭くなったら2行にしたい. */}
+      <Stack maw={1200} w="100%" m="auto" spacing="lg">
+        <Flex w="100%" gap="md">
+          <Box miw={350} sx={() => ({ flexGrow: 1, flexShrink: 1 })}>
+            <DevelopmentDetailCard
+              development={development}
+              onToggleDevelopmentLike={handleToggleDevelopmentLike}
+              isLoggedInUserDeveloper={isLoggedInUserDeveloper}
+            />
+          </Box>
+          <Box w={500} miw={350} sx={() => ({ flexShrink: 1 })}>
+            <DeveloperCard
+              development={development}
+              isLoggedInUserDeveloper={isLoggedInUserDeveloper}
+            />
+          </Box>
+        </Flex>
+      </Stack>
+    </>
   );
 };

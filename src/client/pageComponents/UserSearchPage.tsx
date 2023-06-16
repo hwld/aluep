@@ -1,10 +1,12 @@
 import { Box, Card, Flex, Stack, TextInput, Title } from "@mantine/core";
 import { useRef, useState } from "react";
+import { TbSearch } from "react-icons/tb";
 import { z } from "zod";
 import { userCardMinWidthPx } from "../features/user/UserCard";
 import { UserSearchResultContent } from "../features/user/UserSearchResultContent";
 import { useSearchedUsersQuery } from "../features/user/useSearchedUsersQuery";
 import { useURLParams } from "../lib/useURLParams";
+import { PageHeader } from "../ui/PageHeader";
 
 export const UserSearchPage: React.FC = () => {
   const [{ userName: userNameFromURLParams }, setURLParams] = useURLParams(
@@ -27,42 +29,45 @@ export const UserSearchPage: React.FC = () => {
   const { searchedUserResult } = useSearchedUsersQuery(userNameFromURLParams);
 
   return (
-    <Box>
-      <Flex
-        direction="column"
-        w="100%"
-        maw={1200}
-        miw={userCardMinWidthPx}
-        sx={() => ({
-          marginLeft: "auto",
-          marginRight: "auto",
-        })}
-      >
-        <Card
+    <>
+      <PageHeader icon={TbSearch} pageName="ユーザーの検索" />
+      <Box>
+        <Flex
+          direction="column"
+          w="100%"
+          maw={1200}
+          miw={userCardMinWidthPx}
           sx={() => ({
-            position: "static",
+            marginLeft: "auto",
+            marginRight: "auto",
           })}
         >
-          <Stack>
-            <Title order={5}>検索</Title>
+          <Card
+            sx={() => ({
+              position: "static",
+            })}
+          >
+            <Stack>
+              <Title order={5}>検索</Title>
 
-            <TextInput
-              label="ユーザ名"
-              value={userName}
-              onChange={handleChangeUserName}
+              <TextInput
+                label="ユーザ名"
+                value={userName}
+                onChange={handleChangeUserName}
+              />
+            </Stack>
+          </Card>
+          <Stack mt={30}>
+            <UserSearchResultContent
+              userSearchResult={searchedUserResult ?? []}
+              // URLParamsにあるuserNameが空のときに専用のUIを表示させる
+              // userNameが変更されてから検索が実行されるまでに遅延があるので、
+              // userNameではなく遅延されたuserNameFromURLParamsを使用する。
+              isEmptyKeyword={userNameFromURLParams === ""}
             />
           </Stack>
-        </Card>
-        <Stack mt={30}>
-          <UserSearchResultContent
-            userSearchResult={searchedUserResult ?? []}
-            // URLParamsにあるuserNameが空のときに専用のUIを表示させる
-            // userNameが変更されてから検索が実行されるまでに遅延があるので、
-            // userNameではなく遅延されたuserNameFromURLParamsを使用する。
-            isEmptyKeyword={userNameFromURLParams === ""}
-          />
-        </Stack>
-      </Flex>
-    </Box>
+        </Flex>
+      </Box>
+    </>
   );
 };

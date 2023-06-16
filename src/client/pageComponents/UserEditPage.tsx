@@ -1,9 +1,9 @@
-import { Box, Card, Flex, Title, useMantineTheme } from "@mantine/core";
+import { Box, Card, Flex, useMantineTheme } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { RiEdit2Line } from "react-icons/ri";
+import { MdOutlineEdit } from "react-icons/md";
 import { RouterInputs } from "../../server/lib/trpc";
 import { Routes } from "../../share/routes";
 import { ProfileFormData } from "../../share/schema";
@@ -15,6 +15,7 @@ import {
   showLoadingNotification,
   showSuccessNotification,
 } from "../lib/utils";
+import { PageHeader } from "../ui/PageHeader";
 
 const uploadNotificationId = "upload-icon";
 
@@ -99,32 +100,31 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
   };
 
   return (
-    <Box w="100%" maw={800} miw={400} m="auto">
-      <Flex align="center" gap="xs">
-        <RiEdit2Line size="30px" color={mantineTheme.colors.red[7]} />
-        <Title order={3}>プロフィールの更新</Title>
-      </Flex>
-      <Card mt="md">
-        <Flex gap="md">
-          <UserIconFormDialog
-            userIconUrl={user.image}
-            onSubmit={handleUploadIcon}
-            submitting={uploading}
-          />
-          <Box sx={{ flexGrow: 1 }}>
-            <UserProfileForm
-              submitText="更新する"
-              onSubmit={handleUpdateUser}
-              onCancel={handleCancel}
-              defaultValues={{
-                name: user.name ?? "",
-                profile: user.profile ?? "",
-              }}
-              isLoading={updateMutation.isLoading || updateMutation.isSuccess}
+    <>
+      <PageHeader icon={MdOutlineEdit} pageName="ユーザーの編集" />
+      <Box w="100%" maw={800} miw={400} m="auto">
+        <Card mt="md">
+          <Flex gap="md">
+            <UserIconFormDialog
+              userIconUrl={user.image}
+              onSubmit={handleUploadIcon}
+              submitting={uploading}
             />
-          </Box>
-        </Flex>
-      </Card>
-    </Box>
+            <Box sx={{ flexGrow: 1 }}>
+              <UserProfileForm
+                submitText="更新する"
+                onSubmit={handleUpdateUser}
+                onCancel={handleCancel}
+                defaultValues={{
+                  name: user.name ?? "",
+                  profile: user.profile ?? "",
+                }}
+                isLoading={updateMutation.isLoading || updateMutation.isSuccess}
+              />
+            </Box>
+          </Flex>
+        </Card>
+      </Box>
+    </>
   );
 };
