@@ -26,29 +26,14 @@ export const IdeaSummaryCard: React.FC<Props> = ({ idea }) => {
         </Box>
         <Stack spacing="sm" miw={0}>
           <TextLink href={Routes.idea(idea.id)}>
-            <Title
-              order={4}
-              color="red.7"
-              sx={() => ({
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              })}
-            >
+            <Title order={4} color="red.7" truncate>
               {idea.title}
             </Title>
           </TextLink>
           <Flex gap={5} align="center">
             <UserIconLink userId={idea.user.id} iconSrc={idea.user.image} />
             <TextLink href={Routes.user(idea.user.id)}>
-              <Text
-                size="sm"
-                sx={{
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
+              <Text size="sm" truncate>
                 {idea.user.name}
               </Text>
             </TextLink>

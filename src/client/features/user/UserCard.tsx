@@ -40,10 +40,8 @@ export const UserCard: React.FC<Props> = ({ user }) => {
           <Text
             sx={{
               flexShrink: 0,
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
             }}
+            truncate
           >
             {user.name}
           </Text>

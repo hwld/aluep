@@ -44,11 +44,9 @@ export const IdeaLikingUserCard: React.FC<Props> = ({ likingUser }) => {
           {/* 名前 */}
           <TextLink href={Routes.user(likingUser.id)}>
             <Text
+              truncate
               sx={{
                 flexShrink: 0,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
               }}
               fw="bold"
               size="lg"

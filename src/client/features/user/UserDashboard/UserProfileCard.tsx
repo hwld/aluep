@@ -53,16 +53,7 @@ export const UserProfileCard: React.FC<Props> = ({ user, maxWidth }) => {
         <Flex gap="md">
           <UserIcon iconSrc={user.image} size="xl" />
           <Stack miw={0} spacing="xs">
-            <Title
-              order={1}
-              size={18}
-              miw={0}
-              sx={{
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
+            <Title order={1} size={18} miw={0} truncate>
               {user.name}
             </Title>
             <Flex gap="sm">

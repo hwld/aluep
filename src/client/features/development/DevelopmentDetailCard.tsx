@@ -39,16 +39,7 @@ export const DevelopmentDetailCard: React.FC<Props> = ({
             </Box>
             <Stack spacing={0} miw={0}>
               <TextLink href={Routes.idea(development.ideaId)}>
-                <Text
-                  c="gray.7"
-                  size="xl"
-                  fw="bold"
-                  sx={() => ({
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  })}
-                >
+                <Text c="gray.7" size="xl" fw="bold" truncate>
                   {development.ideaTitle}
                 </Text>
               </TextLink>

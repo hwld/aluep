@@ -18,11 +18,9 @@ export const UserSummaryCard: React.FC<Props> = ({ user }) => {
       <UserIcon size="lg" iconSrc={user.image} />
       <Stack spacing={3} sx={{ flexShrink: 1, minWidth: 0 }}>
         <Text
+          truncate
           sx={{
             flexShrink: 0,
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
           }}
         >
           {user.name}

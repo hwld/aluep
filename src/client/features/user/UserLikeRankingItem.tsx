@@ -43,14 +43,7 @@ export const UserLikeRankingItem: React.FC<Props> = ({
           <UserIconLink userId={user.id} iconSrc={user.image} />
           <Flex miw={0} direction="column">
             <TextLink href={Routes.user(user.id)}>
-              <Text
-                size="xs"
-                sx={{
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
+              <Text size="xs" truncate>
                 {user.name}
               </Text>
             </TextLink>

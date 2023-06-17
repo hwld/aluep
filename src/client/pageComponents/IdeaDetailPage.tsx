@@ -11,12 +11,14 @@ import {
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 import { FaUserAlt } from "react-icons/fa";
+import { MdAccessTime, MdUpdate } from "react-icons/md";
 import { TbFileText } from "react-icons/tb";
 import { Idea } from "../../server/models/idea";
 import { Routes } from "../../share/routes";
 import { useDevelop } from "../features/development/useDevelop";
 import { DevelopButton } from "../features/idea/DevelopButton";
 import { IdeaDescriptionView } from "../features/idea/IdeaDescriptionView";
+import { IdeaInfoCardItem } from "../features/idea/IdeaDetail/IdeaInfoCardItem";
 import { IdeaLikeButton } from "../features/idea/IdeaLikeButton";
 import { IdeaOperationButton } from "../features/idea/IdeaOperationButton";
 import { IdeaTagBadge } from "../features/idea/IdeaTagBadge";
@@ -25,13 +27,14 @@ import { IdeaComments } from "../features/ideaComment/IdeaComments";
 import { useRequireLoginModal } from "../features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "../features/session/useSessionQuery";
 import { UserIconLink } from "../features/user/UserIconLink";
+import { formatDate } from "../lib/utils";
 import { PageHeader } from "../ui/PageHeader";
 import { TextLink } from "../ui/TextLink";
 
 type Props = { idea: Idea };
 
 export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
-  const mantineTheme = useMantineTheme();
+  const { colors } = useMantineTheme();
 
   const { session } = useSessionQuery();
   const router = useRouter();
@@ -135,21 +138,37 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
                 }}
                 w={300}
               >
-                <Flex gap="xs" align="center">
-                  <FaUserAlt size={15} fill={mantineTheme.colors.gray[5]} />
-                  <Text color="gray.5" size="sm">
-                    投稿者
-                  </Text>
-                </Flex>
-                <Flex gap={5} mt={5}>
-                  <UserIconLink
-                    iconSrc={idea.user.image}
-                    userId={idea.user.id}
-                  />
-                  <TextLink href={Routes.user(idea.user.id)}>
-                    <Text size={13}>{idea.user.name}</Text>
-                  </TextLink>
-                </Flex>
+                <IdeaInfoCardItem
+                  icon={<FaUserAlt size={20} color={colors.gray[5]} />}
+                  title="投稿者"
+                >
+                  <Flex gap={5} mt={5}>
+                    <UserIconLink
+                      iconSrc={idea.user.image}
+                      userId={idea.user.id}
+                    />
+                    <TextLink href={Routes.user(idea.user.id)}>
+                      <Text size={13} truncate>
+                        {idea.user.name}
+                      </Text>
+                    </TextLink>
+                  </Flex>
+                </IdeaInfoCardItem>
+
+                <IdeaInfoCardItem
+                  icon={<MdAccessTime size={20} color={colors.gray[5]} />}
+                  title="作成日"
+                >
+                  <Text>{formatDate(new Date(idea.createdAt))}</Text>
+                </IdeaInfoCardItem>
+
+                <IdeaInfoCardItem
+                  icon={<MdUpdate size={20} color={colors.gray[5]} />}
+                  title="更新日"
+                  disabledDivider
+                >
+                  <Text>{formatDate(new Date(idea.updatedAt))}</Text>
+                </IdeaInfoCardItem>
               </Card>
             </Stack>
           </MediaQuery>

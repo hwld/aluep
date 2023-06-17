@@ -44,7 +44,7 @@ export const useSearchedIdeasQuery = ({
         tagIds,
         order,
         period,
-        page: page.toString(),
+        page,
       });
     },
     keepPreviousData: true,

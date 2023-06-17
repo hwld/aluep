@@ -1,4 +1,4 @@
-import { Box, Flex, Stack } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import React from "react";
 import { MdComputer } from "react-icons/md";
 import { Development } from "../../server/models/development";
@@ -36,24 +36,21 @@ export const DevelopmentDetailPage: React.FC<Props> = ({ development }) => {
   return (
     <>
       <PageHeader icon={MdComputer} pageName="開発情報の詳細" />
-      {/* TODO: ipadの768pxには対応したい. 狭くなったら2行にしたい. */}
-      <Stack maw={1200} w="100%" m="auto" spacing="lg">
-        <Flex w="100%" gap="md">
-          <Box miw={350} sx={() => ({ flexGrow: 1, flexShrink: 1 })}>
-            <DevelopmentDetailCard
-              development={development}
-              onToggleDevelopmentLike={handleToggleDevelopmentLike}
-              isLoggedInUserDeveloper={isLoggedInUserDeveloper}
-            />
-          </Box>
-          <Box w={500} miw={350} sx={() => ({ flexShrink: 1 })}>
-            <DeveloperCard
-              development={development}
-              isLoggedInUserDeveloper={isLoggedInUserDeveloper}
-            />
-          </Box>
-        </Flex>
-      </Stack>
+      <Grid maw={1200} w="100%" m="auto">
+        <Grid.Col xs={12} md={7}>
+          <DevelopmentDetailCard
+            development={development}
+            onToggleDevelopmentLike={handleToggleDevelopmentLike}
+            isLoggedInUserDeveloper={isLoggedInUserDeveloper}
+          />
+        </Grid.Col>
+        <Grid.Col xs={12} md={5}>
+          <DeveloperCard
+            development={development}
+            isLoggedInUserDeveloper={isLoggedInUserDeveloper}
+          />
+        </Grid.Col>
+      </Grid>
     </>
   );
 };

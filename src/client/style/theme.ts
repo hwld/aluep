@@ -74,9 +74,6 @@ export const theme: MantineThemeOverride = {
     Paper: { defaultProps: { bg: "gray.1" } },
     Text: {
       defaultProps: { color: "gray.7" },
-      styles: () => ({
-        root: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
-      }),
     },
     Headers: {
       styles: () => ({

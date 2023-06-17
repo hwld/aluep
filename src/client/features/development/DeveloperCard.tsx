@@ -28,15 +28,7 @@ export const DeveloperCard: React.FC<Props> = ({
           href={Routes.user(development.developerUserId)}
           height="min-content"
         >
-          <Title
-            size={18}
-            miw={0}
-            sx={{
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
+          <Title truncate size={18} miw={0}>
             {development.developerUserName}
           </Title>
         </TextLink>

@@ -57,14 +57,7 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
             miw={0}
           >
             <TextLink href={Routes.idea(idea.id)}>
-              <Text
-                size="sm"
-                sx={{
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <Text size="sm" truncate>
                 {idea.user.name}
               </Text>
             </TextLink>

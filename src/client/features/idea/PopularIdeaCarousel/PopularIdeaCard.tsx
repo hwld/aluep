@@ -62,7 +62,6 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
           sx={{
             flexShrink: 1,
             minHeight: 0,
-            textOverflow: "ellipsis",
           }}
           style={{
             display: "-webkit-box",
@@ -89,14 +88,7 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
             <UserIconLink userId={idea.user.id} iconSrc={idea.user.image} />
             <Flex direction="column" miw={0} sx={{ flexShrink: 1 }}>
               <TextLink href={Routes.user(idea.user.id)}>
-                <Text
-                  size="xs"
-                  sx={{
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                  }}
-                >
+                <Text size="xs" truncate>
                   {idea.user.name}
                 </Text>
               </TextLink>

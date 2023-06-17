@@ -31,61 +31,28 @@ export const LoggedInUserCard: React.FC<Props> = ({ user, iconWidth }) => {
           })}
           spacing="xs"
         >
-          <Text
-            c="gray.1"
-            fw="bold"
-            size="sm"
-            sx={() => ({
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            })}
-          >
+          <Text c="gray.1" fw="bold" size="sm" truncate>
             {user.name}
           </Text>
           {/* アイコン類 */}
           <Flex gap="xs">
             <Flex gap="2px" align="center">
               <TbHeart size="20" color={colors.gray[1]} />
-              <Text
-                size="sm"
-                color={colors.gray[1]}
-                sx={() => ({
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                })}
-              >
+              <Text size="sm" color={colors.gray[1]} truncate>
                 {loggedInUserInfo?.allLikes ?? 0}
               </Text>
             </Flex>
 
             <Flex gap="2px" align="center">
               <TbFileText size="20" color={colors.gray[1]} />
-              <Text
-                size="sm"
-                color={colors.gray[1]}
-                sx={() => ({
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                })}
-              >
+              <Text size="sm" color={colors.gray[1]} truncate>
                 {loggedInUserInfo?.ideas ?? 0}
               </Text>
             </Flex>
 
             <Flex gap="2px" align="center">
               <TbCode size="20" color={colors.gray[1]} />
-              <Text
-                size="sm"
-                color={colors.gray[1]}
-                sx={() => ({
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                })}
-              >
+              <Text size="sm" color={colors.gray[1]} truncate>
                 {loggedInUserInfo?.developments ?? 0}
               </Text>
             </Flex>
