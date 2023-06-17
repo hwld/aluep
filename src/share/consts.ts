@@ -3,6 +3,7 @@ export const pageLimit = {
   developments: 20,
   searchedIdeas: 24,
   ideaLikingUsers: 20,
+  developmentLikingUsers: 20,
   userDevelopments: 18,
   likedIdeas: 18,
   likedDevelopments: 18,

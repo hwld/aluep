@@ -96,7 +96,6 @@ export const DevelopmentCard: React.FC<Props> = ({
           開発開始日: {formatDate(new Date(development.createdAt))}
         </Text>
         <Box>
-          {/* TODO:  いいねボタンを詳細画面に移動させる*/}
           <DevelopmentMiniLikeButton
             likes={development.likes}
             likedByLoggedInUser={development.likedByLoggedInUser}

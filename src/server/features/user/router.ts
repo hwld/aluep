@@ -2,6 +2,7 @@ import { router } from "../../lib/trpc";
 import { getFavoritedUsers } from "./favoritedUsers";
 import { favoriteUser } from "./favoriteUser";
 import { getFavoriteCountByUser } from "./favoriteUserCount";
+import { getDevelopmentLikingUsers } from "./getDevelopmentLikingUsers";
 import { getIdeaLikingUsers } from "./getIdeaLikingUsers";
 import { getReceivedLikeCount } from "./getReceivedLikeCount";
 import { getUser } from "./getUser";
@@ -34,6 +35,9 @@ export const userRoute = router({
 
   /** 指定されたお題をいいねしたユーザーを取得する */
   getIdeaLikingUsers: getIdeaLikingUsers,
+
+  /** 指定された開発情報をいいねしたユーザーを取得する */
+  getDevelopmentLikingUsers: getDevelopmentLikingUsers,
 
   /** ユーザーのアクティビティを取得する */
   getUserActivity: getUserActivity,

@@ -58,7 +58,11 @@ export const IdeaLikeButton: React.FC<Props> = ({
           style={{ marginTop: "4px" }}
         />
       </ActionIcon>
-      <Tooltip label="いいねしたユーザーを表示する" position="right">
+      <Tooltip
+        offset={10}
+        label="いいねしたユーザーを表示する"
+        position="right"
+      >
         <Anchor
           component={Link}
           href={Routes.ideaLikingUsers(ideaId)}

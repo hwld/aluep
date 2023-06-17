@@ -8,7 +8,7 @@ export const Routes = {
   ideas: `/ideas`,
   idea: (id: string) => `${Routes.ideas}/${id}`,
   ideaCreate: "/ideas/create",
-  ideaUpdate: (ideaId: string) => `${Routes.ideas}/${ideaId}/update`,
+  ideaUpdate: (ideaId: string) => `${Routes.idea(ideaId)}/update`,
   ideaSearch: (query?: { order?: IdeaOrder; tagIds?: string }) =>
     `${Routes.ideas}/search${buildSearchParamsString(query)}`,
   ideaLikingUsers: (ideaId: string) => `${Routes.ideas}/${ideaId}/liking-users`,
@@ -17,9 +17,11 @@ export const Routes = {
   develop: (ideaId: string) => `${Routes.ideas}/${ideaId}/develop`,
   developments: (ideaId: string) => `${Routes.ideas}/${ideaId}/developments`,
   development: (ideaId: string, developmentId: string) =>
-    `${Routes.idea(ideaId)}/developments/${developmentId}/detail`,
+    `${Routes.developments(ideaId)}/${developmentId}`,
   developmentUpdate: (ideaId: string, developmentId: string) =>
-    `${Routes.idea(ideaId)}/developments/${developmentId}/update`,
+    `${Routes.development(ideaId, developmentId)}/update`,
+  developmentLikingUsers: (ideaId: string, developmentId: string) =>
+    `${Routes.development(ideaId, developmentId)}/liking-users`,
 
   /** ユーザー関連 */
   user: (id: string) => `/users/${id}`,

@@ -62,6 +62,8 @@ export const DevelopmentDetailCard: React.FC<Props> = ({
               <DevelopmentStatusBadge status={development.status} size="xl" />
             </Box>
             <DevelopmentLikeButton
+              developmentId={development.id}
+              ideaId={development.ideaId}
               likes={development.likes}
               likedByLoggedInUser={development.likedByLoggedInUser}
               onToggleIdeaLike={onToggleDevelopmentLike}

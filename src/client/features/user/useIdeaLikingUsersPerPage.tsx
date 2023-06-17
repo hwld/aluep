@@ -17,10 +17,7 @@ export const useIdeaLikingUsersPerPage = (ideaId: string, page: number) => {
   const { data: ideaLikingUsersPerPage, ...others } = useQuery({
     queryKey: ideaLikingUsersPerPageQueryKey(ideaId, page),
     queryFn: () => {
-      return trpc.user.getIdeaLikingUsers.query({
-        ideaId,
-        page: page.toString(),
-      });
+      return trpc.user.getIdeaLikingUsers.query({ ideaId, page });
     },
     keepPreviousData: true,
   });

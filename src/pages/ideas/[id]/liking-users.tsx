@@ -4,7 +4,7 @@ import {
   ideaQueryKey,
   useIdeaQuery,
 } from "../../../client/features/idea/useIdeaQuery";
-import { ideaLikingUsersPerPageQueryKey } from "../../../client/features/user/useIdeaLikingUsersQuery";
+import { ideaLikingUsersPerPageQueryKey } from "../../../client/features/user/useIdeaLikingUsersPerPage";
 import { IdeaLikingUsersPage } from "../../../client/pageComponents/IdeaLikingUsersPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
@@ -41,7 +41,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 /**
  * お題にいいねしているユーザー一覧を表示するページ
  */
-const LikingUsers: NextPage = () => {
+const IdeaLikingUsers: NextPage = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.id);
   const { idea, isLoading } = useIdeaQuery(ideaId);
@@ -54,4 +54,4 @@ const LikingUsers: NextPage = () => {
 
   return <IdeaLikingUsersPage idea={idea} />;
 };
-export default LikingUsers;
+export default IdeaLikingUsers;

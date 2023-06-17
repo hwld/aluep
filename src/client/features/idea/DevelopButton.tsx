@@ -81,7 +81,7 @@ export const DevelopButton: React.FC<Props> = ({
           </ActionIcon>
         </AppTooltip>
       </Flex>
-      <Tooltip label="開発情報の一覧を表示する" position="right">
+      <Tooltip offset={10} label="開発情報の一覧を表示する" position="right">
         <Anchor
           component={Link}
           href={Routes.developments(ideaId)}

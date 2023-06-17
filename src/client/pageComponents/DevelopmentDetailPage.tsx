@@ -5,7 +5,7 @@ import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
 import { DeveloperCard } from "../features/development/DeveloperCard";
 import { DevelopmentDetailCard } from "../features/development/DevelopmentDetailCard";
-import { useDevelopmentLikeOnDetail } from "../features/development/useDevelopLikeOnDetail";
+import { useDevelopmentLikeOnDetail } from "../features/development/useDevelopmentLikeOnDetail";
 import { useRequireLoginModal } from "../features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "../features/session/useSessionQuery";
 import { PageHeader } from "../ui/PageHeader";

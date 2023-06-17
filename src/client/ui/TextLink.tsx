@@ -7,6 +7,7 @@ type Props = {
   width?: string;
   height?: string;
   className?: string;
+  disabled?: boolean;
 } & PropsWithChildren;
 
 export const TextLink: React.FC<Props> = ({
@@ -15,7 +16,12 @@ export const TextLink: React.FC<Props> = ({
   height,
   className,
   children,
+  disabled = false,
 }) => {
+  if (disabled) {
+    return <>{children}</>;
+  }
+
   return (
     <Box
       component={Link}

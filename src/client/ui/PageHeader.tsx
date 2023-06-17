@@ -22,7 +22,7 @@ export const PageHeader: React.FC<Props> = ({ icon: Icon, pageName }) => {
       })}
     >
       <Icon size={25} color={colors.gray[1]} />
-      <Title order={1} c="gray.1" fw="bold" size="md">
+      <Title order={1} c="gray.1" size="md">
         {pageName}
       </Title>
     </Flex>

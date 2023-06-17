@@ -1,14 +1,20 @@
 import { ActionIcon, Flex, Text, useMantineTheme } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
+import { Routes } from "../../../share/routes";
 import { stopPropagation } from "../../lib/utils";
+import { TextLink } from "../../ui/TextLink";
 
 type Props = {
+  ideaId: string;
+  developmentId: string;
   likes: number;
   likedByLoggedInUser: boolean;
   onToggleIdeaLike: () => void;
   disabled?: boolean;
 };
 export const DevelopmentLikeButton: React.FC<Props> = ({
+  ideaId,
+  developmentId,
   likes,
   likedByLoggedInUser,
   onToggleIdeaLike,
@@ -62,9 +68,14 @@ export const DevelopmentLikeButton: React.FC<Props> = ({
           className={`like-icon ${likedByLoggedInUser ? "liked" : ""}`}
         />
       </ActionIcon>
-      <Text size="xl" fw="bold">
-        {likes}
-      </Text>
+      <TextLink
+        href={Routes.developmentLikingUsers(ideaId, developmentId)}
+        disabled={likes === 0}
+      >
+        <Text size="xl" fw="bold">
+          {likes}
+        </Text>
+      </TextLink>
     </Flex>
   );
 };
