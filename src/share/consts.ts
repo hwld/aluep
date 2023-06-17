@@ -4,7 +4,7 @@ export const pageLimit = {
   searchedIdeas: 24,
   ideaLikingUsers: 20,
   developmentLikingUsers: 20,
-  userDevelopments: 18,
+  developmentsByUser: 18,
   likedIdeas: 18,
   likedDevelopments: 18,
   postedIdeas: 18,

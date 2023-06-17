@@ -15,7 +15,7 @@ export const useUserDevelopmentsPerPage = (userId: string, page: number) => {
   const { data: userDevelopmentsPerPage, ...others } = useQuery({
     queryKey: userDevelopmentsPerPageQueryKey(userId, page),
     queryFn: () => {
-      return trpc.development.getUserDevelopments.query({ userId, page });
+      return trpc.development.getDevelopmentsByUser.query({ userId, page });
     },
     keepPreviousData: true,
   });

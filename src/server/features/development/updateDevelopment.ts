@@ -34,6 +34,7 @@ export const updateDevelopment = requireLoggedInProcedure
       data: {
         githubUrl: githubRepositoryUrl,
         comment: input.comment,
+        developedItemUrl: input.developedItemUrl,
         statusId: developmentStatusId,
       },
     });

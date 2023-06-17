@@ -9,7 +9,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { BsGithub } from "react-icons/bs";
-import { TbFileText } from "react-icons/tb";
+import { TbFileText, TbLink } from "react-icons/tb";
 import { Development } from "../../../server/models/development";
 import { Routes } from "../../../share/routes";
 import { TextLink } from "../../ui/TextLink";
@@ -73,10 +73,17 @@ export const DevelopmentDetailCard: React.FC<Props> = ({
             >
               コードを見る
             </Button>
-            {/* TODO: developmentにlinkを追加したい */}
-            {/* <Button leftIcon={<TbLink size={20} />} color="gray.5">
-              リンクを開く
-            </Button> */}
+            {development.developedItemUrl !== "" && (
+              <Button
+                component="a"
+                href={development.developedItemUrl}
+                target="_blank"
+                leftIcon={<TbLink size={20} />}
+                color="gray.5"
+              >
+                リンクを開く
+              </Button>
+            )}
           </Flex>
         </Stack>
       </Stack>

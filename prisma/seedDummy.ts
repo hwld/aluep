@@ -231,6 +231,7 @@ async function createDevelopments({
           id,
           githubUrl: "",
           comment: faker.lorem.words(3),
+          developedItemUrl: "",
           ideaId,
           userId: userIds[userIndex],
           statusId: faker.helpers.arrayElement([

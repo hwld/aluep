@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 import { TbFileText, TbHeart } from "react-icons/tb";
 import { Development } from "../../../server/models/development";
 import { Routes } from "../../../share/routes";
-import { GitHubCodeButton } from "../../ui/GitHubCodeButton";
+import { GitHubCodeIconLink } from "../../ui/GitHubCodeIconLink";
 import { TextLink } from "../../ui/TextLink";
 import { UserIconLink } from "../user/UserIconLink";
+import { DevelopedItemIconLink } from "./DevelopedItemIconLink";
 import { DevelopmentStatusBadge } from "./DevelopmentCard/DevelopmentStatusBadge";
 
 type Props = { development: Development };
@@ -37,7 +38,12 @@ export const LikedDevelopmentCard: React.FC<Props> = ({ development }) => {
     >
       <Flex justify="space-between">
         <DevelopmentStatusBadge status={development.status} />
-        <GitHubCodeButton gitHubUrl={development.githubUrl} />
+        <Flex>
+          <GitHubCodeIconLink gitHubUrl={development.githubUrl} />
+          {development.developedItemUrl !== "" && (
+            <DevelopedItemIconLink url={development.developedItemUrl} />
+          )}
+        </Flex>
       </Flex>
       <Flex gap="xs" justify="space-between" align="flex-end">
         <Flex gap="xs">

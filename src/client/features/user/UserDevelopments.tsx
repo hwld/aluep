@@ -37,7 +37,7 @@ export const UserDevelopments: React.FC<Props> = ({
       }
     >
       {userDevelopmentsPerPage?.list.map((dev) => (
-        <UserDevelopmentCard key={dev.developmentId} userDevelopment={dev} />
+        <UserDevelopmentCard key={dev.id} development={dev} />
       ))}
     </UserContentContainer>
   );

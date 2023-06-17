@@ -12,17 +12,19 @@ import {
 } from "../../../share/schema";
 import { AppForm } from "../../ui/AppForm";
 
+export type DevelopmentFormDefaultValues = Partial<
+  UnionToIntersection<
+    DistributiveOmit<DevelopmentFormData, "type" | "ideaId">
+  > & {
+    type: DevelopmentFormData["type"];
+  }
+>;
+
 type Props = {
   developmentStatuses: DevelopmentStatus[];
   // formのtypeと、それ以外のプロパティを一括で渡せるようにする。
   // 指定されたtypeに必要のないプロパティも渡せるように、Union型をIntersection型に変換する処理を書いた
-  defaultValues?: Partial<
-    UnionToIntersection<
-      DistributiveOmit<DevelopmentFormData, "type" | "ideaId">
-    > & {
-      type: DevelopmentFormData["type"];
-    }
-  >;
+  defaultValues?: DevelopmentFormDefaultValues;
   ideaId: string;
   onSubmit: (data: DevelopmentFormData) => void;
   onCancel: () => void;
@@ -184,6 +186,19 @@ export const DevelopmentForm: React.FC<Props> = ({
               label="コメント"
               minRows={5}
               error={errors.comment?.message}
+              {...field}
+            />
+          );
+        }}
+      />
+      <Controller
+        control={control}
+        name="developedItemUrl"
+        render={({ field }) => {
+          return (
+            <TextInput
+              label="開発したモノのURL"
+              error={getFieldState("developedItemUrl").error?.message}
               {...field}
             />
           );

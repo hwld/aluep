@@ -48,7 +48,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
         // ユーザーの開発情報
         await queryClient.prefetchQuery(
           userDevelopmentsPerPageQueryKey(userId, page),
-          () => caller.development.getUserDevelopments({ userId, page })
+          () => caller.development.getDevelopmentsByUser({ userId, page })
         );
         break;
       case "likedIdeas":

@@ -12,6 +12,7 @@ export type Development = {
   developerUserImage: string | null;
   githubUrl: string;
   comment: string;
+  developedItemUrl: string;
   likes: number;
   likedByLoggedInUser: boolean;
   createdAt: string;
@@ -40,6 +41,7 @@ const convertDevelopment = (
     developerUserImage: raw.user.image,
     githubUrl: raw.githubUrl,
     comment: raw.comment,
+    developedItemUrl: raw.developedItemUrl,
     likes: raw.likes.length,
     // ログインユーザーがいいねしているか
     likedByLoggedInUser: raw.likes.find(
@@ -54,7 +56,7 @@ const convertDevelopment = (
   return development;
 };
 
-type FindDevelopmentsArgs = OmitStrict<
+export type FindDevelopmentsArgs = OmitStrict<
   Prisma.DevelopmentFindManyArgs,
   "include" | "select"
 > & {

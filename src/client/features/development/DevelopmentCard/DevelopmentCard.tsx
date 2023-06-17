@@ -4,11 +4,12 @@ import { Development } from "../../../../server/models/development";
 import { Idea } from "../../../../server/models/idea";
 import { Routes } from "../../../../share/routes";
 import { formatDate } from "../../../lib/utils";
-import { GitHubCodeButton } from "../../../ui/GitHubCodeButton";
+import { GitHubCodeIconLink } from "../../../ui/GitHubCodeIconLink";
 import { TextLink } from "../../../ui/TextLink";
 import { useRequireLoginModal } from "../../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../../session/useSessionQuery";
 import { UserIconLink } from "../../user/UserIconLink";
+import { DevelopedItemIconLink } from "../DevelopedItemIconLink";
 import { DevelopmentMiniLikeButton } from "./DevelopmentMiniLikeButton";
 import { DevelopmentStatusBadge } from "./DevelopmentStatusBadge";
 
@@ -21,6 +22,7 @@ type Props = {
 
 export const developmentCardMinWidthPx = 450;
 
+// TODO: どこの開発情報のカードなのかわからない
 export const DevelopmentCard: React.FC<Props> = ({
   idea,
   development,
@@ -70,7 +72,12 @@ export const DevelopmentCard: React.FC<Props> = ({
     >
       <Flex justify="space-between">
         <DevelopmentStatusBadge status={development.status} />
-        <GitHubCodeButton gitHubUrl={development.githubUrl} />
+        <Flex>
+          <GitHubCodeIconLink gitHubUrl={development.githubUrl} />
+          {development.developedItemUrl && (
+            <DevelopedItemIconLink url={development.developedItemUrl} />
+          )}
+        </Flex>
       </Flex>
       <Flex justify="space-between">
         <Flex gap={10}>

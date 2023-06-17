@@ -4,8 +4,8 @@ import { developIdea } from "./developIdea";
 import { getDevelopment } from "./getDevelopment";
 import { getDevelopmentStatuses } from "./getDevelopmentStatuses";
 import { getDevelopmentsByIdea } from "./getDevelopmentsByIdea";
+import { getDevelopmentsByUser } from "./getDevelopmentsByUser";
 import { getLikedDevelopmentsByUser } from "./getLikedDevelopmentsByUser";
-import { getUserDevelopments } from "./getUserDevelopments";
 import { isDevelopedByUser } from "./isDevelopedByUser";
 import { likeDevelopment } from "./likeDevelopment";
 import { unlikeDevelopment } from "./unlikeDevelopment";
@@ -40,7 +40,7 @@ export const developmentRoute = router({
   getDevelopmentStatuses: getDevelopmentStatuses,
 
   /** 指定したユーザーが開発しているお題と開発情報の概要を取得する */
-  getUserDevelopments: getUserDevelopments,
+  getDevelopmentsByUser: getDevelopmentsByUser,
 
   /** 指定したユーザーがいいねした開発情報を取得する */
   getLikedDevelopmentsByUser: getLikedDevelopmentsByUser,

@@ -44,6 +44,12 @@ export const developmentFormSchema = z
       .string()
       .max(300, "コメントは300文字以下で入力してください。")
       .optional(),
+    developedItemUrl: z
+      .string()
+      .startsWith("https://", {
+        message: "httpsから始まるリンクを入力してください。",
+      })
+      .optional(),
   })
   .and(
     z.union([
@@ -87,6 +93,7 @@ export const updateDevelopFormSchema = developmentFormSchema.and(
 export const createRepositoryURLParamSchema = z
   .object({
     developmentComment: z.string(),
+    developedItemUrl: z.string(),
     repositoryName: z.string(),
     repositoryDesc: z.string(),
   })

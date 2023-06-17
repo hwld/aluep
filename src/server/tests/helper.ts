@@ -57,6 +57,7 @@ export const TestHelpers = {
         ideaId,
         userId: developer.id,
         comment: "",
+        developedItemUrl: "",
         githubUrl: "https://github.com/hwld/aluep",
         statusId: DevelopmentStatusIds.IN_PROGRESS,
       },

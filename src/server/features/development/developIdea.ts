@@ -23,6 +23,7 @@ export const developIdea = requireLoggedInProcedure
         user: { connect: { id: ctx.session.user.id } },
         githubUrl: githubRepositoryUrl,
         comment: input.comment ?? "",
+        developedItemUrl: input.developedItemUrl ?? "",
         status: { connect: { id: developmentStatusId } },
       },
     });

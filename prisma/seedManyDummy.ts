@@ -95,6 +95,7 @@ async function main() {
           id,
           githubUrl: "",
           comment: faker.lorem.words(3),
+          developedItemUrl: "",
           ideaId: ideaIds[ideaIndex],
           userId: userIds[userIndex],
           statusId: faker.helpers.arrayElement([

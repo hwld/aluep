@@ -1,5 +1,6 @@
-import { Card, Stack, Text, useMantineTheme } from "@mantine/core";
+import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 import { MdOutlineEdit } from "react-icons/md";
 import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
@@ -7,7 +8,10 @@ import { DevelopmentStatusIds } from "../../share/consts";
 import { CreateRepositoryData, DevelopmentFormData } from "../../share/schema";
 import { useDevelop } from "../features/development/useDevelop";
 import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
-import { DevelopmentForm } from "../features/idea/DevelopmentForm";
+import {
+  DevelopmentForm,
+  DevelopmentFormDefaultValues,
+} from "../features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import { PageHeader } from "../ui/PageHeader";
 
@@ -22,7 +26,6 @@ export const DevelopmentEditPage: React.FC<Props> = ({
   restoredValues,
 }) => {
   const router = useRouter();
-  const mantineTheme = useMantineTheme();
 
   const { developmentStatuses } = useDevelopmentStatusesQuery();
 
@@ -41,6 +44,45 @@ export const DevelopmentEditPage: React.FC<Props> = ({
     router.back();
   };
 
+  const developmentFormDefaultValues =
+    useMemo((): DevelopmentFormDefaultValues => {
+      const base: DevelopmentFormDefaultValues = {
+        comment: development.comment,
+        developedItemUrl: development.developedItemUrl,
+        developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
+        githubRepositoryDescription: "",
+        githubRepositoryName: "",
+        githubRepositoryUrl: "",
+        type: "createRepository",
+      };
+
+      // 復元されたフィールドが一つ以上あれば、リポジトリの作成フォームを
+      // 選択していると仮定する
+      if (Object.keys(restoredValues).length > 0) {
+        return {
+          ...base,
+          type: "createRepository",
+          comment: restoredValues.developmentComment ?? "",
+          developedItemUrl: restoredValues.developedItemUrl ?? "",
+          githubRepositoryName: restoredValues.repositoryName ?? "",
+          githubRepositoryDescription: restoredValues.repositoryDesc ?? "",
+        };
+      } else {
+        return {
+          ...base,
+          type: "referenceRepository",
+          githubRepositoryUrl: development.githubUrl,
+          developmentStatusId: development.status.id,
+        };
+      }
+    }, [
+      development.comment,
+      development.developedItemUrl,
+      development.githubUrl,
+      development.status.id,
+      restoredValues,
+    ]);
+
   return (
     <>
       <PageHeader icon={MdOutlineEdit} pageName="開発情報の編集" />
@@ -58,24 +100,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
               onCancel={handleBack}
               ideaId={idea.id}
               isRelogined={Object.keys(restoredValues).length > 0}
-              defaultValues={{
-                comment:
-                  restoredValues.developmentComment ?? development.comment,
-                developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
-                // 復元されたフィールドが1つ以上あれば、リポジトリの作成を選択していたと解釈する。
-                ...(Object.keys(restoredValues).length > 0
-                  ? {
-                      type: "createRepository",
-                      githubRepositoryName: restoredValues.repositoryName ?? "",
-                      githubRepositoryDescription:
-                        restoredValues.repositoryDesc ?? "",
-                    }
-                  : {
-                      type: "referenceRepository",
-                      githubRepositoryUrl: development.githubUrl,
-                      developmentStatusId: development.status.id,
-                    }),
-              }}
+              defaultValues={developmentFormDefaultValues}
               submitText="更新する"
               isLoading={
                 updateDevelopmentMutation.isLoading ||

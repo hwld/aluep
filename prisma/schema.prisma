@@ -7,8 +7,8 @@ generator client {
 
 // TODO: 本番環境でsupabsaeを使用する
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -132,16 +132,17 @@ model IdeaLike {
 
 // アプリ開発のお題の開発情報
 model Development {
-  id        String            @id @default(cuid())
-  userId    String
-  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  ideaId    String
-  idea      Idea              @relation(fields: [ideaId], references: [id], onDelete: Cascade)
-  githubUrl String
-  comment   String            @db.Text
-  likes     DevelopmentLike[]
-  statusId  String
-  status    DevelopmentStatus @relation(fields: [statusId], references: [id], onDelete: Cascade)
+  id               String            @id @default(cuid())
+  userId           String
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ideaId           String
+  idea             Idea              @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  githubUrl        String
+  comment          String            @db.Text
+  developedItemUrl String            
+  likes            DevelopmentLike[]
+  statusId         String
+  status           DevelopmentStatus @relation(fields: [statusId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
