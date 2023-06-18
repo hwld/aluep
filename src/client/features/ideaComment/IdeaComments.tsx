@@ -1,7 +1,8 @@
-import { Card, Stack, Title } from "@mantine/core";
+import { Button, Card, Stack, Text, Title } from "@mantine/core";
 import { useClickOutside } from "@mantine/hooks";
 import { useRouter } from "next/router";
-import { SyntheticEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { User } from "../../../server/models/user";
 import { IdeaCommentFormData } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { useCyclicRandom } from "../../lib/useCyclicRandom";
@@ -9,18 +10,22 @@ import { extractHash } from "../../lib/utils";
 import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../session/useSessionQuery";
 import { IdeaCommentCard } from "./IdeaCommentCard";
-import { IdeaCommentForm } from "./IdeaCommentForm";
+import { IdeaCommentForm, IdeaCommentFormRef } from "./IdeaCommentForm";
 import { useIdeaComments } from "./useIdeaComments";
 
-type Props = { ideaId: string; ideaOwnerId: string };
+type Props = { ideaId: string; ideaOwnerId: string; loggedInUser?: User };
 
 /** お題へのコメント */
-export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
+export const IdeaComments: React.FC<Props> = ({
+  ideaId,
+  ideaOwnerId,
+  loggedInUser,
+}) => {
   const { session } = useSessionQuery();
   const router = useRouter();
   const { openLoginModal } = useRequireLoginModal();
   const [focusedCommentId, setFocusedCommentId] = useState("");
-  const commentFormRef = useRef<HTMLFormElement | null>(null);
+  const commentFormRef = useRef<IdeaCommentFormRef | null>(null);
 
   const commentsRef = useClickOutside(async () => {
     if (focusedCommentId !== "") {
@@ -42,13 +47,8 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
   // コメント送信後にformを再マウントさせるために使用するkey
   const { random: formKey, nextRandom: nextFormKey } = useCyclicRandom();
 
-  // submit前に呼び出される。
-  // ログインしていなければログインモーダルを表示させる。
-  const handleClickSubmit = (e: SyntheticEvent) => {
-    if (!session) {
-      openLoginModal();
-      e.preventDefault();
-    }
+  const handleOpenLoginModal = () => {
+    openLoginModal();
   };
 
   const handleSubmitComment = (
@@ -69,6 +69,10 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
     deleteCommentMutation.mutate(commentId);
   };
 
+  const handleFocusCommentInput = () => {
+    commentFormRef.current?.focusCommentInput();
+  };
+
   // フラグメントで指定されているコメントを設定する
   // SSRではフラグメントを取得できないので、クライアント側だけで設定されるように
   // useEffectを使用する
@@ -85,7 +89,7 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
 
     // 前のレンダリングよりもコメント数が増えていればスクロールさせる
     if (comments > prevComments.current) {
-      commentFormRef.current?.scrollIntoView({ behavior: "smooth" });
+      commentFormRef.current?.scrollIntoView();
     }
 
     // 前のレンダリングのコメント数を更新する
@@ -115,16 +119,25 @@ export const IdeaComments: React.FC<Props> = ({ ideaId, ideaOwnerId }) => {
           })}
         </Stack>
       )}
-      <Card>
-        <IdeaCommentForm
-          ref={commentFormRef}
-          key={formKey}
-          ideaId={ideaId}
-          onSubmit={handleSubmitComment}
-          onClickSubmitButton={handleClickSubmit}
-          isSubmitting={postCommentMutation.isLoading}
-        />
-      </Card>
+      {loggedInUser ? (
+        <Card onClick={handleFocusCommentInput}>
+          <IdeaCommentForm
+            ref={commentFormRef}
+            key={formKey}
+            loggedInUser={loggedInUser}
+            ideaId={ideaId}
+            onSubmit={handleSubmitComment}
+            isSubmitting={postCommentMutation.isLoading}
+          />
+        </Card>
+      ) : (
+        <Card p="xl">
+          <Stack align="center">
+            <Text>ログインするとコメントできます</Text>
+            <Button onClick={handleOpenLoginModal}>ログイン</Button>
+          </Stack>
+        </Card>
+      )}
     </Stack>
   );
 };

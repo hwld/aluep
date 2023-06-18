@@ -120,7 +120,11 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
               <IdeaDescriptionView descriptionHtml={idea.descriptionHtml} />
             </Card>
 
-            <IdeaComments ideaId={idea.id} ideaOwnerId={idea.user.id} />
+            <IdeaComments
+              loggedInUser={session?.user}
+              ideaId={idea.id}
+              ideaOwnerId={idea.user.id}
+            />
           </Box>
 
           {/* 右カラム */}

@@ -9,9 +9,9 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/router";
+import { useRef } from "react";
 import { FaRegComment, FaUserAlt } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
-import { MdClose } from "react-icons/md";
 import { IdeaComment } from "../../../server/models/ideaComment";
 import { IdeaCommentFormData } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
@@ -47,6 +47,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
   const { openLoginModal } = useRequireLoginModal();
   const mantineTheme = useMantineTheme();
   const router = useRouter();
+  const replyFormRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [isReplyFormOpen, { close: closeReplyForm, open: openReplyForm }] =
     useDisclosure(false);
@@ -84,6 +85,10 @@ export const IdeaCommentCard: React.FC<Props> = ({
         shallow: true,
       });
     }
+  };
+
+  const handleFocusReplyForm = () => {
+    replyFormRef.current?.focus();
   };
 
   return (
@@ -175,13 +180,9 @@ export const IdeaCommentCard: React.FC<Props> = ({
           </Stack>
         </Card>
         {isReplyFormOpen && (
-          <Card>
-            <Flex justify="flex-end" mb="sm">
-              <CardActionIcon onClick={closeReplyForm}>
-                <MdClose size="80%" />
-              </CardActionIcon>
-            </Flex>
+          <Card onClick={handleFocusReplyForm}>
             <IdeaCommentReplyForm
+              ref={replyFormRef}
               inReplyToCommentId={comment.id}
               ideaId={comment.ideaId}
               onCancel={closeReplyForm}
