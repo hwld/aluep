@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
+import { sessionKeys } from "./queryKeys";
 
-const loggedInUserInfoQueryKey = (userId: string) =>
-  ["loggedInUserInfo", userId] as const;
-
-export const useLoggedInUserInfoQuery = (userId: string) => {
+export const useLoggedInUserInfoQuery = () => {
   const { data: loggedInUserInfo, ...others } = useQuery({
-    queryKey: loggedInUserInfoQueryKey(userId),
+    queryKey: sessionKeys.loggedInUserInfo,
     queryFn: () => {
       return trpc.me.getMySummary.query();
     },

@@ -4,13 +4,7 @@ import { Idea } from "../../../server/models/idea";
 import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
 import { useSessionQuery } from "../session/useSessionQuery";
-import { ideaQueryKey } from "./useIdeaQuery";
-
-// ideaQueryKeyが無効になった時には、ideaLikedQueryKeyが変更されている可能性がある?
-export const ideaLikedQueryKey = (
-  ideaId: string,
-  loggedInUserId: string | undefined
-) => [...ideaQueryKey(ideaId), "user", loggedInUserId ?? "", "liked"];
+import { ideaKeys } from "./queryKeys";
 
 // ログインユーザーと指定されたお題とのいいね状況
 export const useIdeaLike = (ideaId: string) => {
@@ -18,7 +12,7 @@ export const useIdeaLike = (ideaId: string) => {
   const { session } = useSessionQuery();
 
   const { data: likedByLoggedInUser } = useQuery({
-    queryKey: ideaLikedQueryKey(ideaId, session?.user.id),
+    queryKey: ideaKeys.isLiked(ideaId, session?.user.id),
     queryFn: () => {
       return trpc.idea.isLikedByUser.query({
         ideaId,
@@ -44,7 +38,7 @@ export const useIdeaLike = (ideaId: string) => {
       // お題のいいね数を更新する
       // ideaLikedQueryKeyの先頭がideaQuerykeyになっているので、自分のいいね状況も更新される
       // ideaLikedQueryKeyは自分がいいねしたかの情報だけで、お題のいいね数とは関係がないのでどちらもinvalidateする必要がある。
-      queryClient.invalidateQueries(ideaQueryKey(ideaId));
+      queryClient.invalidateQueries(ideaKeys.detail(ideaId));
     },
   });
 
@@ -65,25 +59,27 @@ export const useIdeaLike = (ideaId: string) => {
       // お題のいいね数を更新する
       // ideaLikedQueryKeyの先頭がideaQuerykeyになっているので、自分のいいね状況も更新される
       // ideaLikedQueryKeyは自分がいいねしたかの情報だけで、お題のいいね数とは関係がないのでどちらもinvalidateする必要がある。
-      queryClient.invalidateQueries(ideaQueryKey(ideaId));
+      queryClient.invalidateQueries(ideaKeys.detail(ideaId));
     },
   });
 
   /** 楽観的更新のためにキャッシュを操作する */
   const optimisticUpdate = async ({ like }: { like: boolean }) => {
-    await queryClient.cancelQueries(ideaQueryKey(ideaId));
+    await queryClient.cancelQueries(ideaKeys.detail(ideaId));
 
     // お題(いいね数を含む)
-    const previousIdea = queryClient.getQueryData<Idea>(ideaQueryKey(ideaId));
+    const previousIdea = queryClient.getQueryData<Idea>(
+      ideaKeys.detail(ideaId)
+    );
 
     // いいねを反映させる
     queryClient.setQueryData<boolean>(
-      ideaLikedQueryKey(ideaId, session?.user.id),
+      ideaKeys.isLiked(ideaId, session?.user.id),
       () => like
     );
 
     // いいね数を変える
-    queryClient.setQueryData<Idea>(ideaQueryKey(ideaId), (old) => {
+    queryClient.setQueryData<Idea>(ideaKeys.detail(ideaId), (old) => {
       if (!old) {
         return old;
       }
@@ -102,11 +98,8 @@ export const useIdeaLike = (ideaId: string) => {
     like: boolean;
     previousIdea: Idea | undefined;
   }) => {
-    queryClient.setQueryData(
-      ideaLikedQueryKey(ideaId, session?.user.id),
-      !like
-    );
-    queryClient.setQueryData(ideaQueryKey(ideaId), previousIdea);
+    queryClient.setQueryData(ideaKeys.isLiked(ideaId, session?.user.id), !like);
+    queryClient.setQueryData(ideaKeys.detail(ideaId), previousIdea);
 
     const action = like ? "いいね" : "いいね解除";
 

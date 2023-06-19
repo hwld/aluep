@@ -2,10 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { RouterInputs } from "../../../server/lib/trpc";
 import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
-import {
-  DevelopmentsPerPageData,
-  developmentsPerPageQueryKey,
-} from "./useDevelopmentsPerPage";
+import { developmentKeys } from "./queryKeys";
+import { DevelopmentsPerPageData } from "./useDevelopmentsPerPage";
 
 /**
  * ページングされた開発情報のリスト上で開発情報にいいねを行う。
@@ -29,7 +27,7 @@ export const useDevelopmentLikeOnList = (ideaId: string, page: number) => {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(developmentsPerPageQueryKey(ideaId, page));
+      queryClient.invalidateQueries(developmentKeys.listPerPage(ideaId, page));
     },
   });
 
@@ -47,7 +45,7 @@ export const useDevelopmentLikeOnList = (ideaId: string, page: number) => {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(developmentsPerPageQueryKey(ideaId, page));
+      queryClient.invalidateQueries(developmentKeys.listPerPage(ideaId, page));
     },
   });
 
@@ -61,16 +59,16 @@ export const useDevelopmentLikeOnList = (ideaId: string, page: number) => {
   }): Promise<{
     previousDevelopments: DevelopmentsPerPageData | undefined;
   }> => {
-    await queryClient.cancelQueries(developmentsPerPageQueryKey(ideaId, page));
+    await queryClient.cancelQueries(developmentKeys.listPerPage(ideaId, page));
 
     const previousDevelopments =
       queryClient.getQueryData<DevelopmentsPerPageData>(
-        developmentsPerPageQueryKey(ideaId, page)
+        developmentKeys.listPerPage(ideaId, page)
       );
 
     // 指定されたdevelopmentの状態だけを書き換える
     queryClient.setQueryData<DevelopmentsPerPageData>(
-      developmentsPerPageQueryKey(ideaId, page),
+      developmentKeys.listPerPage(ideaId, page),
       (oldPaginatedDevelopments) => {
         if (!oldPaginatedDevelopments) {
           return undefined;
@@ -106,7 +104,7 @@ export const useDevelopmentLikeOnList = (ideaId: string, page: number) => {
     like: boolean;
   }) => {
     queryClient.setQueryData(
-      developmentsPerPageQueryKey(ideaId, page),
+      developmentKeys.listPerPage(ideaId, page),
       previousDevelopments
     );
 

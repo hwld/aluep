@@ -1,4 +1,4 @@
-import { allTagsQueryKey } from "../../client/features/idea/useAllTagsQuery";
+import { ideaKeys } from "../../client/features/idea/queryKeys";
 import { IdeaCreatePage } from "../../client/pageComponents/IdeaCreatePage";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../server/router";
@@ -11,7 +11,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     const caller = appRouter.createCaller(callerContext);
-    await queryClient.prefetchQuery(allTagsQueryKey, () =>
+    await queryClient.prefetchQuery(ideaKeys.allTags, () =>
       caller.idea.getAllTags()
     );
   }

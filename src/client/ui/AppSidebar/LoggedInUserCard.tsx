@@ -8,7 +8,7 @@ type Props = { user: Session["user"]; iconWidth: number };
 
 export const LoggedInUserCard: React.FC<Props> = ({ user, iconWidth }) => {
   const { colors } = useMantineTheme();
-  const { loggedInUserInfo } = useLoggedInUserInfoQuery(user.id);
+  const { loggedInUserInfo } = useLoggedInUserInfoQuery();
 
   return (
     <Flex

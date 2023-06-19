@@ -1,11 +1,8 @@
 import { useRouter } from "next/router";
-import { developedQueryKey } from "../../../client/features/development/useDevelop";
-import { ideaLikedQueryKey } from "../../../client/features/idea/useIdeaLike";
-import {
-  ideaQueryKey,
-  useIdeaQuery,
-} from "../../../client/features/idea/useIdeaQuery";
-import { ideaCommentsQueryKey } from "../../../client/features/ideaComment/useIdeaComments";
+import { developmentKeys } from "../../../client/features/development/queryKeys";
+import { ideaKeys } from "../../../client/features/idea/queryKeys";
+import { useIdeaQuery } from "../../../client/features/idea/useIdeaQuery";
+import { ideaCommentKeys } from "../../../client/features/ideaComment/queryKeys";
 import { IdeaDetailPage } from "../../../client/pageComponents/IdeaDetailPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
@@ -25,18 +22,18 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     // お題情報のプリフェッチ
-    queryClient.setQueryData(ideaQueryKey(ideaId), idea);
+    queryClient.setQueryData(ideaKeys.detail(ideaId), idea);
 
     // ログインユーザーのいいね状況のプリフェッチ
     await queryClient.prefetchQuery(
-      ideaLikedQueryKey(ideaId, session?.user.id),
+      ideaKeys.isLiked(ideaId, session?.user.id),
       () =>
         caller.idea.isLikedByUser({ ideaId, userId: session?.user.id ?? null })
     );
 
     // ログインユーザーの開発情報のプリフェッチ
     await queryClient.prefetchQuery(
-      developedQueryKey(ideaId, session?.user.id),
+      developmentKeys.isDeveloped(ideaId, session?.user.id),
       () =>
         caller.development.isDevelopedByUser({
           ideaId: ideaId,
@@ -45,7 +42,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     );
 
     // コメントのプリフェッチ
-    await queryClient.prefetchQuery(ideaCommentsQueryKey(ideaId), () =>
+    await queryClient.prefetchQuery(ideaCommentKeys.listByIdea(ideaId), () =>
       caller.ideaComment.getAll({ ideaId })
     );
   }

@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
+import { ideaKeys } from "../idea/queryKeys";
+import { userKeys } from "./queryKeys";
 
 // 名前が長すぎる...
 
-export const top10LikesDevelopmentsInThisMonthQueryKey = [
-  "top10LikesDevelopmentsInThisMonth",
-];
 export const useTop10LikesDevelopmentInThisMonth = () => {
   const { data: top10LikesDevelopmentsInThisMonth, ...others } = useQuery({
-    queryKey: top10LikesDevelopmentsInThisMonthQueryKey,
+    queryKey: userKeys.top10LikesDevelopmentsInThisMonth,
     queryFn: () => {
       return trpc.aggregate.getTop10LikesDevelopmentsInThisMonth.query();
     },
@@ -20,12 +19,9 @@ export const useTop10LikesDevelopmentInThisMonth = () => {
   return { top10LikesDevelopmentsInThisMonth, ...others };
 };
 
-export const top10LikesPostersInThisMonthQueryKey = [
-  "top10LikesPostersInThisMonth",
-];
 export const useTop10LikesPostersInThisMonth = () => {
   const { data: top10LikesPostersInThisMonth, ...others } = useQuery({
-    queryKey: top10LikesPostersInThisMonthQueryKey,
+    queryKey: userKeys.top10LikesPostersInThisMonth,
     queryFn: () => {
       return trpc.aggregate.getTop10LikesPostersInThisMonth.query();
     },
@@ -36,12 +32,9 @@ export const useTop10LikesPostersInThisMonth = () => {
   return { top10LikesPostersInThisMonth, ...others };
 };
 
-export const top10LikesIdeasInThisMonthQueryKey = [
-  "top10LikesIdeasInThisMonth",
-];
 export const useTop10LikesIdeasInThisMonth = () => {
   const { data: top10LikesIdeasInThisMonth, ...others } = useQuery({
-    queryKey: top10LikesIdeasInThisMonthQueryKey,
+    queryKey: ideaKeys.top10LikesIdeasInThisMonth,
     queryFn: () => {
       return trpc.aggregate.getTop10LikesIdeasInThisMonth.query();
     },

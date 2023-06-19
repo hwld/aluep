@@ -1,16 +1,8 @@
 import { useRouter } from "next/router";
-import { likedDevelopmentsPerPageQueryKey } from "../../../client/features/development/useLikedDevelopmentsPerPage";
-import { userDevelopmentsPerPageQueryKey } from "../../../client/features/development/useUserDevelopmentsPerPage";
-import { likedIdeasPerPageQueryKey } from "../../../client/features/idea/useLikedIdeasPerPage";
-import { postedIdeasPerPageQueryKey } from "../../../client/features/idea/usePostedIdeasQuery";
-import { favoritedUserQueryKey } from "../../../client/features/user/useFavoriteUser";
-import { favoriteUserCountQueryKey } from "../../../client/features/user/useFavoriteUserCountQuery";
-import { receivedLikeCountQueryKey } from "../../../client/features/user/useReceivedLikeCountQuery";
-import { userActivityQueryKey } from "../../../client/features/user/useUserActivityQuery";
-import {
-  userQueryKey,
-  useUserQuery,
-} from "../../../client/features/user/useUserQuery";
+import { developmentKeys } from "../../../client/features/development/queryKeys";
+import { ideaKeys } from "../../../client/features/idea/queryKeys";
+import { userKeys } from "../../../client/features/user/queryKeys";
+import { useUserQuery } from "../../../client/features/user/useUserQuery";
 import { UserDetailPage } from "../../../client/pageComponents/UserDetailPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
@@ -40,28 +32,28 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       case "postedIdeas":
         // ユーザーが投稿したお題
         await queryClient.prefetchQuery(
-          postedIdeasPerPageQueryKey(userId, page),
+          ideaKeys.postedListPerPage(userId, page),
           () => caller.idea.getPostedIdeasByUser({ userId, page })
         );
         break;
       case "developments":
         // ユーザーの開発情報
         await queryClient.prefetchQuery(
-          userDevelopmentsPerPageQueryKey(userId, page),
+          developmentKeys.listByUserPerPage(userId, page),
           () => caller.development.getDevelopmentsByUser({ userId, page })
         );
         break;
       case "likedIdeas":
         // ユーザーがいいねしたお題
         await queryClient.prefetchQuery(
-          likedIdeasPerPageQueryKey(userId, page),
+          ideaKeys.likedListPerPage(userId, page),
           () => caller.idea.getLikedIdeasByUser({ userId, page })
         );
         break;
       case "likedDevelopments":
         // ユーザーがいいねいた開発情報
         await queryClient.prefetchQuery(
-          likedDevelopmentsPerPageQueryKey(userId, page),
+          developmentKeys.likedListPerPage(userId, page),
           () => caller.development.getLikedDevelopmentsByUser({ userId, page })
         );
         break;
@@ -70,26 +62,26 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     // ユーザーの情報
-    await queryClient.prefetchQuery(userQueryKey(userId), () => user);
+    await queryClient.prefetchQuery(userKeys.detail(userId), () => user);
 
     // ユーザーがもらったいいねの数
-    await queryClient.prefetchQuery(receivedLikeCountQueryKey(userId), () =>
+    await queryClient.prefetchQuery(userKeys.receivedLikeCount(userId), () =>
       caller.user.getReceivedLikeCount({ userId })
     );
 
     // ログインユーザーがユーザーをお気に入り登録しているか
     await queryClient.prefetchQuery(
-      favoritedUserQueryKey(userId, session?.user.id),
+      userKeys.isFavorited(userId, session?.user.id),
       () => caller.user.isFavoritedByLoggedInUser({ userId })
     );
 
     // ユーザーがいいねしたユーザーの数
-    await queryClient.prefetchQuery(favoriteUserCountQueryKey(userId), () =>
+    await queryClient.prefetchQuery(userKeys.favoriteCount(userId), () =>
       caller.user.getFavoriteCountByUser({ userId })
     );
 
     // ユーザーのアクティビティ
-    await queryClient.prefetchQuery(userActivityQueryKey(userId), () =>
+    await queryClient.prefetchQuery(userKeys.activity(userId), () =>
       caller.user.getUserActivity({ userId })
     );
   }

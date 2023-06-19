@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
-
-export const allTagsQueryKey = ["allTags"];
+import { ideaKeys } from "./queryKeys";
 
 // すべてのタグってあんまり更新頻度高くないし、react-queryで管理しなくても良いかもしれない。
 export const useAllTagsQuery = () => {
   const { data: allTags, ...others } = useQuery({
-    queryKey: allTagsQueryKey,
+    queryKey: ideaKeys.allTags,
     queryFn: () => {
       return trpc.idea.getAllTags.query();
     },

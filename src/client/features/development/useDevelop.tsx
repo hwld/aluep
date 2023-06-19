@@ -16,14 +16,9 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "../../lib/utils";
-import { ideaQueryKey } from "../idea/useIdeaQuery";
+import { ideaKeys } from "../idea/queryKeys";
 import { useSessionQuery } from "../session/useSessionQuery";
-
-export const developedQueryKey = (
-  ideaId: string,
-  loggedInUserId: string | undefined
-) =>
-  [...ideaQueryKey(ideaId), "user", loggedInUserId ?? "", "developed"] as const;
+import { developmentKeys } from "./queryKeys";
 
 export const useDevelop = (ideaId: string) => {
   const router = useRouter();
@@ -31,7 +26,7 @@ export const useDevelop = (ideaId: string) => {
   const { session } = useSessionQuery();
 
   const { data: developedData, ...others } = useQuery({
-    queryKey: developedQueryKey(ideaId, session?.user.id),
+    queryKey: developmentKeys.isDeveloped(ideaId, session?.user.id),
     queryFn: () => {
       return trpc.development.isDevelopedByUser.query({
         ideaId,
@@ -46,7 +41,7 @@ export const useDevelop = (ideaId: string) => {
     },
     onSuccess: async (_, fields) => {
       await queryClient.invalidateQueries(
-        developedQueryKey(ideaId, session?.user.id)
+        developmentKeys.isDeveloped(ideaId, session?.user.id)
       );
 
       const message =
@@ -111,7 +106,7 @@ export const useDevelop = (ideaId: string) => {
     },
     onSuccess: async () => {
       // 特定のテーマのキャッシュを無効にする
-      await queryClient.invalidateQueries(ideaQueryKey(ideaId));
+      await queryClient.invalidateQueries(ideaKeys.detail(ideaId));
     },
   });
 

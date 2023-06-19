@@ -6,7 +6,7 @@ import {
 } from "next";
 import { getServerSession, Session } from "next-auth";
 import superjson from "superjson";
-import { sessionQuerykey } from "../../client/features/session/useSessionQuery";
+import { sessionKeys } from "../../client/features/session/queryKeys";
 import { authOptions } from "../../pages/api/auth/[...nextauth]";
 import { TRPCContext } from "./trpc";
 
@@ -27,7 +27,7 @@ export const withReactQueryGetServerSideProps = (
     const session = await getServerSession(params.req, params.res, authOptions);
 
     // セッション情報をプリフェッチする
-    queryClient.setQueryData(sessionQuerykey, session);
+    queryClient.setQueryData(sessionKeys.session, session);
 
     const result = await callback({
       params,

@@ -1,17 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { RouterInputs } from "../../../server/lib/trpc";
 import { trpc } from "../../lib/trpc";
-
-export const favoritedUserQueryKey = (
-  userId: string,
-  loggedInUserId?: string
-) => ["user", "favoriteUserId", userId, loggedInUserId];
+import { userKeys } from "./queryKeys";
 
 export const useFavoriteUser = (userId: string, loggedInUserId?: string) => {
   const queryClient = useQueryClient();
 
   const { data: favorited } = useQuery({
-    queryKey: favoritedUserQueryKey(userId, loggedInUserId),
+    queryKey: userKeys.isFavorited(userId, loggedInUserId),
     queryFn: () => {
       return trpc.user.isFavoritedByLoggedInUser.query({ userId });
     },
@@ -23,7 +19,7 @@ export const useFavoriteUser = (userId: string, loggedInUserId?: string) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(
-        favoritedUserQueryKey(userId, loggedInUserId)
+        userKeys.isFavorited(userId, loggedInUserId)
       );
     },
   });
@@ -34,7 +30,7 @@ export const useFavoriteUser = (userId: string, loggedInUserId?: string) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(
-        favoritedUserQueryKey(userId, loggedInUserId)
+        userKeys.isFavorited(userId, loggedInUserId)
       );
     },
   });

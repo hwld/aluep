@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
-
-export const sessionQuerykey = ["session"];
+import { sessionKeys } from "./queryKeys";
 
 export const useSessionQuery = () => {
   const { data: session, ...others } = useQuery({
-    queryKey: sessionQuerykey,
+    queryKey: sessionKeys.session,
     queryFn: () => {
       return trpc.session.query();
     },

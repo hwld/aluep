@@ -1,13 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
-
-export const ideasQueryKey = ["ideas"] as const;
-export const ideaQueryKey = (ideaId: string) =>
-  [...ideasQueryKey, ideaId] as const;
+import { ideaKeys } from "./queryKeys";
 
 export const useIdeaQuery = (ideaId: string) => {
   const { data: idea, ...others } = useQuery({
-    queryKey: ideaQueryKey(ideaId),
+    queryKey: ideaKeys.detail(ideaId),
     queryFn: () => {
       return trpc.idea.get.query({ ideaId: ideaId });
     },

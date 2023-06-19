@@ -1,6 +1,5 @@
 import { NextPage } from "next";
-import { allTagsQueryKey } from "../../client/features/idea/useAllTagsQuery";
-import { searchedIdeasQueryKey } from "../../client/features/idea/useSearchedIdeasQuery";
+import { ideaKeys } from "../../client/features/idea/queryKeys";
 import { IdeaSearchPage } from "../../client/pageComponents/IdeaSearchPage";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../server/router";
@@ -29,11 +28,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    await queryClient.prefetchQuery(allTagsQueryKey, () =>
+    await queryClient.prefetchQuery(ideaKeys.allTags, () =>
       caller.idea.getAllTags()
     );
     await queryClient.prefetchQuery(
-      searchedIdeasQueryKey({
+      ideaKeys.searchedList({
         keyword,
         tagIds,
         order,

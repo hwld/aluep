@@ -1,10 +1,8 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { developmentsPerPageQueryKey } from "../../../../client/features/development/useDevelopmentsPerPage";
-import {
-  ideaQueryKey,
-  useIdeaQuery,
-} from "../../../../client/features/idea/useIdeaQuery";
+import { developmentKeys } from "../../../../client/features/development/queryKeys";
+import { ideaKeys } from "../../../../client/features/idea/queryKeys";
+import { useIdeaQuery } from "../../../../client/features/idea/useIdeaQuery";
 import { DevelopmentsPage as DevelopmentsPageComponent } from "../../../../client/pageComponents/DevelopmentsPage";
 import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../server/router";
@@ -28,11 +26,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    await queryClient.prefetchQuery(ideaQueryKey(ideaId), () =>
+    await queryClient.prefetchQuery(ideaKeys.detail(ideaId), () =>
       caller.idea.get({ ideaId: ideaId })
     );
     await queryClient.prefetchQuery(
-      developmentsPerPageQueryKey(ideaId, page),
+      developmentKeys.listPerPage(ideaId, page),
       () => caller.development.getManyByIdea({ ideaId: ideaId, page })
     );
   }

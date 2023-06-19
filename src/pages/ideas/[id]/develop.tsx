@@ -1,9 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import {
-  ideaQueryKey,
-  useIdeaQuery,
-} from "../../../client/features/idea/useIdeaQuery";
+import { ideaKeys } from "../../../client/features/idea/queryKeys";
+import { useIdeaQuery } from "../../../client/features/idea/useIdeaQuery";
 import { DevelopIdeaPage } from "../../../client/pageComponents/DevelopPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
@@ -37,7 +35,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       };
     }
 
-    queryClient.setQueryData(ideaQueryKey(ideaId), idea);
+    queryClient.setQueryData(ideaKeys.detail(ideaId), idea);
   }
 );
 

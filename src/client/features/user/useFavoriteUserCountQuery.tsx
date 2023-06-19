@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
-
-export const favoriteUserCountQueryKey = (userId: string) =>
-  ["users", userId, "favoriteUserCount"] as const;
+import { userKeys } from "./queryKeys";
 
 export const useFavoriteUserCountQuery = (userId: string) => {
   const { data: favoriteUserCount, ...others } = useQuery({
-    queryKey: favoriteUserCountQueryKey(userId),
+    queryKey: userKeys.favoriteCount(userId),
     queryFn: () => {
       return trpc.user.getFavoriteCountByUser.query({ userId });
     },

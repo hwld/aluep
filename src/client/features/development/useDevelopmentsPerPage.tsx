@@ -1,12 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Development } from "../../../server/models/development";
 import { trpc } from "../../lib/trpc";
-import { ideaQueryKey } from "../idea/useIdeaQuery";
-
-export const developmentsPerPageQueryKey = (ideaId: string, page: number) => {
-  const p = isNaN(page) ? 1 : page;
-  return [...ideaQueryKey(ideaId), "developments", { page: p }] as const;
-};
+import { developmentKeys } from "./queryKeys";
 
 export type DevelopmentsPerPageData = {
   list: Development[];
@@ -15,7 +10,7 @@ export type DevelopmentsPerPageData = {
 
 export const useDevelopmentsPerPage = (ideaId: string, page: number) => {
   const { data: developmentsPerPage, ...others } = useQuery({
-    queryKey: developmentsPerPageQueryKey(ideaId, page),
+    queryKey: developmentKeys.listPerPage(ideaId, page),
     queryFn: (): Promise<DevelopmentsPerPageData> => {
       return trpc.development.getManyByIdea.query({
         page: page.toString(),

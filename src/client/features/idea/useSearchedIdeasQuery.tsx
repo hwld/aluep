@@ -1,17 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { ideaOrderSchema, ideaPeriodSchema } from "../../../share/schema";
 import { trpc } from "../../lib/trpc";
+import { ideaKeys } from "./queryKeys";
 
-export const searchedIdeasQueryKey = ({
-  keyword,
-  tagIds,
-  order,
-  page,
-  period,
-}: UseSearchedIdeasQueryArgs) =>
-  ["ideas", { keyword, tagIds, order, period, page }] as const;
-
-type UseSearchedIdeasQueryArgs = {
+export type UseSearchedIdeasQueryArgs = {
   keyword: string;
   tagIds: string[];
   order: string;
@@ -26,7 +18,7 @@ export const useSearchedIdeasQuery = ({
   page,
 }: UseSearchedIdeasQueryArgs) => {
   const { data: searchedIdeasResult, ...others } = useQuery({
-    queryKey: searchedIdeasQueryKey({
+    queryKey: ideaKeys.searchedList({
       keyword,
       tagIds,
       page,

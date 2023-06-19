@@ -1,12 +1,8 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { favoritedUsersPerPageQueryKey } from "../../../client/features/user/useFavoritedUsersPerPage";
+import { userKeys } from "../../../client/features/user/queryKeys";
+import { useUserQuery } from "../../../client/features/user/useUserQuery";
 import { FavoritedUsersPage } from "../../../client/pageComponents/FavoritedUsersPage";
-
-import {
-  userQueryKey,
-  useUserQuery,
-} from "../../../client/features/user/useUserQuery";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
 import { paginatedPageSchema } from "../../../share/schema";
@@ -29,16 +25,14 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    await queryClient.prefetchQuery(
-      favoritedUsersPerPageQueryKey(userId, page),
-      () =>
-        caller.user.getFavoritedUsers({
-          favoriteByUserId: userId,
-          page,
-        })
+    await queryClient.prefetchQuery(userKeys.favoritedList(userId, page), () =>
+      caller.user.getFavoritedUsers({
+        favoriteByUserId: userId,
+        page,
+      })
     );
 
-    await queryClient.prefetchQuery(userQueryKey(userId), () => user);
+    await queryClient.prefetchQuery(userKeys.detail(userId), () => user);
   }
 );
 

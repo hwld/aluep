@@ -3,7 +3,7 @@ import { RouterInputs } from "../../../server/lib/trpc";
 import { Development } from "../../../server/models/development";
 import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
-import { developmentQuerykey } from "./useDevelopmentQuery";
+import { developmentKeys } from "./queryKeys";
 
 /**
  * 開発情報詳細画面で開発情報にいいねを行う
@@ -25,7 +25,7 @@ export const useDevelopmentLikeOnDetail = (developmentId: string) => {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(developmentQuerykey(developmentId));
+      queryClient.invalidateQueries(developmentKeys.detail(developmentId));
     },
   });
 
@@ -43,7 +43,7 @@ export const useDevelopmentLikeOnDetail = (developmentId: string) => {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(developmentQuerykey(developmentId));
+      queryClient.invalidateQueries(developmentKeys.detail(developmentId));
     },
   });
 
@@ -57,14 +57,14 @@ export const useDevelopmentLikeOnDetail = (developmentId: string) => {
   }): Promise<{
     previousDevelopment: Development | undefined;
   }> => {
-    await queryClient.cancelQueries(developmentQuerykey(developmentId));
+    await queryClient.cancelQueries(developmentKeys.detail(developmentId));
 
     const previousDevelopment = queryClient.getQueryData<Development>(
-      developmentQuerykey(developmentId)
+      developmentKeys.detail(developmentId)
     );
 
     queryClient.setQueryData<Development>(
-      developmentQuerykey(developmentId),
+      developmentKeys.detail(developmentId),
       (development): Development | undefined => {
         if (development === undefined) {
           return undefined;
@@ -90,7 +90,7 @@ export const useDevelopmentLikeOnDetail = (developmentId: string) => {
     like: boolean;
   }) => {
     queryClient.setQueryData(
-      developmentQuerykey(developmentId),
+      developmentKeys.detail(developmentId),
       previousDevelopment
     );
 

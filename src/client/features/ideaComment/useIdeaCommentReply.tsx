@@ -3,7 +3,7 @@ import { IdeaCommentFormData } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
-import { ideaCommentsQueryKey } from "./useIdeaComments";
+import { ideaCommentKeys } from "./queryKeys";
 
 type UseIdeaCommentReplyParams = {
   ideaId: string;
@@ -21,7 +21,7 @@ export const useIdeaCommentReply = ({
     },
     onSuccess: () => {
       onSuccess?.();
-      queryClient.invalidateQueries(ideaCommentsQueryKey(ideaId));
+      queryClient.invalidateQueries(ideaCommentKeys.listByIdea(ideaId));
     },
     onError: () => {
       showErrorNotification({

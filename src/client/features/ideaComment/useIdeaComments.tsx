@@ -3,17 +3,14 @@ import { IdeaCommentFormData } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
-import { ideaQueryKey } from "../idea/useIdeaQuery";
-
-export const ideaCommentsQueryKey = (ideaId: string) =>
-  [...ideaQueryKey(ideaId), "comments"] as const;
+import { ideaCommentKeys } from "./queryKeys";
 
 export const useIdeaComments = (ideaId: string) => {
   const queryClient = useQueryClient();
 
   // 指定されたお題のコメントを取得する
   const { data: ideaComments } = useQuery({
-    queryKey: ideaCommentsQueryKey(ideaId),
+    queryKey: ideaCommentKeys.listByIdea(ideaId),
     queryFn: () => {
       return trpc.ideaComment.getAll.query({ ideaId });
     },
@@ -24,7 +21,7 @@ export const useIdeaComments = (ideaId: string) => {
       return trpc.ideaComment.comment.mutate({ ...data, ideaId });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(ideaCommentsQueryKey(ideaId));
+      queryClient.invalidateQueries(ideaCommentKeys.listByIdea(ideaId));
     },
     onError: () => {
       showErrorNotification({
@@ -39,7 +36,7 @@ export const useIdeaComments = (ideaId: string) => {
       return trpc.ideaComment.delete.mutate({ commentId });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(ideaCommentsQueryKey(ideaId));
+      queryClient.invalidateQueries(ideaCommentKeys.listByIdea(ideaId));
     },
     onError: () => {
       showErrorNotification({

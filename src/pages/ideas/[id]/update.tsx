@@ -1,10 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { allTagsQueryKey } from "../../../client/features/idea/useAllTagsQuery";
-import {
-  ideaQueryKey,
-  useIdeaQuery,
-} from "../../../client/features/idea/useIdeaQuery";
+import { ideaKeys } from "../../../client/features/idea/queryKeys";
+import { useIdeaQuery } from "../../../client/features/idea/useIdeaQuery";
 import { IdeaEditPage } from "../../../client/pageComponents/IdeaEditPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
@@ -28,8 +25,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    await queryClient.prefetchQuery(ideaQueryKey(ideaId), () => idea);
-    await queryClient.prefetchQuery(allTagsQueryKey, () =>
+    await queryClient.prefetchQuery(ideaKeys.detail(ideaId), () => idea);
+    await queryClient.prefetchQuery(ideaKeys.allTags, () =>
       caller.idea.getAllTags()
     );
   }

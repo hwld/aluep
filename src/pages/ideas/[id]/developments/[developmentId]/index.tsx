@@ -1,12 +1,8 @@
 import { useRouter } from "next/router";
-import {
-  developmentQuerykey,
-  useDevelopmentQuery,
-} from "../../../../../client/features/development/useDevelopmentQuery";
-import {
-  ideaQueryKey,
-  useIdeaQuery,
-} from "../../../../../client/features/idea/useIdeaQuery";
+import { developmentKeys } from "../../../../../client/features/development/queryKeys";
+import { useDevelopmentQuery } from "../../../../../client/features/development/useDevelopmentQuery";
+import { ideaKeys } from "../../../../../client/features/idea/queryKeys";
+import { useIdeaQuery } from "../../../../../client/features/idea/useIdeaQuery";
 import { DevelopmentDetailPage } from "../../../../../client/pageComponents/DevelopmentDetailPage";
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../../server/router";
@@ -29,8 +25,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    queryClient.setQueryData(ideaQueryKey(ideaId), idea);
-    queryClient.setQueryData(developmentQuerykey(developmentId), development);
+    queryClient.setQueryData(ideaKeys.detail(ideaId), idea);
+    queryClient.setQueryData(
+      developmentKeys.detail(developmentId),
+      development
+    );
   }
 );
 

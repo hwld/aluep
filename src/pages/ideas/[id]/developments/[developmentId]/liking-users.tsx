@@ -1,10 +1,8 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import {
-  developmentQuerykey,
-  useDevelopmentQuery,
-} from "../../../../../client/features/development/useDevelopmentQuery";
-import { developmentLikingUsersPerPageQueryKey } from "../../../../../client/features/user/useDevelopmentLikingUsersPerPage";
+import { developmentKeys } from "../../../../../client/features/development/queryKeys";
+import { useDevelopmentQuery } from "../../../../../client/features/development/useDevelopmentQuery";
+import { userKeys } from "../../../../../client/features/user/queryKeys";
 import { DevelopmentLikingUsersPage } from "../../../../../client/pageComponents/DevelopmentLikingUsersPage";
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../../server/router";
@@ -26,11 +24,14 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    await queryClient.prefetchQuery(developmentQuerykey(developmentId), () => {
-      return caller.development.get({ developmentId });
-    });
     await queryClient.prefetchQuery(
-      developmentLikingUsersPerPageQueryKey(developmentId, page),
+      developmentKeys.detail(developmentId),
+      () => {
+        return caller.development.get({ developmentId });
+      }
+    );
+    await queryClient.prefetchQuery(
+      userKeys.developmentLikingList(developmentId, page),
       () => {
         return caller.user.getDevelopmentLikingUsers({ developmentId, page });
       }

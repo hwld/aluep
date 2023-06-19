@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
-import { userQueryKey } from "./useUserQuery";
+import { userKeys } from "./queryKeys";
 
 export type UserActivity = {
   postedIdeaCount: number;
@@ -8,12 +8,9 @@ export type UserActivity = {
   likedIdeaCount: number;
 };
 
-export const userActivityQueryKey = (userId: string) =>
-  [...userQueryKey(userId), "user-activity"] as const;
-
 export const useUserActivityQuery = (userId: string) => {
   const { data: userActivity, ...others } = useQuery({
-    queryKey: userActivityQueryKey(userId),
+    queryKey: userKeys.activity(userId),
     queryFn: () => {
       return trpc.user.getUserActivity.query({ userId });
     },

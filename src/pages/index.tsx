@@ -1,10 +1,6 @@
 import { NextPage } from "next";
-import { pickedUpIdeasQueryKey } from "../client/features/idea/usePickedUpIdeasQuery";
-import {
-  top10LikesDevelopmentsInThisMonthQueryKey,
-  top10LikesIdeasInThisMonthQueryKey,
-  top10LikesPostersInThisMonthQueryKey,
-} from "../client/features/user/useRankingQuery";
+import { ideaKeys } from "../client/features/idea/queryKeys";
+import { userKeys } from "../client/features/user/queryKeys";
 import { HomePage } from "../client/pageComponents/HomePage";
 import { withReactQueryGetServerSideProps } from "../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../server/router";
@@ -14,26 +10,26 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const caller = appRouter.createCaller(callerContext);
 
     // ランキング
-    await queryClient.prefetchQuery(top10LikesIdeasInThisMonthQueryKey, () =>
+    await queryClient.prefetchQuery(ideaKeys.top10LikesIdeasInThisMonth, () =>
       caller.aggregate.getTop10LikesIdeasInThisMonth()
     );
     await queryClient.prefetchQuery(
-      top10LikesDevelopmentsInThisMonthQueryKey,
+      userKeys.top10LikesDevelopmentsInThisMonth,
       () => caller.aggregate.getTop10LikesDevelopmentsInThisMonth()
     );
-    await queryClient.prefetchQuery(top10LikesPostersInThisMonthQueryKey, () =>
+    await queryClient.prefetchQuery(userKeys.top10LikesPostersInThisMonth, () =>
       caller.aggregate.getTop10LikesPostersInThisMonth()
     );
 
     //　ピックアップされたお題
-    await queryClient.prefetchQuery(pickedUpIdeasQueryKey("createdDesc"), () =>
+    await queryClient.prefetchQuery(ideaKeys.pickedUpList("createdDesc"), () =>
       caller.aggregate.getPickedIdeas({ order: "createdDesc" })
     );
-    await queryClient.prefetchQuery(pickedUpIdeasQueryKey("likeDesc"), () =>
+    await queryClient.prefetchQuery(ideaKeys.pickedUpList("likeDesc"), () =>
       caller.aggregate.getPickedIdeas({ order: "likeDesc" })
     );
     await queryClient.prefetchQuery(
-      pickedUpIdeasQueryKey("developmentDesc"),
+      ideaKeys.pickedUpList("developmentDesc"),
       () => caller.aggregate.getPickedIdeas({ order: "developmentDesc" })
     );
   }

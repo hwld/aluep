@@ -1,10 +1,8 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import {
-  ideaQueryKey,
-  useIdeaQuery,
-} from "../../../client/features/idea/useIdeaQuery";
-import { ideaLikingUsersPerPageQueryKey } from "../../../client/features/user/useIdeaLikingUsersPerPage";
+import { ideaKeys } from "../../../client/features/idea/queryKeys";
+import { useIdeaQuery } from "../../../client/features/idea/useIdeaQuery";
+import { userKeys } from "../../../client/features/user/queryKeys";
 import { IdeaLikingUsersPage } from "../../../client/pageComponents/IdeaLikingUsersPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
@@ -28,12 +26,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    await queryClient.prefetchQuery(ideaQueryKey(ideaId), () =>
+    await queryClient.prefetchQuery(ideaKeys.detail(ideaId), () =>
       caller.idea.get({ ideaId: ideaId })
     );
-    await queryClient.prefetchQuery(
-      ideaLikingUsersPerPageQueryKey(ideaId, page),
-      () => caller.user.getIdeaLikingUsers({ ideaId, page })
+    await queryClient.prefetchQuery(userKeys.ideaLikingList(ideaId, page), () =>
+      caller.user.getIdeaLikingUsers({ ideaId, page })
     );
   }
 );

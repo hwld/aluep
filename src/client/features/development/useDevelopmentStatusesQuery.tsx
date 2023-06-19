@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
-
-const developmentStatusesQueryKey = ["developmentStatuses"];
+import { developmentKeys } from "./queryKeys";
 
 export const useDevelopmentStatusesQuery = () => {
   const { data: developmentStatuses, ...others } = useQuery({
-    queryKey: developmentStatusesQueryKey,
+    queryKey: developmentKeys.allStatuses,
     queryFn: () => {
       return trpc.development.getDevelopmentStatuses.query();
     },
