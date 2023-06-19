@@ -6,10 +6,10 @@ import { sortedInSameOrder } from "../../../share/utils";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
-import { DevelopmentLikingUser } from "../../models/developmentLike";
+import { DevelopmentLikers } from "../../models/developmentLike";
 import { findManyUsers } from "../../models/user";
 
-export const getDevelopmentLikingUsers = publicProcedure
+export const getDevelopmentLikers = publicProcedure
   .input(z.object({ developmentId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page } }) => {
     const [developmentLikesPerPage, { allPages }] = await paginate({
@@ -19,25 +19,25 @@ export const getDevelopmentLikingUsers = publicProcedure
         orderBy: { createdAt: "desc" },
       } satisfies Prisma.DevelopmentLikeFindManyArgs,
       counter: db.developmentLike.count,
-      pagingData: { page, limit: pageLimit.ideaLikingUsers },
+      pagingData: { page, limit: pageLimit.ideaLikers },
     });
 
-    const likingUserId = developmentLikesPerPage.map(({ userId }) => userId);
+    const likerId = developmentLikesPerPage.map(({ userId }) => userId);
 
-    const users = await findManyUsers({ where: { id: { in: likingUserId } } });
+    const users = await findManyUsers({ where: { id: { in: likerId } } });
 
     const sortedUsers = sortedInSameOrder({
       target: users,
-      base: likingUserId,
+      base: likerId,
       getKey: (t) => t.id,
     });
 
-    const developmentLikingUsers: DevelopmentLikingUser[] = sortedUsers.map(
+    const developmentLikers: DevelopmentLikers[] = sortedUsers.map(
       (user, i) => ({
         ...user,
         likedDate: developmentLikesPerPage[i].createdAt,
       })
     );
 
-    return { list: developmentLikingUsers, allPages };
+    return { list: developmentLikers, allPages };
   });

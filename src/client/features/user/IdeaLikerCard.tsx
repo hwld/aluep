@@ -1,27 +1,27 @@
 import { Card, Flex, Text } from "@mantine/core";
 import { useRouter } from "next/router";
-import { IdeaLikingUser } from "../../../server/models/ideaLike";
+import { IdeaLiker } from "../../../server/models/ideaLike";
 import { Routes } from "../../../share/routes";
 import { formatDate } from "../../lib/utils";
 import { TextLink } from "../../ui/TextLink";
 import { UserIcon } from "./UserIcon";
 
-export const ideaLikingUserCardMinWidthPx = 350;
+export const ideaLikerCardMinWidthPx = 350;
 
 type Props = {
-  likingUser: IdeaLikingUser;
+  liker: IdeaLiker;
 };
-export const IdeaLikingUserCard: React.FC<Props> = ({ likingUser }) => {
+export const IdeaLikerCard: React.FC<Props> = ({ liker }) => {
   const router = useRouter();
 
   const handleGoUserDetail = () => {
-    router.push(Routes.user(likingUser.id));
+    router.push(Routes.user(liker.id));
   };
 
   //お題をいいねしたユーザーのカード
   return (
     <Card
-      miw={ideaLikingUserCardMinWidthPx}
+      miw={ideaLikerCardMinWidthPx}
       w="100%"
       sx={(theme) => ({
         gap: theme.spacing.sm,
@@ -40,9 +40,9 @@ export const IdeaLikingUserCard: React.FC<Props> = ({ likingUser }) => {
       <Flex justify="space-between">
         <Flex gap={10} miw={0}>
           {/* アイコン　*/}
-          <UserIcon iconSrc={likingUser.image} />
+          <UserIcon iconSrc={liker.image} />
           {/* 名前 */}
-          <TextLink href={Routes.user(likingUser.id)}>
+          <TextLink href={Routes.user(liker.id)}>
             <Text
               truncate
               sx={{
@@ -51,7 +51,7 @@ export const IdeaLikingUserCard: React.FC<Props> = ({ likingUser }) => {
               fw="bold"
               size="lg"
             >
-              {likingUser.name}
+              {liker.name}
             </Text>
           </TextLink>
         </Flex>
@@ -59,7 +59,7 @@ export const IdeaLikingUserCard: React.FC<Props> = ({ likingUser }) => {
       {/* いいねをした日付 */}
       <Flex align="center" justify="flex-start" mt={10}>
         <Text size="sm" color="gray.5">
-          いいねした日: {formatDate(likingUser.likedDate)}
+          いいねした日: {formatDate(liker.likedDate)}
         </Text>
       </Flex>
     </Card>

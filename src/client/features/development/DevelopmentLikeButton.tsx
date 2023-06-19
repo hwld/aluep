@@ -69,7 +69,7 @@ export const DevelopmentLikeButton: React.FC<Props> = ({
         />
       </ActionIcon>
       <TextLink
-        href={Routes.developmentLikingUsers(ideaId, developmentId)}
+        href={Routes.developmentLikers(ideaId, developmentId)}
         disabled={likes === 0}
       >
         <Text size="xl" fw="bold">

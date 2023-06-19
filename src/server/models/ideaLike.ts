@@ -1,3 +1,3 @@
 import { User } from "./user";
 
-export type IdeaLikingUser = User & { likedDate: Date };
+export type IdeaLiker = User & { likedDate: Date };

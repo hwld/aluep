@@ -1,3 +1,3 @@
 import { User } from "./user";
 
-export type DevelopmentLikingUser = User & { likedDate: Date };
+export type DevelopmentLikers = User & { likedDate: Date };

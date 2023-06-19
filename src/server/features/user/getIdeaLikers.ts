@@ -5,10 +5,10 @@ import { sortedInSameOrder } from "../../../share/utils";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
-import { IdeaLikingUser } from "../../models/ideaLike";
+import { IdeaLiker } from "../../models/ideaLike";
 import { findManyUsers } from "../../models/user";
 
-export const getIdeaLikingUsers = publicProcedure
+export const getIdeaLikers = publicProcedure
   .input(z.object({ ideaId: z.string(), page: pagingSchema }))
   .query(async ({ input }) => {
     const [ideaLikesPerPage, { allPages }] = await paginate({
@@ -18,28 +18,28 @@ export const getIdeaLikingUsers = publicProcedure
         orderBy: { createdAt: "desc" as const },
       },
       counter: db.ideaLike.count,
-      pagingData: { page: input.page, limit: pageLimit.ideaLikingUsers },
+      pagingData: { page: input.page, limit: pageLimit.ideaLikers },
     });
 
-    const likingUserId = ideaLikesPerPage.map(({ userId }) => userId);
+    const likerId = ideaLikesPerPage.map(({ userId }) => userId);
 
     //ユーザーの情報を取得する
     const users = await findManyUsers({
-      where: { id: { in: likingUserId } },
+      where: { id: { in: likerId } },
     });
 
     //userIdsに並び順を合わせる
     const sortedUsers = sortedInSameOrder({
       target: users,
-      base: likingUserId,
+      base: likerId,
       getKey: (t) => t.id,
     });
 
     //usersにceratedAt(いいねをした日)をつける
-    const IdeaLikingUsers: IdeaLikingUser[] = sortedUsers.map((user, i) => ({
+    const IdeaLikers: IdeaLiker[] = sortedUsers.map((user, i) => ({
       ...user,
       likedDate: ideaLikesPerPage[i].createdAt,
     }));
 
-    return { list: IdeaLikingUsers, allPages };
+    return { list: IdeaLikers, allPages };
   });

@@ -4,19 +4,19 @@ import { Idea } from "../../server/models/idea";
 import { paginatedPageSchema } from "../../share/schema";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import {
-  IdeaLikingUserCard,
-  ideaLikingUserCardMinWidthPx,
-} from "../features/user/IdeaLikingUserCard";
-import { useIdeaLikingUsersPerPage } from "../features/user/useIdeaLikingUsersPerPage";
+  IdeaLikerCard,
+  ideaLikerCardMinWidthPx,
+} from "../features/user/IdeaLikerCard";
+import { useIdeaLikersPerPage } from "../features/user/useIdeaLikersPerPage";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
 import { GridContainer } from "../ui/GridContainer";
 import { PageHeader } from "../ui/PageHeader";
 
 type Props = { idea: Idea };
-export const IdeaLikingUsersPage: React.FC<Props> = ({ idea }) => {
+export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
-  const { ideaLikingUsersPerPage } = useIdeaLikingUsersPerPage(idea.id, page);
+  const { ideaLikersPerPage } = useIdeaLikersPerPage(idea.id, page);
 
   const handleChangePage = (page: number) => {
     setURLParams({ page });
@@ -35,16 +35,16 @@ export const IdeaLikingUsersPage: React.FC<Props> = ({ idea }) => {
           <Text c="gray.5" align="left">
             いいねしたユーザー
           </Text>
-          <GridContainer minItemWidthPx={ideaLikingUserCardMinWidthPx}>
-            {ideaLikingUsersPerPage?.list.map((user) => {
-              return <IdeaLikingUserCard key={user.id} likingUser={user} />;
+          <GridContainer minItemWidthPx={ideaLikerCardMinWidthPx}>
+            {ideaLikersPerPage?.list.map((user) => {
+              return <IdeaLikerCard key={user.id} liker={user} />;
             })}
           </GridContainer>
         </Stack>
         <AppPagination
           page={page}
           onChange={handleChangePage}
-          total={ideaLikingUsersPerPage?.allPages ?? 0}
+          total={ideaLikersPerPage?.allPages ?? 0}
         />
       </Stack>
     </>

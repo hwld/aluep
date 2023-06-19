@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { ideaKeys } from "../../../client/features/idea/queryKeys";
 import { useIdeaQuery } from "../../../client/features/idea/useIdeaQuery";
 import { userKeys } from "../../../client/features/user/queryKeys";
-import { IdeaLikingUsersPage } from "../../../client/pageComponents/IdeaLikingUsersPage";
+import { IdeaLikersPage } from "../../../client/pageComponents/IdeaLikersPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
 import { paginatedPageSchema } from "../../../share/schema";
@@ -29,8 +29,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     await queryClient.prefetchQuery(ideaKeys.detail(ideaId), () =>
       caller.idea.get({ ideaId: ideaId })
     );
-    await queryClient.prefetchQuery(userKeys.ideaLikingList(ideaId, page), () =>
-      caller.user.getIdeaLikingUsers({ ideaId, page })
+    await queryClient.prefetchQuery(userKeys.ideaLikers(ideaId, page), () =>
+      caller.user.getIdeaLikers({ ideaId, page })
     );
   }
 );
@@ -38,7 +38,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 /**
  * お題にいいねしているユーザー一覧を表示するページ
  */
-const IdeaLikingUsers: NextPage = () => {
+const IdeaLikers: NextPage = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.id);
   const { idea, isLoading } = useIdeaQuery(ideaId);
@@ -49,6 +49,6 @@ const IdeaLikingUsers: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return <IdeaLikingUsersPage idea={idea} />;
+  return <IdeaLikersPage idea={idea} />;
 };
-export default IdeaLikingUsers;
+export default IdeaLikers;

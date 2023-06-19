@@ -4,21 +4,19 @@ import { Development } from "../../server/models/development";
 import { paginatedPageSchema } from "../../share/schema";
 import { DevelopmentSummaryCard } from "../features/development/DevelopmentSummaryCard";
 import {
-  IdeaLikingUserCard,
-  ideaLikingUserCardMinWidthPx,
-} from "../features/user/IdeaLikingUserCard";
-import { useDevelopmentLikingUsersPerPage } from "../features/user/useDevelopmentLikingUsersPerPage";
+  IdeaLikerCard,
+  ideaLikerCardMinWidthPx,
+} from "../features/user/IdeaLikerCard";
+import { useDevelopmentLikersPerPage } from "../features/user/useDevelopmentLikersPerPage";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
 import { GridContainer } from "../ui/GridContainer";
 import { PageHeader } from "../ui/PageHeader";
 
 type Props = { development: Development };
-export const DevelopmentLikingUsersPage: React.FC<Props> = ({
-  development,
-}) => {
+export const DevelopmentLikersPage: React.FC<Props> = ({ development }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
-  const { developmentLikingUsersPerPage } = useDevelopmentLikingUsersPerPage(
+  const { developmentLikersPerPage } = useDevelopmentLikersPerPage(
     development.id,
     page
   );
@@ -40,16 +38,16 @@ export const DevelopmentLikingUsersPage: React.FC<Props> = ({
           <Text c="gray.5" align="left">
             いいねしたユーザー
           </Text>
-          <GridContainer minItemWidthPx={ideaLikingUserCardMinWidthPx}>
-            {developmentLikingUsersPerPage?.list.map((user) => {
-              return <IdeaLikingUserCard key={user.id} likingUser={user} />;
+          <GridContainer minItemWidthPx={ideaLikerCardMinWidthPx}>
+            {developmentLikersPerPage?.list.map((user) => {
+              return <IdeaLikerCard key={user.id} liker={user} />;
             })}
           </GridContainer>
         </Stack>
         <AppPagination
           page={page}
           onChange={handleChangePage}
-          total={developmentLikingUsersPerPage?.allPages ?? 0}
+          total={developmentLikersPerPage?.allPages ?? 0}
         />
       </Stack>
     </>

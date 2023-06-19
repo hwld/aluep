@@ -28,7 +28,6 @@ export const developmentKeys = {
       { page: isNaN(page) ? 1 : page },
     ] as const,
 
-  // TODO: 名前どうすれば
   listByUserPerPage: (userId: string, page: number) =>
     [
       ...userKeys.detail(userId),

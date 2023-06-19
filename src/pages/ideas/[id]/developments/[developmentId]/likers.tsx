@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { developmentKeys } from "../../../../../client/features/development/queryKeys";
 import { useDevelopmentQuery } from "../../../../../client/features/development/useDevelopmentQuery";
 import { userKeys } from "../../../../../client/features/user/queryKeys";
-import { DevelopmentLikingUsersPage } from "../../../../../client/pageComponents/DevelopmentLikingUsersPage";
+import { DevelopmentLikersPage } from "../../../../../client/pageComponents/DevelopmentLikersPage";
 import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../../server/router";
 import { paginatedPageSchema } from "../../../../../share/schema";
@@ -31,15 +31,15 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       }
     );
     await queryClient.prefetchQuery(
-      userKeys.developmentLikingList(developmentId, page),
+      userKeys.developmentLikers(developmentId, page),
       () => {
-        return caller.user.getDevelopmentLikingUsers({ developmentId, page });
+        return caller.user.getDevelopmentLikers({ developmentId, page });
       }
     );
   }
 );
 
-const DevelopmentLikingUsers: NextPage = () => {
+const DevelopmentLikers: NextPage = () => {
   const router = useRouter();
   const developmentId = assertString(router.query.developmentId);
   const { development, isLoading } = useDevelopmentQuery(developmentId);
@@ -50,7 +50,7 @@ const DevelopmentLikingUsers: NextPage = () => {
     return <NotFoundPage></NotFoundPage>;
   }
 
-  return <DevelopmentLikingUsersPage development={development} />;
+  return <DevelopmentLikersPage development={development} />;
 };
 
-export default DevelopmentLikingUsers;
+export default DevelopmentLikers;

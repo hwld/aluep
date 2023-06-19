@@ -65,7 +65,7 @@ export const IdeaLikeButton: React.FC<Props> = ({
       >
         <Anchor
           component={Link}
-          href={Routes.ideaLikingUsers(ideaId)}
+          href={Routes.ideaLikers(ideaId)}
           size="sm"
           sx={(theme) => ({
             pointerEvents: likes === 0 ? "none" : "auto",

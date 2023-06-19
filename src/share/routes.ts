@@ -11,7 +11,7 @@ export const Routes = {
   ideaUpdate: (ideaId: string) => `${Routes.idea(ideaId)}/update`,
   ideaSearch: (query?: { order?: IdeaOrder; tagIds?: string }) =>
     `${Routes.ideas}/search${buildSearchParamsString(query)}`,
-  ideaLikingUsers: (ideaId: string) => `${Routes.ideas}/${ideaId}/liking-users`,
+  ideaLikers: (ideaId: string) => `${Routes.ideas}/${ideaId}/likers`,
 
   /** アプリ開発のお題の開発関連 */
   develop: (ideaId: string) => `${Routes.ideas}/${ideaId}/develop`,
@@ -20,8 +20,8 @@ export const Routes = {
     `${Routes.developments(ideaId)}/${developmentId}`,
   developmentUpdate: (ideaId: string, developmentId: string) =>
     `${Routes.development(ideaId, developmentId)}/update`,
-  developmentLikingUsers: (ideaId: string, developmentId: string) =>
-    `${Routes.development(ideaId, developmentId)}/liking-users`,
+  developmentLikers: (ideaId: string, developmentId: string) =>
+    `${Routes.development(ideaId, developmentId)}/likers`,
 
   /** ユーザー関連 */
   user: (id: string) => `/users/${id}`,

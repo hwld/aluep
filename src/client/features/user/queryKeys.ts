@@ -15,20 +15,19 @@ export const userKeys = {
   receivedLikeCount: (userId: string) =>
     [...userKeys.detail(userId), "received-like-count"] as const,
 
-  // TODO: 何だこの名前
   /** 指定された開発情報をいいねしたユーザーを取得する */
-  developmentLikingList: (developmentId: string, page: number) =>
+  developmentLikers: (developmentId: string, page: number) =>
     [
       ...developmentKeys.detail(developmentId),
-      "liking-users",
+      "likers",
       { page: isNaN(page) ? 1 : page },
     ] as const,
 
   /** 指定されたお題をいいねしたユーザーを取得する */
-  ideaLikingList: (ideaId: string, page: number) =>
+  ideaLikers: (ideaId: string, page: number) =>
     [
       ...ideaKeys.detail(ideaId),
-      "liking-users",
+      "likers",
       { page: isNaN(page) ? 1 : page },
     ] as const,
 
