@@ -3,7 +3,7 @@ import { Development } from "../../../server/models/development";
 import { Routes } from "../../../share/routes";
 import { TextLink } from "../../ui/TextLink";
 import { UserIconLink } from "../user/UserIconLink";
-import { DevelopmentMenuButton } from "./DevelopmentCard/DevelopmentMenuButton";
+import { DevelopmentMenuButton } from "./DevelopmentMenuButton";
 
 type Props = { development: Development; isLoggedInUserDeveloper: boolean };
 export const DeveloperCard: React.FC<Props> = ({

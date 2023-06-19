@@ -7,7 +7,7 @@ import { formatDate } from "../../lib/utils";
 import { GitHubCodeIconLink } from "../../ui/GitHubCodeIconLink";
 import { TextLink } from "../../ui/TextLink";
 import { DevelopedItemIconLink } from "../development/DevelopedItemIconLink";
-import { DevelopmentStatusBadge } from "../development/DevelopmentCard/DevelopmentStatusBadge";
+import { DevelopmentStatusBadge } from "../development/DevelopmentStatusBadge";
 
 export const userDevelopmentCardMinWidthPx = 450;
 

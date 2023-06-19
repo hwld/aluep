@@ -7,7 +7,7 @@ import { GitHubCodeIconLink } from "../../ui/GitHubCodeIconLink";
 import { TextLink } from "../../ui/TextLink";
 import { UserIconLink } from "../user/UserIconLink";
 import { DevelopedItemIconLink } from "./DevelopedItemIconLink";
-import { DevelopmentStatusBadge } from "./DevelopmentCard/DevelopmentStatusBadge";
+import { DevelopmentStatusBadge } from "./DevelopmentStatusBadge";
 
 type Props = { development: Development };
 

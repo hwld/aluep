@@ -1,6 +1,6 @@
 import { Badge, MantineSize, MantineTheme } from "@mantine/core";
-import { DevelopmentStatus } from "../../../../server/models/developmentStatus";
-import { DevelopmentStatusIds } from "../../../../share/consts";
+import { DevelopmentStatus } from "../../../server/models/developmentStatus";
+import { DevelopmentStatusIds } from "../../../share/consts";
 
 type Props = { status: DevelopmentStatus; size?: MantineSize };
 

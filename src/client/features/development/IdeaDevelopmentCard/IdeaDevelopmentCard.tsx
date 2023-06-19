@@ -10,8 +10,8 @@ import { useRequireLoginModal } from "../../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../../session/useSessionQuery";
 import { UserIconLink } from "../../user/UserIconLink";
 import { DevelopedItemIconLink } from "../DevelopedItemIconLink";
-import { DevelopmentMiniLikeButton } from "./DevelopmentMiniLikeButton";
-import { DevelopmentStatusBadge } from "./DevelopmentStatusBadge";
+import { DevelopmentStatusBadge } from "../DevelopmentStatusBadge";
+import { IdeaDevelopmentMiniLikeButton } from "./IdeaDevelopmentMiniLikeButton";
 
 type Props = {
   idea: Idea;
@@ -22,8 +22,7 @@ type Props = {
 
 export const developmentCardMinWidthPx = 450;
 
-// TODO: どこの開発情報のカードなのかわからない
-export const DevelopmentCard: React.FC<Props> = ({
+export const IdeaDevelopmentCard: React.FC<Props> = ({
   idea,
   development,
   onLikeDevelopment: onLike,
@@ -103,7 +102,7 @@ export const DevelopmentCard: React.FC<Props> = ({
           開発開始日: {formatDate(new Date(development.createdAt))}
         </Text>
         <Box>
-          <DevelopmentMiniLikeButton
+          <IdeaDevelopmentMiniLikeButton
             likes={development.likes}
             likedByLoggedInUser={development.likedByLoggedInUser}
             onClick={handleLikeDevelopment}

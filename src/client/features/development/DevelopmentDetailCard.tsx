@@ -13,8 +13,8 @@ import { TbFileText, TbLink } from "react-icons/tb";
 import { Development } from "../../../server/models/development";
 import { Routes } from "../../../share/routes";
 import { TextLink } from "../../ui/TextLink";
-import { DevelopmentStatusBadge } from "./DevelopmentCard/DevelopmentStatusBadge";
 import { DevelopmentLikeButton } from "./DevelopmentLikeButton";
+import { DevelopmentStatusBadge } from "./DevelopmentStatusBadge";
 
 type Props = {
   development: Development;

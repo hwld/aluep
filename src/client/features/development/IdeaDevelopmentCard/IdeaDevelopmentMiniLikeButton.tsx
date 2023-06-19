@@ -8,7 +8,7 @@ type Props = {
   onClick: () => void;
   disabled?: boolean;
 };
-export const DevelopmentMiniLikeButton: React.FC<Props> = ({
+export const IdeaDevelopmentMiniLikeButton: React.FC<Props> = ({
   likes,
   likedByLoggedInUser,
   onClick,

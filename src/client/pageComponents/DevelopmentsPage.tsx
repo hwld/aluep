@@ -3,9 +3,9 @@ import { MdComputer } from "react-icons/md";
 import { Idea } from "../../server/models/idea";
 import { paginatedPageSchema } from "../../share/schema";
 import {
-  DevelopmentCard,
+  IdeaDevelopmentCard,
   developmentCardMinWidthPx,
-} from "../features/development/DevelopmentCard/DevelopmentCard";
+} from "../features/development/IdeaDevelopmentCard/IdeaDevelopmentCard";
 import { useDevelopmentLikeOnList } from "../features/development/useDevelopmentLikeOnList";
 import { useDevelopmentsPerPage } from "../features/development/useDevelopmentsPerPage";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
@@ -40,7 +40,7 @@ export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
           <GridContainer minItemWidthPx={developmentCardMinWidthPx}>
             {developmentsPerPage?.list.map((dev) => {
               return (
-                <DevelopmentCard
+                <IdeaDevelopmentCard
                   key={dev.id}
                   idea={idea}
                   development={dev}
