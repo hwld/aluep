@@ -17,11 +17,11 @@ type UploadAvatar = (
 
 // 開発環境ではローカルストレージにアバター画像を保存したいから実装を切り替える
 // 他に良い方法が思いつかなかった・・・
-export const uploadAvatar: UploadAvatar = async (...params) => {
+export const uploadAvatar: UploadAvatar = async (...args) => {
   if (process.env.STORAGE_TYPE === "local") {
-    return await uploadAvatarOnDevelop(...params);
+    return await uploadAvatarOnDevelop(...args);
   } else {
-    return await uploadAvatarOnProduct(...params);
+    return await uploadAvatarOnProduct(...args);
   }
 };
 

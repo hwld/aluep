@@ -119,7 +119,7 @@ async function createIdeas(
   return ideaIds;
 }
 
-type CreateIdeaLikeParams = {
+type CreateIdeaLikeArgs = {
   userIds: string[];
   ideaIds: string[];
   /** いいねされるお題の数 */
@@ -135,7 +135,7 @@ async function createIdeaLike({
   ideaIds,
   likedIdeaCounts,
   maxIdeaLikeCounts,
-}: CreateIdeaLikeParams) {
+}: CreateIdeaLikeArgs) {
   console.log("お題にいいねを追加");
 
   // いいねされるお題をランダムで選択する
@@ -181,7 +181,7 @@ async function createIdeaLike({
   console.log("");
 }
 
-type CreateDevelopmentParams = {
+type CreateDevelopmentArgs = {
   ideaIds: string[];
   userIds: string[];
   /** 開発されるお題の数 */
@@ -195,7 +195,7 @@ async function createDevelopments({
   userIds,
   developedIdeaCounts,
   maxDevelopmentCounts,
-}: CreateDevelopmentParams): Promise<string[]> {
+}: CreateDevelopmentArgs): Promise<string[]> {
   console.log("開発者の作成");
 
   // 開発されるお題をランダムで選択する
@@ -252,7 +252,7 @@ async function createDevelopments({
   return developmentIds;
 }
 
-type CreateDevelopmentLikesParam = {
+type CreateDevelopmentLikesArgs = {
   userIds: string[];
   developmentIds: string[];
   // 何人の開発者がいいねされるか
@@ -266,7 +266,7 @@ async function createDevelopmentLikes({
   developmentIds,
   likedDevelopmentCounts,
   maxDevelopmentLikeCounts,
-}: CreateDevelopmentLikesParam) {
+}: CreateDevelopmentLikesArgs) {
   console.log("開発者へのいいねを追加");
 
   //　いいねされる開発者をランダムで選択する

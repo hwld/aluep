@@ -6,7 +6,7 @@ import { urlParamToString } from "../../server/lib/urlParam";
 import { appRouter } from "../../server/router";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, callerContext }) => {
+  async ({ gsspContext: { query }, queryClient, callerContext }) => {
     const caller = appRouter.createCaller(callerContext);
 
     const userName = urlParamToString(query.userName, "");

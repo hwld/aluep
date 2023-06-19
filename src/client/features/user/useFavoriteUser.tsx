@@ -3,7 +3,11 @@ import { RouterInputs } from "../../../server/lib/trpc";
 import { trpc } from "../../lib/trpc";
 import { userKeys } from "./queryKeys";
 
-export const useFavoriteUser = (userId: string, loggedInUserId?: string) => {
+type UseFavoriteUserArgs = { userId: string; loggedInUserId?: string };
+export const useFavoriteUser = ({
+  userId,
+  loggedInUserId,
+}: UseFavoriteUserArgs) => {
   const queryClient = useQueryClient();
 
   const { data: favorited } = useQuery({

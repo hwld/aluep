@@ -10,7 +10,7 @@ import { assertString } from "../../../../../share/utils";
 import NotFoundPage from "../../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, callerContext }) => {
+  async ({ gsspContext: { query }, queryClient, callerContext }) => {
     const ideaId = assertString(query.id);
     const developmentId = assertString(query.developmentId);
 
@@ -38,8 +38,8 @@ const DevelopmentDetail = () => {
   const developmentId = assertString(router.query.developmentId);
   const ideaId = assertString(router.query.id);
   const { development: development, isLoading: loadingDevelopment } =
-    useDevelopmentQuery(developmentId);
-  const { idea, isLoading: loadingIdea } = useIdeaQuery(ideaId);
+    useDevelopmentQuery({ developmentId });
+  const { idea, isLoading: loadingIdea } = useIdeaQuery({ ideaId });
 
   if (loadingDevelopment || loadingIdea) {
     return <></>;

@@ -1,7 +1,7 @@
 import { useDebouncedValue } from "@mantine/hooks";
 import { FormEvent, FormEventHandler } from "react";
 
-type UseAppFormParams = {
+type UseAppFormArgs = {
   isSubmitting: boolean;
   wait?: number;
   onCancel?: () => void;
@@ -18,7 +18,7 @@ export const useDebouncedSubmitting = ({
   wait = 250,
   onCancel,
   onSubmit,
-}: UseAppFormParams) => {
+}: UseAppFormArgs) => {
   // すぐに終わる操作で一瞬インジケータが表示されるのを防ぐために、
   // isSubmittingが変更されてから250ms経過した後に反映させる。
   // ただ、その間にキャンセルボタンやSubmitボタンを押されたくないので、

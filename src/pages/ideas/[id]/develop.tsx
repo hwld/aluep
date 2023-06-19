@@ -11,7 +11,7 @@ import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session, callerContext }) => {
+  async ({ gsspContext: { query }, queryClient, session, callerContext }) => {
     if (!session) {
       return { redirect: { destination: Routes.home, permanent: false } };
     }
@@ -45,7 +45,7 @@ const DevelopIdea: NextPage = () => {
   const createRepositoryData = createRepositoryURLParamSchema.parse(
     router.query
   );
-  const { idea } = useIdeaQuery(ideaId);
+  const { idea } = useIdeaQuery({ ideaId });
 
   if (!idea) {
     return <NotFoundPage />;

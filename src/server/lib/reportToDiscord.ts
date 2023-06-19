@@ -26,7 +26,7 @@ export const buildReportedUser = (
     : undefined;
 };
 
-type Params = {
+type Args = {
   reportedUser: ReportedUser;
 } & (
   | { type: "idea"; report: ReportIdeaForm }
@@ -38,7 +38,7 @@ type Params = {
 const buildEmbedFields = ({
   type,
   report,
-}: OmitStrict<Params, "reportedUser">): {
+}: OmitStrict<Args, "reportedUser">): {
   color: number;
   title: string;
   targetField: APIEmbedField;
@@ -89,9 +89,9 @@ const buildEmbedFields = ({
   }
 };
 
-export const reportToDiscord = async (param: Params) => {
-  const { report, reportedUser } = param;
-  const { title, color, targetField: field } = buildEmbedFields(param);
+export const reportToDiscord = async (args: Args) => {
+  const { report, reportedUser } = args;
+  const { title, color, targetField: field } = buildEmbedFields(args);
 
   const webhookClient = new WebhookClient({
     url: process.env.DISCORD_WEBHOOK_URL || "",

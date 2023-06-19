@@ -17,27 +17,15 @@ export const userKeys = {
 
   /** 指定された開発情報をいいねしたユーザーを取得する */
   developmentLikers: (developmentId: string, page: number) =>
-    [
-      ...developmentKeys.detail(developmentId),
-      "likers",
-      { page: isNaN(page) ? 1 : page },
-    ] as const,
+    [...developmentKeys.detail(developmentId), "likers", { page }] as const,
 
   /** 指定されたお題をいいねしたユーザーを取得する */
   ideaLikers: (ideaId: string, page: number) =>
-    [
-      ...ideaKeys.detail(ideaId),
-      "likers",
-      { page: isNaN(page) ? 1 : page },
-    ] as const,
+    [...ideaKeys.detail(ideaId), "likers", { page }] as const,
 
   /** 指定したユーザーがお気に入り登録したユーザーを取得する */
   favoritedList: (userId: string, page: number) =>
-    [
-      ...userKeys.detail(userId),
-      "favorited-users",
-      { page: isNaN(page) ? 1 : page },
-    ] as const,
+    [...userKeys.detail(userId), "favorited-users", { page }] as const,
 
   /**
    * ログインしているユーザーが指定したユーザーをお気に入り登録しているか

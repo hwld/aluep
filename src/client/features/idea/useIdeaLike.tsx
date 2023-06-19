@@ -6,8 +6,10 @@ import { showErrorNotification } from "../../lib/utils";
 import { useSessionQuery } from "../session/useSessionQuery";
 import { ideaKeys } from "./queryKeys";
 
+type UseIdeaLikeArgs = { ideaId: string };
+
 // ログインユーザーと指定されたお題とのいいね状況
-export const useIdeaLike = (ideaId: string) => {
+export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
   const queryClient = useQueryClient();
   const { session } = useSessionQuery();
 

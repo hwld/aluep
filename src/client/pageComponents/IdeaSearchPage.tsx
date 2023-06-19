@@ -12,8 +12,8 @@ import {
   ideaCardMinWidthPx,
 } from "../features/idea/IdeaCard/IdeaCard";
 import {
+  IdeaSearchArgs,
   IdeaSearchForm,
-  IdeaSearchParams,
 } from "../features/idea/IdeaSearchForm";
 import { useAllTagsQuery } from "../features/idea/useAllTagsQuery";
 import { useSearchedIdeasQuery } from "../features/idea/useSearchedIdeasQuery";
@@ -37,10 +37,10 @@ export const IdeaSearchPage: React.FC = () => {
     page,
   });
 
-  const handleSearch = async (param: IdeaSearchParams) => {
+  const handleSearch = async (args: IdeaSearchArgs) => {
     setQueryParams({
-      keyword: param.keyword,
-      tagIds: param.tagIds,
+      keyword: args.keyword,
+      tagIds: args.tagIds,
       page: 1,
     });
   };

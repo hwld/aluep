@@ -7,7 +7,11 @@ export type ReceivedLikeCount = {
   developmentLikeCount: number;
 };
 
-export const useReceivedLikeCountQuery = (userId: string) => {
+type UseReceivedLikeCountQueryArgs = { userId: string };
+
+export const useReceivedLikeCountQuery = ({
+  userId,
+}: UseReceivedLikeCountQueryArgs) => {
   const { data: recievedLikeCount, ...others } = useQuery({
     queryKey: userKeys.receivedLikeCount(userId),
     queryFn: () => {

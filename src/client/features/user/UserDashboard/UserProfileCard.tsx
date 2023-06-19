@@ -21,9 +21,9 @@ export const UserProfileCard: React.FC<Props> = ({ user, maxWidth }) => {
   const isLoggedInUserPage = session?.user.id === user.id;
 
   const { createFavoriteMutation, deleteFavoriteMutation, favorited } =
-    useFavoriteUser(user.id, session?.user.id);
+    useFavoriteUser({ userId: user.id, loggedInUserId: session?.user.id });
 
-  const { favoriteUserCount } = useFavoriteUserCountQuery(user.id);
+  const { favoriteUserCount } = useFavoriteUserCountQuery({ userId: user.id });
 
   const handleFavoriteUser = () => {
     if (session?.user.id === undefined) {

@@ -22,8 +22,8 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
   const [{ tab: activeTab, page }, setURLParam] =
     useURLParams(userDetailPageSchame);
 
-  const { recievedLikeCount } = useReceivedLikeCountQuery(user.id);
-  const { userActivity } = useUserActivityQuery(user.id);
+  const { recievedLikeCount } = useReceivedLikeCountQuery({ userId: user.id });
+  const { userActivity } = useUserActivityQuery({ userId: user.id });
 
   const handleChangeTab = (tab: UserDetailPageTab) => {
     setURLParam({ tab, page: 1 });

@@ -6,7 +6,7 @@ import { appRouter } from "../../server/router";
 import { searchIdeaPageSchema } from "../../share/schema";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, callerContext }) => {
+  async ({ gsspContext: { query }, queryClient, callerContext }) => {
     const caller = appRouter.createCaller(callerContext);
 
     const parseQueryResult = searchIdeaPageSchema.safeParse(query);

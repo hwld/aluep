@@ -43,7 +43,7 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
 
   const {
     mutations: { cancelDevelopMutation },
-  } = useDevelop(development.ideaId);
+  } = useDevelop({ ideaId: development.ideaId });
 
   const handleDeleteDevelopment = () => {
     cancelDevelopMutation.mutate(

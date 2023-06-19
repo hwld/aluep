@@ -11,7 +11,7 @@ import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, callerContext }) => {
+  async ({ gsspContext: { query }, queryClient, callerContext }) => {
     const parsePageResult = paginatedPageSchema.safeParse(query);
     if (!parsePageResult.success) {
       return { notFound: true };
@@ -41,7 +41,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 const IdeaLikers: NextPage = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.id);
-  const { idea, isLoading } = useIdeaQuery(ideaId);
+  const { idea, isLoading } = useIdeaQuery({ ideaId });
 
   if (isLoading) {
     return <></>;

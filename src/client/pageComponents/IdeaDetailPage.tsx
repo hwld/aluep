@@ -40,10 +40,10 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
   const router = useRouter();
   const { openLoginModal } = useRequireLoginModal();
   const { likeIdeaMutation, unlikeIdeaMutation, likedByLoggedInUser } =
-    useIdeaLike(idea.id);
+    useIdeaLike({ ideaId: idea.id });
   const {
     data: { developedData },
-  } = useDevelop(idea.id);
+  } = useDevelop({ ideaId: idea.id });
 
   const handleLikeIdea = () => {
     //ログインしていなければログインモーダルを表示する

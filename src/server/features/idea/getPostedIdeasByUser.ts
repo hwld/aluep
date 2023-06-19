@@ -9,12 +9,12 @@ import { findManyIdeas } from "../../models/idea";
 export const getPostedIdeasByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page } }) => {
-    const [postedIdeasPerPage, { allPages }] = await paginate({
+    const [postedIdeas, { allPages }] = await paginate({
       finder: findManyIdeas,
       finderInput: { where: { userId: input.userId } },
       counter: db.idea.count,
       pagingData: { page, limit: pageLimit.postedIdeas },
     });
 
-    return { list: postedIdeasPerPage, allPages };
+    return { list: postedIdeas, allPages };
   });

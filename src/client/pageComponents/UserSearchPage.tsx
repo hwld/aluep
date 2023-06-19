@@ -26,7 +26,9 @@ export const UserSearchPage: React.FC = () => {
     }, 200);
   };
 
-  const { searchedUserResult } = useSearchedUsersQuery(userNameFromURLParams);
+  const { searchedUserResult } = useSearchedUsersQuery({
+    userName: userNameFromURLParams,
+  });
 
   return (
     <>

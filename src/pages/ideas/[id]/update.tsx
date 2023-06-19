@@ -10,7 +10,7 @@ import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session, callerContext }) => {
+  async ({ gsspContext: { query }, queryClient, session, callerContext }) => {
     if (!session) {
       return { redirect: { destination: Routes.home, permanent: false } };
     }
@@ -35,7 +35,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 const UpdateIdea: NextPage = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.id);
-  const { idea, isLoading } = useIdeaQuery(ideaId);
+  const { idea, isLoading } = useIdeaQuery({ ideaId });
 
   if (isLoading) {
     return <></>;

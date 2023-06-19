@@ -42,7 +42,7 @@ export const IdeaComments: React.FC<Props> = ({
 
   // お題のコメント操作
   const { ideaComments, postCommentMutation, deleteCommentMutation } =
-    useIdeaComments(ideaId);
+    useIdeaComments({ ideaId });
 
   // コメント送信後にformを再マウントさせるために使用するkey
   const { random: formKey, nextRandom: nextFormKey } = useCyclicRandom();

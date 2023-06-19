@@ -7,7 +7,7 @@ import { User } from "../../server/models/user";
 import { paginatedPageSchema } from "../../share/schema";
 import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";
 import { UserSummaryCard } from "../features/user/UserSummaryCard";
-import { useFavoritedUsersPerPage } from "../features/user/useFavoritedUsersPerPage";
+import { useFavoritedUsers } from "../features/user/useFavoritedUsers";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
 import { PageHeader } from "../ui/PageHeader";
@@ -16,7 +16,7 @@ type Props = { user: User };
 
 export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
-  const { favoritedUsersPerPage } = useFavoritedUsersPerPage(user.id, page);
+  const { favoritedUsers } = useFavoritedUsers({ userId: user.id, page });
   const { colors } = useMantineTheme();
 
   const handleChangePage = (page: number) => {
@@ -31,7 +31,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
           <Text c="gray.5">ユーザー</Text>
           <UserSummaryCard user={user} />
         </Stack>
-        {favoritedUsersPerPage?.list.length === 0 ? (
+        {favoritedUsers?.list.length === 0 ? (
           <Flex direction="column" align="center" gap={50}>
             <Flex align="flex-end" justify="center">
               <BsFillPeopleFill size={70} color={colors.red[7]} />
@@ -57,7 +57,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
                 gap: theme.spacing.xs,
               })}
             >
-              {favoritedUsersPerPage?.list.map((user) => {
+              {favoritedUsers?.list.map((user) => {
                 return <UserCard key={user.id} user={user} />;
               })}
             </Box>
@@ -66,7 +66,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
         <AppPagination
           page={page}
           onChange={handleChangePage}
-          total={favoritedUsersPerPage?.allPages ?? 0}
+          total={favoritedUsers?.allPages ?? 0}
         />
       </Stack>
     </>

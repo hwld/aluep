@@ -3,7 +3,7 @@ import { RouterInputs } from "../../../server/lib/trpc";
 import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
 import { developmentKeys } from "./queryKeys";
-import { DevelopmentsPerPageData } from "./useDevelopmentsPerPage";
+import { DevelopmentsData } from "./useDevelopmentsByIdea";
 
 /**
  * ページングされた開発情報のリスト上で開発情報にいいねを行う。
@@ -27,7 +27,7 @@ export const useDevelopmentLikeOnList = (ideaId: string, page: number) => {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(developmentKeys.listPerPage(ideaId, page));
+      queryClient.invalidateQueries(developmentKeys.listByIdea(ideaId, page));
     },
   });
 
@@ -45,7 +45,7 @@ export const useDevelopmentLikeOnList = (ideaId: string, page: number) => {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(developmentKeys.listPerPage(ideaId, page));
+      queryClient.invalidateQueries(developmentKeys.listByIdea(ideaId, page));
     },
   });
 
@@ -57,18 +57,17 @@ export const useDevelopmentLikeOnList = (ideaId: string, page: number) => {
     developmentId: string;
     like: boolean;
   }): Promise<{
-    previousDevelopments: DevelopmentsPerPageData | undefined;
+    previousDevelopments: DevelopmentsData | undefined;
   }> => {
-    await queryClient.cancelQueries(developmentKeys.listPerPage(ideaId, page));
+    await queryClient.cancelQueries(developmentKeys.listByIdea(ideaId, page));
 
-    const previousDevelopments =
-      queryClient.getQueryData<DevelopmentsPerPageData>(
-        developmentKeys.listPerPage(ideaId, page)
-      );
+    const previousDevelopments = queryClient.getQueryData<DevelopmentsData>(
+      developmentKeys.listByIdea(ideaId, page)
+    );
 
     // 指定されたdevelopmentの状態だけを書き換える
-    queryClient.setQueryData<DevelopmentsPerPageData>(
-      developmentKeys.listPerPage(ideaId, page),
+    queryClient.setQueryData<DevelopmentsData>(
+      developmentKeys.listByIdea(ideaId, page),
       (oldPaginatedDevelopments) => {
         if (!oldPaginatedDevelopments) {
           return undefined;
@@ -100,11 +99,11 @@ export const useDevelopmentLikeOnList = (ideaId: string, page: number) => {
     previousDevelopments,
     like,
   }: {
-    previousDevelopments: DevelopmentsPerPageData | undefined;
+    previousDevelopments: DevelopmentsData | undefined;
     like: boolean;
   }) => {
     queryClient.setQueryData(
-      developmentKeys.listPerPage(ideaId, page),
+      developmentKeys.listByIdea(ideaId, page),
       previousDevelopments
     );
 

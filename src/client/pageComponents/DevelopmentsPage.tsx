@@ -1,4 +1,4 @@
-import { Stack, Text, useMantineTheme } from "@mantine/core";
+import { Stack, Text } from "@mantine/core";
 import { MdComputer } from "react-icons/md";
 import { Idea } from "../../server/models/idea";
 import { paginatedPageSchema } from "../../share/schema";
@@ -7,7 +7,7 @@ import {
   developmentCardMinWidthPx,
 } from "../features/development/IdeaDevelopmentCard/IdeaDevelopmentCard";
 import { useDevelopmentLikeOnList } from "../features/development/useDevelopmentLikeOnList";
-import { useDevelopmentsPerPage } from "../features/development/useDevelopmentsPerPage";
+import { useDevelopmentsByIdea } from "../features/development/useDevelopmentsByIdea";
 import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
@@ -18,8 +18,7 @@ type Props = { idea: Idea };
 
 export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
-  const { developmentsPerPage } = useDevelopmentsPerPage(idea.id, page);
-  const { colors } = useMantineTheme();
+  const { developments } = useDevelopmentsByIdea({ ideaId: idea.id, page });
   const { likeDevelopmentMutation, unlikeDevelopmentMutation } =
     useDevelopmentLikeOnList(idea.id, page);
 
@@ -38,7 +37,7 @@ export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
         <Stack spacing="sm">
           <Text c="gray.5">開発情報</Text>
           <GridContainer minItemWidthPx={developmentCardMinWidthPx}>
-            {developmentsPerPage?.list.map((dev) => {
+            {developments?.list.map((dev) => {
               return (
                 <IdeaDevelopmentCard
                   key={dev.id}
@@ -58,7 +57,7 @@ export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
         <AppPagination
           page={page}
           onChange={handleChangePage}
-          total={developmentsPerPage?.allPages ?? 0}
+          total={developments?.allPages ?? 0}
         />
       </Stack>
     </>

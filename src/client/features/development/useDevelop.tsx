@@ -20,7 +20,9 @@ import { ideaKeys } from "../idea/queryKeys";
 import { useSessionQuery } from "../session/useSessionQuery";
 import { developmentKeys } from "./queryKeys";
 
-export const useDevelop = (ideaId: string) => {
+type UseDevelopArgs = { ideaId: string };
+
+export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { session } = useSessionQuery();

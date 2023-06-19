@@ -5,7 +5,9 @@ import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
 import { ideaCommentKeys } from "./queryKeys";
 
-export const useIdeaComments = (ideaId: string) => {
+type UseIdeaCommentsArgs = { ideaId: string };
+
+export const useIdeaComments = ({ ideaId }: UseIdeaCommentsArgs) => {
   const queryClient = useQueryClient();
 
   // 指定されたお題のコメントを取得する

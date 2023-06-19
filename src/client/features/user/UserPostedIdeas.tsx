@@ -2,7 +2,7 @@ import { useMantineTheme } from "@mantine/core";
 import { TbFileText } from "react-icons/tb";
 import { User } from "../../../server/models/user";
 import { IdeaCard, ideaCardMinWidthPx } from "../idea/IdeaCard/IdeaCard";
-import { usePostedIdeasPerPageQuery } from "../idea/usePostedIdeasQuery";
+import { usePostedIdeasQuery } from "../idea/usePostedIdeasQuery";
 import { UserContentContainer } from "./UserContentContainer";
 
 type Props = {
@@ -15,7 +15,7 @@ export const UserPostedIdeas: React.FC<Props> = ({
   page,
   onChangePage,
 }) => {
-  const { postedIdeasPerPage } = usePostedIdeasPerPageQuery(user.id, page);
+  const { postedIdeas } = usePostedIdeasQuery({ userId: user.id, page });
   const { colors } = useMantineTheme();
 
   return (
@@ -23,8 +23,8 @@ export const UserPostedIdeas: React.FC<Props> = ({
       itemMinWidthPx={ideaCardMinWidthPx}
       page={page}
       onChangePage={onChangePage}
-      totalPages={postedIdeasPerPage?.allPages ?? 0}
-      isEmpty={postedIdeasPerPage?.list.length === 0}
+      totalPages={postedIdeas?.allPages ?? 0}
+      isEmpty={postedIdeas?.list.length === 0}
       emptyIcon={<TbFileText size="100" color={colors.red[7]} />}
       emptyText="お題がありません"
       emptyDescription={
@@ -33,7 +33,7 @@ export const UserPostedIdeas: React.FC<Props> = ({
         </>
       }
     >
-      {postedIdeasPerPage?.list.map((idea) => (
+      {postedIdeas?.list.map((idea) => (
         <IdeaCard key={idea.id} idea={idea} />
       ))}
     </UserContentContainer>

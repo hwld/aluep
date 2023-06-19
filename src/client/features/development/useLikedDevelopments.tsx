@@ -2,10 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
 import { developmentKeys } from "./queryKeys";
 
+type UseLikedDevelopmentsArgs = { userId: string; page: number };
 /** ユーザーがいいねした開発情報を取得する */
-export const useLikedDevelopmentsPerPage = (userId: string, page: number) => {
-  const { data: likedDevelopmentsPerPage, ...others } = useQuery({
-    queryKey: developmentKeys.likedListPerPage(userId, page),
+export const useLikedDevelopments = ({
+  userId,
+  page,
+}: UseLikedDevelopmentsArgs) => {
+  const { data: likedDevelopments, ...others } = useQuery({
+    queryKey: developmentKeys.likedList(userId, page),
     queryFn: () => {
       return trpc.development.getLikedDevelopmentsByUser.query({
         userId: userId,
@@ -15,5 +19,5 @@ export const useLikedDevelopmentsPerPage = (userId: string, page: number) => {
     keepPreviousData: true,
   });
 
-  return { likedDevelopmentsPerPage, ...others };
+  return { likedDevelopments, ...others };
 };

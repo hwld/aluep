@@ -5,7 +5,7 @@ import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
 import { ideaCommentKeys } from "./queryKeys";
 
-type UseIdeaCommentReplyParams = {
+type UseIdeaCommentReplyArgs = {
   ideaId: string;
   closeReplyForm: () => void;
   onSuccess?: () => void;
@@ -13,7 +13,7 @@ type UseIdeaCommentReplyParams = {
 export const useIdeaCommentReply = ({
   ideaId,
   onSuccess,
-}: UseIdeaCommentReplyParams) => {
+}: UseIdeaCommentReplyArgs) => {
   const queryClient = useQueryClient();
   const replyMutation = useMutation({
     mutationFn: (data: OmitStrict<IdeaCommentFormData, "ideaId">) => {

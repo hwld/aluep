@@ -16,20 +16,12 @@ export const ideaKeys = {
     [...ideaKeys.detail(ideaId), "users", userId ?? "", "liked"] as const,
 
   /** 特定のユーザーが投稿したpageページ目のお題のリスト */
-  postedListPerPage: (userId: string, page: number) =>
-    [
-      ...userKeys.detail(userId),
-      "posted-ideas",
-      { page: isNaN(page) ? 1 : page },
-    ] as const,
+  postedList: (userId: string, page: number) =>
+    [...userKeys.detail(userId), "posted-ideas", { page }] as const,
 
   /** 特定のユーザーがいいねしたpageページ目のお題のリスト */
-  likedListPerPage: (userId: string, page: number) =>
-    [
-      userKeys.detail(userId),
-      "liked-ideas",
-      { page: isNaN(page) ? 1 : page },
-    ] as const,
+  likedList: (userId: string, page: number) =>
+    [userKeys.detail(userId), "liked-ideas", { page }] as const,
 
   /** 特定の基準でピックアップされたお題のリスト */
   pickedUpList: (order: IdeaOrder) =>

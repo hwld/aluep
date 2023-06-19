@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
 import { ideaKeys } from "./queryKeys";
 
+type UseLikedIdeasArgs = { userId: string; page: number };
+
 /** ユーザーが良いねしたお題を取得する */
-export const useLikedIdeasPerPage = (userId: string, page: number) => {
-  const { data: likedIdeasPerPage, ...others } = useQuery({
-    queryKey: ideaKeys.likedListPerPage(userId, page),
+export const useLikedIdeas = ({ userId, page }: UseLikedIdeasArgs) => {
+  const { data: likedIdeas, ...others } = useQuery({
+    queryKey: ideaKeys.likedList(userId, page),
     queryFn: () => {
       return trpc.idea.getLikedIdeasByUser.query({
         userId: userId,
@@ -15,5 +17,5 @@ export const useLikedIdeasPerPage = (userId: string, page: number) => {
     keepPreviousData: true,
   });
 
-  return { likedIdeasPerPage, ...others };
+  return { likedIdeas, ...others };
 };

@@ -12,8 +12,8 @@ import { TRPCContext } from "./trpc";
 
 export type PageProps = { stringifiedDehydratedState?: string };
 
-type Callback = (params: {
-  params: GetServerSidePropsContext;
+type Callback = (args: {
+  gsspContext: GetServerSidePropsContext;
   queryClient: QueryClient;
   session: Session | null;
   callerContext: TRPCContext;
@@ -22,18 +22,18 @@ type Callback = (params: {
 export const withReactQueryGetServerSideProps = (
   callback: Callback
 ): GetServerSideProps<PageProps> => {
-  return async (params) => {
+  return async (args) => {
     const queryClient = new QueryClient();
-    const session = await getServerSession(params.req, params.res, authOptions);
+    const session = await getServerSession(args.req, args.res, authOptions);
 
     // セッション情報をプリフェッチする
     queryClient.setQueryData(sessionKeys.session, session);
 
     const result = await callback({
-      params,
+      gsspContext: args,
       queryClient,
       session,
-      callerContext: { session, req: params.req },
+      callerContext: { session, req: args.req },
     });
 
     // callbackが戻り値を持っていればそれをそのまま返す

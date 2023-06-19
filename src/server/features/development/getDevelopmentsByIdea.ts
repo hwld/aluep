@@ -9,7 +9,7 @@ import { findManyDevelopments } from "../../models/development";
 export const getDevelopmentsByIdea = publicProcedure
   .input(z.object({ ideaId: z.string(), page: pagingSchema }))
   .query(async ({ input: { page }, input, ctx }) => {
-    const [developmentsPerPage, { allPages }] = await paginate({
+    const [developments, { allPages }] = await paginate({
       finderInput: {
         where: { ideaId: input.ideaId },
         loggedInUserId: ctx.session?.user.id,
@@ -19,5 +19,5 @@ export const getDevelopmentsByIdea = publicProcedure
       pagingData: { page, limit: pageLimit.developments },
     });
 
-    return { list: developmentsPerPage, allPages };
+    return { list: developments, allPages };
   });

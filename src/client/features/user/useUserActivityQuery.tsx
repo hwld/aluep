@@ -8,7 +8,9 @@ export type UserActivity = {
   likedIdeaCount: number;
 };
 
-export const useUserActivityQuery = (userId: string) => {
+type UserUserActivityQueryArgs = { userId: string };
+
+export const useUserActivityQuery = ({ userId }: UserUserActivityQueryArgs) => {
   const { data: userActivity, ...others } = useQuery({
     queryKey: userKeys.activity(userId),
     queryFn: () => {

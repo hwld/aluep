@@ -3,15 +3,20 @@ import { Development } from "../../../server/models/development";
 import { trpc } from "../../lib/trpc";
 import { developmentKeys } from "./queryKeys";
 
-export type DevelopmentsPerPageData = {
+export type DevelopmentsData = {
   list: Development[];
   allPages: number;
 };
 
-export const useDevelopmentsPerPage = (ideaId: string, page: number) => {
-  const { data: developmentsPerPage, ...others } = useQuery({
-    queryKey: developmentKeys.listPerPage(ideaId, page),
-    queryFn: (): Promise<DevelopmentsPerPageData> => {
+type UseDevelopmentsByIdeaArgs = { ideaId: string; page: number };
+
+export const useDevelopmentsByIdea = ({
+  ideaId,
+  page,
+}: UseDevelopmentsByIdeaArgs) => {
+  const { data: developments, ...others } = useQuery({
+    queryKey: developmentKeys.listByIdea(ideaId, page),
+    queryFn: (): Promise<DevelopmentsData> => {
       return trpc.development.getManyByIdea.query({
         page: page.toString(),
         ideaId: ideaId,
@@ -20,5 +25,5 @@ export const useDevelopmentsPerPage = (ideaId: string, page: number) => {
     keepPreviousData: true,
   });
 
-  return { developmentsPerPage, ...others };
+  return { developments, ...others };
 };

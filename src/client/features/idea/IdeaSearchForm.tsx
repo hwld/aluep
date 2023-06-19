@@ -11,15 +11,15 @@ import {
 import React, { SyntheticEvent, useState } from "react";
 import { IdeaTag } from "../../../server/models/ideaTag";
 
-export type IdeaSearchParams = {
+export type IdeaSearchArgs = {
   keyword: string;
   tagIds: string[];
 };
 
 type Props = {
   allTags: IdeaTag[];
-  defaultValues?: IdeaSearchParams;
-  onSearch: (params: IdeaSearchParams) => void;
+  defaultValues?: IdeaSearchArgs;
+  onSearch: (args: IdeaSearchArgs) => void;
 };
 
 export const IdeaSearchForm: React.FC<Props> = ({

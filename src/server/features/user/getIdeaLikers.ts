@@ -11,7 +11,7 @@ import { findManyUsers } from "../../models/user";
 export const getIdeaLikers = publicProcedure
   .input(z.object({ ideaId: z.string(), page: pagingSchema }))
   .query(async ({ input }) => {
-    const [ideaLikesPerPage, { allPages }] = await paginate({
+    const [ideaLikes, { allPages }] = await paginate({
       finder: db.ideaLike.findMany,
       finderInput: {
         where: { ideaId: input.ideaId },
@@ -21,7 +21,7 @@ export const getIdeaLikers = publicProcedure
       pagingData: { page: input.page, limit: pageLimit.ideaLikers },
     });
 
-    const likerId = ideaLikesPerPage.map(({ userId }) => userId);
+    const likerId = ideaLikes.map(({ userId }) => userId);
 
     //ユーザーの情報を取得する
     const users = await findManyUsers({
@@ -38,7 +38,7 @@ export const getIdeaLikers = publicProcedure
     //usersにceratedAt(いいねをした日)をつける
     const IdeaLikers: IdeaLiker[] = sortedUsers.map((user, i) => ({
       ...user,
-      likedDate: ideaLikesPerPage[i].createdAt,
+      likedDate: ideaLikes[i].createdAt,
     }));
 
     return { list: IdeaLikers, allPages };

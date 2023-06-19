@@ -2,7 +2,7 @@ import { useMantineTheme } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
 import { User } from "../../../server/models/user";
 import { IdeaCard, ideaCardMinWidthPx } from "../idea/IdeaCard/IdeaCard";
-import { useLikedIdeasPerPage } from "../idea/useLikedIdeasPerPage";
+import { useLikedIdeas } from "../idea/useLikedIdeas";
 import { UserContentContainer } from "./UserContentContainer";
 
 type Props = {
@@ -15,7 +15,7 @@ export const UserLikedIdeas: React.FC<Props> = ({
   page,
   onChangePage,
 }) => {
-  const { likedIdeasPerPage } = useLikedIdeasPerPage(user.id, page);
+  const { likedIdeas } = useLikedIdeas({ userId: user.id, page });
   const { colors } = useMantineTheme();
 
   return (
@@ -23,8 +23,8 @@ export const UserLikedIdeas: React.FC<Props> = ({
       itemMinWidthPx={ideaCardMinWidthPx}
       page={page}
       onChangePage={onChangePage}
-      totalPages={likedIdeasPerPage?.allPages ?? 0}
-      isEmpty={likedIdeasPerPage?.list.length === 0}
+      totalPages={likedIdeas?.allPages ?? 0}
+      isEmpty={likedIdeas?.list.length === 0}
       emptyIcon={
         <TbHeart
           size="100"
@@ -41,7 +41,7 @@ export const UserLikedIdeas: React.FC<Props> = ({
         </>
       }
     >
-      {likedIdeasPerPage?.list.map((idea) => (
+      {likedIdeas?.list.map((idea) => (
         <IdeaCard key={idea.id} idea={idea} />
       ))}
     </UserContentContainer>

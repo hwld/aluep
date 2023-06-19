@@ -7,7 +7,7 @@ import {
   IdeaLikerCard,
   ideaLikerCardMinWidthPx,
 } from "../features/user/IdeaLikerCard";
-import { useIdeaLikersPerPage } from "../features/user/useIdeaLikersPerPage";
+import { useIdeaLikers } from "../features/user/useIdeaLikers";
 import { useURLParams } from "../lib/useURLParams";
 import { AppPagination } from "../ui/AppPagination";
 import { GridContainer } from "../ui/GridContainer";
@@ -16,7 +16,7 @@ import { PageHeader } from "../ui/PageHeader";
 type Props = { idea: Idea };
 export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
-  const { ideaLikersPerPage } = useIdeaLikersPerPage(idea.id, page);
+  const { ideaLikers } = useIdeaLikers({ ideaId: idea.id, page });
 
   const handleChangePage = (page: number) => {
     setURLParams({ page });
@@ -36,7 +36,7 @@ export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {
             いいねしたユーザー
           </Text>
           <GridContainer minItemWidthPx={ideaLikerCardMinWidthPx}>
-            {ideaLikersPerPage?.list.map((user) => {
+            {ideaLikers?.list.map((user) => {
               return <IdeaLikerCard key={user.id} liker={user} />;
             })}
           </GridContainer>
@@ -44,7 +44,7 @@ export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {
         <AppPagination
           page={page}
           onChange={handleChangePage}
-          total={ideaLikersPerPage?.allPages ?? 0}
+          total={ideaLikers?.allPages ?? 0}
         />
       </Stack>
     </>

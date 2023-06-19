@@ -12,7 +12,7 @@ import { findManyUsers } from "../../models/user";
 export const getDevelopmentLikers = publicProcedure
   .input(z.object({ developmentId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page } }) => {
-    const [developmentLikesPerPage, { allPages }] = await paginate({
+    const [developmentLikes, { allPages }] = await paginate({
       finder: db.developmentLike.findMany,
       finderInput: {
         where: { developmentId: input.developmentId },
@@ -22,7 +22,7 @@ export const getDevelopmentLikers = publicProcedure
       pagingData: { page, limit: pageLimit.ideaLikers },
     });
 
-    const likerId = developmentLikesPerPage.map(({ userId }) => userId);
+    const likerId = developmentLikes.map(({ userId }) => userId);
 
     const users = await findManyUsers({ where: { id: { in: likerId } } });
 
@@ -35,7 +35,7 @@ export const getDevelopmentLikers = publicProcedure
     const developmentLikers: DevelopmentLikers[] = sortedUsers.map(
       (user, i) => ({
         ...user,
-        likedDate: developmentLikesPerPage[i].createdAt,
+        likedDate: developmentLikes[i].createdAt,
       })
     );
 

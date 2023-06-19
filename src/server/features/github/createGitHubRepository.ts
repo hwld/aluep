@@ -3,7 +3,7 @@ import { z } from "zod";
 import { GitHubErrors } from "../../../share/errors";
 import { db } from "../../lib/prismadb";
 
-type Params = {
+type Args = {
   repositoryName: string;
   repositoryDescription: string;
   userId: string;
@@ -16,7 +16,7 @@ export const createGitHubRepository = async ({
   repositoryName,
   repositoryDescription,
   userId,
-}: Params): Promise<string> => {
+}: Args): Promise<string> => {
   // アクセストークンを取得する
   const account = await db.account.findFirst({
     where: { userId: userId, provider: "github" },

@@ -13,7 +13,7 @@ import { assertString } from "../../../../../share/utils";
 import NotFoundPage from "../../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, queryClient, session, callerContext }) => {
+  async ({ gsspContext: { query }, queryClient, session, callerContext }) => {
     if (!session) {
       return { redirect: { destination: Routes.home, permanent: false } };
     }
@@ -52,8 +52,8 @@ const DevelopmentUpdate: NextPage = () => {
     router.query
   );
 
-  const { idea } = useIdeaQuery(ideaId);
-  const { development: development } = useDevelopmentQuery(developmentId);
+  const { idea } = useIdeaQuery({ ideaId });
+  const { development: development } = useDevelopmentQuery({ developmentId });
 
   // テーマが取得できないときはサーバーでエラーが出るから
   // ここには到達しない

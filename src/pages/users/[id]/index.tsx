@@ -11,7 +11,7 @@ import { assertNever, assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ params: { query }, callerContext, queryClient, session }) => {
+  async ({ gsspContext: { query }, callerContext, queryClient, session }) => {
     const caller = appRouter.createCaller(callerContext);
 
     const parseUserDetailResult = userDetailPageSchame.safeParse(query);
@@ -31,29 +31,27 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     switch (tab) {
       case "postedIdeas":
         // ユーザーが投稿したお題
-        await queryClient.prefetchQuery(
-          ideaKeys.postedListPerPage(userId, page),
-          () => caller.idea.getPostedIdeasByUser({ userId, page })
+        await queryClient.prefetchQuery(ideaKeys.postedList(userId, page), () =>
+          caller.idea.getPostedIdeasByUser({ userId, page })
         );
         break;
       case "developments":
         // ユーザーの開発情報
         await queryClient.prefetchQuery(
-          developmentKeys.listByUserPerPage(userId, page),
+          developmentKeys.listByUser(userId, page),
           () => caller.development.getDevelopmentsByUser({ userId, page })
         );
         break;
       case "likedIdeas":
         // ユーザーがいいねしたお題
-        await queryClient.prefetchQuery(
-          ideaKeys.likedListPerPage(userId, page),
-          () => caller.idea.getLikedIdeasByUser({ userId, page })
+        await queryClient.prefetchQuery(ideaKeys.likedList(userId, page), () =>
+          caller.idea.getLikedIdeasByUser({ userId, page })
         );
         break;
       case "likedDevelopments":
         // ユーザーがいいねいた開発情報
         await queryClient.prefetchQuery(
-          developmentKeys.likedListPerPage(userId, page),
+          developmentKeys.likedList(userId, page),
           () => caller.development.getLikedDevelopmentsByUser({ userId, page })
         );
         break;
@@ -93,7 +91,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 function UserDetail() {
   const router = useRouter();
   const userId = assertString(router.query.id);
-  const { user, isLoading } = useUserQuery(userId);
+  const { user, isLoading } = useUserQuery({ userId });
 
   if (isLoading) {
     return <></>;

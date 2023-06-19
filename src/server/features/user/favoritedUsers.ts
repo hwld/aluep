@@ -20,12 +20,12 @@ export const getFavoritedUsers = publicProcedure
       (favorite) => favorite.favoritedUserId
     );
 
-    const [favoritedUsersPerPage, { allPages }] = await paginate({
+    const [favoritedUsers, { allPages }] = await paginate({
       finderInput: { where: { id: { in: favoritedUserIds } } },
       finder: findManyUsers,
       counter: db.user.count,
       pagingData: { page, limit: pageLimit.favoritedUsers },
     });
 
-    return { list: favoritedUsersPerPage, allPages };
+    return { list: favoritedUsers, allPages };
   });
