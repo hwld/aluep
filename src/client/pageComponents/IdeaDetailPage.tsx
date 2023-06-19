@@ -76,7 +76,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
     <>
       <PageHeader icon={TbFileText} pageName="お題の詳細" />
       <Flex maw={1200} direction="column" align="center" m="auto">
-        <Title align="center" color="red.7">
+        <Title align="center" color="red.7" sx={{ wordBreak: "break-all" }}>
           {idea.title}
         </Title>
         <Flex mt="xl" gap="lg" w="100%">

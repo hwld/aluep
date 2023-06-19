@@ -1,9 +1,8 @@
-import { Grid } from "@mantine/core";
+import { Box } from "@mantine/core";
 import React from "react";
 import { MdComputer } from "react-icons/md";
 import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
-import { DeveloperCard } from "../features/development/DeveloperCard";
 import { DevelopmentDetailCard } from "../features/development/DevelopmentDetailCard";
 import { useDevelopmentLikeOnDetail } from "../features/development/useDevelopmentLikeOnDetail";
 import { useRequireLoginModal } from "../features/session/RequireLoginModalProvider";
@@ -36,21 +35,13 @@ export const DevelopmentDetailPage: React.FC<Props> = ({ development }) => {
   return (
     <>
       <PageHeader icon={MdComputer} pageName="開発情報の詳細" />
-      <Grid maw={1200} w="100%" m="auto">
-        <Grid.Col xs={12} md={7}>
-          <DevelopmentDetailCard
-            development={development}
-            onToggleDevelopmentLike={handleToggleDevelopmentLike}
-            isLoggedInUserDeveloper={isLoggedInUserDeveloper}
-          />
-        </Grid.Col>
-        <Grid.Col xs={12} md={5}>
-          <DeveloperCard
-            development={development}
-            isLoggedInUserDeveloper={isLoggedInUserDeveloper}
-          />
-        </Grid.Col>
-      </Grid>
+      <Box maw={1200} w="100%" m="auto">
+        <DevelopmentDetailCard
+          development={development}
+          onToggleDevelopmentLike={handleToggleDevelopmentLike}
+          isLoggedInUserDeveloper={isLoggedInUserDeveloper}
+        />
+      </Box>
     </>
   );
 };

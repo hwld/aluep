@@ -41,7 +41,11 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
         {/* ヘッダ */}
         <Flex justify="space-between" align="flex-start" gap={10} miw={0}>
           <TextLink href={Routes.idea(idea.id)} className="idea-link">
-            <Title order={3} color="red.7" sx={{ lineHeight: 1.4 }}>
+            <Title
+              order={3}
+              color="red.7"
+              sx={{ lineHeight: 1.4, wordBreak: "break-all" }}
+            >
               {idea.title}
             </Title>
           </TextLink>

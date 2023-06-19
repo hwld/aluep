@@ -16,6 +16,7 @@ export type Development = {
   likes: number;
   likedByLoggedInUser: boolean;
   createdAt: string;
+  updatedAt: string;
   status: DevelopmentStatus;
 };
 
@@ -50,6 +51,7 @@ const convertDevelopment = (
       ? true
       : false,
     createdAt: raw.createdAt.toUTCString(),
+    updatedAt: raw.updatedAt.toUTCString(),
     status: { id: raw.status.id, name: raw.status.name },
   };
 

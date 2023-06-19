@@ -75,6 +75,7 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
               color="red.7"
               sx={{
                 lineHeight: 1.2,
+                wordBreak: "break-all",
               }}
             >
               {idea.title}

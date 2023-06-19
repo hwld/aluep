@@ -1,4 +1,4 @@
-import { ActionIcon, Menu } from "@mantine/core";
+import { ActionIcon, Divider, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 import { BsThreeDots } from "react-icons/bs";
@@ -81,9 +81,6 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
         </Menu.Target>
 
         <MenuDropdown>
-          <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
-            通報する
-          </MenuItem>
           {isOwner && (
             <MenuLinkItem
               icon={<RiEdit2Line size={18} />}
@@ -92,6 +89,10 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
               プロフィールを編集する
             </MenuLinkItem>
           )}
+          <Divider />
+          <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
+            通報する
+          </MenuItem>
         </MenuDropdown>
       </AppMenu>
       <AppModal

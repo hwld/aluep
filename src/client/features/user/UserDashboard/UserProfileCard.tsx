@@ -44,12 +44,13 @@ export const UserProfileCard: React.FC<Props> = ({ user, maxWidth }) => {
       maw={maxWidth}
       h="100%"
       p="xl"
+      pt={35}
       sx={{ flexGrow: 1, position: "relative" }}
     >
       <Box sx={{ position: "absolute", top: 10, right: 10 }}>
         <UserProfileMenuButton user={user} isOwner={isLoggedInUserPage} />
       </Box>
-      <Stack mt="md">
+      <Stack h="100%">
         <Flex gap="md">
           <UserIcon iconSrc={user.image} size="xl" />
           <Stack miw={0} spacing="xs">
@@ -83,11 +84,10 @@ export const UserProfileCard: React.FC<Props> = ({ user, maxWidth }) => {
           </Stack>
         </Flex>
         <Box
-          h={160}
           w="100%"
           bg="gray.2"
           p="sm"
-          sx={{ borderRadius: "5px", overflow: "auto" }}
+          sx={{ borderRadius: "5px", overflow: "auto", flexGrow: 1 }}
         >
           {!user.profile ? (
             <Text c="gray.4">自己紹介はありません</Text>

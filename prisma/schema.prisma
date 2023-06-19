@@ -145,6 +145,7 @@ model Development {
   status           DevelopmentStatus @relation(fields: [statusId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([userId, ideaId])
   @@map("developments")
