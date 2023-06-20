@@ -79,14 +79,13 @@ const convertIdeaComment = (
 
 type FindManyIdeaCommentsArgs = OmitStrict<
   Prisma.IdeaCommentFindManyArgs,
-  "include" | "select"
+  "include" | "select" | "orderBy"
 >;
-export const findManyIdeaComments = async ({
-  orderBy,
-  ...args
-}: FindManyIdeaCommentsArgs): Promise<IdeaComment[]> => {
+export const findManyIdeaComments = async (
+  args: FindManyIdeaCommentsArgs
+): Promise<IdeaComment[]> => {
   const rawComments = await db.ideaComment.findMany({
-    orderBy: { createdAt: "desc", ...orderBy },
+    orderBy: { createdAt: "asc" },
     ...args,
     ...ideaCommentArgs,
   });

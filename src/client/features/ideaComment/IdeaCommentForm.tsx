@@ -61,11 +61,7 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
     });
 
     return (
-      <form
-        onSubmit={handleSubmit}
-        ref={formRef}
-        onClick={() => console.log("hello")}
-      >
+      <form onSubmit={handleSubmit} ref={formRef}>
         <Flex align="center" gap={5}>
           <UserIcon iconSrc={loggedInUser.image} />
           <Text>{loggedInUser.name}</Text>

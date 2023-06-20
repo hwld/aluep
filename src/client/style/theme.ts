@@ -70,6 +70,7 @@ export const theme: MantineThemeOverride = {
     },
   },
   components: {
+    Button: { styles: { root: { transition: "background-color 250ms" } } },
     Tooltip: { defaultProps: { color: "gray.7" } },
     Paper: { defaultProps: { bg: "gray.1" } },
     Text: {

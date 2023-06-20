@@ -31,6 +31,11 @@ export const PickedUpIdeas: React.FC<Props> = ({
           component={Link}
           href={readMoreHref}
           variant="outline"
+          sx={(theme) => ({
+            "&:hover": {
+              backgroundColor: theme.fn.rgba(theme.colors.red[4], 0.1),
+            },
+          })}
         >
           もっと見る
         </Button>

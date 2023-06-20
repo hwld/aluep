@@ -128,7 +128,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
           </Box>
 
           {/* 右カラム */}
-          <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+          <MediaQuery smallerThan="lg" styles={{ display: "none" }}>
             <Stack
               h="min-content"
               // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する

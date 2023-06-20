@@ -102,7 +102,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
             boxShadow: focused ? `0 0 0 2px ${theme.colors.red[7]}` : "",
           })}
         >
-          <Stack spacing="xs">
+          <Stack spacing="md">
             <Flex gap="0" justify="space-between">
               <Flex gap="xs" align="flex-start">
                 <UserIconLink
@@ -114,11 +114,11 @@ export const IdeaCommentCard: React.FC<Props> = ({
                     <Flex gap={5} align="center">
                       <FaUserAlt size={14} fill={mantineTheme.colors.red[7]} />
                       <Text color="red.7" size="xs">
-                        投稿者
+                        お題の投稿者
                       </Text>
                     </Flex>
                   )}
-                  <Text c="gray.5">{comment.fromUser.name}</Text>
+                  <Text size="xs">{comment.fromUser.name}</Text>
                 </Box>
               </Flex>
               <Box>
@@ -168,7 +168,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
                 </UnstyledButton>
               </Flex>
             )}
-            <Text>{comment.comment}</Text>
+            <Text sx={{ whiteSpace: "pre-wrap" }}>{comment.comment}</Text>
             <Flex justify="space-between" align="center" gap="xs">
               <Flex align="center">
                 <CardActionIcon color="gray.5" onClick={handleOpenReplyForm}>
