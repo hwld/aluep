@@ -26,7 +26,7 @@ export const ideaCommentFormSchema = z.object({
   comment: z
     .string()
     .min(1, "コメントを入力してください。")
-    .max(2000, "コメントは2000文字以下で入力してください"),
+    .max(2000, "コメントは2000文字以下で入力してください。"),
   inReplyToCommentId: z.string().min(1).optional(),
 });
 export type IdeaCommentFormData = z.infer<typeof ideaCommentFormSchema>;
@@ -84,6 +84,16 @@ export const developmentFormSchema = z
       }),
     ])
   );
+
+export const developmentMemoFormSchema = z.object({
+  developmentId: z.string().min(1),
+  memo: z
+    .string()
+    .min(1, "メモを入力してください。")
+    .max(2000, "メモは2000文字以下で入力してください。"),
+  parentMemoId: z.string().min(1).optional(),
+});
+export type DevelopmentMemoFormData = z.infer<typeof developmentMemoFormSchema>;
 
 export const updateDevelopFormSchema = developmentFormSchema.and(
   z.object({ developmentId: z.string() })

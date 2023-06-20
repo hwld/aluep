@@ -1,5 +1,6 @@
 import { aggregateRoute } from "./features/aggregate/router";
 import { developmentRoute } from "./features/development/router";
+import { developmentMemoRoute } from "./features/developmentMemo/router";
 import { ideaRoute } from "./features/idea/router";
 import { ideaCommentRoute } from "./features/ideaComment/router";
 import { meRoute } from "./features/me/router";
@@ -14,6 +15,7 @@ export const appRouter = router({
   idea: ideaRoute,
   ideaComment: ideaCommentRoute,
   development: developmentRoute,
+  developmentMemo: developmentMemoRoute,
   session: publicProcedure.query(async ({ ctx }) => {
     return ctx.session;
   }),

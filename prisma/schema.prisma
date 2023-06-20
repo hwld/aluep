@@ -58,6 +58,7 @@ model User {
   ideaComments     IdeaComment[]
   favoriteByUsers  FavoriteUser[]    @relation("asFavoriteByUser")
   faboritedUsers   FavoriteUser[]    @relation("asFavoritedUser")
+  developmentMemos DevelopmentMemo[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -132,17 +133,19 @@ model IdeaLike {
 
 // アプリ開発のお題の開発情報
 model Development {
-  id               String            @id @default(cuid())
-  userId           String
-  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  ideaId           String
-  idea             Idea              @relation(fields: [ideaId], references: [id], onDelete: Cascade)
-  githubUrl        String
-  comment          String            @db.Text
-  developedItemUrl String            
-  likes            DevelopmentLike[]
-  statusId         String
-  status           DevelopmentStatus @relation(fields: [statusId], references: [id], onDelete: Cascade)
+  id                  String            @id @default(cuid())
+  userId              String
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ideaId              String
+  idea                Idea              @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  githubUrl           String
+  comment             String            @db.Text
+  developedItemUrl    String
+  likes               DevelopmentLike[]
+  statusId            String
+  status              DevelopmentStatus @relation(fields: [statusId], references: [id], onDelete: Cascade)
+  developmentMemos    DevelopmentMemo[]
+  allowOtherUserMemos Boolean           @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -172,6 +175,26 @@ model DevelopmentStatus {
   idea Development[]
 
   @@map("development_statuses")
+}
+
+model DevelopmentMemo {
+  id   String @id @default(cuid())
+  memo String @db.Text
+
+  // 一つのメモには一つの返信しか出来ない
+  parentMemoId String?          @unique @map("parentCommentId")
+  parentMemo   DevelopmentMemo? @relation(name: "parentChild", fields: [parentMemoId], references: [id], onDelete: Cascade)
+  childMemo    DevelopmentMemo? @relation("parentChild")
+
+  fromUserId String
+  fromUser   User   @relation(fields: [fromUserId], references: [id], onDelete: Cascade)
+
+  developmentId String
+  development   Development @relation(fields: [developmentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("development_memos")
 }
 
 model FavoriteUser {
@@ -205,6 +228,7 @@ model IdeaComment {
   @@map("idea_comments")
 }
 
+// TODO: 多対多じゃないのに中間テーブル作ってるのなんでだろう・・・
 model IdeaCommentParentChild {
   // 返信元コメントが削除されたときにNullに設定することで、childに該当するコメントが返信であることを表現できるようにする
   parentCommentId String?

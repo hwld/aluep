@@ -7,7 +7,6 @@ export const getAllComments = publicProcedure
   .query(async ({ input }) => {
     const comments = await findManyIdeaComments({
       where: { ideaId: input.ideaId },
-      orderBy: { createdAt: "asc" },
     });
 
     return comments;

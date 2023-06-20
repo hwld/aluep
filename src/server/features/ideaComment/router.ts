@@ -4,6 +4,7 @@ import { deleteComment } from "./deleteComment";
 import { getAllComments } from "./getAllComments";
 
 export const ideaCommentRoute = router({
+  // TODO: createとかにする
   /** お題にコメントする */
   comment: commentIdea,
 
