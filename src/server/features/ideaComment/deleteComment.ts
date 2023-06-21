@@ -3,7 +3,7 @@ import { z } from "zod";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 
-export const deleteComment = requireLoggedInProcedure
+export const deleteIdeaComment = requireLoggedInProcedure
   .input(z.object({ commentId: z.string().min(1) }))
   .mutation(async ({ input, ctx }) => {
     // ログインユーザーが投稿したコメントか確認する

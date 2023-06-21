@@ -2,7 +2,7 @@ import { Flex, Stack, Text } from "@mantine/core";
 import { ReactNode } from "react";
 
 type Props = { icon: ReactNode; text: string; description: ReactNode };
-export const EmptyUserContentItem: React.FC<Props> = ({
+export const EmptyContentItem: React.FC<Props> = ({
   icon,
   text,
   description,

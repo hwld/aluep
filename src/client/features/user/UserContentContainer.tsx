@@ -1,8 +1,8 @@
 import { Flex, Stack } from "@mantine/core";
 import { ReactNode } from "react";
 import { AppPagination } from "../../ui/AppPagination";
+import { EmptyContentItem } from "../../ui/EmptyContentItem";
 import { GridContainer } from "../../ui/GridContainer";
-import { EmptyUserContentItem } from "./EmptyUserContentItem";
 
 type Props = {
   children: ReactNode;
@@ -30,7 +30,7 @@ export const UserContentContainer: React.FC<Props> = ({
     <Stack w="100%">
       {isEmpty ? (
         <Flex align="center" direction="column">
-          <EmptyUserContentItem
+          <EmptyContentItem
             icon={emptyIcon}
             text={emptyText}
             description={emptyDescription}

@@ -1,16 +1,15 @@
 import { router } from "../../lib/trpc";
-import { commentIdea } from "./commentIdea";
-import { deleteComment } from "./deleteComment";
-import { getAllComments } from "./getAllComments";
+import { createIdeaComment } from "./createIdeaComment";
+import { deleteIdeaComment } from "./deleteComment";
+import { getAllIdeaComments } from "./getAllIdeaComments";
 
 export const ideaCommentRoute = router({
-  // TODO: createとかにする
   /** お題にコメントする */
-  comment: commentIdea,
+  create: createIdeaComment,
 
   /** お題につけたコメントを削除する */
-  delete: deleteComment,
+  delete: deleteIdeaComment,
 
   /** お題についたコメントをすべて取得する */
-  getAll: getAllComments,
+  getAll: getAllIdeaComments,
 });

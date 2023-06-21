@@ -18,6 +18,7 @@ export type Development = {
   createdAt: string;
   updatedAt: string;
   status: DevelopmentStatus;
+  allowOtherUserMemos: boolean;
 };
 
 const developmentArgs = {
@@ -53,6 +54,7 @@ const convertDevelopment = (
     createdAt: raw.createdAt.toUTCString(),
     updatedAt: raw.updatedAt.toUTCString(),
     status: { id: raw.status.id, name: raw.status.name },
+    allowOtherUserMemos: raw.allowOtherUserMemos,
   };
 
   return development;

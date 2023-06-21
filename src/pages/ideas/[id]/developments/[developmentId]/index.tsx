@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { developmentKeys } from "../../../../../client/features/development/queryKeys";
 import { useDevelopmentQuery } from "../../../../../client/features/development/useDevelopmentQuery";
+import { developmentMemoKeys } from "../../../../../client/features/developmentMemo/queryKeys";
 import { ideaKeys } from "../../../../../client/features/idea/queryKeys";
 import { useIdeaQuery } from "../../../../../client/features/idea/useIdeaQuery";
 import { DevelopmentDetailPage } from "../../../../../client/pageComponents/DevelopmentDetailPage";
@@ -16,12 +17,15 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     const caller = appRouter.createCaller(callerContext);
 
-    // お題と開発情報が存在しない場合は404にする
     const idea = await caller.idea.get({ ideaId: ideaId });
     const development = await caller.development.get({
       developmentId: developmentId,
     });
-    if (!idea || !development) {
+    const developmentMemos = await caller.developmentMemo.getAll({
+      developmentId: developmentId,
+    });
+
+    if (!idea || !development || !developmentMemos) {
       return { notFound: true };
     }
 
@@ -29,6 +33,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     queryClient.setQueryData(
       developmentKeys.detail(developmentId),
       development
+    );
+    queryClient.setQueryData(
+      developmentMemoKeys.listByDevelopment(developmentId),
+      developmentMemos
     );
   }
 );

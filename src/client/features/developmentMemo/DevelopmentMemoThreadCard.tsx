@@ -83,7 +83,7 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
               userId={memo.fromUser.id}
               iconSrc={memo.fromUser.imageUrl}
             />
-            <Text c="gray.5" size="xs">
+            <Text c="gray.5" size="xs" truncate>
               {memo.fromUser.name}
             </Text>
           </Flex>

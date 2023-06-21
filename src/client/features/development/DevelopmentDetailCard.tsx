@@ -25,13 +25,13 @@ import { DevelopmentStatusBadge } from "./DevelopmentStatusBadge";
 type Props = {
   development: Development;
   onToggleDevelopmentLike: () => void;
-  isLoggedInUserDeveloper: boolean;
+  isDeveloper: boolean;
 };
 
 export const DevelopmentDetailCard: React.FC<Props> = ({
   development,
   onToggleDevelopmentLike,
-  isLoggedInUserDeveloper,
+  isDeveloper,
 }) => {
   const { colors } = useMantineTheme();
 
@@ -68,7 +68,7 @@ export const DevelopmentDetailCard: React.FC<Props> = ({
                   likes={development.likes}
                   likedByLoggedInUser={development.likedByLoggedInUser}
                   onToggleIdeaLike={onToggleDevelopmentLike}
-                  disabled={isLoggedInUserDeveloper}
+                  disabled={isDeveloper}
                 />
                 <Flex gap="md">
                   <Button
@@ -115,7 +115,7 @@ export const DevelopmentDetailCard: React.FC<Props> = ({
             <Box sx={{ position: "absolute", top: 10, right: 10 }}>
               <DevelopmentMenuButton
                 development={development}
-                isOwner={isLoggedInUserDeveloper}
+                isOwner={isDeveloper}
               />
             </Box>
             <Flex mt="sm" gap="xs" align="center">

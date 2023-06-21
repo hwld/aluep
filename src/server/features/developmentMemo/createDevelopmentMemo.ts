@@ -14,14 +14,16 @@ export const createDevelopmentMemo = requireLoggedInProcedure
       throw new TRPCError({ code: "NOT_FOUND" });
     }
 
-    if (
-      !development.allowOtherUserMemos &&
-      development.userId !== ctx.session.user.id
-    ) {
+    const isOtherUser = development.userId !== ctx.session.user.id;
+
+    if (!development.allowOtherUserMemos && isOtherUser) {
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
-    // TODO: 他のユーザーは返信しかできないようにする
+    // 他のユーザーは返信しかできない
+    if (isOtherUser && input.parentMemoId === undefined) {
+      throw new TRPCError({ code: "BAD_REQUEST" });
+    }
 
     const createdMemo = await db.developmentMemo.create({
       data: {

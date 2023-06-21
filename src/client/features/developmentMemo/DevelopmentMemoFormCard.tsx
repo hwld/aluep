@@ -60,7 +60,9 @@ export const DevelopmentMemoFormCard: React.FC<Props> = ({
       <form onSubmit={handleSubmit}>
         <Flex align="center" gap="xs">
           <UserIcon iconSrc={loggedInUser.image} />
-          <Text>{loggedInUser.name}</Text>
+          <Text truncate size="xs" color="gray.5">
+            {loggedInUser.name}
+          </Text>
         </Flex>
         <Controller
           control={control}

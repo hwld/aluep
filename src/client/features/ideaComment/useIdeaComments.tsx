@@ -20,7 +20,7 @@ export const useIdeaComments = ({ ideaId }: UseIdeaCommentsArgs) => {
 
   const postCommentMutation = useMutation({
     mutationFn: (data: OmitStrict<IdeaCommentFormData, "ideaId">) => {
-      return trpc.ideaComment.comment.mutate({ ...data, ideaId });
+      return trpc.ideaComment.create.mutate({ ...data, ideaId });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(ideaCommentKeys.listByIdea(ideaId));

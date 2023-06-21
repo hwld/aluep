@@ -9,6 +9,7 @@ import { getLikedDevelopmentsByUser } from "./getLikedDevelopmentsByUser";
 import { isDevelopedByUser } from "./isDevelopedByUser";
 import { likeDevelopment } from "./likeDevelopment";
 import { unlikeDevelopment } from "./unlikeDevelopment";
+import { updateAllowOtherUserMemos } from "./updateAllowOtherUserMemos";
 import { updateDevelopment } from "./updateDevelopment";
 
 export const developmentRoute = router({
@@ -29,6 +30,9 @@ export const developmentRoute = router({
 
   /** 開発情報を更新する */
   update: updateDevelopment,
+
+  /** 他のユーザーがメモに返信できるかを更新する */
+  updateAllowOtherUserMemos: updateAllowOtherUserMemos,
 
   /** 開発情報にいいねする */
   like: likeDevelopment,

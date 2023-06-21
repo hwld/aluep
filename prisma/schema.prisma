@@ -229,7 +229,6 @@ model IdeaComment {
   @@map("idea_comments")
 }
 
-// TODO: 多対多じゃないのに中間テーブル作ってるのなんでだろう・・・
 model IdeaCommentParentChild {
   // 返信元コメントが削除されたときにNullに設定することで、childに該当するコメントが返信であることを表現できるようにする
   parentCommentId String?

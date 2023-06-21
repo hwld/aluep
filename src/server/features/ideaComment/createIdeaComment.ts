@@ -2,7 +2,7 @@ import { ideaCommentFormSchema } from "../../../share/schema";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 
-export const commentIdea = requireLoggedInProcedure
+export const createIdeaComment = requireLoggedInProcedure
   .input(ideaCommentFormSchema)
   .mutation(async ({ input, ctx }) => {
     const comment = await db.ideaComment.create({
