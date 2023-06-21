@@ -130,7 +130,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
                 お題を削除する
               </MenuItem>
 
-              <Divider my="5px" />
+              <Divider my={5} />
             </>
           )}
           <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>

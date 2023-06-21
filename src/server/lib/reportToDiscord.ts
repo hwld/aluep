@@ -3,6 +3,7 @@ import { IncomingMessage } from "http";
 import { Routes } from "../../share/routes";
 import {
   ReportDevelopmentForm,
+  ReportDevelopmentMemoForm,
   ReportIdeaCommentForm,
   ReportIdeaForm,
   ReportUserForm,
@@ -33,6 +34,7 @@ type Args = {
   | { type: "development"; report: ReportDevelopmentForm }
   | { type: "ideaComment"; report: ReportIdeaCommentForm }
   | { type: "user"; report: ReportUserForm }
+  | { type: "developmentMemo"; report: ReportDevelopmentMemoForm }
 );
 
 const buildEmbedFields = ({
@@ -83,6 +85,16 @@ const buildEmbedFields = ({
         targetField: {
           name: ":detective: 通報対象のユーザー",
           value: `[${report.targetUser.name}](${report.targetUser.url})`,
+        },
+      };
+    }
+    case "developmentMemo": {
+      return {
+        title: "開発メモの通報",
+        color: 0xd946ef,
+        targetField: {
+          name: ":tools: 通報対象の開発メモ",
+          value: `[通報対象のメモへのリンク](${report.targetMemoUrl})`,
         },
       };
     }

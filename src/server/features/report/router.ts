@@ -1,5 +1,6 @@
 import { router } from "../../lib/trpc";
 import { reportDevelopment } from "./reportDevelopment";
+import { reportDevelopmentMemo } from "./reportDevelopmentMemo";
 import { reportIdea } from "./reportIdea";
 import { reportIdeaComment } from "./reportIdeaComment";
 import { reportUser } from "./reportUser";
@@ -16,4 +17,7 @@ export const reportRouter = router({
 
   /**ユーザーを通報する */
   user: reportUser,
+
+  /**開発メモを通報する */
+  developmentMemo: reportDevelopmentMemo,
 });

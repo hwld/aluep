@@ -227,3 +227,11 @@ export const reportUserFormSchema = reportBaseFormSchema.and(
   })
 );
 export type ReportUserForm = z.infer<typeof reportUserFormSchema>;
+
+export const reportDevelopmentMemoFormSchema = reportBaseFormSchema.and(
+  z.object({ targetMemoUrl: z.string() })
+);
+
+export type ReportDevelopmentMemoForm = z.infer<
+  typeof reportDevelopmentMemoFormSchema
+>;

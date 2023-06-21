@@ -6,8 +6,8 @@ import { Idea } from "../../server/models/idea";
 import { DevelopmentMemoFormData } from "../../share/schema";
 import { DevelopmentDetailCard } from "../features/development/DevelopmentDetailCard";
 import { useDevelopmentLikeOnDetail } from "../features/development/useDevelopmentLikeOnDetail";
-import { DevelopmentMemoCard } from "../features/developmentMemo/DevelopmentMemoCard";
 import { DevelopmentMemoFormCard } from "../features/developmentMemo/DevelopmentMemoFormCard";
+import { DevelopmentMemoThreadCard } from "../features/developmentMemo/DevelopmentMemoThreadCard";
 import { useDevelopmentMemos } from "../features/developmentMemo/useDevelopmentMemos";
 import { useRequireLoginModal } from "../features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "../features/session/useSessionQuery";
@@ -16,15 +16,17 @@ import { PageHeader } from "../ui/PageHeader";
 
 type Props = { development: Development; idea: Idea };
 
-export const DevelopmentDetailPage: React.FC<Props> = ({ development }) => {
+export const DevelopmentDetailPage: React.FC<Props> = ({
+  development,
+  idea,
+}) => {
   const { session } = useSessionQuery();
   const loggedInUser = session?.user;
   const isLoggedInUserDeveloper =
     development.developerUserId === loggedInUser?.id;
-  const { developmentMemos, createMemoMutation, deleteMemoMutation } =
-    useDevelopmentMemos({
-      developmentId: development.id,
-    });
+  const { developmentMemoThreads, createMemoMutation } = useDevelopmentMemos({
+    developmentId: development.id,
+  });
   const { likeDevelopmentMutation, unlikeDevelopmentMutation } =
     useDevelopmentLikeOnDetail(development.id);
   const { openLoginModal } = useRequireLoginModal();
@@ -51,10 +53,6 @@ export const DevelopmentDetailPage: React.FC<Props> = ({ development }) => {
     });
   };
 
-  const handleDeleteMemo = (id: string) => {
-    deleteMemoMutation.mutate({ developmentMemoId: id });
-  };
-
   return (
     <>
       <PageHeader icon={MdComputer} pageName="開発情報の詳細" />
@@ -70,17 +68,15 @@ export const DevelopmentDetailPage: React.FC<Props> = ({ development }) => {
             <Switch label="他のユーザーのコメントを許可" />
           </Flex>
           <Stack spacing="xs">
-            {developmentMemos?.map((memo) => {
+            {developmentMemoThreads?.map((thread) => {
               return (
-                <DevelopmentMemoCard
-                  key={memo.id}
-                  memo={memo}
+                <DevelopmentMemoThreadCard
+                  ideaId={idea.id}
+                  key={thread.rootMemo.id}
+                  memo={thread.rootMemo}
                   developmentId={development.id}
-                  // TODO
-                  childrenMemos={[memo, memo, memo, memo]}
-                  onSubmitMemo={handleSubmitMemo}
-                  isSubmittingMemo={createMemoMutation.isLoading}
-                  onDeleteMemo={handleDeleteMemo}
+                  childrenMemos={thread.children}
+                  loggedInUserId={loggedInUser?.id}
                 />
               );
             })}

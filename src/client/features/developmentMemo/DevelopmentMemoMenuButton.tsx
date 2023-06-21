@@ -1,12 +1,11 @@
 import { ActionIcon, Divider, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
+import { BiTrashAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
+import { FaTrash } from "react-icons/fa";
 import { MdFlag } from "react-icons/md";
-import { RiEdit2Line } from "react-icons/ri";
 import { RouterInputs } from "../../../server/lib/trpc";
-import { User } from "../../../server/models/user";
-import { Routes } from "../../../share/routes";
 import { ReportBaseForm } from "../../../share/schema";
 import { trpc } from "../../lib/trpc";
 import {
@@ -14,50 +13,67 @@ import {
   showSuccessNotification,
   stopPropagation,
 } from "../../lib/utils";
+import { AppConfirmModal } from "../../ui/AppConfirmModal";
 import { AppMenu } from "../../ui/AppMenu/AppMenu";
 import { MenuDropdown } from "../../ui/AppMenu/MenuDropdown";
 import { MenuItem } from "../../ui/AppMenu/MenuItem";
-import { MenuLinkItem } from "../../ui/AppMenu/MenuLinkItem";
 import { AppModal } from "../../ui/AppModal";
 import { ReportForm } from "../report/ReportForm";
 
 type Props = {
-  user: User;
+  ideaId: string;
+  developmentId: string;
+  developmentMemoId: string;
   /** ログインしているユーザーのプロフィールかどうか */
   isOwner: boolean;
+  onDeleteMemo: (id: string) => void;
+  isDeleting?: boolean;
 };
-export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
+export const DevelopmentMemoMenuButton: React.FC<Props> = ({
+  ideaId,
+  developmentId,
+  isOwner,
+  developmentMemoId,
+  onDeleteMemo,
+  isDeleting = false,
+}) => {
+  const [
+    isOpenDeleteModal,
+    { close: closeDeleteModal, open: openDeleteModal },
+  ] = useDisclosure(false);
+
   const [
     isReportModalOpen,
     { close: closeReportModal, open: openReportModal },
   ] = useDisclosure(false);
 
-  const reportUserMutation = useMutation({
-    mutationFn: (data: RouterInputs["report"]["user"]) => {
-      return trpc.report.user.mutate(data);
+  const handleDeleteMemo = () => {
+    onDeleteMemo(developmentMemoId);
+  };
+
+  const reportDevelopmentMemoMutation = useMutation({
+    mutationFn: (data: RouterInputs["report"]["developmentMemo"]) => {
+      return trpc.report.developmentMemo.mutate(data);
     },
     onSuccess: () => {
       showSuccessNotification({
-        title: "ユーザーの通報",
-        message: "ユーザーを通報しました。",
+        title: "開発メモの通報",
+        message: "開発メモを通報しました。",
       });
       closeReportModal();
     },
     onError: () => {
       showErrorNotification({
-        title: "ユーザーの通報",
-        message: "ユーザーを通報できませんでした。",
+        title: "開発メモの通報",
+        message: "開発メモを通報できませんでした。",
       });
     },
   });
 
-  const handleSubmitReportUser = (data: ReportBaseForm) => {
-    reportUserMutation.mutate({
+  const handleSubmitReportDevelopmentMemo = (data: ReportBaseForm) => {
+    reportDevelopmentMemoMutation.mutate({
       reportDetail: data.reportDetail,
-      targetUser: {
-        url: `${window.location.origin}${Routes.user(user.id)}`,
-        name: user.name,
-      },
+      targetMemoUrl: "TODO: メモのリンクを作れるようにする",
     });
   };
 
@@ -83,31 +99,46 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
         <MenuDropdown>
           {isOwner && (
             <>
-              <MenuLinkItem
-                icon={<RiEdit2Line size={18} />}
-                href={Routes.userUpdate}
+              <MenuItem
+                icon={<FaTrash size={18} />}
+                red
+                onClick={openDeleteModal}
               >
-                プロフィールを編集する
-              </MenuLinkItem>
+                メモを削除する
+              </MenuItem>
               <Divider my={5} />
             </>
           )}
-
           <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
             通報する
           </MenuItem>
         </MenuDropdown>
       </AppMenu>
+      <AppConfirmModal
+        title="開発メモの削除"
+        message={
+          <>
+            開発メモを削除してもよろしいですか？<br></br>
+            開発メモを削除すると、もらった返信が完全に削除されます。
+          </>
+        }
+        opened={isOpenDeleteModal}
+        onClose={closeDeleteModal}
+        onConfirm={handleDeleteMemo}
+        isConfirming={isDeleting}
+        confirmIcon={BiTrashAlt}
+        confirmText="削除する"
+      />
       <AppModal
         opened={isReportModalOpen}
         onClose={closeReportModal}
-        title="ユーザーの通報"
+        title="開発メモの通報"
       >
         <ReportForm
-          submitText="ユーザーを通報する"
-          onSubmit={handleSubmitReportUser}
+          submitText="開発メモを通報する"
+          onSubmit={handleSubmitReportDevelopmentMemo}
           onCancel={closeReportModal}
-          isLoading={reportUserMutation.isLoading}
+          isLoading={false}
         />
       </AppModal>
     </>

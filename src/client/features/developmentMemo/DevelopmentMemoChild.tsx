@@ -1,0 +1,57 @@
+import { Flex, Stack, Text } from "@mantine/core";
+import { DevelopmentMemo } from "../../../server/models/developmentMemo";
+import { formatDate } from "../../lib/utils";
+import { useSessionQuery } from "../session/useSessionQuery";
+import { UserIconLink } from "../user/UserIconLink";
+import { DevelopmentMemoMenuButton } from "./DevelopmentMemoMenuButton";
+import { useDevelopmentMemos } from "./useDevelopmentMemos";
+
+type Props = { memo: DevelopmentMemo; developmentId: string; ideaId: string };
+
+export const DevelopmentMemoChild: React.FC<Props> = ({
+  memo,
+  developmentId,
+  ideaId,
+}) => {
+  const { session } = useSessionQuery();
+
+  const { deleteMemoMutation } = useDevelopmentMemos({ developmentId });
+
+  const handleDeleteMemo = (id: string) => {
+    deleteMemoMutation.mutate({ developmentMemoId: id });
+  };
+
+  return (
+    <Flex key={memo.id} gap="xs">
+      <Stack>
+        <UserIconLink
+          userId={memo.fromUser.id}
+          iconSrc={memo.fromUser.imageUrl}
+        />
+      </Stack>
+      <Stack spacing="md" sx={{ flexGrow: 1 }}>
+        <Flex justify="space-between">
+          <Stack spacing={0}>
+            <Text c="gray.5" size="xs">
+              {memo.fromUser.name}
+            </Text>
+            <Flex>
+              <Text c="gray.7" size="xs">
+                {formatDate(memo.createdAt)}
+              </Text>
+            </Flex>
+          </Stack>
+          <DevelopmentMemoMenuButton
+            ideaId={ideaId}
+            developmentId={developmentId}
+            developmentMemoId={memo.id}
+            isOwner={memo.fromUser.id === session?.user.id}
+            onDeleteMemo={handleDeleteMemo}
+            isDeleting={deleteMemoMutation.isLoading}
+          />
+        </Flex>
+        <Text>{memo.memo}</Text>
+      </Stack>
+    </Flex>
+  );
+};

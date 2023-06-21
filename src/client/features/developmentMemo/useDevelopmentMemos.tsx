@@ -1,8 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { RouterInputs } from "../../../server/lib/trpc";
+import { DevelopmentMemo } from "../../../server/models/developmentMemo";
 import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
 import { developmentMemoKeys } from "./queryKeys";
+
+type DevelopmentMemoThreads = {
+  rootMemo: DevelopmentMemo;
+  /** 前の要素が次の要素の親になっている。 */
+  children: DevelopmentMemo[];
+};
 
 type UseDevelopmentMemoArgs = { developmentId: string };
 export const useDevelopmentMemos = ({
@@ -16,6 +24,33 @@ export const useDevelopmentMemos = ({
       return trpc.developmentMemo.getAll.query({ developmentId });
     },
   });
+
+  const developmentMemoThreads = useMemo(() => {
+    if (!developmentMemos) {
+      return [];
+    }
+
+    const roots = developmentMemos.filter((memo) => memo.parentMemoId === null);
+    return roots.map((root): DevelopmentMemoThreads => {
+      const children: DevelopmentMemo[] = [];
+      let parentMemoId: string = root.id;
+
+      while (true) {
+        const child = developmentMemos.find(
+          (memo) => memo.parentMemoId === parentMemoId
+        );
+
+        if (!child) {
+          break;
+        }
+
+        children.push(child);
+        parentMemoId = child.id;
+      }
+
+      return { rootMemo: root, children: children };
+    });
+  }, [developmentMemos]);
 
   const createMemoMutation = useMutation({
     mutationFn: async (data: RouterInputs["developmentMemo"]["create"]) => {
@@ -51,5 +86,9 @@ export const useDevelopmentMemos = ({
     },
   });
 
-  return { developmentMemos, createMemoMutation, deleteMemoMutation };
+  return {
+    developmentMemoThreads,
+    createMemoMutation,
+    deleteMemoMutation,
+  };
 };

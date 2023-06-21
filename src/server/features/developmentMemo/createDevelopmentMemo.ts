@@ -21,6 +21,8 @@ export const createDevelopmentMemo = requireLoggedInProcedure
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
+    // TODO: 他のユーザーは返信しかできないようにする
+
     const createdMemo = await db.developmentMemo.create({
       data: {
         developmentId: input.developmentId,

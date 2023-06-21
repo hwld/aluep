@@ -179,6 +179,7 @@ model DevelopmentStatus {
 
 model DevelopmentMemo {
   id   String @id @default(cuid())
+  // TODO: textとかにする
   memo String @db.Text
 
   // 一つのメモには一つの返信しか出来ない
@@ -241,5 +242,5 @@ model IdeaCommentParentChild {
 
   createdAt DateTime @default(now())
 
-  @@map("idea_comment_parent_childs")
+  @@map("idea_comment_parent_child")
 }
