@@ -8,7 +8,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, { useRef } from "react";
 import { MdComputer } from "react-icons/md";
 import { TbNote } from "react-icons/tb";
 import { Development } from "../../server/models/development";
@@ -23,6 +23,7 @@ import { useDevelopmentMemos } from "../features/developmentMemo/useDevelopmentM
 import { useRequireLoginModal } from "../features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "../features/session/useSessionQuery";
 import { trpc } from "../lib/trpc";
+import { useAutoScrollOnIncrease } from "../lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "../lib/useCyclicRandom";
 import { showErrorNotification } from "../lib/utils";
 import { EmptyContentItem } from "../ui/EmptyContentItem";
@@ -35,6 +36,8 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
   idea,
 }) => {
   const { colors } = useMantineTheme();
+
+  const memoFormCardRef = useRef<HTMLDivElement | null>(null);
 
   const { session } = useSessionQuery();
   const loggedInUser = session?.user;
@@ -93,6 +96,12 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
   const handleToggleAllowOtherUserMemos = () => {
     toggleAllowOtherUserMemosMutation.mutate();
   };
+
+  // メモスレッドが追加されたらスクロールさせる
+  useAutoScrollOnIncrease({
+    target: memoFormCardRef,
+    count: developmentMemoThreads.length,
+  });
 
   return (
     <>
@@ -153,6 +162,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
           )}
           {loggedInUser && isDeveloper && (
             <DevelopmentMemoFormCard
+              ref={memoFormCardRef}
               key={formKey}
               developmentId={development.id}
               loggedInUser={loggedInUser}

@@ -29,7 +29,6 @@ export const DevelopmentMemoReplyForm = forwardRef<HTMLTextAreaElement, Props>(
       control,
       handleSubmit: innerHandleSubmit,
       formState: { errors },
-      getValues,
     } = useForm<DevelopmentMemoFormData>({
       defaultValues: {
         developmentId,

@@ -7,7 +7,7 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { DevelopmentMemo } from "../../../server/models/developmentMemo";
 import { DevelopmentMemoFormData } from "../../../share/schema";
@@ -44,6 +44,7 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
   const memoRef = useHashRemoverOnClickOutside({
     canRemove: (hash) => hash === memo.id,
   });
+  const replyFormCardRef = useRef<HTMLDivElement | null>(null);
 
   const replyTargetMemoId = useMemo(() => {
     if (childrenMemos.length === 0) {
@@ -128,21 +129,19 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
           </Text>
         </Flex>
       </Stack>
-      {childrenMemos.length > 0 && (
-        <Box mt="sm">
-          <ChildDevelopmentMemoSection
-            ideaId={ideaId}
-            developmentId={developmentId}
-            childMemos={childrenMemos}
-            isOpenReplyForm={isOpenReplyForm}
-            onOpenReplyForm={handleOpenReplyForm}
-          />
-        </Box>
-      )}
+      <ChildDevelopmentMemoSection
+        ideaId={ideaId}
+        developmentId={developmentId}
+        childMemos={childrenMemos}
+        isOpenReplyForm={isOpenReplyForm}
+        onOpenReplyForm={handleOpenReplyForm}
+        onCloseReplyForm={handleCloseReplyForm}
+      />
       {isOpenReplyForm && (
         <>
           {childrenMemos.length === 0 && <Divider my="md" />}
           <Box
+            ref={replyFormCardRef}
             p="xs"
             sx={(theme) => ({
               borderRadius: theme.radius.md,

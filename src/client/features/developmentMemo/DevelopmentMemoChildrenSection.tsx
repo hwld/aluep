@@ -1,5 +1,7 @@
 import { Box, Button, Divider, Stack } from "@mantine/core";
+import { useRef } from "react";
 import { DevelopmentMemo } from "../../../server/models/developmentMemo";
+import { useAutoScrollOnIncrease } from "../../lib/useAutoScrollOnIncrease";
 import { DevelopmentMemoChild } from "./DevelopmentMemoChild";
 
 type Props = {
@@ -8,6 +10,7 @@ type Props = {
   childMemos: DevelopmentMemo[];
   isOpenReplyForm: boolean;
   onOpenReplyForm: () => void;
+  onCloseReplyForm: () => void;
 };
 export const ChildDevelopmentMemoSection: React.FC<Props> = ({
   ideaId,
@@ -15,13 +18,27 @@ export const ChildDevelopmentMemoSection: React.FC<Props> = ({
   childMemos,
   isOpenReplyForm,
   onOpenReplyForm,
+  onCloseReplyForm,
 }) => {
+  const underRef = useRef<HTMLDivElement | null>(null);
+
   const handleOpenReplyForm = () => {
     onOpenReplyForm();
   };
 
+  useAutoScrollOnIncrease({
+    target: underRef,
+    count: childMemos.length,
+    onAfterScroll: onCloseReplyForm,
+    verticalPosition: "center",
+  });
+
+  if (childMemos.length === 0) {
+    return <></>;
+  }
+
   return (
-    <Box>
+    <Box mt="sm">
       <Divider></Divider>
       <Stack
         spacing="xl"
@@ -39,8 +56,8 @@ export const ChildDevelopmentMemoSection: React.FC<Props> = ({
           },
         })}
       >
-        {childMemos.map((memo) => {
-          return (
+        {childMemos.map((memo, i) => {
+          const child = (
             <DevelopmentMemoChild
               ideaId={ideaId}
               key={memo.id}
@@ -48,6 +65,18 @@ export const ChildDevelopmentMemoSection: React.FC<Props> = ({
               developmentId={developmentId}
             />
           );
+
+          // 最後のメモの上部にBoxを追加して、スクロールできるようにする
+          if (childMemos.length - 1 === i) {
+            return (
+              <Box key={memo.id}>
+                <Box ref={underRef} />
+                {child}
+              </Box>
+            );
+          } else {
+            return child;
+          }
         })}
       </Stack>
       {!isOpenReplyForm && (

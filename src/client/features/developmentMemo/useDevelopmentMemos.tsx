@@ -23,6 +23,7 @@ export const useDevelopmentMemos = ({
     queryFn: () => {
       return trpc.developmentMemo.getAll.query({ developmentId });
     },
+    initialData: [],
   });
 
   const developmentMemoThreads = useMemo(() => {

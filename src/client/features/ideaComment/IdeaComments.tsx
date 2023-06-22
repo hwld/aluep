@@ -1,8 +1,9 @@
 import { Button, Card, Stack, Text, Title } from "@mantine/core";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { User } from "../../../server/models/user";
 import { IdeaCommentFormData } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
+import { useAutoScrollOnIncrease } from "../../lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "../../lib/useCyclicRandom";
 import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../session/useSessionQuery";
@@ -55,20 +56,11 @@ export const IdeaComments: React.FC<Props> = ({
     commentFormRef.current?.focusCommentInput();
   };
 
-  // コメントが追加されたときにのみスクロールしたいので、
-  // 一つ前のレンダリングのコメント数を保持しておくrefを作成する
-  const prevComments = useRef(ideaComments?.length ?? 0);
-  useEffect(() => {
-    const comments = ideaComments?.length ?? 0;
-
-    // 前のレンダリングよりもコメント数が増えていればスクロールさせる
-    if (comments > prevComments.current) {
-      commentFormRef.current?.scrollIntoView();
-    }
-
-    // 前のレンダリングのコメント数を更新する
-    prevComments.current = comments;
-  }, [ideaComments?.length]);
+  // コメントの数が増えたら自動でスクロールする
+  useAutoScrollOnIncrease({
+    target: commentFormRef,
+    count: ideaComments?.length ?? 0,
+  });
 
   return (
     <Stack>

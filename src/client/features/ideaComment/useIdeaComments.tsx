@@ -16,6 +16,7 @@ export const useIdeaComments = ({ ideaId }: UseIdeaCommentsArgs) => {
     queryFn: () => {
       return trpc.ideaComment.getAll.query({ ideaId });
     },
+    keepPreviousData: true,
   });
 
   const postCommentMutation = useMutation({

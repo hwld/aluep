@@ -64,7 +64,7 @@ export const DevelopmentMemoChild: React.FC<Props> = ({
             isDeleting={deleteMemoMutation.isLoading}
           />
         </Flex>
-        <Text>{memo.memo}</Text>
+        <Text sx={{ whiteSpace: "pre-wrap" }}>{memo.memo}</Text>
       </Stack>
     </Flex>
   );

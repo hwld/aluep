@@ -22,7 +22,7 @@ type Props = {
 };
 
 export type IdeaCommentFormRef = {
-  scrollIntoView: () => void;
+  scrollIntoView: Element["scrollIntoView"];
   focusCommentInput: () => void;
 };
 
@@ -51,8 +51,8 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
 
     useImperativeHandle(ref, (): IdeaCommentFormRef => {
       return {
-        scrollIntoView: () => {
-          formRef.current?.scrollIntoView({ behavior: "smooth" });
+        scrollIntoView: (arg?: boolean | ScrollIntoViewOptions) => {
+          formRef.current?.scrollIntoView(arg);
         },
         focusCommentInput: () => {
           commentRef.current?.focus();
