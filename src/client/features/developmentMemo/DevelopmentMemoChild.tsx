@@ -1,5 +1,6 @@
 import { Flex, Stack, Text } from "@mantine/core";
 import { DevelopmentMemo } from "../../../server/models/developmentMemo";
+import { useHashRemoverOnClickOutside } from "../../lib/useHashRemoverOnClickOutside";
 import { formatDate } from "../../lib/utils";
 import { useSessionQuery } from "../session/useSessionQuery";
 import { UserIconLink } from "../user/UserIconLink";
@@ -14,15 +15,28 @@ export const DevelopmentMemoChild: React.FC<Props> = ({
   ideaId,
 }) => {
   const { session } = useSessionQuery();
-
   const { deleteMemoMutation } = useDevelopmentMemos({ developmentId });
+  const memoRef = useHashRemoverOnClickOutside({
+    canRemove: (hash) => hash === memo.id,
+  });
 
   const handleDeleteMemo = (id: string) => {
     deleteMemoMutation.mutate({ developmentMemoId: id });
   };
 
   return (
-    <Flex key={memo.id} gap="xs">
+    <Flex
+      ref={memoRef}
+      id={memo.id}
+      gap="xs"
+      sx={(theme) => ({
+        "&:target": {
+          outline: `${theme.fn.rgba(theme.colors.red[7], 0.5)} solid 2px`,
+          outlineOffset: "5px",
+          borderRadius: theme.radius.xs,
+        },
+      })}
+    >
       <Stack>
         <UserIconLink
           userId={memo.fromUser.id}

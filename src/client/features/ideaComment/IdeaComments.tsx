@@ -1,12 +1,9 @@
 import { Button, Card, Stack, Text, Title } from "@mantine/core";
-import { useClickOutside } from "@mantine/hooks";
-import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { User } from "../../../server/models/user";
 import { IdeaCommentFormData } from "../../../share/schema";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { useCyclicRandom } from "../../lib/useCyclicRandom";
-import { extractHash } from "../../lib/utils";
 import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../session/useSessionQuery";
 import { IdeaCommentCard } from "./IdeaCommentCard";
@@ -22,30 +19,15 @@ export const IdeaComments: React.FC<Props> = ({
   loggedInUser,
 }) => {
   const { session } = useSessionQuery();
-  const router = useRouter();
   const { openLoginModal } = useRequireLoginModal();
-  const [focusedCommentId, setFocusedCommentId] = useState("");
   const commentFormRef = useRef<IdeaCommentFormRef | null>(null);
-
-  const commentsRef = useClickOutside(async () => {
-    if (focusedCommentId !== "") {
-      // フラグメントを削除する
-      // フラグメントで指定されているカードの外側のクリックでフラグメントを削除したかったのだが、
-      // 別のコメントの返信元へのリンクをクリックすると、そちらでもrouter.replaceを使用しているため、
-      // routingがキャンセルされてエラーが出ることがあるため、コメント全体の外側のクリックでフラグメントを削除するようにしている
-      await router.replace(router.asPath.split("#")[0], undefined, {
-        shallow: true,
-        scroll: false,
-      });
-    }
-  });
 
   // お題のコメント操作
   const { ideaComments, postCommentMutation, deleteCommentMutation } =
     useIdeaComments({ ideaId });
 
   // コメント送信後にformを再マウントさせるために使用するkey
-  const { random: formKey, nextRandom: nextFormKey } = useCyclicRandom();
+  const [formKey, nextFormKey] = useCyclicRandom();
 
   const handleOpenLoginModal = () => {
     openLoginModal();
@@ -73,14 +55,6 @@ export const IdeaComments: React.FC<Props> = ({
     commentFormRef.current?.focusCommentInput();
   };
 
-  // フラグメントで指定されているコメントを設定する
-  // SSRではフラグメントを取得できないので、クライアント側だけで設定されるように
-  // useEffectを使用する
-  useEffect(() => {
-    const id = extractHash(router.asPath);
-    setFocusedCommentId(id);
-  }, [router.asPath]);
-
   // コメントが追加されたときにのみスクロールしたいので、
   // 一つ前のレンダリングのコメント数を保持しておくrefを作成する
   const prevComments = useRef(ideaComments?.length ?? 0);
@@ -94,7 +68,7 @@ export const IdeaComments: React.FC<Props> = ({
 
     // 前のレンダリングのコメント数を更新する
     prevComments.current = comments;
-  }, [commentsRef, ideaComments?.length]);
+  }, [ideaComments?.length]);
 
   return (
     <Stack>
@@ -102,7 +76,7 @@ export const IdeaComments: React.FC<Props> = ({
         投稿されたコメント
       </Title>
       {ideaComments && ideaComments.length > 0 && (
-        <Stack spacing="xs" ref={commentsRef}>
+        <Stack spacing="xs">
           {ideaComments.map((comment) => {
             return (
               <IdeaCommentCard
@@ -113,7 +87,6 @@ export const IdeaComments: React.FC<Props> = ({
                 isDeleting={deleteCommentMutation.isLoading}
                 isOwner={session?.user.id === comment.fromUser.id}
                 ideaOwnerId={ideaOwnerId}
-                focused={focusedCommentId === comment.id}
               />
             );
           })}

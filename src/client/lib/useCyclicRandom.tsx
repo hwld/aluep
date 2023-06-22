@@ -1,5 +1,8 @@
 import { useCallback, useState } from "react";
 
+/**
+ * ランダムな文字列と、その文字列を変更する関数を返す
+ */
 export const useCyclicRandom = () => {
   const [random, _setRandom] = useState(Math.random().toString());
 
@@ -7,5 +10,5 @@ export const useCyclicRandom = () => {
     _setRandom(() => Math.random().toString());
   }, []);
 
-  return { random, nextRandom };
+  return [random, nextRandom] as const;
 };

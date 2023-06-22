@@ -11,17 +11,30 @@ export const AppNavigationProgress = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const handleStart = (url: string) => {
+    const handleStart = (url: string, { shallow }: { shallow: boolean }) => {
+      if (shallow) {
+        return;
+      }
       if (url !== router.asPath) {
         // resetしないと、画面遷移->プログレスバーが消える直前に2画面に遷移でプログレスバーが表示されなくなることがある。
         resetNavigationProgress();
         startNavigationProgress();
       }
     };
-    const handleComplete = () => {
+    const handleComplete = (_: string, { shallow }: { shallow: boolean }) => {
+      if (shallow) {
+        return;
+      }
       completeNavigationProgress();
     };
-    const handleError = () => {
+    const handleError = (
+      _: unknown,
+      __: unknown,
+      { shallow }: { shallow: boolean }
+    ) => {
+      if (shallow) {
+        return;
+      }
       resetNavigationProgress();
     };
 

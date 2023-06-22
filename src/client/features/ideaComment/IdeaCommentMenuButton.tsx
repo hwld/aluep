@@ -67,19 +67,19 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
     },
   });
 
+  const buildLink = () => {
+    return `${window.location.origin}${Routes.idea(ideaId)}#${commentId}`;
+  };
+
   const handleSubmitReportIdeaComment = (data: ReportBaseForm) => {
     reportIdeaCommentMutation.mutate({
       reportDetail: data.reportDetail,
-      targetCommentUrl: `${window.location.origin}${Routes.idea(
-        ideaId
-      )}#${commentId}`,
+      targetCommentUrl: buildLink(),
     });
   };
 
   const handleCopyLink = () => {
-    clipboard.copy(
-      `${window.location.origin}${Routes.idea(ideaId)}#${commentId}`
-    );
+    clipboard.copy(buildLink());
   };
 
   return (

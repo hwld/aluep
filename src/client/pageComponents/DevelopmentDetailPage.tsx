@@ -67,7 +67,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
   });
 
   const { openLoginModal } = useRequireLoginModal();
-  const { random: formKey, nextRandom: nextFormKey } = useCyclicRandom();
+  const [formKey, nextFormKey] = useCyclicRandom();
 
   const handleToggleDevelopmentLike = () => {
     if (!session) {

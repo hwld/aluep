@@ -12,6 +12,7 @@ import { FaRegComment } from "react-icons/fa";
 import { DevelopmentMemo } from "../../../server/models/developmentMemo";
 import { DevelopmentMemoFormData } from "../../../share/schema";
 import { useCyclicRandom } from "../../lib/useCyclicRandom";
+import { useHashRemoverOnClickOutside } from "../../lib/useHashRemoverOnClickOutside";
 import { formatDate } from "../../lib/utils";
 import { CardActionIcon } from "../../ui/CardActionIcon";
 import { DevelopmentMemoReplyForm } from "../ideaComment/DevelopMemoReplyForm";
@@ -39,7 +40,10 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
     developmentId,
   });
   const [isOpenReplyForm, setIsOpenReplyForm] = useState(false);
-  const { random: formKey, nextRandom: nextFormKey } = useCyclicRandom();
+  const [formKey, nextFormKey] = useCyclicRandom();
+  const memoRef = useHashRemoverOnClickOutside({
+    canRemove: (hash) => hash === memo.id,
+  });
 
   const replyTargetMemoId = useMemo(() => {
     if (childrenMemos.length === 0) {
@@ -76,7 +80,18 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
 
   return (
     <Card>
-      <Stack spacing="md">
+      <Stack
+        ref={memoRef}
+        spacing="md"
+        id={memo.id}
+        sx={(theme) => ({
+          "&:target": {
+            outline: `${theme.fn.rgba(theme.colors.red[7], 0.5)} solid 2px`,
+            outlineOffset: "5px",
+            borderRadius: theme.radius.xs,
+          },
+        })}
+      >
         <Flex justify="space-between">
           <Flex align="center" gap="xs">
             <UserIconLink

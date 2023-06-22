@@ -1,11 +1,13 @@
 import { ActionIcon, Divider, Menu } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { MdFlag } from "react-icons/md";
+import { TbLink } from "react-icons/tb";
 import { RouterInputs } from "../../../server/lib/trpc";
+import { Routes } from "../../../share/routes";
 import { ReportBaseForm } from "../../../share/schema";
 import { trpc } from "../../lib/trpc";
 import {
@@ -37,6 +39,8 @@ export const DevelopmentMemoMenuButton: React.FC<Props> = ({
   onDeleteMemo,
   isDeleting = false,
 }) => {
+  const clipboard = useClipboard();
+
   const [
     isOpenDeleteModal,
     { close: closeDeleteModal, open: openDeleteModal },
@@ -70,11 +74,22 @@ export const DevelopmentMemoMenuButton: React.FC<Props> = ({
     },
   });
 
+  const buildLink = () => {
+    return `${window.location.origin}${Routes.development(
+      ideaId,
+      developmentId
+    )}#${developmentMemoId}`;
+  };
+
   const handleSubmitReportDevelopmentMemo = (data: ReportBaseForm) => {
     reportDevelopmentMemoMutation.mutate({
       reportDetail: data.reportDetail,
-      targetMemoUrl: "TODO: メモのリンクを作れるようにする",
+      targetMemoUrl: buildLink(),
     });
+  };
+
+  const handleCopyLink = () => {
+    clipboard.copy(buildLink());
   };
 
   return (
@@ -109,6 +124,9 @@ export const DevelopmentMemoMenuButton: React.FC<Props> = ({
               <Divider my={5} />
             </>
           )}
+          <MenuItem icon={<TbLink size={20} />} onClick={handleCopyLink}>
+            リンクをコピーする
+          </MenuItem>
           <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
             通報する
           </MenuItem>
