@@ -7,6 +7,7 @@ on:
 
 env:
   IMAGE_NAME: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/aluep:${{ github.sha }}
+  DATABASE_URL: ${{secrets.DATABASE_URL}}
 
 jobs:
   deploy:
@@ -26,6 +27,16 @@ jobs:
 
       - name: "Configure docker to use the gcloud cli"
         run: gcloud auth configure-docker --quiet
+
+      - name: "Database migration"
+        run: npx prisma migrate deploy
+
+      # seedを実行するための環境をインストールする
+      - name: "Set up ts-node"
+        run: npm install typescript ts-node
+
+      - name: "Detabase seeding"
+        run: npx prisma db seed
 
       - name: "Build docker image"
         run: >

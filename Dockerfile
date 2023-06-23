@@ -1,10 +1,6 @@
-# 現在、alpineだけ指定すると3.17が使用され、こちらではopenssl3が使われるようになっている。
-# しかし、prismaではopenssl1しかサポートしていないため、エラーになる。
-# 一時的にひとつ前のバージョンに戻し、openssl1が入っているイメージを使用する。
-# https://github.com/prisma/prisma/issues/16553
 
 # 依存関係をインストールするステージ
-FROM node:18-alpine3.16 AS deps
+FROM node:18-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
@@ -15,7 +11,7 @@ RUN npx prisma generate;
 
 
 # アプリをビルドするステージ
-FROM node:18-alpine3.16 AS builder
+FROM node:18-alpine AS builder
 WORKDIR /app
 # depsステージで取得したnode_modulesをコピーする
 COPY --from=deps /app/node_modules ./node_modules
@@ -31,7 +27,7 @@ ENV NEXT_PUBLIC_CONTACT_URL ${NEXT_PUBLIC_CONTACT_URL}
 RUN npm run build
 
 # アプリを実行する
-FROM node:18-alpine3.16 AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
