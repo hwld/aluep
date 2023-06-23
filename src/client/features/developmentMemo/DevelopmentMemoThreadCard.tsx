@@ -1,5 +1,4 @@
 import {
-  Box,
   Card,
   Divider,
   Flex,
@@ -7,7 +6,7 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { DevelopmentMemo } from "../../../server/models/developmentMemo";
 import { DevelopmentMemoFormData } from "../../../share/schema";
@@ -15,7 +14,7 @@ import { useCyclicRandom } from "../../lib/useCyclicRandom";
 import { useHashRemoverOnClickOutside } from "../../lib/useHashRemoverOnClickOutside";
 import { formatDate } from "../../lib/utils";
 import { CardActionIcon } from "../../ui/CardActionIcon";
-import { DevelopmentMemoReplyForm } from "../ideaComment/DevelopMemoReplyForm";
+import { DevelopmentMemoReplyFormBox } from "../ideaComment/DevelopMemoReplyFormBox";
 import { UserIconLink } from "../user/UserIconLink";
 import { ChildDevelopmentMemoSection } from "./DevelopmentMemoChildrenSection";
 import { DevelopmentMemoMenuButton } from "./DevelopmentMemoMenuButton";
@@ -44,7 +43,6 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
   const memoRef = useHashRemoverOnClickOutside({
     canRemove: (hash) => hash === memo.id,
   });
-  const replyFormCardRef = useRef<HTMLDivElement | null>(null);
 
   const replyTargetMemoId = useMemo(() => {
     if (childrenMemos.length === 0) {
@@ -140,24 +138,14 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
       {isOpenReplyForm && (
         <>
           {childrenMemos.length === 0 && <Divider my="md" />}
-          <Box
-            ref={replyFormCardRef}
-            p="xs"
-            sx={(theme) => ({
-              borderRadius: theme.radius.md,
-              border: "1px solid",
-              borderColor: theme.colors.gray[4],
-            })}
-          >
-            <DevelopmentMemoReplyForm
-              key={formKey}
-              developmentId={developmentId}
-              onSubmit={handleSubmitMemo}
-              onCancel={handleCloseReplyForm}
-              parentMemoId={replyTargetMemoId}
-              isSubmitting={createMemoMutation.isLoading}
-            />
-          </Box>
+          <DevelopmentMemoReplyFormBox
+            key={formKey}
+            developmentId={developmentId}
+            onSubmit={handleSubmitMemo}
+            onCancel={handleCloseReplyForm}
+            parentMemoId={replyTargetMemoId}
+            isSubmitting={createMemoMutation.isLoading}
+          />
         </>
       )}
     </Card>

@@ -8,7 +8,6 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useRef } from "react";
 import { FaRegComment, FaUserAlt } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
 import { IdeaComment } from "../../../server/models/ideaComment";
@@ -21,7 +20,7 @@ import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
 import { useSessionQuery } from "../session/useSessionQuery";
 import { UserIconLink } from "../user/UserIconLink";
 import { IdeaCommentMenuButton } from "./IdeaCommentMenuButton";
-import { IdeaCommentReplyForm } from "./IdeaCommentReplyForm";
+import { IdeaCommentReplyFormCard } from "./IdeaCommentReplyFormCard";
 import { useIdeaCommentReply } from "./useIdeaCommentReply";
 
 type Props = {
@@ -44,7 +43,6 @@ export const IdeaCommentCard: React.FC<Props> = ({
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
   const mantineTheme = useMantineTheme();
-  const replyFormRef = useRef<HTMLTextAreaElement | null>(null);
 
   const commentRef = useHashRemoverOnClickOutside({
     canRemove: (hash) => {
@@ -86,10 +84,6 @@ export const IdeaCommentCard: React.FC<Props> = ({
     if (comment.inReplyToComment) {
       window.location.hash = comment.inReplyToComment.id;
     }
-  };
-
-  const handleFocusReplyForm = () => {
-    replyFormRef.current?.focus();
   };
 
   return (
@@ -181,16 +175,13 @@ export const IdeaCommentCard: React.FC<Props> = ({
         </Stack>
       </Card>
       {isReplyFormOpen && (
-        <Card onClick={handleFocusReplyForm}>
-          <IdeaCommentReplyForm
-            ref={replyFormRef}
-            inReplyToCommentId={comment.id}
-            ideaId={comment.ideaId}
-            onCancel={closeReplyForm}
-            onSubmit={handleSubmitReply}
-            isSubmitting={replyMutation.isLoading}
-          />
-        </Card>
+        <IdeaCommentReplyFormCard
+          inReplyToCommentId={comment.id}
+          ideaId={comment.ideaId}
+          onCancel={closeReplyForm}
+          onSubmit={handleSubmitReply}
+          isSubmitting={replyMutation.isLoading}
+        />
       )}
     </Stack>
   );

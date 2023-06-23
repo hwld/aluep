@@ -1,6 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Divider, Flex, Text, useMantineTheme } from "@mantine/core";
-import { forwardRef } from "react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
+import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { TbAlertCircle } from "react-icons/tb";
@@ -19,33 +26,56 @@ type Props = {
   isSubmitting?: boolean;
 };
 
-export const DevelopmentMemoReplyForm = forwardRef<HTMLTextAreaElement, Props>(
-  function DevelopmentMemoReplyForm(
-    { developmentId, parentMemoId, onSubmit, onCancel, isSubmitting = false },
-    ref
-  ) {
-    const { colors } = useMantineTheme();
-    const {
-      control,
-      handleSubmit: innerHandleSubmit,
-      formState: { errors },
-    } = useForm<DevelopmentMemoFormData>({
-      defaultValues: {
-        developmentId,
-        parentMemoId,
-        memo: "",
-      },
-      resolver: zodResolver(developmentMemoFormSchema),
+export const DevelopmentMemoReplyFormBox: React.FC<Props> = ({
+  developmentId,
+  parentMemoId,
+  onSubmit,
+  onCancel,
+  isSubmitting = false,
+}) => {
+  const { colors } = useMantineTheme();
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const {
+    control,
+    handleSubmit: innerHandleSubmit,
+    formState: { errors },
+  } = useForm<DevelopmentMemoFormData>({
+    defaultValues: {
+      developmentId,
+      parentMemoId,
+      memo: "",
+    },
+    resolver: zodResolver(developmentMemoFormSchema),
+  });
+
+  const { debouncedSubmitting, handleSubmit, handleCancel } =
+    useDebouncedSubmitting({
+      isSubmitting,
+      onCancel,
+      onSubmit: innerHandleSubmit(onSubmit),
     });
 
-    const { debouncedSubmitting, handleSubmit, handleCancel } =
-      useDebouncedSubmitting({
-        isSubmitting,
-        onCancel,
-        onSubmit: innerHandleSubmit(onSubmit),
-      });
+  const handleFocusTextarea = () => {
+    textareaRef.current?.focus();
+  };
 
-    return (
+  useLayoutEffect(() => {
+    textareaRef.current?.focus();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <Box
+      p="xs"
+      sx={(theme) => ({
+        borderRadius: theme.radius.md,
+        border: "1px solid",
+        borderColor: theme.colors.gray[4],
+      })}
+      onClick={handleFocusTextarea}
+    >
       <form onSubmit={handleSubmit}>
         <Controller
           control={control}
@@ -60,16 +90,7 @@ export const DevelopmentMemoReplyForm = forwardRef<HTMLTextAreaElement, Props>(
                 {...field}
                 ref={(e) => {
                   field.ref(e);
-
-                  if (!ref) {
-                    return;
-                  }
-
-                  if (typeof ref === "function") {
-                    ref(e);
-                  } else {
-                    ref.current = e;
-                  }
+                  textareaRef.current = e;
                 }}
               />
             );
@@ -104,6 +125,6 @@ export const DevelopmentMemoReplyForm = forwardRef<HTMLTextAreaElement, Props>(
           </Flex>
         </Flex>
       </form>
-    );
-  }
-);
+    </Box>
+  );
+};

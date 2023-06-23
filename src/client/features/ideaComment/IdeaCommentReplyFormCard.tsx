@@ -1,6 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Divider, Flex, Text, useMantineTheme } from "@mantine/core";
-import { forwardRef } from "react";
+import {
+  Button,
+  Card,
+  Divider,
+  Flex,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
+import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { TbAlertCircle } from "react-icons/tb";
@@ -20,29 +27,43 @@ type Props = {
   isSubmitting?: boolean;
 };
 
-export const IdeaCommentReplyForm = forwardRef<HTMLTextAreaElement, Props>(
-  function IdeaCommentReplyForm(
-    { ideaId, inReplyToCommentId, onSubmit, onCancel, isSubmitting = false },
-    ref
-  ) {
-    const { colors } = useMantineTheme();
-    const {
-      control,
-      handleSubmit: innerHandleSubmit,
-      formState: { errors },
-    } = useForm<IdeaCommentFormData>({
-      defaultValues: { ideaId, inReplyToCommentId, comment: "" },
-      resolver: zodResolver(ideaCommentFormSchema),
+export const IdeaCommentReplyFormCard: React.FC<Props> = ({
+  ideaId,
+  inReplyToCommentId,
+  onSubmit,
+  onCancel,
+  isSubmitting = false,
+}) => {
+  const { colors } = useMantineTheme();
+  const innerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const {
+    control,
+    handleSubmit: innerHandleSubmit,
+    formState: { errors },
+  } = useForm<IdeaCommentFormData>({
+    defaultValues: { ideaId, inReplyToCommentId, comment: "" },
+    resolver: zodResolver(ideaCommentFormSchema),
+  });
+
+  const { debouncedSubmitting, handleSubmit, handleCancel } =
+    useDebouncedSubmitting({
+      isSubmitting,
+      onCancel,
+      onSubmit: innerHandleSubmit(onSubmit),
     });
 
-    const { debouncedSubmitting, handleSubmit, handleCancel } =
-      useDebouncedSubmitting({
-        isSubmitting,
-        onCancel,
-        onSubmit: innerHandleSubmit(onSubmit),
-      });
+  const handleFocusTextarea = () => {
+    innerTextareaRef.current?.focus();
+  };
 
-    return (
+  useLayoutEffect(() => {
+    innerTextareaRef.current?.focus();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <Card onClick={handleFocusTextarea}>
       <form onSubmit={handleSubmit}>
         <Controller
           control={control}
@@ -57,16 +78,7 @@ export const IdeaCommentReplyForm = forwardRef<HTMLTextAreaElement, Props>(
                 {...field}
                 ref={(e) => {
                   field.ref(e);
-
-                  if (!ref) {
-                    return;
-                  }
-
-                  if (typeof ref === "function") {
-                    ref(e);
-                  } else {
-                    ref.current = e;
-                  }
+                  innerTextareaRef.current = e;
                 }}
               />
             );
@@ -101,6 +113,6 @@ export const IdeaCommentReplyForm = forwardRef<HTMLTextAreaElement, Props>(
           </Flex>
         </Flex>
       </form>
-    );
-  }
-);
+    </Card>
+  );
+};
