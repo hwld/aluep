@@ -6,7 +6,7 @@ on:
       - "main"
 
 env:
-  IMAGE_NAME: asia.gcr.io/${{ secrets.GCP_PROJECT_ID }}/aluep:${{ github.sha }}
+  IMAGE_NAME: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/aluep/aluep:${{ github.sha }}
   DATABASE_URL: ${{secrets.DATABASE_URL}}
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
           version: ">= 363.0.0"
 
       - name: "Configure docker to use the gcloud cli"
-        run: gcloud auth configure-docker --quiet
+        run: gcloud auth configure-docker --quiet asia-northeast1-docker.pkg.dev
 
       - name: "Database migration"
         run: npx prisma migrate deploy
