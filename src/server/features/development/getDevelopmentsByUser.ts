@@ -18,7 +18,9 @@ export const getDevelopmentsByUser = publicProcedure
         where: { userId: input.userId },
         loggedInUserId: ctx.session?.user.id,
       } satisfies FindDevelopmentsArgs,
-      counter: (loggedInUserId, ...others) => db.development.count(...others),
+      counter: ({ loggedInUserId, ...others }) => {
+        return db.development.count(others);
+      },
       pagingData: { page, limit: pageLimit.developmentsByUser },
     });
 
