@@ -1,22 +1,22 @@
+import { useDevelop } from "@/client/features/development/useDevelop";
+import { useDevelopmentStatusesQuery } from "@/client/features/development/useDevelopmentStatusesQuery";
+import {
+  DevelopmentForm,
+  DevelopmentFormDefaultValues,
+} from "@/client/features/idea/DevelopmentForm";
+import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { Development } from "@/server/models/development";
+import { Idea } from "@/server/models/idea";
+import { DevelopmentStatusIds } from "@/share/consts";
+import {
+  CreateRepositoryData,
+  DevelopmentFormData,
+} from "@/share/schema/development";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { MdOutlineEdit } from "react-icons/md";
-import { Development } from "../../server/models/development";
-import { Idea } from "../../server/models/idea";
-import { DevelopmentStatusIds } from "../../share/consts";
-import {
-  CreateRepositoryData,
-  DevelopmentFormData,
-} from "../../share/schema/development";
-import { useDevelop } from "../features/development/useDevelop";
-import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
-import {
-  DevelopmentForm,
-  DevelopmentFormDefaultValues,
-} from "../features/idea/DevelopmentForm";
-import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
-import { PageHeader } from "../ui/PageHeader";
 
 type Props = {
   idea: Idea;

@@ -1,3 +1,5 @@
+import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { Routes } from "@/share/routes";
 import {
   Button,
   Card,
@@ -11,8 +13,6 @@ import { NextPage } from "next";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { MdLogout } from "react-icons/md";
-import { withReactQueryGetServerSideProps } from "../server/lib/GetServerSidePropsWithReactQuery";
-import { Routes } from "../share/routes";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ session }) => {

@@ -1,9 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { RouterInputs } from "../../../server/lib/trpc";
-import { trpc } from "../../lib/trpc";
-import { showErrorNotification } from "../../lib/utils";
-import { developmentKeys } from "./queryKeys";
-import { DevelopmentsData } from "./useDevelopmentsByIdea";
+import { developmentKeys } from "@/client/features/development/queryKeys";
+import { DevelopmentsData } from "@/client/features/development/useDevelopmentsByIdea";
+import { trpc } from "@/client/lib/trpc";
+import { showErrorNotification } from "@/client/lib/utils";
+import { RouterInputs } from "@/server/lib/trpc";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 /**
  * ページングされた開発情報のリスト上で開発情報にいいねを行う。

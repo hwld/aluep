@@ -1,9 +1,9 @@
-import { router } from "../../lib/trpc";
-import { reportDevelopment } from "./reportDevelopment";
-import { reportDevelopmentMemo } from "./reportDevelopmentMemo";
-import { reportIdea } from "./reportIdea";
-import { reportIdeaComment } from "./reportIdeaComment";
-import { reportUser } from "./reportUser";
+import { reportDevelopment } from "@/server/features/report/reportDevelopment";
+import { reportDevelopmentMemo } from "@/server/features/report/reportDevelopmentMemo";
+import { reportIdea } from "@/server/features/report/reportIdea";
+import { reportIdeaComment } from "@/server/features/report/reportIdeaComment";
+import { reportUser } from "@/server/features/report/reportUser";
+import { router } from "@/server/lib/trpc";
 
 export const reportRouter = router({
   /**お題を通報する */

@@ -1,17 +1,17 @@
+import { DevelopedItemIconLink } from "@/client/features/development/DevelopedItemIconLink";
+import { DevelopmentStatusBadge } from "@/client/features/development/DevelopmentStatusBadge";
+import { IdeaDevelopmentMiniLikeButton } from "@/client/features/development/IdeaDevelopmentCard/IdeaDevelopmentMiniLikeButton";
+import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { formatDate } from "@/client/lib/utils";
+import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink";
+import { TextLink } from "@/client/ui/TextLink";
+import { Development } from "@/server/models/development";
+import { Idea } from "@/server/models/idea";
+import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Text } from "@mantine/core";
 import { useRouter } from "next/router";
-import { Development } from "../../../../server/models/development";
-import { Idea } from "../../../../server/models/idea";
-import { Routes } from "../../../../share/routes";
-import { formatDate } from "../../../lib/utils";
-import { GitHubCodeIconLink } from "../../../ui/GitHubCodeIconLink";
-import { TextLink } from "../../../ui/TextLink";
-import { useRequireLoginModal } from "../../session/RequireLoginModalProvider";
-import { useSessionQuery } from "../../session/useSessionQuery";
-import { UserIconLink } from "../../user/UserIconLink";
-import { DevelopedItemIconLink } from "../DevelopedItemIconLink";
-import { DevelopmentStatusBadge } from "../DevelopmentStatusBadge";
-import { IdeaDevelopmentMiniLikeButton } from "./IdeaDevelopmentMiniLikeButton";
 
 type Props = {
   idea: Idea;

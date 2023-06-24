@@ -1,3 +1,4 @@
+import { IdeaTag } from "@/server/models/ideaTag";
 import {
   Box,
   Button,
@@ -9,7 +10,6 @@ import {
   Title,
 } from "@mantine/core";
 import React, { SyntheticEvent, useState } from "react";
-import { IdeaTag } from "../../../server/models/ideaTag";
 
 export type IdeaSearchArgs = {
   keyword: string;

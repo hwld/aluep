@@ -1,5 +1,5 @@
-import { Flex, Title, useMantineTheme } from "@mantine/core";
-import { IconType } from "react-icons";
+import { useMantineTheme, Flex, Title } from "@mantine/core";
+import { IconType } from "react-icons/lib";
 
 type Props = { icon: IconType; pageName: string };
 export const PageHeader: React.FC<Props> = ({ icon: Icon, pageName }) => {

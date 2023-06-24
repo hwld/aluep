@@ -1,7 +1,7 @@
-import { useSessionQuery } from "../../client/features/session/useSessionQuery";
-import { UserEditPage } from "../../client/pageComponents/UserEditPage";
-import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
-import { Routes } from "../../share/routes";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { UserEditPage } from "@/client/pageComponents/UserEditPage";
+import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { Routes } from "@/share/routes";
 import NotFoundPage from "../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(

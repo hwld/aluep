@@ -1,8 +1,8 @@
+import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import { Routes } from "@/share/routes";
 import { Button, Card, Text, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbFileText } from "react-icons/tb";
-import { Routes } from "../../../share/routes";
-import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
 
 type Props = { isLoggedIn: boolean };
 

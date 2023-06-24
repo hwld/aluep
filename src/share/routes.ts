@@ -1,5 +1,5 @@
-import { IdeaOrder } from "./schema/idea";
-import { buildSearchParamsString } from "./utils";
+import { IdeaOrder } from "@/share/schema/idea";
+import { buildSearchParamsString } from "@/share/utils";
 
 export const Routes = {
   home: "/",

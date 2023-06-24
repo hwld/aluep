@@ -1,3 +1,7 @@
+import { AppTooltip } from "@/client/ui/AppTooltip";
+import { ComputerIcon } from "@/client/ui/ComputerIcon";
+import { Routes } from "@/share/routes";
+import { DevelopedData } from "@/share/schema/development";
 import {
   ActionIcon,
   Anchor,
@@ -10,10 +14,6 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
-import { Routes } from "../../../share/routes";
-import { DevelopedData } from "../../../share/schema/development";
-import { AppTooltip } from "../../ui/AppTooltip";
-import { ComputerIcon } from "../../ui/ComputerIcon";
 
 type Props = {
   developments: number;

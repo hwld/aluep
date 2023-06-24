@@ -1,6 +1,6 @@
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { trpc } from "@/client/lib/trpc";
 import { useQuery } from "@tanstack/react-query";
-import { trpc } from "../../lib/trpc";
-import { ideaKeys } from "./queryKeys";
 
 type UseIdeaQueryArgs = { ideaId: string };
 

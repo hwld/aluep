@@ -1,4 +1,4 @@
-import { Avatar, AvatarProps } from "@mantine/core";
+import { AvatarProps, Avatar } from "@mantine/core";
 import React, { useEffect, useRef } from "react";
 
 export type UserIconProps = {

@@ -4,8 +4,12 @@ import nextJest from "next/jest";
 const createJestConfig = nextJest({
   dir: "./",
 });
+
 const customJestConfig: Config = {
   moduleDirectories: ["node_modules"],
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/../$1",
+  },
   testEnvironment: "@quramy/jest-prisma-node/environment",
   // サーバーのコードだけ含める。
   testMatch: ["<rootDir>/**/*.test.ts"],

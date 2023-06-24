@@ -1,6 +1,6 @@
-import { profileFormSchema } from "../../../share/schema/user";
-import { db } from "../../lib/prismadb";
-import { requireLoggedInProcedure } from "../../lib/trpc";
+import { db } from "@/server/lib/prismadb";
+import { requireLoggedInProcedure } from "@/server/lib/trpc";
+import { profileFormSchema } from "@/share/schema/user";
 
 export const updateMe = requireLoggedInProcedure
   .input(profileFormSchema)

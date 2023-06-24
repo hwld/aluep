@@ -1,3 +1,19 @@
+import { EmptyHomeIdeas } from "@/client/features/idea/EmptyHomeIdeas";
+import { ideaCardMinWidthPx } from "@/client/features/idea/IdeaCard/IdeaCard";
+import { PickedUpIdeas } from "@/client/features/idea/PickedUpIdeas";
+import { PopularIdeaCarousel } from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCarousel";
+import { usePickedUpIdeasQuery } from "@/client/features/idea/usePickedUpIdeasQuery";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem";
+import {
+  useTop10LikesDevelopmentInThisMonth,
+  useTop10LikesIdeasInThisMonth,
+  useTop10LikesPostersInThisMonth,
+} from "@/client/features/user/useRankingQuery";
+import { EmptyRankingContent } from "@/client/ui/EmptyRankingContent";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { RankingCard } from "@/client/ui/RankingCard";
+import { Routes } from "@/share/routes";
 import {
   Center,
   Flex,
@@ -6,30 +22,10 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-
-import {
-  useTop10LikesDevelopmentInThisMonth,
-  useTop10LikesIdeasInThisMonth,
-  useTop10LikesPostersInThisMonth,
-} from "../features/user/useRankingQuery";
-import { EmptyRankingContent } from "../ui/EmptyRankingContent";
-
-import { RankingCard } from "../ui/RankingCard";
-
-import { PickedUpIdeas } from "../features/idea/PickedUpIdeas";
-import { UserLikeRankingItem } from "../features/user/UserLikeRankingItem";
-
 import { AiFillFire } from "react-icons/ai";
 import { IoSparkles } from "react-icons/io5";
 import { MdComputer, MdOutlineHome } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
-import { Routes } from "../../share/routes";
-import { EmptyHomeIdeas } from "../features/idea/EmptyHomeIdeas";
-import { ideaCardMinWidthPx } from "../features/idea/IdeaCard/IdeaCard";
-import { PopularIdeaCarousel } from "../features/idea/PopularIdeaCarousel/PopularIdeaCarousel";
-import { usePickedUpIdeasQuery } from "../features/idea/usePickedUpIdeasQuery";
-import { useSessionQuery } from "../features/session/useSessionQuery";
-import { PageHeader } from "../ui/PageHeader";
 
 export const HomePage: React.FC = () => {
   const { colors } = useMantineTheme();

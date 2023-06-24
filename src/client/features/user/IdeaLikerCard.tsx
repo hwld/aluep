@@ -1,10 +1,10 @@
+import { UserIcon } from "@/client/features/user/UserIcon";
+import { formatDate } from "@/client/lib/utils";
+import { TextLink } from "@/client/ui/TextLink";
+import { IdeaLiker } from "@/server/models/ideaLike";
+import { Routes } from "@/share/routes";
 import { Card, Flex, Text } from "@mantine/core";
 import { useRouter } from "next/router";
-import { IdeaLiker } from "../../../server/models/ideaLike";
-import { Routes } from "../../../share/routes";
-import { formatDate } from "../../lib/utils";
-import { TextLink } from "../../ui/TextLink";
-import { UserIcon } from "./UserIcon";
 
 export const ideaLikerCardMinWidthPx = 350;
 

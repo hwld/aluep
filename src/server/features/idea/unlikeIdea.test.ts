@@ -1,4 +1,4 @@
-import { TestHelpers } from "../../tests/helper";
+import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題へいいね解除API", () => {
   it("いいね解除できる", async () => {

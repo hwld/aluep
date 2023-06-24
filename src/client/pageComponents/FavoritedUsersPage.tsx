@@ -1,16 +1,16 @@
+import { UserCard, userCardMinWidthPx } from "@/client/features/user/UserCard";
+import { UserSummaryCard } from "@/client/features/user/UserSummaryCard";
+import { useFavoritedUsers } from "@/client/features/user/useFavoritedUsers";
+import { useURLParams } from "@/client/lib/useURLParams";
+import { AppPagination } from "@/client/ui/AppPagination";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { paginatedPageSchema } from "@/share/schema/util";
 import { Box, Flex, Stack, Text, useMantineTheme } from "@mantine/core";
+import { User } from "next-auth";
 import React from "react";
 import { BiBookmarkHeart } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { TbHeart } from "react-icons/tb";
-import { User } from "../../server/models/user";
-import { paginatedPageSchema } from "../../share/schema/util";
-import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";
-import { UserSummaryCard } from "../features/user/UserSummaryCard";
-import { useFavoritedUsers } from "../features/user/useFavoritedUsers";
-import { useURLParams } from "../lib/useURLParams";
-import { AppPagination } from "../ui/AppPagination";
-import { PageHeader } from "../ui/PageHeader";
 
 type Props = { user: User };
 

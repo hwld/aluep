@@ -1,7 +1,7 @@
-import { sortedInSameOrder } from "../../../share/utils";
-import { db } from "../../lib/prismadb";
-import { publicProcedure } from "../../lib/trpc";
-import { UserAndDevelopmentLikes } from "../../models/user";
+import { db } from "@/server/lib/prismadb";
+import { publicProcedure } from "@/server/lib/trpc";
+import { UserAndDevelopmentLikes } from "@/server/models/user";
+import { sortedInSameOrder } from "@/share/utils";
 
 export const getTop10LikesDevelopmentsInThisMonth = publicProcedure.query(
   async () => {

@@ -1,12 +1,12 @@
-import { aggregateRoute } from "./features/aggregate/router";
-import { developmentRoute } from "./features/development/router";
-import { developmentMemoRoute } from "./features/developmentMemo/router";
-import { ideaRoute } from "./features/idea/router";
-import { ideaCommentRoute } from "./features/ideaComment/router";
-import { meRoute } from "./features/me/router";
-import { reportRouter } from "./features/report/router";
-import { userRoute } from "./features/user/router";
-import { publicProcedure, router } from "./lib/trpc";
+import { aggregateRoute } from "@/server/features/aggregate/router";
+import { developmentRoute } from "@/server/features/development/router";
+import { developmentMemoRoute } from "@/server/features/developmentMemo/router";
+import { ideaRoute } from "@/server/features/idea/router";
+import { ideaCommentRoute } from "@/server/features/ideaComment/router";
+import { meRoute } from "@/server/features/me/router";
+import { reportRouter } from "@/server/features/report/router";
+import { userRoute } from "@/server/features/user/router";
+import { publicProcedure, router } from "@/server/lib/trpc";
 
 export const appRouter = router({
   me: meRoute,

@@ -1,5 +1,5 @@
-import { developmentKeys } from "../development/queryKeys";
-import { ideaKeys } from "../idea/queryKeys";
+import { developmentKeys } from "@/client/features/development/queryKeys";
+import { ideaKeys } from "@/client/features/idea/queryKeys";
 
 export const userKeys = {
   all: ["users"] as const,

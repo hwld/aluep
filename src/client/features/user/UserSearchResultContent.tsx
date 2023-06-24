@@ -1,8 +1,8 @@
+import { EmptyUserSearchResult } from "@/client/features/user/EmptyUserSearchResult";
+import { UserCard, userCardMinWidthPx } from "@/client/features/user/UserCard";
+import { User } from "@/server/models/user";
 import { Box, Flex, Text, useMantineTheme } from "@mantine/core";
 import { MdOutlinePersonSearch } from "react-icons/md";
-import { User } from "../../../server/models/user";
-import { EmptyUserSearchResult } from "./EmptyUserSearchResult";
-import { UserCard, userCardMinWidthPx } from "./UserCard";
 
 type Props = {
   userSearchResult: User[];

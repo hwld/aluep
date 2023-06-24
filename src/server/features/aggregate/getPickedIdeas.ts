@@ -1,7 +1,7 @@
+import { publicProcedure } from "@/server/lib/trpc";
+import { pickUpIdeas as pickUp } from "@/server/models/idea";
+import { ideaOrderSchema } from "@/share/schema/idea";
 import { z } from "zod";
-import { ideaOrderSchema } from "../../../share/schema/idea";
-import { publicProcedure } from "../../lib/trpc";
-import { pickUpIdeas as pickUp } from "../../models/idea";
 
 export const getPickedIdeas = publicProcedure
   .input(z.object({ order: ideaOrderSchema }))

@@ -1,3 +1,14 @@
+import { IdeaCommentMenuButton } from "@/client/features/ideaComment/IdeaCommentMenuButton";
+import { IdeaCommentReplyFormCard } from "@/client/features/ideaComment/IdeaCommentReplyFormCard";
+import { useIdeaCommentReply } from "@/client/features/ideaComment/useIdeaCommentReply";
+import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
+import { formatDate } from "@/client/lib/utils";
+import { CardActionIcon } from "@/client/ui/CardActionIcon";
+import { IdeaComment } from "@/server/models/ideaComment";
+import { IdeaCommentFormData } from "@/share/schema/ideaComment";
 import {
   Box,
   Card,
@@ -10,17 +21,6 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { FaRegComment, FaUserAlt } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
-import { IdeaComment } from "../../../server/models/ideaComment";
-import { IdeaCommentFormData } from "../../../share/schema/ideaComment";
-import { useHashRemoverOnClickOutside } from "../../lib/useHashRemoverOnClickOutside";
-import { formatDate } from "../../lib/utils";
-import { CardActionIcon } from "../../ui/CardActionIcon";
-import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
-import { useSessionQuery } from "../session/useSessionQuery";
-import { UserIconLink } from "../user/UserIconLink";
-import { IdeaCommentMenuButton } from "./IdeaCommentMenuButton";
-import { IdeaCommentReplyFormCard } from "./IdeaCommentReplyFormCard";
-import { useIdeaCommentReply } from "./useIdeaCommentReply";
 
 type Props = {
   ideaId: string;

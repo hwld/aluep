@@ -1,6 +1,6 @@
-import { ActionIcon, ActionIconProps } from "@mantine/core";
+import { OmitStrict } from "@/types/OmitStrict";
+import { ActionIconProps, ActionIcon } from "@mantine/core";
 import { ComponentPropsWithoutRef } from "react";
-import { OmitStrict } from "../../types/OmitStrict";
 
 type Props = OmitStrict<ActionIconProps, "sx"> &
   ComponentPropsWithoutRef<"button">;

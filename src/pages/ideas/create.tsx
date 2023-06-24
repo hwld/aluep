@@ -1,8 +1,8 @@
-import { ideaKeys } from "../../client/features/idea/queryKeys";
-import { IdeaCreatePage } from "../../client/pageComponents/IdeaCreatePage";
-import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../server/router";
-import { Routes } from "../../share/routes";
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { IdeaCreatePage } from "@/client/pageComponents/IdeaCreatePage";
+import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { appRouter } from "@/server/router";
+import { Routes } from "@/share/routes";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ queryClient, session, callerContext }) => {

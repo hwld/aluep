@@ -1,6 +1,6 @@
+import { developmentKeys } from "@/client/features/development/queryKeys";
+import { trpc } from "@/client/lib/trpc";
 import { useQuery } from "@tanstack/react-query";
-import { trpc } from "../../lib/trpc";
-import { developmentKeys } from "./queryKeys";
 
 type UseLikedDevelopmentsArgs = { userId: string; page: number };
 /** ユーザーがいいねした開発情報を取得する */

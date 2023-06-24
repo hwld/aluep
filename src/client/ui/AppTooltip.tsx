@@ -1,4 +1,4 @@
-import { Tooltip, TooltipProps } from "@mantine/core";
+import { TooltipProps, Tooltip } from "@mantine/core";
 
 type Props = TooltipProps & { hidden?: boolean };
 export const AppTooltip: React.FC<Props> = ({

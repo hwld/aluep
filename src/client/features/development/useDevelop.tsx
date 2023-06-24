@@ -1,24 +1,24 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { TRPCClientError } from "@trpc/client";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
-import { RouterInputs } from "../../../server/lib/trpc";
-import { AppRouter } from "../../../server/router";
-import { GitHubErrors } from "../../../share/errors";
-import { Routes } from "../../../share/routes";
-import {
-  CreateRepositoryData,
-  DevelopmentFormData,
-} from "../../../share/schema/development";
-import { trpc } from "../../lib/trpc";
+import { developmentKeys } from "@/client/features/development/queryKeys";
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { trpc } from "@/client/lib/trpc";
 import {
   isTRPCClientError,
   showErrorNotification,
   showSuccessNotification,
-} from "../../lib/utils";
-import { ideaKeys } from "../idea/queryKeys";
-import { useSessionQuery } from "../session/useSessionQuery";
-import { developmentKeys } from "./queryKeys";
+} from "@/client/lib/utils";
+import { RouterInputs } from "@/server/lib/trpc";
+import { AppRouter } from "@/server/router";
+import { GitHubErrors } from "@/share/errors";
+import { Routes } from "@/share/routes";
+import {
+  CreateRepositoryData,
+  DevelopmentFormData,
+} from "@/share/schema/development";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { TRPCClientError } from "@trpc/client";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 type UseDevelopArgs = { ideaId: string };
 

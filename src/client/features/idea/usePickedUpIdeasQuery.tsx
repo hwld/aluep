@@ -1,7 +1,7 @@
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { trpc } from "@/client/lib/trpc";
+import { IdeaOrder } from "@/share/schema/idea";
 import { useQuery } from "@tanstack/react-query";
-import { IdeaOrder } from "../../../share/schema/idea";
-import { trpc } from "../../lib/trpc";
-import { ideaKeys } from "./queryKeys";
 
 export const usePickedUpIdeasQuery = (order: IdeaOrder) => {
   const { data: pickedUpIdeas, ...others } = useQuery({

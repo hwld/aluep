@@ -1,18 +1,18 @@
-import { Stack, Text } from "@mantine/core";
-import { MdComputer } from "react-icons/md";
-import { Idea } from "../../server/models/idea";
-import { paginatedPageSchema } from "../../share/schema/util";
 import {
   IdeaDevelopmentCard,
   developmentCardMinWidthPx,
-} from "../features/development/IdeaDevelopmentCard/IdeaDevelopmentCard";
-import { useDevelopmentLikeOnList } from "../features/development/useDevelopmentLikeOnList";
-import { useDevelopmentsByIdea } from "../features/development/useDevelopmentsByIdea";
-import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
-import { useURLParams } from "../lib/useURLParams";
-import { AppPagination } from "../ui/AppPagination";
-import { GridContainer } from "../ui/GridContainer";
-import { PageHeader } from "../ui/PageHeader";
+} from "@/client/features/development/IdeaDevelopmentCard/IdeaDevelopmentCard";
+import { useDevelopmentLikeOnList } from "@/client/features/development/useDevelopmentLikeOnList";
+import { useDevelopmentsByIdea } from "@/client/features/development/useDevelopmentsByIdea";
+import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
+import { useURLParams } from "@/client/lib/useURLParams";
+import { AppPagination } from "@/client/ui/AppPagination";
+import { GridContainer } from "@/client/ui/GridContainer";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { Idea } from "@/server/models/idea";
+import { paginatedPageSchema } from "@/share/schema/util";
+import { Stack, Text } from "@mantine/core";
+import { MdComputer } from "react-icons/md";
 
 type Props = { idea: Idea };
 

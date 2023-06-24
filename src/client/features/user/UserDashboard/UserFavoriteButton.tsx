@@ -1,7 +1,7 @@
+import { AppModal } from "@/client/ui/AppModal";
 import { Button, Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { BiUserX } from "react-icons/bi";
-import { AppModal } from "../../../ui/AppModal";
 
 type Props = {
   onFavorite: () => void;

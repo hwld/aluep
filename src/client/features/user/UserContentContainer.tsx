@@ -1,8 +1,8 @@
-import { Flex, Stack } from "@mantine/core";
+import { AppPagination } from "@/client/ui/AppPagination";
+import { EmptyContentItem } from "@/client/ui/EmptyContentItem";
+import { GridContainer } from "@/client/ui/GridContainer";
+import { Stack, Flex } from "@mantine/core";
 import { ReactNode } from "react";
-import { AppPagination } from "../../ui/AppPagination";
-import { EmptyContentItem } from "../../ui/EmptyContentItem";
-import { GridContainer } from "../../ui/GridContainer";
 
 type Props = {
   children: ReactNode;

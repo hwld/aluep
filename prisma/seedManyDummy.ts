@@ -12,9 +12,9 @@
  *   ・各お題の開発者一人に0~49のいいね
  */
 
+import { DevelopmentStatusIds } from "@/share/consts";
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
-import { DevelopmentStatusIds } from "../src/share/consts";
 
 const prisma = new PrismaClient();
 

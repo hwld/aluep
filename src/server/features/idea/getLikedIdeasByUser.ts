@@ -1,11 +1,11 @@
+import { paginate } from "@/server/lib/paginate";
+import { db } from "@/server/lib/prismadb";
+import { publicProcedure } from "@/server/lib/trpc";
+import { findManyIdeas } from "@/server/models/idea";
+import { pageLimit } from "@/share/consts";
+import { pagingSchema } from "@/share/schema/util";
+import { sortedInSameOrder } from "@/share/utils";
 import { z } from "zod";
-import { pageLimit } from "../../../share/consts";
-import { pagingSchema } from "../../../share/schema/util";
-import { sortedInSameOrder } from "../../../share/utils";
-import { paginate } from "../../lib/paginate";
-import { db } from "../../lib/prismadb";
-import { publicProcedure } from "../../lib/trpc";
-import { findManyIdeas } from "../../models/idea";
 
 export const getLikedIdeasByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))

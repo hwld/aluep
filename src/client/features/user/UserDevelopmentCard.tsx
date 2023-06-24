@@ -1,13 +1,13 @@
+import { DevelopedItemIconLink } from "@/client/features/development/DevelopedItemIconLink";
+import { DevelopmentStatusBadge } from "@/client/features/development/DevelopmentStatusBadge";
+import { formatDate } from "@/client/lib/utils";
+import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink";
+import { TextLink } from "@/client/ui/TextLink";
+import { Development } from "@/server/models/development";
+import { Routes } from "@/share/routes";
 import { Card, Flex, Text, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbHeart } from "react-icons/tb";
-import { Development } from "../../../server/models/development";
-import { Routes } from "../../../share/routes";
-import { formatDate } from "../../lib/utils";
-import { GitHubCodeIconLink } from "../../ui/GitHubCodeIconLink";
-import { TextLink } from "../../ui/TextLink";
-import { DevelopedItemIconLink } from "../development/DevelopedItemIconLink";
-import { DevelopmentStatusBadge } from "../development/DevelopmentStatusBadge";
 
 export const userDevelopmentCardMinWidthPx = 450;
 

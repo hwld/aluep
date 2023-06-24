@@ -1,6 +1,6 @@
+import { db } from "@/server/lib/prismadb";
+import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
-import { OmitStrict } from "../../types/OmitStrict";
-import { db } from "../lib/prismadb";
 
 export type IdeaComment = {
   /** nullのときは返信元が削除されている

@@ -1,8 +1,8 @@
 import {
-  completeNavigationProgress,
-  NavigationProgress,
   resetNavigationProgress,
   startNavigationProgress,
+  completeNavigationProgress,
+  NavigationProgress,
 } from "@mantine/nprogress";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

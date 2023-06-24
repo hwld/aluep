@@ -1,16 +1,19 @@
+import { IdeaForm } from "@/client/features/idea/IdeaForm";
+import { useAllTagsQuery } from "@/client/features/idea/useAllTagsQuery";
+import { trpc } from "@/client/lib/trpc";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "@/client/lib/utils";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { RouterInputs } from "@/server/lib/trpc";
+import { Idea } from "@/server/models/idea";
+import { Routes } from "@/share/routes";
+import { IdeaFormData } from "@/share/schema/idea";
 import { Box, Card } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { MdOutlineEdit } from "react-icons/md";
-import { RouterInputs } from "../../server/lib/trpc";
-import { Idea } from "../../server/models/idea";
-import { Routes } from "../../share/routes";
-import { IdeaFormData } from "../../share/schema/idea";
-import { IdeaForm } from "../features/idea/IdeaForm";
-import { useAllTagsQuery } from "../features/idea/useAllTagsQuery";
-import { trpc } from "../lib/trpc";
-import { showErrorNotification, showSuccessNotification } from "../lib/utils";
-import { PageHeader } from "../ui/PageHeader";
 
 type Props = { idea: Idea };
 export const IdeaEditPage: React.FC<Props> = ({ idea }) => {

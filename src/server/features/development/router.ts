@@ -1,16 +1,16 @@
-import { router } from "../../lib/trpc";
-import { deleteDevelopment } from "./deleteDevelopment";
-import { developIdea } from "./developIdea";
-import { getDevelopment } from "./getDevelopment";
-import { getDevelopmentStatuses } from "./getDevelopmentStatuses";
-import { getDevelopmentsByIdea } from "./getDevelopmentsByIdea";
-import { getDevelopmentsByUser } from "./getDevelopmentsByUser";
-import { getLikedDevelopmentsByUser } from "./getLikedDevelopmentsByUser";
-import { isDevelopedByUser } from "./isDevelopedByUser";
-import { likeDevelopment } from "./likeDevelopment";
-import { unlikeDevelopment } from "./unlikeDevelopment";
-import { updateAllowOtherUserMemos } from "./updateAllowOtherUserMemos";
-import { updateDevelopment } from "./updateDevelopment";
+import { deleteDevelopment } from "@/server/features/development/deleteDevelopment";
+import { developIdea } from "@/server/features/development/developIdea";
+import { getDevelopment } from "@/server/features/development/getDevelopment";
+import { getDevelopmentStatuses } from "@/server/features/development/getDevelopmentStatuses";
+import { getDevelopmentsByIdea } from "@/server/features/development/getDevelopmentsByIdea";
+import { getDevelopmentsByUser } from "@/server/features/development/getDevelopmentsByUser";
+import { getLikedDevelopmentsByUser } from "@/server/features/development/getLikedDevelopmentsByUser";
+import { isDevelopedByUser } from "@/server/features/development/isDevelopedByUser";
+import { likeDevelopment } from "@/server/features/development/likeDevelopment";
+import { unlikeDevelopment } from "@/server/features/development/unlikeDevelopment";
+import { updateAllowOtherUserMemos } from "@/server/features/development/updateAllowOtherUserMemos";
+import { updateDevelopment } from "@/server/features/development/updateDevelopment";
+import { router } from "@/server/lib/trpc";
 
 export const developmentRoute = router({
   /** お題の開発情報を作成する(開発する) */

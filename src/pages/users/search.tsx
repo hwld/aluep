@@ -1,9 +1,9 @@
+import { userKeys } from "@/client/features/user/queryKeys";
+import { UserSearchPage } from "@/client/pageComponents/UserSearchPage";
+import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { urlParamToString } from "@/server/lib/urlParam";
+import { appRouter } from "@/server/router";
 import { NextPage } from "next";
-import { userKeys } from "../../client/features/user/queryKeys";
-import { UserSearchPage } from "../../client/pageComponents/UserSearchPage";
-import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
-import { urlParamToString } from "../../server/lib/urlParam";
-import { appRouter } from "../../server/router";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, queryClient, callerContext }) => {

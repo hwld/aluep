@@ -1,11 +1,11 @@
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { TextLink } from "@/client/ui/TextLink";
+import { Routes } from "@/share/routes";
 import { Flex, Text, useMantineTheme } from "@mantine/core";
+import { User } from "next-auth";
 import { useMemo } from "react";
 import { BiMedal } from "react-icons/bi";
 import { TbHeart } from "react-icons/tb";
-import { User } from "../../../server/models/user";
-import { Routes } from "../../../share/routes";
-import { TextLink } from "../../ui/TextLink";
-import { UserIconLink } from "./UserIconLink";
 
 type Props = { ranking: number; user: User; likeCount: number };
 export const UserLikeRankingItem: React.FC<Props> = ({

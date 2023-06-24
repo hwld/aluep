@@ -1,8 +1,8 @@
+import { stopPropagation } from "@/client/lib/utils";
+import { TextLink } from "@/client/ui/TextLink";
+import { Routes } from "@/share/routes";
 import { ActionIcon, Flex, Text, useMantineTheme } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
-import { Routes } from "../../../share/routes";
-import { stopPropagation } from "../../lib/utils";
-import { TextLink } from "../../ui/TextLink";
 
 type Props = {
   ideaId: string;

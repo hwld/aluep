@@ -1,4 +1,4 @@
-import { TestHelpers } from "../../tests/helper";
+import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題の削除API", () => {
   it("他人が投稿したお題を削除することはできない", async () => {

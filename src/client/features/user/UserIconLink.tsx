@@ -1,8 +1,8 @@
+import { UserIcon, UserIconProps } from "@/client/features/user/UserIcon";
+import { stopPropagation } from "@/client/lib/utils";
+import { Routes } from "@/share/routes";
 import Link from "next/link";
 import React from "react";
-import { Routes } from "../../../share/routes";
-import { stopPropagation } from "../../lib/utils";
-import { UserIcon, UserIconProps } from "./UserIcon";
 
 type Props = {
   iconSrc?: string | null;

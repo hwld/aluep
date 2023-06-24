@@ -1,3 +1,7 @@
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { TextLink } from "@/client/ui/TextLink";
+import { Idea } from "@/server/models/idea";
+import { Routes } from "@/share/routes";
 import {
   Box,
   Card,
@@ -8,10 +12,6 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { TbFileText } from "react-icons/tb";
-import { Idea } from "../../../server/models/idea";
-import { Routes } from "../../../share/routes";
-import { TextLink } from "../../ui/TextLink";
-import { UserIconLink } from "../user/UserIconLink";
 
 /**　アプリ開発のお題の概要カード */
 type Props = { idea: Idea };

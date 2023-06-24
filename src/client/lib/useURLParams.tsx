@@ -1,7 +1,7 @@
+import { assertNever } from "@/share/utils";
 import { useRouter } from "next/router";
-import { useCallback, useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { ZodTypeDef, z } from "zod";
-import { assertNever } from "../../share/utils";
 
 /**
  * URLSearchParamsを操作するhook

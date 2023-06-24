@@ -1,7 +1,7 @@
+import { db } from "@/server/lib/prismadb";
+import { GitHubErrors } from "@/share/errors";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { GitHubErrors } from "../../../share/errors";
-import { db } from "../../lib/prismadb";
 
 type Args = {
   repositoryName: string;

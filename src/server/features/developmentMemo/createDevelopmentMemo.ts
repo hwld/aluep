@@ -1,7 +1,7 @@
+import { db } from "@/server/lib/prismadb";
+import { requireLoggedInProcedure } from "@/server/lib/trpc";
+import { createDevelopmentMemoInputSchema } from "@/share/schema/developmentMemo";
 import { TRPCError } from "@trpc/server";
-import { createDevelopmentMemoInputSchema } from "../../../share/schema/developmentMemo";
-import { db } from "../../lib/prismadb";
-import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const createDevelopmentMemo = requireLoggedInProcedure
   .input(createDevelopmentMemoInputSchema)

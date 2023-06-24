@@ -1,10 +1,10 @@
+import { developmentMemoKeys } from "@/client/features/developmentMemo/queryKeys";
+import { trpc } from "@/client/lib/trpc";
+import { showErrorNotification } from "@/client/lib/utils";
+import { RouterInputs } from "@/server/lib/trpc";
+import { DevelopmentMemo } from "@/server/models/developmentMemo";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { RouterInputs } from "../../../server/lib/trpc";
-import { DevelopmentMemo } from "../../../server/models/developmentMemo";
-import { trpc } from "../../lib/trpc";
-import { showErrorNotification } from "../../lib/utils";
-import { developmentMemoKeys } from "./queryKeys";
 
 type DevelopmentMemoThreads = {
   rootMemo: DevelopmentMemo;

@@ -1,11 +1,11 @@
+import { trpc } from "@/client/lib/trpc";
+import { showErrorNotification } from "@/client/lib/utils";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { Routes } from "@/share/routes";
 import { Box, Button, List, Mark, Text } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { TbTrash } from "react-icons/tb";
-import { Routes } from "../../share/routes";
-import { trpc } from "../lib/trpc";
-import { showErrorNotification } from "../lib/utils";
-import { PageHeader } from "../ui/PageHeader";
 
 export const UserDeletepage: React.FC = () => {
   const router = useRouter();

@@ -1,3 +1,10 @@
+import { UserIcon } from "@/client/features/user/UserIcon";
+import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
+import { PlainTextarea } from "@/client/ui/PlainTextarea";
+import {
+  DevelopmentMemoFormData,
+  developmentMemoFormSchema,
+} from "@/share/schema/developmentMemo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -7,18 +14,11 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
+import { User } from "next-auth";
 import { forwardRef, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { TbAlertCircle } from "react-icons/tb";
-import { User } from "../../../server/models/user";
-import {
-  DevelopmentMemoFormData,
-  developmentMemoFormSchema,
-} from "../../../share/schema/developmentMemo";
-import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
-import { PlainTextarea } from "../../ui/PlainTextarea";
-import { UserIcon } from "../user/UserIcon";
 
 type Props = {
   developmentId: string;

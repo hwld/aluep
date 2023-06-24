@@ -1,3 +1,20 @@
+import { DevelopmentDetailCard } from "@/client/features/development/DevelopmentDetailCard";
+import { developmentKeys } from "@/client/features/development/queryKeys";
+import { useDevelopmentLikeOnDetail } from "@/client/features/development/useDevelopmentLikeOnDetail";
+import { DevelopmentMemoFormCard } from "@/client/features/developmentMemo/DevelopmentMemoFormCard";
+import { DevelopmentMemoThreadCard } from "@/client/features/developmentMemo/DevelopmentMemoThreadCard";
+import { useDevelopmentMemos } from "@/client/features/developmentMemo/useDevelopmentMemos";
+import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { trpc } from "@/client/lib/trpc";
+import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
+import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
+import { showErrorNotification } from "@/client/lib/utils";
+import { EmptyContentItem } from "@/client/ui/EmptyContentItem";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { Development } from "@/server/models/development";
+import { Idea } from "@/server/models/idea";
+import { DevelopmentMemoFormData } from "@/share/schema/developmentMemo";
 import {
   Card,
   Center,
@@ -11,23 +28,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useRef } from "react";
 import { MdComputer } from "react-icons/md";
 import { TbNote } from "react-icons/tb";
-import { Development } from "../../server/models/development";
-import { Idea } from "../../server/models/idea";
-import { DevelopmentMemoFormData } from "../../share/schema/developmentMemo";
-import { DevelopmentDetailCard } from "../features/development/DevelopmentDetailCard";
-import { developmentKeys } from "../features/development/queryKeys";
-import { useDevelopmentLikeOnDetail } from "../features/development/useDevelopmentLikeOnDetail";
-import { DevelopmentMemoFormCard } from "../features/developmentMemo/DevelopmentMemoFormCard";
-import { DevelopmentMemoThreadCard } from "../features/developmentMemo/DevelopmentMemoThreadCard";
-import { useDevelopmentMemos } from "../features/developmentMemo/useDevelopmentMemos";
-import { useRequireLoginModal } from "../features/session/RequireLoginModalProvider";
-import { useSessionQuery } from "../features/session/useSessionQuery";
-import { trpc } from "../lib/trpc";
-import { useAutoScrollOnIncrease } from "../lib/useAutoScrollOnIncrease";
-import { useCyclicRandom } from "../lib/useCyclicRandom";
-import { showErrorNotification } from "../lib/utils";
-import { EmptyContentItem } from "../ui/EmptyContentItem";
-import { PageHeader } from "../ui/PageHeader";
 
 type Props = { development: Development; idea: Idea };
 

@@ -1,18 +1,18 @@
-import { Card, Stack, Text } from "@mantine/core";
-import { useRouter } from "next/router";
-import { MdComputer } from "react-icons/md";
-import { Idea } from "../../server/models/idea";
-import { DevelopmentStatusIds } from "../../share/consts";
-import { Routes } from "../../share/routes";
+import { useDevelop } from "@/client/features/development/useDevelop";
+import { useDevelopmentStatusesQuery } from "@/client/features/development/useDevelopmentStatusesQuery";
+import { DevelopmentForm } from "@/client/features/idea/DevelopmentForm";
+import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { Idea } from "@/server/models/idea";
+import { DevelopmentStatusIds } from "@/share/consts";
+import { Routes } from "@/share/routes";
 import {
   CreateRepositoryData,
   DevelopmentFormData,
-} from "../../share/schema/development";
-import { useDevelop } from "../features/development/useDevelop";
-import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
-import { DevelopmentForm } from "../features/idea/DevelopmentForm";
-import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
-import { PageHeader } from "../ui/PageHeader";
+} from "@/share/schema/development";
+import { Card, Stack, Text } from "@mantine/core";
+import { useRouter } from "next/router";
+import { MdComputer } from "react-icons/md";
 
 type Props = {
   idea: Idea;

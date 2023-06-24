@@ -1,8 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { RouterInputs } from "../../../server/lib/trpc";
-import { trpc } from "../../lib/trpc";
-import { showErrorNotification } from "../../lib/utils";
-import { ideaCommentKeys } from "./queryKeys";
+import { ideaCommentKeys } from "@/client/features/ideaComment/queryKeys";
+import { trpc } from "@/client/lib/trpc";
+import { showErrorNotification } from "@/client/lib/utils";
+import { RouterInputs } from "@/server/lib/trpc";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 type UseIdeaCommentReplyArgs = {
   ideaId: string;

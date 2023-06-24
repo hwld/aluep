@@ -1,14 +1,14 @@
+import { developmentKeys } from "@/client/features/development/queryKeys";
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
+import { DevelopmentsPage as DevelopmentsPageComponent } from "@/client/pageComponents/DevelopmentsPage";
+import NotFoundPage from "@/pages/404";
+import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { appRouter } from "@/server/router";
+import { paginatedPageSchema } from "@/share/schema/util";
+import { assertString } from "@/share/utils";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { developmentKeys } from "../../../../client/features/development/queryKeys";
-import { ideaKeys } from "../../../../client/features/idea/queryKeys";
-import { useIdeaQuery } from "../../../../client/features/idea/useIdeaQuery";
-import { DevelopmentsPage as DevelopmentsPageComponent } from "../../../../client/pageComponents/DevelopmentsPage";
-import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../../server/router";
-import { paginatedPageSchema } from "../../../../share/schema/util";
-import { assertString } from "../../../../share/utils";
-import NotFoundPage from "../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, queryClient, callerContext }) => {

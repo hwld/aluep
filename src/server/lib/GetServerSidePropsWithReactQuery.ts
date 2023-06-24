@@ -1,14 +1,14 @@
-import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { sessionKeys } from "@/client/features/session/queryKeys";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { TRPCContext } from "@/server/lib/trpc";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from "next";
-import { getServerSession, Session } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import superjson from "superjson";
-import { sessionKeys } from "../../client/features/session/queryKeys";
-import { authOptions } from "../../pages/api/auth/[...nextauth]";
-import { TRPCContext } from "./trpc";
 
 export type PageProps = { stringifiedDehydratedState?: string };
 

@@ -1,8 +1,7 @@
+import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
 import { Button, Flex, Stack } from "@mantine/core";
-import { useId } from "@mantine/hooks";
-import { FormEventHandler, PropsWithChildren } from "react";
+import { FormEventHandler, PropsWithChildren, useId } from "react";
 import { IconType } from "react-icons/lib";
-import { useDebouncedSubmitting } from "../lib/useDebouncedSubmitting";
 
 type Props = {
   onSubmit: FormEventHandler<HTMLFormElement>;

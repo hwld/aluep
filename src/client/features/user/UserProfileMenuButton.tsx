@@ -1,25 +1,25 @@
-import { ActionIcon, Divider, Menu } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
-import { BsThreeDots } from "react-icons/bs";
-import { MdFlag } from "react-icons/md";
-import { RiEdit2Line } from "react-icons/ri";
-import { RouterInputs } from "../../../server/lib/trpc";
-import { User } from "../../../server/models/user";
-import { Routes } from "../../../share/routes";
-import { ReportBaseForm } from "../../../share/schema/report";
-import { trpc } from "../../lib/trpc";
+import { ReportForm } from "@/client/features/report/ReportForm";
+import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
   stopPropagation,
-} from "../../lib/utils";
-import { AppMenu } from "../../ui/AppMenu/AppMenu";
-import { MenuDropdown } from "../../ui/AppMenu/MenuDropdown";
-import { MenuItem } from "../../ui/AppMenu/MenuItem";
-import { MenuLinkItem } from "../../ui/AppMenu/MenuLinkItem";
-import { AppModal } from "../../ui/AppModal";
-import { ReportForm } from "../report/ReportForm";
+} from "@/client/lib/utils";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
+import { MenuDropdown } from "@/client/ui/AppMenu/MenuDropdown";
+import { MenuItem } from "@/client/ui/AppMenu/MenuItem";
+import { MenuLinkItem } from "@/client/ui/AppMenu/MenuLinkItem";
+import { AppModal } from "@/client/ui/AppModal";
+import { RouterInputs } from "@/server/lib/trpc";
+import { Routes } from "@/share/routes";
+import { ReportBaseForm } from "@/share/schema/report";
+import { ActionIcon, Divider, Menu } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { useMutation } from "@tanstack/react-query";
+import { User } from "next-auth";
+import { BsThreeDots } from "react-icons/bs";
+import { MdFlag } from "react-icons/md";
+import { RiEdit2Line } from "react-icons/ri";
 
 type Props = {
   user: User;

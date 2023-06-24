@@ -1,7 +1,7 @@
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { trpc } from "@/client/lib/trpc";
+import { ideaOrderSchema, ideaPeriodSchema } from "@/share/schema/idea";
 import { useQuery } from "@tanstack/react-query";
-import { ideaOrderSchema, ideaPeriodSchema } from "../../../share/schema/idea";
-import { trpc } from "../../lib/trpc";
-import { ideaKeys } from "./queryKeys";
 
 export type UseSearchedIdeasQueryArgs = {
   keyword: string;

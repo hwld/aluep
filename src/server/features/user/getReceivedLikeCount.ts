@@ -1,7 +1,7 @@
+import { ReceivedLikeCount } from "@/client/features/user/useReceivedLikeCountQuery";
+import { db } from "@/server/lib/prismadb";
+import { publicProcedure } from "@/server/lib/trpc";
 import { z } from "zod";
-import { ReceivedLikeCount } from "../../../client/features/user/useReceivedLikeCountQuery";
-import { db } from "../../lib/prismadb";
-import { publicProcedure } from "../../lib/trpc";
 
 export const getReceivedLikeCount = publicProcedure
   .input(z.object({ userId: z.string() }))

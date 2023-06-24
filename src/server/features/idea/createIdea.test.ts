@@ -1,6 +1,6 @@
+import { db } from "@/server/lib/prismadb";
+import { TestHelpers } from "@/server/tests/helper";
 import { faker } from "@faker-js/faker";
-import { db } from "../../lib/prismadb";
-import { TestHelpers } from "../../tests/helper";
 
 describe("お題の作成API", () => {
   it("ログインしていないとお題を作成することはできない", async () => {

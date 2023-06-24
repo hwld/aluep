@@ -1,5 +1,5 @@
-import { Button, Slider, Stack } from "@mantine/core";
-import { useEffect, useRef } from "react";
+import { Stack, Slider, Button } from "@mantine/core";
+import { useRef, useEffect } from "react";
 
 export const imageCropperSize = 300;
 export const imageCropperStep = 0.01;

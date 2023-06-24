@@ -1,3 +1,11 @@
+import { DevelopmentLikeButton } from "@/client/features/development/DevelopmentLikeButton";
+import { DevelopmentMenuButton } from "@/client/features/development/DevelopmentMenuButton";
+import { DevelopmentStatusBadge } from "@/client/features/development/DevelopmentStatusBadge";
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { formatDate } from "@/client/lib/utils";
+import { TextLink } from "@/client/ui/TextLink";
+import { Development } from "@/server/models/development";
+import { Routes } from "@/share/routes";
 import {
   Box,
   Button,
@@ -13,14 +21,6 @@ import {
 import { BsGithub } from "react-icons/bs";
 import { MdAccessTime, MdUpdate } from "react-icons/md";
 import { TbFileText, TbLink } from "react-icons/tb";
-import { Development } from "../../../server/models/development";
-import { Routes } from "../../../share/routes";
-import { formatDate } from "../../lib/utils";
-import { TextLink } from "../../ui/TextLink";
-import { UserIconLink } from "../user/UserIconLink";
-import { DevelopmentLikeButton } from "./DevelopmentLikeButton";
-import { DevelopmentMenuButton } from "./DevelopmentMenuButton";
-import { DevelopmentStatusBadge } from "./DevelopmentStatusBadge";
 
 type Props = {
   development: Development;

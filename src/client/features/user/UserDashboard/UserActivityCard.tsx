@@ -1,3 +1,4 @@
+import { UserActivity } from "@/client/features/user/useUserActivityQuery";
 import {
   Card,
   Divider,
@@ -8,7 +9,6 @@ import {
 } from "@mantine/core";
 import { MdComputer } from "react-icons/md";
 import { TbFileText, TbHeart } from "react-icons/tb";
-import { UserActivity } from "../useUserActivityQuery";
 
 type Props = { userActivity: UserActivity; width?: number };
 export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {

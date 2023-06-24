@@ -1,6 +1,6 @@
+import { createMenuItemStyleProps } from "@/client/ui/AppMenu/createMenuItemStyleProps";
 import { Menu, MenuItemProps } from "@mantine/core";
 import Link, { LinkProps } from "next/link";
-import { createMenuItemStyleProps } from "./createMenuItemStyleProps";
 
 type Props = { red?: boolean } & LinkProps & MenuItemProps;
 export const MenuLinkItem: React.FC<Props> = ({ red, ...props }) => {

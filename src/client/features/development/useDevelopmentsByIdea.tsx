@@ -1,7 +1,7 @@
+import { developmentKeys } from "@/client/features/development/queryKeys";
+import { trpc } from "@/client/lib/trpc";
+import { Development } from "@/server/models/development";
 import { useQuery } from "@tanstack/react-query";
-import { Development } from "../../../server/models/development";
-import { trpc } from "../../lib/trpc";
-import { developmentKeys } from "./queryKeys";
 
 export type DevelopmentsData = {
   list: Development[];

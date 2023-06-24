@@ -1,6 +1,6 @@
+import { DevelopmentStatusIds } from "@/share/consts";
 import { Badge, MantineSize, MantineTheme } from "@mantine/core";
-import { DevelopmentStatus } from "../../../server/models/developmentStatus";
-import { DevelopmentStatusIds } from "../../../share/consts";
+import { DevelopmentStatus } from "@prisma/client";
 
 type Props = { status: DevelopmentStatus; size?: MantineSize };
 

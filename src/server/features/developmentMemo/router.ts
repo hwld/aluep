@@ -1,7 +1,7 @@
-import { router } from "../../lib/trpc";
-import { createDevelopmentMemo } from "./createDevelopmentMemo";
-import { deleteDevelopmentMemo } from "./deleteDevelopmentMemo";
-import { getAllDevelopmentMemos } from "./getAllDevelopmentMemos";
+import { createDevelopmentMemo } from "@/server/features/developmentMemo/createDevelopmentMemo";
+import { deleteDevelopmentMemo } from "@/server/features/developmentMemo/deleteDevelopmentMemo";
+import { getAllDevelopmentMemos } from "@/server/features/developmentMemo/getAllDevelopmentMemos";
+import { router } from "@/server/lib/trpc";
 
 export const developmentMemoRoute = router({
   create: createDevelopmentMemo,

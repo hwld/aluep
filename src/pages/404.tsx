@@ -1,10 +1,10 @@
+import { Routes } from "@/share/routes";
 import { Box, Button, Flex, Text, Title, useMantineTheme } from "@mantine/core";
 import { NextPage } from "next";
 import Link from "next/link";
 import { MdOutlineErrorOutline } from "react-icons/md";
-import { Routes } from "../share/routes";
 
-const NotFoundPage: NextPage = () => {
+export const NotFoundPage: NextPage = () => {
   const theme = useMantineTheme();
 
   return (

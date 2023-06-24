@@ -1,3 +1,19 @@
+import { ReportForm } from "@/client/features/report/ReportForm";
+import { trpc } from "@/client/lib/trpc";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "@/client/lib/utils";
+import { AppConfirmModal } from "@/client/ui/AppConfirmModal";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
+import { MenuDropdown } from "@/client/ui/AppMenu/MenuDropdown";
+import { MenuItem } from "@/client/ui/AppMenu/MenuItem";
+import { MenuLinkItem } from "@/client/ui/AppMenu/MenuLinkItem";
+import { AppModal } from "@/client/ui/AppModal";
+import { RouterInputs } from "@/server/lib/trpc";
+import { Idea } from "@/server/models/idea";
+import { Routes } from "@/share/routes";
+import { ReportBaseForm } from "@/share/schema/report";
 import { ActionIcon, Divider, Menu, useMantineTheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
@@ -7,22 +23,6 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
-import { RouterInputs } from "../../../server/lib/trpc";
-import { Idea } from "../../../server/models/idea";
-import { Routes } from "../../../share/routes";
-import { ReportBaseForm } from "../../../share/schema/report";
-import { trpc } from "../../lib/trpc";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "../../lib/utils";
-import { AppConfirmModal } from "../../ui/AppConfirmModal";
-import { AppMenu } from "../../ui/AppMenu/AppMenu";
-import { MenuDropdown } from "../../ui/AppMenu/MenuDropdown";
-import { MenuItem } from "../../ui/AppMenu/MenuItem";
-import { MenuLinkItem } from "../../ui/AppMenu/MenuLinkItem";
-import { AppModal } from "../../ui/AppModal";
-import { ReportForm } from "../report/ReportForm";
 
 type Props = { idea: Idea; isIdeaOwner: boolean };
 export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {

@@ -1,3 +1,9 @@
+import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
+import { PlainTextarea } from "@/client/ui/PlainTextarea";
+import {
+  DevelopmentMemoFormData,
+  developmentMemoFormSchema,
+} from "@/share/schema/developmentMemo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
@@ -11,12 +17,6 @@ import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { TbAlertCircle } from "react-icons/tb";
-import {
-  DevelopmentMemoFormData,
-  developmentMemoFormSchema,
-} from "../../../share/schema/developmentMemo";
-import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
-import { PlainTextarea } from "../../ui/PlainTextarea";
 
 type Props = {
   onSubmit: (data: DevelopmentMemoFormData) => void;

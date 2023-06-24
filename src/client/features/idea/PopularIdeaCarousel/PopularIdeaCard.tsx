@@ -1,3 +1,8 @@
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { useSamePositionLeftClick } from "@/client/lib/useSamePositionLeftClick";
+import { TextLink } from "@/client/ui/TextLink";
+import { Idea } from "@/server/models/idea";
+import { Routes } from "@/share/routes";
 import {
   Box,
   Card,
@@ -13,11 +18,6 @@ import { MouseEventHandler } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
-import { Idea } from "../../../../server/models/idea";
-import { Routes } from "../../../../share/routes";
-import { useSamePositionLeftClick } from "../../../lib/useSamePositionLeftClick";
-import { TextLink } from "../../../ui/TextLink";
-import { UserIconLink } from "../../user/UserIconLink";
 
 export const popularIdeaCardWidthPx = 400;
 export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {

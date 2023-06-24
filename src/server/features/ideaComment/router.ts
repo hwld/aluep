@@ -1,7 +1,7 @@
-import { router } from "../../lib/trpc";
-import { createIdeaComment } from "./createIdeaComment";
-import { deleteIdeaComment } from "./deleteComment";
-import { getAllIdeaComments } from "./getAllIdeaComments";
+import { createIdeaComment } from "@/server/features/ideaComment/createIdeaComment";
+import { deleteIdeaComment } from "@/server/features/ideaComment/deleteComment";
+import { getAllIdeaComments } from "@/server/features/ideaComment/getAllIdeaComments";
+import { router } from "@/server/lib/trpc";
 
 export const ideaCommentRoute = router({
   /** お題にコメントする */

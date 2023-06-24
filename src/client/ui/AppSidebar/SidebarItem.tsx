@@ -1,8 +1,8 @@
-import { Box, Button } from "@mantine/core";
+import { AppTooltip } from "@/client/ui/AppTooltip";
+import { WrapperLink } from "@/client/ui/WrapperLink";
+import { Button, Box } from "@mantine/core";
 import React, { MouseEventHandler } from "react";
-import { IconType } from "react-icons";
-import { AppTooltip } from "../AppTooltip";
-import { WrapperLink } from "../WrapperLink";
+import { IconType } from "react-icons/lib";
 
 type Props = {
   icon: IconType;

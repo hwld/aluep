@@ -1,3 +1,9 @@
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
+import { MenuDropdown } from "@/client/ui/AppMenu/MenuDropdown";
+import { MenuItem } from "@/client/ui/AppMenu/MenuItem";
+import { MenuLinkItem } from "@/client/ui/AppMenu/MenuLinkItem";
+import { Routes } from "@/share/routes";
+import { OmitStrict } from "@/types/OmitStrict";
 import { BadgeProps, Menu } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
@@ -6,12 +12,6 @@ import { BiBookmarkHeart } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { RiAccountCircleLine } from "react-icons/ri";
-import { Routes } from "../../../share/routes";
-import { OmitStrict } from "../../../types/OmitStrict";
-import { AppMenu } from "../AppMenu/AppMenu";
-import { MenuDropdown } from "../AppMenu/MenuDropdown";
-import { MenuItem } from "../AppMenu/MenuItem";
-import { MenuLinkItem } from "../AppMenu/MenuLinkItem";
 
 type Props = Omit<
   { user: Session["user"]; trigger: ReactNode } & OmitStrict<BadgeProps, "sx">,

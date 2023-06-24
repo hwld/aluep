@@ -1,5 +1,5 @@
-import { Menu, MenuItemProps } from "@mantine/core";
-import { createMenuItemStyleProps } from "./createMenuItemStyleProps";
+import { createMenuItemStyleProps } from "@/client/ui/AppMenu/createMenuItemStyleProps";
+import { MenuItemProps, Menu } from "@mantine/core";
 
 type Props = { red?: boolean } & MenuItemProps &
   React.ComponentPropsWithoutRef<"button">;

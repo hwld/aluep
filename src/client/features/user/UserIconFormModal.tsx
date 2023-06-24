@@ -1,13 +1,13 @@
-import { Text, UnstyledButton } from "@mantine/core";
-import { useRef, useState } from "react";
-import { AppModal } from "../../ui/AppModal";
+import { UserIcon } from "@/client/features/user/UserIcon";
+import { AppModal } from "@/client/ui/AppModal";
 import {
   ImageCropper,
-  ImageInfo,
   imageCropperSize,
   imageCropperStep,
-} from "../../ui/ImageCropper";
-import { UserIcon } from "./UserIcon";
+  ImageInfo,
+} from "@/client/ui/ImageCropper";
+import { Text, UnstyledButton } from "@mantine/core";
+import { useRef, useState } from "react";
 
 type Props = {
   userIconUrl: string | null | undefined;

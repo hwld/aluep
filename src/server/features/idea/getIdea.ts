@@ -1,6 +1,6 @@
+import { publicProcedure } from "@/server/lib/trpc";
+import { Idea, findIdea } from "@/server/models/idea";
 import { z } from "zod";
-import { publicProcedure } from "../../lib/trpc";
-import { findIdea, Idea } from "../../models/idea";
 
 export const getIdea = publicProcedure
   .input(z.object({ ideaId: z.string() }))

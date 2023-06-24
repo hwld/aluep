@@ -1,17 +1,17 @@
+import { UserIcon } from "@/client/features/user/UserIcon";
+import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
+import { PlainTextarea } from "@/client/ui/PlainTextarea";
+import {
+  IdeaCommentFormData,
+  ideaCommentFormSchema,
+} from "@/share/schema/ideaComment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Divider, Flex, Text, useMantineTheme } from "@mantine/core";
+import { User } from "next-auth";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { TbAlertCircle } from "react-icons/tb";
-import { User } from "../../../server/models/user";
-import {
-  IdeaCommentFormData,
-  ideaCommentFormSchema,
-} from "../../../share/schema/ideaComment";
-import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
-import { PlainTextarea } from "../../ui/PlainTextarea";
-import { UserIcon } from "../user/UserIcon";
 
 type Props = {
   ideaId: string;

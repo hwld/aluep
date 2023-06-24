@@ -1,7 +1,8 @@
+import { stopPropagation } from "@/client/lib/utils";
 import { Box } from "@mantine/core";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
-import { stopPropagation } from "../lib/utils";
+
 type Props = {
   href: string;
   width?: string;

@@ -1,9 +1,9 @@
+import { createOrExtractGithubRepositoryUrl } from "@/server/features/development/utils";
+import { db } from "@/server/lib/prismadb";
+import { requireLoggedInProcedure } from "@/server/lib/trpc";
+import { DevelopmentStatusIds } from "@/share/consts";
+import { updateDevelopmentInputSchema } from "@/share/schema/development";
 import { TRPCError } from "@trpc/server";
-import { DevelopmentStatusIds } from "../../../share/consts";
-import { updateDevelopmentInputSchema } from "../../../share/schema/development";
-import { db } from "../../lib/prismadb";
-import { requireLoggedInProcedure } from "../../lib/trpc";
-import { createOrExtractGithubRepositoryUrl } from "./utils";
 
 export const updateDevelopment = requireLoggedInProcedure
   .input(updateDevelopmentInputSchema)

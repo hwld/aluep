@@ -1,4 +1,4 @@
-import { ideaKeys } from "../idea/queryKeys";
+import { ideaKeys } from "@/client/features/idea/queryKeys";
 
 export const ideaCommentKeys = {
   listByIdea: (ideaId: string) =>

@@ -1,4 +1,4 @@
-import { db } from "../lib/prismadb";
+import { db } from "@/server/lib/prismadb";
 
 export type IdeaTag = {
   id: string;

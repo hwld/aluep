@@ -1,4 +1,4 @@
-import { developmentKeys } from "../development/queryKeys";
+import { developmentKeys } from "@/client/features/development/queryKeys";
 
 export const developmentMemoKeys = {
   listByDevelopment: (developmentId: string) =>

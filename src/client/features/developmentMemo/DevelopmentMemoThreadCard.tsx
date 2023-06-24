@@ -1,3 +1,13 @@
+import { ChildDevelopmentMemoSection } from "@/client/features/developmentMemo/DevelopmentMemoChildrenSection";
+import { DevelopmentMemoMenuButton } from "@/client/features/developmentMemo/DevelopmentMemoMenuButton";
+import { useDevelopmentMemos } from "@/client/features/developmentMemo/useDevelopmentMemos";
+import { DevelopmentMemoReplyFormBox } from "@/client/features/ideaComment/DevelopMemoReplyFormBox";
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
+import { formatDate } from "@/client/lib/utils";
+import { CardActionIcon } from "@/client/ui/CardActionIcon";
+import { DevelopmentMemo } from "@/server/models/developmentMemo";
+import { DevelopmentMemoFormData } from "@/share/schema/developmentMemo";
 import {
   Card,
   Divider,
@@ -8,16 +18,6 @@ import {
 } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { FaRegComment } from "react-icons/fa";
-import { DevelopmentMemo } from "../../../server/models/developmentMemo";
-import { DevelopmentMemoFormData } from "../../../share/schema/developmentMemo";
-import { useHashRemoverOnClickOutside } from "../../lib/useHashRemoverOnClickOutside";
-import { formatDate } from "../../lib/utils";
-import { CardActionIcon } from "../../ui/CardActionIcon";
-import { DevelopmentMemoReplyFormBox } from "../ideaComment/DevelopMemoReplyFormBox";
-import { UserIconLink } from "../user/UserIconLink";
-import { ChildDevelopmentMemoSection } from "./DevelopmentMemoChildrenSection";
-import { DevelopmentMemoMenuButton } from "./DevelopmentMemoMenuButton";
-import { useDevelopmentMemos } from "./useDevelopmentMemos";
 
 type Props = {
   ideaId: string;

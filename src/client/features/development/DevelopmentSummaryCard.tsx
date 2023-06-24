@@ -1,9 +1,9 @@
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { TextLink } from "@/client/ui/TextLink";
+import { Development } from "@/server/models/development";
+import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { TbFileText } from "react-icons/tb";
-import { Development } from "../../../server/models/development";
-import { Routes } from "../../../share/routes";
-import { TextLink } from "../../ui/TextLink";
-import { UserIconLink } from "../user/UserIconLink";
 
 type Props = { development: Development };
 export const DevelopmentSummaryCard: React.FC<Props> = ({ development }) => {

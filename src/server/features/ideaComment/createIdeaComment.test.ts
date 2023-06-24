@@ -1,5 +1,5 @@
+import { TestHelpers } from "@/server/tests/helper";
 import { faker } from "@faker-js/faker";
-import { TestHelpers } from "../../tests/helper";
 
 describe("お題のコメントAPI", () => {
   it("お題にコメントできる", async () => {

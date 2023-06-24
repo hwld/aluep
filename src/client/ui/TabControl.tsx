@@ -1,4 +1,4 @@
-import { Box, Center, SegmentedControl } from "@mantine/core";
+import { Center, Box, SegmentedControl } from "@mantine/core";
 import { useMemo } from "react";
 import { IconType } from "react-icons/lib";
 

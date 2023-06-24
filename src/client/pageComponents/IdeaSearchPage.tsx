@@ -1,27 +1,27 @@
-import { Box, Card, Flex, Select, Title } from "@mantine/core";
-import React from "react";
-import { TbSearch } from "react-icons/tb";
+import { EmptyIdeaSearchResult } from "@/client/features/idea/EmptyIdeaSearchResult";
+import {
+  IdeaCard,
+  ideaCardMinWidthPx,
+} from "@/client/features/idea/IdeaCard/IdeaCard";
+import {
+  IdeaSearchArgs,
+  IdeaSearchForm,
+} from "@/client/features/idea/IdeaSearchForm";
+import { useAllTagsQuery } from "@/client/features/idea/useAllTagsQuery";
+import { useSearchedIdeasQuery } from "@/client/features/idea/useSearchedIdeasQuery";
+import { ideaOrderItems, ideaPeriodItems } from "@/client/lib/consts";
+import { useURLParams } from "@/client/lib/useURLParams";
+import { AppPagination } from "@/client/ui/AppPagination";
+import { GridContainer } from "@/client/ui/GridContainer";
+import { PageHeader } from "@/client/ui/PageHeader";
 import {
   ideaOrderSchema,
   ideaPeriodSchema,
   searchIdeaPageSchema,
-} from "../../share/schema/idea";
-import { EmptyIdeaSearchResult } from "../features/idea/EmptyIdeaSearchResult";
-import {
-  IdeaCard,
-  ideaCardMinWidthPx,
-} from "../features/idea/IdeaCard/IdeaCard";
-import {
-  IdeaSearchArgs,
-  IdeaSearchForm,
-} from "../features/idea/IdeaSearchForm";
-import { useAllTagsQuery } from "../features/idea/useAllTagsQuery";
-import { useSearchedIdeasQuery } from "../features/idea/useSearchedIdeasQuery";
-import { ideaOrderItems, ideaPeriodItems } from "../lib/consts";
-import { useURLParams } from "../lib/useURLParams";
-import { AppPagination } from "../ui/AppPagination";
-import { GridContainer } from "../ui/GridContainer";
-import { PageHeader } from "../ui/PageHeader";
+} from "@/share/schema/idea";
+import { Box, Card, Flex, Select, Title } from "@mantine/core";
+import React from "react";
+import { TbSearch } from "react-icons/tb";
 
 export const IdeaSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();

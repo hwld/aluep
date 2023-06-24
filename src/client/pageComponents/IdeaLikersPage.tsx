@@ -1,17 +1,17 @@
-import { Stack, Text } from "@mantine/core";
-import { TbHeart } from "react-icons/tb";
-import { Idea } from "../../server/models/idea";
-import { paginatedPageSchema } from "../../share/schema/util";
-import { IdeaSummaryCard } from "../features/idea/IdeaSummaryCard";
+import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
 import {
   IdeaLikerCard,
   ideaLikerCardMinWidthPx,
-} from "../features/user/IdeaLikerCard";
-import { useIdeaLikers } from "../features/user/useIdeaLikers";
-import { useURLParams } from "../lib/useURLParams";
-import { AppPagination } from "../ui/AppPagination";
-import { GridContainer } from "../ui/GridContainer";
-import { PageHeader } from "../ui/PageHeader";
+} from "@/client/features/user/IdeaLikerCard";
+import { useIdeaLikers } from "@/client/features/user/useIdeaLikers";
+import { useURLParams } from "@/client/lib/useURLParams";
+import { AppPagination } from "@/client/ui/AppPagination";
+import { GridContainer } from "@/client/ui/GridContainer";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { Idea } from "@/server/models/idea";
+import { paginatedPageSchema } from "@/share/schema/util";
+import { Stack, Text } from "@mantine/core";
+import { TbHeart } from "react-icons/tb";
 
 type Props = { idea: Idea };
 export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {

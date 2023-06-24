@@ -1,8 +1,8 @@
-import { router } from "../../lib/trpc";
-import { getPickedIdeas } from "./getPickedIdeas";
-import { getTop10LikesDevelopmentsInThisMonth } from "./getTop10LikesDevelopmentsInThisMonth";
-import { getTop10LikesIdeasInThisMonth } from "./getTop10LikesIdeasInThisMonth";
-import { getTop10LikesPostersInThisMonth } from "./getTop10LikesPostersInThisMonth";
+import { getPickedIdeas } from "@/server/features/aggregate/getPickedIdeas";
+import { getTop10LikesDevelopmentsInThisMonth } from "@/server/features/aggregate/getTop10LikesDevelopmentsInThisMonth";
+import { getTop10LikesIdeasInThisMonth } from "@/server/features/aggregate/getTop10LikesIdeasInThisMonth";
+import { getTop10LikesPostersInThisMonth } from "@/server/features/aggregate/getTop10LikesPostersInThisMonth";
+import { router } from "@/server/lib/trpc";
 
 export const aggregateRoute = router({
   /** 1ヶ月間でいいねが多かったお題Top10を取得する */

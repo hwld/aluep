@@ -1,13 +1,13 @@
+import { developmentKeys } from "@/client/features/development/queryKeys";
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
+import { ideaCommentKeys } from "@/client/features/ideaComment/queryKeys";
+import { IdeaDetailPage } from "@/client/pageComponents/IdeaDetailPage";
+import NotFoundPage from "@/pages/404";
+import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { appRouter } from "@/server/router";
+import { assertString } from "@/share/utils";
 import { useRouter } from "next/router";
-import { developmentKeys } from "../../../client/features/development/queryKeys";
-import { ideaKeys } from "../../../client/features/idea/queryKeys";
-import { useIdeaQuery } from "../../../client/features/idea/useIdeaQuery";
-import { ideaCommentKeys } from "../../../client/features/ideaComment/queryKeys";
-import { IdeaDetailPage } from "../../../client/pageComponents/IdeaDetailPage";
-import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../server/router";
-import { assertString } from "../../../share/utils";
-import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, queryClient, session, callerContext }) => {

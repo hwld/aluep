@@ -1,7 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { RouterInputs } from "../../../server/lib/trpc";
-import { trpc } from "../../lib/trpc";
-import { userKeys } from "./queryKeys";
+import { userKeys } from "@/client/features/user/queryKeys";
+import { trpc } from "@/client/lib/trpc";
+import { RouterInputs } from "@/server/lib/trpc";
+import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 
 type UseFavoriteUserArgs = { userId: string; loggedInUserId?: string };
 export const useFavoriteUser = ({

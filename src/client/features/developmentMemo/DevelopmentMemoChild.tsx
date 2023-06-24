@@ -1,11 +1,11 @@
+import { DevelopmentMemoMenuButton } from "@/client/features/developmentMemo/DevelopmentMemoMenuButton";
+import { useDevelopmentMemos } from "@/client/features/developmentMemo/useDevelopmentMemos";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
+import { formatDate } from "@/client/lib/utils";
+import { DevelopmentMemo } from "@/server/models/developmentMemo";
 import { Flex, Stack, Text } from "@mantine/core";
-import { DevelopmentMemo } from "../../../server/models/developmentMemo";
-import { useHashRemoverOnClickOutside } from "../../lib/useHashRemoverOnClickOutside";
-import { formatDate } from "../../lib/utils";
-import { useSessionQuery } from "../session/useSessionQuery";
-import { UserIconLink } from "../user/UserIconLink";
-import { DevelopmentMemoMenuButton } from "./DevelopmentMemoMenuButton";
-import { useDevelopmentMemos } from "./useDevelopmentMemos";
 
 type Props = { memo: DevelopmentMemo; developmentId: string; ideaId: string };
 

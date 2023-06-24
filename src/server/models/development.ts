@@ -1,7 +1,7 @@
+import { db } from "@/server/lib/prismadb";
+import { DevelopmentStatus } from "@/server/models/developmentStatus";
+import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
-import { OmitStrict } from "../../types/OmitStrict";
-import { db } from "../lib/prismadb";
-import { DevelopmentStatus } from "./developmentStatus";
 
 export type Development = {
   id: string;

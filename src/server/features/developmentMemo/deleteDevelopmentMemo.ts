@@ -1,7 +1,7 @@
+import { db } from "@/server/lib/prismadb";
+import { requireLoggedInProcedure } from "@/server/lib/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { db } from "../../lib/prismadb";
-import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const deleteDevelopmentMemo = requireLoggedInProcedure
   .input(z.object({ developmentMemoId: z.string() }))

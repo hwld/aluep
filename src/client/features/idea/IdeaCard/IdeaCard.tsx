@@ -1,13 +1,13 @@
+import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge";
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { TextLink } from "@/client/ui/TextLink";
+import { Idea } from "@/server/models/idea";
+import { Routes } from "@/share/routes";
 import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { FaRegComment } from "react-icons/fa";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
-import { Idea } from "../../../../server/models/idea";
-import { Routes } from "../../../../share/routes";
-import { TextLink } from "../../../ui/TextLink";
-import { UserIconLink } from "../../user/UserIconLink";
-import { IdeaTagBadge } from "../IdeaTagBadge";
 
 export const ideaCardMinWidthPx = 450;
 

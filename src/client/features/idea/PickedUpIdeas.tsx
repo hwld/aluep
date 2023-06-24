@@ -1,10 +1,13 @@
+import {
+  IdeaCard,
+  ideaCardMinWidthPx,
+} from "@/client/features/idea/IdeaCard/IdeaCard";
+import { GridContainer } from "@/client/ui/GridContainer";
+import { Idea } from "@/server/models/idea";
 import { Button, Flex, Stack, Title } from "@mantine/core";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { HiArrowRight } from "react-icons/hi";
-import { Idea } from "../../../server/models/idea";
-import { GridContainer } from "../../ui/GridContainer";
-import { IdeaCard, ideaCardMinWidthPx } from "./IdeaCard/IdeaCard";
 
 type Props = {
   title: string;

@@ -1,9 +1,12 @@
+import {
+  ideaCardMinWidthPx,
+  IdeaCard,
+} from "@/client/features/idea/IdeaCard/IdeaCard";
+import { useLikedIdeas } from "@/client/features/idea/useLikedIdeas";
+import { UserContentContainer } from "@/client/features/user/UserContentContainer";
 import { useMantineTheme } from "@mantine/core";
+import { User } from "next-auth";
 import { TbHeart } from "react-icons/tb";
-import { User } from "../../../server/models/user";
-import { IdeaCard, ideaCardMinWidthPx } from "../idea/IdeaCard/IdeaCard";
-import { useLikedIdeas } from "../idea/useLikedIdeas";
-import { UserContentContainer } from "./UserContentContainer";
 
 type Props = {
   user: User;

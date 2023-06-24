@@ -1,14 +1,14 @@
+import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { UserFavoriteButton } from "@/client/features/user/UserDashboard/UserFavoriteButton";
+import { UserIcon } from "@/client/features/user/UserIcon";
+import { UserProfileMenuButton } from "@/client/features/user/UserProfileMenuButton";
+import { useFavoriteUser } from "@/client/features/user/useFavoriteUser";
+import { useFavoriteUserCountQuery } from "@/client/features/user/useFavoriteUserCountQuery";
+import { TextLink } from "@/client/ui/TextLink";
+import { User } from "@/server/models/user";
+import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
-import { User } from "../../../../server/models/user";
-import { Routes } from "../../../../share/routes";
-import { TextLink } from "../../../ui/TextLink";
-import { useRequireLoginModal } from "../../session/RequireLoginModalProvider";
-import { useSessionQuery } from "../../session/useSessionQuery";
-import { UserIcon } from "../UserIcon";
-import { UserProfileMenuButton } from "../UserProfileMenuButton";
-import { useFavoriteUser } from "../useFavoriteUser";
-import { useFavoriteUserCountQuery } from "../useFavoriteUserCountQuery";
-import { UserFavoriteButton } from "./UserFavoriteButton";
 
 type Props = {
   user: User;

@@ -1,7 +1,7 @@
-import { router } from "../../lib/trpc";
-import { deleteMe } from "./deleteMe";
-import { getMySummary } from "./getMySummary";
-import { updateMe } from "./updateMe";
+import { deleteMe } from "@/server/features/me/deleteMe";
+import { getMySummary } from "@/server/features/me/getMySummary";
+import { updateMe } from "@/server/features/me/updateMe";
+import { router } from "@/server/lib/trpc";
 
 export const meRoute = router({
   /** プロフィールを更新する */

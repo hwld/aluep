@@ -1,7 +1,8 @@
-import { Box, Modal, ModalProps } from "@mantine/core";
-import { stopPropagation } from "../lib/utils";
-
 // mantineのmodalはクリックイベントを伝搬させるので、それを止めるための層を追加した
+
+import { stopPropagation } from "@/client/lib/utils";
+import { ModalProps, Box, Modal } from "@mantine/core";
+
 // Modalを作成する。
 export const AppModal: React.FC<ModalProps> = ({ children, ...props }) => {
   return (

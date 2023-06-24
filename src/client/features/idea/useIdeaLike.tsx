@@ -1,10 +1,10 @@
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { trpc } from "@/client/lib/trpc";
+import { showErrorNotification } from "@/client/lib/utils";
+import { RouterInputs } from "@/server/lib/trpc";
+import { Idea } from "@/server/models/idea";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { RouterInputs } from "../../../server/lib/trpc";
-import { Idea } from "../../../server/models/idea";
-import { trpc } from "../../lib/trpc";
-import { showErrorNotification } from "../../lib/utils";
-import { useSessionQuery } from "../session/useSessionQuery";
-import { ideaKeys } from "./queryKeys";
 
 type UseIdeaLikeArgs = { ideaId: string };
 

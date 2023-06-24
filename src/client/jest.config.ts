@@ -7,6 +7,9 @@ const createJestConfig = nextJest({
 
 const customJestConfig: Config = {
   moduleDirectories: ["node_modules"],
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/../$1",
+  },
   testEnvironment: "jest-environment-jsdom",
   // クライアントのコードだけ含める
   testMatch: ["<rootDir>/**/*.test.ts?(x)"],

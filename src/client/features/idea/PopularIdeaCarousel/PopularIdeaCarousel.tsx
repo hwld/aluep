@@ -1,7 +1,10 @@
+import {
+  PopularIdeaCard,
+  popularIdeaCardWidthPx,
+} from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCard";
+import { Idea } from "@/server/models/idea";
 import { Carousel } from "@mantine/carousel";
 import { Box, Flex } from "@mantine/core";
-import { Idea } from "../../../../server/models/idea";
-import { PopularIdeaCard, popularIdeaCardWidthPx } from "./PopularIdeaCard";
 
 type Props = { ideas: Idea[] | undefined; miw?: string };
 export const PopularIdeaCarousel: React.FC<Props> = ({ ideas, miw }) => {

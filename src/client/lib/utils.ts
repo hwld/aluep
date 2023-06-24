@@ -1,3 +1,4 @@
+import { AppRouter } from "@/server/router";
 import {
   NotificationProps,
   showNotification,
@@ -7,7 +8,6 @@ import { TRPCClientError } from "@trpc/client";
 import { format } from "date-fns";
 import ja from "date-fns/locale/ja";
 import { SyntheticEvent } from "react";
-import { AppRouter } from "../../server/router";
 
 export const stopPropagation = (e: SyntheticEvent) => e.stopPropagation();
 

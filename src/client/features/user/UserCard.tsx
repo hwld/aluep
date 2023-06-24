@@ -1,9 +1,9 @@
+import { UserIcon } from "@/client/features/user/UserIcon";
+import { TextLink } from "@/client/ui/TextLink";
+import { User } from "@/server/models/user";
+import { Routes } from "@/share/routes";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
-import { User } from "../../../server/models/user";
-import { Routes } from "../../../share/routes";
-import { TextLink } from "../../ui/TextLink";
-import { UserIcon } from "./UserIcon";
 
 export const userCardMinWidthPx = 350;
 

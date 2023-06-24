@@ -1,10 +1,10 @@
+import { db } from "@/server/lib/prismadb";
+import { convertUser } from "@/server/models/user";
+import { Routes } from "@/share/routes";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { User as PrismaUser } from "@prisma/client";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import { db } from "../../../server/lib/prismadb";
-import { convertUser } from "../../../server/models/user";
-import { Routes } from "../../../share/routes";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),

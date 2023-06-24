@@ -1,7 +1,7 @@
+import { db } from "@/server/lib/prismadb";
+import { publicProcedure } from "@/server/lib/trpc";
+import { DevelopedData } from "@/share/schema/development";
 import { z } from "zod";
-import { DevelopedData } from "../../../share/schema/development";
-import { db } from "../../lib/prismadb";
-import { publicProcedure } from "../../lib/trpc";
 
 export const isDevelopedByUser = publicProcedure
   .input(z.object({ ideaId: z.string(), userId: z.string().nullable() }))

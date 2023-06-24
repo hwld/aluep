@@ -1,8 +1,8 @@
+import { useLoggedInUserInfoQuery } from "@/client/features/session/useLoggedInUserInfoQuery";
+import { UserIcon } from "@/client/features/user/UserIcon";
 import { Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { Session } from "next-auth";
 import { TbChevronDown, TbCode, TbFileText, TbHeart } from "react-icons/tb";
-import { useLoggedInUserInfoQuery } from "../../features/session/useLoggedInUserInfoQuery";
-import { UserIcon } from "../../features/user/UserIcon";
 
 type Props = { user: Session["user"]; iconWidth: number };
 

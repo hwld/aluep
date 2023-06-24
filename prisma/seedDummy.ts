@@ -1,10 +1,11 @@
 /**
  * ダミーデータを生成
  */
+
+import { DevelopmentStatusIds } from "@/share/consts";
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
 import { Presets, SingleBar } from "cli-progress";
-import { DevelopmentStatusIds } from "../src/share/consts";
 
 const prisma = new PrismaClient();
 

@@ -1,7 +1,7 @@
-import { sortedInSameOrder } from "../../../share/utils";
-import { db } from "../../lib/prismadb";
-import { publicProcedure } from "../../lib/trpc";
-import { findManyIdeas } from "../../models/idea";
+import { db } from "@/server/lib/prismadb";
+import { publicProcedure } from "@/server/lib/trpc";
+import { findManyIdeas } from "@/server/models/idea";
+import { sortedInSameOrder } from "@/share/utils";
 
 export const getTop10LikesIdeasInThisMonth = publicProcedure.query(async () => {
   const ideas = await db.$transaction(async (tx) => {

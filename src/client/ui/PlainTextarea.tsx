@@ -1,6 +1,6 @@
+import { OmitStrict } from "@/types/OmitStrict";
 import { Textarea, TextareaProps } from "@mantine/core";
 import { forwardRef } from "react";
-import { OmitStrict } from "../../types/OmitStrict";
 
 type Props = {} & OmitStrict<TextareaProps, "styles">;
 

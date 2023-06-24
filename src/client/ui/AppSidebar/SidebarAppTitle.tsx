@@ -1,7 +1,7 @@
+import { Routes } from "@/share/routes";
 import { Anchor, Box, Title } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
-import { Routes } from "../../../share/routes";
 
 export const SidebarAppTitle: React.FC = () => {
   return (

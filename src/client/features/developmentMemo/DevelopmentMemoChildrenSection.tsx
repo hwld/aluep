@@ -1,8 +1,8 @@
+import { DevelopmentMemoChild } from "@/client/features/developmentMemo/DevelopmentMemoChild";
+import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
+import { DevelopmentMemo } from "@/server/models/developmentMemo";
 import { Box, Button, Divider, Stack } from "@mantine/core";
 import { useRef } from "react";
-import { DevelopmentMemo } from "../../../server/models/developmentMemo";
-import { useAutoScrollOnIncrease } from "../../lib/useAutoScrollOnIncrease";
-import { DevelopmentMemoChild } from "./DevelopmentMemoChild";
 
 type Props = {
   ideaId: string;

@@ -1,14 +1,14 @@
-import { APIEmbed, APIEmbedField, WebhookClient } from "discord.js";
-import { IncomingMessage } from "http";
-import { Routes } from "../../share/routes";
+import { Routes } from "@/share/routes";
 import {
   ReportDevelopmentInput,
   ReportDevelopmentMemoInput,
   ReportIdeaCommentInput,
   ReportIdeaInput,
   ReportUserInput,
-} from "../../share/schema/report";
-import { OmitStrict } from "../../types/OmitStrict";
+} from "@/share/schema/report";
+import { OmitStrict } from "@/types/OmitStrict";
+import { APIEmbed, APIEmbedField, WebhookClient } from "discord.js";
+import { IncomingMessage } from "http";
 
 type ReportedUser = { url: string; name: string } | undefined;
 export const buildReportedUser = (

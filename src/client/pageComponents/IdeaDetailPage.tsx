@@ -1,3 +1,20 @@
+import { useDevelop } from "@/client/features/development/useDevelop";
+import { DevelopButton } from "@/client/features/idea/DevelopButton";
+import { IdeaDescriptionView } from "@/client/features/idea/IdeaDescriptionView";
+import { IdeaInfoCardItem } from "@/client/features/idea/IdeaDetail/IdeaInfoCardItem";
+import { IdeaLikeButton } from "@/client/features/idea/IdeaLikeButton";
+import { IdeaOperationButton } from "@/client/features/idea/IdeaOperationButton";
+import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge";
+import { useIdeaLike } from "@/client/features/idea/useIdeaLike";
+import { IdeaComments } from "@/client/features/ideaComment/IdeaComments";
+import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { formatDate } from "@/client/lib/utils";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { TextLink } from "@/client/ui/TextLink";
+import { Idea } from "@/server/models/idea";
+import { Routes } from "@/share/routes";
 import {
   Box,
   Card,
@@ -13,23 +30,6 @@ import { SyntheticEvent } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { MdAccessTime, MdUpdate } from "react-icons/md";
 import { TbFileText } from "react-icons/tb";
-import { Idea } from "../../server/models/idea";
-import { Routes } from "../../share/routes";
-import { useDevelop } from "../features/development/useDevelop";
-import { DevelopButton } from "../features/idea/DevelopButton";
-import { IdeaDescriptionView } from "../features/idea/IdeaDescriptionView";
-import { IdeaInfoCardItem } from "../features/idea/IdeaDetail/IdeaInfoCardItem";
-import { IdeaLikeButton } from "../features/idea/IdeaLikeButton";
-import { IdeaOperationButton } from "../features/idea/IdeaOperationButton";
-import { IdeaTagBadge } from "../features/idea/IdeaTagBadge";
-import { useIdeaLike } from "../features/idea/useIdeaLike";
-import { IdeaComments } from "../features/ideaComment/IdeaComments";
-import { useRequireLoginModal } from "../features/session/RequireLoginModalProvider";
-import { useSessionQuery } from "../features/session/useSessionQuery";
-import { UserIconLink } from "../features/user/UserIconLink";
-import { formatDate } from "../lib/utils";
-import { PageHeader } from "../ui/PageHeader";
-import { TextLink } from "../ui/TextLink";
 
 type Props = { idea: Idea };
 

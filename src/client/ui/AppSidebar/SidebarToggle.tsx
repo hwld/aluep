@@ -1,4 +1,4 @@
-import { Burger, useMantineTheme } from "@mantine/core";
+import { useMantineTheme, Burger } from "@mantine/core";
 
 type Props = {
   isOpen: boolean;

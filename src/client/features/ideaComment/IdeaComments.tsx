@@ -1,14 +1,17 @@
+import { IdeaCommentCard } from "@/client/features/ideaComment/IdeaCommentCard";
+import {
+  IdeaCommentForm,
+  IdeaCommentFormRef,
+} from "@/client/features/ideaComment/IdeaCommentForm";
+import { useIdeaComments } from "@/client/features/ideaComment/useIdeaComments";
+import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
+import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
+import { IdeaCommentFormData } from "@/share/schema/ideaComment";
 import { Button, Card, Stack, Text, Title } from "@mantine/core";
+import { User } from "next-auth";
 import { useRef } from "react";
-import { User } from "../../../server/models/user";
-import { IdeaCommentFormData } from "../../../share/schema/ideaComment";
-import { useAutoScrollOnIncrease } from "../../lib/useAutoScrollOnIncrease";
-import { useCyclicRandom } from "../../lib/useCyclicRandom";
-import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
-import { useSessionQuery } from "../session/useSessionQuery";
-import { IdeaCommentCard } from "./IdeaCommentCard";
-import { IdeaCommentForm, IdeaCommentFormRef } from "./IdeaCommentForm";
-import { useIdeaComments } from "./useIdeaComments";
 
 type Props = { ideaId: string; ideaOwnerId: string; loggedInUser?: User };
 

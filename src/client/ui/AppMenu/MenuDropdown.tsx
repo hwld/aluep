@@ -1,4 +1,4 @@
-import { Menu, MenuDropdownProps } from "@mantine/core";
+import { MenuDropdownProps, Menu } from "@mantine/core";
 import React from "react";
 
 export const MenuDropdown: React.FC<MenuDropdownProps> = ({

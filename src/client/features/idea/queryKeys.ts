@@ -1,6 +1,6 @@
-import { IdeaOrder } from "../../../share/schema/idea";
-import { userKeys } from "../user/queryKeys";
-import { UseSearchedIdeasQueryArgs } from "./useSearchedIdeasQuery";
+import { UseSearchedIdeasQueryArgs } from "@/client/features/idea/useSearchedIdeasQuery";
+import { userKeys } from "@/client/features/user/queryKeys";
+import { IdeaOrder } from "@/share/schema/idea";
 
 export const ideaKeys = {
   all: ["ideas"] as const,

@@ -1,9 +1,9 @@
+import { AppForm } from "@/client/ui/AppForm";
+import { ProfileFormData, profileFormSchema } from "@/share/schema/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea, TextInput } from "@mantine/core";
-import { Controller, useForm } from "react-hook-form";
+import { TextInput, Textarea } from "@mantine/core";
+import { useForm, Controller } from "react-hook-form";
 import { RiEdit2Line } from "react-icons/ri";
-import { ProfileFormData, profileFormSchema } from "../../../share/schema/user";
-import { AppForm } from "../../ui/AppForm";
 
 type Props = {
   onSubmit: (data: ProfileFormData) => void;

@@ -1,21 +1,21 @@
+import { UserIconFormDialog } from "@/client/features/user/UserIconFormModal";
+import { UserProfileForm } from "@/client/features/user/UserProfileForm";
+import { trpc } from "@/client/lib/trpc";
+import {
+  showErrorNotification,
+  showLoadingNotification,
+  showSuccessNotification,
+} from "@/client/lib/utils";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { RouterInputs } from "@/server/lib/trpc";
+import { Routes } from "@/share/routes";
+import { ProfileFormData } from "@/share/schema/user";
 import { Box, Card, Flex } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { MdOutlineEdit } from "react-icons/md";
-import { RouterInputs } from "../../server/lib/trpc";
-import { Routes } from "../../share/routes";
-import { ProfileFormData } from "../../share/schema/user";
-import { UserIconFormDialog } from "../features/user/UserIconFormModal";
-import { UserProfileForm } from "../features/user/UserProfileForm";
-import { trpc } from "../lib/trpc";
-import {
-  showErrorNotification,
-  showLoadingNotification,
-  showSuccessNotification,
-} from "../lib/utils";
-import { PageHeader } from "../ui/PageHeader";
 
 const uploadNotificationId = "upload-icon";
 

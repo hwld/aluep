@@ -1,7 +1,7 @@
+import { LikeDevelopmentIcon } from "@/client/features/development/LikeDevelopmentIcon";
+import { LikeIdeaIcon } from "@/client/features/idea/LikeIdeaIcon";
+import { ReceivedLikeCount } from "@/client/features/user/useReceivedLikeCountQuery";
 import { Card, Flex, Stack, Text } from "@mantine/core";
-import { LikeDevelopmentIcon } from "../../development/LikeDevelopmentIcon";
-import { LikeIdeaIcon } from "../../idea/LikeIdeaIcon";
-import { ReceivedLikeCount } from "../useReceivedLikeCountQuery";
 
 type Props = { receivedLikeCount: ReceivedLikeCount; width?: number };
 export const UserReceivedLikeCard: React.FC<Props> = ({

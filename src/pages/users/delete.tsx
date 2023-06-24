@@ -1,7 +1,7 @@
+import { UserDeletepage } from "@/client/pageComponents/UserDeletePage";
+import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { Routes } from "@/share/routes";
 import { NextPage } from "next";
-import { UserDeletepage } from "../../client/pageComponents/UserDeletePage";
-import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
-import { Routes } from "../../share/routes";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ session }) => {

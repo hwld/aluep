@@ -1,6 +1,6 @@
+import { userKeys } from "@/client/features/user/queryKeys";
+import { trpc } from "@/client/lib/trpc";
 import { useQuery } from "@tanstack/react-query";
-import { trpc } from "../../lib/trpc";
-import { userKeys } from "./queryKeys";
 
 type UseFavoriteUserCountQueryArgs = { userId: string };
 

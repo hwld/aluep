@@ -1,5 +1,5 @@
-import { DevelopmentStatusIds } from "../../../share/consts";
-import { TestHelpers } from "../../tests/helper";
+import { TestHelpers } from "@/server/tests/helper";
+import { DevelopmentStatusIds } from "@/share/consts";
 
 describe("開発情報更新API", () => {
   it("他人の開発情報は更新できない", async () => {

@@ -1,13 +1,13 @@
+import { developmentKeys } from "@/client/features/development/queryKeys";
+import { useDevelopmentQuery } from "@/client/features/development/useDevelopmentQuery";
+import { developmentMemoKeys } from "@/client/features/developmentMemo/queryKeys";
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
+import { DevelopmentDetailPage } from "@/client/pageComponents/DevelopmentDetailPage";
+import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { appRouter } from "@/server/router";
+import { assertString } from "@/share/utils";
 import { useRouter } from "next/router";
-import { developmentKeys } from "../../../../../client/features/development/queryKeys";
-import { useDevelopmentQuery } from "../../../../../client/features/development/useDevelopmentQuery";
-import { developmentMemoKeys } from "../../../../../client/features/developmentMemo/queryKeys";
-import { ideaKeys } from "../../../../../client/features/idea/queryKeys";
-import { useIdeaQuery } from "../../../../../client/features/idea/useIdeaQuery";
-import { DevelopmentDetailPage } from "../../../../../client/pageComponents/DevelopmentDetailPage";
-import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../../../server/router";
-import { assertString } from "../../../../../share/utils";
 import NotFoundPage from "../../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(

@@ -1,5 +1,5 @@
-import { db } from "../../lib/prismadb";
-import { TestHelpers } from "../../tests/helper";
+import { db } from "@/server/lib/prismadb";
+import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題更新API", () => {
   it("他人が投稿したお題は更新できない", async () => {

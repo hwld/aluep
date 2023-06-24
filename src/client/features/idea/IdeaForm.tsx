@@ -1,12 +1,12 @@
+import { IdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/IdeaDescriptionEditor";
+import { useIdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/useIdeaDescriptionEditor";
+import { AppForm } from "@/client/ui/AppForm";
+import { IdeaTag } from "@/server/models/ideaTag";
+import { IdeaFormData, ideaFormSchema } from "@/share/schema/idea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, MultiSelect, Space, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { MdPostAdd } from "react-icons/md";
-import { IdeaTag } from "../../../server/models/ideaTag";
-import { IdeaFormData, ideaFormSchema } from "../../../share/schema/idea";
-import { AppForm } from "../../ui/AppForm";
-import { IdeaDescriptionEditor } from "./IdeaDescriptionEditor/IdeaDescriptionEditor";
-import { useIdeaDescriptionEditor } from "./IdeaDescriptionEditor/useIdeaDescriptionEditor";
 
 type Props = {
   allTags: IdeaTag[];

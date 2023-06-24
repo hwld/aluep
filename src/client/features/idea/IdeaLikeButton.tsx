@@ -1,3 +1,4 @@
+import { Routes } from "@/share/routes";
 import {
   ActionIcon,
   Anchor,
@@ -7,7 +8,6 @@ import {
 } from "@mantine/core";
 import Link from "next/link";
 import { TbHeart } from "react-icons/tb";
-import { Routes } from "../../../share/routes";
 
 type Props = {
   likes: number;

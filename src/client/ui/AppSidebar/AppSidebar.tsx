@@ -1,3 +1,10 @@
+import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import { LoggedInUserCard } from "@/client/ui/AppSidebar/LoggedInUserCard";
+import { LoggedInUserMenu } from "@/client/ui/AppSidebar/LoggedInUserMenu";
+import { SidebarAppTitle } from "@/client/ui/AppSidebar/SidebarAppTitle";
+import { SidebarItem } from "@/client/ui/AppSidebar/SidebarItem";
+import { SidebarToggle } from "@/client/ui/AppSidebar/SidebarToggle";
+import { Routes } from "@/share/routes";
 import { Box, Flex, Stack, UnstyledButton } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Session } from "next-auth";
@@ -12,13 +19,6 @@ import {
   MdPostAdd,
   MdSearch,
 } from "react-icons/md";
-import { Routes } from "../../../share/routes";
-import { useRequireLoginModal } from "../../features/session/RequireLoginModalProvider";
-import { LoggedInUserCard } from "./LoggedInUserCard";
-import { LoggedInUserMenu } from "./LoggedInUserMenu";
-import { SidebarAppTitle } from "./SidebarAppTitle";
-import { SidebarItem } from "./SidebarItem";
-import { SidebarToggle } from "./SidebarToggle";
 
 type Props = { loggedInUser?: Session["user"] };
 

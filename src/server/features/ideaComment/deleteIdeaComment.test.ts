@@ -1,4 +1,4 @@
-import { TestHelpers } from "../../tests/helper";
+import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題コメント削除API", () => {
   it("コメントを削除できる", async () => {

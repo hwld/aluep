@@ -1,7 +1,7 @@
+import { stopPropagation } from "@/client/lib/utils";
 import { ActionIcon, Tooltip } from "@mantine/core";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { stopPropagation } from "../../lib/utils";
 
 type Props = { label: string; url: string; icon: ReactNode };
 export const DevelopmentCardIconLink: React.FC<Props> = ({

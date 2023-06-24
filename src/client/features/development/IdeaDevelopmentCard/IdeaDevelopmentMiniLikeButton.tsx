@@ -1,6 +1,6 @@
+import { stopPropagation } from "@/client/lib/utils";
 import { ActionIcon, Flex, Text, useMantineTheme } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
-import { stopPropagation } from "../../../lib/utils";
 
 type Props = {
   likes: number;

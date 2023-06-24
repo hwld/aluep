@@ -1,4 +1,5 @@
-import { MutableRefObject, useCallback, useEffect, useRef } from "react";
+import { MutableRefObject, useCallback, useRef, useEffect } from "react";
+
 type UseAutoScrollOnIncreaseArgs = {
   /** スクロールする対象の要素 */
   target: MutableRefObject<{

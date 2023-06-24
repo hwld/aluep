@@ -1,5 +1,5 @@
+import { db } from "@/server/lib/prismadb";
 import { Prisma } from "@prisma/client";
-import { db } from "../lib/prismadb";
 
 export type User = {
   id: string;

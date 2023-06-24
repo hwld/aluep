@@ -1,6 +1,6 @@
+import { DevelopmentCardIconLink } from "@/client/features/development/DevelopmentCardLinkIcon";
 import { useMantineTheme } from "@mantine/core";
 import { BsGithub } from "react-icons/bs";
-import { DevelopmentCardIconLink } from "../features/development/DevelopmentCardLinkIcon";
 
 type Props = { gitHubUrl: string };
 

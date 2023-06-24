@@ -1,9 +1,9 @@
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { userKeys } from "@/client/features/user/queryKeys";
+import { HomePage } from "@/client/pageComponents/HomePage";
+import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { appRouter } from "@/server/router";
 import { NextPage } from "next";
-import { ideaKeys } from "../client/features/idea/queryKeys";
-import { userKeys } from "../client/features/user/queryKeys";
-import { HomePage } from "../client/pageComponents/HomePage";
-import { withReactQueryGetServerSideProps } from "../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../server/router";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ queryClient, callerContext }) => {

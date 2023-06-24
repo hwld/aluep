@@ -1,3 +1,4 @@
+import { OmitStrict } from "@/types/OmitStrict";
 import Bold from "@tiptap/extension-bold";
 import BulletList from "@tiptap/extension-bullet-list";
 import Document from "@tiptap/extension-document";
@@ -12,7 +13,6 @@ import Paragraph from "@tiptap/extension-paragraph";
 import Strike from "@tiptap/extension-strike";
 import Text from "@tiptap/extension-text";
 import { EditorOptions, useEditor } from "@tiptap/react";
-import { OmitStrict } from "../../../../types/OmitStrict";
 
 export const useIdeaDescriptionEditor = (
   opts: OmitStrict<Partial<EditorOptions>, "extensions">

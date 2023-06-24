@@ -1,15 +1,15 @@
-import { router } from "../../lib/trpc";
-import { getFavoritedUsers } from "./favoritedUsers";
-import { favoriteUser } from "./favoriteUser";
-import { getFavoriteCountByUser } from "./favoriteUserCount";
-import { getDevelopmentLikers } from "./getDevelopmentLikers";
-import { getIdeaLikers } from "./getIdeaLikers";
-import { getReceivedLikeCount } from "./getReceivedLikeCount";
-import { getUser } from "./getUser";
-import { getUserActivity } from "./getUserActivity";
-import { isFavoritedByLoggedInUser } from "./isFavoritedByLoggedInUser";
-import { searchUser } from "./searchUser";
-import { unfavoriteUser } from "./unfavoriteUser";
+import { favoriteUser } from "@/server/features/user/favoriteUser";
+import { getFavoriteCountByUser } from "@/server/features/user/favoriteUserCount";
+import { getFavoritedUsers } from "@/server/features/user/favoritedUsers";
+import { getDevelopmentLikers } from "@/server/features/user/getDevelopmentLikers";
+import { getIdeaLikers } from "@/server/features/user/getIdeaLikers";
+import { getReceivedLikeCount } from "@/server/features/user/getReceivedLikeCount";
+import { getUser } from "@/server/features/user/getUser";
+import { getUserActivity } from "@/server/features/user/getUserActivity";
+import { isFavoritedByLoggedInUser } from "@/server/features/user/isFavoritedByLoggedInUser";
+import { searchUser } from "@/server/features/user/searchUser";
+import { unfavoriteUser } from "@/server/features/user/unfavoriteUser";
+import { router } from "@/server/lib/trpc";
 
 export const userRoute = router({
   /** ユーザーを取得する */

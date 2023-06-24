@@ -3,12 +3,14 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.tabSize": 2,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true
+    "source.organizeImports": true,
   },
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "typescript.referencesCodeLens.enabled": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-
-  "jest.autoRun": { "watch": false, "onSave": "test-file" }
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "jest.autoRun": {
+    "watch": false,
+    "onSave": "test-file"
+  }
 }

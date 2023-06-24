@@ -1,6 +1,6 @@
+import { publicProcedure } from "@/server/lib/trpc";
+import { findManyDevelopmentMemo } from "@/server/models/developmentMemo";
 import { z } from "zod";
-import { publicProcedure } from "../../lib/trpc";
-import { findManyDevelopmentMemo } from "../../models/developmentMemo";
 
 export const getAllDevelopmentMemos = publicProcedure
   .input(z.object({ developmentId: z.string() }))

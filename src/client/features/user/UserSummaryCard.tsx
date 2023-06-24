@@ -1,7 +1,7 @@
+import { userCardMinWidthPx } from "@/client/features/user/UserCard";
+import { UserIcon } from "@/client/features/user/UserIcon";
 import { Card, Stack, Text } from "@mantine/core";
 import { Session } from "next-auth";
-import { userCardMinWidthPx } from "./UserCard";
-import { UserIcon } from "./UserIcon";
 
 type Props = { user: Session["user"] };
 export const UserSummaryCard: React.FC<Props> = ({ user }) => {

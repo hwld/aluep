@@ -1,10 +1,10 @@
+import { RequireLoginModal } from "@/client/features/session/RequireLoginModal";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { AppModal } from "@/client/ui/AppModal";
+import { AppSidebar } from "@/client/ui/AppSidebar/AppSidebar";
 import { Box } from "@mantine/core";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery, useDisclosure } from "@mantine/hooks";
 import { ReactNode } from "react";
-import { RequireLoginModal } from "../features/session/RequireLoginModal";
-import { useSessionQuery } from "../features/session/useSessionQuery";
-import { AppModal } from "./AppModal";
-import { AppSidebar } from "./AppSidebar/AppSidebar";
 
 type Props = { children: ReactNode };
 

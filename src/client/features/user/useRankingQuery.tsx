@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { trpc } from "../../lib/trpc";
-import { ideaKeys } from "../idea/queryKeys";
-import { userKeys } from "./queryKeys";
-
 // 名前が長すぎる...
+
+import { ideaKeys } from "@/client/features/idea/queryKeys";
+import { userKeys } from "@/client/features/user/queryKeys";
+import { trpc } from "@/client/lib/trpc";
+import { useQuery } from "@tanstack/react-query";
 
 export const useTop10LikesDevelopmentInThisMonth = () => {
   const { data: top10LikesDevelopmentsInThisMonth, ...others } = useQuery({

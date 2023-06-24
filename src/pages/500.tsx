@@ -1,8 +1,8 @@
+import { Routes } from "@/share/routes";
 import { Box, Button, Flex, Text, Title, useMantineTheme } from "@mantine/core";
 import { NextPage } from "next";
 import Link from "next/link";
 import { BiWrench } from "react-icons/bi";
-import { Routes } from "../share/routes";
 
 const ServerErrorPage: NextPage = () => {
   const theme = useMantineTheme();

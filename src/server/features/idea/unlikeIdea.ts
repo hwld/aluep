@@ -1,6 +1,6 @@
+import { db } from "@/server/lib/prismadb";
+import { requireLoggedInProcedure } from "@/server/lib/trpc";
 import { z } from "zod";
-import { db } from "../../lib/prismadb";
-import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const unlikeIdea = requireLoggedInProcedure
   .input(z.object({ ideaId: z.string() }))

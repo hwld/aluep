@@ -1,5 +1,5 @@
+import { pagingSchema } from "@/share/schema/util";
 import { z } from "zod";
-import { pagingSchema } from "./util";
 
 export const ideaFormSchema = z.object({
   title: z

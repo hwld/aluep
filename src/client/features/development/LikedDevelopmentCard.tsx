@@ -1,13 +1,13 @@
+import { DevelopedItemIconLink } from "@/client/features/development/DevelopedItemIconLink";
+import { DevelopmentStatusBadge } from "@/client/features/development/DevelopmentStatusBadge";
+import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink";
+import { TextLink } from "@/client/ui/TextLink";
+import { Development } from "@/server/models/development";
+import { Routes } from "@/share/routes";
 import { Card, Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbFileText, TbHeart } from "react-icons/tb";
-import { Development } from "../../../server/models/development";
-import { Routes } from "../../../share/routes";
-import { GitHubCodeIconLink } from "../../ui/GitHubCodeIconLink";
-import { TextLink } from "../../ui/TextLink";
-import { UserIconLink } from "../user/UserIconLink";
-import { DevelopedItemIconLink } from "./DevelopedItemIconLink";
-import { DevelopmentStatusBadge } from "./DevelopmentStatusBadge";
 
 type Props = { development: Development };
 

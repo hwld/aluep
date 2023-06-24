@@ -1,16 +1,16 @@
-import { DistributiveOmit } from "@emotion/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Radio, Select, Text, Textarea, TextInput } from "@mantine/core";
-import { UnionToIntersection } from "@tiptap/react";
-import React from "react";
-import { Controller, useForm } from "react-hook-form";
-import { MdComputer } from "react-icons/md";
-import { DevelopmentStatus } from "../../../server/models/developmentStatus";
+import { AppForm } from "@/client/ui/AppForm";
+import { DevelopmentStatus } from "@/server/models/developmentStatus";
 import {
   DevelopmentFormData,
   developmentFormSchema,
-} from "../../../share/schema/development";
-import { AppForm } from "../../ui/AppForm";
+} from "@/share/schema/development";
+import { DistributiveOmit } from "@emotion/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Radio, Select, Text, TextInput, Textarea } from "@mantine/core";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import { UnionToIntersection } from "react-hook-form/dist/types/path/common";
+import { MdComputer } from "react-icons/md";
 
 export type DevelopmentFormDefaultValues = Partial<
   UnionToIntersection<DistributiveOmit<DevelopmentFormData, "type">> & {

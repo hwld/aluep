@@ -1,13 +1,13 @@
+import { developmentKeys } from "@/client/features/development/queryKeys";
+import { useDevelopmentQuery } from "@/client/features/development/useDevelopmentQuery";
+import { userKeys } from "@/client/features/user/queryKeys";
+import { DevelopmentLikersPage } from "@/client/pageComponents/DevelopmentLikersPage";
+import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { appRouter } from "@/server/router";
+import { paginatedPageSchema } from "@/share/schema/util";
+import { assertString } from "@/share/utils";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { developmentKeys } from "../../../../../client/features/development/queryKeys";
-import { useDevelopmentQuery } from "../../../../../client/features/development/useDevelopmentQuery";
-import { userKeys } from "../../../../../client/features/user/queryKeys";
-import { DevelopmentLikersPage } from "../../../../../client/pageComponents/DevelopmentLikersPage";
-import { withReactQueryGetServerSideProps } from "../../../../../server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "../../../../../server/router";
-import { paginatedPageSchema } from "../../../../../share/schema/util";
-import { assertString } from "../../../../../share/utils";
 import NotFoundPage from "../../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(

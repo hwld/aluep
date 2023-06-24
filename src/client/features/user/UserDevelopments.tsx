@@ -1,12 +1,12 @@
-import { useMantineTheme } from "@mantine/core";
-import { TbCode } from "react-icons/tb";
-import { User } from "../../../server/models/user";
-import { useDevelopmentsByUser } from "../development/useDevelopmentsByUser";
-import { UserContentContainer } from "./UserContentContainer";
+import { useDevelopmentsByUser } from "@/client/features/development/useDevelopmentsByUser";
+import { UserContentContainer } from "@/client/features/user/UserContentContainer";
 import {
   UserDevelopmentCard,
   userDevelopmentCardMinWidthPx,
-} from "./UserDevelopmentCard";
+} from "@/client/features/user/UserDevelopmentCard";
+import { useMantineTheme } from "@mantine/core";
+import { User } from "next-auth";
+import { TbCode } from "react-icons/tb";
 
 type Props = {
   user: User;

@@ -1,15 +1,15 @@
-import { router } from "../../lib/trpc";
-import { createIdea } from "./createIdea";
-import { deleteIdea } from "./deleteIdea";
-import { getAllTags } from "./getAllTags";
-import { getIdea } from "./getIdea";
-import { getLikedIdeasByUser } from "./getLikedIdeasByUser";
-import { getPostedIdeasByUser } from "./getPostedIdeasByUser";
-import { isLikedByUser } from "./isLikedByUser";
-import { likeIdea } from "./likeIdea";
-import { searchIdeas } from "./searchIdeas";
-import { unlikeIdea } from "./unlikeIdea";
-import { updateIdea } from "./updateIdea";
+import { createIdea } from "@/server/features/idea/createIdea";
+import { deleteIdea } from "@/server/features/idea/deleteIdea";
+import { getAllTags } from "@/server/features/idea/getAllTags";
+import { getIdea } from "@/server/features/idea/getIdea";
+import { getLikedIdeasByUser } from "@/server/features/idea/getLikedIdeasByUser";
+import { getPostedIdeasByUser } from "@/server/features/idea/getPostedIdeasByUser";
+import { isLikedByUser } from "@/server/features/idea/isLikedByUser";
+import { likeIdea } from "@/server/features/idea/likeIdea";
+import { searchIdeas } from "@/server/features/idea/searchIdeas";
+import { unlikeIdea } from "@/server/features/idea/unlikeIdea";
+import { updateIdea } from "@/server/features/idea/updateIdea";
+import { router } from "@/server/lib/trpc";
 
 export const ideaRoute = router({
   /** すべてのタグを取得する */

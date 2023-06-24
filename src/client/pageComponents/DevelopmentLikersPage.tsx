@@ -1,17 +1,17 @@
-import { Stack, Text } from "@mantine/core";
-import { TbHeart } from "react-icons/tb";
-import { Development } from "../../server/models/development";
-import { paginatedPageSchema } from "../../share/schema/util";
-import { DevelopmentSummaryCard } from "../features/development/DevelopmentSummaryCard";
+import { DevelopmentSummaryCard } from "@/client/features/development/DevelopmentSummaryCard";
 import {
   IdeaLikerCard,
   ideaLikerCardMinWidthPx,
-} from "../features/user/IdeaLikerCard";
-import { useDevelopmentLikers } from "../features/user/useDevelopmentLikers";
-import { useURLParams } from "../lib/useURLParams";
-import { AppPagination } from "../ui/AppPagination";
-import { GridContainer } from "../ui/GridContainer";
-import { PageHeader } from "../ui/PageHeader";
+} from "@/client/features/user/IdeaLikerCard";
+import { useDevelopmentLikers } from "@/client/features/user/useDevelopmentLikers";
+import { useURLParams } from "@/client/lib/useURLParams";
+import { AppPagination } from "@/client/ui/AppPagination";
+import { GridContainer } from "@/client/ui/GridContainer";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { Development } from "@/server/models/development";
+import { paginatedPageSchema } from "@/share/schema/util";
+import { Stack, Text } from "@mantine/core";
+import { TbHeart } from "react-icons/tb";
 
 type Props = { development: Development };
 export const DevelopmentLikersPage: React.FC<Props> = ({ development }) => {

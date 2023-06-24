@@ -1,8 +1,8 @@
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { db } from "@/server/lib/prismadb";
+import { uploadAvatar } from "@/server/lib/uploadAvatar";
 import { NextApiHandler } from "next";
 import { getServerSession } from "next-auth";
-import { db } from "../../server/lib/prismadb";
-import { uploadAvatar } from "../../server/lib/uploadAvatar";
-import { authOptions } from "./auth/[...nextauth]";
 
 export const config = {
   api: {

@@ -1,6 +1,6 @@
-import { createIdeaCommentInputSchema } from "../../../share/schema/ideaComment";
-import { db } from "../../lib/prismadb";
-import { requireLoggedInProcedure } from "../../lib/trpc";
+import { db } from "@/server/lib/prismadb";
+import { requireLoggedInProcedure } from "@/server/lib/trpc";
+import { createIdeaCommentInputSchema } from "@/share/schema/ideaComment";
 
 export const createIdeaComment = requireLoggedInProcedure
   .input(createIdeaCommentInputSchema)

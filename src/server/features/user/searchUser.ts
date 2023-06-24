@@ -1,6 +1,6 @@
+import { publicProcedure } from "@/server/lib/trpc";
+import { findManyUsers } from "@/server/models/user";
 import { z } from "zod";
-import { publicProcedure } from "../../lib/trpc";
-import { findManyUsers } from "../../models/user";
 
 export const searchUser = publicProcedure
   .input(z.object({ userName: z.string() }))

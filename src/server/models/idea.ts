@@ -1,10 +1,10 @@
+import { db } from "@/server/lib/prismadb";
+import { IdeaOrder, IdeaPeriod } from "@/share/schema/idea";
+import { sortedInSameOrder } from "@/share/utils";
+import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
 import { formatDistanceStrict } from "date-fns";
 import { ja } from "date-fns/locale";
-import { IdeaOrder, IdeaPeriod } from "../../share/schema/idea";
-import { sortedInSameOrder } from "../../share/utils";
-import { OmitStrict } from "../../types/OmitStrict";
-import { db } from "../lib/prismadb";
 
 export type Idea = {
   user: {

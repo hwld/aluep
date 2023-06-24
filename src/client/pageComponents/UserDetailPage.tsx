@@ -1,23 +1,20 @@
+import { UserDashboard } from "@/client/features/user/UserDashboard/UserDashboard";
+import { UserDevelopments } from "@/client/features/user/UserDevelopments";
+import { UserLikedDevelopments } from "@/client/features/user/UserLikedDevelopments";
+import { UserLikedIdeas } from "@/client/features/user/UserLikedIdeas";
+import { UserPostedIdeas } from "@/client/features/user/UserPostedIdeas";
+import { useReceivedLikeCountQuery } from "@/client/features/user/useReceivedLikeCountQuery";
+import { useUserActivityQuery } from "@/client/features/user/useUserActivityQuery";
+import { useURLParams } from "@/client/lib/useURLParams";
+import { PageHeader } from "@/client/ui/PageHeader";
+import { TabControl } from "@/client/ui/TabControl";
+import { User } from "@/server/models/user";
+import { UserDetailPageTab, userDetailPageSchame } from "@/share/schema/user";
+import { assertNever } from "@/share/utils";
 import { Box, Flex, Stack } from "@mantine/core";
 import { useMemo } from "react";
 import { MdOutlinePerson } from "react-icons/md";
 import { TbCode, TbFileText, TbHeart } from "react-icons/tb";
-import { User } from "../../server/models/user";
-import {
-  UserDetailPageTab,
-  userDetailPageSchame,
-} from "../../share/schema/user";
-import { assertNever } from "../../share/utils";
-import { UserDashboard } from "../features/user/UserDashboard/UserDashboard";
-import { UserDevelopments } from "../features/user/UserDevelopments";
-import { UserLikedDevelopments } from "../features/user/UserLikedDevelopments";
-import { UserLikedIdeas } from "../features/user/UserLikedIdeas";
-import { UserPostedIdeas } from "../features/user/UserPostedIdeas";
-import { useReceivedLikeCountQuery } from "../features/user/useReceivedLikeCountQuery";
-import { useUserActivityQuery } from "../features/user/useUserActivityQuery";
-import { useURLParams } from "../lib/useURLParams";
-import { PageHeader } from "../ui/PageHeader";
-import { TabControl } from "../ui/TabControl";
 
 type Props = { user: User };
 

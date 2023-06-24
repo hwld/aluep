@@ -1,3 +1,9 @@
+import { RequireLoginModalProvider } from "@/client/features/session/RequireLoginModalProvider";
+import { theme } from "@/client/style/theme";
+import { AppLayout } from "@/client/ui/AppLayout";
+import { AppNavigationProgress } from "@/client/ui/AppNavigationProgress";
+import { ErrorBoundary } from "@/client/ui/ErrorBoundary";
+import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { NotificationsProvider } from "@mantine/notifications";
@@ -10,12 +16,6 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { useState } from "react";
 import superjson from "superjson";
-import { RequireLoginModalProvider } from "../client/features/session/RequireLoginModalProvider";
-import { theme } from "../client/style/theme";
-import { AppLayout } from "../client/ui/AppLayout";
-import { AppNavigationProgress } from "../client/ui/AppNavigationProgress";
-import { ErrorBoundary } from "../client/ui/ErrorBoundary";
-import { PageProps } from "../server/lib/GetServerSidePropsWithReactQuery";
 
 export default function App(props: AppProps<PageProps>) {
   const {

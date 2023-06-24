@@ -1,7 +1,7 @@
+import { UserActivity } from "@/client/features/user/useUserActivityQuery";
+import { db } from "@/server/lib/prismadb";
+import { publicProcedure } from "@/server/lib/trpc";
 import { z } from "zod";
-import { UserActivity } from "../../../client/features/user/useUserActivityQuery";
-import { db } from "../../lib/prismadb";
-import { publicProcedure } from "../../lib/trpc";
 
 export const getUserActivity = publicProcedure
   .input(z.object({ userId: z.string() }))

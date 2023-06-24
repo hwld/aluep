@@ -1,8 +1,8 @@
+import { AppModal } from "@/client/ui/AppModal";
 import { Button, Flex, Text } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { ReactNode } from "react";
 import { IconType } from "react-icons/lib";
-import { AppModal } from "./AppModal";
 
 type Props = {
   title: string;

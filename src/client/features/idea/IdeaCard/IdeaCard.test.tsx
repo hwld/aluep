@@ -1,5 +1,5 @@
+import { IdeaCard } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { render } from "@testing-library/react";
-import { IdeaCard } from "./IdeaCard";
 
 describe("IdeaCard", () => {
   it("お題のタイトルが表示されている", () => {

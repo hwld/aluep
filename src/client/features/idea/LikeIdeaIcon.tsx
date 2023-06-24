@@ -1,4 +1,4 @@
-import { Flex, useMantineTheme } from "@mantine/core";
+import { useMantineTheme, Flex } from "@mantine/core";
 
 const styles = {
   sm: { iconSize: 25, wrapperSize: 35 },

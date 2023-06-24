@@ -1,12 +1,9 @@
+import { AppForm } from "@/client/ui/AppForm";
+import { ReportBaseForm, reportBaseFormSchema } from "@/share/schema/report";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { MdFlag } from "react-icons/md";
-import {
-  ReportBaseForm,
-  reportBaseFormSchema,
-} from "../../../share/schema/report";
-import { AppForm } from "../../ui/AppForm";
 
 type Props = {
   submitText: string;

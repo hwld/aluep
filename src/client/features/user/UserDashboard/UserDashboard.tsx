@@ -1,10 +1,10 @@
+import { UserActivityCard } from "@/client/features/user/UserDashboard/UserActivityCard";
+import { UserProfileCard } from "@/client/features/user/UserDashboard/UserProfileCard";
+import { UserReceivedLikeCard } from "@/client/features/user/UserDashboard/UserReceivedLikeCard";
+import { ReceivedLikeCount } from "@/client/features/user/useReceivedLikeCountQuery";
+import { UserActivity } from "@/client/features/user/useUserActivityQuery";
+import { User } from "@/server/models/user";
 import { Box, Flex, MediaQuery } from "@mantine/core";
-import { User } from "../../../../server/models/user";
-import { ReceivedLikeCount } from "../useReceivedLikeCountQuery";
-import { UserActivity } from "../useUserActivityQuery";
-import { UserActivityCard } from "./UserActivityCard";
-import { UserProfileCard } from "./UserProfileCard";
-import { UserReceivedLikeCard } from "./UserReceivedLikeCard";
 
 type Props = {
   user: User;
