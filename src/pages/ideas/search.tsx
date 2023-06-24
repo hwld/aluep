@@ -3,7 +3,7 @@ import { ideaKeys } from "../../client/features/idea/queryKeys";
 import { IdeaSearchPage } from "../../client/pageComponents/IdeaSearchPage";
 import { withReactQueryGetServerSideProps } from "../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../server/router";
-import { searchIdeaPageSchema } from "../../share/schema";
+import { searchIdeaPageSchema } from "../../share/schema/idea";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, queryClient, callerContext }) => {

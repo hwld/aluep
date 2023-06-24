@@ -5,7 +5,10 @@ import { MdOutlineEdit } from "react-icons/md";
 import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
 import { DevelopmentStatusIds } from "../../share/consts";
-import { CreateRepositoryData, DevelopmentFormData } from "../../share/schema";
+import {
+  CreateRepositoryData,
+  DevelopmentFormData,
+} from "../../share/schema/development";
 import { useDevelop } from "../features/development/useDevelop";
 import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
 import {

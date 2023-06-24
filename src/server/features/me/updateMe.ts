@@ -1,4 +1,4 @@
-import { profileFormSchema } from "../../../share/schema";
+import { profileFormSchema } from "../../../share/schema/user";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 

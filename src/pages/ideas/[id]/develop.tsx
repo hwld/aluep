@@ -6,7 +6,7 @@ import { DevelopIdeaPage } from "../../../client/pageComponents/DevelopPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
 import { Routes } from "../../../share/routes";
-import { createRepositoryURLParamSchema } from "../../../share/schema";
+import { createRepositoryURLParamSchema } from "../../../share/schema/development";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 

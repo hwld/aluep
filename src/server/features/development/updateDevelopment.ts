@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { DevelopmentStatusIds } from "../../../share/consts";
-import { updateDevelopFormSchema } from "../../../share/schema";
+import { updateDevelopFormSchema } from "../../../share/schema/development";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 import { createOrExtractGithubRepositoryUrl } from "./utils";

@@ -1,5 +1,5 @@
 import { pageLimit } from "../../../share/consts";
-import { searchIdeaPageSchema } from "../../../share/schema";
+import { searchIdeaPageSchema } from "../../../share/schema/idea";
 import { publicProcedure } from "../../lib/trpc";
 import { findSearchedIdeas, Idea } from "../../models/idea";
 

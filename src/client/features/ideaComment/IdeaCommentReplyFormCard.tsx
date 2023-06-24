@@ -14,7 +14,7 @@ import { TbAlertCircle } from "react-icons/tb";
 import {
   IdeaCommentFormData,
   ideaCommentFormSchema,
-} from "../../../share/schema";
+} from "../../../share/schema/ideaComment";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
 import { PlainTextarea } from "../../ui/PlainTextarea";

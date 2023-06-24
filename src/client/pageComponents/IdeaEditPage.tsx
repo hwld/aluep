@@ -5,7 +5,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { RouterInputs } from "../../server/lib/trpc";
 import { Idea } from "../../server/models/idea";
 import { Routes } from "../../share/routes";
-import { IdeaFormData } from "../../share/schema";
+import { IdeaFormData } from "../../share/schema/idea";
 import { IdeaForm } from "../features/idea/IdeaForm";
 import { useAllTagsQuery } from "../features/idea/useAllTagsQuery";
 import { trpc } from "../lib/trpc";

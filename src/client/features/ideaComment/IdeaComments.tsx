@@ -1,7 +1,7 @@
 import { Button, Card, Stack, Text, Title } from "@mantine/core";
 import { useRef } from "react";
 import { User } from "../../../server/models/user";
-import { IdeaCommentFormData } from "../../../share/schema";
+import { IdeaCommentFormData } from "../../../share/schema/ideaComment";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { useAutoScrollOnIncrease } from "../../lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "../../lib/useCyclicRandom";

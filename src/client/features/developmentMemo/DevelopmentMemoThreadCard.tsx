@@ -9,7 +9,7 @@ import {
 import { useMemo, useState } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { DevelopmentMemo } from "../../../server/models/developmentMemo";
-import { DevelopmentMemoFormData } from "../../../share/schema";
+import { DevelopmentMemoFormData } from "../../../share/schema/developmentMemo";
 import { useCyclicRandom } from "../../lib/useCyclicRandom";
 import { useHashRemoverOnClickOutside } from "../../lib/useHashRemoverOnClickOutside";
 import { formatDate } from "../../lib/utils";

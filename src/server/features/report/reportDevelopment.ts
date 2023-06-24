@@ -1,4 +1,4 @@
-import { reportDevelopmentFormSchema } from "../../../share/schema";
+import { reportDevelopmentFormSchema } from "../../../share/schema/report";
 import { buildReportedUser, reportToDiscord } from "../../lib/reportToDiscord";
 import { publicProcedure } from "../../lib/trpc";
 

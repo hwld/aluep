@@ -1,7 +1,7 @@
 import { Stack, Text } from "@mantine/core";
 import { MdComputer } from "react-icons/md";
 import { Idea } from "../../server/models/idea";
-import { paginatedPageSchema } from "../../share/schema";
+import { paginatedPageSchema } from "../../share/schema/util";
 import {
   IdeaDevelopmentCard,
   developmentCardMinWidthPx,

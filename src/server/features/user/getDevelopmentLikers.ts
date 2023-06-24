@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { pageLimit } from "../../../share/consts";
-import { pagingSchema } from "../../../share/schema";
+import { pagingSchema } from "../../../share/schema/util";
 import { sortedInSameOrder } from "../../../share/utils";
 import { paginate } from "../../lib/paginate";
 import { db } from "../../lib/prismadb";

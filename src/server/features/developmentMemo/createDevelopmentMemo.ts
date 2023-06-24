@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { developmentMemoFormSchema } from "../../../share/schema";
+import { developmentMemoFormSchema } from "../../../share/schema/developmentMemo";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 

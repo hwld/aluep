@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IdeaCommentFormData } from "../../../share/schema";
+import { IdeaCommentFormData } from "../../../share/schema/ideaComment";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";

@@ -4,7 +4,7 @@ import { BiBookmarkHeart } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { TbHeart } from "react-icons/tb";
 import { User } from "../../server/models/user";
-import { paginatedPageSchema } from "../../share/schema";
+import { paginatedPageSchema } from "../../share/schema/util";
 import { UserCard, userCardMinWidthPx } from "../features/user/UserCard";
 import { UserSummaryCard } from "../features/user/UserSummaryCard";
 import { useFavoritedUsers } from "../features/user/useFavoritedUsers";

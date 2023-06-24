@@ -6,7 +6,7 @@ import { userKeys } from "../../../client/features/user/queryKeys";
 import { IdeaLikersPage } from "../../../client/pageComponents/IdeaLikersPage";
 import { withReactQueryGetServerSideProps } from "../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../server/router";
-import { paginatedPageSchema } from "../../../share/schema";
+import { paginatedPageSchema } from "../../../share/schema/util";
 import { assertString } from "../../../share/utils";
 import NotFoundPage from "../../404";
 

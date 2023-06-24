@@ -11,7 +11,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { FaRegComment, FaUserAlt } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
 import { IdeaComment } from "../../../server/models/ideaComment";
-import { IdeaCommentFormData } from "../../../share/schema";
+import { IdeaCommentFormData } from "../../../share/schema/ideaComment";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { useHashRemoverOnClickOutside } from "../../lib/useHashRemoverOnClickOutside";
 import { formatDate } from "../../lib/utils";

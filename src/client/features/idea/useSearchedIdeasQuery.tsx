@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ideaOrderSchema, ideaPeriodSchema } from "../../../share/schema";
+import { ideaOrderSchema, ideaPeriodSchema } from "../../../share/schema/idea";
 import { trpc } from "../../lib/trpc";
 import { ideaKeys } from "./queryKeys";
 

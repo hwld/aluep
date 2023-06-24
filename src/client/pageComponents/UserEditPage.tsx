@@ -6,7 +6,7 @@ import { useState } from "react";
 import { MdOutlineEdit } from "react-icons/md";
 import { RouterInputs } from "../../server/lib/trpc";
 import { Routes } from "../../share/routes";
-import { ProfileFormData } from "../../share/schema";
+import { ProfileFormData } from "../../share/schema/user";
 import { UserIconFormDialog } from "../features/user/UserIconFormModal";
 import { UserProfileForm } from "../features/user/UserProfileForm";
 import { trpc } from "../lib/trpc";

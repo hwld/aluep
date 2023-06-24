@@ -1,5 +1,5 @@
 import sanitize from "sanitize-html";
-import { ideaFormSchema } from "../../../share/schema";
+import { ideaFormSchema } from "../../../share/schema/idea";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 import { ideaDescriptionSanitizeOptions } from "./ideaDescriptionSanitizeOptions";

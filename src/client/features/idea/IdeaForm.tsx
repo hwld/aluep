@@ -3,7 +3,7 @@ import { Input, MultiSelect, Space, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { MdPostAdd } from "react-icons/md";
 import { IdeaTag } from "../../../server/models/ideaTag";
-import { IdeaFormData, ideaFormSchema } from "../../../share/schema";
+import { IdeaFormData, ideaFormSchema } from "../../../share/schema/idea";
 import { AppForm } from "../../ui/AppForm";
 import { IdeaDescriptionEditor } from "./IdeaDescriptionEditor/IdeaDescriptionEditor";
 import { useIdeaDescriptionEditor } from "./IdeaDescriptionEditor/useIdeaDescriptionEditor";

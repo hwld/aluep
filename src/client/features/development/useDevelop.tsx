@@ -9,7 +9,7 @@ import { Routes } from "../../../share/routes";
 import {
   CreateRepositoryData,
   DevelopmentFormData,
-} from "../../../share/schema";
+} from "../../../share/schema/development";
 import { trpc } from "../../lib/trpc";
 import {
   isTRPCClientError,

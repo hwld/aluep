@@ -6,7 +6,7 @@ import { useIdeaQuery } from "../../../../client/features/idea/useIdeaQuery";
 import { DevelopmentsPage as DevelopmentsPageComponent } from "../../../../client/pageComponents/DevelopmentsPage";
 import { withReactQueryGetServerSideProps } from "../../../../server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "../../../../server/router";
-import { paginatedPageSchema } from "../../../../share/schema";
+import { paginatedPageSchema } from "../../../../share/schema/util";
 import { assertString } from "../../../../share/utils";
 import NotFoundPage from "../../../404";
 

@@ -7,7 +7,7 @@ import {
   ReportIdeaCommentForm,
   ReportIdeaForm,
   ReportUserForm,
-} from "../../share/schema";
+} from "../../share/schema/report";
 import { OmitStrict } from "../../types/OmitStrict";
 
 type ReportedUser = { url: string; name: string } | undefined;

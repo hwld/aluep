@@ -8,7 +8,7 @@ import { MdFlag } from "react-icons/md";
 import { TbLink } from "react-icons/tb";
 import { RouterInputs } from "../../../server/lib/trpc";
 import { Routes } from "../../../share/routes";
-import { ReportBaseForm } from "../../../share/schema";
+import { ReportBaseForm } from "../../../share/schema/report";
 import { trpc } from "../../lib/trpc";
 import {
   showErrorNotification,

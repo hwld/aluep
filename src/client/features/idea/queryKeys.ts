@@ -1,4 +1,4 @@
-import { IdeaOrder } from "../../../share/schema";
+import { IdeaOrder } from "../../../share/schema/idea";
 import { userKeys } from "../user/queryKeys";
 import { UseSearchedIdeasQueryArgs } from "./useSearchedIdeasQuery";
 

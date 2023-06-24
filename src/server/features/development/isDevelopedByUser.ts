@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DevelopedData } from "../../../share/schema";
+import { DevelopedData } from "../../../share/schema/development";
 import { db } from "../../lib/prismadb";
 import { publicProcedure } from "../../lib/trpc";
 

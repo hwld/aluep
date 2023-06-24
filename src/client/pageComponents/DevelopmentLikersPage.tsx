@@ -1,7 +1,7 @@
 import { Stack, Text } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
 import { Development } from "../../server/models/development";
-import { paginatedPageSchema } from "../../share/schema";
+import { paginatedPageSchema } from "../../share/schema/util";
 import { DevelopmentSummaryCard } from "../features/development/DevelopmentSummaryCard";
 import {
   IdeaLikerCard,

@@ -5,7 +5,7 @@ import {
   ideaOrderSchema,
   ideaPeriodSchema,
   searchIdeaPageSchema,
-} from "../../share/schema";
+} from "../../share/schema/idea";
 import { EmptyIdeaSearchResult } from "../features/idea/EmptyIdeaSearchResult";
 import {
   IdeaCard,

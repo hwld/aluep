@@ -1,4 +1,4 @@
-import { ideaCommentFormSchema } from "../../../share/schema";
+import { ideaCommentFormSchema } from "../../../share/schema/ideaComment";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 

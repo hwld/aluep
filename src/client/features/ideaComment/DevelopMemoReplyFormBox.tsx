@@ -14,7 +14,7 @@ import { TbAlertCircle } from "react-icons/tb";
 import {
   DevelopmentMemoFormData,
   developmentMemoFormSchema,
-} from "../../../share/schema";
+} from "../../../share/schema/developmentMemo";
 import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
 import { PlainTextarea } from "../../ui/PlainTextarea";
 

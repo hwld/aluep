@@ -15,7 +15,7 @@ import { User } from "../../../server/models/user";
 import {
   DevelopmentMemoFormData,
   developmentMemoFormSchema,
-} from "../../../share/schema";
+} from "../../../share/schema/developmentMemo";
 import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
 import { PlainTextarea } from "../../ui/PlainTextarea";
 import { UserIcon } from "../user/UserIcon";

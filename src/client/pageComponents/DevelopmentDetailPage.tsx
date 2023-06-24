@@ -13,7 +13,7 @@ import { MdComputer } from "react-icons/md";
 import { TbNote } from "react-icons/tb";
 import { Development } from "../../server/models/development";
 import { Idea } from "../../server/models/idea";
-import { DevelopmentMemoFormData } from "../../share/schema";
+import { DevelopmentMemoFormData } from "../../share/schema/developmentMemo";
 import { DevelopmentDetailCard } from "../features/development/DevelopmentDetailCard";
 import { developmentKeys } from "../features/development/queryKeys";
 import { useDevelopmentLikeOnDetail } from "../features/development/useDevelopmentLikeOnDetail";

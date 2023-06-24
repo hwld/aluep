@@ -8,7 +8,7 @@ import { User } from "../../../server/models/user";
 import {
   IdeaCommentFormData,
   ideaCommentFormSchema,
-} from "../../../share/schema";
+} from "../../../share/schema/ideaComment";
 import { OmitStrict } from "../../../types/OmitStrict";
 import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
 import { PlainTextarea } from "../../ui/PlainTextarea";

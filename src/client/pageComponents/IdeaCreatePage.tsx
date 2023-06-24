@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { MdPostAdd } from "react-icons/md";
 import { Routes } from "../../share/routes";
-import { IdeaFormData } from "../../share/schema";
+import { IdeaFormData } from "../../share/schema/idea";
 import { IdeaForm } from "../features/idea/IdeaForm";
 import { useAllTagsQuery } from "../features/idea/useAllTagsQuery";
 import { trpc } from "../lib/trpc";

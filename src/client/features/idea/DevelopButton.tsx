@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 import { Routes } from "../../../share/routes";
-import { DevelopedData } from "../../../share/schema";
+import { DevelopedData } from "../../../share/schema/development";
 import { AppTooltip } from "../../ui/AppTooltip";
 import { ComputerIcon } from "../../ui/ComputerIcon";
 

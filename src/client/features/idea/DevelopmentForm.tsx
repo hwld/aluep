@@ -9,7 +9,7 @@ import { DevelopmentStatus } from "../../../server/models/developmentStatus";
 import {
   DevelopmentFormData,
   developmentFormSchema,
-} from "../../../share/schema";
+} from "../../../share/schema/development";
 import { AppForm } from "../../ui/AppForm";
 
 export type DevelopmentFormDefaultValues = Partial<

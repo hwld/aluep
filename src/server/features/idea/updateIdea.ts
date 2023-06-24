@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import sanitize from "sanitize-html";
-import { ideaUpdateFormSchema } from "../../../share/schema";
+import { ideaUpdateFormSchema } from "../../../share/schema/idea";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 import { ideaDescriptionSanitizeOptions } from "./ideaDescriptionSanitizeOptions";

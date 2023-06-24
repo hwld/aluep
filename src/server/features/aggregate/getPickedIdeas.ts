@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ideaOrderSchema } from "../../../share/schema";
+import { ideaOrderSchema } from "../../../share/schema/idea";
 import { publicProcedure } from "../../lib/trpc";
 import { pickUpIdeas as pickUp } from "../../models/idea";
 

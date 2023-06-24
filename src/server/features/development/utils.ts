@@ -1,4 +1,4 @@
-import { DevelopmentFormData } from "../../../share/schema";
+import { DevelopmentFormData } from "../../../share/schema/development";
 import { createGitHubRepository } from "../github/createGitHubRepository";
 
 /**

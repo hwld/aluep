@@ -4,7 +4,10 @@ import { MdComputer } from "react-icons/md";
 import { Idea } from "../../server/models/idea";
 import { DevelopmentStatusIds } from "../../share/consts";
 import { Routes } from "../../share/routes";
-import { CreateRepositoryData, DevelopmentFormData } from "../../share/schema";
+import {
+  CreateRepositoryData,
+  DevelopmentFormData,
+} from "../../share/schema/development";
 import { useDevelop } from "../features/development/useDevelop";
 import { useDevelopmentStatusesQuery } from "../features/development/useDevelopmentStatusesQuery";
 import { DevelopmentForm } from "../features/idea/DevelopmentForm";
