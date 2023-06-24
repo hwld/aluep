@@ -18,10 +18,10 @@ export const ideaFormSchema = z.object({
 });
 export type IdeaFormData = z.infer<typeof ideaFormSchema>;
 
-// 更新するときにはidが必要なのでお題のフォームにそれを追加する
-export const ideaUpdateFormSchema = z
-  .object({ ideaId: z.string().min(1).max(100) })
-  .and(ideaFormSchema);
+export const createIdeaInputSchema = ideaFormSchema;
+export const updateIdeaInputSchema = ideaFormSchema.and(
+  z.object({ ideaId: z.string().min(1).max(100) })
+);
 
 // お題の並び順
 export const ideaOrderSchema = z.union([
@@ -39,7 +39,7 @@ export const ideaPeriodSchema = z.union([
 ]);
 export type IdeaPeriod = z.infer<typeof ideaPeriodSchema>;
 
-/** お題検索画面用のスキーマ */
+// お題検索画面のパラメータ
 export const searchIdeaPageSchema = z.object({
   keyword: z.string().default(""),
   tagIds: z

@@ -1,4 +1,4 @@
-import { Box, useMantineTheme } from "@mantine/core";
+import { Box } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { ReactNode } from "react";
 import { RequireLoginModal } from "../features/session/RequireLoginModal";
@@ -12,7 +12,6 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
   const { session } = useSessionQuery();
   const unsupportedDisplay = useMediaQuery("(max-width: 600px)");
   const [isOpen, { close }] = useDisclosure(true);
-  const { colors } = useMantineTheme();
 
   return (
     <>

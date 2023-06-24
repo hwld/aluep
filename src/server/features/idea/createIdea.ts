@@ -1,11 +1,11 @@
 import sanitize from "sanitize-html";
-import { ideaFormSchema } from "../../../share/schema/idea";
+import { createIdeaInputSchema } from "../../../share/schema/idea";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 import { ideaDescriptionSanitizeOptions } from "./ideaDescriptionSanitizeOptions";
 
 export const createIdea = requireLoggedInProcedure
-  .input(ideaFormSchema)
+  .input(createIdeaInputSchema)
   .mutation(async ({ input, ctx }) => {
     const sanitizedIdeaDescriptionHtml = sanitize(
       input.descriptionHtml,

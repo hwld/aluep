@@ -2,7 +2,6 @@ import { Button, Card, Stack, Text, Title } from "@mantine/core";
 import { useRef } from "react";
 import { User } from "../../../server/models/user";
 import { IdeaCommentFormData } from "../../../share/schema/ideaComment";
-import { OmitStrict } from "../../../types/OmitStrict";
 import { useAutoScrollOnIncrease } from "../../lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "../../lib/useCyclicRandom";
 import { useRequireLoginModal } from "../session/RequireLoginModalProvider";
@@ -34,18 +33,19 @@ export const IdeaComments: React.FC<Props> = ({
     openLoginModal();
   };
 
-  const handleSubmitComment = (
-    data: OmitStrict<IdeaCommentFormData, "ideaId">
-  ) => {
-    postCommentMutation.mutate(data, {
-      onSuccess: () => {
-        // Formのkeyを変更して再マウントさせる。
-        // これでFormのフィールドがリセットされ、submitボタンを一度も押していないことになる。
-        // handleSubmitCommentでフィールドをリセットするメソッドを受けとり、onSuccessで実行することも
-        // できるが、submitを一度押していることになるので、コメント欄に入力->入力をすべて削除でエラーメッセージが表示されてしまう
-        nextFormKey();
-      },
-    });
+  const handleSubmitComment = (data: IdeaCommentFormData) => {
+    postCommentMutation.mutate(
+      { ...data, ideaId },
+      {
+        onSuccess: () => {
+          // Formのkeyを変更して再マウントさせる。
+          // これでFormのフィールドがリセットされ、submitボタンを一度も押していないことになる。
+          // handleSubmitCommentでフィールドをリセットするメソッドを受けとり、onSuccessで実行することも
+          // できるが、submitを一度押していることになるので、コメント欄に入力->入力をすべて削除でエラーメッセージが表示されてしまう
+          nextFormKey();
+        },
+      }
+    );
   };
 
   const handleDeleteComment = (commentId: string) => {

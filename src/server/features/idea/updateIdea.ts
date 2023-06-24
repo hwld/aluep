@@ -1,12 +1,12 @@
 import { TRPCError } from "@trpc/server";
 import sanitize from "sanitize-html";
-import { ideaUpdateFormSchema } from "../../../share/schema/idea";
+import { updateIdeaInputSchema } from "../../../share/schema/idea";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 import { ideaDescriptionSanitizeOptions } from "./ideaDescriptionSanitizeOptions";
 
 export const updateIdea = requireLoggedInProcedure
-  .input(ideaUpdateFormSchema)
+  .input(updateIdeaInputSchema)
   .mutation(async ({ input, ctx }) => {
     // ログインユーザーが投稿したお題が存在するか確認する
     const existingIdea = await db.idea.findFirst({

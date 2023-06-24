@@ -8,17 +8,19 @@ export const reportBaseFormSchema = z.object({
 });
 export type ReportBaseForm = z.infer<typeof reportBaseFormSchema>;
 
-export const reportIdeaFormSchema = reportBaseFormSchema.and(
+export const reportIdeaInputSchema = reportBaseFormSchema.and(
   z.object({ targetIdea: z.object({ url: z.string(), title: z.string() }) })
 );
-export type ReportIdeaForm = z.infer<typeof reportIdeaFormSchema>;
+export type ReportIdeaInput = z.infer<typeof reportIdeaInputSchema>;
 
-export const reportIdeaCommentFormSchema = reportBaseFormSchema.and(
+export const reportIdeaCommentInputSchema = reportBaseFormSchema.and(
   z.object({ targetCommentUrl: z.string() })
 );
-export type ReportIdeaCommentForm = z.infer<typeof reportIdeaCommentFormSchema>;
+export type ReportIdeaCommentInput = z.infer<
+  typeof reportIdeaCommentInputSchema
+>;
 
-export const reportDevelopmentFormSchema = reportBaseFormSchema.and(
+export const reportDevelopmentInputSchema = reportBaseFormSchema.and(
   z.object({
     targetDeveloepr: z.object({
       url: z.string(),
@@ -26,9 +28,11 @@ export const reportDevelopmentFormSchema = reportBaseFormSchema.and(
     }),
   })
 );
-export type ReportDevelopmentForm = z.infer<typeof reportDevelopmentFormSchema>;
+export type ReportDevelopmentInput = z.infer<
+  typeof reportDevelopmentInputSchema
+>;
 
-export const reportUserFormSchema = reportBaseFormSchema.and(
+export const reportUserInputSchema = reportBaseFormSchema.and(
   z.object({
     targetUser: z.object({
       url: z.string(),
@@ -36,12 +40,12 @@ export const reportUserFormSchema = reportBaseFormSchema.and(
     }),
   })
 );
-export type ReportUserForm = z.infer<typeof reportUserFormSchema>;
+export type ReportUserInput = z.infer<typeof reportUserInputSchema>;
 
-export const reportDevelopmentMemoFormSchema = reportBaseFormSchema.and(
+export const reportDevelopmentMemoInputSchema = reportBaseFormSchema.and(
   z.object({ targetMemoUrl: z.string() })
 );
 
-export type ReportDevelopmentMemoForm = z.infer<
-  typeof reportDevelopmentMemoFormSchema
+export type ReportDevelopmentMemoInput = z.infer<
+  typeof reportDevelopmentMemoInputSchema
 >;

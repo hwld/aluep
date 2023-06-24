@@ -1,10 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { developmentMemoFormSchema } from "../../../share/schema/developmentMemo";
+import { createDevelopmentMemoInputSchema } from "../../../share/schema/developmentMemo";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 
 export const createDevelopmentMemo = requireLoggedInProcedure
-  .input(developmentMemoFormSchema)
+  .input(createDevelopmentMemoInputSchema)
   .mutation(async ({ input, ctx }) => {
     const development = await db.development.findUnique({
       where: { id: input.developmentId },

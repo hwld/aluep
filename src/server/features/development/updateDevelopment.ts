@@ -1,12 +1,12 @@
 import { TRPCError } from "@trpc/server";
 import { DevelopmentStatusIds } from "../../../share/consts";
-import { updateDevelopFormSchema } from "../../../share/schema/development";
+import { updateDevelopmentInputSchema } from "../../../share/schema/development";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 import { createOrExtractGithubRepositoryUrl } from "./utils";
 
 export const updateDevelopment = requireLoggedInProcedure
-  .input(updateDevelopFormSchema)
+  .input(updateDevelopmentInputSchema)
   .mutation(async ({ input, ctx }) => {
     // ログインユーザーが開発者か確認する
     const development = await db.development.findFirst({

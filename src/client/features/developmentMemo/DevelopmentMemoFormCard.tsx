@@ -39,7 +39,7 @@ export const DevelopmentMemoFormCard = forwardRef<HTMLDivElement, Props>(
       formState: { errors },
       handleSubmit: innerHandleSubmit,
     } = useForm<DevelopmentMemoFormData>({
-      defaultValues: { developmentId, memo: "" },
+      defaultValues: { memo: "" },
       resolver: zodResolver(developmentMemoFormSchema),
     });
 

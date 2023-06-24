@@ -5,7 +5,7 @@ export const MenuDropdown: React.FC<MenuDropdownProps> = ({
   children,
   ...props
 }) => {
-  const { onClick, ...others } = props;
+  const { onClick, ..._ } = props;
 
   const handleClick: MenuDropdownProps["onClick"] = (e) => {
     e.stopPropagation();

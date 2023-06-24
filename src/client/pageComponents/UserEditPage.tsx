@@ -1,4 +1,4 @@
-import { Box, Card, Flex, useMantineTheme } from "@mantine/core";
+import { Box, Card, Flex } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
@@ -22,7 +22,6 @@ const uploadNotificationId = "upload-icon";
 type Props = { user: Session["user"] };
 export const UserEditPage: React.FC<Props> = ({ user }) => {
   const router = useRouter();
-  const mantineTheme = useMantineTheme();
   const [uploading, setUploading] = useState(false);
 
   const handleUploadIcon = async (iconFile: File) => {

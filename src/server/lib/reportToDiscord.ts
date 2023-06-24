@@ -2,11 +2,11 @@ import { APIEmbed, APIEmbedField, WebhookClient } from "discord.js";
 import { IncomingMessage } from "http";
 import { Routes } from "../../share/routes";
 import {
-  ReportDevelopmentForm,
-  ReportDevelopmentMemoForm,
-  ReportIdeaCommentForm,
-  ReportIdeaForm,
-  ReportUserForm,
+  ReportDevelopmentInput,
+  ReportDevelopmentMemoInput,
+  ReportIdeaCommentInput,
+  ReportIdeaInput,
+  ReportUserInput,
 } from "../../share/schema/report";
 import { OmitStrict } from "../../types/OmitStrict";
 
@@ -30,11 +30,11 @@ export const buildReportedUser = (
 type Args = {
   reportedUser: ReportedUser;
 } & (
-  | { type: "idea"; report: ReportIdeaForm }
-  | { type: "development"; report: ReportDevelopmentForm }
-  | { type: "ideaComment"; report: ReportIdeaCommentForm }
-  | { type: "user"; report: ReportUserForm }
-  | { type: "developmentMemo"; report: ReportDevelopmentMemoForm }
+  | { type: "idea"; report: ReportIdeaInput }
+  | { type: "development"; report: ReportDevelopmentInput }
+  | { type: "ideaComment"; report: ReportIdeaCommentInput }
+  | { type: "user"; report: ReportUserInput }
+  | { type: "developmentMemo"; report: ReportDevelopmentMemoInput }
 );
 
 const buildEmbedFields = ({

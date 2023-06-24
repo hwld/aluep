@@ -60,7 +60,3 @@ export const showErrorNotification = (
 export const formatDate = (date: Date) => {
   return format(date, "yyyy年MM月dd日", { locale: ja });
 };
-
-export const extractHash = (path: string) => {
-  return path.split("#")[1] ?? "";
-};

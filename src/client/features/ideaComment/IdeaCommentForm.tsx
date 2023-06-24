@@ -9,7 +9,6 @@ import {
   IdeaCommentFormData,
   ideaCommentFormSchema,
 } from "../../../share/schema/ideaComment";
-import { OmitStrict } from "../../../types/OmitStrict";
 import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
 import { PlainTextarea } from "../../ui/PlainTextarea";
 import { UserIcon } from "../user/UserIcon";
@@ -17,7 +16,7 @@ import { UserIcon } from "../user/UserIcon";
 type Props = {
   ideaId: string;
   loggedInUser: User;
-  onSubmit: (data: OmitStrict<IdeaCommentFormData, "ideaId">) => void;
+  onSubmit: (data: IdeaCommentFormData) => void;
   isSubmitting?: boolean;
 };
 
@@ -40,7 +39,7 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
       handleSubmit: innerHandleSubmit,
       formState: { errors },
     } = useForm<IdeaCommentFormData>({
-      defaultValues: { ideaId, comment: "" },
+      defaultValues: { comment: "" },
       resolver: zodResolver(ideaCommentFormSchema),
     });
 

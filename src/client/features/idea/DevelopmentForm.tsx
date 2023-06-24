@@ -13,9 +13,7 @@ import {
 import { AppForm } from "../../ui/AppForm";
 
 export type DevelopmentFormDefaultValues = Partial<
-  UnionToIntersection<
-    DistributiveOmit<DevelopmentFormData, "type" | "ideaId">
-  > & {
+  UnionToIntersection<DistributiveOmit<DevelopmentFormData, "type">> & {
     type: DevelopmentFormData["type"];
   }
 >;
@@ -37,7 +35,6 @@ type Props = {
 export const DevelopmentForm: React.FC<Props> = ({
   developmentStatuses,
   defaultValues,
-  ideaId,
   isRelogined = false,
   onSubmit,
   onCancel,
@@ -53,7 +50,6 @@ export const DevelopmentForm: React.FC<Props> = ({
   } = useForm<DevelopmentFormData>({
     defaultValues: {
       ...defaultValues,
-      ideaId,
     },
     resolver: zodResolver(developmentFormSchema),
   });

@@ -1,4 +1,4 @@
-import { Box, Card, useMantineTheme } from "@mantine/core";
+import { Box, Card } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { MdOutlineEdit } from "react-icons/md";
@@ -16,7 +16,6 @@ type Props = { idea: Idea };
 export const IdeaEditPage: React.FC<Props> = ({ idea }) => {
   const router = useRouter();
   const { allTags } = useAllTagsQuery();
-  const mantineTheme = useMantineTheme();
 
   const updateMutation = useMutation({
     mutationFn: (data: RouterInputs["idea"]["update"]) => {

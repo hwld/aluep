@@ -15,21 +15,16 @@ import {
   IdeaCommentFormData,
   ideaCommentFormSchema,
 } from "../../../share/schema/ideaComment";
-import { OmitStrict } from "../../../types/OmitStrict";
 import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
 import { PlainTextarea } from "../../ui/PlainTextarea";
 
 type Props = {
-  inReplyToCommentId: string;
-  ideaId: string;
-  onSubmit: (data: OmitStrict<IdeaCommentFormData, "ideaId">) => void;
+  onSubmit: (data: IdeaCommentFormData) => void;
   onCancel: () => void;
   isSubmitting?: boolean;
 };
 
 export const IdeaCommentReplyFormCard: React.FC<Props> = ({
-  ideaId,
-  inReplyToCommentId,
   onSubmit,
   onCancel,
   isSubmitting = false,
@@ -41,7 +36,7 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
     handleSubmit: innerHandleSubmit,
     formState: { errors },
   } = useForm<IdeaCommentFormData>({
-    defaultValues: { ideaId, inReplyToCommentId, comment: "" },
+    defaultValues: { comment: "" },
     resolver: zodResolver(ideaCommentFormSchema),
   });
 

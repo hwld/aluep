@@ -1,7 +1,8 @@
-import { Box, Card, useMantineTheme } from "@mantine/core";
+import { Box, Card } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { MdPostAdd } from "react-icons/md";
+import { RouterInputs } from "../../server/lib/trpc";
 import { Routes } from "../../share/routes";
 import { IdeaFormData } from "../../share/schema/idea";
 import { IdeaForm } from "../features/idea/IdeaForm";
@@ -13,10 +14,9 @@ import { PageHeader } from "../ui/PageHeader";
 export const IdeaCreatePage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
   const router = useRouter();
-  const mantineTheme = useMantineTheme();
 
   const createMutate = useMutation({
-    mutationFn: (data: IdeaFormData) => {
+    mutationFn: (data: RouterInputs["idea"]["create"]) => {
       return trpc.idea.create.mutate(data);
     },
     onSuccess: ({ ideaId }) => {

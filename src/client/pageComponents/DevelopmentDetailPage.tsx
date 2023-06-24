@@ -86,11 +86,14 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
   };
 
   const handleSubmitMemo = (data: DevelopmentMemoFormData) => {
-    createMemoMutation.mutate(data, {
-      onSuccess: () => {
-        nextFormKey();
-      },
-    });
+    createMemoMutation.mutate(
+      { ...data, developmentId: development.id },
+      {
+        onSuccess: () => {
+          nextFormKey();
+        },
+      }
+    );
   };
 
   const handleToggleAllowOtherUserMemos = () => {

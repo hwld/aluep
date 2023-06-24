@@ -10,7 +10,6 @@ import { useMemo, useState } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { DevelopmentMemo } from "../../../server/models/developmentMemo";
 import { DevelopmentMemoFormData } from "../../../share/schema/developmentMemo";
-import { useCyclicRandom } from "../../lib/useCyclicRandom";
 import { useHashRemoverOnClickOutside } from "../../lib/useHashRemoverOnClickOutside";
 import { formatDate } from "../../lib/utils";
 import { CardActionIcon } from "../../ui/CardActionIcon";
@@ -39,7 +38,6 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
     developmentId,
   });
   const [isOpenReplyForm, setIsOpenReplyForm] = useState(false);
-  const [formKey, nextFormKey] = useCyclicRandom();
   const memoRef = useHashRemoverOnClickOutside({
     canRemove: (hash) => hash === memo.id,
   });
@@ -52,15 +50,6 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
     return childrenMemos.at(-1)!.id;
   }, [childrenMemos, memo.id]);
 
-  // 返信元のメモIDが変わったらフォームをマウントし直したい
-  // (参考: https://react.dev/reference/react/useState#storing-information-from-previous-renders)
-  const [prevReplyTargetMemoId, setPrevReplyTargetMemoId] =
-    useState(replyTargetMemoId);
-  if (prevReplyTargetMemoId !== replyTargetMemoId) {
-    setPrevReplyTargetMemoId(replyTargetMemoId);
-    nextFormKey();
-  }
-
   const handleOpenReplyForm = () => {
     setIsOpenReplyForm(true);
   };
@@ -70,7 +59,11 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
   };
 
   const handleSubmitMemo = (data: DevelopmentMemoFormData) => {
-    createMemoMutation.mutate(data);
+    createMemoMutation.mutate({
+      ...data,
+      developmentId,
+      parentMemoId: replyTargetMemoId,
+    });
   };
 
   const handleDeleteMemo = (id: string) => {
@@ -139,11 +132,8 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
         <>
           {childrenMemos.length === 0 && <Divider my="md" />}
           <DevelopmentMemoReplyFormBox
-            key={formKey}
-            developmentId={developmentId}
             onSubmit={handleSubmitMemo}
             onCancel={handleCloseReplyForm}
-            parentMemoId={replyTargetMemoId}
             isSubmitting={createMemoMutation.isLoading}
           />
         </>

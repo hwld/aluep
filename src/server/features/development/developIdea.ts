@@ -1,11 +1,11 @@
 import { DevelopmentStatusIds } from "../../../share/consts";
-import { developmentFormSchema } from "../../../share/schema/development";
+import { createDevelopmentInputSchema } from "../../../share/schema/development";
 import { db } from "../../lib/prismadb";
 import { requireLoggedInProcedure } from "../../lib/trpc";
 import { createOrExtractGithubRepositoryUrl } from "./utils";
 
 export const developIdea = requireLoggedInProcedure
-  .input(developmentFormSchema)
+  .input(createDevelopmentInputSchema)
   .mutation(async ({ input, ctx }) => {
     const githubRepositoryUrl = await createOrExtractGithubRepositoryUrl(
       input,

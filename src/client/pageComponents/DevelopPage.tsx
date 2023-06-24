@@ -1,4 +1,4 @@
-import { Card, Stack, Text, useMantineTheme } from "@mantine/core";
+import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { MdComputer } from "react-icons/md";
 import { Idea } from "../../server/models/idea";
@@ -20,7 +20,6 @@ type Props = {
 };
 export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
   const router = useRouter();
-  const mantineTheme = useMantineTheme();
 
   const { developmentStatuses } = useDevelopmentStatusesQuery();
 
@@ -29,9 +28,12 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
   } = useDevelop({ ideaId: idea.id });
 
   const handleDevelopIdea = (data: DevelopmentFormData) => {
-    developMutation.mutate(data, {
-      onSuccess: () => router.replace(Routes.idea(idea.id)),
-    });
+    developMutation.mutate(
+      { ...data, ideaId: idea.id },
+      {
+        onSuccess: () => router.replace(Routes.idea(idea.id)),
+      }
+    );
   };
 
   const handleBack = () => {

@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { IdeaCommentFormData } from "../../../share/schema/ideaComment";
-import { OmitStrict } from "../../../types/OmitStrict";
+import { RouterInputs } from "../../../server/lib/trpc";
 import { trpc } from "../../lib/trpc";
 import { showErrorNotification } from "../../lib/utils";
 import { ideaCommentKeys } from "./queryKeys";
@@ -20,8 +19,8 @@ export const useIdeaComments = ({ ideaId }: UseIdeaCommentsArgs) => {
   });
 
   const postCommentMutation = useMutation({
-    mutationFn: (data: OmitStrict<IdeaCommentFormData, "ideaId">) => {
-      return trpc.ideaComment.create.mutate({ ...data, ideaId });
+    mutationFn: (data: RouterInputs["ideaComment"]["create"]) => {
+      return trpc.ideaComment.create.mutate(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(ideaCommentKeys.listByIdea(ideaId));

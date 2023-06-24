@@ -1,9 +1,7 @@
 import { z } from "zod";
 
-export type DevelopmentFormData = z.infer<typeof developmentFormSchema>;
 export const developmentFormSchema = z
   .object({
-    ideaId: z.string().min(1).max(100),
     comment: z
       .string()
       .max(300, "コメントは300文字以下で入力してください。")
@@ -48,9 +46,13 @@ export const developmentFormSchema = z
       }),
     ])
   );
+export type DevelopmentFormData = z.infer<typeof developmentFormSchema>;
 
-export const updateDevelopFormSchema = developmentFormSchema.and(
-  z.object({ developmentId: z.string() })
+export const createDevelopmentInputSchema = developmentFormSchema.and(
+  z.object({ ideaId: z.string().min(1).max(100) })
+);
+export const updateDevelopmentInputSchema = developmentFormSchema.and(
+  z.object({ ideaId: z.string().min(1).max(100), developmentId: z.string() })
 );
 
 /** DevelopFormのtype="createRepository"情報をURLパラメータに持たせたときに使う */

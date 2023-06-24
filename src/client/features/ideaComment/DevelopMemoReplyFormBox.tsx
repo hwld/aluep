@@ -19,16 +19,12 @@ import { useDebouncedSubmitting } from "../../lib/useDebouncedSubmitting";
 import { PlainTextarea } from "../../ui/PlainTextarea";
 
 type Props = {
-  parentMemoId: string;
-  developmentId: string;
   onSubmit: (data: DevelopmentMemoFormData) => void;
   onCancel: () => void;
   isSubmitting?: boolean;
 };
 
 export const DevelopmentMemoReplyFormBox: React.FC<Props> = ({
-  developmentId,
-  parentMemoId,
   onSubmit,
   onCancel,
   isSubmitting = false,
@@ -42,8 +38,6 @@ export const DevelopmentMemoReplyFormBox: React.FC<Props> = ({
     formState: { errors },
   } = useForm<DevelopmentMemoFormData>({
     defaultValues: {
-      developmentId,
-      parentMemoId,
       memo: "",
     },
     resolver: zodResolver(developmentMemoFormSchema),

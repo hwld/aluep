@@ -39,6 +39,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
   const handleUpdateDevelopment = (data: DevelopmentFormData) => {
     updateDevelopmentMutation.mutate({
       ...data,
+      ideaId: idea.id,
       developmentId: development.id,
     });
   };

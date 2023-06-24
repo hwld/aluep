@@ -12,7 +12,6 @@ import { FaRegComment, FaUserAlt } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
 import { IdeaComment } from "../../../server/models/ideaComment";
 import { IdeaCommentFormData } from "../../../share/schema/ideaComment";
-import { OmitStrict } from "../../../types/OmitStrict";
 import { useHashRemoverOnClickOutside } from "../../lib/useHashRemoverOnClickOutside";
 import { formatDate } from "../../lib/utils";
 import { CardActionIcon } from "../../ui/CardActionIcon";
@@ -73,10 +72,8 @@ export const IdeaCommentCard: React.FC<Props> = ({
     openReplyForm();
   };
 
-  const handleSubmitReply = (
-    data: OmitStrict<IdeaCommentFormData, "ideaId">
-  ) => {
-    replyMutation.mutate(data);
+  const handleSubmitReply = (data: IdeaCommentFormData) => {
+    replyMutation.mutate({ ...data, ideaId, inReplyToCommentId: comment.id });
   };
 
   // このコメントの返信元コメントにスクロールする
@@ -176,8 +173,6 @@ export const IdeaCommentCard: React.FC<Props> = ({
       </Card>
       {isReplyFormOpen && (
         <IdeaCommentReplyFormCard
-          inReplyToCommentId={comment.id}
-          ideaId={comment.ideaId}
           onCancel={closeReplyForm}
           onSubmit={handleSubmitReply}
           isSubmitting={replyMutation.isLoading}
