@@ -1,7 +1,7 @@
+import { updateIdeaInputSchema } from "@/models/idea";
 import { ideaDescriptionSanitizeOptions } from "@/server/features/idea/ideaDescriptionSanitizeOptions";
 import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
-import { updateIdeaInputSchema } from "@/share/schema/idea";
 import { TRPCError } from "@trpc/server";
 import sanitize from "sanitize-html";
 

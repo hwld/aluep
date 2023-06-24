@@ -7,14 +7,14 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
+import {
+  CreateRepositoryData,
+  DevelopmentFormData,
+} from "@/models/development";
 import { RouterInputs } from "@/server/lib/trpc";
 import { AppRouter } from "@/server/router";
 import { GitHubErrors } from "@/share/errors";
 import { Routes } from "@/share/routes";
-import {
-  CreateRepositoryData,
-  DevelopmentFormData,
-} from "@/share/schema/development";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TRPCClientError } from "@trpc/client";
 import { signIn } from "next-auth/react";

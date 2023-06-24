@@ -1,4 +1,4 @@
-import { IdeaOrder, IdeaPeriod } from "@/share/schema/idea";
+import { IdeaOrder, IdeaPeriod } from "@/models/idea";
 
 export const ideaOrderItems: { value: IdeaOrder; label: string }[] = [
   { value: "createdDesc", label: "新しい順" },

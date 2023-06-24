@@ -4,7 +4,7 @@ import { useFavoritedUsers } from "@/client/features/user/useFavoritedUsers";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination";
 import { PageHeader } from "@/client/ui/PageHeader";
-import { paginatedPageSchema } from "@/share/schema/util";
+import { paginatedPageSchema } from "@/share/paging";
 import { Box, Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { User } from "next-auth";
 import React from "react";

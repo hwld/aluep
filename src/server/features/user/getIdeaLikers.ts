@@ -1,10 +1,10 @@
+import { IdeaLiker } from "@/models/ideaLike";
 import { paginate } from "@/server/lib/paginate";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { IdeaLiker } from "@/server/models/ideaLike";
-import { findManyUsers } from "@/server/models/user";
+import { findManyUsers } from "@/server/repositories/user";
 import { pageLimit } from "@/share/consts";
-import { pagingSchema } from "@/share/schema/util";
+import { pagingSchema } from "@/share/paging";
 import { sortedInSameOrder } from "@/share/utils";
 import { z } from "zod";
 

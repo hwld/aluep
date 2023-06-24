@@ -1,6 +1,6 @@
 import { UserIcon } from "@/client/features/user/UserIcon";
 import { TextLink } from "@/client/ui/TextLink";
-import { User } from "@/server/models/user";
+import { User } from "@/models/user";
 import { Routes } from "@/share/routes";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";

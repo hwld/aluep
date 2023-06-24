@@ -3,7 +3,7 @@ import {
   ideaCardMinWidthPx,
 } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { GridContainer } from "@/client/ui/GridContainer";
-import { Idea } from "@/server/models/idea";
+import { Idea } from "@/models/idea";
 import { Button, Flex, Stack, Title } from "@mantine/core";
 import Link from "next/link";
 import { ReactNode } from "react";

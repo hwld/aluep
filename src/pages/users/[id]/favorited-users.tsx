@@ -3,7 +3,7 @@ import { useUserQuery } from "@/client/features/user/useUserQuery";
 import { FavoritedUsersPage } from "@/client/pageComponents/FavoritedUsersPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";
-import { paginatedPageSchema } from "@/share/schema/util";
+import { paginatedPageSchema } from "@/share/paging";
 import { assertString } from "@/share/utils";
 import { NextPage } from "next";
 import { useRouter } from "next/router";

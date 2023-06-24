@@ -25,7 +25,7 @@ Aluep は、アプリケーション案である「アプリ開発のお題」�
 
 - [Cloud Run](https://cloud.google.com/run?hl=ja)
 - [Cloud Storage](https://cloud.google.com/storage?hl=ja)
-- [PlanetScale](https://planetscale.com/)
+- [Supabase Database](https://supabase.com/docs/guides/database/overview)
 
 ## ディレクトリ構成
 
@@ -44,15 +44,17 @@ Aluep は、アプリケーション案である「アプリ開発のお題」�
     │   ├── style: 📚アプリのテーマ
     │   └── ui: 📚汎用的なコンポーネント
     │ 
+    ├── models: 📚フロント・サーバー両方で使用されるモデルとそれに関連するデータ
+    │ 
     ├── pages: 📚APIの設定や、実際に表示されるページ、SSRなど
     │ 
     ├── server: 📚サーバー側のコード
     │   ├── features: 📚機能別のAPI実装
     │   ├── lib: 📚汎用的なコード
-    │   ├── models: 📚モデルの型定義や、RDBとモデルの変換など
+    │   ├── repositories: 📚RDBアクセスとモデルの変換処理など
     │   └── tests: 📚テストの用のヘルパー
-    │ 
-    ├── share: 📚フロント・サーバー両方で使用されるコード
+    │   
+    ├── share: 📚フロント・サーバー両方で使用される一般的なコード
     │ 
     └── types: 📚型定義
 </pre>

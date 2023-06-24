@@ -1,7 +1,7 @@
 import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge";
 import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { TextLink } from "@/client/ui/TextLink";
-import { Idea } from "@/server/models/idea";
+import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";

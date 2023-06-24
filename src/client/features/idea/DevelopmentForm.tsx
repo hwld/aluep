@@ -1,9 +1,9 @@
 import { AppForm } from "@/client/ui/AppForm";
-import { DevelopmentStatus } from "@/server/models/developmentStatus";
 import {
   DevelopmentFormData,
   developmentFormSchema,
-} from "@/share/schema/development";
+} from "@/models/development";
+import { DevelopmentStatus } from "@/models/developmentStatus";
 import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Radio, Select, Text, TextInput, Textarea } from "@mantine/core";

@@ -1,4 +1,4 @@
-import { IdeaTag } from "@/server/models/ideaTag";
+import { IdeaTag } from "@/models/ideaTag";
 import {
   Box,
   Button,

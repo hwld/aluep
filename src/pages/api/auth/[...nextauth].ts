@@ -1,5 +1,5 @@
 import { db } from "@/server/lib/prismadb";
-import { convertUser } from "@/server/models/user";
+import { convertUser } from "@/server/repositories/user";
 import { Routes } from "@/share/routes";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { User as PrismaUser } from "@prisma/client";

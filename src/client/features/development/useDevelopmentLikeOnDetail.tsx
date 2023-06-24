@@ -1,8 +1,8 @@
 import { developmentKeys } from "@/client/features/development/queryKeys";
 import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
+import { Development } from "@/models/development";
 import { RouterInputs } from "@/server/lib/trpc";
-import { Development } from "@/server/models/development";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 /**

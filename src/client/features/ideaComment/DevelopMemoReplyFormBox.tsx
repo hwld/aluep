@@ -3,7 +3,7 @@ import { PlainTextarea } from "@/client/ui/PlainTextarea";
 import {
   DevelopmentMemoFormData,
   developmentMemoFormSchema,
-} from "@/share/schema/developmentMemo";
+} from "@/models/developmentMemo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,

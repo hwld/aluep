@@ -3,7 +3,7 @@ import { UserProfileCard } from "@/client/features/user/UserDashboard/UserProfil
 import { UserReceivedLikeCard } from "@/client/features/user/UserDashboard/UserReceivedLikeCard";
 import { ReceivedLikeCount } from "@/client/features/user/useReceivedLikeCountQuery";
 import { UserActivity } from "@/client/features/user/useUserActivityQuery";
-import { User } from "@/server/models/user";
+import { User } from "@/models/user";
 import { Box, Flex, MediaQuery } from "@mantine/core";
 
 type Props = {

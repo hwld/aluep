@@ -4,7 +4,7 @@ import { PlainTextarea } from "@/client/ui/PlainTextarea";
 import {
   IdeaCommentFormData,
   ideaCommentFormSchema,
-} from "@/share/schema/ideaComment";
+} from "@/models/ideaComment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Divider, Flex, Text, useMantineTheme } from "@mantine/core";
 import { User } from "next-auth";

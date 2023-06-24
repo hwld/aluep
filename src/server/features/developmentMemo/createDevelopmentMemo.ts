@@ -1,6 +1,6 @@
+import { createDevelopmentMemoInputSchema } from "@/models/developmentMemo";
 import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
-import { createDevelopmentMemoInputSchema } from "@/share/schema/developmentMemo";
 import { TRPCError } from "@trpc/server";
 
 export const createDevelopmentMemo = requireLoggedInProcedure

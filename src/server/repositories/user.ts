@@ -1,12 +1,6 @@
+import { User } from "@/models/user";
 import { db } from "@/server/lib/prismadb";
 import { Prisma } from "@prisma/client";
-
-export type User = {
-  id: string;
-  name: string | null;
-  image: string | null;
-  profile: string | null;
-};
 
 const userArgs = {
   select: { id: true, name: true, image: true, profile: true },

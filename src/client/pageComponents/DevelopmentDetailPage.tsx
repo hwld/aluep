@@ -12,9 +12,9 @@ import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
 import { showErrorNotification } from "@/client/lib/utils";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem";
 import { PageHeader } from "@/client/ui/PageHeader";
-import { Development } from "@/server/models/development";
-import { Idea } from "@/server/models/idea";
-import { DevelopmentMemoFormData } from "@/share/schema/developmentMemo";
+import { Development } from "@/models/development";
+import { DevelopmentMemoFormData } from "@/models/developmentMemo";
+import { Idea } from "@/models/idea";
 import {
   Card,
   Center,

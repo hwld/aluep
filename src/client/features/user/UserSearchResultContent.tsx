@@ -1,6 +1,6 @@
 import { EmptyUserSearchResult } from "@/client/features/user/EmptyUserSearchResult";
 import { UserCard, userCardMinWidthPx } from "@/client/features/user/UserCard";
-import { User } from "@/server/models/user";
+import { User } from "@/models/user";
 import { Box, Flex, Text, useMantineTheme } from "@mantine/core";
 import { MdOutlinePersonSearch } from "react-icons/md";
 

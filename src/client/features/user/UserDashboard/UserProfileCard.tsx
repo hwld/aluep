@@ -6,7 +6,7 @@ import { UserProfileMenuButton } from "@/client/features/user/UserProfileMenuBut
 import { useFavoriteUser } from "@/client/features/user/useFavoriteUser";
 import { useFavoriteUserCountQuery } from "@/client/features/user/useFavoriteUserCountQuery";
 import { TextLink } from "@/client/ui/TextLink";
-import { User } from "@/server/models/user";
+import { User } from "@/models/user";
 import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
 

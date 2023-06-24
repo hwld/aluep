@@ -1,6 +1,6 @@
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { UserAndIdeaLikes } from "@/server/models/user";
+import { UserAndIdeaLikes } from "@/server/repositories/user";
 import { sortedInSameOrder } from "@/share/utils";
 
 export const getTop10LikesPostersInThisMonth = publicProcedure.query(

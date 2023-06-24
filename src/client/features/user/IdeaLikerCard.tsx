@@ -1,7 +1,7 @@
 import { UserIcon } from "@/client/features/user/UserIcon";
 import { formatDate } from "@/client/lib/utils";
 import { TextLink } from "@/client/ui/TextLink";
-import { IdeaLiker } from "@/server/models/ideaLike";
+import { IdeaLiker } from "@/models/ideaLike";
 import { Routes } from "@/share/routes";
 import { Card, Flex, Text } from "@mantine/core";
 import { useRouter } from "next/router";

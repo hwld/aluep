@@ -8,8 +8,8 @@ import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination";
 import { GridContainer } from "@/client/ui/GridContainer";
 import { PageHeader } from "@/client/ui/PageHeader";
-import { Development } from "@/server/models/development";
-import { paginatedPageSchema } from "@/share/schema/util";
+import { Development } from "@/models/development";
+import { paginatedPageSchema } from "@/share/paging";
 import { Stack, Text } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
 

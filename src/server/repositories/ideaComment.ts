@@ -1,28 +1,7 @@
+import { IdeaComment } from "@/models/ideaComment";
 import { db } from "@/server/lib/prismadb";
 import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
-
-export type IdeaComment = {
-  /** nullのときは返信元が削除されている
-   *  undefinedのときは返信コメントではない
-   */
-  inReplyToComment?:
-    | {
-        id: string;
-        fromUserName: string | null;
-      }
-    | null
-    | undefined;
-  id: string;
-  comment: string;
-  ideaId: string;
-  fromUser: {
-    id: string;
-    name: string | null;
-    image: string | null;
-  };
-  createdAt: Date;
-};
 
 const ideaCommentArgs = {
   select: {

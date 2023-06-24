@@ -1,25 +1,7 @@
+import { Development } from "@/models/development";
 import { db } from "@/server/lib/prismadb";
-import { DevelopmentStatus } from "@/server/models/developmentStatus";
 import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
-
-export type Development = {
-  id: string;
-  ideaId: string;
-  ideaTitle: string;
-  developerUserId: string;
-  developerUserName: string | null;
-  developerUserImage: string | null;
-  githubUrl: string;
-  comment: string;
-  developedItemUrl: string;
-  likes: number;
-  likedByLoggedInUser: boolean;
-  createdAt: string;
-  updatedAt: string;
-  status: DevelopmentStatus;
-  allowOtherUserMemos: boolean;
-};
 
 const developmentArgs = {
   include: {

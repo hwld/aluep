@@ -6,10 +6,9 @@ import {
   showSuccessNotification,
 } from "@/client/lib/utils";
 import { PageHeader } from "@/client/ui/PageHeader";
+import { Idea, IdeaFormData } from "@/models/idea";
 import { RouterInputs } from "@/server/lib/trpc";
-import { Idea } from "@/server/models/idea";
 import { Routes } from "@/share/routes";
-import { IdeaFormData } from "@/share/schema/idea";
 import { Box, Card } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";

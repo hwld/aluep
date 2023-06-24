@@ -4,7 +4,7 @@ import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
-import { DevelopmentMemo } from "@/server/models/developmentMemo";
+import { DevelopmentMemo } from "@/models/developmentMemo";
 import { Flex, Stack, Text } from "@mantine/core";
 
 type Props = { memo: DevelopmentMemo; developmentId: string; ideaId: string };

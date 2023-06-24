@@ -8,8 +8,7 @@ import { useUserActivityQuery } from "@/client/features/user/useUserActivityQuer
 import { useURLParams } from "@/client/lib/useURLParams";
 import { PageHeader } from "@/client/ui/PageHeader";
 import { TabControl } from "@/client/ui/TabControl";
-import { User } from "@/server/models/user";
-import { UserDetailPageTab, userDetailPageSchame } from "@/share/schema/user";
+import { User, UserDetailPageTab, userDetailPageSchame } from "@/models/user";
 import { assertNever } from "@/share/utils";
 import { Box, Flex, Stack } from "@mantine/core";
 import { useMemo } from "react";

@@ -3,7 +3,7 @@ import { DevelopmentStatusBadge } from "@/client/features/development/Developmen
 import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink";
 import { TextLink } from "@/client/ui/TextLink";
-import { Development } from "@/server/models/development";
+import { Development } from "@/models/development";
 import { Routes } from "@/share/routes";
 import { Card, Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";

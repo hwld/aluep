@@ -5,7 +5,7 @@ import { DevelopmentsPage as DevelopmentsPageComponent } from "@/client/pageComp
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";
-import { paginatedPageSchema } from "@/share/schema/util";
+import { paginatedPageSchema } from "@/share/paging";
 import { assertString } from "@/share/utils";
 import { NextPage } from "next";
 import { useRouter } from "next/router";

@@ -1,5 +1,27 @@
-import { pagingSchema } from "@/share/schema/util";
+import { pagingSchema } from "@/share/paging";
 import { z } from "zod";
+
+export type Idea = {
+  user: {
+    id: string;
+    name: string | null;
+    image: string | null;
+  };
+  likes: number;
+  id: string;
+  title: string;
+  descriptionHtml: string;
+  tags: {
+    id: string;
+    name: string;
+  }[];
+  developments: number;
+  comments: number;
+  createdAt: string;
+  updatedAt: string;
+  /** 作成してから取得するまでの経過時間 */
+  elapsedSinceCreation: string;
+};
 
 export const ideaFormSchema = z.object({
   title: z

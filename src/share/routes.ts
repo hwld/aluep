@@ -1,4 +1,4 @@
-import { IdeaOrder } from "@/share/schema/idea";
+import { IdeaOrder } from "@/models/idea";
 import { buildSearchParamsString } from "@/share/utils";
 
 export const Routes = {

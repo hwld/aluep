@@ -1,6 +1,5 @@
+import { DevelopmentStatus } from "@/models/developmentStatus";
 import { db } from "@/server/lib/prismadb";
-
-export type DevelopmentStatus = { id: string; name: string };
 
 export const findDevelopmentStatuses = async (): Promise<
   DevelopmentStatus[]

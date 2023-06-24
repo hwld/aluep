@@ -2,7 +2,7 @@ import {
   PopularIdeaCard,
   popularIdeaCardWidthPx,
 } from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCard";
-import { Idea } from "@/server/models/idea";
+import { Idea } from "@/models/idea";
 import { Carousel } from "@mantine/carousel";
 import { Box, Flex } from "@mantine/core";
 

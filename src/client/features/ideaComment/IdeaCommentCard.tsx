@@ -7,8 +7,7 @@ import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { CardActionIcon } from "@/client/ui/CardActionIcon";
-import { IdeaComment } from "@/server/models/ideaComment";
-import { IdeaCommentFormData } from "@/share/schema/ideaComment";
+import { IdeaComment, IdeaCommentFormData } from "@/models/ideaComment";
 import {
   Box,
   Card,

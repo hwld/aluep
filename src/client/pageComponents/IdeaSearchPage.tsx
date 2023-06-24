@@ -18,7 +18,7 @@ import {
   ideaOrderSchema,
   ideaPeriodSchema,
   searchIdeaPageSchema,
-} from "@/share/schema/idea";
+} from "@/models/idea";
 import { Box, Card, Flex, Select, Title } from "@mantine/core";
 import React from "react";
 import { TbSearch } from "react-icons/tb";

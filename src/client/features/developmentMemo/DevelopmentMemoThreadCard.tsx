@@ -6,8 +6,10 @@ import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { CardActionIcon } from "@/client/ui/CardActionIcon";
-import { DevelopmentMemo } from "@/server/models/developmentMemo";
-import { DevelopmentMemoFormData } from "@/share/schema/developmentMemo";
+import {
+  DevelopmentMemo,
+  DevelopmentMemoFormData,
+} from "@/models/developmentMemo";
 import {
   Card,
   Divider,

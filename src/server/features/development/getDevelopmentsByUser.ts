@@ -4,9 +4,9 @@ import { publicProcedure } from "@/server/lib/trpc";
 import {
   FindDevelopmentsArgs,
   findManyDevelopments,
-} from "@/server/models/development";
+} from "@/server/repositories/development";
 import { pageLimit } from "@/share/consts";
-import { pagingSchema } from "@/share/schema/util";
+import { pagingSchema } from "@/share/paging";
 import { z } from "zod";
 
 export const getDevelopmentsByUser = publicProcedure

@@ -1,11 +1,5 @@
+import { IdeaTag } from "@/models/ideaTag";
 import { db } from "@/server/lib/prismadb";
-
-export type IdeaTag = {
-  id: string;
-  createdAt: string;
-  name: string;
-  updatedAt: string;
-};
 
 export const findAllIdeaTags = async (): Promise<IdeaTag[]> => {
   const rawTags = await db.ideaTag.findMany();

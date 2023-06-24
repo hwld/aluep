@@ -1,6 +1,6 @@
+import { DevelopedData } from "@/models/development";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { DevelopedData } from "@/share/schema/development";
 import { z } from "zod";
 
 export const isDevelopedByUser = publicProcedure

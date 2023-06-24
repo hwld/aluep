@@ -3,11 +3,11 @@ import { useDevelopmentQuery } from "@/client/features/development/useDevelopmen
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { DevelopmentEditPage } from "@/client/pageComponents/DevelopmentEditPage";
+import { createRepositoryURLParamSchema } from "@/models/development";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";
 import { Routes } from "@/share/routes";
-import { createRepositoryURLParamSchema } from "@/share/schema/development";
 import { assertString } from "@/share/utils";
 import { NextPage } from "next";
 import { useRouter } from "next/router";

@@ -13,7 +13,7 @@ import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
 import { PageHeader } from "@/client/ui/PageHeader";
 import { TextLink } from "@/client/ui/TextLink";
-import { Idea } from "@/server/models/idea";
+import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import {
   Box,

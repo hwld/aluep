@@ -1,6 +1,6 @@
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { findManyIdeas } from "@/server/models/idea";
+import { findManyIdeas } from "@/server/repositories/idea";
 import { sortedInSameOrder } from "@/share/utils";
 
 export const getTop10LikesIdeasInThisMonth = publicProcedure.query(async () => {

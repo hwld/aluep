@@ -1,6 +1,6 @@
 import { DevelopmentMemoChild } from "@/client/features/developmentMemo/DevelopmentMemoChild";
 import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
-import { DevelopmentMemo } from "@/server/models/developmentMemo";
+import { DevelopmentMemo } from "@/models/developmentMemo";
 import { Box, Button, Divider, Stack } from "@mantine/core";
 import { useRef } from "react";
 

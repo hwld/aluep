@@ -3,13 +3,13 @@ import { useDevelopmentStatusesQuery } from "@/client/features/development/useDe
 import { DevelopmentForm } from "@/client/features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
 import { PageHeader } from "@/client/ui/PageHeader";
-import { Idea } from "@/server/models/idea";
-import { DevelopmentStatusIds } from "@/share/consts";
-import { Routes } from "@/share/routes";
 import {
   CreateRepositoryData,
   DevelopmentFormData,
-} from "@/share/schema/development";
+} from "@/models/development";
+import { Idea } from "@/models/idea";
+import { DevelopmentStatusIds } from "@/share/consts";
+import { Routes } from "@/share/routes";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { MdComputer } from "react-icons/md";

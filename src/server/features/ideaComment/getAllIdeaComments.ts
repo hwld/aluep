@@ -1,5 +1,5 @@
 import { publicProcedure } from "@/server/lib/trpc";
-import { findManyIdeaComments } from "@/server/models/ideaComment";
+import { findManyIdeaComments } from "@/server/repositories/ideaComment";
 import { z } from "zod";
 
 export const getAllIdeaComments = publicProcedure

@@ -1,5 +1,5 @@
 import { publicProcedure } from "@/server/lib/trpc";
-import { findUser } from "@/server/models/user";
+import { findUser } from "@/server/repositories/user";
 import { z } from "zod";
 
 export const getUser = publicProcedure

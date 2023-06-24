@@ -3,10 +3,10 @@ import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { userKeys } from "@/client/features/user/queryKeys";
 import { useUserQuery } from "@/client/features/user/useUserQuery";
 import { UserDetailPage } from "@/client/pageComponents/UserDetailPage";
+import { userDetailPageSchame } from "@/models/user";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";
-import { userDetailPageSchame } from "@/share/schema/user";
-import { assertString, assertNever } from "@/share/utils";
+import { assertNever, assertString } from "@/share/utils";
 import { useRouter } from "next/router";
 import NotFoundPage from "../../404";
 

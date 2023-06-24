@@ -1,5 +1,12 @@
-import { pagingSchema } from "@/share/schema/util";
+import { pagingSchema } from "@/share/paging";
 import { z } from "zod";
+
+export type User = {
+  id: string;
+  name: string | null;
+  image: string | null;
+  profile: string | null;
+};
 
 export const profileFormSchema = z.object({
   name: z

@@ -1,15 +1,7 @@
+import { DevelopmentMemo } from "@/models/developmentMemo";
 import { db } from "@/server/lib/prismadb";
 import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
-
-export type DevelopmentMemo = {
-  id: string;
-  developmentId: string;
-  memo: string;
-  fromUser: { id: string; name: string | null; imageUrl: string | null };
-  parentMemoId: string | null;
-  createdAt: Date;
-};
 
 const developmentMemoArgs = {
   select: {

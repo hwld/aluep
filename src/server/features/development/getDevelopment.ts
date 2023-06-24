@@ -1,5 +1,5 @@
 import { publicProcedure } from "@/server/lib/trpc";
-import { findDevelopment } from "@/server/models/development";
+import { findDevelopment } from "@/server/repositories/development";
 import { z } from "zod";
 
 export const getDevelopment = publicProcedure

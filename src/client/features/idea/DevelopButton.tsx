@@ -1,7 +1,7 @@
 import { AppTooltip } from "@/client/ui/AppTooltip";
 import { ComputerIcon } from "@/client/ui/ComputerIcon";
+import { DevelopedData } from "@/models/development";
 import { Routes } from "@/share/routes";
-import { DevelopedData } from "@/share/schema/development";
 import {
   ActionIcon,
   Anchor,

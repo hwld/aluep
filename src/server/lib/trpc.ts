@@ -1,5 +1,5 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { findUser } from "@/server/models/user";
+import { findUser } from "@/server/repositories/user";
 import { AppRouter } from "@/server/router";
 import {
   TRPCError,

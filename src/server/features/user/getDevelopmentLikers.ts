@@ -1,10 +1,10 @@
+import { DevelopmentLikers } from "@/models/developmentLike";
 import { paginate } from "@/server/lib/paginate";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { DevelopmentLikers } from "@/server/models/developmentLike";
-import { findManyUsers } from "@/server/models/user";
+import { findManyUsers } from "@/server/repositories/user";
 import { pageLimit } from "@/share/consts";
-import { pagingSchema } from "@/share/schema/util";
+import { pagingSchema } from "@/share/paging";
 import { sortedInSameOrder } from "@/share/utils";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";

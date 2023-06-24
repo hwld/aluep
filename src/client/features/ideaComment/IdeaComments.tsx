@@ -8,7 +8,7 @@ import { useRequireLoginModal } from "@/client/features/session/RequireLoginModa
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
-import { IdeaCommentFormData } from "@/share/schema/ideaComment";
+import { IdeaCommentFormData } from "@/models/ideaComment";
 import { Button, Card, Stack, Text, Title } from "@mantine/core";
 import { User } from "next-auth";
 import { useRef } from "react";

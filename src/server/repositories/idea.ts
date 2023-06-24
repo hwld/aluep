@@ -1,32 +1,10 @@
+import { Idea, IdeaOrder, IdeaPeriod } from "@/models/idea";
 import { db } from "@/server/lib/prismadb";
-import { IdeaOrder, IdeaPeriod } from "@/share/schema/idea";
 import { sortedInSameOrder } from "@/share/utils";
 import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
 import { formatDistanceStrict } from "date-fns";
 import { ja } from "date-fns/locale";
-
-export type Idea = {
-  user: {
-    id: string;
-    name: string | null;
-    image: string | null;
-  };
-  likes: number;
-  id: string;
-  title: string;
-  descriptionHtml: string;
-  tags: {
-    id: string;
-    name: string;
-  }[];
-  developments: number;
-  comments: number;
-  createdAt: string;
-  updatedAt: string;
-  /** 作成してから取得するまでの経過時間 */
-  elapsedSinceCreation: string;
-};
 
 const ideaArgs = {
   include: {

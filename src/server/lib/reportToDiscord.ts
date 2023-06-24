@@ -1,11 +1,11 @@
-import { Routes } from "@/share/routes";
 import {
   ReportDevelopmentInput,
   ReportDevelopmentMemoInput,
   ReportIdeaCommentInput,
   ReportIdeaInput,
   ReportUserInput,
-} from "@/share/schema/report";
+} from "@/models/report";
+import { Routes } from "@/share/routes";
 import { OmitStrict } from "@/types/OmitStrict";
 import { APIEmbed, APIEmbedField, WebhookClient } from "discord.js";
 import { IncomingMessage } from "http";

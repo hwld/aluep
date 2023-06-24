@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+export type DevelopmentMemo = {
+  id: string;
+  developmentId: string;
+  memo: string;
+  fromUser: { id: string; name: string | null; imageUrl: string | null };
+  parentMemoId: string | null;
+  createdAt: Date;
+};
+
 export const developmentMemoFormSchema = z.object({
   memo: z
     .string()

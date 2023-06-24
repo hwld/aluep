@@ -4,7 +4,7 @@ import { userKeys } from "@/client/features/user/queryKeys";
 import { IdeaLikersPage } from "@/client/pageComponents/IdeaLikersPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";
-import { paginatedPageSchema } from "@/share/schema/util";
+import { paginatedPageSchema } from "@/share/paging";
 import { assertString } from "@/share/utils";
 import { NextPage } from "next";
 import { useRouter } from "next/router";

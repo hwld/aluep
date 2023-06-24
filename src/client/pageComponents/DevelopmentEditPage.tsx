@@ -6,13 +6,13 @@ import {
 } from "@/client/features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
 import { PageHeader } from "@/client/ui/PageHeader";
-import { Development } from "@/server/models/development";
-import { Idea } from "@/server/models/idea";
-import { DevelopmentStatusIds } from "@/share/consts";
 import {
   CreateRepositoryData,
+  Development,
   DevelopmentFormData,
-} from "@/share/schema/development";
+} from "@/models/development";
+import { Idea } from "@/models/idea";
+import { DevelopmentStatusIds } from "@/share/consts";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useMemo } from "react";

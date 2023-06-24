@@ -1,9 +1,9 @@
 import { paginate } from "@/server/lib/paginate";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { findManyDevelopments } from "@/server/models/development";
+import { findManyDevelopments } from "@/server/repositories/development";
 import { pageLimit } from "@/share/consts";
-import { pagingSchema } from "@/share/schema/util";
+import { pagingSchema } from "@/share/paging";
 import { z } from "zod";
 
 export const getDevelopmentsByIdea = publicProcedure

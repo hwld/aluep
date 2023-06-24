@@ -1,5 +1,6 @@
+import { IdeaTag } from "@/models/ideaTag";
 import { publicProcedure } from "@/server/lib/trpc";
-import { IdeaTag, findAllIdeaTags } from "@/server/models/ideaTag";
+import { findAllIdeaTags } from "@/server/repositories/ideaTag";
 
 export const getAllTags = publicProcedure.query(
   async (): Promise<IdeaTag[]> => {

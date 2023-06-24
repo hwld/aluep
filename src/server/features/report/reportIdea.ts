@@ -1,9 +1,9 @@
+import { reportIdeaInputSchema } from "@/models/report";
 import {
-  reportToDiscord,
   buildReportedUser,
+  reportToDiscord,
 } from "@/server/lib/reportToDiscord";
 import { publicProcedure } from "@/server/lib/trpc";
-import { reportIdeaInputSchema } from "@/share/schema/report";
 
 export const reportIdea = publicProcedure
   .input(reportIdeaInputSchema)

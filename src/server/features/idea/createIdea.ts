@@ -1,7 +1,7 @@
+import { createIdeaInputSchema } from "@/models/idea";
 import { ideaDescriptionSanitizeOptions } from "@/server/features/idea/ideaDescriptionSanitizeOptions";
 import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
-import { createIdeaInputSchema } from "@/share/schema/idea";
 import sanitize from "sanitize-html";
 
 export const createIdea = requireLoggedInProcedure

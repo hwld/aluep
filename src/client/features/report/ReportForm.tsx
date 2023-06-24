@@ -1,5 +1,5 @@
 import { AppForm } from "@/client/ui/AppForm";
-import { ReportBaseForm, reportBaseFormSchema } from "@/share/schema/report";
+import { ReportBaseForm, reportBaseFormSchema } from "@/models/report";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";

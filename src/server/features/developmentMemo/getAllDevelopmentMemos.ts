@@ -1,5 +1,5 @@
 import { publicProcedure } from "@/server/lib/trpc";
-import { findManyDevelopmentMemo } from "@/server/models/developmentMemo";
+import { findManyDevelopmentMemo } from "@/server/repositories/developmentMemo";
 import { z } from "zod";
 
 export const getAllDevelopmentMemos = publicProcedure

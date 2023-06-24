@@ -1,5 +1,5 @@
+import { DevelopmentFormData } from "@/models/development";
 import { createGitHubRepository } from "@/server/features/github/createGitHubRepository";
-import { DevelopmentFormData } from "@/share/schema/development";
 
 /**
  * formからGitHubRepositoryのURLを取得する。

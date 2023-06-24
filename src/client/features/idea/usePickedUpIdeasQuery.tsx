@@ -1,6 +1,6 @@
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { trpc } from "@/client/lib/trpc";
-import { IdeaOrder } from "@/share/schema/idea";
+import { IdeaOrder } from "@/models/idea";
 import { useQuery } from "@tanstack/react-query";
 
 export const usePickedUpIdeasQuery = (order: IdeaOrder) => {

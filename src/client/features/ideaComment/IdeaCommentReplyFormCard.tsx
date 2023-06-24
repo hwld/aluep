@@ -3,7 +3,7 @@ import { PlainTextarea } from "@/client/ui/PlainTextarea";
 import {
   IdeaCommentFormData,
   ideaCommentFormSchema,
-} from "@/share/schema/ideaComment";
+} from "@/models/ideaComment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
