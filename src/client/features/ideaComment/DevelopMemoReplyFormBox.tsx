@@ -38,7 +38,7 @@ export const DevelopmentMemoReplyFormBox: React.FC<Props> = ({
     formState: { errors },
   } = useForm<DevelopmentMemoFormData>({
     defaultValues: {
-      memo: "",
+      text: "",
     },
     resolver: zodResolver(developmentMemoFormSchema),
   });
@@ -73,14 +73,14 @@ export const DevelopmentMemoReplyFormBox: React.FC<Props> = ({
       <form onSubmit={handleSubmit}>
         <Controller
           control={control}
-          name="memo"
+          name="text"
           render={({ field }) => {
             return (
               <PlainTextarea
                 placeholder="メモに返信する"
                 autosize
                 minRows={5}
-                error={errors.memo !== undefined}
+                error={errors.text !== undefined}
                 {...field}
                 ref={(e) => {
                   field.ref(e);
@@ -95,10 +95,10 @@ export const DevelopmentMemoReplyFormBox: React.FC<Props> = ({
           <Flex
             align="center"
             gap={5}
-            sx={{ visibility: errors.memo ? "visible" : "hidden" }}
+            sx={{ visibility: errors.text ? "visible" : "hidden" }}
           >
             <TbAlertCircle size={30} color={colors.red[7]} />
-            <Text color="red">{errors.memo?.message}</Text>
+            <Text color="red">{errors.text?.message}</Text>
           </Flex>
           <Flex gap="xs">
             <Button

@@ -8,7 +8,7 @@ describe("お題コメント削除API", () => {
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { commentId } = await caller.ideaComment.create({
       ideaId: idea.id,
-      comment: "commet",
+      text: "commet",
     });
 
     await caller.ideaComment.delete({ commentId });

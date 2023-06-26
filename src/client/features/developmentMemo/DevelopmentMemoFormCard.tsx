@@ -39,7 +39,7 @@ export const DevelopmentMemoFormCard = forwardRef<HTMLDivElement, Props>(
       formState: { errors },
       handleSubmit: innerHandleSubmit,
     } = useForm<DevelopmentMemoFormData>({
-      defaultValues: { memo: "" },
+      defaultValues: { text: "" },
       resolver: zodResolver(developmentMemoFormSchema),
     });
 
@@ -65,7 +65,7 @@ export const DevelopmentMemoFormCard = forwardRef<HTMLDivElement, Props>(
           </Flex>
           <Controller
             control={control}
-            name="memo"
+            name="text"
             render={({ field }) => {
               return (
                 <PlainTextarea
@@ -73,7 +73,7 @@ export const DevelopmentMemoFormCard = forwardRef<HTMLDivElement, Props>(
                   placeholder="メモを投稿する"
                   autosize
                   minRows={5}
-                  error={errors.memo !== undefined}
+                  error={errors.text !== undefined}
                   {...field}
                   ref={(e) => {
                     field.ref(e);
@@ -88,10 +88,10 @@ export const DevelopmentMemoFormCard = forwardRef<HTMLDivElement, Props>(
             <Flex
               align="center"
               gap={5}
-              sx={{ visibility: errors.memo ? "visible" : "hidden" }}
+              sx={{ visibility: errors.text ? "visible" : "hidden" }}
             >
               <TbAlertCircle size={30} color={colors.red[7]} />
-              <Text color="red">{errors.memo?.message}</Text>
+              <Text color="red">{errors.text?.message}</Text>
             </Flex>
             <Button
               type="submit"

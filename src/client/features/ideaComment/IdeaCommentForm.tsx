@@ -39,7 +39,7 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
       handleSubmit: innerHandleSubmit,
       formState: { errors },
     } = useForm<IdeaCommentFormData>({
-      defaultValues: { comment: "" },
+      defaultValues: { text: "" },
       resolver: zodResolver(ideaCommentFormSchema),
     });
 
@@ -67,7 +67,7 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
         </Flex>
         <Controller
           control={control}
-          name="comment"
+          name="text"
           render={({ field }) => {
             return (
               <PlainTextarea
@@ -75,7 +75,7 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
                 placeholder="コメントする"
                 autosize
                 minRows={5}
-                error={errors.comment !== undefined}
+                error={errors.text !== undefined}
                 {...field}
                 ref={(e) => {
                   field.ref(e);
@@ -90,10 +90,10 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
           <Flex
             align="center"
             gap={5}
-            sx={{ visibility: errors.comment ? "visible" : "hidden" }}
+            sx={{ visibility: errors.text ? "visible" : "hidden" }}
           >
             <TbAlertCircle size={30} color={colors.red[7]} />
-            <Text color="red">{errors.comment?.message}</Text>
+            <Text color="red">{errors.text?.message}</Text>
           </Flex>
           <Button
             type="submit"

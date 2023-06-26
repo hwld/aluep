@@ -4,7 +4,7 @@ import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
 import { DevelopmentStatusIds } from "@/share/consts";
 
-export const developIdea = requireLoggedInProcedure
+export const createDevelopment = requireLoggedInProcedure
   .input(createDevelopmentInputSchema)
   .mutation(async ({ input, ctx }) => {
     const githubRepositoryUrl = await createOrExtractGithubRepositoryUrl(

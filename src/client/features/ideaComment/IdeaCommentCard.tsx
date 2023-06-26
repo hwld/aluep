@@ -159,7 +159,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
               </UnstyledButton>
             </Flex>
           )}
-          <Text sx={{ whiteSpace: "pre-wrap" }}>{comment.comment}</Text>
+          <Text sx={{ whiteSpace: "pre-wrap" }}>{comment.text}</Text>
           <Flex justify="space-between" align="center" gap="xs">
             <Flex align="center">
               <CardActionIcon color="gray.5" onClick={handleOpenReplyForm}>

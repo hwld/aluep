@@ -6,7 +6,7 @@ import { Prisma } from "@prisma/client";
 const ideaCommentArgs = {
   select: {
     id: true,
-    comment: true,
+    text: true,
     ideaId: true,
     fromUser: true,
     createdAt: true,
@@ -43,7 +43,7 @@ const convertIdeaComment = (
 ): IdeaComment => {
   const comment: IdeaComment = {
     id: raw.id,
-    comment: raw.comment,
+    text: raw.text,
     ideaId: raw.ideaId,
     fromUser: {
       id: raw.fromUser.id,

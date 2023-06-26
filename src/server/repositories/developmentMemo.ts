@@ -7,7 +7,7 @@ const developmentMemoArgs = {
   select: {
     id: true,
     developmentId: true,
-    memo: true,
+    text: true,
     fromUser: { select: { id: true, name: true, image: true } },
     parentMemoId: true,
     createdAt: true,
@@ -20,7 +20,7 @@ const convertDevelopmentMemo = (
   return {
     id: raw.id,
     developmentId: raw.developmentId,
-    memo: raw.memo,
+    text: raw.text,
     fromUser: {
       id: raw.fromUser.id,
       name: raw.fromUser.name,

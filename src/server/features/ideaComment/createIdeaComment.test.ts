@@ -7,13 +7,13 @@ describe("お題のコメントAPI", () => {
       userName: "user",
     });
     const { idea } = await TestHelpers.createIdeaAndUser();
-    const comment = "comment";
+    const text = "comment";
 
-    await caller.ideaComment.create({ ideaId: idea.id, comment });
+    await caller.ideaComment.create({ ideaId: idea.id, text });
 
     const comments = await caller.ideaComment.getAll({ ideaId: idea.id });
     expect(comments.length).toBe(1);
-    expect(comments[0].comment).toBe(comment);
+    expect(comments[0].text).toBe(text);
   });
 
   it("お題に返信できる", async () => {
@@ -23,12 +23,12 @@ describe("お題のコメントAPI", () => {
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { commentId: parentCommentId } = await caller.ideaComment.create({
       ideaId: idea.id,
-      comment: "first",
+      text: "first",
     });
 
     await caller.ideaComment.create({
       ideaId: idea.id,
-      comment: "comment",
+      text: "comment",
       inReplyToCommentId: parentCommentId,
     });
 
@@ -47,7 +47,10 @@ describe("お題のコメントAPI", () => {
       });
       const { idea } = await TestHelpers.createIdeaAndUser();
 
-      const promise = caller.ideaComment.create({ ideaId: idea.id, comment });
+      const promise = caller.ideaComment.create({
+        ideaId: idea.id,
+        text: comment,
+      });
 
       await expect(promise).rejects.toThrow();
     });

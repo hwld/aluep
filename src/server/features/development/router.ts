@@ -1,5 +1,5 @@
 import { deleteDevelopment } from "@/server/features/development/deleteDevelopment";
-import { developIdea } from "@/server/features/development/developIdea";
+import { createDevelopment } from "@/server/features/development/developIdea";
 import { getDevelopment } from "@/server/features/development/getDevelopment";
 import { getDevelopmentStatuses } from "@/server/features/development/getDevelopmentStatuses";
 import { getDevelopmentsByIdea } from "@/server/features/development/getDevelopmentsByIdea";
@@ -14,7 +14,7 @@ import { router } from "@/server/lib/trpc";
 
 export const developmentRoute = router({
   /** お題の開発情報を作成する(開発する) */
-  create: developIdea,
+  create: createDevelopment,
 
   /** 開発情報を取得する */
   get: getDevelopment,

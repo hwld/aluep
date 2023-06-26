@@ -8,7 +8,7 @@ export const createIdeaComment = requireLoggedInProcedure
     const comment = await db.ideaComment.create({
       data: {
         ideaId: input.ideaId,
-        comment: input.comment,
+        text: input.text,
         fromUserId: ctx.session.user.id,
         // 返信元が指定されていればParentChildを作成する
         ...(input.inReplyToCommentId

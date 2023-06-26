@@ -43,7 +43,7 @@ export const TestHelpers = {
   createIdeaCommentAndUser: async ({ ideaId }: { ideaId: string }) => {
     const commenter = await db.user.create({ data: { name: "user" } });
     const comment = await db.ideaComment.create({
-      data: { ideaId, comment: "comment", fromUserId: commenter.id },
+      data: { ideaId, text: "comment", fromUserId: commenter.id },
     });
 
     return { comment, commenter };

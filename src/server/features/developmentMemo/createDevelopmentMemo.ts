@@ -28,7 +28,7 @@ export const createDevelopmentMemo = requireLoggedInProcedure
     const createdMemo = await db.developmentMemo.create({
       data: {
         developmentId: input.developmentId,
-        memo: input.memo,
+        text: input.text,
         fromUserId: ctx.session.user.id,
         parentMemoId: input.parentMemoId,
       },

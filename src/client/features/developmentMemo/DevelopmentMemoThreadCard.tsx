@@ -105,7 +105,7 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
             isDeleting={deleteMemoMutation.isLoading}
           />
         </Flex>
-        <Text sx={{ whiteSpace: "pre-line" }}>{memo.memo}</Text>
+        <Text sx={{ whiteSpace: "pre-line" }}>{memo.text}</Text>
         <Flex justify="space-between" align="center">
           <Flex align="center" gap={3}>
             <CardActionIcon onClick={handleOpenReplyForm}>

@@ -36,7 +36,7 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
     handleSubmit: innerHandleSubmit,
     formState: { errors },
   } = useForm<IdeaCommentFormData>({
-    defaultValues: { comment: "" },
+    defaultValues: { text: "" },
     resolver: zodResolver(ideaCommentFormSchema),
   });
 
@@ -62,14 +62,14 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
       <form onSubmit={handleSubmit}>
         <Controller
           control={control}
-          name="comment"
+          name="text"
           render={({ field }) => {
             return (
               <PlainTextarea
                 placeholder="コメントに返信する"
                 autosize
                 minRows={5}
-                error={errors.comment !== undefined}
+                error={errors.text !== undefined}
                 {...field}
                 ref={(e) => {
                   field.ref(e);
@@ -84,10 +84,10 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
           <Flex
             align="center"
             gap={5}
-            sx={{ visibility: errors.comment ? "visible" : "hidden" }}
+            sx={{ visibility: errors.text ? "visible" : "hidden" }}
           >
             <TbAlertCircle size={30} color={colors.red[7]} />
-            <Text color="red">{errors.comment?.message}</Text>
+            <Text color="red">{errors.text?.message}</Text>
           </Flex>
           <Flex gap="xs">
             <Button

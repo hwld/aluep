@@ -179,8 +179,7 @@ model DevelopmentStatus {
 
 model DevelopmentMemo {
   id   String @id @default(cuid())
-  // TODO: textとかにする
-  memo String @db.Text
+  text String @db.Text
 
   // 一つのメモには一つの返信しか出来ない
   parentMemoId String?          @unique @map("parentCommentId")
@@ -213,7 +212,7 @@ model FavoriteUser {
 
 model IdeaComment {
   id      String @id @default(cuid())
-  comment String @db.Text
+  text String @db.Text 
 
   ideaId     String
   idea       Idea   @relation(fields: [ideaId], references: [id], onDelete: Cascade)

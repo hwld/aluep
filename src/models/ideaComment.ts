@@ -12,7 +12,7 @@ export type IdeaComment = {
     | null
     | undefined;
   id: string;
-  comment: string;
+  text: string;
   ideaId: string;
   fromUser: {
     id: string;
@@ -23,7 +23,7 @@ export type IdeaComment = {
 };
 
 export const ideaCommentFormSchema = z.object({
-  comment: z
+  text: z
     .string()
     .min(1, "コメントを入力してください。")
     .max(2000, "コメントは2000文字以下で入力してください。"),
