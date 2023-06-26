@@ -93,6 +93,7 @@
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
     "ts-node": "^10.9.1",
-    "ts-prune": "^0.10.3"
+    "ts-prune": "^0.10.3",
+    "tsconfig-paths": "^4.2.0"
   }
 }
