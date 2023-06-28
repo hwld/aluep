@@ -146,7 +146,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
                   icon={<FaUserAlt size={20} color={colors.gray[5]} />}
                   title="投稿者"
                 >
-                  <Flex gap={5} mt={5}>
+                  <Flex gap={5} mt={5} align="center">
                     <UserIconLink
                       iconSrc={idea.user.image}
                       userId={idea.user.id}

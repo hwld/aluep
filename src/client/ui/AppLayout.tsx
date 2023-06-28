@@ -3,7 +3,7 @@ import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { AppModal } from "@/client/ui/AppModal";
 import { AppSidebar } from "@/client/ui/AppSidebar/AppSidebar";
 import { Box } from "@mantine/core";
-import { useMediaQuery, useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { ReactNode } from "react";
 
 type Props = { children: ReactNode };
@@ -24,7 +24,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
         <AppSidebar loggedInUser={session?.user} />
         <Box
           component="main"
-          p="xl"
+          p="sm"
           sx={(theme) => ({
             width: "100%",
             minWidth: "0",

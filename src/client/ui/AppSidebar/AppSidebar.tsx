@@ -53,7 +53,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
   return (
     <Box
       h="100dvh"
-      p="md"
+      p={3}
       sx={() => ({
         position: "sticky",
         top: 0,
