@@ -16,9 +16,7 @@ describe("お題の作成API", () => {
   });
 
   it("お題を作成し、作成したお題を取得することができる", async () => {
-    const { caller } = await TestHelpers.createSessionCaller({
-      userName: "user",
-    });
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
     const title = "test-title";
     const descriptionHtml = "<p>test-description</p>";
 
@@ -41,9 +39,8 @@ describe("お題の作成API", () => {
         '<a target="_blank">link</a>',
       ],
     ])('"%s" -> "%s"', async (input, expected) => {
-      const { caller } = await TestHelpers.createSessionCaller({
-        userName: "user",
-      });
+      const { caller } = await TestHelpers.createNewUserSessionCaller();
+
       const { ideaId } = await caller.idea.create({
         title: "title",
         descriptionHtml: input,
@@ -88,9 +85,7 @@ describe("お題の作成API", () => {
         },
       ],
     ])("%s", async (_, { title, body, tags }) => {
-      const { caller } = await TestHelpers.createSessionCaller({
-        userName: "user",
-      });
+      const { caller } = await TestHelpers.createNewUserSessionCaller();
       await db.ideaTag.createMany({
         data: tags.map((t) => ({ id: t, name: t })),
       });

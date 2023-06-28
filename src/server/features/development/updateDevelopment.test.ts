@@ -3,9 +3,7 @@ import { DevelopmentStatusIds } from "@/share/consts";
 
 describe("開発情報更新API", () => {
   it("他人の開発情報は更新できない", async () => {
-    const { caller } = await TestHelpers.createSessionCaller({
-      userName: "user",
-    });
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { development } = await TestHelpers.createDevelopmentAndUser({
       ideaId: idea.id,
@@ -43,9 +41,7 @@ describe("開発情報更新API", () => {
   });
 
   it("開発情報を更新できる", async () => {
-    const { caller } = await TestHelpers.createSessionCaller({
-      userName: "user",
-    });
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { developmentId } = await caller.development.create({
       ideaId: idea.id,

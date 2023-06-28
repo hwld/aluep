@@ -2,9 +2,8 @@ import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題へいいね解除API", () => {
   it("いいね解除できる", async () => {
-    const { caller, loginUserId } = await TestHelpers.createSessionCaller({
-      userName: "user",
-    });
+    const { caller, loginUserId } =
+      await TestHelpers.createNewUserSessionCaller();
     const { idea } = await TestHelpers.createIdeaAndUser();
     await caller.idea.like({ ideaId: idea.id });
 

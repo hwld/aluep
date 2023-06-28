@@ -3,9 +3,7 @@ import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題更新API", () => {
   it("他人が投稿したお題は更新できない", async () => {
-    const { caller } = await TestHelpers.createSessionCaller({
-      userName: "user",
-    });
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { idea } = await TestHelpers.createIdeaAndUser();
 
     const promise = caller.idea.update({
@@ -33,9 +31,7 @@ describe("お題更新API", () => {
   });
 
   it("お題を更新できる", async () => {
-    const { caller } = await TestHelpers.createSessionCaller({
-      userName: "user",
-    });
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { id: tagId } = await db.ideaTag.create({ data: { name: "tag" } });
     const { ideaId } = await caller.idea.create({
       title: "title",

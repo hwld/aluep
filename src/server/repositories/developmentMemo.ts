@@ -35,7 +35,7 @@ type FindManyDevelopmentMemoArgs = OmitStrict<
   Prisma.DevelopmentMemoFindManyArgs,
   "select" | "include" | "orderBy"
 >;
-export const findManyDevelopmentMemo = async (
+export const findManyDevelopmentMemos = async (
   args: FindManyDevelopmentMemoArgs
 ) => {
   const rawMemos = await db.developmentMemo.findMany({

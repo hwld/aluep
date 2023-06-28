@@ -3,9 +3,7 @@ import { DevelopmentStatusIds } from "@/share/consts";
 
 describe("お題開発情報削除API", () => {
   it("開発情報を削除できる", async () => {
-    const { caller } = await TestHelpers.createSessionCaller({
-      userName: "user",
-    });
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { developmentId } = await caller.development.create({
       type: "referenceRepository",
@@ -21,9 +19,7 @@ describe("お題開発情報削除API", () => {
   });
 
   it("自分以外の開発情報は削除できない", async () => {
-    const { caller } = await TestHelpers.createSessionCaller({
-      userName: "user",
-    });
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { development } = await TestHelpers.createDevelopmentAndUser({
       ideaId: idea.id,

@@ -1,13 +1,15 @@
 import { db } from "@/server/lib/prismadb";
 import { appRouter } from "@/server/router";
 import { DevelopmentStatusIds } from "@/share/consts";
+import { OmitStrict } from "@/types/OmitStrict";
+import { Prisma } from "@prisma/client";
 import { addYears } from "date-fns";
 import { createRequest } from "node-mocks-http";
 
 export const TestHelpers = {
   /** セッションのあるCallerを作成する */
-  createSessionCaller: async ({ userName }: { userName: string }) => {
-    const loginUser = await db.user.create({ data: { name: userName } });
+  createNewUserSessionCaller: async () => {
+    const loginUser = await db.user.create({ data: { name: "loginUser" } });
     const caller = appRouter.createCaller({
       session: {
         user: loginUser,
@@ -23,6 +25,20 @@ export const TestHelpers = {
   createPublicCaller: async () => {
     const caller = appRouter.createCaller({
       session: null,
+      req: createRequest(),
+    });
+
+    return { caller };
+  },
+
+  /** 指定されたユーザーでログイン済みのセッションCallerを作成する */
+  createSessionCaller: async ({ userId }: { userId: string }) => {
+    const loginUser = await db.user.findUnique({ where: { id: userId } });
+    const caller = appRouter.createCaller({
+      session: {
+        user: loginUser,
+        expires: addYears(new Date(), 1).toUTCString(),
+      },
       req: createRequest(),
     });
 
@@ -46,23 +62,51 @@ export const TestHelpers = {
       data: { ideaId, text: "comment", fromUserId: commenter.id },
     });
 
-    return { comment, commenter };
+    const { caller: commenterCaller } = await TestHelpers.createSessionCaller({
+      userId: commenter.id,
+    });
+
+    return { comment, commenter, commenterCaller };
   },
 
   /** ユーザーを作成して、お題を開発する */
-  createDevelopmentAndUser: async ({ ideaId }: { ideaId: string }) => {
+  createDevelopmentAndUser: async (
+    args: Partial<
+      OmitStrict<Prisma.DevelopmentUncheckedCreateInput, "ideaId">
+    > & {
+      ideaId: string;
+    }
+  ) => {
     const developer = await db.user.create({ data: { name: "developer" } });
     const development = await db.development.create({
       data: {
-        ideaId,
         userId: developer.id,
         comment: "",
         developedItemUrl: "",
         githubUrl: "https://github.com/hwld/aluep",
         statusId: DevelopmentStatusIds.IN_PROGRESS,
+        ...args,
       },
     });
 
-    return { development, developer };
+    const { caller: developerCaller } = await TestHelpers.createSessionCaller({
+      userId: developer.id,
+    });
+
+    return { development, developer, developerCaller };
+  },
+
+  /** 開発メモを作成する */
+  createDevelopmentMemoAndUser: async ({
+    developmentId,
+  }: {
+    developmentId: string;
+  }) => {
+    const memoer = await db.user.create({ data: { name: "user" } });
+    const memo = await db.developmentMemo.create({
+      data: { developmentId, text: "memo", fromUserId: memoer.id },
+    });
+
+    return { memo, memoer };
   },
 };

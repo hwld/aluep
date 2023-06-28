@@ -2,9 +2,7 @@ import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題の削除API", () => {
   it("他人が投稿したお題を削除することはできない", async () => {
-    const { caller } = await TestHelpers.createSessionCaller({
-      userName: "user",
-    });
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { idea } = await TestHelpers.createIdeaAndUser();
 
     const promise = caller.idea.delete({ ideaId: idea.id });
@@ -22,9 +20,7 @@ describe("お題の削除API", () => {
   });
 
   it("存在するお題を削除することができる", async () => {
-    const { caller } = await TestHelpers.createSessionCaller({
-      userName: "user",
-    });
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { ideaId } = await caller.idea.create({
       title: "title",
       descriptionHtml: "<p>body</p>",
