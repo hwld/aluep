@@ -68,6 +68,7 @@
     "formidable": "^2.1.1",
     "https-proxy-agent": "^5.0.1",
     "lowlight": "^2.8.1",
+    "msw": "^1.2.2",
     "next": "13.0.2",
     "next-auth": "^4.20.1",
     "node-mocks-http": "^1.12.1",
