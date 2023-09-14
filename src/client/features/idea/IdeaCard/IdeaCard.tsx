@@ -60,7 +60,7 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
             sx={{ overflow: "hidden" }}
             miw={0}
           >
-            <TextLink href={Routes.idea(idea.id)}>
+            <TextLink href={Routes.user(idea.user.id)}>
               <Text size="sm" truncate>
                 {idea.user.name}
               </Text>
