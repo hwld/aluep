@@ -1,3 +1,5 @@
+import { mockCreateGitHubRepository } from "@/server/features/github/mock";
+import { server } from "@/server/mock/server";
 import { TestHelpers } from "@/server/tests/helper";
 import { DevelopmentStatusIds } from "@/share/consts";
 
@@ -33,6 +35,21 @@ describe("お題開発API", () => {
     expect(development?.status.id).toBe(DevelopmentStatusIds.COMPLETED);
   });
 
-  // TODO: callerを直接テストしちゃうとGitHub APIにリクエスト飛んじゃう
-  // it("リポジトリの作成とお題の開発情報の登録ができる", async () => {});
+  it("リポジトリの作成とお題の開発情報の登録ができる", async () => {
+    const { idea } = await TestHelpers.createIdeaAndUser();
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
+    const repositoryUrl = "https://github.com/hwld/test";
+    server.use(mockCreateGitHubRepository({ repositoryUrl }));
+
+    const { developmentId } = await caller.development.create({
+      ideaId: idea.id,
+      type: "createRepository",
+      githubRepositoryName: "repo",
+      githubRepositoryDescription: "desc",
+      comment: "comment",
+    });
+
+    const development = await caller.development.get({ developmentId });
+    expect(development?.githubUrl).toBe(repositoryUrl);
+  });
 });

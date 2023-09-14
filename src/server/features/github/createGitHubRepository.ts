@@ -3,6 +3,8 @@ import { GitHubErrors } from "@/share/errors";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
+export const createGitHubRepositoryURL = "https://api.github.com/user/repos";
+
 type Args = {
   repositoryName: string;
   repositoryDescription: string;
@@ -27,7 +29,7 @@ export const createGitHubRepository = async ({
 
   // GitHub APIを使ってPublicリポジトリを作成する。
   // https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-for-the-authenticated-user
-  const response = await fetch("https://api.github.com/user/repos", {
+  const response = await fetch(createGitHubRepositoryURL, {
     method: "POST",
     headers: {
       Accept: "application/vnd.github+json",

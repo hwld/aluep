@@ -9,7 +9,19 @@ import { createRequest } from "node-mocks-http";
 export const TestHelpers = {
   /** セッションのあるCallerを作成する */
   createNewUserSessionCaller: async () => {
+    // userの登録
     const loginUser = await db.user.create({ data: { name: "loginUser" } });
+
+    // githubのアカウントの登録
+    await db.account.create({
+      data: {
+        userId: loginUser.id,
+        provider: "github",
+        providerAccountId: "dummy",
+        type: "dummy",
+      },
+    });
+
     const caller = appRouter.createCaller({
       session: {
         user: loginUser,
