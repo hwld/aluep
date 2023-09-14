@@ -3,35 +3,19 @@ import formidable from "formidable";
 import { NextApiRequest } from "next";
 import path from "path";
 
-const storage = new Storage({
-  keyFilename:
-    process.env.NODE_ENV === "production"
-      ? "/secret/gcs-key.json"
-      : `${__dirname}/../../../../gcs-key.json`,
-});
+const storage = new Storage(
+  process.env.NODE_ENV === "development"
+    ? { apiEndpoint: process.env.GCS_EMULATOR_HOST }
+    : { keyFilename: "/secret/gcs-key.json" }
+);
 
 type UploadAvatar = (
   req: NextApiRequest,
   loggedInUserId: string
 ) => Promise<string>;
 
-// 開発環境ではローカルストレージにアバター画像を保存したいから実装を切り替える
-// 他に良い方法が思いつかなかった・・・
-export const uploadAvatar: UploadAvatar = async (...args) => {
-  if (process.env.STORAGE_TYPE === "local") {
-    return await uploadAvatarOnDevelop(...args);
-  } else {
-    return await uploadAvatarOnProduct(...args);
-  }
-};
-
-// 仮実装
-const uploadAvatarOnProduct: UploadAvatar = async (req, loggedInUserId) => {
-  const bucket = storage.bucket(
-    process.env.NODE_ENV === "production"
-      ? "aptose-user-upload"
-      : "dev-aptose-user-upload"
-  );
+export const uploadAvatar: UploadAvatar = async (req, loggedInUserId) => {
+  const bucket = storage.bucket("aluep-user-upload");
   const filePath = `avatars/${loggedInUserId}`;
   const file = bucket.file(filePath);
   const writableStream = file.createWriteStream();
@@ -56,22 +40,5 @@ const uploadAvatarOnProduct: UploadAvatar = async (req, loggedInUserId) => {
   await file.setMetadata({ cacheControl: "no-cache", contentType: mimeType });
   await file.rename(`${filePath}${ext}`);
 
-  return `https://storage.googleapis.com/${bucket.name}/${filePath}${ext}`;
-};
-
-const uploadAvatarOnDevelop: UploadAvatar = async (req, loggedInUserId) => {
-  const form = formidable({
-    uploadDir: `${__dirname}/../../../../public/user-avatars`,
-    filename: () => {
-      return `${loggedInUserId}`;
-    },
-  });
-
-  await new Promise((resolve, reject) => {
-    form.parse(req, () => {
-      resolve(undefined);
-    });
-  });
-
-  return `/user-avatars/${loggedInUserId}`;
+  return `${storage.apiEndpoint}/${bucket.name}/${filePath}${ext}`;
 };

@@ -14,3 +14,10 @@ services:
       localedef -i ja_JP -c -f UTF-8 -A /usr/share/locale/locale.alias ja_JP.UTF-8 &&
       /usr/local/bin/docker-entrypoint.sh postgres
       "
+  gcs:
+    image: fsouza/fake-gcs-server
+    volumes:
+      - ./local-gcs:/data/aluep-user-upload
+    ports:
+      - 4443:4443
+    command: -scheme http -public-host localhost:4443

@@ -44,7 +44,8 @@ next-env.d.ts
 /public/user-avatars
 
 # GCS 
-gcs-key.json
+/local-gcs
 
 # bundle-analyzer
 /analyze
+
