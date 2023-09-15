@@ -6,7 +6,7 @@ import path from "path";
 const storage = new Storage(
   process.env.NODE_ENV === "development"
     ? { apiEndpoint: process.env.GCS_EMULATOR_HOST }
-    : { keyFilename: "/secret/gcs-key.json" }
+    : { keyFilename: "/gcs/key.json" }
 );
 
 type UploadAvatar = (

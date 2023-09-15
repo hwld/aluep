@@ -1,17 +1,27 @@
 import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { PageHeader } from "@/client/ui/PageHeader";
+import { ReCaptchaCheckBox } from "@/client/ui/ReCaptchaCheckBox";
+import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
-import { Box, Button, List, Mark, Text } from "@mantine/core";
+import { Box, Button, List, Mark, Text, Title } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { TbTrash } from "react-icons/tb";
 
 export const UserDeletepage: React.FC = () => {
   const router = useRouter();
+
+  const [reCaptchaToken, setReCaptchaToken] = useState<string | undefined>(
+    undefined
+  );
+
+  const disableDeleteButton = reCaptchaToken === undefined;
+
   const deleteMutation = useMutation({
-    mutationFn: () => {
-      return trpc.me.delete.mutate();
+    mutationFn: (data: RouterInputs["me"]["delete"]) => {
+      return trpc.me.delete.mutate(data);
     },
     onSuccess: () => {
       router.replace(Routes.home);
@@ -25,7 +35,10 @@ export const UserDeletepage: React.FC = () => {
   });
 
   const handleDeleteUser = () => {
-    deleteMutation.mutate();
+    if (reCaptchaToken === undefined) {
+      return;
+    }
+    deleteMutation.mutate({ reCaptchaToken });
   };
 
   return (
@@ -54,20 +67,35 @@ export const UserDeletepage: React.FC = () => {
               削除され、復元することはできません。
             </Mark>
           </Text>
+          <Title order={3} mt="lg" mb="md">
+            チェックを入れてユーザーを削除する
+          </Title>
+          <ReCaptchaCheckBox onCheck={setReCaptchaToken} />
           <Box
             mt={50}
             w="100%"
             h={120}
             sx={(theme) => ({
-              backgroundColor: theme.fn.rgba(theme.colors.red[7], 0.15),
+              backgroundColor: theme.fn.rgba(theme.colors.pink[6], 0.15),
               borderRadius: theme.radius.md,
               display: "grid",
               placeItems: "center",
             })}
           >
-            <Button color="red" onClick={handleDeleteUser}>
-              ユーザーを削除する
-            </Button>
+            <Box sx={{ textAlign: "center" }}>
+              <Button
+                color="red"
+                onClick={handleDeleteUser}
+                disabled={disableDeleteButton}
+              >
+                ユーザーを削除する
+              </Button>
+              {disableDeleteButton && (
+                <Text mt="xs" size="sm">
+                  チェックボックスにチェックを入れてください
+                </Text>
+              )}
+            </Box>
           </Box>
         </Box>
       </Box>

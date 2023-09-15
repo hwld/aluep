@@ -40,11 +40,10 @@ next-env.d.ts
 /prisma/dev.db
 /prisma/dev.db-journal
 
-# upload-file
-/public/user-avatars
-
-# GCS 
+# Google Cloud
 /local-gcs
+recaptcha-key.json
+gcs-key.json
 
 # bundle-analyzer
 /analyze

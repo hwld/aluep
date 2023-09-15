@@ -31,3 +31,6 @@ export const userDetailPageSchame = z.object({
   tab: userDetailPageTabSchema.default("postedIdeas"),
   page: pagingSchema.default(1),
 });
+
+/** ユーザー削除画面用のスキーマ */
+export const userDeletePageSchema = z.object({ reCaptchaToken: z.string() });
