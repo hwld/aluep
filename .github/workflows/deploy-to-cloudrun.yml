@@ -46,6 +46,7 @@ jobs:
           -t ${{ env.IMAGE_NAME }}
           --build-arg NEXT_PUBLIC_URL=${{ vars.NEXT_PUBLIC_URL }}
           --build-arg NEXT_PUBLIC_CONTACT_URL=${{ vars.NEXT_PUBLIC_CONTACT_URL }}
+          --build-arg NEXT_PUBLIC_RECAPTCHA_KEY=${{ vars.NEXT_PUBLIC_RECAPTCHA_KEY }}
           .
 
       - name: "Push docker image"
