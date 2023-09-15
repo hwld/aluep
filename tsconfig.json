@@ -31,7 +31,8 @@
     "incremental": true,
     "types": [
       "@types/jest",
-      "@quramy/jest-prisma-node"
+      "@quramy/jest-prisma-node",
+      "grecaptcha"
     ]
   },
   "include": [

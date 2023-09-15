@@ -24,6 +24,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
+    "@google-cloud/recaptcha-enterprise": "^4.0.1",
     "@google-cloud/storage": "^6.9.1",
     "@hookform/resolvers": "^2.9.10",
     "@mantine/carousel": "^5.10.5",
@@ -95,6 +96,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/formidable": "^2.0.5",
+    "@types/grecaptcha": "^3.0.4",
     "@types/sanitize-html": "^2.8.0",
     "cross-env": "^7.0.3",
     "dotenv-cli": "^6.0.0",
