@@ -76,24 +76,28 @@ export const HomePage: React.FC = () => {
                 readMoreHref={Routes.ideaSearch({ order: "createdDesc" })}
                 ideas={latestIdeas}
               />
-              <PickedUpIdeas
-                icon={
-                  <TbHeart
-                    size="30px"
-                    color="transparent"
-                    fill={colors.pink[7]}
-                  />
-                }
-                title="いいねが多かったお題"
-                readMoreHref={Routes.ideaSearch({ order: "likeDesc" })}
-                ideas={manyLikesIdeas}
-              />
-              <PickedUpIdeas
-                icon={<MdComputer size="30px" color={colors.blue[7]} />}
-                title="開発者が多かったお題"
-                readMoreHref={Routes.ideaSearch({ order: "developmentDesc" })}
-                ideas={manyDevelopmentsIdeas}
-              />
+              {manyLikesIdeas.length !== 0 && (
+                <PickedUpIdeas
+                  icon={
+                    <TbHeart
+                      size="30px"
+                      color="transparent"
+                      fill={colors.pink[7]}
+                    />
+                  }
+                  title="いいねが多かったお題"
+                  readMoreHref={Routes.ideaSearch({ order: "likeDesc" })}
+                  ideas={manyLikesIdeas}
+                />
+              )}
+              {manyDevelopmentsIdeas.length !== 0 && (
+                <PickedUpIdeas
+                  icon={<MdComputer size="30px" color={colors.blue[7]} />}
+                  title="開発者が多かったお題"
+                  readMoreHref={Routes.ideaSearch({ order: "developmentDesc" })}
+                  ideas={manyDevelopmentsIdeas}
+                />
+              )}
             </>
           )}
         </Stack>

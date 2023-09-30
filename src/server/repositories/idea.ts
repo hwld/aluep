@@ -90,6 +90,7 @@ export const pickUpIdeas = async (
       [T in typeof order]: {
         select: Prisma.Sql;
         from: Prisma.Sql;
+        having?: Prisma.Sql;
         orderBy: Prisma.Sql;
       };
     } = {
@@ -107,11 +108,13 @@ export const pickUpIdeas = async (
       likeDesc: {
         select: Prisma.sql`, COUNT(idea_likes.id) as "likeCounts"`,
         from: Prisma.sql`LEFT JOIN idea_likes ON (ideas.id = idea_likes."ideaId")`,
+        having: Prisma.sql`COUNT(idea_likes.id) > 0`,
         orderBy: Prisma.sql`"likeCounts" desc`,
       },
       developmentDesc: {
         select: Prisma.sql`, COUNT(developments.id) as "developmentCounts"`,
         from: Prisma.sql`LEFT JOIN developments ON (ideas.id = developments."ideaId")`,
+        having: Prisma.sql`COUNT(developments.id) > 0`,
         orderBy: Prisma.sql`"developmentCounts" desc`,
       },
     };
@@ -127,6 +130,14 @@ export const pickUpIdeas = async (
           ${orderMap[order].from}
         GROUP BY
           ideas.id
+        ${
+          orderMap[order].having !== undefined
+            ? Prisma.sql`
+          HAVING
+            ${orderMap[order].having}
+          `
+            : Prisma.empty
+        }
         ORDER BY
           ${orderMap[order].orderBy}
       ) master
