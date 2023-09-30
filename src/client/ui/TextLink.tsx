@@ -5,16 +5,12 @@ import { PropsWithChildren } from "react";
 
 type Props = {
   href: string;
-  width?: string;
-  height?: string;
   className?: string;
   disabled?: boolean;
 } & PropsWithChildren;
 
 export const TextLink: React.FC<Props> = ({
   href,
-  width,
-  height,
   className,
   children,
   disabled = false,
@@ -29,8 +25,7 @@ export const TextLink: React.FC<Props> = ({
       className={className}
       href={href}
       miw={0}
-      w={width}
-      h={height}
+      w="fit-content"
       sx={(theme) => ({
         textDecoration: "none",
         "&:hover": {

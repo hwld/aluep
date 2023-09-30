@@ -124,10 +124,7 @@ export const DevelopmentDetailCard: React.FC<Props> = ({
                 iconSrc={development.developerUserImage}
                 size="lg"
               />
-              <TextLink
-                href={Routes.user(development.developerUserId)}
-                height="min-content"
-              >
+              <TextLink href={Routes.user(development.developerUserId)}>
                 <Title truncate size={18} miw={0}>
                   {development.developerUserName}
                 </Title>
