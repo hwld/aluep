@@ -21,4 +21,5 @@ export const trpc = createTRPCProxyClient<AppRouter>({
  */
 export const trpcMsw = createTRPCMsw<AppRouter>({
   baseUrl: apiUrl,
+  transformer: { output: SuperJSON, input: SuperJSON },
 });

@@ -5,7 +5,7 @@ import { initialize, mswDecorator } from "msw-storybook-addon";
 import { RequireLoginModalProvider } from "../src/client/features/session/RequireLoginModalProvider";
 import { theme } from "../src/client/style/theme";
 
-initialize();
+initialize({ serviceWorker: { url: "/apiMockServiceWorker.js" } });
 
 const preview: Preview = {
   parameters: {
@@ -20,7 +20,11 @@ const preview: Preview = {
   decorators: [
     mswDecorator,
     (Story) => {
-      const queryClient = new QueryClient();
+      const queryClient = new QueryClient({
+        defaultOptions: {
+          queries: { retry: false, refetchOnWindowFocus: false },
+        },
+      });
       return (
         <QueryClientProvider client={queryClient}>
           <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>

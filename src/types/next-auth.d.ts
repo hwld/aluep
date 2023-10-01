@@ -1,3 +1,4 @@
+import type { User } from "@/models/user";
 import "next-auth";
 
 // DBにあるuserIdをセッションに含めるための型定義

@@ -16,7 +16,10 @@ export const useTop10LikesDevelopmentInThisMonth = () => {
     staleTime: Infinity,
   });
 
-  return { top10LikesDevelopmentsInThisMonth, ...others };
+  return {
+    top10LikesDevelopmentsInThisMonth: top10LikesDevelopmentsInThisMonth ?? [],
+    ...others,
+  };
 };
 
 export const useTop10LikesPostersInThisMonth = () => {
@@ -29,7 +32,10 @@ export const useTop10LikesPostersInThisMonth = () => {
     staleTime: Infinity,
   });
 
-  return { top10LikesPostersInThisMonth, ...others };
+  return {
+    top10LikesPostersInThisMonth: top10LikesPostersInThisMonth ?? [],
+    ...others,
+  };
 };
 
 export const useTop10LikesIdeasInThisMonth = () => {
