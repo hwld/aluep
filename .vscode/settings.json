@@ -5,7 +5,7 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true,
   },
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "typescript.referencesCodeLens.enabled": true,

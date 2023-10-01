@@ -38,7 +38,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "src/client/__mocks__/trpc.ts"
   ],
   "exclude": [
     "node_modules"
