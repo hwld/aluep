@@ -1,6 +1,7 @@
 import { DevelopmentStatus } from "@/models/developmentStatus";
 import { z } from "zod";
 
+//TODO: developer: {id...}　とかのほうが見やすい気がする
 export type Development = {
   id: string;
   ideaId: string;

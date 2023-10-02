@@ -10,6 +10,7 @@ export const pageLimit = {
   postedIdeas: 18,
 } as const;
 
+// 使ってるmodels/developmentStatus.tsに置く？
 export const DevelopmentStatusIds = {
   /** 開発中 */
   IN_PROGRESS: "1",

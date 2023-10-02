@@ -4,8 +4,8 @@ import { AppLayout } from "@/client/ui/AppLayout";
 import { IdeaHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof HomePage> = {
-  title: "Page/HomePage",
+const meta = {
+  title: "Page/ホーム",
   component: HomePage,
   parameters: {
     layout: "fullscreen",
@@ -19,11 +19,12 @@ const meta: Meta<typeof HomePage> = {
       );
     },
   ],
-};
+} satisfies Meta<typeof HomePage>;
 export default meta;
-type Story = StoryObj<typeof HomePage>;
+type Story = StoryObj<typeof meta>;
 
 export const Empty: Story = {
+  name: "空のデータ",
   parameters: {
     msw: {
       handlers: [
@@ -54,6 +55,7 @@ export const Empty: Story = {
 };
 
 export const Small: Story = {
+  name: "少量のデータ",
   parameters: {
     msw: {
       handlers: [
@@ -116,6 +118,7 @@ export const Small: Story = {
 };
 
 export const Large: Story = {
+  name: "大量のデータ",
   parameters: {
     msw: {
       handlers: [

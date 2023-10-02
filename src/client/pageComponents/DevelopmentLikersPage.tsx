@@ -14,6 +14,8 @@ import { Stack, Text } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
 
 type Props = { development: Development };
+
+// TODO: なんか名前が・・・
 export const DevelopmentLikersPage: React.FC<Props> = ({ development }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { developmentLikers } = useDevelopmentLikers({

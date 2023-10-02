@@ -1,5 +1,10 @@
+import { Development } from "@/models/development";
+import { DevelopmentLikers } from "@/models/developmentLike";
 import { Idea } from "@/models/idea";
+import { IdeaComment } from "@/models/ideaComment";
+import { IdeaTag } from "@/models/ideaTag";
 import { User } from "@/models/user";
+import { DevelopmentStatusIds } from "@/share/consts";
 import { faker } from "@faker-js/faker";
 
 export const IdeaHelper = {
@@ -28,6 +33,72 @@ export const UserHelper = {
       name: "user",
       image: "",
       profile: "",
+      ...data,
+    };
+  },
+};
+
+export const IdeaTagHelper = {
+  create: (data?: Partial<IdeaTag>): IdeaTag => {
+    return {
+      id: faker.datatype.uuid(),
+      name: "tag",
+      createdAt: new Date().toLocaleString(),
+      updatedAt: new Date().toLocaleString(),
+      ...data,
+    };
+  },
+};
+
+export const DevelopmentHelper = {
+  create: (data?: Partial<Development>): Development => {
+    return {
+      id: faker.datatype.uuid(),
+      developerUserId: faker.datatype.uuid(),
+      developedItemUrl: "",
+      allowOtherUserMemos: true,
+      comment: "",
+      createdAt: new Date().toLocaleString(),
+      developerUserImage: "",
+      developerUserName: "user",
+      githubUrl: "",
+      ideaId: faker.datatype.uuid(),
+      ideaTitle: "idea",
+      likedByLoggedInUser: true,
+      likes: 100,
+      status: {
+        id: DevelopmentStatusIds.IN_PROGRESS,
+        name: "開発中",
+        ...data?.status,
+      },
+      updatedAt: new Date().toLocaleString(),
+      ...data,
+    };
+  },
+};
+
+export const DevelopmentLikerHelper = {
+  create: (data?: Partial<DevelopmentLikers>): DevelopmentLikers => {
+    return {
+      id: faker.datatype.uuid(),
+      name: "user",
+      profile: "",
+      image: "",
+      likedDate: new Date(),
+      ...data,
+    };
+  },
+};
+
+export const IdeaCommentHelper = {
+  create: (data?: Partial<IdeaComment>): IdeaComment => {
+    return {
+      id: faker.datatype.uuid(),
+      text: "コメント",
+      createdAt: new Date(),
+      fromUser: UserHelper.create(),
+      ideaId: faker.datatype.uuid(),
+      inReplyToComment: { fromUserName: "user", id: faker.datatype.uuid() },
       ...data,
     };
   },
