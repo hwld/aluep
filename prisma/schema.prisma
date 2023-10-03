@@ -5,7 +5,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// TODO: 本番環境でsupabsaeを使用する
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
