@@ -1,7 +1,7 @@
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { userKeys } from "@/client/features/user/queryKeys";
-import { IdeaLikersPage } from "@/client/pageComponents/IdeaLikersPage";
+import { IdeaLikersPage } from "@/client/pageComponents/IdeaLikersPage/IdeaLikersPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";
 import { paginatedPageSchema } from "@/share/paging";

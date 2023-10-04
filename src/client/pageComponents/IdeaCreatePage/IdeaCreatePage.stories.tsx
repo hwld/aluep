@@ -1,12 +1,11 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
-import { DevelopmentEditPage } from "@/client/pageComponents/DevelopmentEditPage";
+import { IdeaCreatePage } from "@/client/pageComponents/IdeaCreatePage/IdeaCreatePage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
-import { DevelopmentHelper, IdeaHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Page/開発情報の編集",
-  component: DevelopmentEditPage,
+  title: "Page/お題作成",
+  component: IdeaCreatePage,
   parameters: {
     layout: "fullscreen",
   },
@@ -19,25 +18,18 @@ const meta = {
       );
     },
   ],
-} satisfies Meta<typeof DevelopmentEditPage>;
+} satisfies Meta<typeof IdeaCreatePage>;
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
-  args: {
-    idea: IdeaHelper.create(),
-    development: DevelopmentHelper.create(),
-    restoredValues: {},
-  },
   parameters: {
     msw: {
       handlers: [
         trpcMsw.session.query((req, res, ctx) => {
           return res(ctx.status(200), ctx.data(null));
         }),
-        trpcMsw.development.isDevelopedByUser.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data({ developed: false }));
-        }),
-        trpcMsw.development.getDevelopmentStatuses.query((req, res, ctx) => {
+        trpcMsw.idea.getAllTags.query((req, res, ctx) => {
           return res(ctx.status(200), ctx.data([]));
         }),
       ],

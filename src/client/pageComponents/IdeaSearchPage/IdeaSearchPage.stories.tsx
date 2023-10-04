@@ -1,5 +1,5 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
-import { IdeaSearchPage } from "@/client/pageComponents/IdeaSearchPage";
+import { IdeaSearchPage } from "@/client/pageComponents/IdeaSearchPage/IdeaSearchPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { IdeaHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";

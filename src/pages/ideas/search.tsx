@@ -1,5 +1,5 @@
 import { ideaKeys } from "@/client/features/idea/queryKeys";
-import { IdeaSearchPage } from "@/client/pageComponents/IdeaSearchPage";
+import { IdeaSearchPage } from "@/client/pageComponents/IdeaSearchPage/IdeaSearchPage";
 import { searchIdeaPageSchema } from "@/models/idea";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";

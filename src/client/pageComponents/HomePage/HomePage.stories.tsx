@@ -1,5 +1,5 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
-import { HomePage } from "@/client/pageComponents/HomePage";
+import { HomePage } from "@/client/pageComponents/HomePage/HomePage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { IdeaHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";

@@ -1,7 +1,7 @@
 import { developmentKeys } from "@/client/features/development/queryKeys";
 import { useDevelopmentQuery } from "@/client/features/development/useDevelopmentQuery";
 import { userKeys } from "@/client/features/user/queryKeys";
-import { DevelopmentLikersPage } from "@/client/pageComponents/DevelopmentLikersPage";
+import { DevelopmentLikersPage } from "@/client/pageComponents/DevelopmentLikersPage/DevelopmentLikersPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";
 import { paginatedPageSchema } from "@/share/paging";

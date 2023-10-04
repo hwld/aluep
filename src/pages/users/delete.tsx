@@ -1,4 +1,4 @@
-import { UserDeletepage } from "@/client/pageComponents/UserDeletePage";
+import { UserDeletepage } from "@/client/pageComponents/UserDeletePage/UserDeletePage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
 import { NextPage } from "next";

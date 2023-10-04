@@ -1,12 +1,12 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
-import { UserEditPage } from "@/client/pageComponents/UserEditPage";
+import { FavoritedUsersPage } from "@/client/pageComponents/FavoritedUsersPage/FavoritedUsersPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Page/ユーザーの編集",
-  component: UserEditPage,
+  title: "Page/お気に入りユーザー",
+  component: FavoritedUsersPage,
   parameters: {
     layout: "fullscreen",
   },
@@ -19,28 +19,24 @@ const meta = {
       );
     },
   ],
-} satisfies Meta<typeof UserEditPage>;
+} satisfies Meta<typeof FavoritedUsersPage>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
+
 export const Default: Story = {
-  args: { user: UserHelper.create({ profile: "profile" }) },
+  args: { user: UserHelper.create() },
   parameters: {
     msw: {
       handlers: [
         trpcMsw.session.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({
-              expires: "",
-              user: UserHelper.create(),
-            })
-          );
+          return res(ctx.status(200), ctx.data(null));
         }),
-        trpcMsw.me.getMySummary.query((req, res, ctx) => {
+        trpcMsw.user.getFavoritedUsers.query((req, res, ctx) => {
+          const { create } = UserHelper;
           return res(
             ctx.status(200),
-            ctx.data({ allLikes: 0, developments: 0, ideas: 0 })
+            ctx.data({ list: [create(), create(), create()], allPages: 1 })
           );
         }),
       ],

@@ -1,5 +1,5 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
-import { DevelopmentsPage } from "@/client/pageComponents/DevelopmentsPage";
+import { DevelopmentsPage } from "@/client/pageComponents/DevelopmentsPage/DevelopmentsPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { DevelopmentHelper, IdeaHelper } from "@/models/tests/helpers";
 import { DevelopmentStatusIds } from "@/share/consts";

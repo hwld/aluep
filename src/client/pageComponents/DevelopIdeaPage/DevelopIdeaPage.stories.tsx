@@ -1,11 +1,12 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
-import { IdeaCreatePage } from "@/client/pageComponents/IdeaCreatePage";
+import { DevelopIdeaPage } from "@/client/pageComponents/DevelopIdeaPage/DevelopIdeaPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { IdeaHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Page/お題作成",
-  component: IdeaCreatePage,
+  title: "Page/お題の開発",
+  component: DevelopIdeaPage,
   parameters: {
     layout: "fullscreen",
   },
@@ -18,18 +19,22 @@ const meta = {
       );
     },
   ],
-} satisfies Meta<typeof IdeaCreatePage>;
-export default meta;
+} satisfies Meta<typeof DevelopIdeaPage>;
 
+export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
+  args: { idea: IdeaHelper.create(), restoredValues: {} },
   parameters: {
     msw: {
       handlers: [
         trpcMsw.session.query((req, res, ctx) => {
           return res(ctx.status(200), ctx.data(null));
         }),
-        trpcMsw.idea.getAllTags.query((req, res, ctx) => {
+        trpcMsw.development.isDevelopedByUser.query((req, res, ctx) => {
+          return res(ctx.status(200), ctx.data({ developed: false }));
+        }),
+        trpcMsw.development.getDevelopmentStatuses.query((req, res, ctx) => {
           return res(ctx.status(200), ctx.data([]));
         }),
       ],

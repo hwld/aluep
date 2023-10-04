@@ -1,6 +1,6 @@
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { DevelopIdeaPage } from "@/client/pageComponents/DevelopIdeaPage";
+import { DevelopIdeaPage } from "@/client/pageComponents/DevelopIdeaPage/DevelopIdeaPage";
 import { createRepositoryURLParamSchema } from "@/models/development";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";

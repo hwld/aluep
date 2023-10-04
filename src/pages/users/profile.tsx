@@ -1,5 +1,5 @@
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { UserEditPage } from "@/client/pageComponents/UserEditPage";
+import { UserEditPage } from "@/client/pageComponents/UserEditPage/UserEditPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
 import NotFoundPage from "../404";

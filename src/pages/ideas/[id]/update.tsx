@@ -1,6 +1,6 @@
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { IdeaEditPage } from "@/client/pageComponents/IdeaEditPage";
+import { IdeaEditPage } from "@/client/pageComponents/IdeaEditPage/IdeaEditPage";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";

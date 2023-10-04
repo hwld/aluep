@@ -1,6 +1,6 @@
 import { userKeys } from "@/client/features/user/queryKeys";
 import { useUserQuery } from "@/client/features/user/useUserQuery";
-import { FavoritedUsersPage } from "@/client/pageComponents/FavoritedUsersPage";
+import { FavoritedUsersPage } from "@/client/pageComponents/FavoritedUsersPage/FavoritedUsersPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";
 import { paginatedPageSchema } from "@/share/paging";

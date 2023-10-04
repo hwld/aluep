@@ -2,7 +2,7 @@ import { developmentKeys } from "@/client/features/development/queryKeys";
 import { useDevelopmentQuery } from "@/client/features/development/useDevelopmentQuery";
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { DevelopmentEditPage } from "@/client/pageComponents/DevelopmentEditPage";
+import { DevelopmentEditPage } from "@/client/pageComponents/DevelopmentEditPage/DevelopmentEditPage";
 import { createRepositoryURLParamSchema } from "@/models/development";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";

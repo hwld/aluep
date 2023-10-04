@@ -1,12 +1,12 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
-import { DevelopIdeaPage } from "@/client/pageComponents/DevelopIdeaPage";
+import { DevelopmentEditPage } from "@/client/pageComponents/DevelopmentEditPage/DevelopmentEditPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
-import { IdeaHelper } from "@/models/tests/helpers";
+import { DevelopmentHelper, IdeaHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Page/お題の開発",
-  component: DevelopIdeaPage,
+  title: "Page/開発情報の編集",
+  component: DevelopmentEditPage,
   parameters: {
     layout: "fullscreen",
   },
@@ -19,12 +19,15 @@ const meta = {
       );
     },
   ],
-} satisfies Meta<typeof DevelopIdeaPage>;
-
+} satisfies Meta<typeof DevelopmentEditPage>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
-  args: { idea: IdeaHelper.create(), restoredValues: {} },
+  args: {
+    idea: IdeaHelper.create(),
+    development: DevelopmentHelper.create(),
+    restoredValues: {},
+  },
   parameters: {
     msw: {
       handlers: [

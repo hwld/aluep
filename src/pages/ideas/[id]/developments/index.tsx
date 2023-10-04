@@ -1,7 +1,7 @@
 import { developmentKeys } from "@/client/features/development/queryKeys";
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { DevelopmentsPage as DevelopmentsPageComponent } from "@/client/pageComponents/DevelopmentsPage";
+import { DevelopmentsPage as DevelopmentsPageComponent } from "@/client/pageComponents/DevelopmentsPage/DevelopmentsPage";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";

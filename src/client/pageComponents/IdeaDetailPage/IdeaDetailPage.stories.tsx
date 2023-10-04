@@ -1,5 +1,5 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
-import { IdeaDetailPage } from "@/client/pageComponents/IdeaDetailPage";
+import { IdeaDetailPage } from "@/client/pageComponents/IdeaDetailPage/IdeaDetailPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import {
   IdeaCommentHelper,

@@ -3,7 +3,7 @@ import { useDevelopmentQuery } from "@/client/features/development/useDevelopmen
 import { developmentMemoKeys } from "@/client/features/developmentMemo/queryKeys";
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { DevelopmentDetailPage } from "@/client/pageComponents/DevelopmentDetailPage";
+import { DevelopmentDetailPage } from "@/client/pageComponents/DevelopmentDetailPage/DevelopmentDetailPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";
 import { assertString } from "@/share/utils";

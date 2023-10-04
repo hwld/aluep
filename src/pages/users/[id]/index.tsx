@@ -2,7 +2,7 @@ import { developmentKeys } from "@/client/features/development/queryKeys";
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { userKeys } from "@/client/features/user/queryKeys";
 import { useUserQuery } from "@/client/features/user/useUserQuery";
-import { UserDetailPage } from "@/client/pageComponents/UserDetailPage";
+import { UserDetailPage } from "@/client/pageComponents/UserDetailPage/UserDetailPage";
 import { userDetailPageSchame } from "@/models/user";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { appRouter } from "@/server/router";
