@@ -13,10 +13,12 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
+import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { TbAlertCircle } from "react-icons/tb";
+import classes from "./DevelopMemoReplyFormBox.module.css";
 
 type Props = {
   onSubmit: (data: DevelopmentMemoFormData) => void;
@@ -24,6 +26,7 @@ type Props = {
   isSubmitting?: boolean;
 };
 
+// TODO: スタイルをDevelopmentMemoFormCardとある程度共通化したい
 export const DevelopmentMemoReplyFormBox: React.FC<Props> = ({
   onSubmit,
   onCancel,
@@ -61,15 +64,7 @@ export const DevelopmentMemoReplyFormBox: React.FC<Props> = ({
   }, []);
 
   return (
-    <Box
-      p="xs"
-      sx={(theme) => ({
-        borderRadius: theme.radius.md,
-        border: "1px solid",
-        borderColor: theme.colors.gray[4],
-      })}
-      onClick={handleFocusTextarea}
-    >
+    <Box p="xs" className={classes.root} onClick={handleFocusTextarea}>
       <form onSubmit={handleSubmit}>
         <Controller
           control={control}
@@ -95,10 +90,12 @@ export const DevelopmentMemoReplyFormBox: React.FC<Props> = ({
           <Flex
             align="center"
             gap={5}
-            sx={{ visibility: errors.text ? "visible" : "hidden" }}
+            className={clsx(classes["error-message"], {
+              [classes.show]: errors.text,
+            })}
           >
             <TbAlertCircle size={30} color={colors.red[7]} />
-            <Text color="red">{errors.text?.message}</Text>
+            <Text c="red">{errors.text?.message}</Text>
           </Flex>
           <Flex gap="xs">
             <Button
@@ -111,7 +108,12 @@ export const DevelopmentMemoReplyFormBox: React.FC<Props> = ({
             <Button
               type="submit"
               loading={debouncedSubmitting}
-              leftIcon={<MdOutlineInsertComment size={20} />}
+              leftSection={
+                <MdOutlineInsertComment
+                  size={20}
+                  style={{ opacity: debouncedSubmitting ? 0.3 : 1 }}
+                />
+              }
               loaderProps={{ size: 20 }}
             >
               返信

@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// TODO: DevMemoとかにする
 export type DevelopmentMemo = {
   id: string;
   developmentId: string;

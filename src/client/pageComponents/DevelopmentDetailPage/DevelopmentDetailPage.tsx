@@ -1,8 +1,8 @@
 import { DevelopmentDetailCard } from "@/client/features/development/DevelopmentDetailCard";
 import { developmentKeys } from "@/client/features/development/queryKeys";
 import { useDevelopmentLikeOnDetail } from "@/client/features/development/useDevelopmentLikeOnDetail";
-import { DevelopmentMemoFormCard } from "@/client/features/developmentMemo/DevelopmentMemoFormCard";
-import { DevelopmentMemoThreadCard } from "@/client/features/developmentMemo/DevelopmentMemoThreadCard";
+import { DevelopmentMemoFormCard } from "@/client/features/developmentMemo/DevelopmentMemoFormCard/DevelopmentMemoFormCard";
+import { DevelopmentMemoThreadCard } from "@/client/features/developmentMemo/DevelopmentMemoThreadCard/DevelopmentMemoThreadCard";
 import { useDevelopmentMemos } from "@/client/features/developmentMemo/useDevelopmentMemos";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";

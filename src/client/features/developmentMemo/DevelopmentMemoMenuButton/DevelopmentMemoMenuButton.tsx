@@ -1,4 +1,4 @@
-import { ReportForm } from "@/client/features/report/ReportForm";
+import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
 import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
@@ -21,6 +21,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { MdFlag } from "react-icons/md";
 import { TbLink } from "react-icons/tb";
+import classes from "./DevelopmentMemoMenuButton.module.css";
 
 type Props = {
   ideaId: string;
@@ -98,16 +99,10 @@ export const DevelopmentMemoMenuButton: React.FC<Props> = ({
         <Menu.Target>
           <ActionIcon
             size={35}
-            color="gray"
-            sx={(theme) => ({
-              transition: "all 150ms",
-              "&:hover": {
-                backgroundColor: theme.fn.rgba(theme.colors.gray[5], 0.1),
-              },
-            })}
+            className={classes.trigger}
             onClick={stopPropagation}
           >
-            <BsThreeDots size="70%" />
+            <BsThreeDots size="70%" color="var(--mantine-color-gray-7)" />
           </ActionIcon>
         </Menu.Target>
 
@@ -115,7 +110,7 @@ export const DevelopmentMemoMenuButton: React.FC<Props> = ({
           {isOwner && (
             <>
               <AppMenuItem
-                icon={<FaTrash size={18} />}
+                leftSection={<FaTrash size={18} />}
                 red
                 onClick={openDeleteModal}
               >
@@ -124,10 +119,16 @@ export const DevelopmentMemoMenuButton: React.FC<Props> = ({
               <Divider my={5} />
             </>
           )}
-          <AppMenuItem icon={<TbLink size={20} />} onClick={handleCopyLink}>
+          <AppMenuItem
+            leftSection={<TbLink size={20} />}
+            onClick={handleCopyLink}
+          >
             リンクをコピーする
           </AppMenuItem>
-          <AppMenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
+          <AppMenuItem
+            leftSection={<MdFlag size={18} />}
+            onClick={openReportModal}
+          >
             通報する
           </AppMenuItem>
         </AppMenuDropdown>

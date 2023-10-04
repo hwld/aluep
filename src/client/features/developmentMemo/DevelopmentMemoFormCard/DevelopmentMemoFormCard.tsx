@@ -14,11 +14,13 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
+import clsx from "clsx";
 import { User } from "next-auth";
 import { forwardRef, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { TbAlertCircle } from "react-icons/tb";
+import classes from "./DevelopmentMemoFormCard.module.css";
 
 type Props = {
   developmentId: string;
@@ -59,7 +61,7 @@ export const DevelopmentMemoFormCard = forwardRef<HTMLDivElement, Props>(
         <form onSubmit={handleSubmit}>
           <Flex align="center" gap="xs">
             <UserIcon iconSrc={loggedInUser.image} />
-            <Text truncate size="xs" color="gray.5">
+            <Text truncate size="xs" c="gray.5">
               {loggedInUser.name}
             </Text>
           </Flex>
@@ -88,15 +90,22 @@ export const DevelopmentMemoFormCard = forwardRef<HTMLDivElement, Props>(
             <Flex
               align="center"
               gap={5}
-              sx={{ visibility: errors.text ? "visible" : "hidden" }}
+              className={clsx(classes["error-message"], {
+                [classes.show]: errors.text,
+              })}
             >
               <TbAlertCircle size={30} color={colors.red[7]} />
-              <Text color="red">{errors.text?.message}</Text>
+              <Text c="red">{errors.text?.message}</Text>
             </Flex>
             <Button
               type="submit"
               loading={debouncedSubmitting}
-              leftIcon={<MdOutlineInsertComment size={20} />}
+              leftSection={
+                <MdOutlineInsertComment
+                  size={20}
+                  style={{ opacity: debouncedSubmitting ? 0.3 : 1 }}
+                />
+              }
               loaderProps={{ size: 20 }}
             >
               送信

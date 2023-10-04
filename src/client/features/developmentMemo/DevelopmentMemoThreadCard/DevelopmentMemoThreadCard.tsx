@@ -1,7 +1,7 @@
-import { ChildDevelopmentMemoSection } from "@/client/features/developmentMemo/DevelopmentMemoChildrenSection";
-import { DevelopmentMemoMenuButton } from "@/client/features/developmentMemo/DevelopmentMemoMenuButton";
+import { DevelopmentMemoReplyFormBox } from "@/client/features/developmentMemo/DevelopMemoReplyFormBox/DevelopMemoReplyFormBox";
+import { ChildDevelopmentMemoSection } from "@/client/features/developmentMemo/DevelopmentMemoChildrenSection/DevelopmentMemoChildrenSection";
+import { DevelopmentMemoMenuButton } from "@/client/features/developmentMemo/DevelopmentMemoMenuButton/DevelopmentMemoMenuButton";
 import { useDevelopmentMemos } from "@/client/features/developmentMemo/useDevelopmentMemos";
-import { DevelopmentMemoReplyFormBox } from "@/client/features/ideaComment/DevelopMemoReplyFormBox";
 import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
@@ -20,6 +20,7 @@ import {
 } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { FaRegComment } from "react-icons/fa";
+import classes from "./DevelopmentMemoThreadCard.module.css";
 
 type Props = {
   ideaId: string;
@@ -74,18 +75,7 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
 
   return (
     <Card>
-      <Stack
-        ref={memoRef}
-        spacing="md"
-        id={memo.id}
-        sx={(theme) => ({
-          "&:target": {
-            outline: `${theme.fn.rgba(theme.colors.red[7], 0.5)} solid 2px`,
-            outlineOffset: "5px",
-            borderRadius: theme.radius.xs,
-          },
-        })}
-      >
+      <Stack ref={memoRef} gap="md" id={memo.id} className={classes.root}>
         <Flex justify="space-between">
           <Flex align="center" gap="xs">
             <UserIconLink
@@ -105,7 +95,7 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
             isDeleting={deleteMemoMutation.isLoading}
           />
         </Flex>
-        <Text sx={{ whiteSpace: "pre-line" }}>{memo.text}</Text>
+        <Text className={classes["memo-text"]}>{memo.text}</Text>
         <Flex justify="space-between" align="center">
           <Flex align="center" gap={3}>
             <CardActionIcon onClick={handleOpenReplyForm}>

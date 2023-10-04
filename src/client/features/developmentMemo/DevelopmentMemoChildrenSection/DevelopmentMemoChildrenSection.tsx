@@ -1,8 +1,9 @@
-import { DevelopmentMemoChild } from "@/client/features/developmentMemo/DevelopmentMemoChild";
+import { DevelopmentMemoChild } from "@/client/features/developmentMemo/DevelopmentMemoChild/DevelopmentMemoChild";
 import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
 import { DevelopmentMemo } from "@/models/developmentMemo";
 import { Box, Button, Divider, Stack } from "@mantine/core";
 import { useRef } from "react";
+import classes from "./DevelopmentMemoChildSection.module.css";
 
 type Props = {
   ideaId: string;
@@ -40,22 +41,7 @@ export const ChildDevelopmentMemoSection: React.FC<Props> = ({
   return (
     <Box mt="sm">
       <Divider></Divider>
-      <Stack
-        spacing="xl"
-        py="md"
-        sx={(theme) => ({
-          position: "relative",
-          "&:before": {
-            content: '""',
-            position: "absolute",
-            top: "20px",
-            bottom: "0",
-            left: "17px",
-            width: "2px",
-            background: theme.colors.gray[3],
-          },
-        })}
-      >
+      <Stack gap="xl" py="md" className={classes.root}>
         {childMemos.map((memo, i) => {
           const child = (
             <DevelopmentMemoChild
@@ -83,10 +69,7 @@ export const ChildDevelopmentMemoSection: React.FC<Props> = ({
         <Button
           variant="outline"
           color="gray.5"
-          sx={(theme) => ({
-            transition: "background-color 250ms",
-            "&:hover": { backgroundColor: theme.colors.gray[2] },
-          })}
+          className={classes["reply-button"]}
           onClick={handleOpenReplyForm}
         >
           返信する

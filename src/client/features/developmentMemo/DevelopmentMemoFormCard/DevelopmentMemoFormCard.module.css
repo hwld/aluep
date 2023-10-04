@@ -1,0 +1,7 @@
+.error-message {
+  visibility: hidden;
+}
+
+.error-message.show {
+  visibility: visible;
+}

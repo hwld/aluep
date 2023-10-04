@@ -1,4 +1,4 @@
-import { DevelopmentMemoMenuButton } from "@/client/features/developmentMemo/DevelopmentMemoMenuButton";
+import { DevelopmentMemoMenuButton } from "@/client/features/developmentMemo/DevelopmentMemoMenuButton/DevelopmentMemoMenuButton";
 import { useDevelopmentMemos } from "@/client/features/developmentMemo/useDevelopmentMemos";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink";
@@ -6,6 +6,7 @@ import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClick
 import { formatDate } from "@/client/lib/utils";
 import { DevelopmentMemo } from "@/models/developmentMemo";
 import { Flex, Stack, Text } from "@mantine/core";
+import classes from "./DevelopmentMemoChild.module.css";
 
 type Props = { memo: DevelopmentMemo; developmentId: string; ideaId: string };
 
@@ -25,27 +26,16 @@ export const DevelopmentMemoChild: React.FC<Props> = ({
   };
 
   return (
-    <Flex
-      ref={memoRef}
-      id={memo.id}
-      gap="xs"
-      sx={(theme) => ({
-        "&:target": {
-          outline: `${theme.fn.rgba(theme.colors.red[7], 0.5)} solid 2px`,
-          outlineOffset: "5px",
-          borderRadius: theme.radius.xs,
-        },
-      })}
-    >
+    <Flex ref={memoRef} id={memo.id} gap="xs" className={classes.root}>
       <Stack>
         <UserIconLink
           userId={memo.fromUser.id}
           iconSrc={memo.fromUser.imageUrl}
         />
       </Stack>
-      <Stack spacing="md" sx={{ flexGrow: 1 }}>
+      <Stack gap="md" className={classes.content}>
         <Flex justify="space-between">
-          <Stack spacing={0}>
+          <Stack gap={0}>
             <Text c="gray.5" size="xs">
               {memo.fromUser.name}
             </Text>
@@ -64,7 +54,7 @@ export const DevelopmentMemoChild: React.FC<Props> = ({
             isDeleting={deleteMemoMutation.isLoading}
           />
         </Flex>
-        <Text sx={{ whiteSpace: "pre-wrap" }}>{memo.text}</Text>
+        <Text className={classes["text-wrapper"]}>{memo.text}</Text>
       </Stack>
     </Flex>
   );

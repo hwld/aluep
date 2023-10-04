@@ -1,5 +1,5 @@
 import { useDevelop } from "@/client/features/development/useDevelop";
-import { ReportForm } from "@/client/features/report/ReportForm";
+import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
 import { trpc } from "@/client/lib/trpc";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";

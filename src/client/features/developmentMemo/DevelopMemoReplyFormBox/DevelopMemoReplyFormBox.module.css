@@ -1,0 +1,13 @@
+.root {
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid;
+  border-color: var(--mantine-color-gray-4);
+}
+
+.error-message {
+  visibility: hidden;
+}
+
+.error-message.show {
+  visibility: visible;
+}

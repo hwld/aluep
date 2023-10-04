@@ -1,4 +1,4 @@
-import { ReportForm } from "@/client/features/report/ReportForm";
+import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
 import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,

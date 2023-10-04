@@ -1,5 +1,6 @@
 import { Development } from "@/models/development";
 import { DevelopmentLikers } from "@/models/developmentLike";
+import { DevelopmentMemo } from "@/models/developmentMemo";
 import { Idea } from "@/models/idea";
 import { IdeaComment } from "@/models/ideaComment";
 import { IdeaTag } from "@/models/ideaTag";
@@ -72,6 +73,25 @@ export const DevelopmentHelper = {
         ...data?.status,
       },
       updatedAt: new Date().toLocaleString(),
+      ...data,
+    };
+  },
+};
+
+export const DevelopmentMemoHelper = {
+  create: (data?: Partial<DevelopmentMemo>): DevelopmentMemo => {
+    return {
+      id: faker.datatype.uuid(),
+      text: "memo",
+      parentMemoId: null,
+      developmentId: faker.datatype.uuid(),
+      fromUser: {
+        id: faker.datatype.uuid(),
+        imageUrl: "",
+        name: "user",
+        ...data?.fromUser,
+      },
+      createdAt: new Date(),
       ...data,
     };
   },
