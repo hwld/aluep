@@ -22,7 +22,7 @@ export const RequireLoginModal: React.FC<Props> = () => {
     >
       <Stack>
         <Text>この機能を利用するためには、ログインをする必要があります。</Text>
-        <Button leftIcon={<FaGithub size="21" />} onClick={handleLogin}>
+        <Button leftSection={<FaGithub size="21" />} onClick={handleLogin}>
           GitHubでログイン
         </Button>
       </Stack>

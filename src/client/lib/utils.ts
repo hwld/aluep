@@ -1,6 +1,6 @@
 import { AppRouter } from "@/server/router";
 import {
-  NotificationProps,
+  NotificationData,
   showNotification,
   updateNotification,
 } from "@mantine/notifications";
@@ -17,7 +17,7 @@ export const isTRPCClientError = (
   return e instanceof TRPCClientError;
 };
 
-export const showLoadingNotification = (props: NotificationProps) => {
+export const showLoadingNotification = (props: NotificationData) => {
   showNotification({
     color: "blue",
     styles: (idea) => ({ title: { color: idea.colors.blue[7] } }),
@@ -26,11 +26,11 @@ export const showLoadingNotification = (props: NotificationProps) => {
 };
 
 export const showSuccessNotification = (
-  props: NotificationProps,
+  props: NotificationData,
   opt?: { update: true; id: string }
 ) => {
   const notification = opt?.update
-    ? (others: NotificationProps) =>
+    ? (others: NotificationData) =>
         updateNotification({ id: opt.id, ...others })
     : showNotification;
 
@@ -42,11 +42,11 @@ export const showSuccessNotification = (
 };
 
 export const showErrorNotification = (
-  props: NotificationProps,
+  props: NotificationData,
   opt?: { update: true; id: string }
 ) => {
   const notification = opt?.update
-    ? (others: NotificationProps) =>
+    ? (others: NotificationData) =>
         updateNotification({ id: opt.id, ...others })
     : showNotification;
 

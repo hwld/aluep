@@ -1,4 +1,4 @@
-import { RequireLoginModal } from "@/client/features/session/RequireLoginModal";
+import { RequireLoginModal } from "@/client/features/session/RequireLoginModal/RequireLoginModal";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { AppSidebar } from "@/client/ui/AppSidebar/AppSidebar/AppSidebar";
