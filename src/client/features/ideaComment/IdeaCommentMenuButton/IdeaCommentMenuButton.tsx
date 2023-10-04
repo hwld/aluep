@@ -21,6 +21,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import { TbLink } from "react-icons/tb";
+import classes from "./IdeaCommentMenuButton.module.css";
 
 type Props = {
   ideaId: string;
@@ -88,13 +89,9 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
         <Menu.Target>
           <ActionIcon
             size={30}
-            color="gray"
-            sx={(theme) => ({
-              transition: "all 150ms",
-              "&:hover": {
-                backgroundColor: theme.fn.rgba(theme.colors.gray[5], 0.1),
-              },
-            })}
+            color="transparent"
+            c="gray.7"
+            className={classes.icon}
             onClick={stopPropagation}
           >
             <BsThreeDots size="70%" />
@@ -107,7 +104,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
               <AppMenuItem
                 red
                 onClick={openDeleteModal}
-                icon={<RiEdit2Fill size={20} />}
+                leftSection={<RiEdit2Fill size={20} />}
               >
                 コメントを削除する
               </AppMenuItem>
@@ -115,10 +112,16 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
             </>
           )}
           <>
-            <AppMenuItem icon={<TbLink size={20} />} onClick={handleCopyLink}>
+            <AppMenuItem
+              leftSection={<TbLink size={20} />}
+              onClick={handleCopyLink}
+            >
               リンクをコピーする
             </AppMenuItem>
-            <AppMenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
+            <AppMenuItem
+              leftSection={<MdFlag size={18} />}
+              onClick={openReportModal}
+            >
               通報する
             </AppMenuItem>
           </>

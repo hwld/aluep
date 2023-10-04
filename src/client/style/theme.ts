@@ -11,6 +11,7 @@ import {
   Select,
   Text,
   TextInput,
+  Title,
   Tooltip,
   createTheme,
 } from "@mantine/core";
@@ -80,6 +81,12 @@ export const theme = createTheme({
   components: {
     Button: Button.extend({
       styles: { root: { transition: "background-color 250ms" } },
+    }),
+    Title: Title.extend({
+      defaultProps: { c: "gray.7" },
+      styles: () => ({
+        root: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
+      }),
     }),
     Tooltip: Tooltip.extend({ defaultProps: { color: "gray.7" } }),
     Paper: Paper.extend({ defaultProps: { bg: "gray.1" } }),

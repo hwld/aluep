@@ -13,10 +13,12 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
+import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { TbAlertCircle } from "react-icons/tb";
+import classes from "./IdeaCommentReplyFormCard.module.css";
 
 type Props = {
   onSubmit: (data: IdeaCommentFormData) => void;
@@ -84,7 +86,9 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
           <Flex
             align="center"
             gap={5}
-            sx={{ visibility: errors.text ? "visible" : "hidden" }}
+            className={clsx(classes["error-message"], {
+              [classes.show]: errors.text,
+            })}
           >
             <TbAlertCircle size={30} color={colors.red[7]} />
             <Text color="red">{errors.text?.message}</Text>
@@ -100,7 +104,7 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
             <Button
               type="submit"
               loading={debouncedSubmitting}
-              leftIcon={<MdOutlineInsertComment size={20} />}
+              leftSection={<MdOutlineInsertComment size={20} />}
               loaderProps={{ size: 20 }}
             >
               返信

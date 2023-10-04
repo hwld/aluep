@@ -98,8 +98,8 @@ export const DevelopmentMemoThreadCard: React.FC<Props> = ({
         <Text className={classes["memo-text"]}>{memo.text}</Text>
         <Flex justify="space-between" align="center">
           <Flex align="center" gap={3}>
-            <CardActionIcon onClick={handleOpenReplyForm}>
-              <FaRegComment color={colors.gray[5]} size={20} />
+            <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>
+              <FaRegComment size={20} />
             </CardActionIcon>
             {childrenMemos.length > 0 && (
               <Text c="gray.5" size="sm">

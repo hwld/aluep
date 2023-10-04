@@ -1,5 +1,5 @@
-import { IdeaCommentMenuButton } from "@/client/features/ideaComment/IdeaCommentMenuButton";
-import { IdeaCommentReplyFormCard } from "@/client/features/ideaComment/IdeaCommentReplyFormCard";
+import { IdeaCommentMenuButton } from "@/client/features/ideaComment/IdeaCommentMenuButton/IdeaCommentMenuButton";
+import { IdeaCommentReplyFormCard } from "@/client/features/ideaComment/IdeaCommentReplyFormCard/IdeaCommentReplyFormCard";
 import { useIdeaCommentReply } from "@/client/features/ideaComment/useIdeaCommentReply";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
@@ -20,6 +20,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { FaRegComment, FaUserAlt } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
+import classes from "./IdeaCommentCard.module.css";
 
 type Props = {
   ideaId: string;
@@ -83,17 +84,9 @@ export const IdeaCommentCard: React.FC<Props> = ({
   };
 
   return (
-    <Stack spacing="xs" ref={commentRef}>
-      <Card
-        id={comment.id}
-        pos="static"
-        sx={(theme) => ({
-          "&:target": {
-            boxShadow: `0 0 0 2px ${theme.colors.red[7]}`,
-          },
-        })}
-      >
-        <Stack spacing="md">
+    <Stack gap="xs" ref={commentRef}>
+      <Card id={comment.id} pos="static" className={classes.root}>
+        <Stack gap="md">
           <Flex gap="0" justify="space-between">
             <Flex gap="xs" align="flex-start">
               <UserIconLink
@@ -124,16 +117,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
           </Flex>
           {/* 返信コメントは返信元が削除されている場合はnullになる */}
           {comment.inReplyToComment === null && (
-            <Box
-              color="red.7"
-              sx={(theme) => ({
-                color: theme.colors.red[7],
-                textDecoration: "none",
-                display: "flex",
-                gap: 3,
-                alignItems: "center",
-              })}
-            >
+            <Box color="red.7" className={classes["deleted-message"]}>
               <HiOutlineChevronDoubleRight />
               削除されたコメント
             </Box>
@@ -143,26 +127,17 @@ export const IdeaCommentCard: React.FC<Props> = ({
               <UnstyledButton
                 onClick={handleScrollReplySource}
                 color="red.7"
-                sx={(theme) => ({
-                  color: theme.colors.red[7],
-                  textDecoration: "none",
-                  display: "flex",
-                  gap: 3,
-                  alignItems: "center",
-                  "&:hover": {
-                    color: theme.colors.red[9],
-                  },
-                })}
+                className={classes["replay-message"]}
               >
                 <HiOutlineChevronDoubleRight />
                 {comment.inReplyToComment.fromUserName ?? "不明なユーザー名"}
               </UnstyledButton>
             </Flex>
           )}
-          <Text sx={{ whiteSpace: "pre-wrap" }}>{comment.text}</Text>
+          <Text className={classes.comment}>{comment.text}</Text>
           <Flex justify="space-between" align="center" gap="xs">
             <Flex align="center">
-              <CardActionIcon color="gray.5" onClick={handleOpenReplyForm}>
+              <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>
                 <FaRegComment size="70%" />
               </CardActionIcon>
             </Flex>

@@ -6,7 +6,7 @@ import { IdeaLikeButton } from "@/client/features/idea/IdeaLikeButton";
 import { IdeaOperationButton } from "@/client/features/idea/IdeaOperationButton";
 import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge";
 import { useIdeaLike } from "@/client/features/idea/useIdeaLike";
-import { IdeaComments } from "@/client/features/ideaComment/IdeaComments";
+import { IdeaComments } from "@/client/features/ideaComment/IdeaComments/IdeaComments";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink";

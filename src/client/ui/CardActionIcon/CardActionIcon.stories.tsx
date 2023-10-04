@@ -11,8 +11,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: function Render() {
     return (
-      <CardActionIcon>
-        <FaRegComment color="var(--mantine-color-gray-5)" size={20} />
+      <CardActionIcon c="gray.5">
+        <FaRegComment size={20} />
       </CardActionIcon>
     );
   },

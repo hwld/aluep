@@ -1,8 +1,8 @@
-import { IdeaCommentCard } from "@/client/features/ideaComment/IdeaCommentCard";
+import { IdeaCommentCard } from "@/client/features/ideaComment/IdeaCommentCard/IdeaCommentCard";
 import {
   IdeaCommentForm,
   IdeaCommentFormRef,
-} from "@/client/features/ideaComment/IdeaCommentForm";
+} from "@/client/features/ideaComment/IdeaCommentForm/IdeaCommentForm";
 import { useIdeaComments } from "@/client/features/ideaComment/useIdeaComments";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
@@ -71,7 +71,7 @@ export const IdeaComments: React.FC<Props> = ({
         投稿されたコメント
       </Title>
       {ideaComments && ideaComments.length > 0 && (
-        <Stack spacing="xs">
+        <Stack gap="xs">
           {ideaComments.map((comment) => {
             return (
               <IdeaCommentCard

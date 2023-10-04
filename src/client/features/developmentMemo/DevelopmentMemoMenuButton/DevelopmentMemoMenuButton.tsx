@@ -99,10 +99,12 @@ export const DevelopmentMemoMenuButton: React.FC<Props> = ({
         <Menu.Target>
           <ActionIcon
             size={35}
+            color="transparent"
+            c="gray.7"
             className={classes.trigger}
             onClick={stopPropagation}
           >
-            <BsThreeDots size="70%" color="var(--mantine-color-gray-7)" />
+            <BsThreeDots size="70%" />
           </ActionIcon>
         </Menu.Target>
 
