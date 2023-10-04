@@ -1,0 +1,16 @@
+.input {
+  border-width: 0px;
+  transition: background-color 250ms;
+}
+
+.input[data-error] {
+  color: var(--mantine-color-red-7) !important;
+}
+
+.wrapper {
+  outline: none !important;
+}
+
+.error {
+  color: var(--mantine-color-red-7) !important;
+}

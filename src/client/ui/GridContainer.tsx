@@ -1,19 +1,16 @@
 import { Box } from "@mantine/core";
 import { PropsWithChildren } from "react";
+import classes from "./GridContainer.module.css";
 
-type Props = PropsWithChildren & { minItemWidthPx: number };
+type Props = PropsWithChildren & { minItemWidthPx?: number };
 export const GridContainer: React.FC<Props> = ({
   children,
   minItemWidthPx,
 }) => {
   return (
     <Box
-      sx={(theme) => ({
-        display: "grid",
-        gridTemplateColumns: `repeat(auto-fit, minmax(${minItemWidthPx}px, 1fr))`,
-        gridAutoRows: "max-content",
-        gap: theme.spacing.md,
-      })}
+      style={{ "--item-min-width": `${minItemWidthPx}px` }}
+      className={classes.root}
     >
       {children}
     </Box>

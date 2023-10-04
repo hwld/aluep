@@ -1,6 +1,7 @@
-import { Center, Box, SegmentedControl } from "@mantine/core";
+import { Box, Center, SegmentedControl } from "@mantine/core";
 import { useMemo } from "react";
 import { IconType } from "react-icons/lib";
+import classes from "./TabControl.module.css";
 
 type Props<T extends string> = {
   activeTab: T;
@@ -32,23 +33,11 @@ export const TabControl = <T extends string>({
       onChange={onChange}
       data={innerData}
       color="red.7"
-      styles={(theme) => ({
-        root: { backgroundColor: theme.colors.gray[1] },
-        control: {
-          borderRadius: "4px",
-          transition: "background-color 150ms",
-          "&:hover": {
-            backgroundColor: theme.fn.rgba(theme.colors.gray[2], 0.5),
-          },
-        },
-        controlActive: { pointerEvents: "none" },
-        label: {
-          fontWeight: "bold",
-          color: theme.colors.gray[5],
-          "&:hover": { color: theme.colors.gray[7] },
-        },
-        labelActive: { color: `${theme.colors.gray[1]}!important` },
-      })}
+      classNames={{
+        root: classes.root,
+        control: classes.control,
+        label: classes.label,
+      }}
     />
   );
 };

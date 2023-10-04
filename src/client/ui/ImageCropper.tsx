@@ -1,5 +1,6 @@
-import { Stack, Slider, Button } from "@mantine/core";
-import { useRef, useEffect } from "react";
+import { Button, Slider, Stack } from "@mantine/core";
+import { useEffect, useRef } from "react";
+import classes from "./ImageCropper.module.css";
 
 export const imageCropperSize = 300;
 export const imageCropperStep = 0.01;
@@ -187,8 +188,8 @@ export const ImageCropper: React.FC<Props> = ({
   }, [image]);
 
   return (
-    <Stack w="min-content" spacing="xl">
-      <Stack spacing="md">
+    <Stack w="min-content" gap="xl">
+      <Stack gap="md">
         <canvas
           ref={canvasRef}
           width={imageCropperSize}
@@ -206,10 +207,10 @@ export const ImageCropper: React.FC<Props> = ({
           step={imageCropperStep}
           min={0.1}
           max={2}
-          styles={(theme) => ({
-            thumb: { borderWidth: 2 },
-            track: { "&::before": { backgroundColor: theme.colors.gray[3] } },
-          })}
+          classNames={{
+            thumb: classes["slider-thumb"],
+            track: classes["slider-track"],
+          }}
           onChange={handleScale}
         />
       </Stack>

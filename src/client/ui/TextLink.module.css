@@ -1,0 +1,13 @@
+.root {
+  text-decoration: none;
+}
+
+.root:hover {
+  text-decoration-line: underline;
+  text-decoration-color: var(--mantine-color-red-7);
+  text-underline-offset: 3px;
+}
+
+.root:hover * {
+  color: var(--mantine-color-red-7) !important;
+}

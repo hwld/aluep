@@ -1,0 +1,25 @@
+.root {
+  background-color: var(--mantine-color-gray-1);
+}
+
+.control {
+  border-radius: 4px;
+  transition: background-color 150ms;
+}
+
+.control[data-active] {
+  pointer-events: none;
+}
+
+.label {
+  font-weight: bold;
+  color: var(--mantine-color-gray-5);
+}
+
+.label:hover {
+  color: var(--mantine-color-gray-7);
+}
+
+.label[data-active] {
+  color: var(--mantine-color-gray-1) !important;
+}

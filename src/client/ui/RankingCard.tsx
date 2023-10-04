@@ -1,25 +1,17 @@
 import { Card, Stack, Text } from "@mantine/core";
 import { PropsWithChildren } from "react";
+import classes from "./RankingCard.module.css";
 
 type Props = { title: string } & PropsWithChildren;
 export const RankingCard: React.FC<Props> = ({ title, children }) => {
   return (
-    <Card
-      p={0}
-      w={300}
-      withBorder
-      sx={(theme) => ({
-        flexShrink: 0,
-        borderColor: theme.colors.red[7],
-        borderWidth: "2px",
-      })}
-    >
-      <Card.Section bg="red" py="xs">
-        <Text color="gray.0" align="center">
+    <Card p={0} w={300} withBorder className={classes.root}>
+      <Card.Section bg="red" py="xs" m={0}>
+        <Text c="gray.0" ta="center">
           {title}
         </Text>
       </Card.Section>
-      <Stack spacing="sm" p="md">
+      <Stack gap="sm" p="md">
         {children}
       </Stack>
     </Card>

@@ -1,0 +1,5 @@
+.root {
+  flex-shrink: 0;
+  border-color: var(--mantine-color-red-7);
+  border-width: 2px;
+}

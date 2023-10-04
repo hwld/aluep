@@ -2,6 +2,7 @@ import { stopPropagation } from "@/client/lib/utils";
 import { Box } from "@mantine/core";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
+import classes from "./TextLink.module.css";
 
 type Props = {
   href: string;
@@ -9,6 +10,8 @@ type Props = {
   disabled?: boolean;
 } & PropsWithChildren;
 
+// TODO: この名前だとリンクとしての振る舞いを持ってそうだけど持ってない
+// TextLinkWrapperみたいにするべきかも
 export const TextLink: React.FC<Props> = ({
   href,
   className,
@@ -22,19 +25,10 @@ export const TextLink: React.FC<Props> = ({
   return (
     <Box
       component={Link}
-      className={className}
+      className={`${className} ${classes.root}`}
       href={href}
       miw={0}
       w="fit-content"
-      sx={(theme) => ({
-        textDecoration: "none",
-        "&:hover": {
-          textDecorationLine: "underline",
-          textDecorationColor: theme.colors.red[7],
-          textUnderlineOffset: "3px",
-          "*": { color: theme.colors.red[7] },
-        },
-      })}
       onClick={stopPropagation}
       onMouseDown={stopPropagation}
       onMouseUp={stopPropagation}

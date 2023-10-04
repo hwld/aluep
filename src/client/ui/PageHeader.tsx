@@ -1,5 +1,6 @@
-import { useMantineTheme, Flex, Title } from "@mantine/core";
+import { Flex, Title, useMantineTheme } from "@mantine/core";
 import { IconType } from "react-icons/lib";
+import classes from "./PageHeader.module.css";
 
 type Props = { icon: IconType; pageName: string };
 export const PageHeader: React.FC<Props> = ({ icon: Icon, pageName }) => {
@@ -16,10 +17,7 @@ export const PageHeader: React.FC<Props> = ({ icon: Icon, pageName }) => {
       py="xs"
       px="xl"
       gap={5}
-      sx={(theme) => ({
-        borderRadius: "20px",
-        boxShadow: `0px 4px 6px ${theme.fn.rgba(theme.colors.red[7], 0.3)}`,
-      })}
+      className={classes.root}
     >
       <Icon size={25} color={colors.gray[1]} />
       <Title order={1} c="gray.1" size="md">
