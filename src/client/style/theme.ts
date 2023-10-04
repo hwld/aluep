@@ -1,9 +1,22 @@
-import { MantineThemeOverride } from "@mantine/core";
+import {
+  Button,
+  Card,
+  Divider,
+  Input,
+  InputWrapper,
+  MultiSelect,
+  Notification,
+  Paper,
+  Radio,
+  Select,
+  Text,
+  TextInput,
+  Tooltip,
+  createTheme,
+} from "@mantine/core";
+import { RichTextEditor } from "@mantine/tiptap";
 
-export const theme: MantineThemeOverride = {
-  globalStyles: (theme) => ({
-    body: { backgroundColor: theme.colors.gray[2] },
-  }),
+export const theme = createTheme({
   fontFamily: `'Noto Sans JP', sans-serif`,
   headings: {
     fontFamily: `'Noto Sans JP', sans-serif`,
@@ -15,11 +28,11 @@ export const theme: MantineThemeOverride = {
     xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
   },
   radius: {
-    xs: 2,
-    sm: 4,
-    md: 6,
-    lg: 8,
-    xl: 12,
+    xs: "0.125rem",
+    sm: "0.25rem",
+    md: "0.375rem",
+    lg: "0.5rem",
+    xl: "0.75rem",
   },
   primaryColor: "red",
   primaryShade: 7,
@@ -64,29 +77,25 @@ export const theme: MantineThemeOverride = {
       "#7f1d1d",
     ],
   },
-  focusRingStyles: {
-    inputStyles: (theme) => {
-      return { outline: "none" };
-    },
-  },
   components: {
-    Button: { styles: { root: { transition: "background-color 250ms" } } },
-    Tooltip: { defaultProps: { color: "gray.7" } },
-    Paper: { defaultProps: { bg: "gray.1" } },
-    Text: {
-      defaultProps: { color: "gray.7" },
-    },
+    Button: Button.extend({
+      styles: { root: { transition: "background-color 250ms" } },
+    }),
+    Tooltip: Tooltip.extend({ defaultProps: { color: "gray.7" } }),
+    Paper: Paper.extend({ defaultProps: { bg: "gray.1" } }),
+    Text: Text.extend({ defaultProps: { color: "gray.7" } }),
+    // TODO: なんだこのコンポーネント？ Titleを意図してるんだろうか。
     Headers: {
       styles: () => ({
         root: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
       }),
     },
-    Card: {
+    Card: Card.extend({
       defaultProps: { bg: "gray.1", radius: "lg", shadow: "sm" },
       styles: () => ({ root: { overflow: "unset" } }),
-    },
-    Divider: { defaultProps: { color: "gray.3" } },
-    Input: {
+    }),
+    Divider: Divider.extend({ defaultProps: { color: "gray.3" } }),
+    Input: Input.extend({
       styles: (theme) => ({
         input: {
           backgroundColor: "transparent",
@@ -101,6 +110,8 @@ export const theme: MantineThemeOverride = {
         wrapper: {
           outline: "transparent solid 0px",
           transition: "outline 100ms",
+          // TODO: これどう書き換えればいいんだ
+          // module.cssファイルを作ってclassNameを渡すくらいしかできない？
           "&:focus-within": {
             borderRadius: theme.radius.md,
             outline: `${theme.colors.gray[4]} solid 2px`,
@@ -112,8 +123,8 @@ export const theme: MantineThemeOverride = {
           borderWidth: "2px",
         },
       }),
-    },
-    InputWrapper: {
+    }),
+    InputWrapper: InputWrapper.extend({
       styles: (theme) => ({
         label: {
           color: theme.colors.gray[5],
@@ -121,19 +132,23 @@ export const theme: MantineThemeOverride = {
           marginBottom: theme.radius.md,
         },
       }),
-    },
-    Radio: { styles: (theme) => ({ label: { color: theme.colors.gray[7] } }) },
-    TextInput: { defaultProps: { autoComplete: "off" } },
-    Select: {
+    }),
+    Radio: Radio.extend({
+      styles: (theme) => ({ label: { color: theme.colors.gray[7] } }),
+    }),
+    TextInput: TextInput.extend({ defaultProps: { autoComplete: "off" } }),
+    Select: Select.extend({
       styles: (theme) => ({
         input: {
           transition: "background-color 250ms",
+          // TODO:
           "&:hover": {
             backgroundColor: theme.colors.gray[2],
           },
         },
         item: {
           color: theme.colors.gray[7],
+          // TODO:
           "&:hover": {
             backgroundColor: theme.colors.gray[2],
           },
@@ -145,13 +160,15 @@ export const theme: MantineThemeOverride = {
           borderColor: theme.colors.gray[3],
         },
       }),
-    },
-    MultiSelect: {
-      defaultProps: { transitionDuration: 150, transition: "pop-top-left" },
+    }),
+    // TODO: Comboboxっていうのが新しく追加されてるっぽい。
+    MultiSelect: MultiSelect.extend({
+      // defaultProps: { transitionDuration: 150, transition: "pop-top-left" },
       styles: (theme) => ({
         label: { color: theme.colors.gray[5] },
         item: {
           color: theme.colors.gray[7],
+          // TODO:
           "&[aria-selected='true']": {
             backgroundColor: theme.colors.gray[2],
           },
@@ -169,8 +186,8 @@ export const theme: MantineThemeOverride = {
           borderColor: theme.colors.gray[3],
         },
       }),
-    },
-    Notification: {
+    }),
+    Notification: Notification.extend({
       styles: (theme) => ({
         root: {
           backgroundColor: theme.colors.gray[1],
@@ -180,8 +197,8 @@ export const theme: MantineThemeOverride = {
           color: theme.colors.gray[5],
         },
       }),
-    },
-    RichTextEditor: {
+    }),
+    RichTextEditor: RichTextEditor.extend({
       styles: (theme) => ({
         root: {
           borderRadius: theme.radius.md,
@@ -216,6 +233,6 @@ export const theme: MantineThemeOverride = {
           backgroundColor: "transparent",
         },
       }),
-    },
+    }),
   },
-};
+});

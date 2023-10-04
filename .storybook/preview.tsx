@@ -1,4 +1,5 @@
 import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
 import type { Preview } from "@storybook/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { initialize, mswDecorator } from "msw-storybook-addon";
@@ -27,7 +28,7 @@ const preview: Preview = {
       });
       return (
         <QueryClientProvider client={queryClient}>
-          <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
+          <MantineProvider theme={theme}>
             <RequireLoginModalProvider>
               <Story />
             </RequireLoginModalProvider>

@@ -5,8 +5,9 @@ import { AppNavigationProgress } from "@/client/ui/AppNavigationProgress";
 import { ErrorBoundary } from "@/client/ui/ErrorBoundary";
 import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
 import { ModalsProvider } from "@mantine/modals";
-import { NotificationsProvider } from "@mantine/notifications";
+import { Notifications } from "@mantine/notifications";
 import {
   Hydrate,
   QueryClient,
@@ -51,17 +52,16 @@ export default function App(props: AppProps<PageProps>) {
 
       <QueryClientProvider client={queryClient}>
         <Hydrate state={superjson.parse(stringifiedDehydratedState || "{}")}>
-          <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-            <NotificationsProvider position="bottom-center">
-              <ModalsProvider>
-                <RequireLoginModalProvider>
-                  <AppLayout>
-                    <AppNavigationProgress />
-                    <Component {...pageProps} />
-                  </AppLayout>
-                </RequireLoginModalProvider>
-              </ModalsProvider>
-            </NotificationsProvider>
+          <MantineProvider theme={theme}>
+            <ModalsProvider>
+              <RequireLoginModalProvider>
+                <Notifications />
+                <AppLayout>
+                  <AppNavigationProgress />
+                  <Component {...pageProps} />
+                </AppLayout>
+              </RequireLoginModalProvider>
+            </ModalsProvider>
           </MantineProvider>
         </Hydrate>
       </QueryClientProvider>
