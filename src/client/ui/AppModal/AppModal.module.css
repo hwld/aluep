@@ -1,0 +1,21 @@
+.root {
+  z-index: 10;
+}
+
+.title {
+  font-size: var(--mantine-font-size-xl);
+  font-weight: bold;
+  color: var(--mantine-color-red-7);
+}
+
+.header {
+  background-color: var(--mantine-color-gray-1);
+}
+
+.close {
+  transition: background-color 150ms;
+}
+
+.close:hover {
+  background-color: var(--mantine-color-gray-2);
+}

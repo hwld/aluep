@@ -4,12 +4,12 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
-import { AppConfirmModal } from "@/client/ui/AppConfirmModal";
-import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
-import { MenuDropdown } from "@/client/ui/AppMenu/MenuDropdown";
-import { MenuItem } from "@/client/ui/AppMenu/MenuItem";
-import { MenuLinkItem } from "@/client/ui/AppMenu/MenuLinkItem";
-import { AppModal } from "@/client/ui/AppModal";
+import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
+import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
+import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
+import { AppMenuLinkItem } from "@/client/ui/AppMenu/AppMenuLinkItem/AppMenuLinkItem";
+import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Idea } from "@/models/idea";
 import { ReportBaseForm } from "@/models/report";
 import { RouterInputs } from "@/server/lib/trpc";
@@ -113,30 +113,30 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
             <BsThreeDots size="70%" color={mantineTheme.colors.gray[5]} />
           </ActionIcon>
         </Menu.Target>
-        <MenuDropdown>
+        <AppMenuDropdown>
           {isIdeaOwner && (
             <>
-              <MenuLinkItem
+              <AppMenuLinkItem
                 icon={<RiEdit2Fill size={20} />}
                 href={Routes.ideaUpdate(idea.id)}
               >
                 お題を編集する
-              </MenuLinkItem>
-              <MenuItem
+              </AppMenuLinkItem>
+              <AppMenuItem
                 icon={<FaTrash size={18} />}
                 red
                 onClick={openDeleteModal}
               >
                 お題を削除する
-              </MenuItem>
+              </AppMenuItem>
 
               <Divider my={5} />
             </>
           )}
-          <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
+          <AppMenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
             通報する
-          </MenuItem>
-        </MenuDropdown>
+          </AppMenuItem>
+        </AppMenuDropdown>
       </AppMenu>
       <AppConfirmModal
         title="お題の削除"

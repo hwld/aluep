@@ -1,6 +1,6 @@
 import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { useSamePositionLeftClick } from "@/client/lib/useSamePositionLeftClick";
-import { TextLink } from "@/client/ui/TextLink";
+import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import {

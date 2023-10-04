@@ -1,8 +1,8 @@
 import {
+  NavigationProgress,
+  completeNavigationProgress,
   resetNavigationProgress,
   startNavigationProgress,
-  completeNavigationProgress,
-  NavigationProgress,
 } from "@mantine/nprogress";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -49,13 +49,5 @@ export const AppNavigationProgress = () => {
     };
   }, [router.asPath, router.events]);
 
-  return (
-    <NavigationProgress
-      autoReset
-      progressLabel="ページ読み込みのインジケータ"
-      color="red.6"
-      stepInterval={100}
-      size={3}
-    />
-  );
+  return <NavigationProgress color="red.6" stepInterval={100} size={3} />;
 };

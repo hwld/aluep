@@ -1,5 +1,5 @@
 import { userCardMinWidthPx } from "@/client/features/user/UserCard";
-import { UserIcon } from "@/client/features/user/UserIcon";
+import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { Card, Stack, Text } from "@mantine/core";
 import { Session } from "next-auth";
 

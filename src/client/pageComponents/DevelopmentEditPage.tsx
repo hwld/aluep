@@ -5,7 +5,7 @@ import {
   DevelopmentFormDefaultValues,
 } from "@/client/features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
-import { PageHeader } from "@/client/ui/PageHeader";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import {
   CreateRepositoryData,
   Development,

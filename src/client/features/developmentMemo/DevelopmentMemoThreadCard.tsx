@@ -5,7 +5,7 @@ import { DevelopmentMemoReplyFormBox } from "@/client/features/ideaComment/Devel
 import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
-import { CardActionIcon } from "@/client/ui/CardActionIcon";
+import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
 import {
   DevelopmentMemo,
   DevelopmentMemoFormData,

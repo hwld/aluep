@@ -1,5 +1,5 @@
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
-import { AppModal } from "@/client/ui/AppModal";
+import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Button, Stack, Text } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";

@@ -1,11 +1,11 @@
-import { UserIcon } from "@/client/features/user/UserIcon";
-import { AppModal } from "@/client/ui/AppModal";
+import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
+import { AppModal } from "@/client/ui/AppModal/AppModal";
 import {
   ImageCropper,
   imageCropperSize,
   imageCropperStep,
   ImageInfo,
-} from "@/client/ui/ImageCropper";
+} from "@/client/ui/ImageCropper/ImageCropper";
 import { Text, UnstyledButton } from "@mantine/core";
 import { useRef, useState } from "react";
 

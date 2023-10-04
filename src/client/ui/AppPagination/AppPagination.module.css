@@ -1,0 +1,29 @@
+.root {
+  align-self: center;
+  border-radius: var(--mantine-radius-md);
+  overflow: hidden;
+  box-shadow: var(--mantine-shadow-sm);
+}
+
+.pagination-root {
+  flex-wrap: nowrap;
+  gap: 2;
+}
+
+.pagination-control {
+  background-color: var(--mantine-colors-gray-1);
+  color: var(--mantine-color-gray-5);
+  border: none;
+  white-space: nowrap;
+}
+
+.pagination-control[data-active] {
+  color: var(--mantine-color-gray-1);
+  background-color: var(--mantine-color-red-7);
+}
+
+.pagination-control:not([data-active]):hover {
+  transition: background-color 150ms;
+  background-color: var(--mantine-color-gray-2);
+  color: var(--mantine-colors-gray-7);
+}

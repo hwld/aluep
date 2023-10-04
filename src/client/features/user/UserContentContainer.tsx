@@ -1,7 +1,7 @@
-import { AppPagination } from "@/client/ui/AppPagination";
-import { EmptyContentItem } from "@/client/ui/EmptyContentItem";
-import { GridContainer } from "@/client/ui/GridContainer";
-import { Stack, Flex } from "@mantine/core";
+import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
+import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
+import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
+import { Flex, Stack } from "@mantine/core";
 import { ReactNode } from "react";
 
 type Props = {

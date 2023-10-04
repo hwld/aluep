@@ -1,5 +1,5 @@
-import { UserIcon } from "@/client/features/user/UserIcon";
-import { TextLink } from "@/client/ui/TextLink";
+import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
+import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { User } from "@/models/user";
 import { Routes } from "@/share/routes";
 import { Card, Stack, Text } from "@mantine/core";

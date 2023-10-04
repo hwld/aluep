@@ -1,0 +1,16 @@
+.root {
+  border-radius: 100%;
+  transition: all 50ms;
+  outline: transparent solid 0px;
+}
+
+.withBorder {
+  border-width: 2px;
+  border-color: var(--mantine-color-gray-2);
+  border-style: solid;
+}
+
+.interactive:hover {
+  outline: var(--mantine-color-red-6) solid 2px;
+  outline-offset: 2px;
+}

@@ -84,12 +84,6 @@ export const theme = createTheme({
     Tooltip: Tooltip.extend({ defaultProps: { color: "gray.7" } }),
     Paper: Paper.extend({ defaultProps: { bg: "gray.1" } }),
     Text: Text.extend({ defaultProps: { color: "gray.7" } }),
-    // TODO: なんだこのコンポーネント？ Titleを意図してるんだろうか。
-    Headers: {
-      styles: () => ({
-        root: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
-      }),
-    },
     Card: Card.extend({
       defaultProps: { bg: "gray.1", radius: "lg", shadow: "sm" },
       styles: () => ({ root: { overflow: "unset" } }),
@@ -112,11 +106,11 @@ export const theme = createTheme({
           transition: "outline 100ms",
           // TODO: これどう書き換えればいいんだ
           // module.cssファイルを作ってclassNameを渡すくらいしかできない？
-          "&:focus-within": {
-            borderRadius: theme.radius.md,
-            outline: `${theme.colors.gray[4]} solid 2px`,
-            outlineOffset: "2px",
-          },
+          // "&:focus-within": {
+          //   borderRadius: theme.radius.md,
+          //   outline: `${theme.colors.gray[4]} solid 2px`,
+          //   outlineOffset: "2px",
+          // },
         },
         invalid: {
           borderColor: theme.colors.red[7],
@@ -142,16 +136,16 @@ export const theme = createTheme({
         input: {
           transition: "background-color 250ms",
           // TODO:
-          "&:hover": {
-            backgroundColor: theme.colors.gray[2],
-          },
+          // "&:hover": {
+          //   backgroundColor: theme.colors.gray[2],
+          // },
         },
         item: {
           color: theme.colors.gray[7],
           // TODO:
-          "&:hover": {
-            backgroundColor: theme.colors.gray[2],
-          },
+          // "&:hover": {
+          //   backgroundColor: theme.colors.gray[2],
+          // },
         },
         dropdown: {
           borderRadius: theme.radius.md,
@@ -169,9 +163,9 @@ export const theme = createTheme({
         item: {
           color: theme.colors.gray[7],
           // TODO:
-          "&[aria-selected='true']": {
-            backgroundColor: theme.colors.gray[2],
-          },
+          // "&[aria-selected='true']": {
+          //   backgroundColor: theme.colors.gray[2],
+          // },
         },
         defaultValue: {
           backgroundColor: theme.colors.gray[2],

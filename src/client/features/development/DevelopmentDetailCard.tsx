@@ -3,7 +3,7 @@ import { DevelopmentMenuButton } from "@/client/features/development/Development
 import { DevelopmentStatusBadge } from "@/client/features/development/DevelopmentStatusBadge";
 import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
-import { TextLink } from "@/client/ui/TextLink";
+import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Development } from "@/models/development";
 import { Routes } from "@/share/routes";
 import {

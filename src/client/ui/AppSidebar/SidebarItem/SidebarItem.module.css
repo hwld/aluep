@@ -1,0 +1,41 @@
+.root {
+  background-color: transparent;
+  transition: all 150ms;
+  padding: 0px 7px;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.root-active {
+  background-color: var(--mantine-color-gray-1);
+  pointer-events: none;
+}
+
+.root:hover {
+  background-color: var(--mantine-color-red-5);
+}
+
+.inner {
+  justify-content: flex-start;
+}
+
+.label {
+  gap: 7px;
+  color: var(--mantine-color-gray-1);
+}
+
+.label-active {
+  color: var(--mantine-color-red-7);
+}
+
+.icon-wrapper {
+  flex-shrink: 0;
+}
+
+.icon-wrapper svg {
+  color: var(--mantine-color-gray-1);
+}
+
+.icon-wrapper-active svg {
+  color: var(--mantine-color-red-7);
+}

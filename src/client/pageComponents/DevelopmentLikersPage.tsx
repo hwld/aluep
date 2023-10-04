@@ -5,9 +5,9 @@ import {
 } from "@/client/features/user/IdeaLikerCard";
 import { useDevelopmentLikers } from "@/client/features/user/useDevelopmentLikers";
 import { useURLParams } from "@/client/lib/useURLParams";
-import { AppPagination } from "@/client/ui/AppPagination";
-import { GridContainer } from "@/client/ui/GridContainer";
-import { PageHeader } from "@/client/ui/PageHeader";
+import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
+import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Development } from "@/models/development";
 import { paginatedPageSchema } from "@/share/paging";
 import { Stack, Text } from "@mantine/core";

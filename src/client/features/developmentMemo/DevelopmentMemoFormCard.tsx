@@ -1,6 +1,6 @@
-import { UserIcon } from "@/client/features/user/UserIcon";
+import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
-import { PlainTextarea } from "@/client/ui/PlainTextarea";
+import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
 import {
   DevelopmentMemoFormData,
   developmentMemoFormSchema,

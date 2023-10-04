@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  height: auto;
+  aspect-ratio: 1;
+  color: var(--mantine-color-gray-1);
+  border-radius: 50%;
+  transition: all 250ms;
+  background-color: var(--mantine-color-red-8);
+}
+
+.root:hover {
+  background-color: var(--mantine-color-red-5);
+}

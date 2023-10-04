@@ -1,6 +1,6 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
 import { UserDetailPage } from "@/client/pageComponents/UserDetailPage";
-import { AppLayout } from "@/client/ui/AppLayout";
+import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import {
   DevelopmentHelper,
   IdeaHelper,

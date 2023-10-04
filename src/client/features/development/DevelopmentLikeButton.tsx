@@ -1,5 +1,5 @@
 import { stopPropagation } from "@/client/lib/utils";
-import { TextLink } from "@/client/ui/TextLink";
+import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Flex, Text, useMantineTheme } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";

@@ -1,4 +1,4 @@
-import { DevelopmentCardIconLink } from "@/client/features/development/DevelopmentCardLinkIcon";
+import { DevelopmentCardIconLink } from "@/client/features/development/DevelopmentCardLinkIcon/DevelopmentCardLinkIcon";
 import { useMantineTheme } from "@mantine/core";
 import { TbLink } from "react-icons/tb";
 

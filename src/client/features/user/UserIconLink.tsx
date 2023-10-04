@@ -1,4 +1,7 @@
-import { UserIcon, UserIconProps } from "@/client/features/user/UserIcon";
+import {
+  UserIcon,
+  UserIconProps,
+} from "@/client/features/user/UserIcon/UserIcon";
 import { stopPropagation } from "@/client/lib/utils";
 import { Routes } from "@/share/routes";
 import Link from "next/link";

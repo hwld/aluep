@@ -1,11 +1,11 @@
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserFavoriteButton } from "@/client/features/user/UserDashboard/UserFavoriteButton";
-import { UserIcon } from "@/client/features/user/UserIcon";
+import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { UserProfileMenuButton } from "@/client/features/user/UserProfileMenuButton";
 import { useFavoriteUser } from "@/client/features/user/useFavoriteUser";
 import { useFavoriteUserCountQuery } from "@/client/features/user/useFavoriteUserCountQuery";
-import { TextLink } from "@/client/ui/TextLink";
+import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { User } from "@/models/user";
 import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";

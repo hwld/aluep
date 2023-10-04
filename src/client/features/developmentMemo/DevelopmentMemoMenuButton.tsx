@@ -5,11 +5,11 @@ import {
   showSuccessNotification,
   stopPropagation,
 } from "@/client/lib/utils";
-import { AppConfirmModal } from "@/client/ui/AppConfirmModal";
-import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
-import { MenuDropdown } from "@/client/ui/AppMenu/MenuDropdown";
-import { MenuItem } from "@/client/ui/AppMenu/MenuItem";
-import { AppModal } from "@/client/ui/AppModal";
+import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
+import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
+import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
+import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
@@ -111,26 +111,26 @@ export const DevelopmentMemoMenuButton: React.FC<Props> = ({
           </ActionIcon>
         </Menu.Target>
 
-        <MenuDropdown>
+        <AppMenuDropdown>
           {isOwner && (
             <>
-              <MenuItem
+              <AppMenuItem
                 icon={<FaTrash size={18} />}
                 red
                 onClick={openDeleteModal}
               >
                 メモを削除する
-              </MenuItem>
+              </AppMenuItem>
               <Divider my={5} />
             </>
           )}
-          <MenuItem icon={<TbLink size={20} />} onClick={handleCopyLink}>
+          <AppMenuItem icon={<TbLink size={20} />} onClick={handleCopyLink}>
             リンクをコピーする
-          </MenuItem>
-          <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
+          </AppMenuItem>
+          <AppMenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
             通報する
-          </MenuItem>
-        </MenuDropdown>
+          </AppMenuItem>
+        </AppMenuDropdown>
       </AppMenu>
       <AppConfirmModal
         title="開発メモの削除"

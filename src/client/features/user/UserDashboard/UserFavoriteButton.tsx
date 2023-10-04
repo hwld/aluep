@@ -1,4 +1,4 @@
-import { AppModal } from "@/client/ui/AppModal";
+import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Button, Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { BiUserX } from "react-icons/bi";

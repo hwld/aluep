@@ -1,0 +1,8 @@
+.root {
+  transition: background-color 250ms;
+  background-color: transparent;
+}
+
+.root:hover {
+  background-color: var(--mantine-color-gray-2);
+}

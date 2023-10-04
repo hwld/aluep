@@ -10,9 +10,9 @@ import {
   useTop10LikesIdeasInThisMonth,
   useTop10LikesPostersInThisMonth,
 } from "@/client/features/user/useRankingQuery";
-import { EmptyRankingContent } from "@/client/ui/EmptyRankingContent";
-import { PageHeader } from "@/client/ui/PageHeader";
-import { RankingCard } from "@/client/ui/RankingCard";
+import { EmptyRankingContent } from "@/client/ui/EmptyRankingContent/EmptyRankingContent";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
+import { RankingCard } from "@/client/ui/RankingCard/RankingCard";
 import { Routes } from "@/share/routes";
 import {
   Center,

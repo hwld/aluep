@@ -1,5 +1,5 @@
 import { UserIconLink } from "@/client/features/user/UserIconLink";
-import { TextLink } from "@/client/ui/TextLink";
+import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { Flex, Text, useMantineTheme } from "@mantine/core";
 import { User } from "next-auth";

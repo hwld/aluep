@@ -1,8 +1,8 @@
 import { DevelopedItemIconLink } from "@/client/features/development/DevelopedItemIconLink";
 import { DevelopmentStatusBadge } from "@/client/features/development/DevelopmentStatusBadge";
 import { formatDate } from "@/client/lib/utils";
-import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink";
-import { TextLink } from "@/client/ui/TextLink";
+import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
+import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Development } from "@/models/development";
 import { Routes } from "@/share/routes";
 import { Card, Flex, Text, useMantineTheme } from "@mantine/core";

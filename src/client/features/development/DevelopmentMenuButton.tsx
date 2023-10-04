@@ -1,12 +1,12 @@
 import { useDevelop } from "@/client/features/development/useDevelop";
 import { ReportForm } from "@/client/features/report/ReportForm";
 import { trpc } from "@/client/lib/trpc";
-import { AppConfirmModal } from "@/client/ui/AppConfirmModal";
-import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
-import { MenuDropdown } from "@/client/ui/AppMenu/MenuDropdown";
-import { MenuItem } from "@/client/ui/AppMenu/MenuItem";
-import { MenuLinkItem } from "@/client/ui/AppMenu/MenuLinkItem";
-import { AppModal } from "@/client/ui/AppModal";
+import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
+import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
+import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
+import { AppMenuLinkItem } from "@/client/ui/AppMenu/AppMenuLinkItem/AppMenuLinkItem";
+import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Development } from "@/models/development";
 import { ReportBaseForm } from "@/models/report";
 import { RouterInputs } from "@/server/lib/trpc";
@@ -118,10 +118,10 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
           </ActionIcon>
         </Menu.Target>
 
-        <MenuDropdown>
+        <AppMenuDropdown>
           {isOwner && (
             <>
-              <MenuLinkItem
+              <AppMenuLinkItem
                 icon={<RiEdit2Fill size={20} />}
                 href={Routes.developmentUpdate(
                   development.ideaId,
@@ -129,21 +129,21 @@ export const DevelopmentMenuButton: React.FC<Props> = ({
                 )}
               >
                 開発情報を編集する
-              </MenuLinkItem>
-              <MenuItem
+              </AppMenuLinkItem>
+              <AppMenuItem
                 red
                 icon={<FaTrash size={18} />}
                 onClick={openDeleteModal}
               >
                 開発情報を削除する
-              </MenuItem>
+              </AppMenuItem>
               <Divider my="5px" />
             </>
           )}
-          <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
+          <AppMenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
             通報する
-          </MenuItem>
-        </MenuDropdown>
+          </AppMenuItem>
+        </AppMenuDropdown>
       </AppMenu>
       <AppConfirmModal
         title="開発情報の削除"

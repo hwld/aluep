@@ -5,7 +5,7 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
-import { PageHeader } from "@/client/ui/PageHeader";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Idea, IdeaFormData } from "@/models/idea";
 import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";

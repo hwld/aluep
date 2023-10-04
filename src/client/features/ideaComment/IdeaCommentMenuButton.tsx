@@ -5,11 +5,11 @@ import {
   showSuccessNotification,
   stopPropagation,
 } from "@/client/lib/utils";
-import { AppConfirmModal } from "@/client/ui/AppConfirmModal";
-import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
-import { MenuDropdown } from "@/client/ui/AppMenu/MenuDropdown";
-import { MenuItem } from "@/client/ui/AppMenu/MenuItem";
-import { AppModal } from "@/client/ui/AppModal";
+import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
+import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
+import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
+import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
@@ -101,28 +101,28 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
           </ActionIcon>
         </Menu.Target>
 
-        <MenuDropdown>
+        <AppMenuDropdown>
           {isOwner && (
             <>
-              <MenuItem
+              <AppMenuItem
                 red
                 onClick={openDeleteModal}
                 icon={<RiEdit2Fill size={20} />}
               >
                 コメントを削除する
-              </MenuItem>
+              </AppMenuItem>
               <Divider my="5px" />
             </>
           )}
           <>
-            <MenuItem icon={<TbLink size={20} />} onClick={handleCopyLink}>
+            <AppMenuItem icon={<TbLink size={20} />} onClick={handleCopyLink}>
               リンクをコピーする
-            </MenuItem>
-            <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
+            </AppMenuItem>
+            <AppMenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
               通報する
-            </MenuItem>
+            </AppMenuItem>
           </>
-        </MenuDropdown>
+        </AppMenuDropdown>
       </AppMenu>
       <AppConfirmModal
         title="コメントの削除"

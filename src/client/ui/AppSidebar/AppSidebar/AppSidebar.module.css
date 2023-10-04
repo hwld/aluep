@@ -1,0 +1,24 @@
+.root {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: var(--mantine-radius-xl);
+  transition: all 200ms;
+  overflow: auto;
+}
+
+.title-wrapper {
+  overflow: hidden;
+}
+
+.user-menu {
+  display: flex;
+  border-bottom-left-radius: var(--mantine-radius-lg);
+  border-bottom-right-radius: var(--mantine-radiux-lg);
+}

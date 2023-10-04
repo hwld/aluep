@@ -2,7 +2,7 @@ import {
   IdeaCard,
   ideaCardMinWidthPx,
 } from "@/client/features/idea/IdeaCard/IdeaCard";
-import { GridContainer } from "@/client/ui/GridContainer";
+import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
 import { Idea } from "@/models/idea";
 import { Button, Flex, Stack, Title } from "@mantine/core";
 import Link from "next/link";

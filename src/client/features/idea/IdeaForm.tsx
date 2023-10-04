@@ -1,6 +1,6 @@
 import { IdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/IdeaDescriptionEditor";
 import { useIdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/useIdeaDescriptionEditor";
-import { AppForm } from "@/client/ui/AppForm";
+import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { IdeaFormData, ideaFormSchema } from "@/models/idea";
 import { IdeaTag } from "@/models/ideaTag";
 import { zodResolver } from "@hookform/resolvers/zod";

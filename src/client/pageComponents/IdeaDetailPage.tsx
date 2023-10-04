@@ -11,8 +11,8 @@ import { useRequireLoginModal } from "@/client/features/session/RequireLoginModa
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
-import { PageHeader } from "@/client/ui/PageHeader";
-import { TextLink } from "@/client/ui/TextLink";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
+import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import {

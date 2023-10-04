@@ -2,7 +2,7 @@ import { useDevelop } from "@/client/features/development/useDevelop";
 import { useDevelopmentStatusesQuery } from "@/client/features/development/useDevelopmentStatusesQuery";
 import { DevelopmentForm } from "@/client/features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
-import { PageHeader } from "@/client/ui/PageHeader";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import {
   CreateRepositoryData,
   DevelopmentFormData,

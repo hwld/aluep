@@ -1,4 +1,4 @@
-import { AppForm } from "@/client/ui/AppForm";
+import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { ProfileFormData, profileFormSchema } from "@/models/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextInput, Textarea } from "@mantine/core";

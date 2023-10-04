@@ -5,8 +5,8 @@ import { useRequireLoginModal } from "@/client/features/session/RequireLoginModa
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
-import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink";
-import { TextLink } from "@/client/ui/TextLink";
+import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
+import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Development } from "@/models/development";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";

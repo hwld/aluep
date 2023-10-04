@@ -1,4 +1,4 @@
-import { AppForm } from "@/client/ui/AppForm";
+import { AppForm } from "@/client/ui/AppForm/AppForm";
 import {
   DevelopmentFormData,
   developmentFormSchema,

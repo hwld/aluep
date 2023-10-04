@@ -1,0 +1,17 @@
+.item {
+  transition: all 200ms;
+}
+
+.dropdown {
+  min-width: 200px;
+  background-color: var(--mantine-color-gray-1);
+  box-shadow: var(--mantine-shadow-md);
+  padding: 8px 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--mantine-color-gray-2);
+}
+
+.overlay {
+  position: fixed;
+}

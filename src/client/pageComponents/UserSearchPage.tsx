@@ -2,9 +2,9 @@ import { userCardMinWidthPx } from "@/client/features/user/UserCard";
 import { UserSearchResultContent } from "@/client/features/user/UserSearchResultContent";
 import { useSearchedUsersQuery } from "@/client/features/user/useSearchedUsersQuery";
 import { useURLParams } from "@/client/lib/useURLParams";
-import { PageHeader } from "@/client/ui/PageHeader";
-import { Box, Flex, Card, Stack, Title, TextInput } from "@mantine/core";
-import { useState, useRef } from "react";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
+import { Box, Card, Flex, Stack, TextInput, Title } from "@mantine/core";
+import { useRef, useState } from "react";
 import { TbSearch } from "react-icons/tb";
 import { z } from "zod";
 

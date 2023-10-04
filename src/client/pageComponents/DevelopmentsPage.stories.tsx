@@ -1,6 +1,6 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
 import { DevelopmentsPage } from "@/client/pageComponents/DevelopmentsPage";
-import { AppLayout } from "@/client/ui/AppLayout";
+import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { DevelopmentHelper, IdeaHelper } from "@/models/tests/helpers";
 import { DevelopmentStatusIds } from "@/share/consts";
 import { Meta, StoryObj } from "@storybook/react";

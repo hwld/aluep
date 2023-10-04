@@ -1,4 +1,4 @@
-import { AppForm } from "@/client/ui/AppForm";
+import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { ReportBaseForm, reportBaseFormSchema } from "@/models/report";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@mantine/core";

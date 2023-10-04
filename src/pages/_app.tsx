@@ -1,6 +1,6 @@
 import { RequireLoginModalProvider } from "@/client/features/session/RequireLoginModalProvider";
 import { theme } from "@/client/style/theme";
-import { AppLayout } from "@/client/ui/AppLayout";
+import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { AppNavigationProgress } from "@/client/ui/AppNavigationProgress";
 import { ErrorBoundary } from "@/client/ui/ErrorBoundary";
 import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";

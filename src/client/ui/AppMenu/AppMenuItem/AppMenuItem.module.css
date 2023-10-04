@@ -1,0 +1,20 @@
+.root {
+  transition: background-color 150ms;
+  border-radius: var(--mantine-radius-sm);
+  padding: 5px 12px;
+  color: var(--mantine-color-gray-7);
+}
+
+.root[data-hovered] {
+  background-color: var(--mantine-color-gray-2);
+  color: var(--mantine-color-gray-8);
+}
+
+.red {
+  color: var(--mantine-color-red-7);
+}
+
+.red[data-hovered] {
+  background-color: var(--mantine-color-red-2);
+  color: var(--mantine-color-red-8);
+}

@@ -1,6 +1,6 @@
 import { trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaCreatePage } from "@/client/pageComponents/IdeaCreatePage";
-import { AppLayout } from "@/client/ui/AppLayout";
+import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {

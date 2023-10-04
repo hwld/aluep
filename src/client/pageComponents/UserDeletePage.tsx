@@ -1,6 +1,6 @@
 import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
-import { PageHeader } from "@/client/ui/PageHeader";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ReCaptchaCheckBox } from "@/client/ui/ReCaptchaCheckBox";
 import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";

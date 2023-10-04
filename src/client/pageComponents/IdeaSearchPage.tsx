@@ -11,9 +11,9 @@ import { useAllTagsQuery } from "@/client/features/idea/useAllTagsQuery";
 import { useSearchedIdeasQuery } from "@/client/features/idea/useSearchedIdeasQuery";
 import { ideaOrderItems, ideaPeriodItems } from "@/client/lib/consts";
 import { useURLParams } from "@/client/lib/useURLParams";
-import { AppPagination } from "@/client/ui/AppPagination";
-import { GridContainer } from "@/client/ui/GridContainer";
-import { PageHeader } from "@/client/ui/PageHeader";
+import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
+import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import {
   ideaOrderSchema,
   ideaPeriodSchema,

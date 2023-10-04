@@ -1,0 +1,27 @@
+.root {
+  display: flex;
+  align-items: center;
+  flex-shrink: 1;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.root:hover {
+  text-decoration: none;
+}
+
+.contaienr {
+  border-radius: var(--mantine-radius-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 45px;
+  height: 45px;
+  margin-top: 5px;
+}
+
+.title {
+  flex-shrink: 0;
+  color: var(--mantine-color-gray-1);
+}

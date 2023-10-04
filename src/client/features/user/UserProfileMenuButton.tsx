@@ -5,11 +5,11 @@ import {
   showSuccessNotification,
   stopPropagation,
 } from "@/client/lib/utils";
-import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
-import { MenuDropdown } from "@/client/ui/AppMenu/MenuDropdown";
-import { MenuItem } from "@/client/ui/AppMenu/MenuItem";
-import { MenuLinkItem } from "@/client/ui/AppMenu/MenuLinkItem";
-import { AppModal } from "@/client/ui/AppModal";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
+import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
+import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
+import { AppMenuLinkItem } from "@/client/ui/AppMenu/AppMenuLinkItem/AppMenuLinkItem";
+import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
@@ -80,23 +80,23 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
           </ActionIcon>
         </Menu.Target>
 
-        <MenuDropdown>
+        <AppMenuDropdown>
           {isOwner && (
             <>
-              <MenuLinkItem
+              <AppMenuLinkItem
                 icon={<RiEdit2Line size={18} />}
                 href={Routes.userUpdate}
               >
                 プロフィールを編集する
-              </MenuLinkItem>
+              </AppMenuLinkItem>
               <Divider my={5} />
             </>
           )}
 
-          <MenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
+          <AppMenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
             通報する
-          </MenuItem>
-        </MenuDropdown>
+          </AppMenuItem>
+        </AppMenuDropdown>
       </AppMenu>
       <AppModal
         opened={isReportModalOpen}
