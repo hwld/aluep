@@ -1,6 +1,7 @@
 .slider-thumb {
   border-width: 2;
-}
-.slider-track::before {
-  background-color: var(--mantine-color-gray-3);
+
+  &::before {
+    background-color: var(--mantine-color-gray-3);
+  }
 }

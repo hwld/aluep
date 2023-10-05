@@ -4,10 +4,10 @@
   flex-shrink: 1;
   gap: 12px;
   overflow: hidden;
-}
 
-.root:hover {
-  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .contaienr {
@@ -23,5 +23,4 @@
 
 .title {
   flex-shrink: 0;
-  color: var(--mantine-color-gray-1);
 }

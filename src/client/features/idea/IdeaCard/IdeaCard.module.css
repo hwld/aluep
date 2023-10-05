@@ -3,11 +3,11 @@
   position: static;
   transition: all 100ms;
   outline: transparent solid 0px;
-}
 
-.root:not(:has(a:not(.idea-link):hover, button:hover)):hover {
-  outline: var(--mantine-color-red-6) solid 2px;
-  outline-offset: 3px;
+  &:not(:has(a:not(.idea-link):hover, button:hover)):hover {
+    outline: var(--mantine-color-red-6) solid 2px;
+    outline-offset: 3px;
+  }
 }
 
 .idea-title {

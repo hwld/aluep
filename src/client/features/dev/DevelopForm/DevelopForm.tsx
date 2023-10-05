@@ -11,7 +11,6 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { UnionToIntersection } from "react-hook-form/dist/types/path/common";
 import { MdComputer } from "react-icons/md";
-import classes from "./DevelopForm.module.css";
 
 export type DevelopmentFormDefaultValues = Partial<
   UnionToIntersection<DistributiveOmit<DevelopmentFormData, "type">> & {
@@ -76,7 +75,6 @@ export const DevelopForm: React.FC<Props> = ({
         render={({ field }) => {
           return (
             <Radio.Group
-              className={classes["radio-group"]}
               label="開発に使用するGitHubリポジトリを選択する"
               withAsterisk
               {...field}

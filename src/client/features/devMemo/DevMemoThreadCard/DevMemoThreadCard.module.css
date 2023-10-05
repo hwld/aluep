@@ -1,7 +1,9 @@
 .root:target {
-  outline: var(--mantine-color-red-5) solid 2px;
-  outline-offset: 5px;
-  border-radius: var(--mantine-radius-xs);
+  &:target {
+    outline: var(--mantine-color-red-5) solid 2px;
+    outline-offset: 5px;
+    border-radius: var(--mantine-radius-xs);
+  }
 }
 
 .memo-text {

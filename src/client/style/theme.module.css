@@ -2,44 +2,44 @@
   background-color: transparent;
   color: var(--mantine-color-gray-7);
   border-radius: var(--mantine-radius-md);
-}
 
-.input-input:focus {
-  outline: var(--mantine-color-gray-4) solid 2px;
-  outline-offset: 2px;
+  &:focus {
+    outline: var(--mantine-color-gray-4) solid 2px;
+    outline-offset: 2px;
 
-  /* フォーカスしたときに枠線の色が変わるのを防ぐ */
-  --_input-bd: unset;
-}
+    /* フォーカスしたときに枠線の色が変わるのを防ぐ */
+    --_input-bd: unset;
+  }
 
-.input-input[data-error] {
-  border-color: var(--mantine-color-red-7);
-  border-width: 2px;
-}
+  &[data-error] {
+    border-color: var(--mantine-color-red-7);
+    border-width: 2px;
 
-.input-input[data-error]:focus {
-  outline: var(--mantine-color-red-4) solid 2px;
+    &:focus {
+      outline: var(--mantine-color-red-4) solid 2px;
+    }
+  }
 }
 
 .select-option {
   transition: background-color 250ms;
   color: var(--mantine-color-gray-7);
-}
 
-.select-option:hover {
-  background-color: var(--mantine-color-gray-2);
-}
+  &:hover {
+    background-color: var(--mantine-color-gray-2);
+  }
 
-.select-option[data-checked] {
-  pointer-events: none;
-  background-color: var(--mantine-color-red-7);
-  color: var(--mantine-color-gray-1);
-}
+  &[data-checked] {
+    pointer-events: none;
+    background-color: var(--mantine-color-red-7);
+    color: var(--mantine-color-gray-1);
 
-.select-option[data-checked] svg {
-  opacity: 1;
-  color: var(--mantine-color-gray-0);
-  fill: var(--mantine-color-gray-0);
+    & svg {
+      opacity: 1;
+      color: var(--mantine-color-gray-0);
+      fill: var(--mantine-color-gray-0);
+    }
+  }
 }
 
 .select-dropdown {

@@ -3,40 +3,41 @@
   box-shadow: var(--mantine-shadow-md);
   transition: all 200ms;
   background-color: var(--mantine-color-gray-1);
-}
 
-.like-button.liked {
-  background-color: var(--mantine-color-pink-1);
-}
+  .liked {
+    background-color: var(--mantine-color-pink-1);
 
-.like-button:hover {
-  background-color: var(--mantine-color-pink-1);
-}
+    &:hover {
+      background-color: var(--mantine-color-gray-2);
+    }
+  }
 
-.like-button.liked:hover {
-  background-color: var(--mantine-color-gray-2);
-}
+  &:hover {
+    background-color: var(--mantine-color-pink-1);
+  }
 
-.like-button[data-disabled] {
-  background-color: var(--mantine-color-gray-3);
-  border-color: var(--mantine-color-gray-3);
-  box-shadow: var(--mantine-shadow-xs);
+  &[data-disabled] {
+    background-color: var(--mantine-color-gray-3);
+    border-color: var(--mantine-color-gray-3);
+    box-shadow: var(--mantine-shadow-xs);
+  }
 }
 
 .like-count {
   pointer-events: none;
   text-decoration: none;
   color: var(--mantine-color-gray-7);
-}
 
-.like-count.link {
-  pointer-events: auto;
-  text-decoration: underline;
-}
+  &.link {
+    pointer-events: auto;
+    text-decoration: underline;
+  }
 
-.like-count.liked {
-  color: var(--mantine-color-pink-7);
-}
-.like-count:hover {
-  color: var(--mantine-color-red-7);
+  &.liked {
+    color: var(--mantine-color-pink-7);
+  }
+
+  &:hover {
+    color: var(--mantine-color-red-7);
+  }
 }

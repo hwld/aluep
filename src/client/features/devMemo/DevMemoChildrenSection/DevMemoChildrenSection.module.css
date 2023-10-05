@@ -1,0 +1,21 @@
+.root {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    bottom: 0;
+    left: 17px;
+    width: 2px;
+    background: var(--mantine-color-gray-3);
+  }
+}
+
+.reply-button {
+  transition: background-color 250ms;
+
+  &:hover {
+    background-color: var(--mantine-color-gray-2);
+  }
+}

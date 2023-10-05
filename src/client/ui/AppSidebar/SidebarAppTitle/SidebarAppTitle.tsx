@@ -16,7 +16,7 @@ export const SidebarAppTitle: React.FC = () => {
           style={{ marginTop: "2px" }}
         />
       </Box>
-      <Title order={3} className={classes.title}>
+      <Title c="gray.1" order={3} className={classes.title}>
         Aluep
       </Title>
     </Anchor>

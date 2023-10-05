@@ -1,7 +1,7 @@
 .trigger {
   transition: all 150ms;
-}
 
-.trigger:hover {
-  background-color: var(--mantine-color-gray-2);
+  &:hover {
+    background-color: var(--mantine-color-gray-2);
+  }
 }

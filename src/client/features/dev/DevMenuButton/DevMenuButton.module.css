@@ -1,8 +1,8 @@
 .icon {
   transition: all 150ms;
   background-color: transparent;
-}
 
-.icon:hover {
-  background-color: var(--mantine-color-gray-2);
+  &:hover {
+    background-color: var(--mantine-color-gray-2);
+  }
 }

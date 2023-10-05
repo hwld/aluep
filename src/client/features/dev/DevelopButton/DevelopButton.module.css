@@ -5,19 +5,19 @@
   box-shadow: 2px 3px 6px var(--mantine-color-red-3);
   transition: all 200ms;
   background-color: var(--mantine-color-red-7);
-}
 
-.button:hover {
-  background-color: var(--mantine-color-red-6);
+  &:hover {
+    background-color: var(--mantine-color-red-6);
+  }
 }
 
 .developer-count {
   pointer-events: none;
   text-decoration: none;
   color: var(--mantine-color-red-7);
-}
 
-.developer-count.link {
-  pointer-events: auto;
-  text-decoration: underline;
+  &.link {
+    pointer-events: auto;
+    text-decoration: underline;
+  }
 }

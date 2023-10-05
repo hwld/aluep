@@ -15,15 +15,15 @@
   color: var(--mantine-color-gray-5);
   border: none;
   white-space: nowrap;
-}
 
-.pagination-control[data-active] {
-  color: var(--mantine-color-gray-1);
-  background-color: var(--mantine-color-red-7);
-}
+  &[data-active] {
+    color: var(--mantine-color-gray-1);
+    background-color: var(--mantine-color-red-7);
+  }
 
-.pagination-control:not([data-active]):hover {
-  transition: background-color 150ms;
-  background-color: var(--mantine-color-gray-2);
-  color: var(--mantine-colors-gray-7);
+  &:not([data-active]):hover {
+    transition: background-color 150ms;
+    background-color: var(--mantine-color-gray-2);
+    color: var(--mantine-colors-gray-7);
+  }
 }

@@ -1,35 +1,37 @@
 .root {
   border-width: 1px;
   width: min-content;
+
+  &.completed {
+    background-color: var(--mantine-color-green-0);
+    border-color: var(--mantine-color-green-5);
+  }
+
+  &.aborted {
+    background-color: var(--mantine-color-red-0);
+    border-color: var(--mantine-color-red-4);
+  }
+
+  &.in-progress {
+    background-color: var(--mantine-color-blue-0);
+    border-color: var(--mantine-color-blue-5);
+  }
 }
 
-.root.completed {
-  background-color: var(--mantine-color-green-0);
-  border-color: var(--mantine-color-green-5);
-}
+.label {
+  &.xl {
+    margin-bottom: 3px;
+  }
 
-.root.aborted {
-  background-color: var(--mantine-color-red-0);
-  border-color: var(--mantine-color-red-4);
-}
+  &.completed {
+    color: var(--mantine-color-green-8);
+  }
 
-.root.in-progress {
-  background-color: var(--mantine-color-blue-0);
-  border-color: var(--mantine-color-blue-5);
-}
+  &.aborted {
+    color: var(--mantine-color-red-8);
+  }
 
-.label.xl {
-  margin-bottom: 3px;
-}
-
-.label.completed {
-  color: var(--mantine-color-green-8);
-}
-
-.label.aborted {
-  color: var(--mantine-color-red-8);
-}
-
-.label.in-progress {
-  color: var(--mantine-color-blue-8);
+  &.in-progress {
+    color: var(--mantine-color-blue-8);
+  }
 }

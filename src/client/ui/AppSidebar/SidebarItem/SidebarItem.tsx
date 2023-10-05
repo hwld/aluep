@@ -51,7 +51,7 @@ export const SidebarItem: React.FC<Props> = ({
             w={30}
             h={30}
             className={clsx(classes["icon-wrapper"], {
-              [classes["icon-wrapper-active"]]: active,
+              [classes.active]: active,
             })}
           >
             <Icon size="100%" />

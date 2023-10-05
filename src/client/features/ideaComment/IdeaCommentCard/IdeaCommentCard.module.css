@@ -1,5 +1,7 @@
 .root:target {
-  box-shadow: 0 0 0 2px var(--mantine-color-red-7);
+  &:target {
+    box-shadow: 0 0 0 2px var(--mantine-color-red-7);
+  }
 }
 
 .deleted-message {
@@ -16,10 +18,10 @@
   display: flex;
   gap: 3;
   align-items: center;
-}
 
-.replay-message:hover {
-  color: var(--mantine-color-red-9);
+  &:hover {
+    color: var(--mantine-color-red-9);
+  }
 }
 
 .comment {

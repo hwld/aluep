@@ -2,12 +2,14 @@
   border-radius: 50%;
   transition: all 200ms;
   background-color: transparent;
+
+  &:hover {
+    background-color: var(--mantine-color-pink-1);
+  }
 }
 
-.icon:hover {
-  background-color: var(--mantine-color-pink-1);
-}
-
-.liked:hover {
-  background-color: var(--mantine-color-gray-2);
+.liked {
+  &:hover {
+    background-color: var(--mantine-color-gray-2);
+  }
 }

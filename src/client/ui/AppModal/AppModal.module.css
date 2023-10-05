@@ -14,8 +14,8 @@
 
 .close {
   transition: background-color 150ms;
-}
 
-.close:hover {
-  background-color: var(--mantine-color-gray-2);
+  &:hover {
+    background-color: var(--mantine-color-gray-2);
+  }
 }

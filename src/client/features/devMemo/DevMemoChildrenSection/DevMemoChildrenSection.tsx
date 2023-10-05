@@ -3,7 +3,7 @@ import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
 import { DevelopmentMemo } from "@/models/developmentMemo";
 import { Box, Button, Divider, Stack } from "@mantine/core";
 import { useRef } from "react";
-import classes from "./DevMemoChildSection.module.css";
+import classes from "./DevMemoChildrenSection.module.css";
 
 type Props = {
   ideaId: string;
