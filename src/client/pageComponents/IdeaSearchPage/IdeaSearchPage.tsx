@@ -1,4 +1,4 @@
-import { EmptyIdeaSearchResult } from "@/client/features/idea/EmptyIdeaSearchResult";
+import { EmptyIdeaSearchResult } from "@/client/features/idea/EmptyIdeaSearchResult/EmptyIdeaSearchResult";
 import {
   IdeaCard,
   ideaCardMinWidthPx,

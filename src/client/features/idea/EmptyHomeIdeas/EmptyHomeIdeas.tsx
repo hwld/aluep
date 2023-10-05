@@ -3,6 +3,7 @@ import { Routes } from "@/share/routes";
 import { Button, Card, Text, useMantineTheme } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbFileText } from "react-icons/tb";
+import classes from "./EmptyFomeIdeas.module.css";
 
 type Props = { isLoggedIn: boolean };
 
@@ -21,21 +22,12 @@ export const EmptyHomeIdeas: React.FC<Props> = ({ isLoggedIn }) => {
   };
 
   return (
-    <Card
-      w={450}
-      p="xl"
-      sx={() => ({
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        textAlign: "center",
-      })}
-    >
+    <Card w={450} p="xl" className={classes.root}>
       <TbFileText size={100} color={colors.red[7]} />
-      <Text size="lg" color="gray.5" fw="bold" mt="sm">
+      <Text size="lg" c="gray.5" fw="bold" mt="sm">
         お題が投稿されていません
       </Text>
-      <Text align="center" color="gray.4" mt={5}>
+      <Text ta="center" c="gray.4" mt={5}>
         ユーザーによってお題が投稿されると、<br></br>
         人気のお題や最新のお題などが表示されます。
       </Text>

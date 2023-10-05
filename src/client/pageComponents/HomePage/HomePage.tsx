@@ -1,4 +1,4 @@
-import { EmptyHomeIdeas } from "@/client/features/idea/EmptyHomeIdeas";
+import { EmptyHomeIdeas } from "@/client/features/idea/EmptyHomeIdeas/EmptyHomeIdeas";
 import { ideaCardMinWidthPx } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { PickedUpIdeas } from "@/client/features/idea/PickedUpIdeas";
 import { PopularIdeaCarousel } from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCarousel";

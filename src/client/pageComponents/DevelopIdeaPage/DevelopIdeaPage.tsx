@@ -1,6 +1,6 @@
-import { useDevelop } from "@/client/features/dev/useDevelop";
+import { DevelopForm } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { useDevStatusesQuery } from "@/client/features/dev/useDevStatusesQuery";
-import { DevelopmentForm } from "@/client/features/idea/DevelopmentForm";
+import { useDevelop } from "@/client/features/dev/useDevelop";
 import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import {
@@ -51,7 +51,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
         <Stack spacing="xs">
           <Text c="gray.5">開発情報</Text>
           <Card>
-            <DevelopmentForm
+            <DevelopForm
               developmentStatuses={developmentStatuses}
               onSubmit={handleDevelopIdea}
               onCancel={handleBack}

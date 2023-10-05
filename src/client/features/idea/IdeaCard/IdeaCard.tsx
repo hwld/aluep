@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { FaRegComment } from "react-icons/fa";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
+import classes from "./IdeaCard.module.css";
 
 export const ideaCardMinWidthPx = 450;
 
@@ -25,27 +26,17 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
       miw={ideaCardMinWidthPx}
       w="100%"
       h="100%"
-      sx={(theme) => ({
-        cursor: "pointer",
-        position: "static",
-        transition: "all 100ms",
-        outline: "transparent solid 0px",
-        "&:not(:has(a:not(.idea-link):hover, button:hover)):hover": {
-          outline: `${theme.colors.red[6]} solid 2px`,
-          outlineOffset: "3px",
-        },
-      })}
+      className={classes.root}
       onClick={handleGoIdeaDetail}
     >
-      <Stack spacing={10} miw={0}>
+      <Stack gap={10} miw={0}>
         {/* ヘッダ */}
         <Flex justify="space-between" align="flex-start" gap={10} miw={0}>
-          <TextLink href={Routes.idea(idea.id)} className="idea-link">
-            <Title
-              order={3}
-              color="red.7"
-              sx={{ lineHeight: 1.4, wordBreak: "break-all" }}
-            >
+          <TextLink
+            href={Routes.idea(idea.id)}
+            className={classes["idea-link"]}
+          >
+            <Title order={3} c="red.7" className={classes["idea-title"]}>
               {idea.title}
             </Title>
           </TextLink>
@@ -57,7 +48,7 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
           <Flex
             direction="column"
             justify="center"
-            sx={{ overflow: "hidden" }}
+            className={classes["user-content"]}
             miw={0}
           >
             <TextLink href={Routes.user(idea.user.id)}>
@@ -66,7 +57,7 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
               </Text>
             </TextLink>
             <Flex align="center" gap="lg">
-              <Text color="gray.5" size="sm" sx={{ whiteSpace: "nowrap" }}>
+              <Text className={classes["elapsed-text"]} c="gray.5" size="sm">
                 {idea.elapsedSinceCreation}
               </Text>
               <Flex align="center" gap="sm">

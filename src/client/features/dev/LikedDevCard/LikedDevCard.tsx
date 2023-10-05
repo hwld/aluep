@@ -44,7 +44,7 @@ export const LikedDevCard: React.FC<Props> = ({ development }) => {
           <Stack gap={0}>
             <TextLink
               href={Routes.development(development.ideaId, development.id)}
-              className="development-link"
+              className={classes["development-link"]}
             >
               <Text fw="bold" size="lg">
                 {development.developerUserName}

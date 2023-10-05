@@ -78,7 +78,7 @@ export const DevCard: React.FC<Props> = ({
           />
           <TextLink
             href={Routes.development(idea.id, development.id)}
-            className="development-link"
+            className={classes["development-link"]}
           >
             <Text fw="bold" size="lg">
               {development.developerUserName}

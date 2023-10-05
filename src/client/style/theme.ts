@@ -16,6 +16,7 @@ import {
   createTheme,
 } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
+import classes from "./theme.module.css";
 
 export const theme = createTheme({
   fontFamily: `'Noto Sans JP', sans-serif`,
@@ -97,33 +98,10 @@ export const theme = createTheme({
     }),
     Divider: Divider.extend({ defaultProps: { color: "gray.3" } }),
     Input: Input.extend({
-      styles: (theme) => ({
-        input: {
-          backgroundColor: "transparent",
-          color: theme.colors.gray[7],
-          borderRadius: theme.radius.md,
-        },
-        // フォーカスされたときにリングスタイルを当てたい。
-        // theme.focusRingStylesを上書きすることでやろうと考えたが、
-        // MultiSelectのinputのwrapperにoverflow:hiddenが設定されているため、
-        // 影が表示されない。なんのためのhiddenなのかわからないため、とりあえずinputのwrapper
-        // に影を表示させる
-        wrapper: {
-          outline: "transparent solid 0px",
-          transition: "outline 100ms",
-          // TODO: これどう書き換えればいいんだ
-          // module.cssファイルを作ってclassNameを渡すくらいしかできない？
-          // "&:focus-within": {
-          //   borderRadius: theme.radius.md,
-          //   outline: `${theme.colors.gray[4]} solid 2px`,
-          //   outlineOffset: "2px",
-          // },
-        },
-        invalid: {
-          borderColor: theme.colors.red[7],
-          borderWidth: "2px",
-        },
-      }),
+      classNames: {
+        input: classes["input-input"],
+        wrapper: classes["input-wrapper"],
+      },
     }),
     InputWrapper: InputWrapper.extend({
       styles: (theme) => ({
@@ -139,28 +117,10 @@ export const theme = createTheme({
     }),
     TextInput: TextInput.extend({ defaultProps: { autoComplete: "off" } }),
     Select: Select.extend({
-      styles: (theme) => ({
-        input: {
-          transition: "background-color 250ms",
-          // TODO:
-          // "&:hover": {
-          //   backgroundColor: theme.colors.gray[2],
-          // },
-        },
-        item: {
-          color: theme.colors.gray[7],
-          // TODO:
-          // "&:hover": {
-          //   backgroundColor: theme.colors.gray[2],
-          // },
-        },
-        dropdown: {
-          borderRadius: theme.radius.md,
-          backgroundColor: theme.colors.gray[0],
-          border: "1px solid",
-          borderColor: theme.colors.gray[3],
-        },
-      }),
+      classNames: {
+        option: classes["select-option"],
+        dropdown: classes["select-dropdown"],
+      },
     }),
     // TODO: Comboboxっていうのが新しく追加されてるっぽい。
     MultiSelect: MultiSelect.extend({
@@ -205,6 +165,7 @@ export const theme = createTheme({
           borderRadius: theme.radius.md,
           outline: "transparent solid 0px",
           transition: "outline 100ms",
+          // TODO
           "&:focus-within": {
             outline: `${theme.colors.gray[4]} solid 2px`,
             outlineOffset: "2px",

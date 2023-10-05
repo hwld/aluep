@@ -6,11 +6,12 @@ import {
 import { DevelopmentStatus } from "@/models/developmentStatus";
 import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Radio, Select, Text, TextInput, Textarea } from "@mantine/core";
+import { Radio, Select, Stack, Text, TextInput, Textarea } from "@mantine/core";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { UnionToIntersection } from "react-hook-form/dist/types/path/common";
 import { MdComputer } from "react-icons/md";
+import classes from "./DevelopForm.module.css";
 
 export type DevelopmentFormDefaultValues = Partial<
   UnionToIntersection<DistributiveOmit<DevelopmentFormData, "type">> & {
@@ -32,7 +33,7 @@ type Props = {
   isRelogined?: boolean;
 };
 
-export const DevelopmentForm: React.FC<Props> = ({
+export const DevelopForm: React.FC<Props> = ({
   developmentStatuses,
   defaultValues,
   isRelogined = false,
@@ -75,22 +76,25 @@ export const DevelopmentForm: React.FC<Props> = ({
         render={({ field }) => {
           return (
             <Radio.Group
-              spacing="xs"
-              orientation="vertical"
+              className={classes["radio-group"]}
               label="開発に使用するGitHubリポジトリを選択する"
               withAsterisk
               {...field}
             >
-              <Radio
-                label="新しいリポジトリを作成する"
-                value={"createRepository" satisfies DevelopmentFormData["type"]}
-              />
-              <Radio
-                label="既存のリポジトリを使用する"
-                value={
-                  "referenceRepository" satisfies DevelopmentFormData["type"]
-                }
-              />
+              <Stack mt="xs" gap="xs">
+                <Radio
+                  label="新しいリポジトリを作成する"
+                  value={
+                    "createRepository" satisfies DevelopmentFormData["type"]
+                  }
+                />
+                <Radio
+                  label="既存のリポジトリを使用する"
+                  value={
+                    "referenceRepository" satisfies DevelopmentFormData["type"]
+                  }
+                />
+              </Stack>
             </Radio.Group>
           );
         }}

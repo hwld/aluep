@@ -6,8 +6,10 @@ import {
   Tooltip,
   useMantineTheme,
 } from "@mantine/core";
+import clsx from "clsx";
 import Link from "next/link";
 import { TbHeart } from "react-icons/tb";
+import classes from "./IdeaLikeButton.module.css";
 
 type Props = {
   likes: number;
@@ -26,28 +28,13 @@ export const IdeaLikeButton: React.FC<Props> = ({
   const { colors } = useMantineTheme();
 
   return (
-    <Stack align="center" spacing={3}>
+    <Stack align="center" gap={3}>
       <ActionIcon
         disabled={disabled}
         color={likedByLoggedInUser ? "pink" : undefined}
         size={50}
-        sx={(theme) => ({
-          borderRadius: "50%",
-          boxShadow: theme.shadows.md,
-          transition: "all 200ms",
-          backgroundColor: likedByLoggedInUser
-            ? theme.fn.rgba(theme.colors.pink[1], 0.8)
-            : theme.colors.gray[1],
-          "&:hover": {
-            backgroundColor: likedByLoggedInUser
-              ? theme.colors.gray[3]
-              : theme.colors.pink[1],
-          },
-          "&[data-disabled]": {
-            backgroundColor: theme.colors.gray[3],
-            borderColor: theme.colors.gray[3],
-            boxShadow: theme.shadows.xs,
-          },
+        className={clsx(classes["like-button"], {
+          [classes.liked]: likedByLoggedInUser,
         })}
         onClick={onLikeIdea}
       >
@@ -67,11 +54,9 @@ export const IdeaLikeButton: React.FC<Props> = ({
           component={Link}
           href={Routes.ideaLikers(ideaId)}
           size="sm"
-          sx={(theme) => ({
-            pointerEvents: likes === 0 ? "none" : "auto",
-            textDecoration: likes === 0 ? "none" : "underline",
-            color: likedByLoggedInUser ? theme.colors.pink[7] : "inherit",
-            "&:hover": { color: theme.colors.red[7] },
+          className={clsx(classes["like-count"], {
+            [classes.link]: likes > 0,
+            [classes.liked]: likedByLoggedInUser,
           })}
         >
           {likes}
