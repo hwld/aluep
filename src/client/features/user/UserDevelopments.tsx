@@ -1,4 +1,4 @@
-import { useDevelopmentsByUser } from "@/client/features/development/useDevelopmentsByUser";
+import { useDevsByUser } from "@/client/features/dev/useDevsByUser";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer";
 import {
   UserDevelopmentCard,
@@ -18,7 +18,7 @@ export const UserDevelopments: React.FC<Props> = ({
   page,
   onChangePage,
 }) => {
-  const { developmentsByUser: userDevelopments } = useDevelopmentsByUser({
+  const { developmentsByUser: userDevelopments } = useDevsByUser({
     userId: user.id,
     page,
   });

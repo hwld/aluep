@@ -1,5 +1,5 @@
-import { LikedDevelopmentCard } from "@/client/features/development/LikedDevelopmentCard";
-import { useLikedDevelopments } from "@/client/features/development/useLikedDevelopments";
+import { LikedDevCard } from "@/client/features/dev/LikedDevCard/LikedDevCard";
+import { useLikedDevelopments } from "@/client/features/dev/useLikedDevelopments";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer";
 import { useMantineTheme } from "@mantine/core";
 import { User } from "next-auth";
@@ -38,7 +38,7 @@ export const UserLikedDevelopments: React.FC<Props> = ({
       }
     >
       {likedDevelopments?.list.map((dev) => (
-        <LikedDevelopmentCard key={dev.id} development={dev} />
+        <LikedDevCard key={dev.id} development={dev} />
       ))}
     </UserContentContainer>
   );

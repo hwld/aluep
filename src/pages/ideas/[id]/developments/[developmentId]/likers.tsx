@@ -1,5 +1,5 @@
-import { developmentKeys } from "@/client/features/development/queryKeys";
-import { useDevelopmentQuery } from "@/client/features/development/useDevelopmentQuery";
+import { developmentKeys } from "@/client/features/dev/queryKeys";
+import { useDevQuery } from "@/client/features/dev/useDevQuery";
 import { userKeys } from "@/client/features/user/queryKeys";
 import { DevelopmentLikersPage } from "@/client/pageComponents/DevelopmentLikersPage/DevelopmentLikersPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
@@ -42,7 +42,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 const DevelopmentLikers: NextPage = () => {
   const router = useRouter();
   const developmentId = assertString(router.query.developmentId);
-  const { development, isLoading } = useDevelopmentQuery({ developmentId });
+  const { development, isLoading } = useDevQuery({ developmentId });
 
   if (isLoading) {
     return <></>;

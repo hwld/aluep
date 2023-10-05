@@ -1,4 +1,4 @@
-import { LikeDevelopmentIcon } from "@/client/features/development/LikeDevelopmentIcon";
+import { LikeDevIcon } from "@/client/features/dev/LikeDevIcon/LikeDevIcon";
 import { LikeIdeaIcon } from "@/client/features/idea/LikeIdeaIcon";
 import { ReceivedLikeCount } from "@/client/features/user/useReceivedLikeCountQuery";
 import { Card, Flex, Stack, Text } from "@mantine/core";
@@ -33,7 +33,7 @@ export const UserReceivedLikeCard: React.FC<Props> = ({
             開発者としてのいいね
           </Text>
           <Flex align="center" gap={10}>
-            <LikeDevelopmentIcon size="lg" />
+            <LikeDevIcon size="lg" />
             <Flex align="flex-end" gap={2}>
               <Text size="xl" fw="bold" c="red.7">
                 {receivedLikeCount.developmentLikeCount}

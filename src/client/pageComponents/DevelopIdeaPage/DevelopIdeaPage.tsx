@@ -1,5 +1,5 @@
-import { useDevelop } from "@/client/features/development/useDevelop";
-import { useDevelopmentStatusesQuery } from "@/client/features/development/useDevelopmentStatusesQuery";
+import { useDevelop } from "@/client/features/dev/useDevelop";
+import { useDevStatusesQuery } from "@/client/features/dev/useDevStatusesQuery";
 import { DevelopmentForm } from "@/client/features/idea/DevelopmentForm";
 import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
@@ -8,7 +8,7 @@ import {
   DevelopmentFormData,
 } from "@/models/development";
 import { Idea } from "@/models/idea";
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 import { Routes } from "@/share/routes";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
@@ -21,7 +21,7 @@ type Props = {
 export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
   const router = useRouter();
 
-  const { developmentStatuses } = useDevelopmentStatusesQuery();
+  const { developmentStatuses } = useDevStatusesQuery();
 
   const {
     mutations: { developMutation },
@@ -65,7 +65,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
                 githubRepositoryName: restoredValues?.repositoryName ?? "",
                 githubRepositoryDescription:
                   restoredValues?.repositoryDesc ?? "",
-                developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
+                developmentStatusId: DevStatusIds.IN_PROGRESS,
                 githubRepositoryUrl: "",
               }}
             />

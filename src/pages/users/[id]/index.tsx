@@ -1,4 +1,4 @@
-import { developmentKeys } from "@/client/features/development/queryKeys";
+import { developmentKeys } from "@/client/features/dev/queryKeys";
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { userKeys } from "@/client/features/user/queryKeys";
 import { useUserQuery } from "@/client/features/user/useUserQuery";

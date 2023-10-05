@@ -1,6 +1,6 @@
-import { developmentKeys } from "@/client/features/development/queryKeys";
-import { useDevelopmentQuery } from "@/client/features/development/useDevelopmentQuery";
-import { developmentMemoKeys } from "@/client/features/developmentMemo/queryKeys";
+import { developmentKeys } from "@/client/features/dev/queryKeys";
+import { useDevQuery } from "@/client/features/dev/useDevQuery";
+import { developmentMemoKeys } from "@/client/features/devMemo/queryKeys";
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { DevelopmentDetailPage } from "@/client/pageComponents/DevelopmentDetailPage/DevelopmentDetailPage";
@@ -46,7 +46,7 @@ const DevelopmentDetail = () => {
   const developmentId = assertString(router.query.developmentId);
   const ideaId = assertString(router.query.id);
   const { development: development, isLoading: loadingDevelopment } =
-    useDevelopmentQuery({ developmentId });
+    useDevQuery({ developmentId });
   const { idea, isLoading: loadingIdea } = useIdeaQuery({ ideaId });
 
   if (loadingDevelopment || loadingIdea) {

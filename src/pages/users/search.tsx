@@ -1,5 +1,5 @@
 import { userKeys } from "@/client/features/user/queryKeys";
-import { UserSearchPage } from "@/client/pageComponents/UserSearchPage";
+import { UserSearchPage } from "@/client/pageComponents/UserSearchPage/UserSearchPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { urlParamToString } from "@/server/lib/urlParam";
 import { appRouter } from "@/server/router";

@@ -2,7 +2,7 @@
  * ダミーデータを生成
  */
 
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
 import { Presets, SingleBar } from "cli-progress";
@@ -236,9 +236,9 @@ async function createDevelopments({
           ideaId,
           userId: userIds[userIndex],
           statusId: faker.helpers.arrayElement([
-            DevelopmentStatusIds.IN_PROGRESS,
-            DevelopmentStatusIds.ABORTED,
-            DevelopmentStatusIds.COMPLETED,
+            DevStatusIds.IN_PROGRESS,
+            DevStatusIds.ABORTED,
+            DevStatusIds.COMPLETED,
           ]),
         },
         update: { createdAt: new Date() },

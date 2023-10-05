@@ -1,5 +1,5 @@
 import { TestHelpers } from "@/server/tests/helper";
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 
 describe("お題開発情報削除API", () => {
   it("開発情報を削除できる", async () => {
@@ -9,7 +9,7 @@ describe("お題開発情報削除API", () => {
       type: "referenceRepository",
       githubRepositoryUrl: "https://github.com/hwld/aluep",
       ideaId: idea.id,
-      developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
+      developmentStatusId: DevStatusIds.IN_PROGRESS,
     });
 
     await caller.development.delete({ developmentId });

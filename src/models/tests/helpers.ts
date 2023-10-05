@@ -5,7 +5,7 @@ import { Idea } from "@/models/idea";
 import { IdeaComment } from "@/models/ideaComment";
 import { IdeaTag } from "@/models/ideaTag";
 import { User } from "@/models/user";
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 import { faker } from "@faker-js/faker";
 
 export const IdeaHelper = {
@@ -68,7 +68,7 @@ export const DevelopmentHelper = {
       likedByLoggedInUser: true,
       likes: 100,
       status: {
-        id: DevelopmentStatusIds.IN_PROGRESS,
+        id: DevStatusIds.IN_PROGRESS,
         name: "開発中",
         ...data?.status,
       },

@@ -1,5 +1,5 @@
-import { useDevelop } from "@/client/features/development/useDevelop";
-import { useDevelopmentStatusesQuery } from "@/client/features/development/useDevelopmentStatusesQuery";
+import { useDevelop } from "@/client/features/dev/useDevelop";
+import { useDevStatusesQuery } from "@/client/features/dev/useDevStatusesQuery";
 import {
   DevelopmentForm,
   DevelopmentFormDefaultValues,
@@ -12,7 +12,7 @@ import {
   DevelopmentFormData,
 } from "@/models/development";
 import { Idea } from "@/models/idea";
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
@@ -30,7 +30,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
 }) => {
   const router = useRouter();
 
-  const { developmentStatuses } = useDevelopmentStatusesQuery();
+  const { developmentStatuses } = useDevStatusesQuery();
 
   const {
     mutations: { updateDevelopmentMutation },
@@ -53,7 +53,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({
       const base: DevelopmentFormDefaultValues = {
         comment: development.comment,
         developedItemUrl: development.developedItemUrl,
-        developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
+        developmentStatusId: DevStatusIds.IN_PROGRESS,
         githubRepositoryDescription: "",
         githubRepositoryName: "",
         githubRepositoryUrl: "",

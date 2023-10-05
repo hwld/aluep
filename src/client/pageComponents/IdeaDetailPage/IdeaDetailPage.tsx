@@ -1,4 +1,4 @@
-import { useDevelop } from "@/client/features/development/useDevelop";
+import { useDevelop } from "@/client/features/dev/useDevelop";
 import { DevelopButton } from "@/client/features/idea/DevelopButton";
 import { IdeaDescriptionView } from "@/client/features/idea/IdeaDescriptionView";
 import { IdeaInfoCardItem } from "@/client/features/idea/IdeaDetail/IdeaInfoCardItem";

@@ -1,4 +1,4 @@
-import { developmentKeys } from "@/client/features/development/queryKeys";
+import { developmentKeys } from "@/client/features/dev/queryKeys";
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 
 export const userKeys = {

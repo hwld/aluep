@@ -1,7 +1,7 @@
 import { db } from "@/server/lib/prismadb";
 import { convertUser, findUser } from "@/server/repositories/user";
 import { appRouter } from "@/server/router";
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
 import { addYears } from "date-fns";
@@ -101,7 +101,7 @@ export const TestHelpers = {
         comment: "",
         developedItemUrl: "",
         githubUrl: "https://github.com/hwld/aluep",
-        statusId: DevelopmentStatusIds.IN_PROGRESS,
+        statusId: DevStatusIds.IN_PROGRESS,
         ...args,
       },
     });

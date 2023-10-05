@@ -1,7 +1,7 @@
 import { mockCreateGitHubRepository } from "@/server/features/github/mock";
 import { server } from "@/server/mock/server";
 import { TestHelpers } from "@/server/tests/helper";
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 
 describe("お題開発API", () => {
   it("未ログインではお題の開発情報を登録できない", async () => {
@@ -12,7 +12,7 @@ describe("お題開発API", () => {
       type: "referenceRepository",
       ideaId: idea.id,
       githubRepositoryUrl: "https://github.com/hwld/aluep",
-      developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
+      developmentStatusId: DevStatusIds.IN_PROGRESS,
     });
 
     await expect(promise).rejects.toThrow();
@@ -27,12 +27,12 @@ describe("お題開発API", () => {
       type: "referenceRepository",
       ideaId: idea.id,
       githubRepositoryUrl: repositoryUrl,
-      developmentStatusId: DevelopmentStatusIds.COMPLETED,
+      developmentStatusId: DevStatusIds.COMPLETED,
     });
 
     const development = await caller.development.get({ developmentId });
     expect(development?.githubUrl).toBe(repositoryUrl);
-    expect(development?.status.id).toBe(DevelopmentStatusIds.COMPLETED);
+    expect(development?.status.id).toBe(DevStatusIds.COMPLETED);
   });
 
   it("リポジトリの作成とお題の開発情報の登録ができる", async () => {

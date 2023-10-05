@@ -1,5 +1,5 @@
-import { developmentKeys } from "@/client/features/development/queryKeys";
-import { useDevelopmentQuery } from "@/client/features/development/useDevelopmentQuery";
+import { developmentKeys } from "@/client/features/dev/queryKeys";
+import { useDevQuery } from "@/client/features/dev/useDevQuery";
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { DevelopmentEditPage } from "@/client/pageComponents/DevelopmentEditPage/DevelopmentEditPage";
@@ -53,7 +53,7 @@ const DevelopmentUpdate: NextPage = () => {
   );
 
   const { idea } = useIdeaQuery({ ideaId });
-  const { development: development } = useDevelopmentQuery({ developmentId });
+  const { development: development } = useDevQuery({ developmentId });
 
   // テーマが取得できないときはサーバーでエラーが出るから
   // ここには到達しない

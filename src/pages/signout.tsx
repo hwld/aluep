@@ -31,17 +31,17 @@ const Signout: NextPage = () => {
 
   return (
     <Card w={500} m="auto" p="xl">
-      <Stack align="center" spacing="lg">
+      <Stack align="center" gap="lg">
         <Title order={2}>ログアウト</Title>
-        <Stack align="center" spacing="xs">
+        <Stack align="center" gap="xs">
           <Flex align="center" justify="center">
             <Image src="/logo.svg" width={200} height={200} alt="app-logo" />
             <MdLogout size="20%" color={mantineTheme.colors.red[7]} />
           </Flex>
-          <Stack align="center" spacing="sm">
+          <Stack align="center" gap="sm">
             <Text>ログアウトしてもよろしいですか？</Text>
             <Button
-              leftIcon={<MdLogout size={25} />}
+              leftSection={<MdLogout size={25} />}
               color="red"
               onClick={handleSignOut}
               w="fit-content"

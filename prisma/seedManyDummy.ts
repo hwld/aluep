@@ -12,7 +12,7 @@
  *   ・各お題の開発者一人に0~49のいいね
  */
 
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
 
@@ -99,9 +99,9 @@ async function main() {
           ideaId: ideaIds[ideaIndex],
           userId: userIds[userIndex],
           statusId: faker.helpers.arrayElement([
-            DevelopmentStatusIds.IN_PROGRESS,
-            DevelopmentStatusIds.ABORTED,
-            DevelopmentStatusIds.COMPLETED,
+            DevStatusIds.IN_PROGRESS,
+            DevStatusIds.ABORTED,
+            DevStatusIds.COMPLETED,
           ]),
         },
         update: { createdAt: new Date() },

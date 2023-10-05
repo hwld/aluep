@@ -1,0 +1,11 @@
+.root {
+  position: static;
+  cursor: pointer;
+  transition: all 100ms;
+  outline: transparent solid 0px;
+}
+
+.root:not(:has(a:not(.development-link):hover), button:hover):hover {
+  outline: var(--mantine-color-red-6) solid 2px;
+  outline-offset: 3px;
+}

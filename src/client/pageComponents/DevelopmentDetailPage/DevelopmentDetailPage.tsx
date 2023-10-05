@@ -1,9 +1,9 @@
-import { DevelopmentDetailCard } from "@/client/features/development/DevelopmentDetailCard";
-import { developmentKeys } from "@/client/features/development/queryKeys";
-import { useDevelopmentLikeOnDetail } from "@/client/features/development/useDevelopmentLikeOnDetail";
-import { DevelopmentMemoFormCard } from "@/client/features/developmentMemo/DevelopmentMemoFormCard/DevelopmentMemoFormCard";
-import { DevelopmentMemoThreadCard } from "@/client/features/developmentMemo/DevelopmentMemoThreadCard/DevelopmentMemoThreadCard";
-import { useDevelopmentMemos } from "@/client/features/developmentMemo/useDevelopmentMemos";
+import { DevDetailCard } from "@/client/features/dev/DevDetailCard/DevDetailCard";
+import { developmentKeys } from "@/client/features/dev/queryKeys";
+import { useDevLikeOnDetail } from "@/client/features/dev/useDevLikeOnDetail";
+import { DevMemoFormCard } from "@/client/features/devMemo/DevMemoFormCard/DevMemoFormCard";
+import { DevMemoThreadCard } from "@/client/features/devMemo/DevMemoThreadCard/DevMemoThreadCard";
+import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { trpc } from "@/client/lib/trpc";
@@ -43,12 +43,12 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
   const loggedInUser = session?.user;
   const isDeveloper = development.developerUserId === loggedInUser?.id;
 
-  const { developmentMemoThreads, createMemoMutation } = useDevelopmentMemos({
+  const { developmentMemoThreads, createMemoMutation } = useDevMemos({
     developmentId: development.id,
   });
 
   const { likeDevelopmentMutation, unlikeDevelopmentMutation } =
-    useDevelopmentLikeOnDetail(development.id);
+    useDevLikeOnDetail(development.id);
 
   const queryClient = useQueryClient();
   const toggleAllowOtherUserMemosMutation = useMutation({
@@ -110,7 +110,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
     <>
       <PageHeader icon={MdComputer} pageName="開発情報の詳細" />
       <Stack maw={1200} w="100%" m="auto" spacing={40}>
-        <DevelopmentDetailCard
+        <DevDetailCard
           development={development}
           onToggleDevelopmentLike={handleToggleDevelopmentLike}
           isDeveloper={isDeveloper}
@@ -151,7 +151,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
             <Stack spacing="xs">
               {developmentMemoThreads.map((thread) => {
                 return (
-                  <DevelopmentMemoThreadCard
+                  <DevMemoThreadCard
                     ideaId={idea.id}
                     key={thread.rootMemo.id}
                     memo={thread.rootMemo}
@@ -164,7 +164,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
             </Stack>
           )}
           {loggedInUser && isDeveloper && (
-            <DevelopmentMemoFormCard
+            <DevMemoFormCard
               ref={memoFormCardRef}
               key={formKey}
               developmentId={development.id}

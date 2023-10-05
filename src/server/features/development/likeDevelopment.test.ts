@@ -1,5 +1,5 @@
 import { TestHelpers } from "@/server/tests/helper";
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 
 describe("開発情報へのいいねAPI", () => {
   it("いいねできる", async () => {
@@ -38,7 +38,7 @@ describe("開発情報へのいいねAPI", () => {
       ideaId: idea.id,
       type: "referenceRepository",
       githubRepositoryUrl: "https://github.com/hwld/aluep",
-      developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
+      developmentStatusId: DevStatusIds.IN_PROGRESS,
     });
 
     const promise = caller.development.like({ developmentId });

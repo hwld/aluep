@@ -1,5 +1,5 @@
 import { TestHelpers } from "@/server/tests/helper";
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 
 describe("開発情報更新API", () => {
   it("他人の開発情報は更新できない", async () => {
@@ -12,7 +12,7 @@ describe("開発情報更新API", () => {
     const promise = caller.development.update({
       type: "referenceRepository",
       githubRepositoryUrl: "https://github.com/hwld/me",
-      developmentStatusId: DevelopmentStatusIds.ABORTED,
+      developmentStatusId: DevStatusIds.ABORTED,
       developmentId: development.id,
       comment: "new comment",
       ideaId: development.ideaId,
@@ -32,7 +32,7 @@ describe("開発情報更新API", () => {
       developmentId: development.id,
       ideaId: development.ideaId,
       type: "referenceRepository",
-      developmentStatusId: DevelopmentStatusIds.ABORTED,
+      developmentStatusId: DevStatusIds.ABORTED,
       githubRepositoryUrl: "https://github.com/hwld/me",
       comment: "new comment",
     });
@@ -46,11 +46,11 @@ describe("開発情報更新API", () => {
     const { developmentId } = await caller.development.create({
       ideaId: idea.id,
       type: "referenceRepository",
-      developmentStatusId: DevelopmentStatusIds.IN_PROGRESS,
+      developmentStatusId: DevStatusIds.IN_PROGRESS,
       githubRepositoryUrl: "https://github.com/hwld/me",
       comment: "comment",
     });
-    const updatedStatusId = DevelopmentStatusIds.COMPLETED;
+    const updatedStatusId = DevStatusIds.COMPLETED;
     const updatedRepoUrl = "https://github.com/hwld/me2";
     const updatedComment = "new comment";
 

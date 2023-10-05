@@ -1,4 +1,4 @@
-import { DevelopmentSummaryCard } from "@/client/features/development/DevelopmentSummaryCard";
+import { DevSummaryCard } from "@/client/features/dev/DevSummaryCard/DevSummaryCard";
 import {
   IdeaLikerCard,
   ideaLikerCardMinWidthPx,
@@ -33,7 +33,7 @@ export const DevelopmentLikersPage: React.FC<Props> = ({ development }) => {
       <Stack w="100%" maw={1200} m="auto" spacing="lg">
         <Stack spacing="sm">
           <Text c="gray.5">いいねされた開発情報</Text>
-          <DevelopmentSummaryCard development={development} />
+          <DevSummaryCard development={development} />
         </Stack>
 
         <Stack spacing="sm">

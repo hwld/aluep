@@ -1,9 +1,9 @@
 import {
-  IdeaDevelopmentCard,
+  DevCard,
   developmentCardMinWidthPx,
-} from "@/client/features/development/IdeaDevelopmentCard/IdeaDevelopmentCard";
-import { useDevelopmentLikeOnList } from "@/client/features/development/useDevelopmentLikeOnList";
-import { useDevelopmentsByIdea } from "@/client/features/development/useDevelopmentsByIdea";
+} from "@/client/features/dev/DevCard/DevCard";
+import { useDevLikeOnList } from "@/client/features/dev/useDevLikeOnList";
+import { useDevsByIdea } from "@/client/features/dev/useDevsByIdea";
 import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
@@ -18,9 +18,9 @@ type Props = { idea: Idea };
 
 export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
-  const { developments } = useDevelopmentsByIdea({ ideaId: idea.id, page });
+  const { developments } = useDevsByIdea({ ideaId: idea.id, page });
   const { likeDevelopmentMutation, unlikeDevelopmentMutation } =
-    useDevelopmentLikeOnList(idea.id, page);
+    useDevLikeOnList(idea.id, page);
 
   const handleChangePage = (page: number) => {
     setURLParams({ page });
@@ -39,7 +39,7 @@ export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
           <GridContainer minItemWidthPx={developmentCardMinWidthPx}>
             {developments?.list.map((dev) => {
               return (
-                <IdeaDevelopmentCard
+                <DevCard
                   key={dev.id}
                   idea={idea}
                   development={dev}

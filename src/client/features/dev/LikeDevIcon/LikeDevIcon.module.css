@@ -1,0 +1,5 @@
+.root {
+  padding: -4px;
+  border-radius: var(--mantine-radius-md);
+  border: solid 2px var(--mantine-color-red-7);
+}

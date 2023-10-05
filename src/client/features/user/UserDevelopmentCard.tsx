@@ -1,5 +1,5 @@
-import { DevelopedItemIconLink } from "@/client/features/development/DevelopedItemIconLink";
-import { DevelopmentStatusBadge } from "@/client/features/development/DevelopmentStatusBadge";
+import { DevItemIconLink } from "@/client/features/dev/DevItemIconLink/DevItemIconLink";
+import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
 import { formatDate } from "@/client/lib/utils";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
@@ -44,11 +44,11 @@ export const UserDevelopmentCard: React.FC<Props> = ({ development }) => {
       onClick={handleGoDevelopmentDetail}
     >
       <Flex justify="space-between" align="center">
-        <DevelopmentStatusBadge status={development.status} />
+        <DevStatusBadge status={development.status} />
         <Flex>
           <GitHubCodeIconLink gitHubUrl={development.githubUrl} />
           {development.developedItemUrl !== "" && (
-            <DevelopedItemIconLink url={development.developedItemUrl} />
+            <DevItemIconLink url={development.developedItemUrl} />
           )}
         </Flex>
       </Flex>

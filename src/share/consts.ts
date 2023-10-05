@@ -11,7 +11,7 @@ export const pageLimit = {
 } as const;
 
 // 使ってるmodels/developmentStatus.tsに置く？
-export const DevelopmentStatusIds = {
+export const DevStatusIds = {
   /** 開発中 */
   IN_PROGRESS: "1",
   /** 開発中止 */

@@ -2,7 +2,7 @@ import { createDevelopmentInputSchema } from "@/models/development";
 import { createOrExtractGithubRepositoryUrl } from "@/server/features/development/utils";
 import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 
 export const createDevelopment = requireLoggedInProcedure
   .input(createDevelopmentInputSchema)
@@ -14,7 +14,7 @@ export const createDevelopment = requireLoggedInProcedure
     const developmentStatusId =
       input.type === "referenceRepository"
         ? input.developmentStatusId
-        : DevelopmentStatusIds.IN_PROGRESS;
+        : DevStatusIds.IN_PROGRESS;
 
     // 開発情報を登録する
     const development = await db.development.create({

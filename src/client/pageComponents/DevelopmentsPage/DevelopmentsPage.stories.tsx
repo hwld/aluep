@@ -2,7 +2,7 @@ import { trpcMsw } from "@/client/__mocks__/trpc";
 import { DevelopmentsPage } from "@/client/pageComponents/DevelopmentsPage/DevelopmentsPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { DevelopmentHelper, IdeaHelper } from "@/models/tests/helpers";
-import { DevelopmentStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/share/consts";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
@@ -39,13 +39,13 @@ export const Default: Story = {
               list: [
                 create({
                   status: {
-                    id: DevelopmentStatusIds.ABORTED,
+                    id: DevStatusIds.ABORTED,
                     name: "開発中止",
                   },
                 }),
                 create({
                   status: {
-                    id: DevelopmentStatusIds.COMPLETED,
+                    id: DevStatusIds.COMPLETED,
                     name: "開発終了",
                   },
                 }),

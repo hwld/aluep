@@ -1,4 +1,4 @@
-import { DevelopmentCardIconLink } from "@/client/features/development/DevelopmentCardLinkIcon/DevelopmentCardLinkIcon";
+import { DevCardIconLink } from "@/client/features/dev/DevCardLinkIcon/DevCardLinkIcon";
 import { useMantineTheme } from "@mantine/core";
 import { BsGithub } from "react-icons/bs";
 
@@ -9,7 +9,7 @@ export const GitHubCodeIconLink: React.FC<Props> = ({ gitHubUrl }) => {
   const { colors } = useMantineTheme();
 
   return (
-    <DevelopmentCardIconLink
+    <DevCardIconLink
       label="コードを見に行く"
       url={gitHubUrl.replace(/^(https:\/\/github)(.com)/, "$11s$2")}
       icon={<BsGithub size="80%" fill={colors.gray[7]} />}

@@ -1,0 +1,39 @@
+.root {
+  border-radius: 50%;
+  transition: all 200ms;
+  border: solid 1px var(--mantine-color-gray-3);
+  background-color: transparent;
+}
+
+.root.liked {
+  border: solid 1px var(--mantine-color-pink-2);
+  background-color: var(--mantine-color-pink-0);
+}
+
+.root:hover {
+  background-color: var(--mantine-color-pink-1);
+}
+
+.root.liked:hover {
+  background-color: var(--mantine-color-gray-2);
+}
+
+.root .like-icon {
+  margin-top: 4px;
+  height: 75%;
+  width: 75%;
+  color: var(--mantine-color-gray-5);
+  fill: transparent;
+  transition: all 200ms;
+}
+.root .like-icon.liked {
+  height: 75%;
+  width: 75%;
+  color: var(--mantine-color-pink-7);
+  fill: var(--mantine-color-pink-7);
+}
+
+.root[data-disabled] {
+  background-color: var(--mantine-color-gray-3);
+  border-color: var(--mantine-color-gray-3);
+}
