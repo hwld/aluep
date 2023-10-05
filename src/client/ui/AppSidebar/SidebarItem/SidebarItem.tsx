@@ -26,12 +26,7 @@ export const SidebarItem: React.FC<Props> = ({
   ...others
 }) => {
   return (
-    <AppTooltip
-      label={label}
-      hidden={!tooltip}
-      color="gray.7"
-      position="right-start"
-    >
+    <AppTooltip label={label} hidden={!tooltip} position="right-start">
       <WrapperLink
         {...(others.asLink
           ? { noWrap: false, href: others.href, target: others.target }

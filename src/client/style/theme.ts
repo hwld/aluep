@@ -16,7 +16,18 @@ import {
   createTheme,
 } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
-import classes from "./theme.module.css";
+import buttonClasses from "./components/button.module.css";
+import cardClasses from "./components/card.module.css";
+import dividerClasses from "./components/divider.module.css";
+import inputWrapperClasses from "./components/input-wrapper.module.css";
+import inputClasses from "./components/input.module.css";
+import notificationClasses from "./components/notification.module.css";
+import paperClasses from "./components/paper.module.css";
+import radioClasses from "./components/radio.module.css";
+import selectClasses from "./components/select.module.css";
+import textClasses from "./components/text.module.css";
+import titleClasses from "./components/title.module.css";
+import tooltipClasses from "./components/tooltip.module.css";
 
 export const theme = createTheme({
   fontFamily: `'Noto Sans JP', sans-serif`,
@@ -81,45 +92,44 @@ export const theme = createTheme({
   },
   components: {
     Button: Button.extend({
-      styles: { root: { transition: "background-color 250ms" } },
+      classNames: { root: buttonClasses.root },
     }),
     Title: Title.extend({
-      defaultProps: { c: "gray.7" },
-      styles: () => ({
-        root: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
-      }),
+      classNames: { root: titleClasses.root },
     }),
-    Tooltip: Tooltip.extend({ defaultProps: { color: "gray.7" } }),
-    Paper: Paper.extend({ defaultProps: { bg: "gray.1" } }),
-    Text: Text.extend({ defaultProps: { color: "gray.7" } }),
+    Tooltip: Tooltip.extend({
+      classNames: {
+        tooltip: tooltipClasses.tooltip,
+      },
+    }),
+    Paper: Paper.extend({
+      classNames: { root: paperClasses.root },
+    }),
+    Text: Text.extend({
+      classNames: { root: textClasses.root },
+    }),
     Card: Card.extend({
-      defaultProps: { bg: "gray.1", radius: "lg", shadow: "sm" },
-      styles: () => ({ root: { overflow: "unset" } }),
+      classNames: { root: cardClasses.root },
     }),
-    Divider: Divider.extend({ defaultProps: { color: "gray.3" } }),
+    Divider: Divider.extend({
+      classNames: { root: dividerClasses.root },
+    }),
     Input: Input.extend({
       classNames: {
-        input: classes["input-input"],
-        wrapper: classes["input-wrapper"],
+        input: inputClasses.input,
       },
     }),
     InputWrapper: InputWrapper.extend({
-      styles: (theme) => ({
-        label: {
-          color: theme.colors.gray[5],
-          error: theme.colors.blue[7],
-          marginBottom: theme.radius.md,
-        },
-      }),
+      classNames: { label: inputWrapperClasses.label },
     }),
     Radio: Radio.extend({
-      styles: (theme) => ({ label: { color: theme.colors.gray[7] } }),
+      classNames: { label: radioClasses.label },
     }),
     TextInput: TextInput.extend({ defaultProps: { autoComplete: "off" } }),
     Select: Select.extend({
       classNames: {
-        option: classes["select-option"],
-        dropdown: classes["select-dropdown"],
+        option: selectClasses.option,
+        dropdown: selectClasses.dropdown,
       },
     }),
     // TODO: Comboboxっていうのが新しく追加されてるっぽい。
@@ -149,15 +159,10 @@ export const theme = createTheme({
       }),
     }),
     Notification: Notification.extend({
-      styles: (theme) => ({
-        root: {
-          backgroundColor: theme.colors.gray[1],
-          borderColor: theme.colors.gray[1],
-        },
-        description: {
-          color: theme.colors.gray[5],
-        },
-      }),
+      classNames: {
+        root: notificationClasses.root,
+        description: notificationClasses.description,
+      },
     }),
     RichTextEditor: RichTextEditor.extend({
       styles: (theme) => ({

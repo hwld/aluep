@@ -1,0 +1,6 @@
+.root {
+  background-color: var(--mantine-color-gray-1);
+  border-radius: var(--mantine-radius-lg);
+  box-shadow: var(--mantine-shadow-sm);
+  overflow: unset;
+}

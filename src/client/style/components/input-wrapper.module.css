@@ -1,0 +1,4 @@
+.label {
+  color: var(--mantine-color-gray-5);
+  margin-bottom: var(--mantine-radius-md);
+}

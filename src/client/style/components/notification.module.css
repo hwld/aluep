@@ -1,0 +1,8 @@
+.root {
+  background-color: var(--mantine-color-gray-1);
+  border-color: var(--mantine-color-gray-1);
+}
+
+.description {
+  color: var(--mantine-color-gray-5);
+}

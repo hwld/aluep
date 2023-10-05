@@ -1,0 +1,5 @@
+.root {
+  color: var(--mantine-color-gray-7);
+  word-break: break-all;
+  white-space: pre-wrap;
+}
