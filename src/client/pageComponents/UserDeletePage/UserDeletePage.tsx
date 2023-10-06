@@ -59,7 +59,7 @@ export const UserDeletepage: React.FC = () => {
           <Text>
             などが
             <Mark
-              sx={(theme) => ({
+              style={(theme) => ({
                 color: theme.colors.red[5],
                 backgroundColor: "transparent",
               })}
@@ -75,14 +75,14 @@ export const UserDeletepage: React.FC = () => {
             mt={50}
             w="100%"
             h={120}
-            sx={(theme) => ({
-              backgroundColor: theme.fn.rgba(theme.colors.pink[6], 0.15),
+            style={(theme) => ({
+              backgroundColor: theme.colors.pink[0],
               borderRadius: theme.radius.md,
               display: "grid",
               placeItems: "center",
             })}
           >
-            <Box sx={{ textAlign: "center" }}>
+            <Box style={{ textAlign: "center" }}>
               <Button
                 color="red"
                 onClick={handleDeleteUser}

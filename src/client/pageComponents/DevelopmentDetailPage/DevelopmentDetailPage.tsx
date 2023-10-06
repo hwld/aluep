@@ -109,13 +109,13 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
   return (
     <>
       <PageHeader icon={MdComputer} pageName="開発情報の詳細" />
-      <Stack maw={1200} w="100%" m="auto" spacing={40}>
+      <Stack maw={1200} w="100%" m="auto" gap={40}>
         <DevDetailCard
           development={development}
           onToggleDevelopmentLike={handleToggleDevelopmentLike}
           isDeveloper={isDeveloper}
         />
-        <Stack spacing="xl">
+        <Stack gap="xl">
           <Flex align="center" justify="space-between" gap="xl">
             <Title order={4}>開発メモ</Title>
             {isDeveloper && (
@@ -148,7 +148,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
               </Center>
             </Card>
           ) : (
-            <Stack spacing="xs">
+            <Stack gap="xs">
               {developmentMemoThreads.map((thread) => {
                 return (
                   <DevMemoThreadCard

@@ -49,7 +49,7 @@ export const IdeaCreatePage: React.FC = () => {
     <>
       <PageHeader icon={MdPostAdd} pageName="お題の投稿" />
       <Box w="100%" maw={800} miw={300} m="auto">
-        <Card mt="md" sx={{ position: "static" }}>
+        <Card mt="md" style={{ position: "static" }}>
           <IdeaForm
             submitText="投稿する"
             onSubmit={handleCreateIdea}

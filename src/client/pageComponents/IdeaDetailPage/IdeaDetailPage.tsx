@@ -19,7 +19,6 @@ import {
   Box,
   Card,
   Flex,
-  MediaQuery,
   Stack,
   Text,
   Title,
@@ -76,7 +75,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
     <>
       <PageHeader icon={TbFileText} pageName="お題の詳細" />
       <Flex maw={1200} direction="column" align="center" m="auto">
-        <Title align="center" color="red.7" sx={{ wordBreak: "break-all" }}>
+        <Title ta="center" c="red.7" style={{ wordBreak: "break-all" }}>
           {idea.title}
         </Title>
         <Flex mt="xl" gap="lg" w="100%">
@@ -87,7 +86,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
             gap="sm"
             h="min-content"
             // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
-            sx={{ position: "sticky", top: 10, zIndex: 1 }}
+            style={{ position: "sticky", top: 10, zIndex: 1 }}
           >
             <DevelopButton
               ideaId={idea.id}
@@ -106,7 +105,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
           </Flex>
 
           {/* 中カラム */}
-          <Box sx={{ flexGrow: 1 }}>
+          <Box style={{ flexGrow: 1 }}>
             <Card mih={300}>
               {idea.tags.length > 0 && (
                 <Flex gap={10} mb="md" wrap="wrap">
@@ -128,54 +127,54 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
           </Box>
 
           {/* 右カラム */}
-          <MediaQuery smallerThan="lg" styles={{ display: "none" }}>
-            <Stack
-              h="min-content"
-              // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
-              sx={{ position: "sticky", top: 10, zIndex: 1 }}
+          <Stack
+            h="min-content"
+            // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
+            style={{ position: "sticky", top: 10, zIndex: 1 }}
+            visibleFrom="lg"
+          >
+            <Card
+              style={{
+                flexShrink: 0,
+                flexGrow: 0,
+                height: "min-content",
+              }}
+              w={300}
             >
-              <Card
-                sx={{
-                  flexShrink: 0,
-                  flexGrow: 0,
-                  height: "min-content",
-                }}
-                w={300}
+              <IdeaInfoCardItem
+                icon={<FaUserAlt size={20} color={colors.gray[5]} />}
+                title="投稿者"
               >
-                <IdeaInfoCardItem
-                  icon={<FaUserAlt size={20} color={colors.gray[5]} />}
-                  title="投稿者"
-                >
-                  <Flex gap={5} mt={5} align="center">
-                    <UserIconLink
-                      iconSrc={idea.user.image}
-                      userId={idea.user.id}
-                    />
-                    <TextLink href={Routes.user(idea.user.id)}>
-                      <Text size={13} truncate>
-                        {idea.user.name}
-                      </Text>
-                    </TextLink>
-                  </Flex>
-                </IdeaInfoCardItem>
+                <Flex gap={5} mt={5} align="center">
+                  <UserIconLink
+                    iconSrc={idea.user.image}
+                    userId={idea.user.id}
+                  />
+                  <TextLink href={Routes.user(idea.user.id)}>
+                    {/* todo: u */}
+                    <Text size="sm" truncate>
+                      {idea.user.name}
+                    </Text>
+                  </TextLink>
+                </Flex>
+              </IdeaInfoCardItem>
 
-                <IdeaInfoCardItem
-                  icon={<MdAccessTime size={20} color={colors.gray[5]} />}
-                  title="作成日"
-                >
-                  <Text>{formatDate(new Date(idea.createdAt))}</Text>
-                </IdeaInfoCardItem>
+              <IdeaInfoCardItem
+                icon={<MdAccessTime size={20} color={colors.gray[5]} />}
+                title="作成日"
+              >
+                <Text>{formatDate(new Date(idea.createdAt))}</Text>
+              </IdeaInfoCardItem>
 
-                <IdeaInfoCardItem
-                  icon={<MdUpdate size={20} color={colors.gray[5]} />}
-                  title="更新日"
-                  disabledDivider
-                >
-                  <Text>{formatDate(new Date(idea.updatedAt))}</Text>
-                </IdeaInfoCardItem>
-              </Card>
-            </Stack>
-          </MediaQuery>
+              <IdeaInfoCardItem
+                icon={<MdUpdate size={20} color={colors.gray[5]} />}
+                title="更新日"
+                disabledDivider
+              >
+                <Text>{formatDate(new Date(idea.updatedAt))}</Text>
+              </IdeaInfoCardItem>
+            </Card>
+          </Stack>
         </Flex>
       </Flex>
     </>

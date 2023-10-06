@@ -43,3 +43,20 @@ export const Default: Story = {
     },
   },
 };
+
+export const Empty: Story = {
+  args: { user: UserHelper.create() },
+  parameters: {
+    msw: {
+      handlers: [
+        trpcMsw.session.query((req, res, ctx) => {
+          return res(ctx.status(200), ctx.data(null));
+        }),
+        trpcMsw.user.getFavoritedUsers.query((req, res, ctx) => {
+          const { create } = UserHelper;
+          return res(ctx.status(200), ctx.data({ list: [], allPages: 1 }));
+        }),
+      ],
+    },
+  },
+};

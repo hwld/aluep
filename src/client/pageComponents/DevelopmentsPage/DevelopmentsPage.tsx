@@ -29,12 +29,12 @@ export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
   return (
     <>
       <PageHeader icon={MdComputer} pageName="開発情報の一覧" />
-      <Stack w="100%" miw={300} maw={1200} m="auto" spacing="lg">
-        <Stack spacing="sm">
+      <Stack w="100%" miw={300} maw={1200} m="auto" gap="lg">
+        <Stack gap="sm">
           <Text c="gray.5">開発されているお題</Text>
           <IdeaSummaryCard idea={idea} />
         </Stack>
-        <Stack spacing="sm">
+        <Stack gap="sm">
           <Text c="gray.5">開発情報</Text>
           <GridContainer minItemWidthPx={developmentCardMinWidthPx}>
             {developments?.list.map((dev) => {
@@ -55,7 +55,7 @@ export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
           </GridContainer>
         </Stack>
         <AppPagination
-          page={page}
+          value={page}
           onChange={handleChangePage}
           total={developments?.allPages ?? 0}
         />

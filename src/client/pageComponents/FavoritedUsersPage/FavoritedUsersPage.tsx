@@ -26,11 +26,12 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
     setURLParams({ page });
   };
 
+  // TODO:
   return (
     <>
       <PageHeader icon={BiBookmarkHeart} pageName="お気に入りユーザー" />
-      <Stack maw={800} m="auto" spacing="lg">
-        <Stack spacing="sm">
+      <Stack maw={800} m="auto" gap="lg">
+        <Stack gap="sm">
           <Text c="gray.5">ユーザー</Text>
           <UserSummaryCard user={user} />
         </Stack>
@@ -44,21 +45,21 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
               <TbHeart size={160} color={colors.red[6]} fill={colors.red[6]} />
             </Flex>
 
-            <Text size={30}>ユーザのお気に入りをまだしていません</Text>
+            <Text size="xl">ユーザのお気に入りをまだしていません</Text>
 
             <Text c="gray.5">
               他のユーザをお気に入りすると、ここに表示されます。
             </Text>
           </Flex>
         ) : (
-          <Stack spacing="sm">
+          <Stack gap="sm">
             <Text c="gray.5">お気に入りユーザー</Text>
             <Box
-              sx={(theme) => ({
+              style={{
                 display: "grid",
                 gridTemplateColumns: `repeat(auto-fit, minmax(${userCardMinWidthPx}px, 1fr))`,
-                gap: theme.spacing.xs,
-              })}
+                gap: "var(--mantine-spacing-xs)",
+              }}
             >
               {favoritedUsers?.list.map((user) => {
                 return <UserCard key={user.id} user={user} />;
@@ -67,7 +68,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
           </Stack>
         )}
         <AppPagination
-          page={page}
+          value={page}
           onChange={handleChangePage}
           total={favoritedUsers?.allPages ?? 0}
         />

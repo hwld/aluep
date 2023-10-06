@@ -4,7 +4,7 @@ import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Page/ユーザーの詳細",
+  title: "Page/ユーザーの削除",
   component: UserDeletepage,
   parameters: {
     layout: "fullscreen",

@@ -43,12 +43,12 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
   return (
     <>
       <PageHeader icon={MdComputer} pageName="お題の開発" />
-      <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
-        <Stack spacing="xs">
+      <Stack w="100%" maw={800} miw={300} m="auto" gap="lg">
+        <Stack gap="xs">
           <Text c="gray.5">開発するお題</Text>
           <IdeaSummaryCard idea={idea} />
         </Stack>
-        <Stack spacing="xs">
+        <Stack gap="xs">
           <Text c="gray.5">開発情報</Text>
           <Card>
             <DevelopForm

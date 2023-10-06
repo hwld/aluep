@@ -30,14 +30,14 @@ export const DevelopmentLikersPage: React.FC<Props> = ({ development }) => {
   return (
     <>
       <PageHeader icon={TbHeart} pageName="開発情報をいいねしたユーザー" />
-      <Stack w="100%" maw={1200} m="auto" spacing="lg">
-        <Stack spacing="sm">
+      <Stack w="100%" maw={1200} m="auto" gap="lg">
+        <Stack gap="sm">
           <Text c="gray.5">いいねされた開発情報</Text>
           <DevSummaryCard development={development} />
         </Stack>
 
-        <Stack spacing="sm">
-          <Text c="gray.5" align="left">
+        <Stack gap="sm">
+          <Text c="gray.5" ta="left">
             いいねしたユーザー
           </Text>
           <GridContainer minItemWidthPx={ideaLikerCardMinWidthPx}>
@@ -47,7 +47,7 @@ export const DevelopmentLikersPage: React.FC<Props> = ({ development }) => {
           </GridContainer>
         </Stack>
         <AppPagination
-          page={page}
+          value={page}
           onChange={handleChangePage}
           total={developmentLikers?.allPages ?? 0}
         />

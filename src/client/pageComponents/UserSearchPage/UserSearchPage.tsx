@@ -39,13 +39,13 @@ export const UserSearchPage: React.FC = () => {
           w="100%"
           maw={1200}
           miw={userCardMinWidthPx}
-          sx={() => ({
+          style={() => ({
             marginLeft: "auto",
             marginRight: "auto",
           })}
         >
           <Card
-            sx={() => ({
+            style={() => ({
               position: "static",
             })}
           >

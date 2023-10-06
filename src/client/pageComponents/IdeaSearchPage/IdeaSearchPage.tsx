@@ -65,7 +65,7 @@ export const IdeaSearchPage: React.FC = () => {
       <Box>
         <Flex w="100%" direction="column">
           <Card
-            sx={() => ({
+            style={() => ({
               position: "static",
             })}
           >
@@ -78,7 +78,7 @@ export const IdeaSearchPage: React.FC = () => {
           </Card>
           <Flex mt={30} align="center" justify="space-between" mb="xl">
             <Title order={4}>検索結果</Title>
-            <Flex align="center" sx={(theme) => ({ gap: theme.spacing.md })}>
+            <Flex align="center" style={(theme) => ({ gap: theme.spacing.md })}>
               <Select
                 w={150}
                 value={period}
@@ -115,7 +115,7 @@ export const IdeaSearchPage: React.FC = () => {
             </GridContainer>
           )}
           <AppPagination
-            page={page}
+            value={page}
             onChange={handleChangePage}
             total={searchedIdeasResult?.allPages ?? 0}
             mt="md"

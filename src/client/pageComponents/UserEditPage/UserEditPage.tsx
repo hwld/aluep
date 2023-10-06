@@ -36,7 +36,6 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
       message:
         "ユーザーアイコンをアップロードしています。しばらくお待ちください...",
       autoClose: false,
-      disallowClose: true,
     });
     try {
       const response = await fetch(Routes.api.uploadAvatar, {
@@ -109,7 +108,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
               onSubmit={handleUploadIcon}
               submitting={uploading}
             />
-            <Box sx={{ flexGrow: 1 }}>
+            <Box style={{ flexGrow: 1 }}>
               <UserProfileForm
                 submitText="更新する"
                 onSubmit={handleUpdateUser}

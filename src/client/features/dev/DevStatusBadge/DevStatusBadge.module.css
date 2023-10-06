@@ -28,7 +28,7 @@
   }
 
   &.aborted {
-    color: var(--mantine-color-red-8);
+    color: var(--mantine-color-red-7);
   }
 
   &.in-progress {

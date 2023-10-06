@@ -90,12 +90,12 @@ export const DevelopmentEditPage: React.FC<Props> = ({
   return (
     <>
       <PageHeader icon={MdOutlineEdit} pageName="開発情報の編集" />
-      <Stack w="100%" maw={800} miw={300} m="auto" spacing="lg">
-        <Stack spacing="xs">
+      <Stack w="100%" maw={800} miw={300} m="auto" gap="lg">
+        <Stack gap="xs">
           <Text c="gray.5">開発しているお題</Text>
           <IdeaSummaryCard idea={idea} />
         </Stack>
-        <Stack spacing="xs">
+        <Stack gap="xs">
           <Text c="gray.5">開発情報</Text>
           <Card>
             <DevelopForm

@@ -50,7 +50,7 @@ export const IdeaEditPage: React.FC<Props> = ({ idea }) => {
     <>
       <PageHeader icon={MdOutlineEdit} pageName="お題の編集" />
       <Box w="100%" miw={300} maw={800} m="auto">
-        <Card mt="md" sx={{ position: "static" }}>
+        <Card mt="md" style={{ position: "static" }}>
           <IdeaForm
             submitText="更新する"
             allTags={allTags}

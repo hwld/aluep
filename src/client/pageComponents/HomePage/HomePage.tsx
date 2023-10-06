@@ -14,14 +14,7 @@ import { EmptyRankingContent } from "@/client/ui/EmptyRankingContent/EmptyRankin
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { RankingCard } from "@/client/ui/RankingCard/RankingCard";
 import { Routes } from "@/share/routes";
-import {
-  Center,
-  Flex,
-  MediaQuery,
-  Stack,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Center, Flex, Stack, Title, useMantineTheme } from "@mantine/core";
 import { AiFillFire } from "react-icons/ai";
 import { IoSparkles } from "react-icons/io5";
 import { MdComputer, MdOutlineHome } from "react-icons/md";
@@ -50,9 +43,9 @@ export const HomePage: React.FC = () => {
     <>
       <PageHeader icon={MdOutlineHome} pageName="ホーム" />
       <Flex w="100%" gap="xl">
-        <Stack miw={0} sx={{ flexGrow: 1, flexShrink: 1 }} spacing={35}>
+        <Stack miw={0} style={{ flexGrow: 1, flexShrink: 1 }} gap={35}>
           {top10LikesIdeasInThisMonth.length > 0 && (
-            <Stack spacing="sm">
+            <Stack gap="sm">
               <Flex gap="5px">
                 <AiFillFire size="25px" color={colors.red[6]} />
                 <Title order={4}>人気のお題</Title>
@@ -101,39 +94,37 @@ export const HomePage: React.FC = () => {
             </>
           )}
         </Stack>
-        <MediaQuery smallerThan="lg" styles={{ display: "none" }}>
-          <Flex direction="column" gap={30} mt={35}>
-            <RankingCard title="今月のいいねが多かった開発者">
-              {top10LikesDevelopmentsInThisMonth?.length === 0 ? (
-                <EmptyRankingContent page="developments" />
-              ) : (
-                top10LikesDevelopmentsInThisMonth?.map((development, i) => (
-                  <UserLikeRankingItem
-                    ranking={i + 1}
-                    key={development.id}
-                    user={development}
-                    likeCount={development.developmentLikes}
-                  />
-                ))
-              )}
-            </RankingCard>
+        <Flex direction="column" gap={30} mt={35} visibleFrom="lg">
+          <RankingCard title="今月のいいねが多かった開発者">
+            {top10LikesDevelopmentsInThisMonth?.length === 0 ? (
+              <EmptyRankingContent page="developments" />
+            ) : (
+              top10LikesDevelopmentsInThisMonth?.map((development, i) => (
+                <UserLikeRankingItem
+                  ranking={i + 1}
+                  key={development.id}
+                  user={development}
+                  likeCount={development.developmentLikes}
+                />
+              ))
+            )}
+          </RankingCard>
 
-            <RankingCard title="今月のいいねが多かった投稿者">
-              {top10LikesPostersInThisMonth?.length === 0 ? (
-                <EmptyRankingContent page="posters" />
-              ) : (
-                top10LikesPostersInThisMonth?.map((poster, i) => (
-                  <UserLikeRankingItem
-                    ranking={i + 1}
-                    key={poster.id}
-                    user={poster}
-                    likeCount={poster.ideaLikes}
-                  />
-                ))
-              )}
-            </RankingCard>
-          </Flex>
-        </MediaQuery>
+          <RankingCard title="今月のいいねが多かった投稿者">
+            {top10LikesPostersInThisMonth?.length === 0 ? (
+              <EmptyRankingContent page="posters" />
+            ) : (
+              top10LikesPostersInThisMonth?.map((poster, i) => (
+                <UserLikeRankingItem
+                  ranking={i + 1}
+                  key={poster.id}
+                  user={poster}
+                  likeCount={poster.ideaLikes}
+                />
+              ))
+            )}
+          </RankingCard>
+        </Flex>
       </Flex>
     </>
   );

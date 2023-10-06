@@ -25,14 +25,14 @@ export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {
   return (
     <>
       <PageHeader icon={TbHeart} pageName="お題をいいねしたユーザー" />
-      <Stack w="100%" maw={1200} m="auto" spacing="lg">
-        <Stack spacing="sm">
+      <Stack w="100%" maw={1200} m="auto" gap="lg">
+        <Stack gap="sm">
           <Text c="gray.5">いいねされたお題</Text>
           <IdeaSummaryCard idea={idea} />
         </Stack>
 
-        <Stack spacing="sm">
-          <Text c="gray.5" align="left">
+        <Stack gap="sm">
+          <Text c="gray.5" ta="left">
             いいねしたユーザー
           </Text>
           <GridContainer minItemWidthPx={ideaLikerCardMinWidthPx}>
@@ -42,7 +42,7 @@ export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {
           </GridContainer>
         </Stack>
         <AppPagination
-          page={page}
+          value={page}
           onChange={handleChangePage}
           total={ideaLikers?.allPages ?? 0}
         />
