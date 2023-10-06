@@ -1,15 +1,17 @@
 import { RequireLoginModalProvider } from "@/client/features/session/RequireLoginModalProvider";
+import "@/client/style/global.css";
 import { theme } from "@/client/style/theme";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { AppNavigationProgress } from "@/client/ui/AppNavigationProgress";
 import { ErrorBoundary } from "@/client/ui/ErrorBoundary";
 import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
-import "@mantine/carousel/styles.css";
+import "@mantine/carousel/styles.layer.css";
 import { MantineProvider } from "@mantine/core";
-import "@mantine/core/styles.css";
+import "@mantine/core/styles.layer.css";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
-import "@mantine/tiptap/styles.css";
+import "@mantine/nprogress/styles.layer.css";
+import "@mantine/tiptap/styles.layer.css";
 import {
   Hydrate,
   QueryClient,

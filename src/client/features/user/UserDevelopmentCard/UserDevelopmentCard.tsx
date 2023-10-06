@@ -30,19 +30,8 @@ export const UserDevelopmentCard: React.FC<Props> = ({ development }) => {
   return (
     <Card
       key={development.id}
-      p="sm"
       miw={userDevelopmentCardMinWidthPx}
       className={classes.root}
-      // sx={(theme) => ({
-      //   position: "static",
-      //   cursor: "pointer",
-      //   transition: "all 100ms",
-      //   outline: "transparent solid 0px",
-      //   "&:not(:has(a:not(.development-link):hover, button:hover)):hover": {
-      //     outline: `${theme.colors.red[6]} solid 2px`,
-      //     outlineOffset: "2px",
-      //   },
-      // })}
       onClick={handleGoDevelopmentDetail}
     >
       <Flex justify="space-between" align="center">
