@@ -1,8 +1,8 @@
-import { UserDashboard } from "@/client/features/user/UserDashboard/UserDashboard";
-import { UserDevelopments } from "@/client/features/user/UserDevelopments";
-import { UserLikedDevelopments } from "@/client/features/user/UserLikedDevelopments";
-import { UserLikedIdeas } from "@/client/features/user/UserLikedIdeas";
-import { UserPostedIdeas } from "@/client/features/user/UserPostedIdeas";
+import { UserDashboard } from "@/client/features/user/UserDashboard/UserDashboard/UserDashboard";
+import { UserDevelopments } from "@/client/features/user/UserDevelopments/UserDevelopments";
+import { UserLikedDevelopments } from "@/client/features/user/UserLikedDevelopments/UserLikedDevelopments";
+import { UserLikedIdeas } from "@/client/features/user/UserLikedIdeas/UserLikedIdeas";
+import { UserPostedIdeas } from "@/client/features/user/UserPostedIdeas/UserPostedIdeas";
 import { useReceivedLikeCountQuery } from "@/client/features/user/useReceivedLikeCountQuery";
 import { useUserActivityQuery } from "@/client/features/user/useUserActivityQuery";
 import { useURLParams } from "@/client/lib/useURLParams";
@@ -80,7 +80,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
           receivedLikeCount={recievedLikeCount}
           userActivity={userActivity}
         />
-        <Stack mt={40} w="100%" align="center" spacing="xl">
+        <Stack mt={40} w="100%" align="center" gap="xl">
           <TabControl
             activeTab={activeTab}
             onChange={handleChangeTab}

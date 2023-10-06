@@ -2,7 +2,7 @@ import { DevMemoChildrenSection } from "@/client/features/devMemo/DevMemoChildre
 import { DevMemoMenuButton } from "@/client/features/devMemo/DevMemoMenuButton/DevMemoMenuButton";
 import { DevMemoReplyFormBox } from "@/client/features/devMemo/DevMemoReplyFormBox/DevMemoReplyFormBox";
 import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
-import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";

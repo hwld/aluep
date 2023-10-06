@@ -1,5 +1,5 @@
-import { userCardMinWidthPx } from "@/client/features/user/UserCard";
-import { UserSearchResultContent } from "@/client/features/user/UserSearchResultContent";
+import { userCardMinWidthPx } from "@/client/features/user/UserCard/UserCard";
+import { UserSearchResultContent } from "@/client/features/user/UserSearchResultContent/UserSearchResultContent";
 import { useSearchedUsersQuery } from "@/client/features/user/useSearchedUsersQuery";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";

@@ -1,5 +1,8 @@
-import { UserCard, userCardMinWidthPx } from "@/client/features/user/UserCard";
-import { UserSummaryCard } from "@/client/features/user/UserSummaryCard";
+import {
+  UserCard,
+  userCardMinWidthPx,
+} from "@/client/features/user/UserCard/UserCard";
+import { UserSummaryCard } from "@/client/features/user/UserSummaryCard/UserSummaryCard";
 import { useFavoritedUsers } from "@/client/features/user/useFavoritedUsers";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";

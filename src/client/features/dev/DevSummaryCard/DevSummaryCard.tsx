@@ -1,4 +1,4 @@
-import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Development } from "@/models/development";
 import { Routes } from "@/share/routes";

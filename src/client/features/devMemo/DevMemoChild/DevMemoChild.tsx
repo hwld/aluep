@@ -1,7 +1,7 @@
 import { DevMemoMenuButton } from "@/client/features/devMemo/DevMemoMenuButton/DevMemoMenuButton";
 import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { DevelopmentMemo } from "@/models/developmentMemo";

@@ -4,7 +4,7 @@ import { PickedUpIdeas } from "@/client/features/idea/PickedUpIdeas/PickedUpIdea
 import { PopularIdeaCarousel } from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCarousel/PopularIdeaCarousel";
 import { usePickedUpIdeasQuery } from "@/client/features/idea/usePickedUpIdeasQuery";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem";
+import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem/UserLikeRankingItem";
 import {
   useTop10LikesDevelopmentInThisMonth,
   useTop10LikesIdeasInThisMonth,

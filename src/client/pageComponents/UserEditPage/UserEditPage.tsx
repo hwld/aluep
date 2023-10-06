@@ -1,5 +1,5 @@
-import { UserIconFormDialog } from "@/client/features/user/UserIconFormModal";
-import { UserProfileForm } from "@/client/features/user/UserProfileForm";
+import { UserIconFormModal } from "@/client/features/user/UserIconFormModal/UserIconFormModal";
+import { UserProfileForm } from "@/client/features/user/UserProfileForm/UserProfileForm";
 import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
@@ -104,7 +104,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
       <Box w="100%" maw={800} miw={400} m="auto">
         <Card mt="md">
           <Flex gap="md">
-            <UserIconFormDialog
+            <UserIconFormModal
               userIconUrl={user.image}
               onSubmit={handleUploadIcon}
               submitting={uploading}

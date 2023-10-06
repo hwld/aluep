@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+  align-items: center;
+  border-radius: var(--mantine-radius-md);
+  transition: 150ms;
+
+  &:not(&:disabled)&:hover {
+    background-color: var(--mantine-color-gray-0);
+
+    & * {
+      opacity: 0.9;
+    }
+  }
+
+  &:disabled {
+    background-color: var(--mantine-color-gray-1);
+
+    & * {
+      opacity: 0.5;
+    }
+    cursor: not-allowed;
+  }
+}

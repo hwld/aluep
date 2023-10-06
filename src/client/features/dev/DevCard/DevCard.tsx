@@ -3,7 +3,7 @@ import { DevMiniLikeButton } from "@/client/features/dev/DevMiniLikeButton/DevMi
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
 import { TextLink } from "@/client/ui/TextLink/TextLink";

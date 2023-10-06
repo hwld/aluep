@@ -2,7 +2,7 @@ import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard/IdeaSumm
 import {
   IdeaLikerCard,
   ideaLikerCardMinWidthPx,
-} from "@/client/features/user/IdeaLikerCard";
+} from "@/client/features/user/IdeaLikerCard/IdeaLikerCard";
 import { useIdeaLikers } from "@/client/features/user/useIdeaLikers";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";

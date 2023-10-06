@@ -1,7 +1,7 @@
 import { DevLikeButton } from "@/client/features/dev/DevLikeButton/DevLikeButton";
 import { DevMenuButton } from "@/client/features/dev/DevMenuButton/DevMenuButton";
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
-import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";

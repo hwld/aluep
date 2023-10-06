@@ -1,6 +1,6 @@
 import { DevItemIconLink } from "@/client/features/dev/DevItemIconLink/DevItemIconLink";
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
-import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Development } from "@/models/development";

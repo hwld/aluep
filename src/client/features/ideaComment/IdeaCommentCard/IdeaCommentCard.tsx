@@ -3,7 +3,7 @@ import { IdeaCommentReplyFormCard } from "@/client/features/ideaComment/IdeaComm
 import { useIdeaCommentReply } from "@/client/features/ideaComment/useIdeaCommentReply";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";

@@ -9,7 +9,7 @@ import { useIdeaLike } from "@/client/features/idea/useIdeaLike";
 import { IdeaComments } from "@/client/features/ideaComment/IdeaComments/IdeaComments";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { TextLink } from "@/client/ui/TextLink/TextLink";

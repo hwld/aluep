@@ -1,0 +1,12 @@
+.root {
+  max-height: 100px;
+  cursor: pointer;
+  position: static;
+  transition: all 100ms;
+  outline: transparent solid 0px;
+
+  &:hover {
+    outline: var(--mantine-color-red-6) solid 2px;
+    outline-offset: 2px;
+  }
+}
