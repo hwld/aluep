@@ -4,7 +4,7 @@ import {
 } from "@/client/features/dev/DevCard/DevCard";
 import { useDevLikeOnList } from "@/client/features/dev/useDevLikeOnList";
 import { useDevsByIdea } from "@/client/features/dev/useDevsByIdea";
-import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
+import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard/IdeaSummaryCard";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";

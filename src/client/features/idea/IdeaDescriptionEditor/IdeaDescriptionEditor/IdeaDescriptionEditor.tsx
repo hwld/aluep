@@ -1,16 +1,8 @@
-import { Stack, Sx } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import { Editor } from "@tiptap/react";
-
-export const ideaDescriptionStyles: Sx = (theme) => ({
-  color: theme.colors.gray[7],
-  "& p": { margin: 0, minHeight: "1rem" },
-  "& strong": { color: theme.colors.red[7] },
-  "& a": { color: theme.colors.blue[5] },
-  "h1, h2, h3, h4, h5, h6": {
-    margin: "0.1rem 0 0.1rem 0",
-  },
-});
+import clsx from "clsx";
+import classes from "./IdeaDescriptionEditor.module.css";
 
 type Props = { editor: Editor | null; error?: boolean };
 export const IdeaDescriptionEditor: React.FC<Props> = ({
@@ -18,15 +10,13 @@ export const IdeaDescriptionEditor: React.FC<Props> = ({
   error = false,
 }) => {
   return (
-    <Stack spacing={0}>
+    <Stack gap={0}>
       <RichTextEditor
         editor={editor}
-        sx={(theme) => ({
-          ...(error && {
-            borderColor: theme.colors.red[7],
-            borderWidth: "2px",
-          }),
-        })}
+        classNames={{
+          root: clsx({ [classes.error]: error }),
+          content: clsx(classes.content),
+        }}
         withCodeHighlightStyles={false}
         withTypographyStyles={false}
       >
@@ -54,7 +44,7 @@ export const IdeaDescriptionEditor: React.FC<Props> = ({
             <RichTextEditor.Unlink />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
-        <RichTextEditor.Content sx={ideaDescriptionStyles} />
+        <RichTextEditor.Content />
       </RichTextEditor>
     </Stack>
   );

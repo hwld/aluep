@@ -18,6 +18,7 @@ import { MouseEventHandler } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { MdComputer } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
+import classes from "./PopularIdeaCard.module.css";
 
 export const popularIdeaCardWidthPx = 400;
 export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
@@ -42,16 +43,7 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
       key={idea.id}
       miw={popularIdeaCardWidthPx}
       h="100%"
-      sx={(theme) => ({
-        cursor: "pointer",
-        position: "static",
-        transition: "all 100ms",
-        outline: "transparent solid 0px",
-        "&:not(:has(a:not(.idea-link):hover, button:hover)):hover": {
-          outline: `${theme.colors.gray[1]} solid 2px`,
-          outlineOffset: "4px",
-        },
-      })}
+      className={classes.root}
       onMouseDown={setLeftClickPosition}
       onMouseUp={handleMouseUp}
       onMouseLeave={resetPosition}
@@ -59,48 +51,44 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
       <Stack justify="space-between" h="100%">
         {/* ヘッダ */}
         <Box
-          sx={{
+          style={{
             flexShrink: 1,
             minHeight: 0,
-          }}
-          style={{
             display: "-webkit-box",
             WebkitLineClamp: 5,
             WebkitBoxOrient: "vertical",
           }}
         >
-          <TextLink href={Routes.idea(idea.id)} className="idea-link">
+          <TextLink
+            href={Routes.idea(idea.id)}
+            className={classes["idea-link"]}
+          >
             <Title
               order={4}
-              color="red.7"
-              sx={{
-                lineHeight: 1.2,
-                wordBreak: "break-all",
-              }}
+              c="red.7"
+              style={{ lineHeight: 1.2, wordBreak: "break-all" }}
             >
               {idea.title}
             </Title>
           </TextLink>
         </Box>
 
-        <Group position="apart" noWrap>
+        <Group justify="space-between" wrap="nowrap">
           {/* ユーザー情報 */}
-          <Flex miw={0} gap={5} sx={{ alignSelf: "flex-end", flexShrink: 1 }}>
+          <Flex
+            miw={0}
+            gap={5}
+            style={{ alignSelf: "flex-end", flexShrink: 1 }}
+          >
             <UserIconLink userId={idea.user.id} iconSrc={idea.user.image} />
-            <Flex direction="column" miw={0} sx={{ flexShrink: 1 }}>
+            <Flex direction="column" miw={0} style={{ flexShrink: 1 }}>
               <TextLink href={Routes.user(idea.user.id)}>
                 <Text size="xs" truncate>
                   {idea.user.name}
                 </Text>
               </TextLink>
               <Flex align="center" gap="sm">
-                <Text
-                  color="gray.5"
-                  size="xs"
-                  sx={{
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <Text c="gray.5" size="xs" style={{ whiteSpace: "nowrap" }}>
                   {idea.elapsedSinceCreation}
                 </Text>
                 <Flex align="center" gap={3}>
@@ -131,10 +119,10 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
                 fill={mantineTheme.colors.red[7]}
               />
               <Text
-                size={25}
+                size="xl"
                 fw="bold"
                 c="red.7"
-                style={{ whiteSpace: "nowrap" }}
+                style={{ fontSize: "25px", whiteSpace: "nowrap" }}
               >
                 {idea.likes}
               </Text>

@@ -1,4 +1,4 @@
-import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
+import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard/IdeaSummaryCard";
 import {
   IdeaLikerCard,
   ideaLikerCardMinWidthPx,

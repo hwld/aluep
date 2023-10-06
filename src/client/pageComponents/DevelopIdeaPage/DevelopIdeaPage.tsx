@@ -1,7 +1,7 @@
 import { DevelopForm } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { useDevStatusesQuery } from "@/client/features/dev/useDevStatusesQuery";
 import { useDevelop } from "@/client/features/dev/useDevelop";
-import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard";
+import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard/IdeaSummaryCard";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import {
   CreateRepositoryData,

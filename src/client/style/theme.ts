@@ -18,12 +18,13 @@ import {
 import { RichTextEditor } from "@mantine/tiptap";
 import buttonClasses from "./components/button.module.css";
 import cardClasses from "./components/card.module.css";
-import dividerClasses from "./components/divider.module.css";
 import inputWrapperClasses from "./components/input-wrapper.module.css";
 import inputClasses from "./components/input.module.css";
+import multiSelectClasses from "./components/multi-select.module.css";
 import notificationClasses from "./components/notification.module.css";
 import paperClasses from "./components/paper.module.css";
 import radioClasses from "./components/radio.module.css";
+import richTextEditorClasses from "./components/rich-text-editor.module.css";
 import selectClasses from "./components/select.module.css";
 import textClasses from "./components/text.module.css";
 import titleClasses from "./components/title.module.css";
@@ -112,7 +113,7 @@ export const theme = createTheme({
       classNames: { root: cardClasses.root },
     }),
     Divider: Divider.extend({
-      classNames: { root: dividerClasses.root },
+      defaultProps: { color: "gray.3" },
     }),
     Input: Input.extend({
       classNames: {
@@ -132,31 +133,15 @@ export const theme = createTheme({
         dropdown: selectClasses.dropdown,
       },
     }),
-    // TODO: Comboboxっていうのが新しく追加されてるっぽい。
     MultiSelect: MultiSelect.extend({
-      // defaultProps: { transitionDuration: 150, transition: "pop-top-left" },
-      styles: (theme) => ({
-        label: { color: theme.colors.gray[5] },
-        item: {
-          color: theme.colors.gray[7],
-          // TODO:
-          // "&[aria-selected='true']": {
-          //   backgroundColor: theme.colors.gray[2],
-          // },
-        },
-        defaultValue: {
-          backgroundColor: theme.colors.gray[2],
-          color: theme.colors.gray[7],
-        },
-
-        dropdown: {
-          borderRadius: theme.radius.md,
-          backgroundColor: theme.colors.gray[0],
-          borderWidth: "1px",
-          borderStyle: "solid",
-          borderColor: theme.colors.gray[3],
-        },
-      }),
+      classNames: {
+        root: multiSelectClasses.root,
+        input: multiSelectClasses.input,
+        label: multiSelectClasses.label,
+        option: multiSelectClasses.option,
+        dropdown: multiSelectClasses.dropdown,
+        pill: multiSelectClasses.pill,
+      },
     }),
     Notification: Notification.extend({
       classNames: {
@@ -165,41 +150,12 @@ export const theme = createTheme({
       },
     }),
     RichTextEditor: RichTextEditor.extend({
-      styles: (theme) => ({
-        root: {
-          borderRadius: theme.radius.md,
-          outline: "transparent solid 0px",
-          transition: "outline 100ms",
-          // TODO
-          "&:focus-within": {
-            outline: `${theme.colors.gray[4]} solid 2px`,
-            outlineOffset: "2px",
-          },
-        },
-        toolbar: {
-          backgroundColor: theme.colors.gray[1],
-          borderColor: theme.colors.gray[3],
-          borderTopLeftRadius: theme.radius.md,
-          borderTopRightRadius: theme.radius.md,
-        },
-        control: {
-          backgroundColor: "transparent",
-          borderColor: theme.colors.gray[3],
-          outline: "transparent solid 0px",
-          transition: "outline 100ms",
-          "&:focus": {
-            outline: `${theme.colors.gray[4]} solid 2px`,
-            outlineOffset: "2px",
-          },
-        },
-        content: {
-          // 新規作成時のSSRでレイアウトシフトが起きないように高さに合わせておく
-          // 更新のときにはレイアウトシフトが起こってしまう。
-          minHeight: "332px",
-          ".ProseMirror": { minHeight: "300px" },
-          backgroundColor: "transparent",
-        },
-      }),
+      classNames: {
+        root: richTextEditorClasses.root,
+        toolbar: richTextEditorClasses.toolbar,
+        control: richTextEditorClasses.control,
+        content: richTextEditorClasses.content,
+      },
     }),
   },
 });

@@ -1,0 +1,5 @@
+.read-more {
+  &:hover {
+    background-color: var(--mantine-color-red-1);
+  }
+}

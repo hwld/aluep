@@ -1,15 +1,14 @@
 import {
   PopularIdeaCard,
   popularIdeaCardWidthPx,
-} from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCard";
+} from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCard/PopularIdeaCard";
 import { Idea } from "@/models/idea";
 import { Carousel } from "@mantine/carousel";
 import { Box, Flex } from "@mantine/core";
+import classes from "./PopularIdeaCarouse.module.css";
 
 type Props = { ideas: Idea[] | undefined; miw?: string };
 export const PopularIdeaCarousel: React.FC<Props> = ({ ideas, miw }) => {
-  const carouselControlClass = `controls-vcb4f`;
-
   return (
     <Carousel
       align="center"
@@ -21,36 +20,15 @@ export const PopularIdeaCarousel: React.FC<Props> = ({ ideas, miw }) => {
       withIndicators
       height={300}
       dragFree
-      styles={(theme) => ({
+      classNames={{
+        root: classes.root,
+        control: classes.control,
+      }}
+      styles={{
         indicators: { bottom: "10px" },
-        control: {
-          ref: carouselControlClass,
-          "&>svg": { width: "30px", height: "30px" },
-          width: "50px",
-          height: "50px",
-          borderRadius: "50%",
-          opacity: 0,
-          transition: "opacity 400ms, background-color 250ms",
-          backgroundColor: theme.fn.rgba(theme.colors.gray[0], 0.6),
-          "&:hover": {
-            backgroundColor: theme.fn.rgba(theme.colors.gray[0], 1),
-          },
-        },
+        indicator: { backgroundColor: "var(--mantine-color-gray-1)" },
         controls: { top: "calc(50% - 25px)" },
-        root: {
-          "&:hover": {
-            [`& .${carouselControlClass}`]: {
-              opacity: 0.7,
-            },
-          },
-        },
-      })}
-      sx={(theme) => ({
-        borderRadius: theme.radius.lg,
-        boxShadow: `inset ${theme.shadows.lg}`,
-      })}
-      nextControlLabel="次のお題に進める"
-      previousControlLabel="前のお題に戻る"
+      }}
     >
       {ideas && ideas.length > 0 ? (
         ideas.map((idea) => (

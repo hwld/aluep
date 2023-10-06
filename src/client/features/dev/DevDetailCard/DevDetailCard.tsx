@@ -3,6 +3,7 @@ import { DevMenuButton } from "@/client/features/dev/DevMenuButton/DevMenuButton
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
 import { UserIconLink } from "@/client/features/user/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
+import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Development } from "@/models/development";
 import { Routes } from "@/share/routes";
@@ -15,7 +16,6 @@ import {
   Grid,
   Stack,
   Text,
-  Title,
   useMantineTheme,
 } from "@mantine/core";
 import { BsGithub } from "react-icons/bs";
@@ -123,9 +123,9 @@ export const DevDetailCard: React.FC<Props> = ({
                 size="lg"
               />
               <TextLink href={Routes.user(development.developerUserId)}>
-                <Title className={classes["developer-name"]} size={18} miw={0}>
+                <AppTitle size={18} miw={0}>
                   {development.developerUserName}
-                </Title>
+                </AppTitle>
               </TextLink>
             </Flex>
             <Box w="100%" bg="gray.2" p="sm" className={classes.comment}>

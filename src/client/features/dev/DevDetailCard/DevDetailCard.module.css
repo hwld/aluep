@@ -2,12 +2,6 @@
   flex-shrink: 0;
 }
 
-.developer-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap !important;
-}
-
 .menu-button-wrapper {
   position: absolute;
   top: 10px;

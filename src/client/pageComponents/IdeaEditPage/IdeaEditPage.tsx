@@ -1,4 +1,4 @@
-import { IdeaForm } from "@/client/features/idea/IdeaForm";
+import { IdeaForm } from "@/client/features/idea/IdeaForm/IdeaForm";
 import { useAllTagsQuery } from "@/client/features/idea/useAllTagsQuery";
 import { trpc } from "@/client/lib/trpc";
 import {

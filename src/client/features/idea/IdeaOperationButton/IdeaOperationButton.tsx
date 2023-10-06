@@ -23,6 +23,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
+import classes from "./IdeaOperationButton.module.css";
 
 type Props = { idea: Idea; isIdeaOwner: boolean };
 export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
@@ -96,20 +97,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
     <>
       <AppMenu position="bottom-start">
         <Menu.Target>
-          <ActionIcon
-            size={35}
-            sx={(theme) => ({
-              borderRadius: "50%",
-              boxShadow: theme.shadows.md,
-              transition: "all 100ms",
-              backgroundColor: theme.colors.gray[1],
-              outline: "transparent solid 0px",
-              "&:hover": {
-                outline: `${theme.colors.red[6]} solid 2px`,
-                outlineOffset: "2px",
-              },
-            })}
-          >
+          <ActionIcon size={35} className={classes.icon}>
             <BsThreeDots size="70%" color={mantineTheme.colors.gray[5]} />
           </ActionIcon>
         </Menu.Target>
@@ -117,13 +105,13 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
           {isIdeaOwner && (
             <>
               <AppMenuLinkItem
-                icon={<RiEdit2Fill size={20} />}
+                leftSection={<RiEdit2Fill size={20} />}
                 href={Routes.ideaUpdate(idea.id)}
               >
                 お題を編集する
               </AppMenuLinkItem>
               <AppMenuItem
-                icon={<FaTrash size={18} />}
+                leftSection={<FaTrash size={18} />}
                 red
                 onClick={openDeleteModal}
               >
@@ -133,7 +121,10 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
               <Divider my={5} />
             </>
           )}
-          <AppMenuItem icon={<MdFlag size={18} />} onClick={openReportModal}>
+          <AppMenuItem
+            leftSection={<MdFlag size={18} />}
+            onClick={openReportModal}
+          >
             通報する
           </AppMenuItem>
         </AppMenuDropdown>

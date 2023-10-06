@@ -1,0 +1,40 @@
+.root {
+  border-radius: var(--mantine-radius-md);
+  outline: transparent solid 0px;
+
+  &:focus-within {
+    outline: var(--mantine-color-gray-4) solid 2px;
+    outline-offset: 2px;
+  }
+}
+
+.toolbar {
+  background-color: var(--mantine-color-gray-1);
+  border-color: var(--mantine-color-gray-3);
+  border-top-left-radius: var(--mantine-radius-md);
+  border-top-right-radius: var(--mantine-radius-md);
+}
+
+.control {
+  background-color: transparent;
+  border-color: var(--mantine-color-gray-3);
+  outline: transparent solid 0px;
+
+  &:focus {
+    outline: var(--mantine-color-gray-4) solid 2px;
+    outline-offset: 2px;
+  }
+
+  &[data-active] {
+    background-color: var(--mantine-color-red-0);
+  }
+}
+
+.content {
+  min-height: 332px;
+  background-color: transparent;
+
+  & div[class~="tiptap"] {
+    min-height: 300px;
+  }
+}

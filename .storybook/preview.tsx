@@ -1,5 +1,7 @@
+import "@mantine/carousel/styles.css";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import "@mantine/tiptap/styles.css";
 import type { Preview } from "@storybook/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { initialize, mswDecorator } from "msw-storybook-addon";

@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Flex,
+  Grid,
   MultiSelect,
   Stack,
   Text,
@@ -44,38 +45,31 @@ export const IdeaSearchForm: React.FC<Props> = ({
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
-      <Stack spacing="sm">
+      <Stack gap="sm">
         <Title order={5}>検索</Title>
-        <Box
-          sx={(theme) => ({
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr auto",
-            gap: 20,
-            [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-              gridTemplateColumns: "1fr",
-              gap: 10,
-            },
-          })}
-        >
-          <TextInput
-            label="キーワード"
-            value={keyword}
-            onChange={handleChangeKeyword}
-          />
-
-          <MultiSelect
-            label="タグ"
-            data={allTags.map((tag) => ({
-              value: tag.id,
-              label: tag.name,
-            }))}
-            value={tagIds}
-            onChange={handleChangeTagIds}
-            searchable
-          />
-        </Box>
+        <Grid p="xs">
+          <Grid.Col span={{ md: 6 }}>
+            <TextInput
+              label="キーワード"
+              value={keyword}
+              onChange={handleChangeKeyword}
+            />
+          </Grid.Col>
+          <Grid.Col span={{ md: 6 }}>
+            <MultiSelect
+              label="タグ"
+              data={allTags.map((tag) => ({
+                value: tag.id,
+                label: tag.name,
+              }))}
+              value={tagIds}
+              onChange={handleChangeTagIds}
+              searchable
+            />
+          </Grid.Col>
+        </Grid>
         <Flex gap="lg" align="flex-end">
-          <Button type="submit" sx={{ alignSelf: "flex-start" }}>
+          <Button type="submit" style={{ alignSelf: "flex-start" }}>
             検索
           </Button>
           <Text size="sm" c="gray.4">

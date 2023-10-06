@@ -1,20 +1,17 @@
 .option {
+  margin: 1px;
   transition: background-color 250ms;
   color: var(--mantine-color-gray-7);
 
+  &[data-combobox-selected],
   &:hover {
-    background-color: var(--mantine-color-gray-2);
+    background-color: var(--mantine-color-red-1);
   }
 
   &[data-checked] {
-    pointer-events: none;
-    background-color: var(--mantine-color-red-7);
-    color: var(--mantine-color-gray-1);
-
     & svg {
       opacity: 1;
-      color: var(--mantine-color-gray-0);
-      fill: var(--mantine-color-gray-0);
+      color: var(--mantine-color-red-7);
     }
   }
 }

@@ -44,6 +44,7 @@ export const ReportForm: React.FC<Props> = ({
               required
               label="通報の内容"
               minRows={10}
+              styles={{ input: { height: "250px" } }}
               error={errors.reportDetail?.message}
               {...field}
             />

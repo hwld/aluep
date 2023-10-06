@@ -15,10 +15,10 @@ export const IdeaInfoCardItem: React.FC<Props> = ({
   disabledDivider,
 }) => {
   return (
-    <Stack spacing={0}>
+    <Stack gap={0}>
       <Flex gap="xs" align="center">
         {icon}
-        <Text color="gray.5" size="sm">
+        <Text c="gray.5" size="sm">
           {title}
         </Text>
       </Flex>

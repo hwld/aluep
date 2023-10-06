@@ -8,6 +8,7 @@ import { User } from "@/models/user";
 import { DevStatusIds } from "@/share/consts";
 import { faker } from "@faker-js/faker";
 
+// TODO: 最大文字数のIdeaも作れるようにしたい
 export const IdeaHelper = {
   create: (data?: Partial<Idea>): Idea => {
     return {

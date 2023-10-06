@@ -1,4 +1,5 @@
-import { useMantineTheme, Flex } from "@mantine/core";
+import { Flex, useMantineTheme } from "@mantine/core";
+import classes from "./LikeIdeaIcon.module.css";
 
 const styles = {
   sm: { iconSize: 25, wrapperSize: 35 },
@@ -18,13 +19,7 @@ export const LikeIdeaIcon: React.FC<Props> = ({ size = "md" }) => {
       align="center"
       w={styles[size].wrapperSize}
       h={styles[size].wrapperSize}
-      sx={(theme) => ({
-        paddingTop: "4px",
-        borderRadius: theme.radius.md,
-        borderStyle: "solid",
-        borderWidth: "2px",
-        borderColor: theme.colors.red[7],
-      })}
+      className={classes.root}
     >
       <svg
         width={styles[size].iconSize}

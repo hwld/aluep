@@ -1,0 +1,12 @@
+.icon {
+  border-radius: 50%;
+  box-shadow: var(--mantine-shadow-md);
+  transition: all 100ms;
+  background-color: var(--mantine-color-gray-1);
+  outline: transparent solid 0px;
+
+  &:hover {
+    outline: var(--mantine-color-red-6) solid 2px;
+    outline-offset: 2px;
+  }
+}

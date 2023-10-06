@@ -1,10 +1,10 @@
 import { DevelopButton } from "@/client/features/dev/DevelopButton/DevelopButton";
 import { useDevelop } from "@/client/features/dev/useDevelop";
-import { IdeaDescriptionView } from "@/client/features/idea/IdeaDescriptionView";
+import { IdeaDescriptionView } from "@/client/features/idea/IdeaDescriptionView/IdeaDescriptionView";
 import { IdeaInfoCardItem } from "@/client/features/idea/IdeaDetail/IdeaInfoCardItem";
 import { IdeaLikeButton } from "@/client/features/idea/IdeaLikeButton/IdeaLikeButton";
-import { IdeaOperationButton } from "@/client/features/idea/IdeaOperationButton";
-import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge";
+import { IdeaOperationButton } from "@/client/features/idea/IdeaOperationButton/IdeaOperationButton";
+import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";
 import { useIdeaLike } from "@/client/features/idea/useIdeaLike";
 import { IdeaComments } from "@/client/features/ideaComment/IdeaComments/IdeaComments";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";

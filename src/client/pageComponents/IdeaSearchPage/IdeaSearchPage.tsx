@@ -6,7 +6,7 @@ import {
 import {
   IdeaSearchArgs,
   IdeaSearchForm,
-} from "@/client/features/idea/IdeaSearchForm";
+} from "@/client/features/idea/IdeaSearchForm/IdeaSearchForm";
 import { useAllTagsQuery } from "@/client/features/idea/useAllTagsQuery";
 import { useSearchedIdeasQuery } from "@/client/features/idea/useSearchedIdeasQuery";
 import { ideaOrderItems, ideaPeriodItems } from "@/client/lib/consts";

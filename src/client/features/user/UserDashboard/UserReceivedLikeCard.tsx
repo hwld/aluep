@@ -1,5 +1,5 @@
 import { LikeDevIcon } from "@/client/features/dev/LikeDevIcon/LikeDevIcon";
-import { LikeIdeaIcon } from "@/client/features/idea/LikeIdeaIcon";
+import { LikeIdeaIcon } from "@/client/features/idea/LikeIdeaIcon/LikeIdeaIcon";
 import { ReceivedLikeCount } from "@/client/features/user/useReceivedLikeCountQuery";
 import { Card, Flex, Stack, Text } from "@mantine/core";
 

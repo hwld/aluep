@@ -1,4 +1,4 @@
-import { IdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/IdeaDescriptionEditor";
+import { IdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/IdeaDescriptionEditor/IdeaDescriptionEditor";
 import { useIdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/useIdeaDescriptionEditor";
 import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { IdeaFormData, ideaFormSchema } from "@/models/idea";
@@ -79,7 +79,7 @@ export const IdeaForm: React.FC<Props> = ({
               }))}
               label="タグ"
               searchable
-              nothingFound="タグが見つかりませんでした"
+              nothingFoundMessage="タグが見つかりませんでした"
               error={errors.tags?.message}
               {...field}
             />

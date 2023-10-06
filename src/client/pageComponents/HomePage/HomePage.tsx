@@ -1,7 +1,7 @@
 import { EmptyHomeIdeas } from "@/client/features/idea/EmptyHomeIdeas/EmptyHomeIdeas";
 import { ideaCardMinWidthPx } from "@/client/features/idea/IdeaCard/IdeaCard";
-import { PickedUpIdeas } from "@/client/features/idea/PickedUpIdeas";
-import { PopularIdeaCarousel } from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCarousel";
+import { PickedUpIdeas } from "@/client/features/idea/PickedUpIdeas/PickedUpIdeas";
+import { PopularIdeaCarousel } from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCarousel/PopularIdeaCarousel";
 import { usePickedUpIdeasQuery } from "@/client/features/idea/usePickedUpIdeasQuery";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem";

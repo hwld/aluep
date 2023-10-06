@@ -1,16 +1,9 @@
 import { UserIconLink } from "@/client/features/user/UserIconLink";
+import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
-import {
-  Box,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Box, Card, Flex, Stack, Text, useMantineTheme } from "@mantine/core";
 import { TbFileText } from "react-icons/tb";
 
 /**　アプリ開発のお題の概要カード */
@@ -21,14 +14,14 @@ export const IdeaSummaryCard: React.FC<Props> = ({ idea }) => {
   return (
     <Card>
       <Flex gap="md" align="center">
-        <Box sx={{ flexShrink: 0 }}>
+        <Box style={{ flexShrink: 0 }}>
           <TbFileText color={mantineTheme.colors.red[7]} size={60} />
         </Box>
-        <Stack spacing="sm" miw={0}>
+        <Stack gap="sm" miw={0}>
           <TextLink href={Routes.idea(idea.id)}>
-            <Title order={4} color="red.7" truncate>
+            <AppTitle order={4} c="red.7" truncate>
               {idea.title}
-            </Title>
+            </AppTitle>
           </TextLink>
           <Flex gap={5} align="center">
             <UserIconLink userId={idea.user.id} iconSrc={idea.user.image} />
