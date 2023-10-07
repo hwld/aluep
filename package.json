@@ -69,7 +69,7 @@
     "embla-carousel-react": "^7.0.5",
     "formidable": "^2.1.1",
     "https-proxy-agent": "^7.0.0",
-    "lowlight": "^2.8.1",
+    "lowlight": "^3.0.0",
     "next": "13.5.4",
     "next-auth": "^4.20.1",
     "node-mocks-http": "^1.12.1",
