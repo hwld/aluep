@@ -3,6 +3,7 @@ name: "build-test"
 on:
   workflow_dispatch:
   pull_request:
+    types: [opened, reopened]
 
 env:
   TZ: Asia/Tokyo
