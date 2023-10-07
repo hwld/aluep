@@ -3,24 +3,22 @@ import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
-  stopPropagation,
 } from "@/client/lib/utils";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
 import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenu/AppMenuLinkItem/AppMenuLinkItem";
+import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
-import { ActionIcon, Divider, Menu } from "@mantine/core";
+import { Divider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 import { User } from "next-auth";
-import { BsThreeDots } from "react-icons/bs";
 import { MdFlag } from "react-icons/md";
 import { RiEdit2Line } from "react-icons/ri";
-import classes from "./UserProfileMenuButton.module.css";
 
 type Props = {
   user: User;
@@ -65,16 +63,7 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
   return (
     <>
       <AppMenu>
-        <Menu.Target>
-          <ActionIcon
-            size={35}
-            c="gray.7"
-            className={classes.icon}
-            onClick={stopPropagation}
-          >
-            <BsThreeDots size="70%" />
-          </ActionIcon>
-        </Menu.Target>
+        <AppMenuButton />
 
         <AppMenuDropdown>
           {isOwner && (

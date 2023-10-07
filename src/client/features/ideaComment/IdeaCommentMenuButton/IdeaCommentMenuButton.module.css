@@ -1,7 +1,0 @@
-.icon {
-  transition: all 150ms;
-
-  &:hover {
-    background-color: var(--mantine-color-gray-2);
-  }
-}

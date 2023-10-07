@@ -3,25 +3,23 @@ import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
-  stopPropagation,
 } from "@/client/lib/utils";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
 import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
+import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
-import { ActionIcon, Divider, Menu } from "@mantine/core";
+import { Divider } from "@mantine/core";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 import { BiTrashAlt } from "react-icons/bi";
-import { BsThreeDots } from "react-icons/bs";
 import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import { TbLink } from "react-icons/tb";
-import classes from "./IdeaCommentMenuButton.module.css";
 
 type Props = {
   ideaId: string;
@@ -86,17 +84,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
   return (
     <>
       <AppMenu>
-        <Menu.Target>
-          <ActionIcon
-            size={30}
-            color="transparent"
-            c="gray.7"
-            className={classes.icon}
-            onClick={stopPropagation}
-          >
-            <BsThreeDots size="70%" />
-          </ActionIcon>
-        </Menu.Target>
+        <AppMenuButton />
 
         <AppMenuDropdown>
           {isOwner && (

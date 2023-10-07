@@ -3,25 +3,23 @@ import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
-  stopPropagation,
 } from "@/client/lib/utils";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
 import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
+import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
-import { ActionIcon, Divider, Menu } from "@mantine/core";
+import { Divider } from "@mantine/core";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 import { BiTrashAlt } from "react-icons/bi";
-import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { MdFlag } from "react-icons/md";
 import { TbLink } from "react-icons/tb";
-import classes from "./DevMemoMenuButton.module.css";
 
 type Props = {
   ideaId: string;
@@ -96,17 +94,7 @@ export const DevMemoMenuButton: React.FC<Props> = ({
   return (
     <>
       <AppMenu>
-        <Menu.Target>
-          <ActionIcon
-            size={35}
-            color="transparent"
-            c="gray.7"
-            className={classes.trigger}
-            onClick={stopPropagation}
-          >
-            <BsThreeDots size="70%" />
-          </ActionIcon>
-        </Menu.Target>
+        <AppMenuButton />
 
         <AppMenuDropdown>
           {isOwner && (

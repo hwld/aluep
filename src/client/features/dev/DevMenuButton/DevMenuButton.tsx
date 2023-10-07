@@ -6,26 +6,24 @@ import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
 import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenu/AppMenuLinkItem/AppMenuLinkItem";
+import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Development } from "@/models/development";
 import { ReportBaseForm } from "@/models/report";
 import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
-import { ActionIcon, Divider, Menu } from "@mantine/core";
+import { Divider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 import router from "next/router";
 import { BiTrashAlt } from "react-icons/bi";
-import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import {
   showErrorNotification,
   showSuccessNotification,
-  stopPropagation,
 } from "../../../lib/utils";
-import classes from "./DevMenuButton.module.css";
 
 type Props = { development: Development; isOwner: boolean };
 export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
@@ -100,16 +98,7 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
   return (
     <>
       <AppMenu>
-        <Menu.Target>
-          <ActionIcon
-            size={30}
-            c="gray.7"
-            className={classes.icon}
-            onClick={stopPropagation}
-          >
-            <BsThreeDots size="70%" />
-          </ActionIcon>
-        </Menu.Target>
+        <AppMenuButton />
 
         <AppMenuDropdown>
           {isOwner && (
