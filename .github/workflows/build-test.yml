@@ -1,0 +1,20 @@
+name: "build-test"
+
+on:
+  pull_request:
+
+env:
+  TZ: Asia/Tokyo
+
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout the repository"
+        uses: "actions/checkout@v4"
+
+      - name: "Install dependencies"
+        run: npm ci
+
+      - name: "Build app"
+        run: npm run build
