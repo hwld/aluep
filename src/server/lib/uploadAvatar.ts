@@ -38,7 +38,10 @@ export const uploadAvatar: UploadAvatar = async (req, loggedInUserId) => {
     });
   });
 
-  await file.setMetadata({ cacheControl: "no-cache", contentType: mimeType });
+  await file.setMetadata({
+    cacheControl: "no-cache",
+    contentType: mimeType ?? undefined,
+  });
   await file.rename(`${filePath}${ext}`);
 
   return `${storage.apiEndpoint}/${bucket.name}/${filePath}${ext}`;
