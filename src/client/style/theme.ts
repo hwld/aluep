@@ -66,16 +66,16 @@ export const theme = createTheme({
     ],
     // tailwindのZinc
     gray: [
-      "#fafafa",
-      "#f4f4f5",
-      "#e4e4e7",
-      "#d4d4d8",
-      "#a1a1aa",
-      "#71717a",
-      "#52525b",
-      "#3f3f46",
-      "#27272a",
-      "#18181b",
+      "#fafaf9",
+      "#f5f5f4",
+      "#e7e5e4",
+      "#d6d3d1",
+      "#a8a29e",
+      "#78716c",
+      "#57534e",
+      "#44403c",
+      "#292524",
+      "#1c1917",
     ],
     // tailwindのred
     red: [
