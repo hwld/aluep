@@ -27,7 +27,7 @@
     "@emotion/server": "^11.10.0",
     "@google-cloud/recaptcha-enterprise": "^4.0.1",
     "@google-cloud/storage": "^6.9.1",
-    "@hookform/resolvers": "^2.9.10",
+    "@hookform/resolvers": "^3.0.0",
     "@mantine/carousel": "^7.1.2",
     "@mantine/core": "^7.1.2",
     "@mantine/hooks": "^7.1.2",
