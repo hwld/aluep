@@ -1,6 +1,6 @@
 
 # 依存関係をインストールするステージ
-FROM node:18-alpine AS deps
+FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
@@ -11,7 +11,7 @@ RUN npx prisma generate;
 
 
 # アプリをビルドするステージ
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 # depsステージで取得したnode_modulesをコピーする
 COPY --from=deps /app/node_modules ./node_modules
@@ -30,7 +30,7 @@ ENV NEXT_PUBLIC_RECAPTCHA_KEY ${NEXT_PUBLIC_RECAPTCHA_KEY}
 RUN npm run build
 
 # アプリを実行する
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
