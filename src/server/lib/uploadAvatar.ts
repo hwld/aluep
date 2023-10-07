@@ -27,11 +27,12 @@ export const uploadAvatar: UploadAvatar = async (req, loggedInUserId) => {
     ext: string;
   }>((resolve, reject) => {
     form.parse(req, (error, _, files) => {
-      if (!Object.hasOwn(files, "avatar")) {
+      if (!Object.hasOwn(files, "avatar") || !files.avatar) {
         reject(new Error("avatar not specified"));
+        return;
       }
 
-      const icon = files.avatar as formidable.File;
+      const icon = files.avatar[0];
       const ext = path.extname(icon.originalFilename || "");
       resolve({ mimeType: icon.mimetype, ext });
     });
