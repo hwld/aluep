@@ -8,7 +8,7 @@ on:
 
 env:
   TZ: Asia/Tokyo
-  IMAGE_REPOSITORY_NAME: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/aluep
+  IMAGE_REPOSITORY_NAME: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/aluep/aluep
   IMAGE_NAME: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/aluep/aluep:${{ github.sha }}
   DATABASE_URL: ${{secrets.DATABASE_URL}}
 
@@ -63,9 +63,6 @@ jobs:
       - name: "Remove docker image"
         uses: "docker://asia-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli"
         with:
-          # gcr-cleaner-cliが内部でUTC使ってるせいで、日本にあるArtifact Registryと9時間ずれるから、
-          # 9時間経ってないイメージは消せないけど、どうしようもなさそうだから妥協する
-          # 9時間の間に何回もデプロイすることなんてないでしょ多分・・・
           args: >
             -repo=${{ env.IMAGE_REPOSITORY_NAME }}
             -tag-filter-any=.*
