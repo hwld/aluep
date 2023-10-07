@@ -68,7 +68,7 @@
     "discord.js": "14.11.0",
     "embla-carousel-react": "^7.0.5",
     "formidable": "^2.1.1",
-    "https-proxy-agent": "^5.0.1",
+    "https-proxy-agent": "^7.0.0",
     "lowlight": "^2.8.1",
     "next": "13.5.4",
     "next-auth": "^4.20.1",
