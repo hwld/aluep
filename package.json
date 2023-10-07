@@ -96,7 +96,7 @@
     "@storybook/test-runner": "^0.13.0",
     "@storybook/testing-library": "^0.2.0",
     "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^14.0.0",
     "@types/formidable": "^2.0.5",
     "@types/grecaptcha": "^3.0.4",
     "@types/sanitize-html": "^2.8.0",
