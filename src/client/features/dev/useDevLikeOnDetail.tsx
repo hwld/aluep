@@ -1,5 +1,5 @@
 import { developmentKeys } from "@/client/features/dev/queryKeys";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { Development } from "@/models/development";
 import { RouterInputs } from "@/server/lib/trpc";
@@ -13,7 +13,7 @@ export const useDevLikeOnDetail = (developmentId: string) => {
 
   const likeDevelopmentMutation = useMutation({
     mutationFn: (data: RouterInputs["development"]["like"]) => {
-      return trpc.development.like.mutate(data);
+      return __trpc_old.development.like.mutate(data);
     },
     onMutate: async ({ developmentId }) => {
       return await optimisticUpdate({ developmentId, like: true });
@@ -31,7 +31,7 @@ export const useDevLikeOnDetail = (developmentId: string) => {
 
   const unlikeDevelopmentMutation = useMutation({
     mutationFn: (data: RouterInputs["development"]["unlike"]) => {
-      return trpc.development.unlike.mutate(data);
+      return __trpc_old.development.unlike.mutate(data);
     },
     onMutate: async ({ developmentId }) => {
       return await optimisticUpdate({ developmentId, like: false });

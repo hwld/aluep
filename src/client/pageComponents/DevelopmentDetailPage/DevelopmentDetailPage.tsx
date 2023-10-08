@@ -6,7 +6,7 @@ import { DevMemoThreadCard } from "@/client/features/devMemo/DevMemoThreadCard/D
 import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
 import { showErrorNotification } from "@/client/lib/utils";
@@ -53,7 +53,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
   const queryClient = useQueryClient();
   const toggleAllowOtherUserMemosMutation = useMutation({
     mutationFn: () => {
-      return trpc.development.updateAllowOtherUserMemos.mutate({
+      return __trpc_old.development.updateAllowOtherUserMemos.mutate({
         developmentId: development.id,
         allowOtherUserMemos: !development.allowOtherUserMemos,
       });

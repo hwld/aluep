@@ -1,6 +1,6 @@
 import { UserIconFormModal } from "@/client/features/user/UserIconFormModal/UserIconFormModal";
 import { UserProfileForm } from "@/client/features/user/UserProfileForm/UserProfileForm";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showLoadingNotification,
@@ -72,7 +72,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
 
   const updateMutation = useMutation({
     mutationFn: (data: RouterInputs["me"]["update"]) => {
-      return trpc.me.update.mutate(data);
+      return __trpc_old.me.update.mutate(data);
     },
     onSuccess: () => {
       showSuccessNotification({

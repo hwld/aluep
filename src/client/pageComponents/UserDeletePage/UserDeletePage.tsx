@@ -1,4 +1,4 @@
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ReCaptchaCheckBox } from "@/client/ui/ReCaptchaCheckBox";
@@ -21,7 +21,7 @@ export const UserDeletepage: React.FC = () => {
 
   const deleteMutation = useMutation({
     mutationFn: (data: RouterInputs["me"]["delete"]) => {
-      return trpc.me.delete.mutate(data);
+      return __trpc_old.me.delete.mutate(data);
     },
     onSuccess: () => {
       router.replace(Routes.home);

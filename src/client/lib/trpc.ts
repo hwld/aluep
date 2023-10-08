@@ -10,7 +10,7 @@ function getBaseUrl() {
   }
 }
 
-export const trpc = createTRPCProxyClient<AppRouter>({
+export const __trpc_old = createTRPCProxyClient<AppRouter>({
   links: [httpBatchLink({ url: `${getBaseUrl()}/api/trpc` })],
   transformer: SuperJSON,
 });

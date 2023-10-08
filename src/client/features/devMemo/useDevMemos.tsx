@@ -1,5 +1,5 @@
 import { developmentMemoKeys } from "@/client/features/devMemo/queryKeys";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { DevelopmentMemo } from "@/models/developmentMemo";
 import { RouterInputs } from "@/server/lib/trpc";
@@ -19,7 +19,7 @@ export const useDevMemos = ({ developmentId }: UseDevelopmentMemoArgs) => {
   const { data: developmentMemos } = useQuery({
     queryKey: developmentMemoKeys.listByDevelopment(developmentId),
     queryFn: () => {
-      return trpc.developmentMemo.getAll.query({ developmentId });
+      return __trpc_old.developmentMemo.getAll.query({ developmentId });
     },
     initialData: [],
   });
@@ -53,7 +53,7 @@ export const useDevMemos = ({ developmentId }: UseDevelopmentMemoArgs) => {
 
   const createMemoMutation = useMutation({
     mutationFn: async (data: RouterInputs["developmentMemo"]["create"]) => {
-      return trpc.developmentMemo.create.mutate(data);
+      return __trpc_old.developmentMemo.create.mutate(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(
@@ -70,7 +70,7 @@ export const useDevMemos = ({ developmentId }: UseDevelopmentMemoArgs) => {
 
   const deleteMemoMutation = useMutation({
     mutationFn: (data: RouterInputs["developmentMemo"]["delete"]) => {
-      return trpc.developmentMemo.delete.mutate(data);
+      return __trpc_old.developmentMemo.delete.mutate(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(

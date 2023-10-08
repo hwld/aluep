@@ -1,5 +1,5 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -56,7 +56,7 @@ export const DevMemoMenuButton: React.FC<Props> = ({
 
   const reportDevelopmentMemoMutation = useMutation({
     mutationFn: (data: RouterInputs["report"]["developmentMemo"]) => {
-      return trpc.report.developmentMemo.mutate(data);
+      return __trpc_old.report.developmentMemo.mutate(data);
     },
     onSuccess: () => {
       showSuccessNotification({

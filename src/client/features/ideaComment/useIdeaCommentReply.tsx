@@ -1,8 +1,8 @@
 import { ideaCommentKeys } from "@/client/features/ideaComment/queryKeys";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { RouterInputs } from "@/server/lib/trpc";
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type UseIdeaCommentReplyArgs = {
   ideaId: string;
@@ -16,7 +16,7 @@ export const useIdeaCommentReply = ({
   const queryClient = useQueryClient();
   const replyMutation = useMutation({
     mutationFn: (data: RouterInputs["ideaComment"]["create"]) => {
-      return trpc.ideaComment.create.mutate(data);
+      return __trpc_old.ideaComment.create.mutate(data);
     },
     onSuccess: () => {
       onSuccess?.();

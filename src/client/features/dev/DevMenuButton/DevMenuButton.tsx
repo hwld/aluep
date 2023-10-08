@@ -1,6 +1,6 @@
 import { useDevelop } from "@/client/features/dev/useDevelop";
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
 import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
@@ -65,7 +65,7 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
 
   const reportDevelopmentMutation = useMutation({
     mutationFn: (data: RouterInputs["report"]["development"]) => {
-      return trpc.report.development.mutate(data);
+      return __trpc_old.report.development.mutate(data);
     },
     onSuccess: () => {
       showSuccessNotification({

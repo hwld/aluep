@@ -1,5 +1,5 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -33,7 +33,7 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
 
   const reportUserMutation = useMutation({
     mutationFn: (data: RouterInputs["report"]["user"]) => {
-      return trpc.report.user.mutate(data);
+      return __trpc_old.report.user.mutate(data);
     },
     onSuccess: () => {
       showSuccessNotification({

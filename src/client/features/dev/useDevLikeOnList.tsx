@@ -1,6 +1,6 @@
 import { developmentKeys } from "@/client/features/dev/queryKeys";
 import { DevelopmentsData } from "@/client/features/dev/useDevsByIdea";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { RouterInputs } from "@/server/lib/trpc";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -15,7 +15,7 @@ export const useDevLikeOnList = (ideaId: string, page: number) => {
 
   const likeDevelopmentMutation = useMutation({
     mutationFn: (data: RouterInputs["development"]["like"]) => {
-      return trpc.development.like.mutate(data);
+      return __trpc_old.development.like.mutate(data);
     },
     onMutate: async ({ developmentId }) => {
       return await optimisticUpdate({ developmentId, like: true });
@@ -33,7 +33,7 @@ export const useDevLikeOnList = (ideaId: string, page: number) => {
 
   const unlikeDevelopmentMutation = useMutation({
     mutationFn: (data: RouterInputs["development"]["unlike"]) => {
-      return trpc.development.unlike.mutate(data);
+      return __trpc_old.development.unlike.mutate(data);
     },
     onMutate: async ({ developmentId }) => {
       return await optimisticUpdate({ developmentId, like: false });

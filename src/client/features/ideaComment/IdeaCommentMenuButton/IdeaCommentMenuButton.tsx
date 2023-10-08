@@ -1,5 +1,5 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -49,7 +49,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
 
   const reportIdeaCommentMutation = useMutation({
     mutationFn: (data: RouterInputs["report"]["ideaComment"]) => {
-      return trpc.report.ideaComment.mutate(data);
+      return __trpc_old.report.ideaComment.mutate(data);
     },
     onSuccess: () => {
       showSuccessNotification({

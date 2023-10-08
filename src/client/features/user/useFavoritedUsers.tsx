@@ -1,5 +1,5 @@
 import { userKeys } from "@/client/features/user/queryKeys";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { useQuery } from "@tanstack/react-query";
 
 type UseFavoritedUsersArgs = { userId: string; page: number };
@@ -9,7 +9,7 @@ export const useFavoritedUsers = ({ userId, page }: UseFavoritedUsersArgs) => {
   const { data: favoritedUsers, ...others } = useQuery({
     queryKey: userKeys.favoritedList(userId, page),
     queryFn: () => {
-      return trpc.user.getFavoritedUsers.query({
+      return __trpc_old.user.getFavoritedUsers.query({
         favoriteByUserId: userId,
         page: page.toString(),
       });

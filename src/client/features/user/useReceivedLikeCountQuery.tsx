@@ -1,5 +1,5 @@
 import { userKeys } from "@/client/features/user/queryKeys";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { useQuery } from "@tanstack/react-query";
 
 export type ReceivedLikeCount = {
@@ -15,7 +15,7 @@ export const useReceivedLikeCountQuery = ({
   const { data: recievedLikeCount, ...others } = useQuery({
     queryKey: userKeys.receivedLikeCount(userId),
     queryFn: () => {
-      return trpc.user.getReceivedLikeCount.query({ userId });
+      return __trpc_old.user.getReceivedLikeCount.query({ userId });
     },
   });
 

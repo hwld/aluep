@@ -1,6 +1,6 @@
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { Idea } from "@/models/idea";
 import { RouterInputs } from "@/server/lib/trpc";
@@ -16,7 +16,7 @@ export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
   const { data: likedByLoggedInUser } = useQuery({
     queryKey: ideaKeys.isLiked(ideaId, session?.user.id),
     queryFn: () => {
-      return trpc.idea.isLikedByUser.query({
+      return __trpc_old.idea.isLikedByUser.query({
         ideaId,
         userId: session?.user.id ?? null,
       });
@@ -25,7 +25,7 @@ export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
 
   const likeIdeaMutation = useMutation({
     mutationFn: (data: RouterInputs["idea"]["like"]) => {
-      return trpc.idea.like.mutate(data);
+      return __trpc_old.idea.like.mutate(data);
     },
     onMutate: async () => {
       return await optimisticUpdate({ like: true });
@@ -46,7 +46,7 @@ export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
 
   const unlikeIdeaMutation = useMutation({
     mutationFn: (data: RouterInputs["idea"]["unlike"]) => {
-      return trpc.idea.unlike.mutate(data);
+      return __trpc_old.idea.unlike.mutate(data);
     },
     onMutate: async () => {
       return await optimisticUpdate({ like: false });

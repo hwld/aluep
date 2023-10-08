@@ -1,5 +1,5 @@
 import { userKeys } from "@/client/features/user/queryKeys";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { useQuery } from "@tanstack/react-query";
 
 type UseFavoriteUserCountQueryArgs = { userId: string };
@@ -10,7 +10,7 @@ export const useFavoriteUserCountQuery = ({
   const { data: favoriteUserCount, ...others } = useQuery({
     queryKey: userKeys.favoriteCount(userId),
     queryFn: () => {
-      return trpc.user.getFavoriteCountByUser.query({ userId });
+      return __trpc_old.user.getFavoriteCountByUser.query({ userId });
     },
   });
 

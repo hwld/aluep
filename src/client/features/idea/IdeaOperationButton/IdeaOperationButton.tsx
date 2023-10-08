@@ -1,5 +1,5 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -41,7 +41,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
   // お題の削除
   const deleteIdeaMutation = useMutation({
     mutationFn: () => {
-      return trpc.idea.delete.mutate({ ideaId: idea.id });
+      return __trpc_old.idea.delete.mutate({ ideaId: idea.id });
     },
     onSuccess: () => {
       showSuccessNotification({
@@ -66,7 +66,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
   // お題の通報
   const reportIdeaMutation = useMutation({
     mutationFn: (data: RouterInputs["report"]["idea"]) => {
-      return trpc.report.idea.mutate(data);
+      return __trpc_old.report.idea.mutate(data);
     },
     onSuccess: () => {
       showSuccessNotification({

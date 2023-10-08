@@ -1,5 +1,5 @@
 import { ideaKeys } from "@/client/features/idea/queryKeys";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { ideaOrderSchema, ideaPeriodSchema } from "@/models/idea";
 import { useQuery } from "@tanstack/react-query";
 
@@ -31,7 +31,7 @@ export const useSearchedIdeasQuery = ({
       const order = ideaOrderSchema.parse(rawOrder);
       const period = ideaPeriodSchema.parse(rawPeriod);
 
-      return trpc.idea.search.query({
+      return __trpc_old.idea.search.query({
         keyword,
         tagIds,
         order,

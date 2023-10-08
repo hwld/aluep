@@ -1,6 +1,6 @@
 import { IdeaForm } from "@/client/features/idea/IdeaForm/IdeaForm";
 import { useAllTagsQuery } from "@/client/features/idea/useAllTagsQuery";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -20,7 +20,7 @@ export const IdeaCreatePage: React.FC = () => {
 
   const createMutate = useMutation({
     mutationFn: (data: RouterInputs["idea"]["create"]) => {
-      return trpc.idea.create.mutate(data);
+      return __trpc_old.idea.create.mutate(data);
     },
     onSuccess: ({ ideaId }) => {
       showSuccessNotification({

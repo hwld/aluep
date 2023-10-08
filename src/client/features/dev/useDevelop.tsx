@@ -1,7 +1,7 @@
 import { developmentKeys } from "@/client/features/dev/queryKeys";
 import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import {
   isTRPCClientError,
   showErrorNotification,
@@ -30,7 +30,7 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   const { data: developedData, ...others } = useQuery({
     queryKey: developmentKeys.isDeveloped(ideaId, session?.user.id),
     queryFn: () => {
-      return trpc.development.isDevelopedByUser.query({
+      return __trpc_old.development.isDevelopedByUser.query({
         ideaId,
         userId: session?.user.id ?? null,
       });
@@ -39,7 +39,7 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
 
   const developMutation = useMutation({
     mutationFn: (data: RouterInputs["development"]["create"]) => {
-      return trpc.development.create.mutate(data);
+      return __trpc_old.development.create.mutate(data);
     },
     onSuccess: async (_, fields) => {
       await queryClient.invalidateQueries(
@@ -72,7 +72,7 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   // お題の開発情報を更新する
   const updateDevelopmentMutation = useMutation({
     mutationFn: (data: RouterInputs["development"]["update"]) => {
-      return trpc.development.update.mutate(data);
+      return __trpc_old.development.update.mutate(data);
     },
     onSuccess: (_, fields) => {
       const message =
@@ -104,7 +104,9 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   // お題の開発をキャンセルする
   const cancelDevelopMutation = useMutation({
     mutationFn: ({ developmentId }: { developmentId: string }) => {
-      return trpc.development.delete.mutate({ developmentId: developmentId });
+      return __trpc_old.development.delete.mutate({
+        developmentId: developmentId,
+      });
     },
     onSuccess: async () => {
       // 特定のテーマのキャッシュを無効にする

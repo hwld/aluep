@@ -1,5 +1,5 @@
 import { ideaKeys } from "@/client/features/idea/queryKeys";
-import { trpc } from "@/client/lib/trpc";
+import { __trpc_old } from "@/client/lib/trpc";
 import { useQuery } from "@tanstack/react-query";
 
 type UseLikedIdeasArgs = { userId: string; page: number };
@@ -9,7 +9,7 @@ export const useLikedIdeas = ({ userId, page }: UseLikedIdeasArgs) => {
   const { data: likedIdeas, ...others } = useQuery({
     queryKey: ideaKeys.likedList(userId, page),
     queryFn: () => {
-      return trpc.idea.getLikedIdeasByUser.query({
+      return __trpc_old.idea.getLikedIdeasByUser.query({
         userId: userId,
         page: page.toString(),
       });
