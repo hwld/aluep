@@ -2,14 +2,14 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { findUser } from "@/server/repositories/user";
 import { AppRouter } from "@/server/router";
 import {
-  TRPCError,
   inferAsyncReturnType,
   inferRouterInputs,
   initTRPC,
+  TRPCError,
 } from "@trpc/server";
 import { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { IncomingMessage } from "http";
-import { Session, getServerSession } from "next-auth";
+import { getServerSession, Session } from "next-auth";
 import SuperJSON from "superjson";
 
 export async function createTRPCContext(

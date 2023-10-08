@@ -1,10 +1,10 @@
 import { RequireLoginModalProvider } from "@/client/features/session/RequireLoginModalProvider";
+import { trpc } from "@/client/lib/trpc";
 import "@/client/style/global.css";
 import { theme } from "@/client/style/theme";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { AppNavigationProgress } from "@/client/ui/AppNavigationProgress";
 import { ErrorBoundary } from "@/client/ui/ErrorBoundary";
-import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import "@mantine/carousel/styles.layer.css";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.layer.css";
@@ -12,30 +12,10 @@ import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/nprogress/styles.layer.css";
 import "@mantine/tiptap/styles.layer.css";
-import {
-  Hydrate,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { useState } from "react";
-import superjson from "superjson";
 
-export default function App(props: AppProps<PageProps>) {
-  const {
-    Component,
-    pageProps: { stringifiedDehydratedState, ...pageProps },
-  } = props;
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: { retry: false, refetchOnWindowFocus: false },
-        },
-      })
-  );
-
+function App({ Component }: AppProps) {
   return (
     <ErrorBoundary>
       <Head>
@@ -54,21 +34,19 @@ export default function App(props: AppProps<PageProps>) {
         />
       </Head>
 
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={superjson.parse(stringifiedDehydratedState || "{}")}>
-          <MantineProvider theme={theme}>
-            <ModalsProvider>
-              <RequireLoginModalProvider>
-                <Notifications />
-                <AppLayout>
-                  <AppNavigationProgress />
-                  <Component {...pageProps} />
-                </AppLayout>
-              </RequireLoginModalProvider>
-            </ModalsProvider>
-          </MantineProvider>
-        </Hydrate>
-      </QueryClientProvider>
+      <MantineProvider theme={theme}>
+        <ModalsProvider>
+          <RequireLoginModalProvider>
+            <Notifications />
+            <AppLayout>
+              <AppNavigationProgress />
+              <Component />
+            </AppLayout>
+          </RequireLoginModalProvider>
+        </ModalsProvider>
+      </MantineProvider>
     </ErrorBoundary>
   );
 }
+
+export default trpc.withTRPC(App);
