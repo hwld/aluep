@@ -6,7 +6,7 @@ type UseFavoritedUsersArgs = { userId: string; page: number };
 export const useFavoritedUsers = ({ userId, page }: UseFavoritedUsersArgs) => {
   const { data: favoritedUsers, ...others } =
     trpc.user.getFavoritedUsers.useQuery(
-      { favoriteByUserId: userId, page: page.toString() },
+      { favoriteByUserId: userId, page },
       { keepPreviousData: true }
     );
 

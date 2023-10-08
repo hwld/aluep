@@ -6,13 +6,8 @@ type UseLikedIdeasArgs = { userId: string; page: number };
 export const useLikedIdeas = ({ userId, page }: UseLikedIdeasArgs) => {
   const { data: likedIdeas, ...others } =
     trpc.idea.getLikedIdeasByUser.useQuery(
-      {
-        userId: userId,
-        page: page.toString(),
-      },
-      {
-        keepPreviousData: true,
-      }
+      { userId: userId, page },
+      { keepPreviousData: true }
     );
 
   return { likedIdeas, ...others };

@@ -11,7 +11,7 @@ type UseDevelopmentsByIdeaArgs = { ideaId: string; page: number };
 export const useDevsByIdea = ({ ideaId, page }: UseDevelopmentsByIdeaArgs) => {
   const { data: developments, ...others } =
     trpc.development.getManyByIdea.useQuery(
-      { page: page.toString(), ideaId: ideaId },
+      { page, ideaId: ideaId },
       { keepPreviousData: true }
     );
 

@@ -9,13 +9,8 @@ export const usePostedIdeasQuery = ({
 }: UsePostedIdeasQueryArgs) => {
   const { data: postedIdeas, ...others } =
     trpc.idea.getPostedIdeasByUser.useQuery(
-      {
-        userId: userId,
-        page: page.toString(),
-      },
-      {
-        keepPreviousData: true,
-      }
+      { userId: userId, page },
+      { keepPreviousData: true }
     );
 
   return { postedIdeas, ...others };

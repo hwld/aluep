@@ -8,7 +8,7 @@ export const useLikedDevelopments = ({
 }: UseLikedDevelopmentsArgs) => {
   const { data: likedDevelopments, ...others } =
     trpc.development.getLikedDevelopmentsByUser.useQuery(
-      { userId: userId, page: page.toString() },
+      { userId: userId, page },
       { keepPreviousData: true }
     );
 
