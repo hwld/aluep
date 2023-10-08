@@ -1,19 +1,13 @@
-import { developmentKeys } from "@/client/features/dev/queryKeys";
-import { ideaKeys } from "@/client/features/idea/queryKeys";
-import { userKeys } from "@/client/features/user/queryKeys";
 import { useUserQuery } from "@/client/features/user/useUserQuery";
 import { UserDetailPage } from "@/client/pageComponents/UserDetailPage/UserDetailPage";
 import { userDetailPageSchame } from "@/models/user";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "@/server/router";
 import { assertNever, assertString } from "@/share/utils";
 import { useRouter } from "next/router";
 import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ gsspContext: { query }, callerContext, queryClient, session }) => {
-    const caller = appRouter.createCaller(callerContext);
-
+  async ({ gsspContext: { query }, trpcStore }) => {
     const parseUserDetailResult = userDetailPageSchame.safeParse(query);
     if (!parseUserDetailResult.success) {
       return { notFound: true };
@@ -22,66 +16,54 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const { tab, page } = parseUserDetailResult.data;
     const userId = assertString(query.id);
 
-    const user = await caller.user.get({ userId });
+    const user = await trpcStore.user.get.fetch({ userId });
     if (!user) {
       return { notFound: true };
     }
 
+    let prefetching: Promise<void>;
     // タブに応じたデータをプリフェッチする
     switch (tab) {
       case "postedIdeas":
         // ユーザーが投稿したお題
-        await queryClient.prefetchQuery(ideaKeys.postedList(userId, page), () =>
-          caller.idea.getPostedIdeasByUser({ userId, page })
-        );
+        prefetching = trpcStore.idea.getPostedIdeasByUser.prefetch({
+          userId,
+          page,
+        });
         break;
       case "developments":
         // ユーザーの開発情報
-        await queryClient.prefetchQuery(
-          developmentKeys.listByUser(userId, page),
-          () => caller.development.getDevelopmentsByUser({ userId, page })
-        );
+        prefetching = trpcStore.development.getDevelopmentsByUser.prefetch({
+          userId,
+          page,
+        });
         break;
       case "likedIdeas":
         // ユーザーがいいねしたお題
-        await queryClient.prefetchQuery(ideaKeys.likedList(userId, page), () =>
-          caller.idea.getLikedIdeasByUser({ userId, page })
-        );
+        prefetching = trpcStore.idea.getLikedIdeasByUser.prefetch({
+          userId,
+          page,
+        });
         break;
       case "likedDevelopments":
         // ユーザーがいいねいた開発情報
-        await queryClient.prefetchQuery(
-          developmentKeys.likedList(userId, page),
-          () => caller.development.getLikedDevelopmentsByUser({ userId, page })
+        prefetching = trpcStore.development.getLikedDevelopmentsByUser.prefetch(
+          { userId, page }
         );
         break;
       default:
         assertNever(tab);
+        throw new Error("");
     }
 
-    // ユーザーの情報
-    await queryClient.prefetchQuery(userKeys.detail(userId), () => user);
-
-    // ユーザーがもらったいいねの数
-    await queryClient.prefetchQuery(userKeys.receivedLikeCount(userId), () =>
-      caller.user.getReceivedLikeCount({ userId })
-    );
-
-    // ログインユーザーがユーザーをお気に入り登録しているか
-    await queryClient.prefetchQuery(
-      userKeys.isFavorited(userId, session?.user.id),
-      () => caller.user.isFavoritedByLoggedInUser({ userId })
-    );
-
-    // ユーザーがいいねしたユーザーの数
-    await queryClient.prefetchQuery(userKeys.favoriteCount(userId), () =>
-      caller.user.getFavoriteCountByUser({ userId })
-    );
-
-    // ユーザーのアクティビティ
-    await queryClient.prefetchQuery(userKeys.activity(userId), () =>
-      caller.user.getUserActivity({ userId })
-    );
+    await Promise.all([
+      prefetching,
+      trpcStore.user.get.prefetch({ userId }),
+      trpcStore.user.getReceivedLikeCount.prefetch({ userId }),
+      trpcStore.user.isFavoritedByLoggedInUser.prefetch({ userId }),
+      trpcStore.user.getFavoriteCountByUser.prefetch({ userId }),
+      trpcStore.user.getUserActivity.prefetch({ userId }),
+    ]);
   }
 );
 

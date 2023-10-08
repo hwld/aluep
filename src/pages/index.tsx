@@ -1,37 +1,21 @@
-import { ideaKeys } from "@/client/features/idea/queryKeys";
-import { userKeys } from "@/client/features/user/queryKeys";
 import { HomePage } from "@/client/pageComponents/HomePage/HomePage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "@/server/router";
 import { NextPage } from "next";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ queryClient, callerContext }) => {
-    const caller = appRouter.createCaller(callerContext);
+  async ({ trpcStore }) => {
+    // TODO: gsspでできる限りPromise.allを使う
+    await Promise.all([
+      // ランキング
+      trpcStore.aggregate.getTop10LikesIdeasInThisMonth.prefetch(),
+      trpcStore.aggregate.getTop10LikesDevelopmentsInThisMonth.prefetch(),
+      trpcStore.aggregate.getTop10LikesPostersInThisMonth.prefetch(),
 
-    // ランキング
-    await queryClient.prefetchQuery(ideaKeys.top10LikesIdeasInThisMonth, () =>
-      caller.aggregate.getTop10LikesIdeasInThisMonth()
-    );
-    await queryClient.prefetchQuery(
-      userKeys.top10LikesDevelopmentsInThisMonth,
-      () => caller.aggregate.getTop10LikesDevelopmentsInThisMonth()
-    );
-    await queryClient.prefetchQuery(userKeys.top10LikesPostersInThisMonth, () =>
-      caller.aggregate.getTop10LikesPostersInThisMonth()
-    );
-
-    //　ピックアップされたお題
-    await queryClient.prefetchQuery(ideaKeys.pickedUpList("createdDesc"), () =>
-      caller.aggregate.getPickedIdeas({ order: "createdDesc" })
-    );
-    await queryClient.prefetchQuery(ideaKeys.pickedUpList("likeDesc"), () =>
-      caller.aggregate.getPickedIdeas({ order: "likeDesc" })
-    );
-    await queryClient.prefetchQuery(
-      ideaKeys.pickedUpList("developmentDesc"),
-      () => caller.aggregate.getPickedIdeas({ order: "developmentDesc" })
-    );
+      //　ピックアップされたお題
+      trpcStore.aggregate.getPickedIdeas.prefetch({ order: "createdDesc" }),
+      trpcStore.aggregate.getPickedIdeas.prefetch({ order: "likeDesc" }),
+      trpcStore.aggregate.getPickedIdeas.prefetch({ order: "developmentDesc" }),
+    ]);
   }
 );
 

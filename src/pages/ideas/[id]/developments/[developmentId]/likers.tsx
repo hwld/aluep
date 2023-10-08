@@ -1,9 +1,6 @@
-import { developmentKeys } from "@/client/features/dev/queryKeys";
 import { useDevQuery } from "@/client/features/dev/useDevQuery";
-import { userKeys } from "@/client/features/user/queryKeys";
 import { DevelopmentLikersPage } from "@/client/pageComponents/DevelopmentLikersPage/DevelopmentLikersPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "@/server/router";
 import { paginatedPageSchema } from "@/share/paging";
 import { assertString } from "@/share/utils";
 import { NextPage } from "next";
@@ -11,31 +8,25 @@ import { useRouter } from "next/router";
 import NotFoundPage from "../../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ gsspContext: { query }, queryClient, callerContext }) => {
+  async ({ gsspContext: { query }, trpcStore }) => {
     const parsePageResult = paginatedPageSchema.safeParse(query);
     if (!parsePageResult.success) {
       return { notFound: true };
     }
     const { page } = parsePageResult.data;
+
     const developmentId = assertString(query.developmentId);
-    const caller = appRouter.createCaller(callerContext);
-    const development = await caller.development.get({ developmentId });
+    const development = await trpcStore.development.get.fetch({
+      developmentId,
+    });
     if (!development) {
       return { notFound: true };
     }
 
-    await queryClient.prefetchQuery(
-      developmentKeys.detail(developmentId),
-      () => {
-        return caller.development.get({ developmentId });
-      }
-    );
-    await queryClient.prefetchQuery(
-      userKeys.developmentLikers(developmentId, page),
-      () => {
-        return caller.user.getDevelopmentLikers({ developmentId, page });
-      }
-    );
+    await Promise.all([
+      trpcStore.development.get.prefetch({ developmentId }),
+      trpcStore.user.getDevelopmentLikers.prefetch({ developmentId, page }),
+    ]);
   }
 );
 

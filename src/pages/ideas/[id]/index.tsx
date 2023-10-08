@@ -1,50 +1,27 @@
-import { developmentKeys } from "@/client/features/dev/queryKeys";
-import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { ideaCommentKeys } from "@/client/features/ideaComment/queryKeys";
 import { IdeaDetailPage } from "@/client/pageComponents/IdeaDetailPage/IdeaDetailPage";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "@/server/router";
 import { assertString } from "@/share/utils";
 import { useRouter } from "next/router";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ gsspContext: { query }, queryClient, session, callerContext }) => {
+  async ({ gsspContext: { query }, session, trpcStore }) => {
+    const userId = session?.user.id ?? null;
     const ideaId = assertString(query.id);
 
-    const caller = appRouter.createCaller(callerContext);
-
     // テーマがなければ404に飛ばす
-    const idea = await caller.idea.get({ ideaId: ideaId });
+    const idea = await trpcStore.idea.get.fetch({ ideaId: ideaId });
     if (!idea) {
       return { notFound: true };
     }
 
-    // お題情報のプリフェッチ
-    queryClient.setQueryData(ideaKeys.detail(ideaId), idea);
-
-    // ログインユーザーのいいね状況のプリフェッチ
-    await queryClient.prefetchQuery(
-      ideaKeys.isLiked(ideaId, session?.user.id),
-      () =>
-        caller.idea.isLikedByUser({ ideaId, userId: session?.user.id ?? null })
-    );
-
-    // ログインユーザーの開発情報のプリフェッチ
-    await queryClient.prefetchQuery(
-      developmentKeys.isDeveloped(ideaId, session?.user.id),
-      () =>
-        caller.development.isDevelopedByUser({
-          ideaId: ideaId,
-          userId: session?.user.id ?? null,
-        })
-    );
-
-    // コメントのプリフェッチ
-    await queryClient.prefetchQuery(ideaCommentKeys.listByIdea(ideaId), () =>
-      caller.ideaComment.getAll({ ideaId })
-    );
+    await Promise.all([
+      trpcStore.idea.get.prefetch({ ideaId }),
+      trpcStore.idea.isLikedByUser.prefetch({ ideaId, userId }),
+      trpcStore.development.isDevelopedByUser.prefetch({ ideaId, userId }),
+      trpcStore.ideaComment.getAll.prefetch({ ideaId }),
+    ]);
   }
 );
 

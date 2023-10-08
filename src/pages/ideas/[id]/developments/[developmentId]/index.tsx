@@ -1,43 +1,39 @@
-import { developmentKeys } from "@/client/features/dev/queryKeys";
 import { useDevQuery } from "@/client/features/dev/useDevQuery";
-import { developmentMemoKeys } from "@/client/features/devMemo/queryKeys";
-import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { DevelopmentDetailPage } from "@/client/pageComponents/DevelopmentDetailPage/DevelopmentDetailPage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "@/server/router";
 import { assertString } from "@/share/utils";
 import { useRouter } from "next/router";
 import NotFoundPage from "../../../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ gsspContext: { query }, queryClient, callerContext }) => {
+  async ({ gsspContext: { query }, trpcStore }) => {
     const ideaId = assertString(query.id);
     const developmentId = assertString(query.developmentId);
 
-    const caller = appRouter.createCaller(callerContext);
-
-    const idea = await caller.idea.get({ ideaId: ideaId });
-    const development = await caller.development.get({
-      developmentId: developmentId,
-    });
-    const developmentMemos = await caller.developmentMemo.getAll({
-      developmentId: developmentId,
-    });
+    const [idea, development, developmentMemos] = await Promise.all([
+      trpcStore.idea.get.fetch({ ideaId: ideaId }),
+      trpcStore.development.get.fetch({
+        developmentId: developmentId,
+      }),
+      trpcStore.developmentMemo.getAll.fetch({
+        developmentId: developmentId,
+      }),
+    ]);
 
     if (!idea || !development || !developmentMemos) {
       return { notFound: true };
     }
 
-    queryClient.setQueryData(ideaKeys.detail(ideaId), idea);
-    queryClient.setQueryData(
-      developmentKeys.detail(developmentId),
-      development
-    );
-    queryClient.setQueryData(
-      developmentMemoKeys.listByDevelopment(developmentId),
-      developmentMemos
-    );
+    await Promise.all([
+      trpcStore.idea.get.prefetch({ ideaId: ideaId }),
+      trpcStore.development.get.prefetch({
+        developmentId: developmentId,
+      }),
+      trpcStore.developmentMemo.getAll.prefetch({
+        developmentId: developmentId,
+      }),
+    ]);
   }
 );
 

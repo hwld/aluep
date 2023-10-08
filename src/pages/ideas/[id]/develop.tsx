@@ -1,31 +1,28 @@
-import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { DevelopIdeaPage } from "@/client/pageComponents/DevelopIdeaPage/DevelopIdeaPage";
 import { createRepositoryURLParamSchema } from "@/models/development";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "@/server/router";
 import { Routes } from "@/share/routes";
 import { assertString } from "@/share/utils";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ gsspContext: { query }, queryClient, session, callerContext }) => {
+  async ({ gsspContext: { query }, session, trpcStore }) => {
     if (!session) {
       return { redirect: { destination: Routes.home, permanent: false } };
     }
 
     const ideaId = assertString(query.id);
 
-    const caller = appRouter.createCaller(callerContext);
-    const idea = await caller.idea.get({ ideaId: ideaId });
+    const idea = await trpcStore.idea.get.fetch({ ideaId: ideaId });
     if (!idea) {
       return { notFound: true };
     }
 
     // すでに開発している場合はお題にリダイレクトする
-    const developedData = await caller.development.isDevelopedByUser({
+    const developedData = await trpcStore.development.isDevelopedByUser.fetch({
       ideaId: idea.id,
       userId: session.user.id,
     });
@@ -35,7 +32,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       };
     }
 
-    queryClient.setQueryData(ideaKeys.detail(ideaId), idea);
+    await trpcStore.idea.get.prefetch({ ideaId });
   }
 );
 

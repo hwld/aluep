@@ -1,8 +1,7 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { TRPCContext } from "@/server/lib/trpc";
 import { TRPCStore } from "@/server/lib/trpcStore";
 import { appRouter } from "@/server/router";
-import { DehydratedState, QueryClient } from "@tanstack/react-query";
+import { DehydratedState } from "@tanstack/react-query";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import {
   GetServerSideProps,
@@ -16,19 +15,16 @@ export type PageProps = {
   trpcState: DehydratedState;
 };
 
-type Callback<T> = (args: {
+type Callback = (args: {
   gsspContext: GetServerSidePropsContext;
   trpcStore: TRPCStore;
-  queryClient: QueryClient;
   session: Session | null;
-  callerContext: TRPCContext;
 }) => Promise<GetServerSidePropsResult<PageProps> | void>;
 
 export const withReactQueryGetServerSideProps = <T>(
-  callback: Callback<T>
+  callback: Callback
 ): GetServerSideProps<PageProps> => {
   return async (args) => {
-    const queryClient = new QueryClient();
     const session = await getServerSession(args.req, args.res, authOptions);
 
     const trpcStore = createServerSideHelpers({
@@ -42,20 +38,19 @@ export const withReactQueryGetServerSideProps = <T>(
 
     const result = await callback({
       gsspContext: args,
-      queryClient,
       trpcStore,
       session,
-      callerContext: { session, req: args.req },
     });
 
     // TODO
     // 常にtrpcStateは返したい
     // callbackが戻り値を持っていればそれをそのまま返す
-    if (result) {
-      return result;
-    }
+    // if (result) {
+    //   return result;
+    // }
 
     return {
+      ...result,
       props: {
         trpcState: trpcStore.dehydrate(),
       },

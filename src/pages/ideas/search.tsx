@@ -1,21 +1,17 @@
-import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { IdeaSearchPage } from "@/client/pageComponents/IdeaSearchPage/IdeaSearchPage";
 import { searchIdeaPageSchema } from "@/models/idea";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
-import { appRouter } from "@/server/router";
 import { NextPage } from "next";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ gsspContext: { query }, queryClient, callerContext }) => {
-    const caller = appRouter.createCaller(callerContext);
-
+  async ({ gsspContext: { query }, trpcStore }) => {
     const parseQueryResult = searchIdeaPageSchema.safeParse(query);
     if (!parseQueryResult.success) {
       return { notFound: true };
     }
     const { keyword, tagIds, page, order, period } = parseQueryResult.data;
 
-    const searchedIdeas = await caller.idea.search({
+    const searchedIdeas = await trpcStore.idea.search.fetch({
       keyword,
       tagIds,
       page,
@@ -28,19 +24,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { notFound: true };
     }
 
-    await queryClient.prefetchQuery(ideaKeys.allTags, () =>
-      caller.idea.getAllTags()
-    );
-    await queryClient.prefetchQuery(
-      ideaKeys.searchedList({
-        keyword,
-        tagIds,
-        order,
-        period,
-        page,
-      }),
-      () => searchedIdeas
-    );
+    await Promise.all([
+      trpcStore.idea.getAllTags.prefetch(),
+      trpcStore.idea.search.prefetch({ keyword, tagIds, order, period, page }),
+    ]);
   }
 );
 
