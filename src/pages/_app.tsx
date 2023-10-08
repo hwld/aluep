@@ -10,6 +10,7 @@ import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.layer.css";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
+import "@mantine/notifications/styles.layer.css";
 import "@mantine/nprogress/styles.layer.css";
 import "@mantine/tiptap/styles.layer.css";
 import { AppProps } from "next/app";
