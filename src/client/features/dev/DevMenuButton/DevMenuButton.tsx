@@ -1,6 +1,6 @@
 import { useDevelop } from "@/client/features/dev/useDevelop";
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
 import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
@@ -10,11 +10,9 @@ import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Development } from "@/models/development";
 import { ReportBaseForm } from "@/models/report";
-import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
 import { Divider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
 import router from "next/router";
 import { BiTrashAlt } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
@@ -63,10 +61,7 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
     );
   };
 
-  const reportDevelopmentMutation = useMutation({
-    mutationFn: (data: RouterInputs["report"]["development"]) => {
-      return __trpc_old.report.development.mutate(data);
-    },
+  const reportDevelopmentMutation = trpc.report.development.useMutation({
     onSuccess: () => {
       showSuccessNotification({
         title: "開発情報の通報",

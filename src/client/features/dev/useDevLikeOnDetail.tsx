@@ -1,20 +1,14 @@
-import { developmentKeys } from "@/client/features/dev/queryKeys";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { Development } from "@/models/development";
-import { RouterInputs } from "@/server/lib/trpc";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 /**
  * 開発情報詳細画面で開発情報にいいねを行う
  */
 export const useDevLikeOnDetail = (developmentId: string) => {
-  const queryClient = useQueryClient();
+  const utils = trpc.useContext();
 
-  const likeDevelopmentMutation = useMutation({
-    mutationFn: (data: RouterInputs["development"]["like"]) => {
-      return __trpc_old.development.like.mutate(data);
-    },
+  const likeDevelopmentMutation = trpc.development.like.useMutation({
     onMutate: async ({ developmentId }) => {
       return await optimisticUpdate({ developmentId, like: true });
     },
@@ -25,14 +19,11 @@ export const useDevLikeOnDetail = (developmentId: string) => {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(developmentKeys.detail(developmentId));
+      utils.invalidate();
     },
   });
 
-  const unlikeDevelopmentMutation = useMutation({
-    mutationFn: (data: RouterInputs["development"]["unlike"]) => {
-      return __trpc_old.development.unlike.mutate(data);
-    },
+  const unlikeDevelopmentMutation = trpc.development.unlike.useMutation({
     onMutate: async ({ developmentId }) => {
       return await optimisticUpdate({ developmentId, like: false });
     },
@@ -43,7 +34,7 @@ export const useDevLikeOnDetail = (developmentId: string) => {
       });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(developmentKeys.detail(developmentId));
+      utils.invalidate();
     },
   });
 
@@ -57,26 +48,23 @@ export const useDevLikeOnDetail = (developmentId: string) => {
   }): Promise<{
     previousDevelopment: Development | undefined;
   }> => {
-    await queryClient.cancelQueries(developmentKeys.detail(developmentId));
+    await utils.development.get.cancel({ developmentId });
 
-    const previousDevelopment = queryClient.getQueryData<Development>(
-      developmentKeys.detail(developmentId)
-    );
+    const previousDevelopment = utils.development.get.getData({
+      developmentId,
+    });
 
-    queryClient.setQueryData<Development>(
-      developmentKeys.detail(developmentId),
-      (development): Development | undefined => {
-        if (development === undefined) {
-          return undefined;
-        }
-
-        return {
-          ...development,
-          likes: development.likes + (like ? 1 : -1),
-          likedByLoggedInUser: like,
-        };
+    utils.development.get.setData({ developmentId }, (development) => {
+      if (development === undefined) {
+        return undefined;
       }
-    );
+
+      return {
+        ...development,
+        likes: development.likes + (like ? 1 : -1),
+        likedByLoggedInUser: like,
+      };
+    });
 
     return { previousDevelopment };
   };
@@ -89,10 +77,7 @@ export const useDevLikeOnDetail = (developmentId: string) => {
     previousDevelopment: Development | undefined;
     like: boolean;
   }) => {
-    queryClient.setQueryData(
-      developmentKeys.detail(developmentId),
-      previousDevelopment
-    );
+    utils.development.get.setData({ developmentId }, previousDevelopment);
 
     const action = like ? "いいね" : "いいね解除";
 

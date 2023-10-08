@@ -1,6 +1,6 @@
 import { UserIconFormModal } from "@/client/features/user/UserIconFormModal/UserIconFormModal";
 import { UserProfileForm } from "@/client/features/user/UserProfileForm/UserProfileForm";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showLoadingNotification,
@@ -8,10 +8,8 @@ import {
 } from "@/client/lib/utils";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ProfileFormData } from "@/models/user";
-import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
 import { Box, Card, Flex } from "@mantine/core";
-import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -70,10 +68,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
     router.reload();
   };
 
-  const updateMutation = useMutation({
-    mutationFn: (data: RouterInputs["me"]["update"]) => {
-      return __trpc_old.me.update.mutate(data);
-    },
+  const updateMutation = trpc.me.update.useMutation({
     onSuccess: () => {
       showSuccessNotification({
         title: "プロフィールの更新",

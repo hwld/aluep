@@ -52,7 +52,7 @@ export const IdeaComments: React.FC<Props> = ({
   };
 
   const handleDeleteComment = (commentId: string) => {
-    deleteCommentMutation.mutate(commentId);
+    deleteCommentMutation.mutate({ commentId });
   };
 
   const handleFocusCommentInput = () => {

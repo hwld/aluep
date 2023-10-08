@@ -1,5 +1,5 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -11,11 +11,9 @@ import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
-import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
 import { Divider } from "@mantine/core";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
 import { BiTrashAlt } from "react-icons/bi";
 import { MdFlag } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
@@ -47,10 +45,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
     { close: closeReportModal, open: openReportModal },
   ] = useDisclosure(false);
 
-  const reportIdeaCommentMutation = useMutation({
-    mutationFn: (data: RouterInputs["report"]["ideaComment"]) => {
-      return __trpc_old.report.ideaComment.mutate(data);
-    },
+  const reportIdeaCommentMutation = trpc.report.ideaComment.useMutation({
     onSuccess: () => {
       showSuccessNotification({
         title: "コメントの通報",

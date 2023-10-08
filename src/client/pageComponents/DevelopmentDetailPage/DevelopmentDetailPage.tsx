@@ -1,12 +1,11 @@
 import { DevDetailCard } from "@/client/features/dev/DevDetailCard/DevDetailCard";
-import { developmentKeys } from "@/client/features/dev/queryKeys";
 import { useDevLikeOnDetail } from "@/client/features/dev/useDevLikeOnDetail";
 import { DevMemoFormCard } from "@/client/features/devMemo/DevMemoFormCard/DevMemoFormCard";
 import { DevMemoThreadCard } from "@/client/features/devMemo/DevMemoThreadCard/DevMemoThreadCard";
 import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
 import { showErrorNotification } from "@/client/lib/utils";
@@ -24,7 +23,6 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useRef } from "react";
 import { MdComputer } from "react-icons/md";
 import { TbNote } from "react-icons/tb";
@@ -50,24 +48,16 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
   const { likeDevelopmentMutation, unlikeDevelopmentMutation } =
     useDevLikeOnDetail(development.id);
 
-  const queryClient = useQueryClient();
-  const toggleAllowOtherUserMemosMutation = useMutation({
-    mutationFn: () => {
-      return __trpc_old.development.updateAllowOtherUserMemos.mutate({
-        developmentId: development.id,
-        allowOtherUserMemos: !development.allowOtherUserMemos,
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(developmentKeys.detail(development.id));
-    },
-    onError: () => {
-      showErrorNotification({
-        title: "開発メモの返信権限の更新",
-        message: "開発メモの返信権限を更新できませんでした。",
-      });
-    },
-  });
+  const utils = trpc.useContext();
+  const toggleAllowOtherUserMemosMutation =
+    trpc.development.updateAllowOtherUserMemos.useMutation({
+      onError: () => {
+        showErrorNotification({
+          title: "開発メモの返信権限の更新",
+          message: "開発メモの返信権限を更新できませんでした。",
+        });
+      },
+    });
 
   const { openLoginModal } = useRequireLoginModal();
   const [formKey, nextFormKey] = useCyclicRandom();
@@ -97,7 +87,10 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
   };
 
   const handleToggleAllowOtherUserMemos = () => {
-    toggleAllowOtherUserMemosMutation.mutate();
+    toggleAllowOtherUserMemosMutation.mutate({
+      developmentId: development.id,
+      allowOtherUserMemos: !development.allowOtherUserMemos,
+    });
   };
 
   // メモスレッドが追加されたらスクロールさせる

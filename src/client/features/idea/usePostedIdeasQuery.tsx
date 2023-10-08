@@ -1,6 +1,4 @@
-import { ideaKeys } from "@/client/features/idea/queryKeys";
-import { __trpc_old } from "@/client/lib/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/client/lib/trpc";
 
 type UsePostedIdeasQueryArgs = { userId: string; page: number };
 
@@ -9,16 +7,16 @@ export const usePostedIdeasQuery = ({
   userId,
   page,
 }: UsePostedIdeasQueryArgs) => {
-  const { data: postedIdeas, ...others } = useQuery({
-    queryKey: ideaKeys.postedList(userId, page),
-    queryFn: () => {
-      return __trpc_old.idea.getPostedIdeasByUser.query({
+  const { data: postedIdeas, ...others } =
+    trpc.idea.getPostedIdeasByUser.useQuery(
+      {
         userId: userId,
         page: page.toString(),
-      });
-    },
-    keepPreviousData: true,
-  });
+      },
+      {
+        keepPreviousData: true,
+      }
+    );
 
   return { postedIdeas, ...others };
 };

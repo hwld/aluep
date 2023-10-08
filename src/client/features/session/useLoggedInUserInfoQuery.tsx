@@ -1,14 +1,6 @@
-import { sessionKeys } from "@/client/features/session/queryKeys";
-import { __trpc_old } from "@/client/lib/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/client/lib/trpc";
 
 export const useLoggedInUserInfoQuery = () => {
-  const { data: loggedInUserInfo, ...others } = useQuery({
-    queryKey: sessionKeys.loggedInUserInfo,
-    queryFn: () => {
-      return __trpc_old.me.getMySummary.query();
-    },
-  });
-
+  const { data: loggedInUserInfo, ...others } = trpc.me.getMySummary.useQuery();
   return { loggedInUserInfo, ...others };
 };

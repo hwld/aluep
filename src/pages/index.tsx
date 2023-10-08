@@ -4,7 +4,6 @@ import { NextPage } from "next";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ trpcStore }) => {
-    // TODO: gsspでできる限りPromise.allを使う
     await Promise.all([
       // ランキング
       trpcStore.aggregate.getTop10LikesIdeasInThisMonth.prefetch(),

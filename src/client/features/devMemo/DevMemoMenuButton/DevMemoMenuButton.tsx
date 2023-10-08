@@ -1,5 +1,5 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -11,11 +11,9 @@ import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
-import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
 import { Divider } from "@mantine/core";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
 import { BiTrashAlt } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { MdFlag } from "react-icons/md";
@@ -54,24 +52,23 @@ export const DevMemoMenuButton: React.FC<Props> = ({
     onDeleteMemo(developmentMemoId);
   };
 
-  const reportDevelopmentMemoMutation = useMutation({
-    mutationFn: (data: RouterInputs["report"]["developmentMemo"]) => {
-      return __trpc_old.report.developmentMemo.mutate(data);
-    },
-    onSuccess: () => {
-      showSuccessNotification({
-        title: "開発メモの通報",
-        message: "開発メモを通報しました。",
-      });
-      closeReportModal();
-    },
-    onError: () => {
-      showErrorNotification({
-        title: "開発メモの通報",
-        message: "開発メモを通報できませんでした。",
-      });
-    },
-  });
+  const reportDevelopmentMemoMutation = trpc.report.developmentMemo.useMutation(
+    {
+      onSuccess: () => {
+        showSuccessNotification({
+          title: "開発メモの通報",
+          message: "開発メモを通報しました。",
+        });
+        closeReportModal();
+      },
+      onError: () => {
+        showErrorNotification({
+          title: "開発メモの通報",
+          message: "開発メモを通報できませんでした。",
+        });
+      },
+    }
+  );
 
   const buildLink = () => {
     return `${window.location.origin}${Routes.development(

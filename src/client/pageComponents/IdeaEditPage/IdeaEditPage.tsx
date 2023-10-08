@@ -1,16 +1,14 @@
 import { IdeaForm } from "@/client/features/idea/IdeaForm/IdeaForm";
 import { useAllTagsQuery } from "@/client/features/idea/useAllTagsQuery";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Idea, IdeaFormData } from "@/models/idea";
-import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
 import { Box, Card } from "@mantine/core";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { MdOutlineEdit } from "react-icons/md";
 
@@ -19,10 +17,7 @@ export const IdeaEditPage: React.FC<Props> = ({ idea }) => {
   const router = useRouter();
   const { allTags } = useAllTagsQuery();
 
-  const updateMutation = useMutation({
-    mutationFn: (data: RouterInputs["idea"]["update"]) => {
-      return __trpc_old.idea.update.mutate(data);
-    },
+  const updateMutation = trpc.idea.update.useMutation({
     onSuccess: () => {
       showSuccessNotification({
         title: "お題の更新",

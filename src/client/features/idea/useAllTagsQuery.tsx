@@ -1,16 +1,11 @@
-import { ideaKeys } from "@/client/features/idea/queryKeys";
-import { __trpc_old } from "@/client/lib/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/client/lib/trpc";
 
 // すべてのタグってあんまり更新頻度高くないし、react-queryで管理しなくても良いかもしれない。
 export const useAllTagsQuery = () => {
-  const { data: allTags, ...others } = useQuery({
-    queryKey: ideaKeys.allTags,
-    queryFn: () => {
-      return __trpc_old.idea.getAllTags.query();
-    },
-    initialData: [],
-  });
+  const { data: allTags, ...others } = trpc.idea.getAllTags.useQuery(
+    undefined,
+    { initialData: [] }
+  );
 
   return { allTags, ...others };
 };

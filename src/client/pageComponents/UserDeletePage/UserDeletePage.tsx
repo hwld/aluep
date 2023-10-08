@@ -1,11 +1,9 @@
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ReCaptchaCheckBox } from "@/client/ui/ReCaptchaCheckBox";
-import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
 import { Box, Button, List, Mark, Text, Title } from "@mantine/core";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { TbTrash } from "react-icons/tb";
@@ -19,10 +17,7 @@ export const UserDeletepage: React.FC = () => {
 
   const disableDeleteButton = reCaptchaToken === undefined;
 
-  const deleteMutation = useMutation({
-    mutationFn: (data: RouterInputs["me"]["delete"]) => {
-      return __trpc_old.me.delete.mutate(data);
-    },
+  const deleteMutation = trpc.me.delete.useMutation({
     onSuccess: () => {
       router.replace(Routes.home);
     },

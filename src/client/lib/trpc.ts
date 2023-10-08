@@ -1,5 +1,5 @@
 import { AppRouter } from "@/server/router";
-import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
+import { httpBatchLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
 import SuperJSON from "superjson";
 
@@ -10,11 +10,6 @@ function getBaseUrl() {
     return "http://localhost:3000";
   }
 }
-
-export const __trpc_old = createTRPCProxyClient<AppRouter>({
-  links: [httpBatchLink({ url: `${getBaseUrl()}/api/trpc` })],
-  transformer: SuperJSON,
-});
 
 export const trpc = createTRPCNext<AppRouter>({
   config: () => {
@@ -33,4 +28,12 @@ export const trpc = createTRPCNext<AppRouter>({
     };
   },
   ssr: false,
+  overrides: {
+    useMutation: {
+      onSuccess: async (opts) => {
+        await opts.originalFn();
+        await opts.queryClient.invalidateQueries();
+      },
+    },
+  },
 });

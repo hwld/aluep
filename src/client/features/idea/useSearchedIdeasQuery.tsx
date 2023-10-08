@@ -1,46 +1,19 @@
-import { ideaKeys } from "@/client/features/idea/queryKeys";
-import { __trpc_old } from "@/client/lib/trpc";
-import { ideaOrderSchema, ideaPeriodSchema } from "@/models/idea";
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/client/lib/trpc";
+import { IdeaOrder, IdeaPeriod } from "@/models/idea";
 
 export type UseSearchedIdeasQueryArgs = {
   keyword: string;
   tagIds: string[];
-  order: string;
-  period: string;
+  order: IdeaOrder;
+  period: IdeaPeriod;
   page: number;
 };
-export const useSearchedIdeasQuery = ({
-  keyword,
-  tagIds,
-  order: rawOrder,
-  period: rawPeriod,
-  page,
-}: UseSearchedIdeasQueryArgs) => {
-  const { data: searchedIdeasResult, ...others } = useQuery({
-    queryKey: ideaKeys.searchedList({
-      keyword,
-      tagIds,
-      page,
-      order: rawOrder,
-      period: rawPeriod,
-    }),
-    queryFn: ({ queryKey }) => {
-      const { keyword, tagIds } = queryKey[1];
 
-      const order = ideaOrderSchema.parse(rawOrder);
-      const period = ideaPeriodSchema.parse(rawPeriod);
-
-      return __trpc_old.idea.search.query({
-        keyword,
-        tagIds,
-        order,
-        period,
-        page,
-      });
-    },
-    keepPreviousData: true,
-  });
+export const useSearchedIdeasQuery = (args: UseSearchedIdeasQueryArgs) => {
+  const { data: searchedIdeasResult, ...others } = trpc.idea.search.useQuery(
+    args,
+    { keepPreviousData: true }
+  );
 
   return { searchedIdeasResult, ...others };
 };

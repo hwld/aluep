@@ -1,21 +1,19 @@
-import { ideaKeys } from "@/client/features/idea/queryKeys";
-import { __trpc_old } from "@/client/lib/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/client/lib/trpc";
 
 type UseLikedIdeasArgs = { userId: string; page: number };
 
 /** ユーザーが良いねしたお題を取得する */
 export const useLikedIdeas = ({ userId, page }: UseLikedIdeasArgs) => {
-  const { data: likedIdeas, ...others } = useQuery({
-    queryKey: ideaKeys.likedList(userId, page),
-    queryFn: () => {
-      return __trpc_old.idea.getLikedIdeasByUser.query({
+  const { data: likedIdeas, ...others } =
+    trpc.idea.getLikedIdeasByUser.useQuery(
+      {
         userId: userId,
         page: page.toString(),
-      });
-    },
-    keepPreviousData: true,
-  });
+      },
+      {
+        keepPreviousData: true,
+      }
+    );
 
   return { likedIdeas, ...others };
 };

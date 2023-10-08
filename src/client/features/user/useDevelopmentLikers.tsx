@@ -1,6 +1,4 @@
-import { userKeys } from "@/client/features/user/queryKeys";
-import { __trpc_old } from "@/client/lib/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/client/lib/trpc";
 
 type UseDevelopmentLikersArgs = { developmentId: string; page: number };
 
@@ -9,16 +7,11 @@ export const useDevelopmentLikers = ({
   developmentId,
   page,
 }: UseDevelopmentLikersArgs) => {
-  const { data: developmentLikers, ...others } = useQuery({
-    queryKey: userKeys.developmentLikers(developmentId, page),
-    queryFn: () => {
-      return __trpc_old.user.getDevelopmentLikers.query({
-        developmentId,
-        page,
-      });
-    },
-    keepPreviousData: true,
-  });
+  const { data: developmentLikers, ...others } =
+    trpc.user.getDevelopmentLikers.useQuery(
+      { developmentId, page },
+      { keepPreviousData: true }
+    );
 
   return { developmentLikers, ...others };
 };

@@ -1,16 +1,14 @@
 import { IdeaForm } from "@/client/features/idea/IdeaForm/IdeaForm";
 import { useAllTagsQuery } from "@/client/features/idea/useAllTagsQuery";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { IdeaFormData } from "@/models/idea";
-import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
 import { Box, Card } from "@mantine/core";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { MdPostAdd } from "react-icons/md";
 
@@ -18,10 +16,7 @@ export const IdeaCreatePage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
   const router = useRouter();
 
-  const createMutate = useMutation({
-    mutationFn: (data: RouterInputs["idea"]["create"]) => {
-      return __trpc_old.idea.create.mutate(data);
-    },
+  const createMutate = trpc.idea.create.useMutation({
     onSuccess: ({ ideaId }) => {
       showSuccessNotification({
         title: "お題の投稿",

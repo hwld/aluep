@@ -1,5 +1,5 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -12,11 +12,9 @@ import { AppMenuLinkItem } from "@/client/ui/AppMenu/AppMenuLinkItem/AppMenuLink
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Idea } from "@/models/idea";
 import { ReportBaseForm } from "@/models/report";
-import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Divider, Menu, useMantineTheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
@@ -39,10 +37,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
   const router = useRouter();
 
   // お題の削除
-  const deleteIdeaMutation = useMutation({
-    mutationFn: () => {
-      return __trpc_old.idea.delete.mutate({ ideaId: idea.id });
-    },
+  const deleteIdeaMutation = trpc.idea.delete.useMutation({
     onSuccess: () => {
       showSuccessNotification({
         title: "お題の削除",
@@ -60,14 +55,11 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
   });
 
   const handleDeleteIdea = () => {
-    deleteIdeaMutation.mutate();
+    deleteIdeaMutation.mutate({ ideaId: idea.id });
   };
 
   // お題の通報
-  const reportIdeaMutation = useMutation({
-    mutationFn: (data: RouterInputs["report"]["idea"]) => {
-      return __trpc_old.report.idea.mutate(data);
-    },
+  const reportIdeaMutation = trpc.report.idea.useMutation({
     onSuccess: () => {
       showSuccessNotification({
         title: "お題の通報",

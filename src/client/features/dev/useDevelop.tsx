@@ -1,7 +1,5 @@
-import { developmentKeys } from "@/client/features/dev/queryKeys";
-import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import {
   isTRPCClientError,
   showErrorNotification,
@@ -11,11 +9,9 @@ import {
   CreateRepositoryData,
   DevelopmentFormData,
 } from "@/models/development";
-import { RouterInputs } from "@/server/lib/trpc";
 import { AppRouter } from "@/server/router";
 import { GitHubErrors } from "@/share/errors";
 import { Routes } from "@/share/routes";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TRPCClientError } from "@trpc/client";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -24,28 +20,17 @@ type UseDevelopArgs = { ideaId: string };
 
 export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const { session } = useSessionQuery();
+  const utils = trpc.useContext();
 
-  const { data: developedData, ...others } = useQuery({
-    queryKey: developmentKeys.isDeveloped(ideaId, session?.user.id),
-    queryFn: () => {
-      return __trpc_old.development.isDevelopedByUser.query({
-        ideaId,
-        userId: session?.user.id ?? null,
-      });
-    },
-  });
+  const { data: developedData, ...others } =
+    trpc.development.isDevelopedByUser.useQuery({
+      ideaId,
+      userId: session?.user.id ?? null,
+    });
 
-  const developMutation = useMutation({
-    mutationFn: (data: RouterInputs["development"]["create"]) => {
-      return __trpc_old.development.create.mutate(data);
-    },
+  const developMutation = trpc.development.create.useMutation({
     onSuccess: async (_, fields) => {
-      await queryClient.invalidateQueries(
-        developmentKeys.isDeveloped(ideaId, session?.user.id)
-      );
-
       const message =
         fields.type === "createRepository"
           ? `リポジトリ" ${fields.githubRepositoryName} "を作成し、お題の開発を開始しました。`
@@ -70,10 +55,7 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   });
 
   // お題の開発情報を更新する
-  const updateDevelopmentMutation = useMutation({
-    mutationFn: (data: RouterInputs["development"]["update"]) => {
-      return __trpc_old.development.update.mutate(data);
-    },
+  const updateDevelopmentMutation = trpc.development.update.useMutation({
     onSuccess: (_, fields) => {
       const message =
         fields.type === "createRepository"
@@ -85,7 +67,6 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
         message,
       });
 
-      queryClient.invalidateQueries(["developments", fields.developmentId]);
       router.push(Routes.development(fields.ideaId, fields.developmentId));
     },
     onError: (error, fields) => {
@@ -102,17 +83,7 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   });
 
   // お題の開発をキャンセルする
-  const cancelDevelopMutation = useMutation({
-    mutationFn: ({ developmentId }: { developmentId: string }) => {
-      return __trpc_old.development.delete.mutate({
-        developmentId: developmentId,
-      });
-    },
-    onSuccess: async () => {
-      // 特定のテーマのキャッシュを無効にする
-      await queryClient.invalidateQueries(ideaKeys.detail(ideaId));
-    },
-  });
+  const cancelDevelopMutation = trpc.development.delete.useMutation();
 
   // リポジトリの作成段階で発生したエラーをハンドリングする
   const handleCreateRepositoryError = (

@@ -1,9 +1,6 @@
-import { developmentMemoKeys } from "@/client/features/devMemo/queryKeys";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { DevelopmentMemo } from "@/models/developmentMemo";
-import { RouterInputs } from "@/server/lib/trpc";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 type DevelopmentMemoThreads = {
@@ -14,15 +11,12 @@ type DevelopmentMemoThreads = {
 
 type UseDevelopmentMemoArgs = { developmentId: string };
 export const useDevMemos = ({ developmentId }: UseDevelopmentMemoArgs) => {
-  const queryClient = useQueryClient();
+  const utils = trpc.useContext();
 
-  const { data: developmentMemos } = useQuery({
-    queryKey: developmentMemoKeys.listByDevelopment(developmentId),
-    queryFn: () => {
-      return __trpc_old.developmentMemo.getAll.query({ developmentId });
-    },
-    initialData: [],
-  });
+  const { data: developmentMemos } = trpc.developmentMemo.getAll.useQuery(
+    { developmentId },
+    { initialData: [] }
+  );
 
   const developmentMemoThreads = useMemo(() => {
     if (!developmentMemos) {
@@ -51,15 +45,7 @@ export const useDevMemos = ({ developmentId }: UseDevelopmentMemoArgs) => {
     });
   }, [developmentMemos]);
 
-  const createMemoMutation = useMutation({
-    mutationFn: async (data: RouterInputs["developmentMemo"]["create"]) => {
-      return __trpc_old.developmentMemo.create.mutate(data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(
-        developmentMemoKeys.listByDevelopment(developmentId)
-      );
-    },
+  const createMemoMutation = trpc.developmentMemo.create.useMutation({
     onError: () => {
       showErrorNotification({
         title: "開発メモの作成",
@@ -68,15 +54,7 @@ export const useDevMemos = ({ developmentId }: UseDevelopmentMemoArgs) => {
     },
   });
 
-  const deleteMemoMutation = useMutation({
-    mutationFn: (data: RouterInputs["developmentMemo"]["delete"]) => {
-      return __trpc_old.developmentMemo.delete.mutate(data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(
-        developmentMemoKeys.listByDevelopment(developmentId)
-      );
-    },
+  const deleteMemoMutation = trpc.developmentMemo.delete.useMutation({
     onError: () => {
       showErrorNotification({
         title: "メモの削除",

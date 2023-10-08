@@ -1,32 +1,21 @@
-import { ideaKeys } from "@/client/features/idea/queryKeys";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { Idea } from "@/models/idea";
-import { RouterInputs } from "@/server/lib/trpc";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 type UseIdeaLikeArgs = { ideaId: string };
 
 // ログインユーザーと指定されたお題とのいいね状況
 export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
-  const queryClient = useQueryClient();
+  const utils = trpc.useContext();
   const { session } = useSessionQuery();
 
-  const { data: likedByLoggedInUser } = useQuery({
-    queryKey: ideaKeys.isLiked(ideaId, session?.user.id),
-    queryFn: () => {
-      return __trpc_old.idea.isLikedByUser.query({
-        ideaId,
-        userId: session?.user.id ?? null,
-      });
-    },
+  const { data: likedByLoggedInUser } = trpc.idea.isLikedByUser.useQuery({
+    ideaId,
+    userId: session?.user.id ?? null,
   });
 
-  const likeIdeaMutation = useMutation({
-    mutationFn: (data: RouterInputs["idea"]["like"]) => {
-      return __trpc_old.idea.like.mutate(data);
-    },
+  const likeIdeaMutation = trpc.idea.like.useMutation({
     onMutate: async () => {
       return await optimisticUpdate({ like: true });
     },
@@ -37,17 +26,11 @@ export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
       });
     },
     onSettled: () => {
-      // お題のいいね数を更新する
-      // ideaLikedQueryKeyの先頭がideaQuerykeyになっているので、自分のいいね状況も更新される
-      // ideaLikedQueryKeyは自分がいいねしたかの情報だけで、お題のいいね数とは関係がないのでどちらもinvalidateする必要がある。
-      queryClient.invalidateQueries(ideaKeys.detail(ideaId));
+      utils.invalidate();
     },
   });
 
-  const unlikeIdeaMutation = useMutation({
-    mutationFn: (data: RouterInputs["idea"]["unlike"]) => {
-      return __trpc_old.idea.unlike.mutate(data);
-    },
+  const unlikeIdeaMutation = trpc.idea.unlike.useMutation({
     onMutate: async () => {
       return await optimisticUpdate({ like: false });
     },
@@ -58,30 +41,29 @@ export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
       });
     },
     onSettled: () => {
-      // お題のいいね数を更新する
-      // ideaLikedQueryKeyの先頭がideaQuerykeyになっているので、自分のいいね状況も更新される
-      // ideaLikedQueryKeyは自分がいいねしたかの情報だけで、お題のいいね数とは関係がないのでどちらもinvalidateする必要がある。
-      queryClient.invalidateQueries(ideaKeys.detail(ideaId));
+      utils.invalidate();
     },
   });
 
   /** 楽観的更新のためにキャッシュを操作する */
   const optimisticUpdate = async ({ like }: { like: boolean }) => {
-    await queryClient.cancelQueries(ideaKeys.detail(ideaId));
+    await utils.idea.get.cancel({ ideaId });
+    await utils.idea.isLikedByUser.cancel({
+      ideaId,
+      userId: session?.user.id ?? null,
+    });
 
     // お題(いいね数を含む)
-    const previousIdea = queryClient.getQueryData<Idea>(
-      ideaKeys.detail(ideaId)
-    );
+    const previousIdea = utils.idea.get.getData({ ideaId });
 
     // いいねを反映させる
-    queryClient.setQueryData<boolean>(
-      ideaKeys.isLiked(ideaId, session?.user.id),
-      () => like
+    utils.idea.isLikedByUser.setData(
+      { ideaId, userId: session?.user.id ?? null },
+      like
     );
 
     // いいね数を変える
-    queryClient.setQueryData<Idea>(ideaKeys.detail(ideaId), (old) => {
+    utils.idea.get.setData({ ideaId }, (old) => {
       if (!old) {
         return old;
       }
@@ -100,8 +82,11 @@ export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
     like: boolean;
     previousIdea: Idea | undefined;
   }) => {
-    queryClient.setQueryData(ideaKeys.isLiked(ideaId, session?.user.id), !like);
-    queryClient.setQueryData(ideaKeys.detail(ideaId), previousIdea);
+    utils.idea.isLikedByUser.setData(
+      { ideaId, userId: session?.user.id ?? null },
+      !like
+    );
+    utils.idea.get.setData({ ideaId }, previousIdea);
 
     const action = like ? "いいね" : "いいね解除";
 

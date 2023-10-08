@@ -14,11 +14,11 @@
     "watch": false,
     "onSave": "test-file"
   },
-  "cssVariables.lookupFiles": [
-    "**/*.css",
-    "**/*.scss",
-    "**/*.sass",
-    "**/*.less",
-    "node_modules/@mantine/core/esm/index.css",
-  ]
+  // "cssVariables.lookupFiles": [
+  //   "**/*.css",
+  //   "**/*.scss",
+  //   "**/*.sass",
+  //   "**/*.less",
+  //   "node_modules/@mantine/core/esm/index.css",
+  // ]
 }

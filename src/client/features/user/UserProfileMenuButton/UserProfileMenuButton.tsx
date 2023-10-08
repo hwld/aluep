@@ -1,5 +1,5 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { __trpc_old } from "@/client/lib/trpc";
+import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -11,11 +11,9 @@ import { AppMenuLinkItem } from "@/client/ui/AppMenu/AppMenuLinkItem/AppMenuLink
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
-import { RouterInputs } from "@/server/lib/trpc";
 import { Routes } from "@/share/routes";
 import { Divider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
 import { User } from "next-auth";
 import { MdFlag } from "react-icons/md";
 import { RiEdit2Line } from "react-icons/ri";
@@ -31,10 +29,7 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
     { close: closeReportModal, open: openReportModal },
   ] = useDisclosure(false);
 
-  const reportUserMutation = useMutation({
-    mutationFn: (data: RouterInputs["report"]["user"]) => {
-      return __trpc_old.report.user.mutate(data);
-    },
+  const reportUserMutation = trpc.report.user.useMutation({
     onSuccess: () => {
       showSuccessNotification({
         title: "ユーザーの通報",

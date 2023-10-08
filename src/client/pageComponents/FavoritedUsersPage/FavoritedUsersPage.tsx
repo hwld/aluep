@@ -1,9 +1,9 @@
+import { useFavoritedUsers } from "@/client/features/user/useFavoritedUsers";
 import {
   UserCard,
   userCardMinWidthPx,
 } from "@/client/features/user/UserCard/UserCard";
 import { UserSummaryCard } from "@/client/features/user/UserSummaryCard/UserSummaryCard";
-import { useFavoritedUsers } from "@/client/features/user/useFavoritedUsers";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
@@ -26,7 +26,6 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
     setURLParams({ page });
   };
 
-  // TODO:
   return (
     <>
       <PageHeader icon={BiBookmarkHeart} pageName="お気に入りユーザー" />

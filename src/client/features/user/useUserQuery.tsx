@@ -1,15 +1,10 @@
-import { userKeys } from "@/client/features/user/queryKeys";
-import { __trpc_old } from "@/client/lib/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/client/lib/trpc";
 
 type UseUserQueryArgs = { userId: string };
 
 export const useUserQuery = ({ userId }: UseUserQueryArgs) => {
-  const { data: user, ...others } = useQuery({
-    queryKey: userKeys.detail(userId),
-    queryFn: () => {
-      return __trpc_old.user.get.query({ userId });
-    },
+  const { data: user, ...others } = trpc.user.get.useQuery({
+    userId,
   });
 
   return { user, ...others };

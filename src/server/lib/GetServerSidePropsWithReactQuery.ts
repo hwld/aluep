@@ -42,13 +42,6 @@ export const withReactQueryGetServerSideProps = <T>(
       session,
     });
 
-    // TODO
-    // 常にtrpcStateは返したい
-    // callbackが戻り値を持っていればそれをそのまま返す
-    // if (result) {
-    //   return result;
-    // }
-
     return {
       ...result,
       props: {

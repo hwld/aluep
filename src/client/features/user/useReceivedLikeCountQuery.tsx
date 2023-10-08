@@ -1,6 +1,4 @@
-import { userKeys } from "@/client/features/user/queryKeys";
-import { __trpc_old } from "@/client/lib/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { trpc } from "@/client/lib/trpc";
 
 export type ReceivedLikeCount = {
   ideaLikeCount: number;
@@ -12,12 +10,8 @@ type UseReceivedLikeCountQueryArgs = { userId: string };
 export const useReceivedLikeCountQuery = ({
   userId,
 }: UseReceivedLikeCountQueryArgs) => {
-  const { data: recievedLikeCount, ...others } = useQuery({
-    queryKey: userKeys.receivedLikeCount(userId),
-    queryFn: () => {
-      return __trpc_old.user.getReceivedLikeCount.query({ userId });
-    },
-  });
+  const { data: recievedLikeCount, ...others } =
+    trpc.user.getReceivedLikeCount.useQuery({ userId });
 
   return { recievedLikeCount, ...others };
 };
