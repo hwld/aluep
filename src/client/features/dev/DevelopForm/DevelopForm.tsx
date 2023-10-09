@@ -6,7 +6,7 @@ import {
 import { DevelopmentStatus } from "@/models/developmentStatus";
 import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Radio, Select, Stack, Text, TextInput, Textarea } from "@mantine/core";
+import { Radio, Select, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { UnionToIntersection } from "react-hook-form/dist/types/path/common";
@@ -22,6 +22,10 @@ type Props = {
   developmentStatuses: DevelopmentStatus[];
   // formのtypeと、それ以外のプロパティを一括で渡せるようにする。
   // 指定されたtypeに必要のないプロパティも渡せるように、Union型をIntersection型に変換する処理を書いた
+  /**
+   * 非制御コンポーネントから制御コンポーネントに変わったというエラーを出さないためにstring型のフィールドには
+   * 文字列を入れる。
+   */
   defaultValues?: DevelopmentFormDefaultValues;
   ideaId: string;
   onSubmit: (data: DevelopmentFormData) => void;
@@ -110,10 +114,6 @@ export const DevelopForm: React.FC<Props> = ({
                   label="リポジトリ名"
                   error={getFieldState("githubRepositoryName").error?.message}
                   {...field}
-                  // Formのデータとしてunionを使用しているため、typeによってここがundefinedになる可能性がある。
-                  // そうすると、非制御コンポーネントから制御コンポーネントに変わったというエラーが出てしまうため、空文字を手動で設定する。
-                  // defaultValueで設定できそうだが、unionを使用しているため、どれか一つしか設定することができない。
-                  value={field.value ?? ""}
                 />
               );
             }}
@@ -130,7 +130,6 @@ export const DevelopForm: React.FC<Props> = ({
                     getFieldState("githubRepositoryDescription").error?.message
                   }
                   {...field}
-                  value={field.value ?? ""}
                 />
               );
             }}
@@ -150,7 +149,6 @@ export const DevelopForm: React.FC<Props> = ({
                   label="開発に使用するGitHubリポジトリ"
                   error={getFieldState("githubRepositoryUrl").error?.message}
                   {...field}
-                  value={field.value ?? ""}
                 />
               );
             }}
@@ -168,7 +166,6 @@ export const DevelopForm: React.FC<Props> = ({
                   }))}
                   error={getFieldState("developmentStatusId").error?.message}
                   {...field}
-                  value={field.value ?? ""}
                 />
               );
             }}

@@ -9,6 +9,7 @@
   }
 
   &[data-checked] {
+    pointer-events: none;
     & svg {
       opacity: 1;
       color: var(--mantine-color-red-7);
