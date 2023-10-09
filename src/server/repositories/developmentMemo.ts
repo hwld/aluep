@@ -12,7 +12,7 @@ const developmentMemoArgs = {
     parentMemoId: true,
     createdAt: true,
   },
-} satisfies Prisma.DevelopmentMemoArgs;
+} satisfies Prisma.DevelopmentMemoDefaultArgs;
 
 const convertDevelopmentMemo = (
   raw: Prisma.DevelopmentMemoGetPayload<typeof developmentMemoArgs>

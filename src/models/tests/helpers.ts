@@ -12,9 +12,9 @@ import { faker } from "@faker-js/faker";
 export const IdeaHelper = {
   create: (data?: Partial<Idea>): Idea => {
     return {
-      user: { id: faker.datatype.uuid(), name: "user", image: null },
+      user: { id: faker.string.uuid(), name: "user", image: null },
       likes: 0,
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       title: "idea",
       descriptionHtml: "",
       tags: [],
@@ -31,7 +31,7 @@ export const IdeaHelper = {
 export const UserHelper = {
   create: (data?: Partial<User>): User => {
     return {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       name: "user",
       image: "",
       profile: "",
@@ -43,7 +43,7 @@ export const UserHelper = {
 export const IdeaTagHelper = {
   create: (data?: Partial<IdeaTag>): IdeaTag => {
     return {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       name: "tag",
       createdAt: new Date().toLocaleString(),
       updatedAt: new Date().toLocaleString(),
@@ -55,8 +55,8 @@ export const IdeaTagHelper = {
 export const DevelopmentHelper = {
   create: (data?: Partial<Development>): Development => {
     return {
-      id: faker.datatype.uuid(),
-      developerUserId: faker.datatype.uuid(),
+      id: faker.string.uuid(),
+      developerUserId: faker.string.uuid(),
       developedItemUrl: "",
       allowOtherUserMemos: true,
       comment: "",
@@ -64,7 +64,7 @@ export const DevelopmentHelper = {
       developerUserImage: "",
       developerUserName: "user",
       githubUrl: "",
-      ideaId: faker.datatype.uuid(),
+      ideaId: faker.string.uuid(),
       ideaTitle: "idea",
       likedByLoggedInUser: true,
       likes: 100,
@@ -82,12 +82,12 @@ export const DevelopmentHelper = {
 export const DevelopmentMemoHelper = {
   create: (data?: Partial<DevelopmentMemo>): DevelopmentMemo => {
     return {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       text: "memo",
       parentMemoId: null,
-      developmentId: faker.datatype.uuid(),
+      developmentId: faker.string.uuid(),
       fromUser: {
-        id: faker.datatype.uuid(),
+        id: faker.string.uuid(),
         imageUrl: "",
         name: "user",
         ...data?.fromUser,
@@ -101,7 +101,7 @@ export const DevelopmentMemoHelper = {
 export const DevelopmentLikerHelper = {
   create: (data?: Partial<DevelopmentLikers>): DevelopmentLikers => {
     return {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       name: "user",
       profile: "",
       image: "",
@@ -114,12 +114,12 @@ export const DevelopmentLikerHelper = {
 export const IdeaCommentHelper = {
   create: (data?: Partial<IdeaComment>): IdeaComment => {
     return {
-      id: faker.datatype.uuid(),
+      id: faker.string.uuid(),
       text: "コメント",
       createdAt: new Date(),
       fromUser: UserHelper.create(),
-      ideaId: faker.datatype.uuid(),
-      inReplyToComment: { fromUserName: "user", id: faker.datatype.uuid() },
+      ideaId: faker.string.uuid(),
+      inReplyToComment: { fromUserName: "user", id: faker.string.uuid() },
       ...data,
     };
   },

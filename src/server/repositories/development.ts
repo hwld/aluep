@@ -10,7 +10,7 @@ const developmentArgs = {
     status: true,
     idea: { select: { title: true } },
   },
-} satisfies Prisma.DevelopmentArgs;
+} satisfies Prisma.DevelopmentDefaultArgs;
 
 const convertDevelopment = (
   raw: Prisma.DevelopmentGetPayload<typeof developmentArgs>,

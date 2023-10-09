@@ -40,7 +40,7 @@ describe("お題のコメントAPI", () => {
   describe("バリデーションが失敗する入力", () => {
     it.each([
       ["空のコメント", { comment: "", replyToId: "" }],
-      ["2001文字のコメント", { comment: faker.datatype.string(2001) }],
+      ["2001文字のコメント", { comment: faker.string.sample(2001) }],
     ])("%s", async (_, { comment }) => {
       const { caller } = await TestHelpers.createNewUserSessionCaller();
       const { idea } = await TestHelpers.createIdeaAndUser();

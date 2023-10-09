@@ -57,14 +57,14 @@ describe("お題の作成API", () => {
       ["未入力のタイトル", { title: "", body: "<p>body</p>", tags: [] }],
       [
         "51文字のタイトル",
-        { title: faker.datatype.string(51), body: "<p>body</p>", tags: [] },
+        { title: faker.string.sample(51), body: "<p>body</p>", tags: [] },
       ],
       ["未入力の説明", { title: "title", body: "<p></p>", tags: [] }],
       [
         "10001文字の説明",
         {
           title: "title",
-          body: `<p>${faker.datatype.string(10001 - 7)}</p>`,
+          body: `<p>${faker.string.sample(10001 - 7)}</p>`,
           tags: [],
         },
       ],
@@ -73,7 +73,7 @@ describe("お題の作成API", () => {
         {
           title: "title",
           body: "<p>body</p>",
-          tags: [faker.datatype.string(101)],
+          tags: [faker.string.sample(101)],
         },
       ],
       [
@@ -81,7 +81,7 @@ describe("お題の作成API", () => {
         {
           title: "title",
           body: "<p>body</p>",
-          tags: [...new Array(51)].map((_) => faker.datatype.string(10)),
+          tags: [...new Array(51)].map((_) => faker.string.sample(10)),
         },
       ],
     ])("%s", async (_, { title, body, tags }) => {

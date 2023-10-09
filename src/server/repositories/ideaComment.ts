@@ -18,7 +18,7 @@ const ideaCommentArgs = {
       },
     },
   },
-} satisfies Prisma.IdeaCommentArgs;
+} satisfies Prisma.IdeaCommentDefaultArgs;
 
 const buildInReplyToComment = (
   rawComment: Prisma.IdeaCommentGetPayload<typeof ideaCommentArgs>

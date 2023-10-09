@@ -124,7 +124,7 @@ describe("開発情報メモ作成API", () => {
   describe("バリデーションが失敗する入力", () => {
     it.each([
       ["空のメモ", { text: "" }],
-      ["2001文字のメモ", { text: faker.datatype.string(2001) }],
+      ["2001文字のメモ", { text: faker.string.sample(2001) }],
     ])("%s", async (_, { text }) => {
       const { idea } = await TestHelpers.createIdeaAndUser();
       const { development, developerCaller } =

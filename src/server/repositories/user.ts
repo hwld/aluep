@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 
 const userArgs = {
   select: { id: true, name: true, image: true, profile: true },
-} satisfies Prisma.UserArgs;
+} satisfies Prisma.UserDefaultArgs;
 
 export const convertUser = (
   rawUser: Prisma.UserGetPayload<typeof userArgs>
@@ -17,7 +17,10 @@ export const convertUser = (
   };
 };
 
-type FindUserArgs = Omit<Prisma.UserFindFirstArgs, keyof Prisma.UserArgs>;
+type FindUserArgs = Omit<
+  Prisma.UserFindFirstArgs,
+  keyof Prisma.UserDefaultArgs
+>;
 export const findUser = async (
   args: FindUserArgs
 ): Promise<User | undefined> => {
@@ -29,7 +32,10 @@ export const findUser = async (
   return rawUser;
 };
 
-type FindManyUsersArgs = Omit<Prisma.UserFindManyArgs, keyof Prisma.UserArgs>;
+type FindManyUsersArgs = Omit<
+  Prisma.UserFindManyArgs,
+  keyof Prisma.UserDefaultArgs
+>;
 export const findManyUsers = async (
   args: FindManyUsersArgs
 ): Promise<User[]> => {

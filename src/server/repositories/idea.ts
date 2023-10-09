@@ -12,7 +12,7 @@ const ideaArgs = {
     user: true,
     _count: { select: { likes: true, developments: true, comments: true } },
   },
-} satisfies Prisma.IdeaArgs;
+} satisfies Prisma.IdeaDefaultArgs;
 
 const convertIdea = (rawIdea: Prisma.IdeaGetPayload<typeof ideaArgs>): Idea => {
   const idea: Idea = {
