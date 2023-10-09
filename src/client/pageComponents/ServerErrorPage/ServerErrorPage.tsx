@@ -1,11 +1,9 @@
 import { Routes } from "@/share/routes";
-import { Box, Button, Flex, Text, Title, useMantineTheme } from "@mantine/core";
+import { Box, Button, Flex, Text, Title } from "@mantine/core";
 import Link from "next/link";
 import { BiWrench } from "react-icons/bi";
 
 export const ServerErrorPage: React.FC = () => {
-  const theme = useMantineTheme();
-
   return (
     <>
       <Flex
@@ -34,7 +32,7 @@ export const ServerErrorPage: React.FC = () => {
               right: "-350px",
             }}
           >
-            <BiWrench size={600} color={theme.colors.red[7]} />
+            <BiWrench size={600} color="var(--mantine-color-red-7)" />
           </Box>
           <Title size={200} fw={900} style={{ lineHeight: "180px" }}>
             500

@@ -13,7 +13,7 @@ import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Idea } from "@/models/idea";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
-import { ActionIcon, Divider, Menu, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Divider, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/router";
 import { BiTrashAlt } from "react-icons/bi";
@@ -25,7 +25,6 @@ import classes from "./IdeaOperationButton.module.css";
 
 type Props = { idea: Idea; isIdeaOwner: boolean };
 export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
-  const mantineTheme = useMantineTheme();
   const [
     isDeleteModalOpen,
     { open: openDeleteModal, close: closeDeleteModal },
@@ -90,7 +89,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
       <AppMenu position="bottom-start">
         <Menu.Target>
           <ActionIcon size={35} className={classes.icon}>
-            <BsThreeDots size="70%" color={mantineTheme.colors.gray[5]} />
+            <BsThreeDots size="70%" color="var(--mantine-color-gray-5)" />
           </ActionIcon>
         </Menu.Target>
         <AppMenuDropdown>

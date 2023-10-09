@@ -4,7 +4,6 @@ import {
 } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { useLikedIdeas } from "@/client/features/idea/useLikedIdeas";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
-import { useMantineTheme } from "@mantine/core";
 import { User } from "next-auth";
 import { TbHeart } from "react-icons/tb";
 
@@ -19,7 +18,6 @@ export const UserLikedIdeas: React.FC<Props> = ({
   onChangePage,
 }) => {
   const { likedIdeas } = useLikedIdeas({ userId: user.id, page });
-  const { colors } = useMantineTheme();
 
   return (
     <UserContentContainer
@@ -32,7 +30,7 @@ export const UserLikedIdeas: React.FC<Props> = ({
         <TbHeart
           size="100"
           color="transparent"
-          fill={colors.red[7]}
+          fill="var(--mantine-color-red-7)"
           style={{ position: "relative", top: "10px" }}
         />
       }

@@ -3,7 +3,7 @@ import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
-import { Card, Flex, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { FaRegComment } from "react-icons/fa";
 import { MdComputer } from "react-icons/md";
@@ -15,7 +15,6 @@ export const ideaCardMinWidthPx = 450;
 type Props = { idea: Idea };
 export const IdeaCard: React.FC<Props> = ({ idea }) => {
   const router = useRouter();
-  const mantineTheme = useMantineTheme();
 
   const handleGoIdeaDetail = () => {
     router.push(Routes.idea(idea.id));
@@ -62,13 +61,13 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
               </Text>
               <Flex align="center" gap="sm">
                 <Flex align="center" gap={3}>
-                  <TbHeart size="16px" color={mantineTheme.colors.red[7]} />
+                  <TbHeart size="16px" color="var(--mantine-color-red-7)" />
                   <Text size="xs" c="red.7">
                     {idea.likes}
                   </Text>
                 </Flex>
                 <Flex align="center" gap={3}>
-                  <MdComputer size="15px" color={mantineTheme.colors.red[7]} />
+                  <MdComputer size="15px" color="var(--mantine-color-red-7)" />
                   <Text size="xs" c="red.7">
                     {idea.developments}
                   </Text>
@@ -76,7 +75,7 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
                 <Flex align="center" gap={3}>
                   <FaRegComment
                     size="15px"
-                    color={mantineTheme.colors.red[7]}
+                    color="var(--mantine-color-red-7)"
                   />
                   <Text size="xs" c="red.7">
                     {idea.comments}

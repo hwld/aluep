@@ -5,7 +5,7 @@ import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIco
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Development } from "@/models/development";
 import { Routes } from "@/share/routes";
-import { Card, Flex, Text, useMantineTheme } from "@mantine/core";
+import { Card, Flex, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbHeart } from "react-icons/tb";
 import classes from "./UserDevelopmentCard.module.css";
@@ -21,7 +21,6 @@ type Props = {
  */
 export const UserDevelopmentCard: React.FC<Props> = ({ development }) => {
   const router = useRouter();
-  const { colors } = useMantineTheme();
 
   const handleGoDevelopmentDetail = () => {
     router.push(Routes.development(development.ideaId, development.id));
@@ -63,7 +62,7 @@ export const UserDevelopmentCard: React.FC<Props> = ({ development }) => {
           開発開始日: {formatDate(new Date(development.createdAt))}
         </Text>
         <Flex align="center" gap={3}>
-          <TbHeart size="20px" color={colors.red[7]} />
+          <TbHeart size="20px" color="var(--mantine-color-red-7)" />
           <Text size="sm" c="red.7">
             {development.likes}
           </Text>

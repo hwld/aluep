@@ -1,7 +1,7 @@
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
-import { Flex, Text, useMantineTheme } from "@mantine/core";
+import { Flex, Text } from "@mantine/core";
 import { User } from "next-auth";
 import { useMemo } from "react";
 import { BiMedal } from "react-icons/bi";
@@ -13,8 +13,6 @@ export const UserLikeRankingItem: React.FC<Props> = ({
   user,
   likeCount,
 }) => {
-  const mantineTheme = useMantineTheme();
-
   const rank = useMemo(() => {
     switch (ranking) {
       case 1:
@@ -24,7 +22,7 @@ export const UserLikeRankingItem: React.FC<Props> = ({
       case 3:
         return <BiMedal size="30px" color="rgb(172, 109, 77)" />;
       default:
-        return <Text color="gray.5">{ranking}</Text>;
+        return <Text c="gray.5">{ranking}</Text>;
     }
   }, [ranking]);
 
@@ -51,7 +49,7 @@ export const UserLikeRankingItem: React.FC<Props> = ({
               <TbHeart
                 size="20px"
                 color="transparent"
-                fill={mantineTheme.colors.red[7]}
+                fill="var(--mantine-color-red-7)"
               />
               <Text size="xs" c="red.7">
                 {likeCount}

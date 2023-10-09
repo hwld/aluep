@@ -1,4 +1,4 @@
-import { Flex, Text, useMantineTheme } from "@mantine/core";
+import { Flex, Text } from "@mantine/core";
 import { ReactElement } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdOutlinePostAdd } from "react-icons/md";
@@ -7,8 +7,6 @@ import { TbHeart } from "react-icons/tb";
 type Props = { page: "developments" | "posters" };
 
 export const EmptyRankingContent: React.FC<Props> = ({ page }) => {
-  const mantineTheme = useMantineTheme();
-
   const pageData: {
     [T in Props["page"]]: { target: string; icon: ReactElement };
   } = {
@@ -17,7 +15,7 @@ export const EmptyRankingContent: React.FC<Props> = ({ page }) => {
       icon: (
         <>
           <AiOutlineUser size={60} />
-          <TbHeart size={80} color={mantineTheme.colors.red[7]} />
+          <TbHeart size={80} color="var(--mantine-color-red-7)" />
         </>
       ),
     },
@@ -26,7 +24,7 @@ export const EmptyRankingContent: React.FC<Props> = ({ page }) => {
       icon: (
         <>
           <MdOutlinePostAdd size={60} />
-          <TbHeart size={80} color={mantineTheme.colors.red[7]} />
+          <TbHeart size={80} color="var(--mantine-color-red-7)" />
         </>
       ),
     },

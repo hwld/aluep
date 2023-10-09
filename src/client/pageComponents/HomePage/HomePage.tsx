@@ -4,24 +4,23 @@ import { PickedUpIdeas } from "@/client/features/idea/PickedUpIdeas/PickedUpIdea
 import { PopularIdeaCarousel } from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCarousel/PopularIdeaCarousel";
 import { usePickedUpIdeasQuery } from "@/client/features/idea/usePickedUpIdeasQuery";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem/UserLikeRankingItem";
 import {
   useTop10LikesDevelopmentInThisMonth,
   useTop10LikesIdeasInThisMonth,
   useTop10LikesPostersInThisMonth,
 } from "@/client/features/user/useRankingQuery";
+import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem/UserLikeRankingItem";
 import { EmptyRankingContent } from "@/client/ui/EmptyRankingContent/EmptyRankingContent";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { RankingCard } from "@/client/ui/RankingCard/RankingCard";
 import { Routes } from "@/share/routes";
-import { Center, Flex, Stack, Title, useMantineTheme } from "@mantine/core";
+import { Center, Flex, Stack, Title } from "@mantine/core";
 import { AiFillFire } from "react-icons/ai";
 import { IoSparkles } from "react-icons/io5";
 import { MdComputer, MdOutlineHome } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
 
 export const HomePage: React.FC = () => {
-  const { colors } = useMantineTheme();
   const { session } = useSessionQuery();
 
   // ランキング
@@ -47,7 +46,7 @@ export const HomePage: React.FC = () => {
           {top10LikesIdeasInThisMonth.length > 0 && (
             <Stack gap="sm">
               <Flex gap="5px">
-                <AiFillFire size="25px" color={colors.red[6]} />
+                <AiFillFire size="25px" color="var(--mantine-color-red-6)" />
                 <Title order={4}>人気のお題</Title>
               </Flex>
               <PopularIdeaCarousel
@@ -64,7 +63,12 @@ export const HomePage: React.FC = () => {
           ) : (
             <>
               <PickedUpIdeas
-                icon={<IoSparkles size="25px" color={colors.yellow[7]} />}
+                icon={
+                  <IoSparkles
+                    size="25px"
+                    color="var(--mantine-color-yellow-7)"
+                  />
+                }
                 title="最新のお題"
                 readMoreHref={Routes.ideaSearch({ order: "createdDesc" })}
                 ideas={latestIdeas}
@@ -75,7 +79,7 @@ export const HomePage: React.FC = () => {
                     <TbHeart
                       size="30px"
                       color="transparent"
-                      fill={colors.pink[7]}
+                      fill="var(--mantine-color-pink-7)"
                     />
                   }
                   title="いいねが多かったお題"
@@ -85,7 +89,12 @@ export const HomePage: React.FC = () => {
               )}
               {manyDevelopmentsIdeas.length !== 0 && (
                 <PickedUpIdeas
-                  icon={<MdComputer size="30px" color={colors.blue[7]} />}
+                  icon={
+                    <MdComputer
+                      size="30px"
+                      color="var(--mantine-color-blue-7)"
+                    />
+                  }
                   title="開発者が多かったお題"
                   readMoreHref={Routes.ideaSearch({ order: "developmentDesc" })}
                   ideas={manyDevelopmentsIdeas}

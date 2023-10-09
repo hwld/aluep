@@ -6,7 +6,7 @@ import {
   ideaCommentFormSchema,
 } from "@/models/ideaComment";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Divider, Flex, Text, useMantineTheme } from "@mantine/core";
+import { Button, Divider, Flex, Text } from "@mantine/core";
 import clsx from "clsx";
 import { User } from "next-auth";
 import { forwardRef, useImperativeHandle, useRef } from "react";
@@ -32,7 +32,6 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
     { ideaId, onSubmit, isSubmitting = false, loggedInUser },
     ref
   ) {
-    const { colors } = useMantineTheme();
     const formRef = useRef<HTMLFormElement | null>(null);
     const commentRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -96,7 +95,7 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
               [classes.show]: errors.text,
             })}
           >
-            <TbAlertCircle size={30} color={colors.red[7]} />
+            <TbAlertCircle size={30} color="var(--mantine-color-red-7)" />
             <Text c="red">{errors.text?.message}</Text>
           </Flex>
           <Button

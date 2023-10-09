@@ -10,14 +10,7 @@ import {
   DevelopmentMemo,
   DevelopmentMemoFormData,
 } from "@/models/developmentMemo";
-import {
-  Card,
-  Divider,
-  Flex,
-  Stack,
-  Text,
-  useMantineTheme,
-} from "@mantine/core";
+import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { FaRegComment } from "react-icons/fa";
 import classes from "./DevMemoThreadCard.module.css";
@@ -36,7 +29,6 @@ export const DevMemoThreadCard: React.FC<Props> = ({
   childrenMemos,
   loggedInUserId,
 }) => {
-  const { colors } = useMantineTheme();
   const { createMemoMutation, deleteMemoMutation } = useDevMemos({
     developmentId,
   });

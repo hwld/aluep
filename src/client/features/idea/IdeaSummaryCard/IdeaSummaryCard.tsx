@@ -3,19 +3,18 @@ import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
-import { Box, Card, Flex, Stack, Text, useMantineTheme } from "@mantine/core";
+import { Box, Card, Flex, Stack, Text } from "@mantine/core";
 import { TbFileText } from "react-icons/tb";
 
 /**　アプリ開発のお題の概要カード */
 type Props = { idea: Idea };
 
 export const IdeaSummaryCard: React.FC<Props> = ({ idea }) => {
-  const mantineTheme = useMantineTheme();
   return (
     <Card>
       <Flex gap="md" align="center">
         <Box style={{ flexShrink: 0 }}>
-          <TbFileText color={mantineTheme.colors.red[7]} size={60} />
+          <TbFileText color="var(--mantine-color-red-7)" size={60} />
         </Box>
         <Stack gap="sm" miw={0}>
           <TextLink href={Routes.idea(idea.id)}>

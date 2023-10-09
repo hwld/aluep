@@ -14,15 +14,7 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Development } from "@/models/development";
 import { DevelopmentMemoFormData } from "@/models/developmentMemo";
 import { Idea } from "@/models/idea";
-import {
-  Card,
-  Center,
-  Flex,
-  Stack,
-  Switch,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Card, Center, Flex, Stack, Switch, Title } from "@mantine/core";
 import React, { useRef } from "react";
 import { MdComputer } from "react-icons/md";
 import { TbNote } from "react-icons/tb";
@@ -33,8 +25,6 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
   development,
   idea,
 }) => {
-  const { colors } = useMantineTheme();
-
   const memoFormCardRef = useRef<HTMLDivElement | null>(null);
 
   const { session } = useSessionQuery();
@@ -129,7 +119,9 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
             <Card py={40}>
               <Center h="100%">
                 <EmptyContentItem
-                  icon={<TbNote size={120} color={colors.gray[7]} />}
+                  icon={
+                    <TbNote size={120} color="var(--mantine-color-gray-7)" />
+                  }
                   text="開発メモがありません"
                   description={
                     <>

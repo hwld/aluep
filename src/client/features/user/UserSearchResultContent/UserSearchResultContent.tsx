@@ -4,7 +4,7 @@ import {
   userCardMinWidthPx,
 } from "@/client/features/user/UserCard/UserCard";
 import { User } from "@/models/user";
-import { Box, Flex, Text, useMantineTheme } from "@mantine/core";
+import { Box, Flex, Text } from "@mantine/core";
 import { MdOutlinePersonSearch } from "react-icons/md";
 
 type Props = {
@@ -15,8 +15,6 @@ export const UserSearchResultContent: React.FC<Props> = ({
   userSearchResult,
   isEmptyKeyword,
 }) => {
-  const { colors } = useMantineTheme();
-
   const isEmptyResult = userSearchResult.length === 0;
 
   if (isEmptyKeyword) {
@@ -24,7 +22,10 @@ export const UserSearchResultContent: React.FC<Props> = ({
     return (
       <Flex direction="column">
         <Flex justify="center" align="center">
-          <MdOutlinePersonSearch size={100} color={colors.red[7]} />
+          <MdOutlinePersonSearch
+            size={100}
+            color="var(--mantine-color-red-7)"
+          />
         </Flex>
         <Text ta="center" c="gray.5">
           ユーザを検索してみよう!

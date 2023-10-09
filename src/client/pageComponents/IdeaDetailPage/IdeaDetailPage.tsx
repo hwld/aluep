@@ -15,15 +15,7 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
-import {
-  Box,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 import { FaUserAlt } from "react-icons/fa";
@@ -33,8 +25,6 @@ import { TbFileText } from "react-icons/tb";
 type Props = { idea: Idea };
 
 export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
-  const { colors } = useMantineTheme();
-
   const { session } = useSessionQuery();
   const router = useRouter();
   const { openLoginModal } = useRequireLoginModal();
@@ -142,7 +132,9 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
               w={300}
             >
               <IdeaInfoCardItem
-                icon={<FaUserAlt size={20} color={colors.gray[5]} />}
+                icon={
+                  <FaUserAlt size={20} color="var(--mantine-color-gray-5)" />
+                }
                 title="投稿者"
               >
                 <Flex gap={5} mt={5} align="center">
@@ -160,14 +152,18 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
               </IdeaInfoCardItem>
 
               <IdeaInfoCardItem
-                icon={<MdAccessTime size={20} color={colors.gray[5]} />}
+                icon={
+                  <MdAccessTime size={20} color="var(--mantine-color-gray-5)" />
+                }
                 title="作成日"
               >
                 <Text>{formatDate(new Date(idea.createdAt))}</Text>
               </IdeaInfoCardItem>
 
               <IdeaInfoCardItem
-                icon={<MdUpdate size={20} color={colors.gray[5]} />}
+                icon={
+                  <MdUpdate size={20} color="var(--mantine-color-gray-5)" />
+                }
                 title="更新日"
                 disabledDivider
               >

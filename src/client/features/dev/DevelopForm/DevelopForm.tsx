@@ -67,7 +67,7 @@ export const DevelopForm: React.FC<Props> = ({
       isSubmitting={isLoading}
     >
       {isRelogined && (
-        <Text mt={5} size="sm" color="red">
+        <Text mt={5} size="sm" c="red">
           GitHubリポジトリを作成することができなかったため、再ログインを行いました。
           <br />
           もう一度「{submitText}」ボタンを押してください。

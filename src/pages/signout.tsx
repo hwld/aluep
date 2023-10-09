@@ -1,14 +1,6 @@
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
-import {
-  Button,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Button, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { NextPage } from "next";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
@@ -23,8 +15,6 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 );
 
 const Signout: NextPage = () => {
-  const mantineTheme = useMantineTheme();
-
   const handleSignOut = () => {
     signOut({ callbackUrl: Routes.home });
   };
@@ -36,7 +26,7 @@ const Signout: NextPage = () => {
         <Stack align="center" gap="xs">
           <Flex align="center" justify="center">
             <Image src="/logo.svg" width={200} height={200} alt="app-logo" />
-            <MdLogout size="20%" color={mantineTheme.colors.red[7]} />
+            <MdLogout size="20%" color="var(--mantine-color-red-7)" />
           </Flex>
           <Stack align="center" gap="sm">
             <Text>ログアウトしてもよろしいですか？</Text>

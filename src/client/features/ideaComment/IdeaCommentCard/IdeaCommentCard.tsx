@@ -8,15 +8,7 @@ import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClick
 import { formatDate } from "@/client/lib/utils";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
 import { IdeaComment, IdeaCommentFormData } from "@/models/ideaComment";
-import {
-  Box,
-  Card,
-  Flex,
-  Stack,
-  Text,
-  UnstyledButton,
-  useMantineTheme,
-} from "@mantine/core";
+import { Box, Card, Flex, Stack, Text, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FaRegComment, FaUserAlt } from "react-icons/fa";
 import { HiOutlineChevronDoubleRight } from "react-icons/hi";
@@ -41,7 +33,6 @@ export const IdeaCommentCard: React.FC<Props> = ({
 }) => {
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
-  const mantineTheme = useMantineTheme();
 
   const commentRef = useHashRemoverOnClickOutside({
     canRemove: (hash) => {
@@ -96,8 +87,8 @@ export const IdeaCommentCard: React.FC<Props> = ({
               <Box>
                 {comment.fromUser.id === ideaOwnerId && (
                   <Flex gap={5} align="center">
-                    <FaUserAlt size={14} fill={mantineTheme.colors.red[7]} />
-                    <Text color="red.7" size="xs">
+                    <FaUserAlt size={14} fill="var(--mantine-color-red-7)" />
+                    <Text c="red.7" size="xs">
                       お題の投稿者
                     </Text>
                   </Flex>

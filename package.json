@@ -14,7 +14,7 @@
     "test-db-dbpush": "npm run test-dotenv  -- prisma db push --accept-data-loss",
     "test-db-seed": "npm run test-dotenv -- prisma db seed",
     "setup:test-db": "npm run test-db-dbpush && npm run test-db-seed",
-    "ts-prune:next": "ts-prune | grep -v default | grep -v getServerSideProps | grep -v config | grep -v __sleep",
+    "ts-prune": "ts-prune | grep -v default | grep -v getServerSideProps | grep -v config | grep -v __sleep",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "stoprybook build",
     "test-storybook": "test-storybook"

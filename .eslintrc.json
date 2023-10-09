@@ -9,5 +9,8 @@
     "next/core-web-vitals",
     "plugin:storybook/recommended",
     "plugin:deprecation/recommended"
-  ]
+  ],
+  "rules": {
+    "react/no-deprecated": "error"
+  }
 }

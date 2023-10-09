@@ -1,11 +1,5 @@
 import { Routes } from "@/share/routes";
-import {
-  ActionIcon,
-  Anchor,
-  Stack,
-  Tooltip,
-  useMantineTheme,
-} from "@mantine/core";
+import { ActionIcon, Anchor, Stack, Tooltip } from "@mantine/core";
 import clsx from "clsx";
 import Link from "next/link";
 import { TbHeart } from "react-icons/tb";
@@ -25,8 +19,6 @@ export const IdeaLikeButton: React.FC<Props> = ({
   disabled,
   ideaId,
 }) => {
-  const { colors } = useMantineTheme();
-
   return (
     <Stack align="center" gap={3}>
       <ActionIcon
@@ -40,8 +32,12 @@ export const IdeaLikeButton: React.FC<Props> = ({
       >
         <TbHeart
           {...(likedByLoggedInUser
-            ? { size: "75%", color: "transparent", fill: colors.pink[7] }
-            : { size: "70%", color: colors.gray[5] })}
+            ? {
+                size: "75%",
+                color: "transparent",
+                fill: "var(--mantine-color-pink-7)",
+              }
+            : { size: "70%", color: "var(--mantine-color-gray-5)" })}
           style={{ marginTop: "4px" }}
         />
       </ActionIcon>

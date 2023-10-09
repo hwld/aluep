@@ -5,7 +5,7 @@ import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIco
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Development } from "@/models/development";
 import { Routes } from "@/share/routes";
-import { Card, Flex, Stack, Text, useMantineTheme } from "@mantine/core";
+import { Card, Flex, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbFileText, TbHeart } from "react-icons/tb";
 import classes from "./LikedDevCard.module.css";
@@ -17,7 +17,6 @@ type Props = { development: Development };
  *
  */
 export const LikedDevCard: React.FC<Props> = ({ development }) => {
-  const { colors } = useMantineTheme();
   const router = useRouter();
 
   const handleGoDevelopmentDetail = () => {
@@ -54,7 +53,7 @@ export const LikedDevCard: React.FC<Props> = ({ development }) => {
               </Text>
             </TextLink>
             <Flex align="center" gap={5} mt={5}>
-              <TbFileText color={colors.gray[5]} size={25} />
+              <TbFileText color="var(--mantine-color-gray-5)" size={25} />
               <TextLink href={Routes.idea(development.ideaId)}>
                 <Text c="gray.5" size="sm">
                   {development.ideaTitle}
@@ -64,7 +63,10 @@ export const LikedDevCard: React.FC<Props> = ({ development }) => {
           </Stack>
         </Flex>
         <Flex align="center" gap={3}>
-          <TbHeart color={colors.pink[7]} fill={colors.pink[7]} size={20} />
+          <TbHeart
+            color="var(--mantine-color-pink[7]} fill={colors.pink-7)"
+            size={20}
+          />
           <Text size="sm">{development.likes}</Text>
         </Flex>
       </Flex>

@@ -4,7 +4,6 @@ import {
   UserDevelopmentCard,
   userDevelopmentCardMinWidthPx,
 } from "@/client/features/user/UserDevelopmentCard/UserDevelopmentCard";
-import { useMantineTheme } from "@mantine/core";
 import { User } from "next-auth";
 import { TbCode } from "react-icons/tb";
 
@@ -22,7 +21,6 @@ export const UserDevelopments: React.FC<Props> = ({
     userId: user.id,
     page,
   });
-  const { colors } = useMantineTheme();
 
   return (
     <UserContentContainer
@@ -31,7 +29,7 @@ export const UserDevelopments: React.FC<Props> = ({
       onChangePage={onChangePage}
       totalPages={userDevelopments?.allPages ?? 0}
       isEmpty={userDevelopments?.list.length === 0}
-      emptyIcon={<TbCode size="100" color={colors.red[7]} />}
+      emptyIcon={<TbCode size="100" color="var(--mantine-color-red-7)" />}
       emptyText="お題の開発情報がありません"
       emptyDescription={
         <>

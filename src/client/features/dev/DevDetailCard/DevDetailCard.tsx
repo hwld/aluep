@@ -16,7 +16,6 @@ import {
   Grid,
   Stack,
   Text,
-  useMantineTheme,
 } from "@mantine/core";
 import { BsGithub } from "react-icons/bs";
 import { MdAccessTime, MdUpdate } from "react-icons/md";
@@ -34,8 +33,6 @@ export const DevDetailCard: React.FC<Props> = ({
   onToggleDevelopmentLike,
   isDeveloper,
 }) => {
-  const { colors } = useMantineTheme();
-
   return (
     <Card w="100%" h="100%">
       <Grid>
@@ -46,7 +43,7 @@ export const DevDetailCard: React.FC<Props> = ({
               <DevStatusBadge status={development.status} size="xl" />
               <Flex gap={5}>
                 <Box className={classes["icon-wrapper"]}>
-                  <TbFileText color={colors.red[7]} size={30} />
+                  <TbFileText color="var(--mantine-color-red-7)" size={30} />
                 </Box>
                 <Stack gap={0} miw={0}>
                   <TextLink href={Routes.idea(development.ideaId)}>

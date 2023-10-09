@@ -11,7 +11,7 @@ import {
 import { getServerSession, Session } from "next-auth";
 import superjson from "superjson";
 
-export type PageProps = {
+type PageProps = {
   trpcState: DehydratedState;
 };
 

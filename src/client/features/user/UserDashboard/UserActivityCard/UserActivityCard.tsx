@@ -1,19 +1,10 @@
 import { UserActivity } from "@/client/features/user/useUserActivityQuery";
-import {
-  Card,
-  Divider,
-  Flex,
-  Stack,
-  Text,
-  useMantineTheme,
-} from "@mantine/core";
+import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
 import { MdComputer } from "react-icons/md";
 import { TbFileText, TbHeart } from "react-icons/tb";
 
 type Props = { userActivity: UserActivity; width?: number };
 export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
-  const { colors } = useMantineTheme();
-
   return (
     <Card w={width} h="100%" px="xl" style={{ flexShrink: 0 }}>
       <Text c="gray.5" fw="bold">
@@ -25,7 +16,7 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
             投稿したお題の数
           </Text>
           <Flex align="center" gap={10}>
-            <TbFileText size={40} color={colors.red[7]} />
+            <TbFileText size={40} color="var(--mantine-color-red-7)" />
             <Flex align="flex-end" gap={2}>
               <Text size="md" fw="bold" c="red.7">
                 {userActivity.postedIdeaCount}
@@ -40,7 +31,7 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
             開発したお題の数
           </Text>
           <Flex align="center" gap={10}>
-            <MdComputer size={40} color={colors.blue[7]} />
+            <MdComputer size={40} color="var(--mantine-color-blue-7)" />
             <Flex align="flex-end" gap={2}>
               <Text size="md" fw="bold" c="blue.7">
                 {userActivity.developmentCount}
@@ -55,7 +46,7 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
             いいねしたお題の数
           </Text>
           <Flex align="center" gap={10}>
-            <TbHeart size={40} color={colors.pink[6]} />
+            <TbHeart size={40} color="var(--mantine-color-pink-6)" />
             <Flex align="flex-end" gap={2}>
               <Text size="md" fw="bold" c="pink.6">
                 {userActivity.likedIdeaCount}

@@ -4,7 +4,6 @@ import {
 } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { usePostedIdeasQuery } from "@/client/features/idea/usePostedIdeasQuery";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
-import { useMantineTheme } from "@mantine/core";
 import { User } from "next-auth";
 import { TbFileText } from "react-icons/tb";
 
@@ -19,7 +18,6 @@ export const UserPostedIdeas: React.FC<Props> = ({
   onChangePage,
 }) => {
   const { postedIdeas } = usePostedIdeasQuery({ userId: user.id, page });
-  const { colors } = useMantineTheme();
 
   return (
     <UserContentContainer
@@ -28,7 +26,7 @@ export const UserPostedIdeas: React.FC<Props> = ({
       onChangePage={onChangePage}
       totalPages={postedIdeas?.allPages ?? 0}
       isEmpty={postedIdeas?.list.length === 0}
-      emptyIcon={<TbFileText size="100" color={colors.red[7]} />}
+      emptyIcon={<TbFileText size="100" color="var(--mantine-color-red-7)" />}
       emptyText="お題がありません"
       emptyDescription={
         <>

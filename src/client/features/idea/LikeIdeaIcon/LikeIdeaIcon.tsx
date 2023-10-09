@@ -1,4 +1,4 @@
-import { Flex, useMantineTheme } from "@mantine/core";
+import { Flex } from "@mantine/core";
 import classes from "./LikeIdeaIcon.module.css";
 
 const styles = {
@@ -9,9 +9,7 @@ const styles = {
 
 type Props = { size?: "sm" | "md" | "lg" };
 export const LikeIdeaIcon: React.FC<Props> = ({ size = "md" }) => {
-  const { colors } = useMantineTheme();
-
-  const borderColor = colors.red[7];
+  const borderColor = "var(--mantine-color-red-7)";
 
   return (
     <Flex

@@ -5,14 +5,7 @@ import {
   ideaCommentFormSchema,
 } from "@/models/ideaComment";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Button,
-  Card,
-  Divider,
-  Flex,
-  Text,
-  useMantineTheme,
-} from "@mantine/core";
+import { Button, Card, Divider, Flex, Text } from "@mantine/core";
 import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -31,7 +24,6 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
   onCancel,
   isSubmitting = false,
 }) => {
-  const { colors } = useMantineTheme();
   const innerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const {
     control,
@@ -90,8 +82,8 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
               [classes.show]: errors.text,
             })}
           >
-            <TbAlertCircle size={30} color={colors.red[7]} />
-            <Text color="red">{errors.text?.message}</Text>
+            <TbAlertCircle size={30} color="var(--mantine-color-red-7)" />
+            <Text c="red">{errors.text?.message}</Text>
           </Flex>
           <Flex gap="xs">
             <Button

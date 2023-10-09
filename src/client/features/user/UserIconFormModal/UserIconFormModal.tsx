@@ -111,7 +111,7 @@ export const UserIconFormModal: React.FC<Props> = ({
           accept="image/*"
         />
         <UserIcon iconSrc={userIconUrl} size="xl" />
-        <Text size="sm" color="gray.6">
+        <Text size="sm" c="gray.6">
           変更する
         </Text>
       </UnstyledButton>

@@ -3,16 +3,7 @@ import { useSamePositionLeftClick } from "@/client/lib/useSamePositionLeftClick"
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
-import {
-  Box,
-  Card,
-  Flex,
-  Group,
-  Stack,
-  Text,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Box, Card, Flex, Group, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { MouseEventHandler } from "react";
 import { FaRegComment } from "react-icons/fa";
@@ -23,7 +14,6 @@ import classes from "./PopularIdeaCard.module.css";
 export const popularIdeaCardWidthPx = 400;
 export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
   const router = useRouter();
-  const mantineTheme = useMantineTheme();
 
   // ただのクリックで処理するとカルーセルの移動で発火してしまうので
   // mouseDownと同じ位置でmouseUpが発火されたときに処理する
@@ -92,7 +82,7 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
                   {idea.elapsedSinceCreation}
                 </Text>
                 <Flex align="center" gap={3}>
-                  <MdComputer size="15px" color={mantineTheme.colors.red[7]} />
+                  <MdComputer size="15px" color="var(--mantine-color-red-7)" />
                   <Text size="xs" c="red.7">
                     {idea.developments}
                   </Text>
@@ -100,7 +90,7 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
                 <Flex align="center" gap={3}>
                   <FaRegComment
                     size="15px"
-                    color={mantineTheme.colors.red[7]}
+                    color="var(--mantine-color-red-7)"
                   />
                   <Text size="xs" c="red.7">
                     {idea.comments}
@@ -116,7 +106,7 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
               <TbHeart
                 size="55px"
                 color="transparent"
-                fill={mantineTheme.colors.red[7]}
+                fill="var(--mantine-color-red-7)"
               />
               <Text
                 size="xl"

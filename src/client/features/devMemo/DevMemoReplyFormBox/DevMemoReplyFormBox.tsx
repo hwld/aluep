@@ -5,14 +5,7 @@ import {
   developmentMemoFormSchema,
 } from "@/models/developmentMemo";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Text,
-  useMantineTheme,
-} from "@mantine/core";
+import { Box, Button, Divider, Flex, Text } from "@mantine/core";
 import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -32,7 +25,6 @@ export const DevMemoReplyFormBox: React.FC<Props> = ({
   onCancel,
   isSubmitting = false,
 }) => {
-  const { colors } = useMantineTheme();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const {
@@ -94,7 +86,7 @@ export const DevMemoReplyFormBox: React.FC<Props> = ({
               [classes.show]: errors.text,
             })}
           >
-            <TbAlertCircle size={30} color={colors.red[7]} />
+            <TbAlertCircle size={30} color="var(--mantine-color-red-7)" />
             <Text c="red">{errors.text?.message}</Text>
           </Flex>
           <Flex gap="xs">

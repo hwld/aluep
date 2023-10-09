@@ -9,7 +9,7 @@ import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { User } from "@/models/user";
 import { paginatedPageSchema } from "@/share/paging";
-import { Box, Flex, Stack, Text, useMantineTheme } from "@mantine/core";
+import { Box, Flex, Stack, Text } from "@mantine/core";
 import React from "react";
 import { BiBookmarkHeart } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -20,7 +20,6 @@ type Props = { user: User };
 export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { favoritedUsers } = useFavoritedUsers({ userId: user.id, page });
-  const { colors } = useMantineTheme();
 
   const handleChangePage = (page: number) => {
     setURLParams({ page });
@@ -37,11 +36,23 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
         {favoritedUsers?.list.length === 0 ? (
           <Flex direction="column" align="center" gap={50}>
             <Flex align="flex-end" justify="center">
-              <BsFillPeopleFill size={70} color={colors.red[7]} />
-              <TbHeart size={70} color={colors.red[3]} fill={colors.red[3]} />
-              <TbHeart size={100} color={colors.red[4]} fill={colors.red[4]} />
-              <TbHeart size={130} color={colors.red[5]} fill={colors.red[5]} />
-              <TbHeart size={160} color={colors.red[6]} fill={colors.red[6]} />
+              <BsFillPeopleFill size={70} color="var(--mantine-color-red-7)" />
+              <TbHeart
+                size={70}
+                color="var(--mantine-color-red[3]} fill={colors.red-3)"
+              />
+              <TbHeart
+                size={100}
+                color="var(--mantine-color-red[4]} fill={colors.red-4)"
+              />
+              <TbHeart
+                size={130}
+                color="var(--mantine-color-red[5]} fill={colors.red-5)"
+              />
+              <TbHeart
+                size={160}
+                color="var(--mantine-color-red[6]} fill={colors.red-6)"
+              />
             </Flex>
 
             <Text size="xl">ユーザのお気に入りをまだしていません</Text>

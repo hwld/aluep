@@ -2,15 +2,7 @@ import { AppTooltip } from "@/client/ui/AppTooltip";
 import { ComputerIcon } from "@/client/ui/ComputerIcon";
 import { DevelopedData } from "@/models/development";
 import { Routes } from "@/share/routes";
-import {
-  ActionIcon,
-  Anchor,
-  Flex,
-  Stack,
-  Text,
-  Tooltip,
-  useMantineTheme,
-} from "@mantine/core";
+import { ActionIcon, Anchor, Flex, Stack, Text, Tooltip } from "@mantine/core";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -31,7 +23,6 @@ export const DevelopButton: React.FC<Props> = ({
   ideaId,
 }) => {
   const router = useRouter();
-  const mantineTheme = useMantineTheme();
 
   const handleClick = (e: SyntheticEvent) => {
     // すでに開発している場合は自身の開発情報へ遷移させる
@@ -64,7 +55,7 @@ export const DevelopButton: React.FC<Props> = ({
             size={60}
             className={classes.button}
           >
-            <ComputerIcon size="70%" fill={mantineTheme.colors.gray[1]} />
+            <ComputerIcon size="70%" fill="var(--mantine-color-gray-1)" />
           </ActionIcon>
         </AppTooltip>
       </Flex>
