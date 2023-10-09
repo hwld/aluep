@@ -11,6 +11,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, trpcStore }) => {
     const parsePageResult = paginatedPageSchema.safeParse(query);
     if (!parsePageResult.success) {
+      console.trace("不正なクエリー");
       return { notFound: true };
     }
     const { page } = parsePageResult.data;
@@ -20,6 +21,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       developmentId,
     });
     if (!development) {
+      console.trace("指定された開発情報が存在しない");
       return { notFound: true };
     }
 

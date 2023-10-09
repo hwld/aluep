@@ -19,6 +19,9 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     // お題が存在しないか、お題の作成者とログインユーザーが異なれば404にする
     if (idea === undefined || idea.user.id !== session.user.id) {
+      console.trace(
+        "指定されたお題が存在しない、または作成者とログインユーザーが異なる"
+      );
       return { notFound: true };
     }
 

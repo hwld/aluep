@@ -18,6 +18,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     const idea = await trpcStore.idea.get.fetch({ ideaId: ideaId });
     if (!idea) {
+      console.trace("指定されたお題が存在しない");
       return { notFound: true };
     }
 

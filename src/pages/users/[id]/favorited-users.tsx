@@ -11,6 +11,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, trpcStore }) => {
     const parsePageObjResult = paginatedPageSchema.safeParse(query);
     if (!parsePageObjResult.success) {
+      console.trace("不正なクエリー");
       return { notFound: true };
     }
     const { page } = parsePageObjResult.data;
@@ -18,6 +19,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const userId = assertString(query.id);
     const user = await trpcStore.user.get.fetch({ userId });
     if (!user) {
+      console.trace("指定されたユーザーが存在しない");
       return { notFound: true };
     }
 

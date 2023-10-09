@@ -22,6 +22,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     ]);
 
     if (!idea || !development || !developmentMemos) {
+      console.trace("指定されたお題、開発情報、メモのいずれかが存在しない");
       return { notFound: true };
     }
 
