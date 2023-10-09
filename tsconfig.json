@@ -39,7 +39,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/client/__mocks__/trpc.ts"
+    "src/client/__mocks__/trpc.ts",
+    ".storybook/**/*",
   ],
   "exclude": [
     "node_modules"

@@ -1,15 +1,13 @@
 import { AppRouter } from "@/server/router";
-import { createTRPCProxyClient, httpLink } from "@trpc/client";
+import { httpLink } from "@trpc/client";
+import { createTRPCReact } from "@trpc/react-query";
 import { createTRPCMsw } from "msw-trpc";
 import SuperJSON from "superjson";
 
 const apiUrl = "http://localhost:6006/api/trpc";
 
-/**
- *  Storybook用にHttpBatchを無効にしたtRPCのclient
- */
-export const trpc = createTRPCProxyClient<AppRouter>({
-  // HTTP Batchを無効にしたリンク
+export const mockTRPC = createTRPCReact<AppRouter>();
+export const mockTRPCClient = mockTRPC.createClient({
   links: [httpLink({ url: apiUrl })],
   transformer: SuperJSON,
 });
