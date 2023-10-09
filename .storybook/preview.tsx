@@ -13,6 +13,8 @@ import { useState } from "react";
 
 initialize({ serviceWorker: { url: "/apiMockServiceWorker.js" } });
 
+faker.seed(42);
+
 const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },
@@ -33,8 +35,6 @@ const preview: Preview = {
   decorators: [
     mswDecorator,
     (Story) => {
-      faker.seed(42);
-
       const [queryClient] = useState(
         () =>
           new QueryClient({

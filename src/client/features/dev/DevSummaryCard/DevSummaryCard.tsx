@@ -18,7 +18,7 @@ export const DevSummaryCard: React.FC<Props> = ({ development }) => {
           <TextLink
             href={Routes.development(development.ideaId, development.id)}
           >
-            <Text>
+            <Text fw="bold" truncate>
               {development.ideaTitle}
               <br></br>
               <Text span c="red.7" size="lg">
@@ -33,7 +33,9 @@ export const DevSummaryCard: React.FC<Props> = ({ development }) => {
             iconSrc={development.developerUserImage}
           />
           <TextLink href={Routes.user(development.developerUserId)}>
-            <Text>{development.developerUserName}</Text>
+            <Text c="gray.5" size="sm" truncate>
+              {development.developerUserName}
+            </Text>
           </TextLink>
         </Flex>
       </Stack>

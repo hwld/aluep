@@ -11,3 +11,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: { development: DevelopmentHelper.create() },
 };
+
+export const Filled: Story = {
+  args: { development: DevelopmentHelper.createFilled() },
+};

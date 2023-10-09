@@ -1,7 +1,11 @@
 import { DevelopmentEditPage } from "@/client/pageComponents/DevelopmentEditPage/DevelopmentEditPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
-import { DevelopmentHelper, IdeaHelper } from "@/models/tests/helpers";
+import {
+  DevelopmentHelper,
+  IdeaHelper,
+  SampleDevStatuses,
+} from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
@@ -22,10 +26,11 @@ const meta = {
 } satisfies Meta<typeof DevelopmentEditPage>;
 export default meta;
 type Story = StoryObj<typeof meta>;
-export const Default: Story = {
+
+export const Filled: Story = {
   args: {
-    idea: IdeaHelper.create(),
-    development: DevelopmentHelper.create(),
+    idea: IdeaHelper.createFilled(),
+    development: DevelopmentHelper.createFilled(),
     restoredValues: {},
   },
   parameters: {
@@ -35,7 +40,10 @@ export const Default: Story = {
         mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
           developed: false,
         }),
-        mockTrpcQuery(trpcMsw.development.getDevelopmentStatuses, []),
+        mockTrpcQuery(
+          trpcMsw.development.getDevelopmentStatuses,
+          SampleDevStatuses
+        ),
       ],
     },
   },

@@ -32,8 +32,8 @@ export const Found: Story = {
         mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.idea.getAllTags, []),
         mockTrpcQuery(trpcMsw.idea.search, {
-          ideas: [...new Array(3)].map(() => IdeaHelper.create()),
-          allPages: 1,
+          ideas: [...new Array(10)].map(() => IdeaHelper.createFilled()),
+          allPages: 2,
         }),
       ],
     },

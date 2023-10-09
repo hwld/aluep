@@ -7,6 +7,14 @@ const meta = { component: DevDetailCard } satisfies Meta<typeof DevDetailCard>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
+
+const baseHandlers = [
+  mockTrpcQuery(trpcMsw.session, null),
+  mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+    developed: false,
+  }),
+];
+
 export const Default: Story = {
   args: {
     development: DevelopmentHelper.create(),
@@ -14,12 +22,19 @@ export const Default: Story = {
   },
   parameters: {
     msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
-          developed: false,
-        }),
-      ],
+      handlers: [...baseHandlers],
+    },
+  },
+};
+
+export const Filled: Story = {
+  args: {
+    development: DevelopmentHelper.createFilled(),
+    isDeveloper: false,
+  },
+  parameters: {
+    msw: {
+      handlers: [...baseHandlers],
     },
   },
 };

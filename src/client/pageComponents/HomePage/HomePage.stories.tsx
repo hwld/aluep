@@ -87,68 +87,20 @@ export const Small: Story = {
   },
 };
 
-export const Large: Story = {
-  name: "大量のデータ",
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(
-          trpcMsw.aggregate.getTop10LikesIdeasInThisMonth,
-          [...new Array(6)].map(() => IdeaHelper.create())
-        ),
-        mockTrpcQuery(
-          trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth,
-          [...new Array(6)].map(() => ({
-            ...UserHelper.create(),
-            developmentLikes: 10,
-          }))
-        ),
-        mockTrpcQuery(
-          trpcMsw.aggregate.getTop10LikesPostersInThisMonth,
-          [...new Array(6)].map(() => ({
-            ...UserHelper.create(),
-            ideaLikes: 10,
-          }))
-        ),
-        trpcMsw.aggregate.getPickedIdeas.query((req, res, ctx) => {
-          const { order } = req.getInput();
-          const { create } = IdeaHelper;
-
-          switch (order) {
-            case "createdDesc": {
-              return res(
-                ctx.status(200),
-                ctx.data([...new Array(6)].map(() => create()))
-              );
-            }
-            case "likeDesc": {
-              return res(
-                ctx.status(200),
-                ctx.data([...new Array(6)].map(() => create()))
-              );
-            }
-            case "developmentDesc": {
-              return res(
-                ctx.status(200),
-                ctx.data([...new Array(6)].map(() => create()))
-              );
-            }
-          }
-
-          return res(ctx.status(200), ctx.data([]));
-        }),
-      ],
-    },
-  },
-};
-
 export const LargeFilled: Story = {
   name: "大量の最大文字数のデータ",
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.session, {
+          user: UserHelper.createFilled(),
+          expires: "",
+        }),
+        mockTrpcQuery(trpcMsw.me.getMySummary, {
+          allLikes: 100,
+          developments: 100,
+          ideas: 100,
+        }),
         mockTrpcQuery(
           trpcMsw.aggregate.getTop10LikesIdeasInThisMonth,
           [...new Array(6)].map(() => IdeaHelper.createFilled())

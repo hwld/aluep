@@ -53,3 +53,18 @@ export const Empty: Story = {
     },
   },
 };
+
+export const Filled: Story = {
+  args: { user: UserHelper.createFilled() },
+  parameters: {
+    msw: {
+      handlers: [
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.user.getFavoritedUsers, {
+          list: [...new Array(10)].map(() => UserHelper.createFilled()),
+          allPages: 2,
+        }),
+      ],
+    },
+  },
+};

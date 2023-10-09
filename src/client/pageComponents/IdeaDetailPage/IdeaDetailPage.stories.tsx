@@ -28,31 +28,26 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const ideaExample = IdeaHelper.create({
+const ideaSample = IdeaHelper.create({
   title: "TwitterのようなWebアプリケーション",
   likes: 10,
   developments: 3,
-  descriptionHtml: "TwitterのようなWebアプリケーション",
 });
-
-const baseHandlers = [
-  mockTrpcQuery(trpcMsw.ideaComment.getAll, () => {
-    const { create } = IdeaCommentHelper;
-    return [
-      create({ inReplyToComment: undefined }),
-      create({ text: "返信コメント1" }),
-      create({ text: "返信コメント2" }),
-    ];
-  }),
-];
 
 export const Guest: Story = {
   name: "未ログイン",
-  args: { idea: ideaExample },
+  args: { idea: ideaSample },
   parameters: {
     msw: {
       handlers: [
-        ...baseHandlers,
+        mockTrpcQuery(trpcMsw.ideaComment.getAll, () => {
+          const { create } = IdeaCommentHelper;
+          return [
+            create({ inReplyToComment: undefined }),
+            create({ text: "返信コメント1" }),
+            create({ text: "返信コメント2" }),
+          ];
+        }),
         mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.idea.isLikedByUser, false),
         mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
@@ -67,11 +62,44 @@ export const Guest: Story = {
 // (参考: useAutoScrollOnIncrease)
 export const SignedIn: Story = {
   name: "ログイン",
-  args: { idea: ideaExample },
+  args: { idea: ideaSample },
   parameters: {
     msw: {
       handlers: [
-        ...baseHandlers,
+        mockTrpcQuery(trpcMsw.ideaComment.getAll, () => {
+          const { create } = IdeaCommentHelper;
+          return [
+            create({ inReplyToComment: undefined }),
+            create({ text: "返信コメント1" }),
+            create({ text: "返信コメント2" }),
+          ];
+        }),
+        mockTrpcQuery(trpcMsw.session, {
+          user: UserHelper.create(),
+          expires: "",
+        }),
+        mockTrpcQuery(trpcMsw.me.getMySummary, {
+          allLikes: 10,
+          developments: 3,
+          ideas: 1,
+        }),
+        mockTrpcQuery(trpcMsw.idea.isLikedByUser, true),
+        mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+          developed: true,
+          developmentId: "id",
+        }),
+      ],
+    },
+  },
+};
+
+export const EmptyComment: Story = {
+  name: "コメントなし",
+  args: { idea: ideaSample },
+  parameters: {
+    msw: {
+      handlers: [
+        mockTrpcQuery(trpcMsw.ideaComment.getAll, []),
         mockTrpcQuery(trpcMsw.session, {
           user: UserHelper.create(),
           expires: "",

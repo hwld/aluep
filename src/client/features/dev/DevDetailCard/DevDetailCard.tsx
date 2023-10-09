@@ -109,8 +109,8 @@ export const DevDetailCard: React.FC<Props> = ({
 
         {/* 開発者情報 */}
         <Grid.Col span={{ xs: 12, md: 5 }}>
-          <Stack ml="sm" h="100%">
-            <Box className={classes["menu-button-wrapper"]}>
+          <Stack ml="sm" h="100%" pt="15px">
+            <Box style={{ position: "absolute", top: "10px", right: "10px" }}>
               <DevMenuButton development={development} isOwner={isDeveloper} />
             </Box>
             <Flex mt="sm" gap="xs" align="center">

@@ -125,7 +125,7 @@ export const DevelopForm: React.FC<Props> = ({
               return (
                 <Textarea
                   label="リポジトリの説明"
-                  minRows={3}
+                  styles={{ input: { height: "100px" } }}
                   error={
                     getFieldState("githubRepositoryDescription").error?.message
                   }
@@ -179,7 +179,7 @@ export const DevelopForm: React.FC<Props> = ({
           return (
             <Textarea
               label="コメント"
-              minRows={5}
+              styles={{ input: { height: "100px" } }}
               error={errors.comment?.message}
               {...field}
             />

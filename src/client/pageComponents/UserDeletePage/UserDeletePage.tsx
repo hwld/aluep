@@ -71,8 +71,9 @@ export const UserDeletepage: React.FC = () => {
             w="100%"
             h={120}
             style={(theme) => ({
-              backgroundColor: theme.colors.pink[0],
+              backgroundColor: theme.colors.red[1],
               borderRadius: theme.radius.md,
+              border: "2px solid var(--mantine-color-red-3)",
               display: "grid",
               placeItems: "center",
             })}

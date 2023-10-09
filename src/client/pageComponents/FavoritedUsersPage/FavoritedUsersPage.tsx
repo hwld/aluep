@@ -39,19 +39,23 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
               <BsFillPeopleFill size={70} color="var(--mantine-color-red-7)" />
               <TbHeart
                 size={70}
-                color="var(--mantine-color-red[3]} fill={colors.red-3)"
+                color="var(--mantine-color-red-3)"
+                fill="var(--mantine-color-red-3)"
               />
               <TbHeart
                 size={100}
-                color="var(--mantine-color-red[4]} fill={colors.red-4)"
+                color="var(--mantine-color-red-4)"
+                fill="var(--mantine-color-red-4)"
               />
               <TbHeart
                 size={130}
-                color="var(--mantine-color-red[5]} fill={colors.red-5)"
+                color="var(--mantine-color-red-5)"
+                fill="var(--mantine-color-red-5)"
               />
               <TbHeart
                 size={160}
-                color="var(--mantine-color-red[6]} fill={colors.red-6)"
+                color="var(--mantine-color-red-6)"
+                fill="var(--mantine-color-red-6)"
               />
             </Flex>
 

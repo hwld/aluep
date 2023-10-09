@@ -40,3 +40,20 @@ export const Default: Story = {
     },
   },
 };
+
+export const Filled: Story = {
+  args: { development: DevelopmentHelper.createFilled() },
+  parameters: {
+    msw: {
+      handlers: [
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.user.getDevelopmentLikers, {
+          list: [...new Array(9)].map(() =>
+            DevelopmentLikerHelper.createFilled()
+          ),
+          allPages: 2,
+        }),
+      ],
+    },
+  },
+};

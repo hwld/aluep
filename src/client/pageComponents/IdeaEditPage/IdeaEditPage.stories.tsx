@@ -24,8 +24,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const tagSamples = [...new Array(3)].map(() => IdeaTagHelper.create());
 export const Default: Story = {
-  args: { idea: IdeaHelper.create() },
+  args: {
+    idea: IdeaHelper.create({
+      tags: tagSamples,
+    }),
+  },
   parameters: {
     msw: {
       handlers: [
@@ -38,17 +43,7 @@ export const Default: Story = {
           developments: 100,
           ideas: 100,
         }),
-
-        mockTrpcQuery(trpcMsw.idea.getAllTags, () => {
-          const { create } = IdeaTagHelper;
-          return [
-            create({ name: "longlonglonglonglonglong" }),
-            create({
-              name: "長いタグ長いタグ長いタグ長いタグ長いタグ長いタグ",
-            }),
-            create({ name: "短いタグ" }),
-          ];
-        }),
+        mockTrpcQuery(trpcMsw.idea.getAllTags, tagSamples),
       ],
     },
   },

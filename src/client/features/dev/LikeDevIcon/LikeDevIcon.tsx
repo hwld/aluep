@@ -9,7 +9,7 @@ const styles = {
 
 type Props = { size?: "sm" | "md" | "lg" };
 export const LikeDevIcon: React.FC<Props> = ({ size = "md" }) => {
-  const borderColor = "var()";
+  const borderColor = "var(--mantine-color-red-7)";
 
   return (
     <Flex
