@@ -21,6 +21,13 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
+    backgrounds: {
+      default: "app",
+      values: [
+        { name: "app", value: "#e7e5e4" },
+        { name: "card", value: "#f5f5f4" },
+      ],
+    },
   },
   decorators: [
     mswDecorator,
