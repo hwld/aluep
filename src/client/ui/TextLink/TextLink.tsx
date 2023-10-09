@@ -10,8 +10,6 @@ type Props = {
   disabled?: boolean;
 } & PropsWithChildren;
 
-// TODO: この名前だとリンクとしての振る舞いを持ってそうだけど持ってない
-// TextLinkWrapperみたいにするべきかも
 export const TextLink: React.FC<Props> = ({
   href,
   className,
@@ -28,7 +26,6 @@ export const TextLink: React.FC<Props> = ({
       className={`${className} ${classes.root}`}
       href={href}
       miw={0}
-      w="fit-content"
       onClick={stopPropagation}
       onMouseDown={stopPropagation}
       onMouseUp={stopPropagation}

@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { HomePage } from "@/client/pageComponents/HomePage/HomePage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -180,6 +180,92 @@ export const Large: Story = {
               return res(
                 ctx.status(200),
                 ctx.data([...new Array(6)].map(() => create()))
+              );
+            }
+          }
+
+          return res(ctx.status(200), ctx.data([]));
+        }),
+      ],
+    },
+  },
+};
+
+export const LargeFilled: Story = {
+  name: "大量の最大文字数のデータ",
+  parameters: {
+    msw: {
+      handlers: [
+        trpcMsw.session.query((req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.data({ expires: "", user: UserHelper.createFilled() })
+          );
+        }),
+        trpcMsw.me.getMySummary.query((req, res, ctx) => {
+          return res(
+            ctx.status(200),
+            ctx.data({ allLikes: 9999, developments: 9999, ideas: 9999 })
+          );
+        }),
+        trpcMsw.aggregate.getTop10LikesIdeasInThisMonth.query(
+          (req, res, ctx) => {
+            const { createFilled } = IdeaHelper;
+            return res(
+              ctx.status(200),
+              ctx.data([...new Array(6)].map(() => createFilled()))
+            );
+          }
+        ),
+        trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth.query(
+          (req, res, ctx) => {
+            const { createFilled } = UserHelper;
+            return res(
+              ctx.status(200),
+              ctx.data(
+                [...new Array(10)].map(() => ({
+                  ...createFilled(),
+                  developmentLikes: 10,
+                }))
+              )
+            );
+          }
+        ),
+        trpcMsw.aggregate.getTop10LikesPostersInThisMonth.query(
+          (req, res, ctx) => {
+            const { createFilled } = UserHelper;
+            return res(
+              ctx.status(200),
+              ctx.data(
+                [...new Array(10)].map(() => ({
+                  ...createFilled(),
+                  ideaLikes: 10,
+                }))
+              )
+            );
+          }
+        ),
+        trpcMsw.aggregate.getPickedIdeas.query((req, res, ctx) => {
+          const { order } = req.getInput();
+          const { createFilled } = IdeaHelper;
+
+          switch (order) {
+            case "createdDesc": {
+              return res(
+                ctx.status(200),
+                ctx.data([...new Array(6)].map(() => createFilled()))
+              );
+            }
+            case "likeDesc": {
+              return res(
+                ctx.status(200),
+                ctx.data([...new Array(6)].map(() => createFilled()))
+              );
+            }
+            case "developmentDesc": {
+              return res(
+                ctx.status(200),
+                ctx.data([...new Array(6)].map(() => createFilled()))
               );
             }
           }

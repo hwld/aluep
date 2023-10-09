@@ -1,3 +1,4 @@
+import { formatDate } from "@/client/lib/utils";
 import { Development } from "@/models/development";
 import { DevelopmentLikers } from "@/models/developmentLike";
 import { DevelopmentMemo } from "@/models/developmentMemo";
@@ -6,6 +7,7 @@ import { IdeaComment } from "@/models/ideaComment";
 import { IdeaTag } from "@/models/ideaTag";
 import { User } from "@/models/user";
 import { DevStatusIds } from "@/share/consts";
+import { fakeString } from "@/share/fake";
 import { faker } from "@faker-js/faker";
 
 // TODO: 最大文字数のIdeaも作れるようにしたい
@@ -26,6 +28,25 @@ export const IdeaHelper = {
       ...data,
     };
   },
+  createFilled: (): Idea => {
+    return {
+      id: faker.string.uuid(),
+      title: fakeString(50),
+      descriptionHtml: fakeString(10000),
+      user: {
+        id: faker.string.uuid(),
+        name: fakeString(50),
+        image: null,
+      },
+      tags: [],
+      likes: 10000,
+      comments: 10000,
+      developments: 10000,
+      createdAt: formatDate(new Date()),
+      updatedAt: formatDate(new Date()),
+      elapsedSinceCreation: "1日前",
+    };
+  },
 };
 
 export const UserHelper = {
@@ -36,6 +57,14 @@ export const UserHelper = {
       image: "",
       profile: "",
       ...data,
+    };
+  },
+  createFilled: (): User => {
+    return {
+      id: faker.string.uuid(),
+      name: fakeString(50),
+      image: "",
+      profile: fakeString(200),
     };
   },
 };
