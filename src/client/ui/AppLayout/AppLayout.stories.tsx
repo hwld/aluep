@@ -1,5 +1,5 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = { component: AppLayout } satisfies Meta<typeof AppLayout>;
@@ -10,11 +10,7 @@ export const Default: Story = {
   args: { children: <div>content</div> },
   parameters: {
     msw: {
-      handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-      ],
+      handlers: [mockTrpcQuery(trpcMsw.session, null)],
     },
   },
 };

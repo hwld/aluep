@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaCreatePage } from "@/client/pageComponents/IdeaCreatePage/IdeaCreatePage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
@@ -26,12 +26,8 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.idea.getAllTags.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data([]));
-        }),
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.idea.getAllTags, []),
       ],
     },
   },

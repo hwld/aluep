@@ -1,5 +1,5 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaComments } from "@/client/features/ideaComment/IdeaComments/IdeaComments";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaCommentHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -12,18 +12,13 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({ expires: "", user: UserHelper.create() })
-          );
+        mockTrpcQuery(trpcMsw.session, {
+          user: UserHelper.create(),
+          expires: "",
         }),
-        trpcMsw.ideaComment.getAll.query((req, res, ctx) => {
+        mockTrpcQuery(trpcMsw.ideaComment.getAll, () => {
           const { create } = IdeaCommentHelper;
-          return res(
-            ctx.status(200),
-            ctx.data([create({ inReplyToComment: undefined }), create()])
-          );
+          return [create({ inReplyToComment: undefined }), create()];
         }),
       ],
     },

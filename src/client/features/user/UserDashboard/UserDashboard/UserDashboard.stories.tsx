@@ -1,5 +1,5 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { UserDashboard } from "@/client/features/user/UserDashboard/UserDashboard/UserDashboard";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -12,15 +12,9 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.user.isFavoritedByLoggedInUser.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(false));
-        }),
-        trpcMsw.user.getFavoriteCountByUser.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(0));
-        }),
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.user.isFavoritedByLoggedInUser, false),
+        mockTrpcQuery(trpcMsw.user.getFavoriteCountByUser, 0),
       ],
     },
   },

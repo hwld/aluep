@@ -1,5 +1,5 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { UserPostedIdeas } from "@/client/features/user/UserPostedIdeas/UserPostedIdeas";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -14,8 +14,9 @@ export const Empty: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.idea.getPostedIdeasByUser.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data({ list: [], allPages: 1 }));
+        mockTrpcQuery(trpcMsw.idea.getPostedIdeasByUser, {
+          list: [],
+          allPages: 1,
         }),
       ],
     },
@@ -27,15 +28,9 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.idea.getPostedIdeasByUser.query((req, res, ctx) => {
-          const { create } = IdeaHelper;
-          return res(
-            ctx.status(200),
-            ctx.data({
-              list: [...new Array(6)].map(() => create()),
-              allPages: 2,
-            })
-          );
+        mockTrpcQuery(trpcMsw.idea.getPostedIdeasByUser, {
+          list: [...new Array(6)].map(() => IdeaHelper.create()),
+          allPages: 2,
         }),
       ],
     },

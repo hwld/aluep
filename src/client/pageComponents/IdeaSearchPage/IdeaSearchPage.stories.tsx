@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaSearchPage } from "@/client/pageComponents/IdeaSearchPage/IdeaSearchPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -29,18 +29,11 @@ export const Found: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.idea.getAllTags.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data([]));
-        }),
-        trpcMsw.idea.search.query((req, res, ctx) => {
-          const { create } = IdeaHelper;
-          return res(
-            ctx.status(200),
-            ctx.data({ ideas: [create(), create(), create()], allPages: 1 })
-          );
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.idea.getAllTags, []),
+        mockTrpcQuery(trpcMsw.idea.search, {
+          ideas: [...new Array(3)].map(() => IdeaHelper.create()),
+          allPages: 1,
         }),
       ],
     },
@@ -52,15 +45,9 @@ export const NotFound: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.idea.getAllTags.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data([]));
-        }),
-        trpcMsw.idea.search.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data({ ideas: [], allPages: 1 }));
-        }),
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.idea.getAllTags, []),
+        mockTrpcQuery(trpcMsw.idea.search, { ideas: [], allPages: 1 }),
       ],
     },
   },

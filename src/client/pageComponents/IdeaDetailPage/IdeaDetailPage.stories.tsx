@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaDetailPage } from "@/client/pageComponents/IdeaDetailPage/IdeaDetailPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import {
   IdeaCommentHelper,
   IdeaHelper,
@@ -36,16 +36,13 @@ const ideaExample = IdeaHelper.create({
 });
 
 const baseHandlers = [
-  trpcMsw.ideaComment.getAll.query((req, res, ctx) => {
+  mockTrpcQuery(trpcMsw.ideaComment.getAll, () => {
     const { create } = IdeaCommentHelper;
-    return res(
-      ctx.status(200),
-      ctx.data([
-        create({ inReplyToComment: undefined }),
-        create({ text: "返信コメント1" }),
-        create({ text: "返信コメント2" }),
-      ])
-    );
+    return [
+      create({ inReplyToComment: undefined }),
+      create({ text: "返信コメント1" }),
+      create({ text: "返信コメント2" }),
+    ];
   }),
 ];
 
@@ -56,14 +53,10 @@ export const Guest: Story = {
     msw: {
       handlers: [
         ...baseHandlers,
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.idea.isLikedByUser.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(false));
-        }),
-        trpcMsw.development.isDevelopedByUser.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data({ developed: false }));
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.idea.isLikedByUser, false),
+        mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+          developed: false,
         }),
       ],
     },
@@ -79,26 +72,19 @@ export const SignedIn: Story = {
     msw: {
       handlers: [
         ...baseHandlers,
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({ expires: "", user: UserHelper.create() })
-          );
+        mockTrpcQuery(trpcMsw.session, {
+          user: UserHelper.create(),
+          expires: "",
         }),
-        trpcMsw.me.getMySummary.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({ allLikes: 10, developments: 3, ideas: 1 })
-          );
+        mockTrpcQuery(trpcMsw.me.getMySummary, {
+          allLikes: 10,
+          developments: 3,
+          ideas: 1,
         }),
-        trpcMsw.idea.isLikedByUser.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(true));
-        }),
-        trpcMsw.development.isDevelopedByUser.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({ developed: true, developmentId: "id" })
-          );
+        mockTrpcQuery(trpcMsw.idea.isLikedByUser, true),
+        mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+          developed: true,
+          developmentId: "id",
         }),
       ],
     },

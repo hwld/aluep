@@ -1,5 +1,5 @@
 import { DevCard } from "@/client/features/dev/DevCard/DevCard";
-import { trpcMsw } from "@/client/__mocks__/trpc";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { DevelopmentHelper, IdeaHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -11,11 +11,7 @@ export const Default: Story = {
   args: { idea: IdeaHelper.create(), development: DevelopmentHelper.create() },
   parameters: {
     msw: {
-      handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-      ],
+      handlers: [mockTrpcQuery(trpcMsw.session, null)],
     },
   },
 };

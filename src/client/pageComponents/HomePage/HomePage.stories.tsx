@@ -1,6 +1,6 @@
 import { HomePage } from "@/client/pageComponents/HomePage/HomePage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
-import { trpcMsw } from "@/client/__mocks__/trpc";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -28,27 +28,14 @@ export const Empty: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.aggregate.getTop10LikesIdeasInThisMonth.query(
-          (req, res, ctx) => {
-            return res(ctx.status(200), ctx.data([]));
-          }
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesIdeasInThisMonth, []),
+        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesPostersInThisMonth, []),
+        mockTrpcQuery(
+          trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth,
+          []
         ),
-        trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth.query(
-          (req, res, ctx) => {
-            return res(ctx.status(200), ctx.data([]));
-          }
-        ),
-        trpcMsw.aggregate.getTop10LikesPostersInThisMonth.query(
-          (req, res, ctx) => {
-            return res(ctx.status(200), ctx.data([]));
-          }
-        ),
-        trpcMsw.aggregate.getPickedIdeas.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data([]));
-        }),
+        mockTrpcQuery(trpcMsw.aggregate.getPickedIdeas, []),
       ],
     },
   },
@@ -59,9 +46,7 @@ export const Small: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
+        mockTrpcQuery(trpcMsw.session, null),
         trpcMsw.aggregate.getPickedIdeas.query((req, res, ctx) => {
           const { order } = req.getInput();
           const { create } = IdeaHelper;
@@ -88,30 +73,15 @@ export const Small: Story = {
 
           return res(ctx.status(200), ctx.data([]));
         }),
-        trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth.query(
-          (req, res, ctx) => {
-            const { create } = UserHelper;
-            return res(
-              ctx.status(200),
-              ctx.data([{ ...create(), developmentLikes: 3 }])
-            );
-          }
-        ),
-        trpcMsw.aggregate.getTop10LikesPostersInThisMonth.query(
-          (req, res, ctx) => {
-            const { create } = UserHelper;
-            return res(
-              ctx.status(200),
-              ctx.data([{ ...create(), ideaLikes: 5 }])
-            );
-          }
-        ),
-        trpcMsw.aggregate.getTop10LikesIdeasInThisMonth.query(
-          (req, res, ctx) => {
-            const { create } = IdeaHelper;
-            return res(ctx.status(200), ctx.data([create()]));
-          }
-        ),
+        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesIdeasInThisMonth, [
+          IdeaHelper.create(),
+        ]),
+        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesPostersInThisMonth, [
+          { ...UserHelper.create(), ideaLikes: 5 },
+        ]),
+        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth, [
+          { ...UserHelper.create(), developmentLikes: 3 },
+        ]),
       ],
     },
   },
@@ -122,42 +92,24 @@ export const Large: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.aggregate.getTop10LikesIdeasInThisMonth.query(
-          (req, res, ctx) => {
-            const { create } = IdeaHelper;
-            return res(
-              ctx.status(200),
-              ctx.data([...new Array(6)].map(() => create()))
-            );
-          }
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(
+          trpcMsw.aggregate.getTop10LikesIdeasInThisMonth,
+          [...new Array(6)].map(() => IdeaHelper.create())
         ),
-        trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth.query(
-          (req, res, ctx) => {
-            const { create } = UserHelper;
-            return res(
-              ctx.status(200),
-              ctx.data(
-                [...new Array(10)].map(() => ({
-                  ...create(),
-                  developmentLikes: 10,
-                }))
-              )
-            );
-          }
+        mockTrpcQuery(
+          trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth,
+          [...new Array(6)].map(() => ({
+            ...UserHelper.create(),
+            developmentLikes: 10,
+          }))
         ),
-        trpcMsw.aggregate.getTop10LikesPostersInThisMonth.query(
-          (req, res, ctx) => {
-            const { create } = UserHelper;
-            return res(
-              ctx.status(200),
-              ctx.data(
-                [...new Array(10)].map(() => ({ ...create(), ideaLikes: 10 }))
-              )
-            );
-          }
+        mockTrpcQuery(
+          trpcMsw.aggregate.getTop10LikesPostersInThisMonth,
+          [...new Array(6)].map(() => ({
+            ...UserHelper.create(),
+            ideaLikes: 10,
+          }))
         ),
         trpcMsw.aggregate.getPickedIdeas.query((req, res, ctx) => {
           const { order } = req.getInput();
@@ -196,54 +148,24 @@ export const LargeFilled: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({ expires: "", user: UserHelper.createFilled() })
-          );
-        }),
-        trpcMsw.me.getMySummary.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({ allLikes: 9999, developments: 9999, ideas: 9999 })
-          );
-        }),
-        trpcMsw.aggregate.getTop10LikesIdeasInThisMonth.query(
-          (req, res, ctx) => {
-            const { createFilled } = IdeaHelper;
-            return res(
-              ctx.status(200),
-              ctx.data([...new Array(6)].map(() => createFilled()))
-            );
-          }
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(
+          trpcMsw.aggregate.getTop10LikesIdeasInThisMonth,
+          [...new Array(6)].map(() => IdeaHelper.createFilled())
         ),
-        trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth.query(
-          (req, res, ctx) => {
-            const { createFilled } = UserHelper;
-            return res(
-              ctx.status(200),
-              ctx.data(
-                [...new Array(10)].map(() => ({
-                  ...createFilled(),
-                  developmentLikes: 10,
-                }))
-              )
-            );
-          }
+        mockTrpcQuery(
+          trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth,
+          [...new Array(6)].map(() => ({
+            ...UserHelper.createFilled(),
+            developmentLikes: 10,
+          }))
         ),
-        trpcMsw.aggregate.getTop10LikesPostersInThisMonth.query(
-          (req, res, ctx) => {
-            const { createFilled } = UserHelper;
-            return res(
-              ctx.status(200),
-              ctx.data(
-                [...new Array(10)].map(() => ({
-                  ...createFilled(),
-                  ideaLikes: 10,
-                }))
-              )
-            );
-          }
+        mockTrpcQuery(
+          trpcMsw.aggregate.getTop10LikesPostersInThisMonth,
+          [...new Array(6)].map(() => ({
+            ...UserHelper.createFilled(),
+            ideaLikes: 10,
+          }))
         ),
         trpcMsw.aggregate.getPickedIdeas.query((req, res, ctx) => {
           const { order } = req.getInput();

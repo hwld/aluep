@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { DevelopmentDetailPage } from "@/client/pageComponents/DevelopmentDetailPage/DevelopmentDetailPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { DevelopmentHelper, IdeaHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -29,15 +29,11 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+          developed: false,
         }),
-        trpcMsw.development.isDevelopedByUser.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data({ developed: false }));
-        }),
-        trpcMsw.developmentMemo.getAll.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data([]));
-        }),
+        mockTrpcQuery(trpcMsw.developmentMemo.getAll, []),
       ],
     },
   },

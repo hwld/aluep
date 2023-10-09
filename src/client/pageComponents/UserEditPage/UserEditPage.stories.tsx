@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { UserEditPage } from "@/client/pageComponents/UserEditPage/UserEditPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -28,20 +28,14 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({
-              expires: "",
-              user: UserHelper.create(),
-            })
-          );
+        mockTrpcQuery(trpcMsw.session, {
+          user: UserHelper.create(),
+          expires: "",
         }),
-        trpcMsw.me.getMySummary.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({ allLikes: 0, developments: 0, ideas: 0 })
-          );
+        mockTrpcQuery(trpcMsw.me.getMySummary, {
+          allLikes: 0,
+          developments: 0,
+          ideas: 0,
         }),
       ],
     },

@@ -1,5 +1,5 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { AppSidebar } from "@/client/ui/AppSidebar/AppSidebar/AppSidebar";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -15,11 +15,10 @@ export const LoggedIn: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.me.getMySummary.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({ allLikes: 10, developments: 3, ideas: 8 })
-          );
+        mockTrpcQuery(trpcMsw.me.getMySummary, {
+          allLikes: 10,
+          developments: 3,
+          ideas: 8,
         }),
       ],
     },

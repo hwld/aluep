@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { UserDetailPage } from "@/client/pageComponents/UserDetailPage/UserDetailPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import {
   DevelopmentHelper,
   IdeaHelper,
@@ -26,26 +26,17 @@ const meta = {
 export default meta;
 
 const baseHandlers = [
-  trpcMsw.session.query((req, res, ctx) => {
-    return res(ctx.status(200), ctx.data(null));
+  mockTrpcQuery(trpcMsw.session, null),
+  mockTrpcQuery(trpcMsw.user.isFavoritedByLoggedInUser, false),
+  mockTrpcQuery(trpcMsw.user.getFavoriteCountByUser, 8),
+  mockTrpcQuery(trpcMsw.user.getReceivedLikeCount, {
+    ideaLikeCount: 10,
+    developmentLikeCount: 2,
   }),
-  trpcMsw.user.isFavoritedByLoggedInUser.query((req, res, ctx) => {
-    return res(ctx.status(200), ctx.data(false));
-  }),
-  trpcMsw.user.getFavoriteCountByUser.query((req, res, ctx) => {
-    return res(ctx.status(200), ctx.data(8));
-  }),
-  trpcMsw.user.getReceivedLikeCount.query((req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.data({ ideaLikeCount: 10, developmentLikeCount: 2 })
-    );
-  }),
-  trpcMsw.user.getUserActivity.query((req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.data({ developmentCount: 3, likedIdeaCount: 4, postedIdeaCount: 1 })
-    );
+  mockTrpcQuery(trpcMsw.user.getUserActivity, {
+    developmentCount: 3,
+    likedIdeaCount: 4,
+    postedIdeaCount: 1,
   }),
 ];
 
@@ -56,12 +47,9 @@ export const PostedIdeas: Story = {
     msw: {
       handlers: [
         ...baseHandlers,
-        trpcMsw.idea.getPostedIdeasByUser.query((req, res, ctx) => {
-          const { create } = IdeaHelper;
-          return res(
-            ctx.status(200),
-            ctx.data({ list: [create(), create(), create()], allPages: 1 })
-          );
+        mockTrpcQuery(trpcMsw.idea.getPostedIdeasByUser, {
+          list: [...new Array(3)].map(() => IdeaHelper.create()),
+          allPages: 1,
         }),
       ],
     },
@@ -74,15 +62,9 @@ export const Developments: Story = {
     msw: {
       handlers: [
         ...baseHandlers,
-        trpcMsw.development.getDevelopmentsByUser.query((req, res, ctx) => {
-          const { create } = DevelopmentHelper;
-          return res(
-            ctx.status(200),
-            ctx.data({
-              list: [create(), create(), create()],
-              allPages: 1,
-            })
-          );
+        mockTrpcQuery(trpcMsw.development.getDevelopmentsByUser, {
+          list: [...new Array(3)].map(() => DevelopmentHelper.create()),
+          allPages: 1,
         }),
       ],
     },
@@ -95,12 +77,9 @@ export const LikedIdeas: Story = {
     msw: {
       handlers: [
         ...baseHandlers,
-        trpcMsw.idea.getLikedIdeasByUser.query((req, res, ctx) => {
-          const { create } = IdeaHelper;
-          return res(
-            ctx.status(200),
-            ctx.data({ list: [create(), create(), create()], allPages: 1 })
-          );
+        mockTrpcQuery(trpcMsw.idea.getLikedIdeasByUser, {
+          list: [...new Array(3)].map(() => IdeaHelper.create()),
+          allPages: 1,
         }),
       ],
     },
@@ -113,15 +92,10 @@ export const LikedDevelopments: Story = {
     msw: {
       handlers: [
         ...baseHandlers,
-        trpcMsw.development.getLikedDevelopmentsByUser.query(
-          (req, res, ctx) => {
-            const { create } = DevelopmentHelper;
-            return res(
-              ctx.status(200),
-              ctx.data({ list: [create(), create(), create()], allPages: 1 })
-            );
-          }
-        ),
+        mockTrpcQuery(trpcMsw.development.getLikedDevelopmentsByUser, {
+          list: [...new Array(3)].map(() => DevelopmentHelper.create()),
+          allPages: 1,
+        }),
       ],
     },
   },

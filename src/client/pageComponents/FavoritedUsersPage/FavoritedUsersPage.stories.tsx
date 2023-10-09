@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { FavoritedUsersPage } from "@/client/pageComponents/FavoritedUsersPage/FavoritedUsersPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -29,15 +29,10 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.user.getFavoritedUsers.query((req, res, ctx) => {
-          const { create } = UserHelper;
-          return res(
-            ctx.status(200),
-            ctx.data({ list: [create(), create(), create()], allPages: 1 })
-          );
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.user.getFavoritedUsers, {
+          list: [...new Array(3)].map(() => UserHelper.create()),
+          allPages: 1,
         }),
       ],
     },
@@ -49,12 +44,10 @@ export const Empty: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.user.getFavoritedUsers.query((req, res, ctx) => {
-          const { create } = UserHelper;
-          return res(ctx.status(200), ctx.data({ list: [], allPages: 1 }));
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.user.getFavoritedUsers, {
+          list: [],
+          allPages: 1,
         }),
       ],
     },

@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { UserSearchPage } from "@/client/pageComponents/UserSearchPage/UserSearchPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -29,12 +29,8 @@ export const BeforeSearch: Story = {
     nextjs: { router: { query: {} } },
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.user.search.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data([]));
-        }),
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.user.search, []),
       ],
     },
   },
@@ -46,12 +42,8 @@ export const NotFound: Story = {
     nextjs: { router: { query: { userName: "no" } } },
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.user.search.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data([]));
-        }),
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.user.search, []),
       ],
     },
   },
@@ -62,13 +54,11 @@ export const Found: Story = {
     nextjs: { router: { query: { userName: "user" } } },
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.user.search.query((req, res, ctx) => {
-          const { create } = UserHelper;
-          return res(ctx.status(200), ctx.data([create(), create(), create()]));
-        }),
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(
+          trpcMsw.user.search,
+          [...new Array(3)].map(() => UserHelper.create())
+        ),
       ],
     },
   },

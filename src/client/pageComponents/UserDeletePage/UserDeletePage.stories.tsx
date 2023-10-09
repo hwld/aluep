@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { UserDeletepage } from "@/client/pageComponents/UserDeletePage/UserDeletePage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
@@ -25,11 +25,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   parameters: {
     msw: {
-      handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-      ],
+      handlers: [mockTrpcQuery(trpcMsw.session, null)],
     },
   },
 };

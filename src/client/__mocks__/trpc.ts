@@ -21,3 +21,22 @@ export const trpcMsw = createTRPCMsw<AppRouter>({
   baseUrl: apiUrl,
   transformer: { output: SuperJSON, input: SuperJSON },
 });
+
+// TODO: エラーなく型を付けられなかった・・・
+type InputData<Query extends any> = Parameters<
+  /** @ts-ignore */
+  Parameters<Parameters<Query["query"]>[0]>[2]["data"]
+>[0];
+
+// TODO: エラーなく型を付けられなかった・・・
+export const mockTrpcQuery = <T>(
+  route: T,
+  data: InputData<T> | (() => InputData<T>)
+) => {
+  const query: any = (route as any).query;
+  return query((req: any, res: any, ctx: any) => {
+    const _data = typeof data === "function" ? (data as any)() : data;
+
+    return res(ctx.status(200), ctx.data(_data));
+  });
+};

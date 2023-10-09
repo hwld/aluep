@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaEditPage } from "@/client/pageComponents/IdeaEditPage/IdeaEditPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaHelper, IdeaTagHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -29,30 +29,25 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({ expires: "", user: UserHelper.create() })
-          );
+        mockTrpcQuery(trpcMsw.session, {
+          user: UserHelper.create(),
+          expires: "",
         }),
-        trpcMsw.me.getMySummary.query((req, res, ctx) => {
-          return res(
-            ctx.status(200),
-            ctx.data({ allLikes: 100, developments: 100, ideas: 100 })
-          );
+        mockTrpcQuery(trpcMsw.me.getMySummary, {
+          allLikes: 100,
+          developments: 100,
+          ideas: 100,
         }),
-        trpcMsw.idea.getAllTags.query((req, res, ctx) => {
+
+        mockTrpcQuery(trpcMsw.idea.getAllTags, () => {
           const { create } = IdeaTagHelper;
-          return res(
-            ctx.status(200),
-            ctx.data([
-              create({ name: "longlonglonglonglonglong" }),
-              create({
-                name: "長いタグ長いタグ長いタグ長いタグ長いタグ長いタグ",
-              }),
-              create({ name: "短いタグ" }),
-            ])
-          );
+          return [
+            create({ name: "longlonglonglonglonglong" }),
+            create({
+              name: "長いタグ長いタグ長いタグ長いタグ長いタグ長いタグ",
+            }),
+            create({ name: "短いタグ" }),
+          ];
         }),
       ],
     },

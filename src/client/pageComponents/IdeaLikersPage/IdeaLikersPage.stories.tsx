@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaLikersPage } from "@/client/pageComponents/IdeaLikersPage/IdeaLikersPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { IdeaHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -26,22 +26,13 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.user.getIdeaLikers.query((req, res, ctx) => {
-          const { create } = UserHelper;
-          return res(
-            ctx.status(200),
-            ctx.data({
-              list: [
-                { ...create(), likedDate: new Date() },
-                { ...create(), likedDate: new Date() },
-                { ...create(), likedDate: new Date() },
-              ],
-              allPages: 1,
-            })
-          );
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.user.getIdeaLikers, {
+          list: [...new Array(3)].map(() => ({
+            ...UserHelper.create(),
+            likedDate: new Date(),
+          })),
+          allPages: 1,
         }),
       ],
     },

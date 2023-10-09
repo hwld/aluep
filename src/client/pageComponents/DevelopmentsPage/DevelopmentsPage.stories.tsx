@@ -1,6 +1,6 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { DevelopmentsPage } from "@/client/pageComponents/DevelopmentsPage/DevelopmentsPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { DevelopmentHelper, IdeaHelper } from "@/models/tests/helpers";
 import { DevStatusIds } from "@/share/consts";
 import { Meta, StoryObj } from "@storybook/react";
@@ -28,32 +28,27 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.development.getManyByIdea.query((req, res, ctx) => {
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.development.getManyByIdea, () => {
           const { create } = DevelopmentHelper;
-          return res(
-            ctx.status(200),
-            ctx.data({
-              list: [
-                create({
-                  status: {
-                    id: DevStatusIds.ABORTED,
-                    name: "開発中止",
-                  },
-                }),
-                create({
-                  status: {
-                    id: DevStatusIds.COMPLETED,
-                    name: "開発終了",
-                  },
-                }),
-                create(),
-              ],
-              allPages: 1,
-            })
-          );
+          return {
+            list: [
+              create({
+                status: {
+                  id: DevStatusIds.ABORTED,
+                  name: "開発中止",
+                },
+              }),
+              create({
+                status: {
+                  id: DevStatusIds.COMPLETED,
+                  name: "開発終了",
+                },
+              }),
+              create(),
+            ],
+            allPages: 1,
+          };
         }),
       ],
     },

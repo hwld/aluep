@@ -1,5 +1,5 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { UserLikedDevelopments } from "@/client/features/user/UserLikedDevelopments/UserLikedDevelopments";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { DevelopmentHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -14,18 +14,10 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.development.getLikedDevelopmentsByUser.query(
-          (req, res, ctx) => {
-            const { create } = DevelopmentHelper;
-            return res(
-              ctx.status(200),
-              ctx.data({
-                list: [...new Array(6)].map(() => create()),
-                allPages: 2,
-              })
-            );
-          }
-        ),
+        mockTrpcQuery(trpcMsw.development.getLikedDevelopmentsByUser, {
+          list: [...new Array(6)].map(() => DevelopmentHelper.create()),
+          allPages: 2,
+        }),
       ],
     },
   },
@@ -36,17 +28,10 @@ export const Empty: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.development.getLikedDevelopmentsByUser.query(
-          (req, res, ctx) => {
-            return res(
-              ctx.status(200),
-              ctx.data({
-                list: [],
-                allPages: 1,
-              })
-            );
-          }
-        ),
+        mockTrpcQuery(trpcMsw.development.getLikedDevelopmentsByUser, {
+          list: [],
+          allPages: 1,
+        }),
       ],
     },
   },

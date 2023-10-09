@@ -1,5 +1,5 @@
-import { trpcMsw } from "@/client/__mocks__/trpc";
 import { DevMenuButton } from "@/client/features/dev/DevMenuButton/DevMenuButton";
+import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { DevelopmentHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -12,11 +12,9 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        trpcMsw.session.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data(null));
-        }),
-        trpcMsw.development.isDevelopedByUser.query((req, res, ctx) => {
-          return res(ctx.status(200), ctx.data({ developed: false }));
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+          developed: false,
         }),
       ],
     },
