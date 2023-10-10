@@ -23,16 +23,29 @@ export type Idea = {
   elapsedSinceCreation: string;
 };
 
+export const IdeaFields = {
+  title: {
+    maxLength: 50,
+  },
+  descriptionHtml: {
+    maxLength: 10000,
+  },
+};
+const { title, descriptionHtml } = IdeaFields;
+
 // TODO: 最大・最小文字数などを定数として管理したい。
 export const ideaFormSchema = z.object({
   title: z
     .string()
     .min(1, "タイトルを入力してください。")
-    .max(50, "タイトルは50文字以下で入力してください。"),
+    .max(
+      title.maxLength,
+      `タイトルは${title.maxLength}文字以下で入力してください。`
+    ),
   descriptionHtml: z
     .string()
     // htmlを受け取るので、文字数を指定するのは難しそうなのでとりあえず
-    .max(10000, "もう少し短い説明を入力してください。")
+    .max(descriptionHtml.maxLength, "もう少し短い説明を入力してください。")
     // htmlタグの最後の文字(>)のあとにhtmlタグの最初の文字(<)が来ていなければ文字が入力されているとみなす
     .refine((value) => />[^<]/.test(value), "お題の説明を入力してください。"),
   tags: z

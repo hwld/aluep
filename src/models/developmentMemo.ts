@@ -10,11 +10,17 @@ export type DevelopmentMemo = {
   createdAt: Date;
 };
 
+export const DevelopmentMemoFields = {
+  text: { maxLength: 2000 },
+};
+
+const { text } = DevelopmentMemoFields;
+
 export const developmentMemoFormSchema = z.object({
   text: z
     .string()
     .min(1, "メモを入力してください。")
-    .max(2000, "メモは2000文字以下で入力してください。"),
+    .max(text.maxLength, `メモは${text.maxLength}文字以下で入力してください。`),
 });
 export type DevelopmentMemoFormData = z.infer<typeof developmentMemoFormSchema>;
 export const createDevelopmentMemoInputSchema = developmentMemoFormSchema.and(

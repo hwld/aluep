@@ -22,11 +22,21 @@ export type IdeaComment = {
   createdAt: Date;
 };
 
+export const IdeaCommentFields = {
+  text: {
+    maxLength: 2000,
+  },
+};
+const { text } = IdeaCommentFields;
+
 export const ideaCommentFormSchema = z.object({
   text: z
     .string()
     .min(1, "コメントを入力してください。")
-    .max(2000, "コメントは2000文字以下で入力してください。"),
+    .max(
+      text.maxLength,
+      `コメントは${text.maxLength}文字以下で入力してください。`
+    ),
 });
 export type IdeaCommentFormData = z.infer<typeof ideaCommentFormSchema>;
 export const createIdeaCommentInputSchema = ideaCommentFormSchema.and(

@@ -8,12 +8,28 @@ export type User = {
   profile: string | null;
 };
 
+export const UserFields = {
+  name: {
+    maxLength: 50,
+  },
+  profile: { maxLength: 200 },
+};
+const { name, profile } = UserFields;
+
 export const profileFormSchema = z.object({
   name: z
     .string()
     .min(1, "ユーザー名を入力してください。")
-    .max(50, "ユーザー名は50文字以内で入力してください。"),
-  profile: z.string().max(200, "自己紹介文は200文字以内で入力してください。"),
+    .max(
+      name.maxLength,
+      `ユーザー名は${name.maxLength}文字以内で入力してください。`
+    ),
+  profile: z
+    .string()
+    .max(
+      profile.maxLength,
+      `自己紹介文は${profile.maxLength}文字以内で入力してください。`
+    ),
 });
 
 export type ProfileFormData = z.infer<typeof profileFormSchema>;

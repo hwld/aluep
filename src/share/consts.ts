@@ -10,6 +10,7 @@ export const pageLimit = {
   postedIdeas: 18,
 } as const;
 
+// TODO
 // 使ってるmodels/developmentStatus.tsに置く？
 export const DevStatusIds = {
   /** 開発中 */
