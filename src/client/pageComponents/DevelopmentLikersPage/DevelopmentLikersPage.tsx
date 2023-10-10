@@ -1,4 +1,4 @@
-import { DevSummaryCard } from "@/client/features/dev/DevSummaryCard/DevSummaryCard";
+import { DevSummaryHeader } from "@/client/features/dev/DevSummaryCard/DevSummaryHeader";
 import {
   IdeaLikerCard,
   ideaLikerCardMinWidthPx,
@@ -15,7 +15,6 @@ import { TbHeart } from "react-icons/tb";
 
 type Props = { development: Development };
 
-// TODO: なんか名前が・・・
 export const DevelopmentLikersPage: React.FC<Props> = ({ development }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { developmentLikers } = useDevelopmentLikers({
@@ -30,10 +29,11 @@ export const DevelopmentLikersPage: React.FC<Props> = ({ development }) => {
   return (
     <>
       <PageHeader icon={TbHeart} pageName="開発情報をいいねしたユーザー" />
-      <Stack w="100%" maw={1200} m="auto" gap="lg">
+      {/* // TODO */}
+      <Stack w="100%" maw={1200} m="auto" gap="xl">
         <Stack gap="sm">
-          <Text c="gray.5">いいねされた開発情報</Text>
-          <DevSummaryCard development={development} />
+          <Text c="gray.5">開発情報</Text>
+          <DevSummaryHeader development={development} />
         </Stack>
 
         <Stack gap="sm">

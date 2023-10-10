@@ -3,7 +3,7 @@ import {
   UserCard,
   userCardMinWidthPx,
 } from "@/client/features/user/UserCard/UserCard";
-import { UserSummaryCard } from "@/client/features/user/UserSummaryCard/UserSummaryCard";
+import { UserSummaryHeader } from "@/client/features/user/UserSummaryHeader/UserSummaryHeader";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
@@ -31,7 +31,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
       <Stack maw={800} m="auto" gap="lg">
         <Stack gap="sm">
           <Text c="gray.5">ユーザー</Text>
-          <UserSummaryCard user={user} />
+          <UserSummaryHeader user={user} />
         </Stack>
         {favoritedUsers?.list.length === 0 ? (
           <Flex direction="column" align="center" gap={50}>

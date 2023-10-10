@@ -45,7 +45,6 @@ export const UserIcon: React.FC<UserIconProps> = ({
         ref={iconRef}
         src={iconSrc}
         size={size}
-        bg="gray.1"
         imageProps={{ "aria-label": "ユーザーのアイコン" }}
         className={clsx(classes.root, {
           [classes.withBorder]: withBorder,

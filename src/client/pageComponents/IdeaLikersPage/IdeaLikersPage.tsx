@@ -1,4 +1,4 @@
-import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard/IdeaSummaryCard";
+import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import {
   IdeaLikerCard,
   ideaLikerCardMinWidthPx,
@@ -27,8 +27,8 @@ export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {
       <PageHeader icon={TbHeart} pageName="お題をいいねしたユーザー" />
       <Stack w="100%" maw={1200} m="auto" gap="lg">
         <Stack gap="sm">
-          <Text c="gray.5">いいねされたお題</Text>
-          <IdeaSummaryCard idea={idea} />
+          <Text c="gray.5">お題</Text>
+          <IdeaSummaryHeader idea={idea} />
         </Stack>
 
         <Stack gap="sm">

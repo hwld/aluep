@@ -1,9 +1,9 @@
-import { UserSummaryCard } from "@/client/features/user/UserSummaryCard/UserSummaryCard";
+import { UserSummaryHeader } from "@/client/features/user/UserSummaryHeader/UserSummaryHeader";
 import { UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
-const meta = { component: UserSummaryCard } satisfies Meta<
-  typeof UserSummaryCard
+const meta = { component: UserSummaryHeader } satisfies Meta<
+  typeof UserSummaryHeader
 >;
 export default meta;
 

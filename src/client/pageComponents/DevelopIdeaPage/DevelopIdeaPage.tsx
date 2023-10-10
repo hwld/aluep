@@ -1,7 +1,7 @@
 import { DevelopForm } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { useDevelop } from "@/client/features/dev/useDevelop";
 import { useDevStatusesQuery } from "@/client/features/dev/useDevStatusesQuery";
-import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard/IdeaSummaryCard";
+import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import {
   CreateRepositoryData,
@@ -46,7 +46,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
       <Stack w="100%" maw={800} miw={300} m="auto" gap="lg">
         <Stack gap="xs">
           <Text c="gray.5">開発するお題</Text>
-          <IdeaSummaryCard idea={idea} />
+          <IdeaSummaryHeader idea={idea} />
         </Stack>
         <Stack gap="xs">
           <Text c="gray.5">開発情報</Text>

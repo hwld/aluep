@@ -4,7 +4,7 @@ import {
 } from "@/client/features/dev/DevCard/DevCard";
 import { useDevLikeOnList } from "@/client/features/dev/useDevLikeOnList";
 import { useDevsByIdea } from "@/client/features/dev/useDevsByIdea";
-import { IdeaSummaryCard } from "@/client/features/idea/IdeaSummaryCard/IdeaSummaryCard";
+import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
@@ -31,8 +31,8 @@ export const DevelopmentsPage: React.FC<Props> = ({ idea }) => {
       <PageHeader icon={MdComputer} pageName="開発情報の一覧" />
       <Stack w="100%" miw={300} maw={1200} m="auto" gap="lg">
         <Stack gap="sm">
-          <Text c="gray.5">開発されているお題</Text>
-          <IdeaSummaryCard idea={idea} />
+          <Text c="gray.5">お題</Text>
+          <IdeaSummaryHeader idea={idea} />
         </Stack>
         <Stack gap="sm">
           <Text c="gray.5">開発情報</Text>

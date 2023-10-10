@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  createTheme,
   Divider,
   Input,
   InputWrapper,
@@ -13,7 +14,6 @@ import {
   TextInput,
   Title,
   Tooltip,
-  createTheme,
 } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import buttonClasses from "./components/button.module.css";

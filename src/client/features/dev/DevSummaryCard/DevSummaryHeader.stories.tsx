@@ -1,9 +1,9 @@
-import { DevSummaryCard } from "@/client/features/dev/DevSummaryCard/DevSummaryCard";
+import { DevSummaryHeader } from "@/client/features/dev/DevSummaryCard/DevSummaryHeader";
 import { DevelopmentHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
-const meta = { component: DevSummaryCard } satisfies Meta<
-  typeof DevSummaryCard
+const meta = { component: DevSummaryHeader } satisfies Meta<
+  typeof DevSummaryHeader
 >;
 export default meta;
 
