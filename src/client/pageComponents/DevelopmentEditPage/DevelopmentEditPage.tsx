@@ -11,8 +11,8 @@ import {
   Development,
   DevelopmentFormData,
 } from "@/models/development";
+import { DevStatusIds } from "@/models/developmentStatus";
 import { Idea } from "@/models/idea";
-import { DevStatusIds } from "@/share/consts";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useMemo } from "react";

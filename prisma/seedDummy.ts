@@ -2,7 +2,7 @@
  * ダミーデータを生成
  */
 
-import { DevStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/models/developmentStatus";
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
 import { Presets, SingleBar } from "cli-progress";
@@ -68,11 +68,11 @@ async function createUsers(counts: number): Promise<string[]> {
   const userIds = [];
 
   for (let i = 0; i < counts; i++) {
-    const id = faker.datatype.uuid();
+    const id = faker.string.uuid();
     // 既に存在すれば作成日だけ更新する作成しない
     const user = await prisma.user.upsert({
       where: { id },
-      create: { id, name: faker.name.fullName() },
+      create: { id, name: faker.person.fullName() },
       update: { createdAt: new Date() },
     });
     userIds.push(user.id);
@@ -98,7 +98,7 @@ async function createIdeas(
   const ideaIds = [];
 
   for (let i = 0; i < counts; i++) {
-    const id = faker.datatype.uuid();
+    const id = faker.string.uuid();
     const idea = await prisma.idea.upsert({
       where: { id },
       create: {
@@ -144,7 +144,7 @@ async function createIdeaLike({
 
   // お題それぞれに何個いいねをつけるかを決めておく
   const ideaLikeCountsList = [...new Array(likedIdeaIds.length)].map(() =>
-    faker.datatype.number({
+    faker.number.int({
       min: 1,
       max: maxIdeaLikeCounts,
     })
@@ -165,7 +165,7 @@ async function createIdeaLike({
 
     // ユーザーを後ろから走査していいねをつけていく。
     for (let userIndex = 0; userIndex < likeCounts; userIndex++) {
-      const id = faker.datatype.uuid();
+      const id = faker.string.uuid();
       await prisma.ideaLike.upsert({
         where: { id },
         create: {
@@ -206,7 +206,7 @@ async function createDevelopments({
   );
   // お題それぞれに何人開発するかを決めておく
   const developmentCountList = [...new Array(developedIdeaIds.length)].map(() =>
-    faker.datatype.number({ min: 1, max: maxDevelopmentCounts })
+    faker.number.int({ min: 1, max: maxDevelopmentCounts })
   );
 
   // 開発者の総数を求める
@@ -225,7 +225,7 @@ async function createDevelopments({
 
     // ユーザーを先頭から走査して開発させる。
     for (let userIndex = 0; userIndex < developmentCounts; userIndex++) {
-      const id = faker.datatype.uuid();
+      const id = faker.string.uuid();
       const development = await prisma.development.upsert({
         where: { id },
         create: {
@@ -279,7 +279,7 @@ async function createDevelopmentLikes({
   const developmentLikeCountsList = [
     ...new Array(likeDevelopmentIds.length),
   ].map(() =>
-    faker.datatype.number({
+    faker.number.int({
       min: 1,
       max: maxDevelopmentLikeCounts,
     })
@@ -297,7 +297,7 @@ async function createDevelopmentLikes({
 
     // ユーザーを後ろから走査していいねをつけていく
     for (let userIndex = 0; userIndex < likeCounts; userIndex++) {
-      const id = faker.datatype.uuid();
+      const id = faker.string.uuid();
       await prisma.developmentLike.upsert({
         where: { id },
         create: {

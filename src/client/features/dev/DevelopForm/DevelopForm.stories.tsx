@@ -1,5 +1,5 @@
 import { DevelopForm } from "@/client/features/dev/DevelopForm/DevelopForm";
-import { DevStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/models/developmentStatus";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = { component: DevelopForm } satisfies Meta<typeof DevelopForm>;

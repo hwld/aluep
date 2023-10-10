@@ -7,8 +7,8 @@ import {
   CreateRepositoryData,
   DevelopmentFormData,
 } from "@/models/development";
+import { DevStatusIds } from "@/models/developmentStatus";
 import { Idea } from "@/models/idea";
-import { DevStatusIds } from "@/share/consts";
 import { Routes } from "@/share/routes";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";

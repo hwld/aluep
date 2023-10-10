@@ -12,7 +12,7 @@
  *   ・各お題の開発者一人に0~49のいいね
  */
 
-import { DevStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/models/developmentStatus";
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
 
@@ -26,11 +26,11 @@ async function main() {
   // ユーザーを作成する
   const userIds = [];
   for (let i = 0; i < numOfUsers; i++) {
-    const id = faker.datatype.uuid();
+    const id = faker.string.uuid();
     // 既に存在すれば作成日だけ更新する作成しない
     const user = await prisma.user.upsert({
       where: { id },
-      create: { id, name: faker.name.fullName() },
+      create: { id, name: faker.person.fullName() },
       update: { createdAt: new Date() },
     });
     userIds.push(user.id);
@@ -40,7 +40,7 @@ async function main() {
   // 各ユーザーがテーマを作成する
   const ideaIds = [];
   for (let i = 0; i < userIds.length; i++) {
-    const id = faker.datatype.uuid();
+    const id = faker.string.uuid();
     const idea1 = await prisma.idea.upsert({
       where: { id },
       create: {
@@ -60,7 +60,7 @@ async function main() {
   for (let userIndex = 0; userIndex < userIds.length; userIndex++) {
     // 自分よりindexが小さいユーザーが投稿したお題すべてにいいねして、いいね数に差をつける
     for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
-      const id = faker.datatype.uuid();
+      const id = faker.string.uuid();
       await prisma.ideaLike.upsert({
         where: { id },
         create: {
@@ -88,7 +88,7 @@ async function main() {
   for (let userIndex = 0; userIndex < userIds.length; userIndex++) {
     // 自分よりindexが小さいユーザーが投稿したお題すべてを開発する
     for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
-      const id = faker.datatype.uuid();
+      const id = faker.string.uuid();
       const development = await prisma.development.upsert({
         where: { id },
         create: {
@@ -134,7 +134,7 @@ async function main() {
         continue;
       }
 
-      const id = faker.datatype.uuid();
+      const id = faker.string.uuid();
       await prisma.developmentLike.upsert({
         where: { id },
         create: {

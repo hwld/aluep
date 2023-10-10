@@ -1,7 +1,7 @@
+import { DevStatusIds } from "@/models/developmentStatus";
 import { mockCreateGitHubRepository } from "@/server/features/github/mock";
 import { server } from "@/server/mock/server";
 import { TestHelpers } from "@/server/tests/helper";
-import { DevStatusIds } from "@/share/consts";
 
 describe("お題開発API", () => {
   it("未ログインではお題の開発情報を登録できない", async () => {

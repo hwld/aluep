@@ -1,5 +1,5 @@
+import { DevStatusIds } from "@/models/developmentStatus";
 import { TestHelpers } from "@/server/tests/helper";
-import { DevStatusIds } from "@/share/consts";
 
 describe("お題開発情報削除API", () => {
   it("開発情報を削除できる", async () => {

@@ -1,8 +1,8 @@
 import { createDevelopmentInputSchema } from "@/models/development";
+import { DevStatusIds } from "@/models/developmentStatus";
 import { createOrExtractGithubRepositoryUrl } from "@/server/features/development/utils";
 import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
-import { DevStatusIds } from "@/share/consts";
 
 export const createDevelopment = requireLoggedInProcedure
   .input(createDevelopmentInputSchema)

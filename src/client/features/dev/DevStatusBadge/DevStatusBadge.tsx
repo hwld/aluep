@@ -1,4 +1,4 @@
-import { DevStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/models/developmentStatus";
 import { Badge, MantineSize } from "@mantine/core";
 import { DevelopmentStatus } from "@prisma/client";
 import clsx from "clsx";

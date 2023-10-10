@@ -1,5 +1,5 @@
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
-import { DevStatusIds } from "@/share/consts";
+import { DevStatusIds } from "@/models/developmentStatus";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = { component: DevStatusBadge } satisfies Meta<

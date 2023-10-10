@@ -1,12 +1,11 @@
 import { Development } from "@/models/development";
 import { DevelopmentLikers } from "@/models/developmentLike";
 import { DevelopmentMemo } from "@/models/developmentMemo";
-import { DevStatus } from "@/models/developmentStatus";
+import { DevStatus, DevStatusIds } from "@/models/developmentStatus";
 import { Idea } from "@/models/idea";
 import { IdeaComment } from "@/models/ideaComment";
 import { IdeaTag } from "@/models/ideaTag";
 import { User } from "@/models/user";
-import { DevStatusIds } from "@/share/consts";
 import { faker } from "@faker-js/faker";
 
 export const IdeaHelper = {
