@@ -85,7 +85,7 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
           development.ideaId,
           development.id
         )}`,
-        name: development.developerUserName,
+        name: development.developer.name,
       },
     });
   };

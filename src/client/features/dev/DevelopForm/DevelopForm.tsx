@@ -3,7 +3,7 @@ import {
   DevelopmentFormData,
   developmentFormSchema,
 } from "@/models/development";
-import { DevelopmentStatus } from "@/models/developmentStatus";
+import { DevStatus } from "@/models/developmentStatus";
 import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Radio, Select, Stack, Text, Textarea, TextInput } from "@mantine/core";
@@ -19,7 +19,7 @@ export type DevelopmentFormDefaultValues = Partial<
 >;
 
 type Props = {
-  developmentStatuses: DevelopmentStatus[];
+  developmentStatuses: DevStatus[];
   // formのtypeと、それ以外のプロパティを一括で渡せるようにする。
   // 指定されたtypeに必要のないプロパティも渡せるように、Union型をIntersection型に変換する処理を書いた
   /**

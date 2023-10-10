@@ -12,10 +12,12 @@ export const Default: Story = {
     page: 1,
     totalPages: 10,
     itemMinWidthPx: 300,
-    isEmpty: false,
-    emptyIcon: <div>EmptyIcon</div>,
-    emptyText: "空",
-    emptyDescription: "EmptyDescription",
+    emptyProps: {
+      isEmpty: false,
+      icon: <div>EmptyIcon</div>,
+      text: "空",
+      description: "EmptyDescription",
+    },
     children: <div>children</div>,
   },
 };

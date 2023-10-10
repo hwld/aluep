@@ -58,8 +58,9 @@ export const Guest: Story = {
   },
 };
 
-// TODO: 一番下のコメントまでスクロールしてしまう
-// (参考: useAutoScrollOnIncrease)
+// 一番下のコメントまでスクロールしてしまう
+// useAutoScrollOnIncreaseは、前のレンダリングのコメントの数と比較するから、
+// SSRを使わない場合は初回のレンダリングのコメントは常に0なので、読み込まれた時点でスクロールする
 export const SignedIn: Story = {
   name: "ログイン",
   args: { idea: ideaSample },

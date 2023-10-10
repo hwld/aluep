@@ -1,7 +1,7 @@
 import { Development } from "@/models/development";
 import { DevelopmentLikers } from "@/models/developmentLike";
 import { DevelopmentMemo } from "@/models/developmentMemo";
-import { DevelopmentStatus } from "@/models/developmentStatus";
+import { DevStatus } from "@/models/developmentStatus";
 import { Idea } from "@/models/idea";
 import { IdeaComment } from "@/models/ideaComment";
 import { IdeaTag } from "@/models/ideaTag";
@@ -131,7 +131,7 @@ export const IdeaTagHelper = {
   },
 };
 
-export const SampleDevStatuses: DevelopmentStatus[] = [
+export const SampleDevStatuses: DevStatus[] = [
   { id: DevStatusIds.ABORTED, name: "開発中止" },
   { id: DevStatusIds.COMPLETED, name: "開発終了" },
   { id: DevStatusIds.IN_PROGRESS, name: "開発中" },
@@ -141,13 +141,15 @@ export const DevelopmentHelper = {
   create: (data?: Partial<Development>): Development => {
     return {
       id: faker.string.uuid(),
-      developerUserId: faker.string.uuid(),
+      developer: {
+        id: faker.string.uuid(),
+        name: fakeString({ min: 1, max: 50 }),
+        imageUrl: "",
+      },
       developedItemUrl: "",
       allowOtherUserMemos: true,
       comment: fakeString({ min: 1, max: 300 }),
       createdAt: new Date().toLocaleString(),
-      developerUserImage: "",
-      developerUserName: fakeString({ min: 1, max: 50 }),
       githubUrl: "",
       ideaId: faker.string.uuid(),
       ideaTitle: fakeString({ min: 1, max: 50 }),
@@ -168,7 +170,11 @@ export const DevelopmentHelper = {
       githubUrl: "https://github.com/hwld/aluep",
       developedItemUrl: "https://example.com",
       comment: faker.string.sample(300),
-      developerUserName: fakeString(50),
+      developer: {
+        name: fakeString(50),
+        id: faker.string.uuid(),
+        imageUrl: "",
+      },
       ideaTitle: fakeString(50),
       likes: 999,
     };

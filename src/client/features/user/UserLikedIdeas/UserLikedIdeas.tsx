@@ -25,22 +25,24 @@ export const UserLikedIdeas: React.FC<Props> = ({
       page={page}
       onChangePage={onChangePage}
       totalPages={likedIdeas?.allPages ?? 0}
-      isEmpty={likedIdeas?.list.length === 0}
-      emptyIcon={
-        <TbHeart
-          size="100"
-          color="transparent"
-          fill="var(--mantine-color-red-7)"
-          style={{ position: "relative", top: "10px" }}
-        />
-      }
-      emptyText="お題のいいねがありません"
-      emptyDescription={
-        <>
-          ユーザーがお題にいいねすると、<br></br>
-          ここに表示されます。
-        </>
-      }
+      emptyProps={{
+        isEmpty: likedIdeas?.list.length === 0,
+        icon: (
+          <TbHeart
+            size="100"
+            color="transparent"
+            fill="var(--mantine-color-red-7)"
+            style={{ position: "relative", top: "10px" }}
+          />
+        ),
+        text: "お題のいいねがありません",
+        description: (
+          <>
+            ユーザーがお題にいいねすると、<br></br>
+            ここに表示されます。
+          </>
+        ),
+      }}
     >
       {likedIdeas?.list.map((idea) => (
         <IdeaCard key={idea.id} idea={idea} />

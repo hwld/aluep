@@ -34,8 +34,7 @@ export const Me: Story = {
   args: {
     idea: IdeaHelper.create(),
     development: DevelopmentHelper.create({
-      developerUserId: me.id,
-      developerUserName: me.name,
+      developer: { id: me.id, name: me.name, imageUrl: "" },
     }),
   },
   parameters: {

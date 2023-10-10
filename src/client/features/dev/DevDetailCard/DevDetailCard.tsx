@@ -115,13 +115,13 @@ export const DevDetailCard: React.FC<Props> = ({
             </Box>
             <Flex mt="sm" gap="xs" align="center">
               <UserIconLink
-                userId={development.developerUserId}
-                iconSrc={development.developerUserImage}
+                userId={development.developer.id}
+                iconSrc={development.developer.imageUrl}
                 size="lg"
               />
-              <TextLink href={Routes.user(development.developerUserId)}>
+              <TextLink href={Routes.user(development.developer.id)}>
                 <AppTitle size={18} miw={0}>
-                  {development.developerUserName}
+                  {development.developer.name}
                 </AppTitle>
               </TextLink>
             </Flex>

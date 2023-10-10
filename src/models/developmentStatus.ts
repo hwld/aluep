@@ -1,2 +1,1 @@
-// TODO: DevStatusにする
-export type DevelopmentStatus = { id: string; name: string };
+export type DevStatus = { id: string; name: string };

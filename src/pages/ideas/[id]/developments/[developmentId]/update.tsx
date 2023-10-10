@@ -28,7 +28,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     if (
       !idea ||
       !development ||
-      development?.developerUserId !== session.user.id
+      development?.developer.id !== session.user.id
     ) {
       console.trace(
         "お題か開発情報が存在しない、または開発者とログインユーザーが異なっている"

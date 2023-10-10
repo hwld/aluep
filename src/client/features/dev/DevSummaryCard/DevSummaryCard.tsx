@@ -29,12 +29,12 @@ export const DevSummaryCard: React.FC<Props> = ({ development }) => {
         </Flex>
         <Flex align="center" gap={5}>
           <UserIconLink
-            userId={development.developerUserId}
-            iconSrc={development.developerUserImage}
+            userId={development.developer.id}
+            iconSrc={development.developer.imageUrl}
           />
-          <TextLink href={Routes.user(development.developerUserId)}>
+          <TextLink href={Routes.user(development.developer.id)}>
             <Text c="gray.5" size="sm" truncate>
-              {development.developerUserName}
+              {development.developer.name}
             </Text>
           </TextLink>
         </Flex>

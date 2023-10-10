@@ -10,33 +10,27 @@ type Props = {
   totalPages: number;
   onChangePage: (page: number) => void;
   itemMinWidthPx: number;
-  isEmpty: boolean;
-  emptyIcon: ReactNode;
-  emptyText: string;
-  emptyDescription: ReactNode;
+  emptyProps: {
+    isEmpty: boolean;
+    icon: ReactNode;
+    text: string;
+    description: ReactNode;
+  };
 };
 
-// TODO
 export const UserContentContainer: React.FC<Props> = ({
   children,
   page,
   onChangePage,
   totalPages,
   itemMinWidthPx,
-  isEmpty,
-  emptyIcon,
-  emptyText,
-  emptyDescription,
+  emptyProps: { isEmpty, icon, text, description },
 }) => {
   return (
     <Stack w="100%">
       {isEmpty ? (
         <Flex align="center" direction="column">
-          <EmptyContentItem
-            icon={emptyIcon}
-            text={emptyText}
-            description={emptyDescription}
-          />
+          <EmptyContentItem icon={icon} text={text} description={description} />
         </Flex>
       ) : (
         <GridContainer minItemWidthPx={itemMinWidthPx}>

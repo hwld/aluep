@@ -29,7 +29,7 @@ export const DevelopmentDetailPage: React.FC<Props> = ({
 
   const { session } = useSessionQuery();
   const loggedInUser = session?.user;
-  const isDeveloper = development.developerUserId === loggedInUser?.id;
+  const isDeveloper = development.developer.id === loggedInUser?.id;
 
   const { developmentMemoThreads, createMemoMutation } = useDevMemos({
     developmentId: development.id,

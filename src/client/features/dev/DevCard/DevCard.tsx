@@ -52,7 +52,7 @@ export const DevCard: React.FC<Props> = ({
   };
 
   // 開発者自身でなければいいねできる
-  const canLike = development.developerUserId !== session?.user.id;
+  const canLike = development.developer.id !== session?.user.id;
 
   return (
     <Card
@@ -71,17 +71,17 @@ export const DevCard: React.FC<Props> = ({
         </Flex>
       </Flex>
       <Flex justify="space-between">
-        <Flex gap={10}>
+        <Flex gap="xs">
           <UserIconLink
-            iconSrc={development.developerUserImage}
-            userId={development.developerUserId}
+            iconSrc={development.developer.imageUrl}
+            userId={development.developer.id}
           />
           <TextLink
             href={Routes.development(idea.id, development.id)}
             className={classes["development-link"]}
           >
             <Text fw="bold" size="lg">
-              {development.developerUserName}
+              {development.developer.name}
               <Text span c="gray.5" size="sm" fw="normal">
                 {" の開発"}
               </Text>
@@ -89,7 +89,7 @@ export const DevCard: React.FC<Props> = ({
           </TextLink>
         </Flex>
       </Flex>
-      <Flex align="center" justify="space-between" mt={5}>
+      <Flex align="center" justify="space-between">
         <Text size="sm" c="gray.5">
           開発開始日: {formatDate(new Date(development.createdAt))}
         </Text>

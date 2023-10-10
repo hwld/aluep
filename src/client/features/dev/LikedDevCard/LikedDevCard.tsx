@@ -37,8 +37,8 @@ export const LikedDevCard: React.FC<Props> = ({ development }) => {
       <Flex gap="xs" justify="space-between" align="flex-end">
         <Flex gap="xs">
           <UserIconLink
-            iconSrc={development.developerUserImage}
-            userId={development.developerUserId}
+            iconSrc={development.developer.imageUrl}
+            userId={development.developer.id}
           />
           <Stack gap={0}>
             <TextLink
@@ -46,7 +46,7 @@ export const LikedDevCard: React.FC<Props> = ({ development }) => {
               className={classes["development-link"]}
             >
               <Text fw="bold" size="lg">
-                {development.developerUserName}
+                {development.developer.name}
                 <Text span c="gray.5" size="sm" fw="normal">
                   {" の開発"}
                 </Text>

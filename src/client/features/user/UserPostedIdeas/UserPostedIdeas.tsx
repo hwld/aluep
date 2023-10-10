@@ -25,14 +25,16 @@ export const UserPostedIdeas: React.FC<Props> = ({
       page={page}
       onChangePage={onChangePage}
       totalPages={postedIdeas?.allPages ?? 0}
-      isEmpty={postedIdeas?.list.length === 0}
-      emptyIcon={<TbFileText size="100" color="var(--mantine-color-red-7)" />}
-      emptyText="お題がありません"
-      emptyDescription={
-        <>
-          ユーザーがお題を投稿すると、<br></br>ここに表示されます。
-        </>
-      }
+      emptyProps={{
+        isEmpty: postedIdeas?.list.length === 0,
+        icon: <TbFileText size="100" color="var(--mantine-color-red-7)" />,
+        text: "お題がありません",
+        description: (
+          <>
+            ユーザーがお題を投稿すると、<br></br>ここに表示されます。
+          </>
+        ),
+      }}
     >
       {postedIdeas?.list.map((idea) => (
         <IdeaCard key={idea.id} idea={idea} />

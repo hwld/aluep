@@ -1,14 +1,11 @@
-import { DevelopmentStatus } from "@/models/developmentStatus";
+import { DevStatus } from "@/models/developmentStatus";
 import { z } from "zod";
 
-//TODO: developer: {id...}　とかのほうが見やすい気がする
 export type Development = {
   id: string;
   ideaId: string;
   ideaTitle: string;
-  developerUserId: string;
-  developerUserName: string | null;
-  developerUserImage: string | null;
+  developer: { id: string; name: string | null; imageUrl: string | null };
   githubUrl: string;
   comment: string;
   developedItemUrl: string;
@@ -16,7 +13,7 @@ export type Development = {
   likedByLoggedInUser: boolean;
   createdAt: string;
   updatedAt: string;
-  status: DevelopmentStatus;
+  status: DevStatus;
   allowOtherUserMemos: boolean;
 };
 

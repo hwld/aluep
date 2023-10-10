@@ -48,8 +48,8 @@ export const PostedIdeas: Story = {
       handlers: [
         ...baseHandlers,
         mockTrpcQuery(trpcMsw.idea.getPostedIdeasByUser, {
-          list: [...new Array(3)].map(() => IdeaHelper.create()),
-          allPages: 1,
+          list: [...new Array(10)].map(() => IdeaHelper.create()),
+          allPages: 2,
         }),
       ],
     },
@@ -63,8 +63,8 @@ export const Developments: Story = {
       handlers: [
         ...baseHandlers,
         mockTrpcQuery(trpcMsw.development.getDevelopmentsByUser, {
-          list: [...new Array(3)].map(() => DevelopmentHelper.create()),
-          allPages: 1,
+          list: [...new Array(10)].map(() => DevelopmentHelper.create()),
+          allPages: 2,
         }),
       ],
     },
@@ -78,8 +78,8 @@ export const LikedIdeas: Story = {
       handlers: [
         ...baseHandlers,
         mockTrpcQuery(trpcMsw.idea.getLikedIdeasByUser, {
-          list: [...new Array(3)].map(() => IdeaHelper.create()),
-          allPages: 1,
+          list: [...new Array(10)].map(() => IdeaHelper.create()),
+          allPages: 2,
         }),
       ],
     },
@@ -93,8 +93,8 @@ export const LikedDevelopments: Story = {
       handlers: [
         ...baseHandlers,
         mockTrpcQuery(trpcMsw.development.getLikedDevelopmentsByUser, {
-          list: [...new Array(3)].map(() => DevelopmentHelper.create()),
-          allPages: 1,
+          list: [...new Array(10)].map(() => DevelopmentHelper.create()),
+          allPages: 2,
         }),
       ],
     },
