@@ -1,6 +1,6 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { uploadAvatar } from "@/server/lib/googleStorage";
 import { db } from "@/server/lib/prismadb";
-import { uploadAvatar } from "@/server/lib/uploadAvatar";
 import { NextApiHandler } from "next";
 import { getServerSession } from "next-auth";
 

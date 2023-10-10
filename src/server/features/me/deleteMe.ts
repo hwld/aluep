@@ -1,4 +1,5 @@
 import { userDeletePageSchema } from "@/models/user";
+import { deleteAvatar } from "@/server/lib/googleStorage";
 import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
 import { validateReCaptchaToken } from "@/server/lib/validateReCaptchaToken";
@@ -15,6 +16,10 @@ export const deleteMe = requireLoggedInProcedure
     const deleted = await db.user.delete({
       where: { id: ctx.session.user.id },
     });
+
+    if (deleted.image) {
+      await deleteAvatar(deleted.image);
+    }
 
     return deleted;
   });

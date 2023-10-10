@@ -9,15 +9,26 @@ const storage = new Storage(
     : { keyFilename: "/gcs/key.json" }
 );
 
+const uploadBucket = storage.bucket("aluep-user-upload");
+const bucketPath = `${storage.apiEndpoint}/${uploadBucket.name}`;
+const avatarFolderName = "avatars";
+
+const buildAvatarPath = (fileName: string) => {
+  return `${avatarFolderName}/${fileName}`;
+};
+
+const extractFilePathFromUrl = (filePath: string) => {
+  return filePath.split(`${bucketPath}/`)[1];
+};
+
 type UploadAvatar = (
   req: NextApiRequest,
   loggedInUserId: string
 ) => Promise<string>;
 
 export const uploadAvatar: UploadAvatar = async (req, loggedInUserId) => {
-  const bucket = storage.bucket("aluep-user-upload");
-  const filePath = `avatars/${loggedInUserId}`;
-  const file = bucket.file(filePath);
+  const filePath = buildAvatarPath(loggedInUserId);
+  const file = uploadBucket.file(filePath);
   const writableStream = file.createWriteStream();
 
   const form = formidable({ fileWriteStreamHandler: () => writableStream });
@@ -44,5 +55,14 @@ export const uploadAvatar: UploadAvatar = async (req, loggedInUserId) => {
   });
   await file.rename(`${filePath}${ext}`);
 
-  return `${storage.apiEndpoint}/${bucket.name}/${filePath}${ext}`;
+  return `${bucketPath}/${filePath}${ext}`;
+};
+
+export const deleteAvatar = async (imageUrl: string) => {
+  if (!imageUrl.startsWith(`${bucketPath}/${avatarFolderName}/`)) {
+    return;
+  }
+
+  const filePath = extractFilePathFromUrl(imageUrl);
+  await uploadBucket.file(filePath).delete();
 };
