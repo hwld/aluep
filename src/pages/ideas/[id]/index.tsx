@@ -2,6 +2,7 @@ import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { IdeaDetailPage } from "@/client/pageComponents/IdeaDetailPage/IdeaDetailPage";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import { Routes } from "@/share/routes";
 import { assertString } from "@/share/utils";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -58,7 +59,10 @@ const IdeaDetail = () => {
       <Head>
         <title>{idea.title}</title>
         <meta name="twitter:card" content="summary_large_image" />
-        <meta property="og:url" content={window.location.href} />
+        <meta
+          property="og:url"
+          content={`${process.env.NEXT_PUBLIC_URL}${Routes.idea(idea.id)}`}
+        />
         <meta property="og:title" content={idea.title} />
         <meta property="og:image" content={`${ogUrl.toString()}`} />
         <meta property="og:type" content="article" />
