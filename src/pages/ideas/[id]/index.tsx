@@ -3,7 +3,9 @@ import { IdeaDetailPage } from "@/client/pageComponents/IdeaDetailPage/IdeaDetai
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { assertString } from "@/share/utils";
+import Head from "next/head";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, session, trpcStore }) => {
@@ -30,6 +32,20 @@ const IdeaDetail = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.id);
   const { idea, isLoading } = useIdeaQuery({ ideaId });
+  const ogUrl = useMemo(() => {
+    if (!idea) {
+      return "";
+    }
+
+    const url = new URL(`${process.env.NEXT_PUBLIC_URL}/api/og`);
+    url.searchParams.append("title", idea.title);
+    url.searchParams.append("userName", idea.user.name ?? "");
+    if (idea.user.image !== null) {
+      url.searchParams.append("userImage", idea.user.image);
+    }
+
+    return url;
+  }, [idea]);
 
   if (isLoading) {
     return <></>;
@@ -37,6 +53,20 @@ const IdeaDetail = () => {
     return <NotFoundPage />;
   }
 
-  return <IdeaDetailPage idea={idea} />;
+  return (
+    <>
+      <Head>
+        <title>{idea.title}</title>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:title" content={idea.title} />
+        <meta property="og:image" content={`${ogUrl.toString()}`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="Aluep" />
+        <meta property="og:locale" content="ja_JP" />
+      </Head>
+      <IdeaDetailPage idea={idea} />
+    </>
+  );
 };
 export default IdeaDetail;
