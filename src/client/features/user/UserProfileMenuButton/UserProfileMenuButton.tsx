@@ -4,11 +4,11 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
-import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
-import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
-import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
-import { AppMenuLinkItem } from "@/client/ui/AppMenu/AppMenuLinkItem/AppMenuLinkItem";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
+import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
+import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
+import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";

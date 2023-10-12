@@ -1,7 +1,7 @@
 import { DevelopButton } from "@/client/features/dev/DevelopButton/DevelopButton";
 import { useDevelop } from "@/client/features/dev/useDevelop";
 import { IdeaDescriptionView } from "@/client/features/idea/IdeaDescriptionView/IdeaDescriptionView";
-import { IdeaInfoCardItem } from "@/client/features/idea/IdeaDetail/IdeaInfoCardItem";
+import { IdeaInfoCardItem } from "@/client/features/idea/IdeaInfoCardItem/IdeaInfoCardItem";
 import { IdeaLikeButton } from "@/client/features/idea/IdeaLikeButton/IdeaLikeButton";
 import { IdeaOperationButton } from "@/client/features/idea/IdeaOperationButton/IdeaOperationButton";
 import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";

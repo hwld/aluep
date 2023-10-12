@@ -1,4 +1,4 @@
-import { DevSummaryHeader } from "@/client/features/dev/DevSummaryCard/DevSummaryHeader";
+import { DevSummaryHeader } from "@/client/features/dev/DevSummaryHeader/DevSummaryHeader";
 import {
   IdeaLikerCard,
   ideaLikerCardMinWidthPx,

@@ -5,10 +5,10 @@ import {
   showSuccessNotification,
 } from "@/client/lib/utils";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
-import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
-import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
-import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
-import { AppMenuLinkItem } from "@/client/ui/AppMenu/AppMenuLinkItem/AppMenuLinkItem";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
+import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
+import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
+import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Idea } from "@/models/idea";
 import { ReportBaseForm } from "@/models/report";

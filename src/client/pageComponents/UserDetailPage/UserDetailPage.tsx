@@ -1,14 +1,14 @@
-import { UserDashboard } from "@/client/features/user/UserDashboard/UserDashboard/UserDashboard";
+import { UserDashboard } from "@/client/features/user/UserDashboard/UserDashboard";
 import { UserDevelopments } from "@/client/features/user/UserDevelopments/UserDevelopments";
+import { useReceivedLikeCountQuery } from "@/client/features/user/useReceivedLikeCountQuery";
 import { UserLikedDevelopments } from "@/client/features/user/UserLikedDevelopments/UserLikedDevelopments";
 import { UserLikedIdeas } from "@/client/features/user/UserLikedIdeas/UserLikedIdeas";
 import { UserPostedIdeas } from "@/client/features/user/UserPostedIdeas/UserPostedIdeas";
-import { useReceivedLikeCountQuery } from "@/client/features/user/useReceivedLikeCountQuery";
 import { useUserActivityQuery } from "@/client/features/user/useUserActivityQuery";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { TabControl } from "@/client/ui/TabControl/TabControl";
-import { User, UserDetailPageTab, userDetailPageSchame } from "@/models/user";
+import { User, userDetailPageSchame, UserDetailPageTab } from "@/models/user";
 import { assertNever } from "@/share/utils";
 import { Box, Flex, Stack } from "@mantine/core";
 import { useMemo } from "react";

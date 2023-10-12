@@ -29,6 +29,7 @@ const preview: Preview = {
       values: [
         { name: "app", value: "#e7e5e4" },
         { name: "card", value: "#f5f5f4" },
+        { name: "primary", value: "#b91c1c" },
       ],
     },
   },

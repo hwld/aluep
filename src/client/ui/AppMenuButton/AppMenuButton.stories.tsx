@@ -1,7 +1,7 @@
-import { AppMenu } from "@/client/ui/AppMenu/AppMenu/AppMenu";
-import { AppMenuDropdown } from "@/client/ui/AppMenu/AppMenuDropdown";
-import { AppMenuItem } from "@/client/ui/AppMenu/AppMenuItem/AppMenuItem";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
+import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
+import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = { component: AppMenuButton } satisfies Meta<typeof AppMenuButton>;

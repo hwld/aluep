@@ -1,5 +1,5 @@
-import { IdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/IdeaDescriptionEditor/IdeaDescriptionEditor";
-import { useIdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/useIdeaDescriptionEditor";
+import { IdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/IdeaDescriptionEditor";
+import { useIdeaDescriptionEditor } from "@/client/features/idea/useIdeaDescriptionEditor";
 import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { IdeaFormData, ideaFormSchema } from "@/models/idea";
 import { IdeaTag } from "@/models/ideaTag";
