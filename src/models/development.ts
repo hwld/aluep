@@ -38,7 +38,8 @@ export const developmentFormSchema = z
       .startsWith("https://", {
         message: "httpsから始まるリンクを入力してください。",
       })
-      .optional(),
+      .optional()
+      .or(z.literal("")),
   })
   .and(
     z.union([
