@@ -20,7 +20,6 @@ type Props = {
 };
 export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
   const router = useRouter();
-
   const { developmentStatuses } = useDevStatusesQuery();
 
   const {
