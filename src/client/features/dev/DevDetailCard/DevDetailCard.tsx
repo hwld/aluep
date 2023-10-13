@@ -2,6 +2,7 @@ import { DevLikeButton } from "@/client/features/dev/DevLikeButton/DevLikeButton
 import { DevMenuButton } from "@/client/features/dev/DevMenuButton/DevMenuButton";
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
+import { convertToGithubDevUrl } from "@/client/lib/convertToGithubDevUrl";
 import { formatDate } from "@/client/lib/utils";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
@@ -71,7 +72,7 @@ export const DevDetailCard: React.FC<Props> = ({
                 <Flex gap="md">
                   <Button
                     component={"a"}
-                    href={development.githubUrl}
+                    href={convertToGithubDevUrl(development.githubUrl)}
                     target="_blank"
                     leftSection={<BsGithub size={20} />}
                   >
