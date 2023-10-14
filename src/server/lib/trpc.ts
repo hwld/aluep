@@ -1,12 +1,6 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { findUser } from "@/server/repositories/user";
-import { AppRouter } from "@/server/router";
-import {
-  inferAsyncReturnType,
-  inferRouterInputs,
-  initTRPC,
-  TRPCError,
-} from "@trpc/server";
+import { inferAsyncReturnType, initTRPC, TRPCError } from "@trpc/server";
 import { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { IncomingMessage } from "http";
 import { getServerSession, Session } from "next-auth";
@@ -27,12 +21,11 @@ export async function createTRPCContext(
   return { session, req: opts.req };
 }
 
-export type TRPCContext = inferAsyncReturnType<typeof createTRPCContext>;
+type TRPCContext = inferAsyncReturnType<typeof createTRPCContext>;
 
 const t = initTRPC.context<TRPCContext>().create({ transformer: SuperJSON });
 
 export const router = t.router;
-export type RouterInputs = inferRouterInputs<AppRouter>;
 
 // middlewares
 const middleware = t.middleware;

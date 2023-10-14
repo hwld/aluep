@@ -2,10 +2,7 @@ import { DevelopForm } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { useDevelop } from "@/client/features/dev/useDevelop";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
-import {
-  CreateRepositoryData,
-  DevelopmentFormData,
-} from "@/models/development";
+import { DevelopmentFormData } from "@/models/development";
 import { DevStatusIds } from "@/models/developmentStatus";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
@@ -15,9 +12,8 @@ import { MdComputer } from "react-icons/md";
 
 type Props = {
   idea: Idea;
-  restoredValues: CreateRepositoryData;
 };
-export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
+export const DevelopIdeaPage: React.FC<Props> = ({ idea }) => {
   const router = useRouter();
 
   const {
@@ -27,9 +23,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
   const handleDevelopIdea = (data: DevelopmentFormData) => {
     developMutation.mutate(
       { ...data, ideaId: idea.id },
-      {
-        onSuccess: () => router.replace(Routes.idea(idea.id)),
-      }
+      { onSuccess: () => router.replace(Routes.idea(idea.id)) }
     );
   };
 
@@ -54,13 +48,8 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea, restoredValues }) => {
               ideaId={idea.id}
               submitText="開発する"
               isLoading={developMutation.isLoading || developMutation.isSuccess}
-              isRelogined={Object.keys(restoredValues).length > 0}
               defaultValues={{
-                type: "createRepository",
-                comment: restoredValues?.developmentComment ?? "",
-                githubRepositoryName: restoredValues?.repositoryName ?? "",
-                githubRepositoryDescription:
-                  restoredValues?.repositoryDesc ?? "",
+                comment: "",
                 developmentStatusId: DevStatusIds.IN_PROGRESS,
                 githubRepositoryUrl: "",
                 developedItemUrl: "",

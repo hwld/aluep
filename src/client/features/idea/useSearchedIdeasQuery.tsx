@@ -1,7 +1,7 @@
 import { trpc } from "@/client/lib/trpc";
 import { IdeaOrder, IdeaPeriod } from "@/models/idea";
 
-export type UseSearchedIdeasQueryArgs = {
+type UseSearchedIdeasQueryArgs = {
   keyword: string;
   tagIds: string[];
   order: IdeaOrder;

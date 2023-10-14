@@ -8,16 +8,15 @@ import {
 } from "@/models/development";
 import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Radio, Select, Stack, Text, Textarea, TextInput } from "@mantine/core";
+import { Box, Button, Group, Select, Textarea, TextInput } from "@mantine/core";
+import Link from "next/link";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { UnionToIntersection } from "react-hook-form/dist/types/path/common";
 import { MdComputer } from "react-icons/md";
 
-export type DevelopmentFormDefaultValues = Partial<
-  UnionToIntersection<DistributiveOmit<DevelopmentFormData, "type">> & {
-    type: DevelopmentFormData["type"];
-  }
+type DevelopmentFormDefaultValues = Partial<
+  UnionToIntersection<DistributiveOmit<DevelopmentFormData, "type">>
 >;
 
 type Props = {
@@ -33,13 +32,10 @@ type Props = {
   onCancel: () => void;
   submitText: string;
   isLoading?: boolean;
-  /** リポジトリが作成できなかったため、自動で再ログインを行っていたか */
-  isRelogined?: boolean;
 };
 
 export const DevelopForm: React.FC<Props> = ({
   defaultValues,
-  isRelogined = false,
   onSubmit,
   onCancel,
   submitText,
@@ -55,7 +51,6 @@ export const DevelopForm: React.FC<Props> = ({
     handleSubmit,
     control,
     formState: { errors },
-    watch,
     getFieldState,
   } = useForm<DevelopmentFormData>({
     defaultValues: {
@@ -77,79 +72,8 @@ export const DevelopForm: React.FC<Props> = ({
       submitText={submitText}
       isSubmitting={isLoading}
     >
-      {isRelogined && (
-        <Text mt={5} size="sm" c="red">
-          GitHubリポジトリを作成することができなかったため、再ログインを行いました。
-          <br />
-          もう一度「{submitText}」ボタンを押してください。
-        </Text>
-      )}
-      <Controller
-        control={control}
-        name="type"
-        render={({ field }) => {
-          return (
-            <Radio.Group
-              label="開発に使用するGitHubリポジトリを選択する"
-              withAsterisk
-              {...field}
-            >
-              <Stack mt="xs" gap="xs">
-                <Radio
-                  label="新しいリポジトリを作成する"
-                  value={
-                    "createRepository" satisfies DevelopmentFormData["type"]
-                  }
-                />
-                <Radio
-                  label="既存のリポジトリを使用する"
-                  value={
-                    "referenceRepository" satisfies DevelopmentFormData["type"]
-                  }
-                />
-              </Stack>
-            </Radio.Group>
-          );
-        }}
-      />
-
-      {watch("type") === "createRepository" && (
-        <>
-          <Controller
-            control={control}
-            name="githubRepositoryName"
-            render={({ field }) => {
-              return (
-                <TextInput
-                  withAsterisk
-                  label="リポジトリ名"
-                  error={getFieldState("githubRepositoryName").error?.message}
-                  {...field}
-                />
-              );
-            }}
-          />
-          <Controller
-            control={control}
-            name="githubRepositoryDescription"
-            render={({ field }) => {
-              return (
-                <Textarea
-                  label="リポジトリの説明"
-                  styles={{ input: { height: "100px" } }}
-                  error={
-                    getFieldState("githubRepositoryDescription").error?.message
-                  }
-                  {...field}
-                />
-              );
-            }}
-          />
-        </>
-      )}
-
-      {watch("type") === "referenceRepository" && (
-        <>
+      <Group align="flex-end" gap="xs">
+        <Box style={{ flexGrow: 1 }}>
           <Controller
             control={control}
             name="githubRepositoryUrl"
@@ -165,25 +89,30 @@ export const DevelopForm: React.FC<Props> = ({
               );
             }}
           />
-          <Controller
-            control={control}
-            name="developmentStatusId"
-            render={({ field }) => {
-              return (
-                <Select
-                  label="開発状況"
-                  data={developmentStatuses.map((s) => ({
-                    value: s.id.toString(),
-                    label: s.name,
-                  }))}
-                  error={getFieldState("developmentStatusId").error?.message}
-                  {...field}
-                />
-              );
-            }}
-          />
-        </>
-      )}
+        </Box>
+        <Button component={Link} href="https://github.com/new" target="_blank">
+          作成
+        </Button>
+      </Group>
+
+      <Controller
+        control={control}
+        name="developmentStatusId"
+        render={({ field }) => {
+          return (
+            <Select
+              label="開発状況"
+              data={developmentStatuses.map((s) => ({
+                value: s.id.toString(),
+                label: s.name,
+              }))}
+              error={getFieldState("developmentStatusId").error?.message}
+              {...field}
+            />
+          );
+        }}
+      />
+
       <Controller
         control={control}
         name="comment"
@@ -198,6 +127,7 @@ export const DevelopForm: React.FC<Props> = ({
           );
         }}
       />
+
       <Controller
         control={control}
         name="developedItemUrl"

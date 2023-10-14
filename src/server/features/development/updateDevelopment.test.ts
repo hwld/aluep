@@ -10,7 +10,6 @@ describe("開発情報更新API", () => {
     });
 
     const promise = caller.development.update({
-      type: "referenceRepository",
       githubRepositoryUrl: "https://github.com/hwld/me",
       developmentStatusId: DevStatusIds.ABORTED,
       developmentId: development.id,
@@ -31,7 +30,6 @@ describe("開発情報更新API", () => {
     const promise = caller.development.update({
       developmentId: development.id,
       ideaId: development.ideaId,
-      type: "referenceRepository",
       developmentStatusId: DevStatusIds.ABORTED,
       githubRepositoryUrl: "https://github.com/hwld/me",
       comment: "new comment",
@@ -45,7 +43,6 @@ describe("開発情報更新API", () => {
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { developmentId } = await caller.development.create({
       ideaId: idea.id,
-      type: "referenceRepository",
       developmentStatusId: DevStatusIds.IN_PROGRESS,
       githubRepositoryUrl: "https://github.com/hwld/me",
       comment: "comment",
@@ -57,7 +54,6 @@ describe("開発情報更新API", () => {
     await caller.development.update({
       developmentId,
       ideaId: idea.id,
-      type: "referenceRepository",
       developmentStatusId: updatedStatusId,
       githubRepositoryUrl: updatedRepoUrl,
       comment: updatedComment,

@@ -8,7 +8,7 @@ export type User = {
   profile: string | null;
 };
 
-export const UserFields = {
+const UserFields = {
   name: {
     maxLength: 50,
   },

@@ -1,21 +1,13 @@
-import { AppRouter } from "@/server/router";
 import {
   NotificationData,
   showNotification,
   updateNotification,
 } from "@mantine/notifications";
-import { TRPCClientError } from "@trpc/client";
 import { format } from "date-fns";
 import ja from "date-fns/locale/ja";
 import { SyntheticEvent } from "react";
 
 export const stopPropagation = (e: SyntheticEvent) => e.stopPropagation();
-
-export const isTRPCClientError = (
-  e: unknown
-): e is TRPCClientError<AppRouter> => {
-  return e instanceof TRPCClientError;
-};
 
 export const showLoadingNotification = (props: NotificationData) => {
   showNotification({

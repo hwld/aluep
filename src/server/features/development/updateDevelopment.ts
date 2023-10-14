@@ -1,6 +1,4 @@
 import { updateDevelopmentInputSchema } from "@/models/development";
-import { DevStatusIds } from "@/models/developmentStatus";
-import { createOrExtractGithubRepositoryUrl } from "@/server/features/development/utils";
 import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
 import { TRPCError } from "@trpc/server";
@@ -20,22 +18,13 @@ export const updateDevelopment = requireLoggedInProcedure
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
-    const githubRepositoryUrl = await createOrExtractGithubRepositoryUrl(
-      input,
-      ctx.session.user.id
-    );
-    const developmentStatusId =
-      input.type === "referenceRepository"
-        ? input.developmentStatusId
-        : DevStatusIds.IN_PROGRESS;
-
     await db.development.update({
       where: { id: development.id },
       data: {
-        githubUrl: githubRepositoryUrl,
+        githubUrl: input.githubRepositoryUrl,
         comment: input.comment,
         developedItemUrl: input.developedItemUrl,
-        statusId: developmentStatusId,
+        statusId: input.developmentStatusId,
       },
     });
   });

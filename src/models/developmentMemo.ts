@@ -10,7 +10,7 @@ export type DevelopmentMemo = {
   createdAt: Date;
 };
 
-export const DevelopmentMemoFields = {
+const DevelopmentMemoFields = {
   text: { maxLength: 2000 },
 };
 

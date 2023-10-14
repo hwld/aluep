@@ -1,6 +1,4 @@
 import { DevStatusIds } from "@/models/developmentStatus";
-import { mockCreateGitHubRepository } from "@/server/features/github/mock";
-import { server } from "@/server/mock/server";
 import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題開発API", () => {
@@ -9,7 +7,6 @@ describe("お題開発API", () => {
     const { idea } = await TestHelpers.createIdeaAndUser();
 
     const promise = caller.development.create({
-      type: "referenceRepository",
       ideaId: idea.id,
       githubRepositoryUrl: "https://github.com/hwld/aluep",
       developmentStatusId: DevStatusIds.IN_PROGRESS,
@@ -24,7 +21,6 @@ describe("お題開発API", () => {
     const repositoryUrl = "https://github.com/hwld/aluep";
 
     const { developmentId } = await caller.development.create({
-      type: "referenceRepository",
       ideaId: idea.id,
       githubRepositoryUrl: repositoryUrl,
       developmentStatusId: DevStatusIds.COMPLETED,
@@ -33,23 +29,5 @@ describe("お題開発API", () => {
     const development = await caller.development.get({ developmentId });
     expect(development?.githubUrl).toBe(repositoryUrl);
     expect(development?.status.id).toBe(DevStatusIds.COMPLETED);
-  });
-
-  it("リポジトリの作成とお題の開発情報の登録ができる", async () => {
-    const { idea } = await TestHelpers.createIdeaAndUser();
-    const { caller } = await TestHelpers.createNewUserSessionCaller();
-    const repositoryUrl = "https://github.com/hwld/test";
-    server.use(mockCreateGitHubRepository({ repositoryUrl }));
-
-    const { developmentId } = await caller.development.create({
-      ideaId: idea.id,
-      type: "createRepository",
-      githubRepositoryName: "repo",
-      githubRepositoryDescription: "desc",
-      comment: "comment",
-    });
-
-    const development = await caller.development.get({ developmentId });
-    expect(development?.githubUrl).toBe(repositoryUrl);
   });
 });

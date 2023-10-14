@@ -23,7 +23,7 @@ export type Idea = {
   elapsedSinceCreation: string;
 };
 
-export const IdeaFields = {
+const IdeaFields = {
   title: {
     maxLength: 50,
   },

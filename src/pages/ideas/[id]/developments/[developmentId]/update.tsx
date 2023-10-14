@@ -1,7 +1,6 @@
 import { useDevQuery } from "@/client/features/dev/useDevQuery";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { DevelopmentEditPage } from "@/client/pageComponents/DevelopmentEditPage/DevelopmentEditPage";
-import { createRepositoryURLParamSchema } from "@/models/development";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
@@ -49,9 +48,6 @@ const DevelopmentUpdate: NextPage = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.id);
   const developmentId = assertString(router.query.developmentId);
-  const createRepositoryData = createRepositoryURLParamSchema.parse(
-    router.query
-  );
 
   const { idea } = useIdeaQuery({ ideaId });
   const { development: development } = useDevQuery({ developmentId });
@@ -62,12 +58,6 @@ const DevelopmentUpdate: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return (
-    <DevelopmentEditPage
-      idea={idea}
-      development={development}
-      restoredValues={createRepositoryData}
-    />
-  );
+  return <DevelopmentEditPage idea={idea} development={development} />;
 };
 export default DevelopmentUpdate;

@@ -36,7 +36,6 @@ describe("開発情報へのいいねAPI", () => {
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { developmentId } = await caller.development.create({
       ideaId: idea.id,
-      type: "referenceRepository",
       githubRepositoryUrl: "https://github.com/hwld/aluep",
       developmentStatusId: DevStatusIds.IN_PROGRESS,
     });

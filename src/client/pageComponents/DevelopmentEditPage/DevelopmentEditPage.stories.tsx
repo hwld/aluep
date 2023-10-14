@@ -31,7 +31,6 @@ export const Filled: Story = {
   args: {
     idea: IdeaHelper.createFilled(),
     development: DevelopmentHelper.createFilled(),
-    restoredValues: {},
   },
   parameters: {
     msw: {

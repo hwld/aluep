@@ -33,7 +33,7 @@ const baseHandlers = [
 ];
 
 export const FilledIdea: Story = {
-  args: { idea: IdeaHelper.createFilled(), restoredValues: {} },
+  args: { idea: IdeaHelper.createFilled() },
   parameters: {
     msw: {
       handlers: [...baseHandlers],

@@ -22,7 +22,7 @@ export type IdeaComment = {
   createdAt: Date;
 };
 
-export const IdeaCommentFields = {
+const IdeaCommentFields = {
   text: {
     maxLength: 2000,
   },
