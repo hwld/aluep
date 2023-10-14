@@ -1,5 +1,4 @@
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
-import { DevStatusIds } from "@/models/developmentStatus";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = { component: DevStatusBadge } satisfies Meta<
@@ -9,13 +8,13 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 export const InProgrses: Story = {
-  args: { status: { id: DevStatusIds.IN_PROGRESS, name: "開発中" } },
+  args: { status: "IN_PROGRESS" },
 };
 
 export const Aborted: Story = {
-  args: { status: { id: DevStatusIds.ABORTED, name: "開発中止" } },
+  args: { status: "ABORTED" },
 };
 
 export const Completed: Story = {
-  args: { status: { id: DevStatusIds.COMPLETED, name: "開発終了" } },
+  args: { status: "COMPLETED" },
 };

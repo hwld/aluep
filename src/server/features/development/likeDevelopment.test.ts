@@ -1,4 +1,3 @@
-import { DevStatusIds } from "@/models/developmentStatus";
 import { TestHelpers } from "@/server/tests/helper";
 
 describe("開発情報へのいいねAPI", () => {
@@ -37,7 +36,7 @@ describe("開発情報へのいいねAPI", () => {
     const { developmentId } = await caller.development.create({
       ideaId: idea.id,
       githubRepositoryUrl: "https://github.com/hwld/aluep",
-      developmentStatusId: DevStatusIds.IN_PROGRESS,
+      status: "IN_PROGRESS",
     });
 
     const promise = caller.development.like({ developmentId });

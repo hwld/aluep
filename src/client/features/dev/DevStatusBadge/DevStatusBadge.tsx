@@ -1,16 +1,15 @@
-import { DevStatusIds } from "@/models/developmentStatus";
+import { DevStatus, DevStatusNames } from "@/models/developmentStatus";
 import { Badge, MantineSize } from "@mantine/core";
-import { DevelopmentStatus } from "@prisma/client";
 import clsx from "clsx";
 import classes from "./DevStatusBadge.module.css";
 
-type Props = { status: DevelopmentStatus; size?: MantineSize };
+type Props = { status: DevStatus; size?: MantineSize };
 
 export const DevStatusBadge: React.FC<Props> = ({ status, size = "lg" }) => {
-  const map = {
-    [DevStatusIds.IN_PROGRESS]: classes["in-progress"],
-    [DevStatusIds.COMPLETED]: classes.completed,
-    [DevStatusIds.ABORTED]: classes.aborted,
+  const map: { [T in DevStatus]: string } = {
+    IN_PROGRESS: classes["in-progress"],
+    COMPLETED: classes.completed,
+    ABORTED: classes.aborted,
   };
 
   return (
@@ -19,13 +18,13 @@ export const DevStatusBadge: React.FC<Props> = ({ status, size = "lg" }) => {
       variant="light"
       size={size}
       classNames={{
-        root: clsx(classes.root, map[status.id]),
-        label: clsx(classes.label, map[status.id], {
+        root: clsx(classes.root, map[status]),
+        label: clsx(classes.label, map[status], {
           [classes.xl]: size === "xl",
         }),
       }}
     >
-      {status.name}
+      {DevStatusNames[status]}
     </Badge>
   );
 };

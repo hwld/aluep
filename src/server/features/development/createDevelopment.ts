@@ -13,7 +13,7 @@ export const createDevelopment = requireLoggedInProcedure
         githubUrl: input.githubRepositoryUrl,
         comment: input.comment ?? "",
         developedItemUrl: input.developedItemUrl ?? "",
-        status: { connect: { id: input.developmentStatusId } },
+        status: input.status,
       },
     });
 

@@ -141,8 +141,7 @@ model Development {
   comment             String            @db.Text
   developedItemUrl    String
   likes               DevelopmentLike[]
-  statusId            String
-  status              DevelopmentStatus @relation(fields: [statusId], references: [id], onDelete: Cascade)
+  status              DevelopmentStatus @default(IN_PROGRESS)
   developmentMemos    DevelopmentMemo[]
   allowOtherUserMemos Boolean           @default(true)
 
@@ -166,14 +165,10 @@ model DevelopmentLike {
   @@map("development_likes")
 }
 
-model DevelopmentStatus {
-  // 1: 開発中, 2: 開発中止, 3: 開発済み
-  // このidの意味合いを変えたら色んなところに影響が出る
-  id   String        @id
-  name String
-  idea Development[]
-
-  @@map("development_statuses")
+enum DevelopmentStatus {
+  IN_PROGRESS
+  ABORTED
+  COMPLETED
 }
 
 model DevelopmentMemo {
@@ -210,8 +205,8 @@ model FavoriteUser {
 }
 
 model IdeaComment {
-  id      String @id @default(cuid())
-  text String @db.Text 
+  id   String @id @default(cuid())
+  text String @db.Text
 
   ideaId     String
   idea       Idea   @relation(fields: [ideaId], references: [id], onDelete: Cascade)

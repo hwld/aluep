@@ -1,4 +1,3 @@
-import { DevStatusIds } from "@/models/developmentStatus";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -51,26 +50,8 @@ function upsertIdeaTags() {
   return promises;
 }
 
-function upsertDevelopmentStatuses() {
-  const statuses = [
-    { id: DevStatusIds.IN_PROGRESS, name: "開発中" },
-    { id: DevStatusIds.ABORTED, name: "開発中止" },
-    { id: DevStatusIds.COMPLETED, name: "開発済み" },
-  ];
-
-  const promises = statuses.map((status) => {
-    return prisma.developmentStatus.upsert({
-      where: { id: status.id },
-      create: { id: status.id, name: status.name },
-      update: {},
-    });
-  });
-
-  return promises;
-}
-
 async function main() {
-  const promises = [...upsertIdeaTags(), ...upsertDevelopmentStatuses()];
+  const promises = [...upsertIdeaTags()];
   await prisma.$transaction(promises);
 }
 

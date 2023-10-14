@@ -1,4 +1,4 @@
-import { DevStatusIds } from "@/models/developmentStatus";
+import { DevStatus } from "@/models/developmentStatus";
 import { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { DevStatusSelect } from "./DevStatusSelect";
@@ -11,27 +11,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
-    allStatuses: [
-      { id: DevStatusIds.ABORTED, name: "開発中止" },
-      { id: DevStatusIds.COMPLETED, name: "開発完了" },
-      { id: DevStatusIds.IN_PROGRESS, name: "開発中" },
-    ],
-    value: "",
+    value: "IN_PROGRESS",
   },
 
   render: function Render() {
-    const [val, setVal] = useState("");
+    const [val, setVal] = useState<DevStatus>("IN_PROGRESS");
 
-    return (
-      <DevStatusSelect
-        value={val}
-        onChange={(val) => setVal(val)}
-        allStatuses={[
-          { id: DevStatusIds.ABORTED, name: "開発中止" },
-          { id: DevStatusIds.COMPLETED, name: "開発完了" },
-          { id: DevStatusIds.IN_PROGRESS, name: "開発中" },
-        ]}
-      />
-    );
+    return <DevStatusSelect value={val} onChange={(val) => setVal(val)} />;
   },
 };

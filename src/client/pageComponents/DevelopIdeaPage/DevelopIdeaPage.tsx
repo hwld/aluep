@@ -3,7 +3,6 @@ import { useDevelop } from "@/client/features/dev/useDevelop";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { DevelopmentFormData } from "@/models/development";
-import { DevStatusIds } from "@/models/developmentStatus";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Card, Stack, Text } from "@mantine/core";
@@ -50,7 +49,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea }) => {
               isLoading={developMutation.isLoading || developMutation.isSuccess}
               defaultValues={{
                 comment: "",
-                developmentStatusId: DevStatusIds.IN_PROGRESS,
+                status: "IN_PROGRESS",
                 githubRepositoryUrl: "",
                 developedItemUrl: "",
               }}

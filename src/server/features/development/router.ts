@@ -1,7 +1,6 @@
 import { createDevelopment } from "@/server/features/development/createDevelopment";
 import { deleteDevelopment } from "@/server/features/development/deleteDevelopment";
 import { getDevelopment } from "@/server/features/development/getDevelopment";
-import { getDevelopmentStatuses } from "@/server/features/development/getDevelopmentStatuses";
 import { getDevelopmentsByIdea } from "@/server/features/development/getDevelopmentsByIdea";
 import { getDevelopmentsByUser } from "@/server/features/development/getDevelopmentsByUser";
 import { getLikedDevelopmentsByUser } from "@/server/features/development/getLikedDevelopmentsByUser";
@@ -39,9 +38,6 @@ export const developmentRoute = router({
 
   /** 開発情報のいいねを解除する */
   unlike: unlikeDevelopment,
-
-  /** 開発状況の一覧を取得する */
-  getDevelopmentStatuses: getDevelopmentStatuses,
 
   /** 指定したユーザーが開発しているお題と開発情報の概要を取得する */
   getDevelopmentsByUser: getDevelopmentsByUser,

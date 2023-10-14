@@ -1,11 +1,7 @@
 import { DevelopmentEditPage } from "@/client/pageComponents/DevelopmentEditPage/DevelopmentEditPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
-import {
-  DevelopmentHelper,
-  IdeaHelper,
-  SampleDevStatuses,
-} from "@/models/tests/helpers";
+import { DevelopmentHelper, IdeaHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
@@ -39,10 +35,6 @@ export const Filled: Story = {
         mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
           developed: false,
         }),
-        mockTrpcQuery(
-          trpcMsw.development.getDevelopmentStatuses,
-          SampleDevStatuses
-        ),
       ],
     },
   },

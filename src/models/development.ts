@@ -1,4 +1,5 @@
-import { DevStatus } from "@/models/developmentStatus";
+import { devStatusSchema } from "@/models/developmentStatus";
+import { DevelopmentStatus } from "@prisma/client";
 import { z } from "zod";
 
 export type Development = {
@@ -13,7 +14,7 @@ export type Development = {
   likedByLoggedInUser: boolean;
   createdAt: string;
   updatedAt: string;
-  status: DevStatus;
+  status: DevelopmentStatus;
   allowOtherUserMemos: boolean;
 };
 const DevelopmentFields = {
@@ -48,11 +49,7 @@ export const developmentFormSchema = z.object({
       /^https:\/\/github.com\/[^\/]+\/[^\/\?&]+$/,
       "https://から始まる有効なGitHubリポジトリのURLを入力してください。"
     ),
-  developmentStatusId: z
-    .string({
-      required_error: "開発状況を入力してください。",
-    })
-    .min(1, "開発状況を入力してください。"),
+  status: devStatusSchema,
 });
 
 export type DevelopmentFormData = z.infer<typeof developmentFormSchema>;

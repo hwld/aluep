@@ -1,7 +1,7 @@
 import { Development } from "@/models/development";
 import { DevelopmentLikers } from "@/models/developmentLike";
 import { DevelopmentMemo } from "@/models/developmentMemo";
-import { DevStatus, DevStatusIds } from "@/models/developmentStatus";
+import { allDevStatuses } from "@/models/developmentStatus";
 import { Idea } from "@/models/idea";
 import { IdeaComment } from "@/models/ideaComment";
 import { IdeaTag } from "@/models/ideaTag";
@@ -130,12 +130,6 @@ export const IdeaTagHelper = {
   },
 };
 
-export const SampleDevStatuses: DevStatus[] = [
-  { id: DevStatusIds.ABORTED, name: "開発中止" },
-  { id: DevStatusIds.COMPLETED, name: "開発終了" },
-  { id: DevStatusIds.IN_PROGRESS, name: "開発中" },
-];
-
 export const DevelopmentHelper = {
   create: (data?: Partial<Development>): Development => {
     return {
@@ -154,11 +148,7 @@ export const DevelopmentHelper = {
       ideaTitle: fakeString({ min: 1, max: 50 }),
       likedByLoggedInUser: true,
       likes: 100,
-
-      status: {
-        ...faker.helpers.arrayElement(SampleDevStatuses),
-        ...data?.status,
-      },
+      status: data?.status ?? faker.helpers.arrayElement(allDevStatuses),
       updatedAt: new Date().toLocaleString(),
       ...data,
     };

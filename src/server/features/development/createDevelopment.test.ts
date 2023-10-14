@@ -1,4 +1,3 @@
-import { DevStatusIds } from "@/models/developmentStatus";
 import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題開発API", () => {
@@ -9,7 +8,7 @@ describe("お題開発API", () => {
     const promise = caller.development.create({
       ideaId: idea.id,
       githubRepositoryUrl: "https://github.com/hwld/aluep",
-      developmentStatusId: DevStatusIds.IN_PROGRESS,
+      status: "IN_PROGRESS",
     });
 
     await expect(promise).rejects.toThrow();
@@ -23,11 +22,11 @@ describe("お題開発API", () => {
     const { developmentId } = await caller.development.create({
       ideaId: idea.id,
       githubRepositoryUrl: repositoryUrl,
-      developmentStatusId: DevStatusIds.COMPLETED,
+      status: "COMPLETED",
     });
 
     const development = await caller.development.get({ developmentId });
     expect(development?.githubUrl).toBe(repositoryUrl);
-    expect(development?.status.id).toBe(DevStatusIds.COMPLETED);
+    expect(development?.status).toBe("COMPLETED");
   });
 });

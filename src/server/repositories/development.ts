@@ -7,7 +7,6 @@ const developmentArgs = {
   include: {
     user: true,
     likes: true,
-    status: true,
     idea: { select: { title: true } },
   },
 } satisfies Prisma.DevelopmentDefaultArgs;
@@ -37,7 +36,7 @@ const convertDevelopment = (
       : false,
     createdAt: raw.createdAt.toUTCString(),
     updatedAt: raw.updatedAt.toUTCString(),
-    status: { id: raw.status.id, name: raw.status.name },
+    status: raw.status,
     allowOtherUserMemos: raw.allowOtherUserMemos,
   };
 

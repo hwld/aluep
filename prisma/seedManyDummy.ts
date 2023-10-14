@@ -12,7 +12,6 @@
  *   ・各お題の開発者一人に0~49のいいね
  */
 
-import { DevStatusIds } from "@/models/developmentStatus";
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
 
@@ -98,10 +97,10 @@ async function main() {
           developedItemUrl: "",
           ideaId: ideaIds[ideaIndex],
           userId: userIds[userIndex],
-          statusId: faker.helpers.arrayElement([
-            DevStatusIds.IN_PROGRESS,
-            DevStatusIds.ABORTED,
-            DevStatusIds.COMPLETED,
+          status: faker.helpers.arrayElement([
+            "IN_PROGRESS",
+            "COMPLETED",
+            "ABORTED",
           ]),
         },
         update: { createdAt: new Date() },

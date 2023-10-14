@@ -24,7 +24,7 @@ export const updateDevelopment = requireLoggedInProcedure
         githubUrl: input.githubRepositoryUrl,
         comment: input.comment,
         developedItemUrl: input.developedItemUrl,
-        statusId: input.developmentStatusId,
+        status: input.status,
       },
     });
   });

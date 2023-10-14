@@ -29,7 +29,6 @@ const baseHandlers = [
   mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
     developed: false,
   }),
-  mockTrpcQuery(trpcMsw.development.getDevelopmentStatuses, []),
 ];
 
 export const FilledIdea: Story = {

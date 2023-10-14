@@ -1,4 +1,3 @@
-import { DevStatusIds } from "@/models/developmentStatus";
 import { db } from "@/server/lib/prismadb";
 import { convertUser, findUser } from "@/server/repositories/user";
 import { appRouter } from "@/server/router";
@@ -101,7 +100,7 @@ export const TestHelpers = {
         comment: "",
         developedItemUrl: "",
         githubUrl: "https://github.com/hwld/aluep",
-        statusId: DevStatusIds.IN_PROGRESS,
+        status: "IN_PROGRESS",
         ...args,
       },
     });

@@ -1,4 +1,3 @@
-import { DevStatusIds } from "@/models/developmentStatus";
 import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題開発情報削除API", () => {
@@ -8,7 +7,7 @@ describe("お題開発情報削除API", () => {
     const { developmentId } = await caller.development.create({
       githubRepositoryUrl: "https://github.com/hwld/aluep",
       ideaId: idea.id,
-      developmentStatusId: DevStatusIds.IN_PROGRESS,
+      status: "IN_PROGRESS",
     });
 
     await caller.development.delete({ developmentId });

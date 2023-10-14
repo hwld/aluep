@@ -38,7 +38,6 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     await Promise.all([
       trpcStore.idea.get.prefetch({ ideaId }),
       trpcStore.development.get.prefetch({ developmentId }),
-      trpcStore.development.getDevelopmentStatuses.prefetch(),
       trpcStore.me.getMyGitHubRepositories.prefetch(),
     ]);
   }

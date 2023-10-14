@@ -1,4 +1,3 @@
-import { DevStatusIds } from "@/models/developmentStatus";
 import { TestHelpers } from "@/server/tests/helper";
 
 describe("開発情報更新API", () => {
@@ -11,7 +10,7 @@ describe("開発情報更新API", () => {
 
     const promise = caller.development.update({
       githubRepositoryUrl: "https://github.com/hwld/me",
-      developmentStatusId: DevStatusIds.ABORTED,
+      status: "ABORTED",
       developmentId: development.id,
       comment: "new comment",
       ideaId: development.ideaId,
@@ -30,7 +29,7 @@ describe("開発情報更新API", () => {
     const promise = caller.development.update({
       developmentId: development.id,
       ideaId: development.ideaId,
-      developmentStatusId: DevStatusIds.ABORTED,
+      status: "ABORTED",
       githubRepositoryUrl: "https://github.com/hwld/me",
       comment: "new comment",
     });
@@ -43,24 +42,23 @@ describe("開発情報更新API", () => {
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { developmentId } = await caller.development.create({
       ideaId: idea.id,
-      developmentStatusId: DevStatusIds.IN_PROGRESS,
+      status: "IN_PROGRESS",
       githubRepositoryUrl: "https://github.com/hwld/me",
       comment: "comment",
     });
-    const updatedStatusId = DevStatusIds.COMPLETED;
     const updatedRepoUrl = "https://github.com/hwld/me2";
     const updatedComment = "new comment";
 
     await caller.development.update({
       developmentId,
       ideaId: idea.id,
-      developmentStatusId: updatedStatusId,
+      status: "COMPLETED",
       githubRepositoryUrl: updatedRepoUrl,
       comment: updatedComment,
     });
 
     const updatedDevelop = await caller.development.get({ developmentId });
-    expect(updatedDevelop?.status.id).toBe(updatedStatusId);
+    expect(updatedDevelop?.status).toBe("COMPLETED");
     expect(updatedDevelop?.githubUrl).toBe(updatedRepoUrl);
     expect(updatedDevelop?.comment).toBe(updatedComment);
   });

@@ -49,7 +49,7 @@ export const DevelopmentEditPage: React.FC<Props> = ({ idea, development }) => {
               defaultValues={{
                 comment: development.comment,
                 developedItemUrl: development.developedItemUrl,
-                developmentStatusId: development.status.id,
+                status: development.status,
                 githubRepositoryUrl: development.githubUrl,
               }}
               submitText="更新する"

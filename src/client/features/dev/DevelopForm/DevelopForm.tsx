@@ -1,5 +1,4 @@
 import { DevStatusSelect } from "@/client/features/dev/DevStatusSelect/DevStatusSelect";
-import { useDevStatusesQuery } from "@/client/features/dev/useDevStatusesQuery";
 import { trpc } from "@/client/lib/trpc";
 import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { GitHubRepoSelect } from "@/client/ui/GitHubRepoSelect/GitHubRepoSelect";
@@ -40,7 +39,6 @@ export const DevelopForm: React.FC<Props> = ({
   submitText,
   isLoading,
 }) => {
-  const { developmentStatuses } = useDevStatusesQuery();
   const { data: repositories } = trpc.me.getMyGitHubRepositories.useQuery(
     undefined,
     { initialData: [] }
@@ -96,13 +94,12 @@ export const DevelopForm: React.FC<Props> = ({
 
       <Controller
         control={control}
-        name="developmentStatusId"
+        name="status"
         render={({ field }) => {
           return (
             <DevStatusSelect
-              allStatuses={developmentStatuses}
               {...field}
-              error={getFieldState("developmentStatusId").invalid}
+              error={getFieldState("status").invalid}
             />
           );
         }}
