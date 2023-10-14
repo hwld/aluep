@@ -1,6 +1,5 @@
 import {
   ActionIcon,
-  CheckIcon,
   Combobox,
   Group,
   Input,
@@ -65,12 +64,8 @@ export const GitHubRepoSelect: React.FC<Props> = forwardRef<
         className={classes["option"]}
         value={repo.url}
         key={repo.url}
-        active={value === repo.url}
       >
-        <Group gap="xs">
-          {value === repo.url && <CheckIcon size={12} />}
-          {repo.name}
-        </Group>
+        {repo.name}
       </Combobox.Option>
     ));
 

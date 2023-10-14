@@ -1,6 +1,6 @@
 .option {
   margin: 1px;
-  transition: background-color 250ms;
+  transition: background-color 100ms;
   color: var(--mantine-color-gray-7);
 
   &[data-combobox-selected],

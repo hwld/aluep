@@ -1,3 +1,4 @@
+import { DevStatusSelect } from "@/client/features/dev/DevStatusSelect/DevStatusSelect";
 import { useDevStatusesQuery } from "@/client/features/dev/useDevStatusesQuery";
 import { trpc } from "@/client/lib/trpc";
 import { AppForm } from "@/client/ui/AppForm/AppForm";
@@ -8,7 +9,7 @@ import {
 } from "@/models/development";
 import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Group, Select, Textarea, TextInput } from "@mantine/core";
+import { Box, Button, Group, Textarea, TextInput } from "@mantine/core";
 import Link from "next/link";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -20,8 +21,6 @@ type DevelopmentFormDefaultValues = Partial<
 >;
 
 type Props = {
-  // formのtypeと、それ以外のプロパティを一括で渡せるようにする。
-  // 指定されたtypeに必要のないプロパティも渡せるように、Union型をIntersection型に変換する処理を書いた
   /**
    * 非制御コンポーネントから制御コンポーネントに変わったというエラーを出さないためにstring型のフィールドには
    * 文字列を入れる。
@@ -100,14 +99,10 @@ export const DevelopForm: React.FC<Props> = ({
         name="developmentStatusId"
         render={({ field }) => {
           return (
-            <Select
-              label="開発状況"
-              data={developmentStatuses.map((s) => ({
-                value: s.id.toString(),
-                label: s.name,
-              }))}
-              error={getFieldState("developmentStatusId").error?.message}
+            <DevStatusSelect
+              allStatuses={developmentStatuses}
               {...field}
+              error={getFieldState("developmentStatusId").invalid}
             />
           );
         }}

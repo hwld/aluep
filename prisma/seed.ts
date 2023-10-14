@@ -1,3 +1,4 @@
+import { DevStatusIds } from "@/models/developmentStatus";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -51,11 +52,10 @@ function upsertIdeaTags() {
 }
 
 function upsertDevelopmentStatuses() {
-  // ID変えるとプログラムが壊れちゃう
   const statuses = [
-    { id: "1", name: "開発中" },
-    { id: "2", name: "開発中止" },
-    { id: "3", name: "開発済み" },
+    { id: DevStatusIds.IN_PROGRESS, name: "開発中" },
+    { id: DevStatusIds.ABORTED, name: "開発中止" },
+    { id: DevStatusIds.COMPLETED, name: "開発済み" },
   ];
 
   const promises = statuses.map((status) => {
