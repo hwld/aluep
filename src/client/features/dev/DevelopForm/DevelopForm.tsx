@@ -143,6 +143,7 @@ export const DevelopForm: React.FC<Props> = ({
             control={control}
             name="githubRepositoryUrl"
             render={({ field }) => {
+              console.log(field);
               return (
                 <TextInput
                   required

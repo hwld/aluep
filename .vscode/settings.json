@@ -1,5 +1,5 @@
 {
-  "[typescriptreact][typescript][javascript]": {
+  "[typescriptreact][typescript][javascript][css]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2,
