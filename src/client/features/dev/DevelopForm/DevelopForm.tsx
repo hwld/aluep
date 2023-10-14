@@ -1,9 +1,11 @@
+import { useDevStatusesQuery } from "@/client/features/dev/useDevStatusesQuery";
+import { trpc } from "@/client/lib/trpc";
 import { AppForm } from "@/client/ui/AppForm/AppForm";
+import { GitHubRepoSelect } from "@/client/ui/GitHubRepoSelect/GitHubRepoSelect";
 import {
   DevelopmentFormData,
   developmentFormSchema,
 } from "@/models/development";
-import { DevStatus } from "@/models/developmentStatus";
 import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Radio, Select, Stack, Text, Textarea, TextInput } from "@mantine/core";
@@ -19,7 +21,6 @@ export type DevelopmentFormDefaultValues = Partial<
 >;
 
 type Props = {
-  developmentStatuses: DevStatus[];
   // formのtypeと、それ以外のプロパティを一括で渡せるようにする。
   // 指定されたtypeに必要のないプロパティも渡せるように、Union型をIntersection型に変換する処理を書いた
   /**
@@ -37,7 +38,6 @@ type Props = {
 };
 
 export const DevelopForm: React.FC<Props> = ({
-  developmentStatuses,
   defaultValues,
   isRelogined = false,
   onSubmit,
@@ -45,6 +45,12 @@ export const DevelopForm: React.FC<Props> = ({
   submitText,
   isLoading,
 }) => {
+  const { developmentStatuses } = useDevStatusesQuery();
+  const { data: repositories } = trpc.me.getMyGitHubRepositories.useQuery(
+    undefined,
+    { initialData: [] }
+  );
+
   const {
     handleSubmit,
     control,
@@ -57,6 +63,11 @@ export const DevelopForm: React.FC<Props> = ({
     },
     resolver: zodResolver(developmentFormSchema),
   });
+
+  const utils = trpc.useContext();
+  const handleReloadRepositories = () => {
+    utils.me.getMyGitHubRepositories.refetch();
+  };
 
   return (
     <AppForm
@@ -143,12 +154,12 @@ export const DevelopForm: React.FC<Props> = ({
             control={control}
             name="githubRepositoryUrl"
             render={({ field }) => {
-              console.log(field);
               return (
-                <TextInput
-                  required
+                <GitHubRepoSelect
                   label="開発に使用するGitHubリポジトリ"
-                  error={getFieldState("githubRepositoryUrl").error?.message}
+                  onUpdateList={handleReloadRepositories}
+                  repositories={repositories}
+                  error={getFieldState("githubRepositoryUrl").invalid}
                   {...field}
                 />
               );

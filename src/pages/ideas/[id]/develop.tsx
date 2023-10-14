@@ -33,7 +33,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       };
     }
 
-    await trpcStore.idea.get.prefetch({ ideaId });
+    await Promise.all([
+      trpcStore.idea.get.prefetch({ ideaId }),
+      trpcStore.me.getMyGitHubRepositories.prefetch(),
+    ]);
   }
 );
 

@@ -21,6 +21,7 @@ type Props = {
   onChange: (urlValue: string) => void;
   onBlur?: FocusEventHandler<HTMLButtonElement>;
   onUpdateList: () => void;
+  error?: boolean;
 };
 
 export const GitHubRepoSelect: React.FC<Props> = forwardRef<
@@ -35,6 +36,7 @@ export const GitHubRepoSelect: React.FC<Props> = forwardRef<
     onChange,
     onBlur,
     onUpdateList,
+    error,
   },
   ref
 ) {
@@ -92,6 +94,7 @@ export const GitHubRepoSelect: React.FC<Props> = forwardRef<
           onClick={() => combobox.toggleDropdown()}
           onBlur={onBlur}
           rightSectionPointerEvents="none"
+          error={error}
           ref={ref}
         >
           {selectedName || (

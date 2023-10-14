@@ -3,7 +3,6 @@ import {
   DevelopmentFormDefaultValues,
 } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { useDevelop } from "@/client/features/dev/useDevelop";
-import { useDevStatusesQuery } from "@/client/features/dev/useDevStatusesQuery";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import {
@@ -29,8 +28,6 @@ export const DevelopmentEditPage: React.FC<Props> = ({
   restoredValues,
 }) => {
   const router = useRouter();
-
-  const { developmentStatuses } = useDevStatusesQuery();
 
   const {
     mutations: { updateDevelopmentMutation },
@@ -99,7 +96,6 @@ export const DevelopmentEditPage: React.FC<Props> = ({
           <Text c="gray.5">開発情報</Text>
           <Card>
             <DevelopForm
-              developmentStatuses={developmentStatuses}
               onSubmit={handleUpdateDevelopment}
               onCancel={handleBack}
               ideaId={idea.id}

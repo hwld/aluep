@@ -65,8 +65,8 @@ export const developmentFormSchema = z
       z.object({
         type: z.literal("referenceRepository"),
         githubRepositoryUrl: z
-          .string({ required_error: "リポジトリのURLを入力してください。" })
-          .min(1, "リポジトリのURLを入力してください。")
+          .string({ required_error: "リポジトリを選択してください。" })
+          .min(1, "リポジトリを選択してください。")
           .max(
             repoUrl.maxLength,
             `リポジトリのURLは${repoUrl.maxLength}文字以下で入力してください。`
