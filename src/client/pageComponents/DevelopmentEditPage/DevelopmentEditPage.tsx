@@ -3,7 +3,6 @@ import { useDevelop } from "@/client/features/dev/useDevelop";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Development, DevelopmentFormData } from "@/models/development";
-import { DevStatusIds } from "@/models/developmentStatus";
 import { Idea } from "@/models/idea";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
@@ -50,8 +49,8 @@ export const DevelopmentEditPage: React.FC<Props> = ({ idea, development }) => {
               defaultValues={{
                 comment: development.comment,
                 developedItemUrl: development.developedItemUrl,
-                developmentStatusId: DevStatusIds.IN_PROGRESS,
-                githubRepositoryUrl: "",
+                developmentStatusId: development.status.id,
+                githubRepositoryUrl: development.githubUrl,
               }}
               submitText="更新する"
               isLoading={

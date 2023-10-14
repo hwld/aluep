@@ -50,7 +50,7 @@ const DevelopmentUpdate: NextPage = () => {
   const developmentId = assertString(router.query.developmentId);
 
   const { idea } = useIdeaQuery({ ideaId });
-  const { development: development } = useDevQuery({ developmentId });
+  const { development } = useDevQuery({ developmentId });
 
   // テーマが取得できないときはサーバーでエラーが出るから
   // ここには到達しない
