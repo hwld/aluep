@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  Combobox,
   createTheme,
   Divider,
   Input,
@@ -142,6 +143,9 @@ export const theme = createTheme({
         dropdown: multiSelectClasses.dropdown,
         pill: multiSelectClasses.pill,
       },
+    }),
+    Combobox: Combobox.extend({
+      defaultProps: { transitionProps: { duration: 150, transition: "pop" } },
     }),
     Notification: Notification.extend({
       classNames: {
