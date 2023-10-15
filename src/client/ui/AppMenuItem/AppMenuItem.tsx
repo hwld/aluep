@@ -14,7 +14,11 @@ export const AppMenuItem: React.FC<Props> = ({ red, onClick, ...props }) => {
     <Menu.Item
       {...props}
       onClick={handleClick}
-      className={clsx(classes.root, { [classes.red]: red })}
+      classNames={{
+        item: clsx(classes.root, { [classes.red]: red }),
+        itemSection: classes.itemSection,
+        itemLabel: classes.itemLabel,
+      }}
     >
       {props.children}
     </Menu.Item>

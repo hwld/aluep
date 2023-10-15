@@ -1,12 +1,17 @@
 .root {
-  transition: background-color 150ms;
+  transition: background-color 100ms;
   border-radius: var(--mantine-radius-sm);
-  padding: 5px 12px;
+  padding: 6px 6px;
   color: var(--mantine-color-gray-7);
 
   &:hover {
     background-color: var(--mantine-color-gray-2);
     color: var(--mantine-color-gray-8);
+  }
+
+  & svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -17,4 +22,8 @@
     background-color: var(--mantine-color-red-1);
     color: var(--mantine-color-red-8);
   }
+}
+
+.itemSection {
+  margin: 0px 5px;
 }

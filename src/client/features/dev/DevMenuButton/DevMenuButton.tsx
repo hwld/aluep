@@ -4,6 +4,7 @@ import { trpc } from "@/client/lib/trpc";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
+import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
@@ -11,7 +12,6 @@ import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Dev } from "@/models/dev";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
-import { Divider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import router from "next/router";
 import { BiTrashAlt } from "react-icons/bi";
@@ -96,25 +96,22 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
           {isOwner && (
             <>
               <AppMenuLinkItem
-                leftSection={<RiEdit2Fill size={20} />}
+                leftSection={<RiEdit2Fill />}
                 href={Routes.devUpdate(dev.ideaId, dev.id)}
               >
                 開発情報を編集する
               </AppMenuLinkItem>
               <AppMenuItem
                 red
-                leftSection={<FaTrash size={18} />}
+                leftSection={<FaTrash />}
                 onClick={openDeleteModal}
               >
                 開発情報を削除する
               </AppMenuItem>
-              <Divider my="5px" />
+              <AppMenuDivider />
             </>
           )}
-          <AppMenuItem
-            leftSection={<MdFlag size={18} />}
-            onClick={openReportModal}
-          >
+          <AppMenuItem leftSection={<MdFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>

@@ -6,6 +6,7 @@ import {
 } from "@/client/lib/utils";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
+import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
@@ -13,7 +14,7 @@ import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Idea } from "@/models/idea";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
-import { ActionIcon, Divider, Menu } from "@mantine/core";
+import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/router";
 import { BiTrashAlt } from "react-icons/bi";
@@ -96,26 +97,23 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
           {isIdeaOwner && (
             <>
               <AppMenuLinkItem
-                leftSection={<RiEdit2Fill size={20} />}
+                leftSection={<RiEdit2Fill />}
                 href={Routes.ideaUpdate(idea.id)}
               >
                 お題を編集する
               </AppMenuLinkItem>
               <AppMenuItem
-                leftSection={<FaTrash size={18} />}
+                leftSection={<FaTrash />}
                 red
                 onClick={openDeleteModal}
               >
                 お題を削除する
               </AppMenuItem>
 
-              <Divider my={5} />
+              <AppMenuDivider />
             </>
           )}
-          <AppMenuItem
-            leftSection={<MdFlag size={18} />}
-            onClick={openReportModal}
-          >
+          <AppMenuItem leftSection={<MdFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>

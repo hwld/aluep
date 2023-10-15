@@ -7,12 +7,12 @@ import {
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
+import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
-import { Divider } from "@mantine/core";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { BiTrashAlt } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
@@ -92,25 +92,19 @@ export const DevMemoMenuButton: React.FC<Props> = ({
           {isOwner && (
             <>
               <AppMenuItem
-                leftSection={<FaTrash size={18} />}
+                leftSection={<FaTrash />}
                 red
                 onClick={openDeleteModal}
               >
                 メモを削除する
               </AppMenuItem>
-              <Divider my={5} />
+              <AppMenuDivider />
             </>
           )}
-          <AppMenuItem
-            leftSection={<TbLink size={20} />}
-            onClick={handleCopyLink}
-          >
+          <AppMenuItem leftSection={<TbLink />} onClick={handleCopyLink}>
             リンクをコピーする
           </AppMenuItem>
-          <AppMenuItem
-            leftSection={<MdFlag size={18} />}
-            onClick={openReportModal}
-          >
+          <AppMenuItem leftSection={<MdFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>

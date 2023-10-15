@@ -9,7 +9,11 @@ export const AppMenuLinkItem: React.FC<Props> = ({ red, ...props }) => {
     <Menu.Item
       component={Link}
       {...props}
-      className={clsx(classes.root, { [classes.red]: red })}
+      classNames={{
+        item: clsx(classes.root, { [classes.red]: red }),
+        itemSection: classes.itemSection,
+        itemLabel: classes.itemLabel,
+      }}
     >
       {props.children}
     </Menu.Item>
