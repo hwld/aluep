@@ -3,11 +3,12 @@ import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
 import { sortedInSameOrder } from "@/share/utils";
 
-export const getTop10LikesIdeasInThisMonth = publicProcedure.query(async () => {
-  const ideas = await db.$transaction(async (tx) => {
-    // お題のidのリストを取得する
-    type IdeaIdObjs = { ideaId: string }[];
-    const ideaIdObjs = await tx.$queryRaw<IdeaIdObjs>`
+export const getTop10LikesIdeasInThisMonth = publicProcedure.query(
+  async ({ ctx }) => {
+    const ideas = await db.$transaction(async (tx) => {
+      // お題のidのリストを取得する
+      type IdeaIdObjs = { ideaId: string }[];
+      const ideaIdObjs = await tx.$queryRaw<IdeaIdObjs>`
       SELECT
         ideas.id as "ideaId"
         , COUNT(idea_likes.id) as "likeCount"
@@ -26,19 +27,24 @@ export const getTop10LikesIdeasInThisMonth = publicProcedure.query(async () => {
       LIMIT
         10
     `;
-    const ideaIds = ideaIdObjs.map(({ ideaId }) => ideaId);
+      const ideaIds = ideaIdObjs.map(({ ideaId }) => ideaId);
 
-    const ideas = await findManyIdeas({ where: { id: { in: ideaIds } } }, tx);
+      const ideas = await findManyIdeas({
+        args: { where: { id: { in: ideaIds } } },
+        transactionClient: tx,
+        loggedInUserId: ctx.session?.user.id,
+      });
 
-    // ideaIdsに並び順を合わせる
-    const sortedIdeas = sortedInSameOrder({
-      target: ideas,
-      base: ideaIds,
-      getKey: (t) => t.id,
+      // ideaIdsに並び順を合わせる
+      const sortedIdeas = sortedInSameOrder({
+        target: ideas,
+        base: ideaIds,
+        getKey: (t) => t.id,
+      });
+
+      return sortedIdeas;
     });
 
-    return sortedIdeas;
-  });
-
-  return ideas;
-});
+    return ideas;
+  }
+);

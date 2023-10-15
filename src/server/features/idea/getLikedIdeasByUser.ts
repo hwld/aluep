@@ -9,7 +9,7 @@ import { z } from "zod";
 
 export const getLikedIdeasByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
-  .query(async ({ input, input: { page } }) => {
+  .query(async ({ input, input: { page }, ctx }) => {
     // 指定されたユーザーがいいねしたお題のidを取得する
     const [likedIdeaIdObjs, { allPages }] = await paginate({
       finder: db.ideaLike.findMany,
@@ -24,7 +24,8 @@ export const getLikedIdeasByUser = publicProcedure
 
     // いいねしたお題の情報を取得
     const likedIdeas = await findManyIdeas({
-      where: { id: { in: likedIdeaIds } },
+      args: { where: { id: { in: likedIdeaIds } } },
+      loggedInUserId: ctx.session?.user.id,
     });
 
     const sortedLikedIdeas = sortedInSameOrder({

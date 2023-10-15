@@ -5,16 +5,19 @@ import { pageLimit } from "@/share/consts";
 
 export const searchIdeas = publicProcedure
   .input(searchIdeaPageSchema)
-  .query(async ({ input }): Promise<{ ideas: Idea[]; allPages: number }> => {
-    const paginatedIdeas = await findSearchedIdeas(
-      {
-        keyword: input.keyword,
-        tagIds: input.tagIds,
-        order: input.order,
-        period: input.period,
-      },
-      { page: input.page, limit: pageLimit.searchedIdeas }
-    );
+  .query(
+    async ({ input, ctx }): Promise<{ ideas: Idea[]; allPages: number }> => {
+      const paginatedIdeas = await findSearchedIdeas({
+        searchArgs: {
+          keyword: input.keyword,
+          tagIds: input.tagIds,
+          order: input.order,
+          period: input.period,
+        },
+        pagingData: { page: input.page, limit: pageLimit.searchedIdeas },
+        loggedInUserId: ctx.session?.user.id,
+      });
 
-    return paginatedIdeas;
-  });
+      return paginatedIdeas;
+    }
+  );

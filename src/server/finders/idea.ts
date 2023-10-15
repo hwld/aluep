@@ -10,11 +10,16 @@ const ideaArgs = {
   include: {
     tags: { include: { tag: true, idea: true } },
     user: true,
+    likes: true,
+    developments: true,
     _count: { select: { likes: true, developments: true, comments: true } },
   },
 } satisfies Prisma.IdeaDefaultArgs;
 
-const convertIdea = (rawIdea: Prisma.IdeaGetPayload<typeof ideaArgs>): Idea => {
+const convertIdea = (
+  rawIdea: Prisma.IdeaGetPayload<typeof ideaArgs>,
+  loggedInUserId: string | undefined
+): Idea => {
   const idea: Idea = {
     id: rawIdea.id,
     title: rawIdea.title,
@@ -34,14 +39,28 @@ const convertIdea = (rawIdea: Prisma.IdeaGetPayload<typeof ideaArgs>): Idea => {
     likes: rawIdea._count.likes,
     devs: rawIdea._count.developments,
     comments: rawIdea._count.comments,
+    likedByLoggedInUser: rawIdea.likes.find((l) => l.userId === loggedInUserId)
+      ? true
+      : false,
+    developedByLoggedInUser: rawIdea.developments.find(
+      (d) => d.userId === loggedInUserId
+    )
+      ? true
+      : false,
   };
 
   return idea;
 };
 
-export const findIdea = async (
-  where: Prisma.IdeaWhereUniqueInput
-): Promise<Idea | undefined> => {
+type FindIdeaArgs = {
+  where: Prisma.IdeaWhereUniqueInput;
+  loggedInUserId: string | undefined;
+};
+
+export const findIdea = async ({
+  where,
+  loggedInUserId,
+}: FindIdeaArgs): Promise<Idea | undefined> => {
   const rawIdea = await db.idea.findFirst({
     where,
     ...ideaArgs,
@@ -51,17 +70,21 @@ export const findIdea = async (
     return undefined;
   }
 
-  const idea = convertIdea(rawIdea);
+  const idea = convertIdea(rawIdea, loggedInUserId);
   return idea;
 };
 
-export const findManyIdeas = async (
-  {
-    orderBy,
-    ...args
-  }: OmitStrict<Prisma.IdeaFindManyArgs, "include" | "select">,
-  transactionClient?: Prisma.TransactionClient
-) => {
+type FindManyIdeasArgs = {
+  args: OmitStrict<Prisma.IdeaFindManyArgs, "include" | "select">;
+  loggedInUserId: string | undefined;
+  transactionClient?: Prisma.TransactionClient;
+};
+
+export const findManyIdeas = async ({
+  args: { orderBy, ...args },
+  loggedInUserId,
+  transactionClient,
+}: FindManyIdeasArgs) => {
   const client = transactionClient ?? db;
 
   const rawIdeas = await client.idea.findMany({
@@ -69,7 +92,7 @@ export const findManyIdeas = async (
     ...args,
     ...ideaArgs,
   });
-  const ideas = rawIdeas.map(convertIdea);
+  const ideas = rawIdeas.map((r) => convertIdea(r, loggedInUserId));
   return ideas;
 };
 
@@ -80,10 +103,17 @@ type SearchIdeasArgs = {
   period: IdeaPeriod;
 };
 
-export const pickUpIdeas = async (
-  order: IdeaOrder,
-  limit: number
-): Promise<Idea[]> => {
+type PickUpIdeasArgs = {
+  order: IdeaOrder;
+  limit: number;
+  loggedInUserId: string | undefined;
+};
+
+export const pickUpIdeas = async ({
+  order,
+  limit,
+  loggedInUserId,
+}: PickUpIdeasArgs): Promise<Idea[]> => {
   const paginatedIdeas = await db.$transaction(async (tx) => {
     // orderに対応するクエリや並び替え関数を宣言する
     const orderMap: {
@@ -155,10 +185,11 @@ export const pickUpIdeas = async (
     `;
     const pickUpedIdeaIds = ideaIdObjs.map(({ ideaId }) => ideaId);
 
-    const ideas = await findManyIdeas(
-      { where: { id: { in: pickUpedIdeaIds } } },
-      tx
-    );
+    const ideas = await findManyIdeas({
+      args: { where: { id: { in: pickUpedIdeaIds } } },
+      transactionClient: tx,
+      loggedInUserId,
+    });
 
     const sortedIdeas = sortedInSameOrder({
       target: ideas,
@@ -172,11 +203,18 @@ export const pickUpIdeas = async (
   return paginatedIdeas;
 };
 
+type FindSearchedIdeasArgs = {
+  searchArgs: SearchIdeasArgs;
+  pagingData: { page: number; limit: number };
+  loggedInUserId: string | undefined;
+};
+
 /** 条件を指定してお題を取得する */
-export const findSearchedIdeas = async (
-  { keyword, tagIds, order, period }: SearchIdeasArgs,
-  pagingData: { page: number; limit: number }
-): Promise<{ ideas: Idea[]; allPages: number }> => {
+export const findSearchedIdeas = async ({
+  searchArgs: { keyword, tagIds, order, period },
+  pagingData,
+  loggedInUserId,
+}: FindSearchedIdeasArgs): Promise<{ ideas: Idea[]; allPages: number }> => {
   // トランザクションを使用する
   const paginatedIdeas = await db.$transaction(async (tx) => {
     // orderに対応するクエリや並び替え関数を宣言する
@@ -272,10 +310,11 @@ export const findSearchedIdeas = async (
     const allItems = Number(allItemsArray[0].allItems);
     const allPages = Math.ceil(allItems / pagingData?.limit);
 
-    const ideas = await findManyIdeas(
-      { where: { id: { in: searchedIdeaIds } } },
-      tx
-    );
+    const ideas = await findManyIdeas({
+      args: { where: { id: { in: searchedIdeaIds } } },
+      transactionClient: tx,
+      loggedInUserId,
+    });
 
     // searchedIdeaIdsの並び順が保持されないので、並び替え直す。
     const sortedIdeas = sortedInSameOrder({

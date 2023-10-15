@@ -5,7 +5,10 @@ import { z } from "zod";
 
 export const getIdea = publicProcedure
   .input(z.object({ ideaId: z.string() }))
-  .query(async ({ input }): Promise<Idea | undefined> => {
-    const idea = await findIdea({ id: input.ideaId });
+  .query(async ({ input, ctx }): Promise<Idea | undefined> => {
+    const idea = await findIdea({
+      where: { id: input.ideaId },
+      loggedInUserId: ctx.session?.user.id,
+    });
     return idea;
   });

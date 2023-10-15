@@ -8,11 +8,14 @@ import { z } from "zod";
 
 export const getPostedIdeasByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
-  .query(async ({ input, input: { page } }) => {
+  .query(async ({ input, input: { page }, ctx }) => {
     const [postedIdeas, { allPages }] = await paginate({
       finder: findManyIdeas,
-      finderInput: { where: { userId: input.userId } },
-      counter: db.idea.count,
+      finderInput: {
+        args: { where: { userId: input.userId } },
+        loggedInUserId: ctx.session?.user.id,
+      },
+      counter: ({ args }) => db.idea.count(args),
       pagingData: { page, limit: pageLimit.postedIdeas },
     });
 

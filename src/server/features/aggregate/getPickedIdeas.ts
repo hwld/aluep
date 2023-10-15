@@ -5,7 +5,11 @@ import { z } from "zod";
 
 export const getPickedIdeas = publicProcedure
   .input(z.object({ order: ideaOrderSchema }))
-  .query(async ({ input }) => {
-    const ideas = await pickUp(input.order, 6);
+  .query(async ({ input, ctx }) => {
+    const ideas = await pickUp({
+      order: input.order,
+      limit: 6,
+      loggedInUserId: ctx.session?.user.id,
+    });
     return ideas;
   });
