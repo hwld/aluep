@@ -13,7 +13,7 @@ import { Box, Card, Flex } from "@mantine/core";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { MdOutlineEdit } from "react-icons/md";
+import { TbEdit } from "react-icons/tb";
 
 const uploadNotificationId = "upload-icon";
 
@@ -94,7 +94,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <PageHeader icon={MdOutlineEdit} pageName="ユーザーの編集" />
+      <PageHeader icon={TbEdit} pageName="ユーザーの編集" />
       <Box w="100%" maw={800} miw={400} m="auto">
         <Card mt="md">
           <Flex gap="md">

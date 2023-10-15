@@ -6,9 +6,7 @@ import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Group, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { MouseEventHandler } from "react";
-import { FaRegComment } from "react-icons/fa";
-import { MdComputer } from "react-icons/md";
-import { TbHeart } from "react-icons/tb";
+import { TbCode, TbHeart, TbMessageCircle } from "react-icons/tb";
 import classes from "./PopularIdeaCard.module.css";
 
 export const popularIdeaCardWidthPx = 400;
@@ -82,13 +80,13 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
                   {idea.elapsedSinceCreation}
                 </Text>
                 <Flex align="center" gap={3}>
-                  <MdComputer size="15px" color="var(--mantine-color-red-7)" />
+                  <TbCode size="15px" color="var(--mantine-color-red-7)" />
                   <Text size="xs" c="red.7">
                     {idea.devs}
                   </Text>
                 </Flex>
                 <Flex align="center" gap={3}>
-                  <FaRegComment
+                  <TbMessageCircle
                     size="15px"
                     color="var(--mantine-color-red-7)"
                   />

@@ -7,10 +7,7 @@ import { BadgeProps, Menu } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { ReactNode } from "react";
-import { BiBookmarkHeart } from "react-icons/bi";
-import { FaTrash } from "react-icons/fa";
-import { MdLogout } from "react-icons/md";
-import { RiAccountCircleLine } from "react-icons/ri";
+import { TbLogout2, TbTrash, TbUserCircle, TbUserHeart } from "react-icons/tb";
 import classes from "./LoggedInUserMenu.module.css";
 
 type Props = Omit<
@@ -28,28 +25,21 @@ export const LoggedInUserMenu: React.FC<Props> = ({ user, trigger }) => {
       <Menu.Target>{trigger}</Menu.Target>
       <AppMenuDropdown maw={180} className={classes.dropdown}>
         <AppMenuLinkItem
-          leftSection={<RiAccountCircleLine size={20} />}
+          leftSection={<TbUserCircle />}
           href={Routes.user(user.id)}
         >
           プロフィール
         </AppMenuLinkItem>
         <AppMenuLinkItem
-          leftSection={<BiBookmarkHeart size={20} />}
+          leftSection={<TbUserHeart />}
           href={Routes.userFavorites(user.id)}
         >
-          お気に入り
+          お気に入りユーザー
         </AppMenuLinkItem>
-        <AppMenuItem
-          leftSection={<MdLogout size={20} />}
-          onClick={handleLogOut}
-        >
+        <AppMenuItem leftSection={<TbLogout2 />} onClick={handleLogOut}>
           ログアウト
         </AppMenuItem>
-        <AppMenuLinkItem
-          leftSection={<FaTrash size={16} />}
-          href={Routes.userDelete}
-          red
-        >
+        <AppMenuLinkItem leftSection={<TbTrash />} href={Routes.userDelete} red>
           アカウント削除
         </AppMenuLinkItem>
       </AppMenuDropdown>

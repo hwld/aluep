@@ -9,7 +9,7 @@ import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
 import { DevMemo, DevMemoFormData } from "@/models/devMemo";
 import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
-import { FaRegComment } from "react-icons/fa";
+import { TbMessageCircle2 } from "react-icons/tb";
 import classes from "./DevMemoThreadCard.module.css";
 
 type Props = {
@@ -86,7 +86,7 @@ export const DevMemoThreadCard: React.FC<Props> = ({
         <Flex justify="space-between" align="center">
           <Flex align="center" gap={3}>
             <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>
-              <FaRegComment size={20} />
+              <TbMessageCircle2 size={20} />
             </CardActionIcon>
             {childrenMemos.length > 0 && (
               <Text c="gray.5" size="sm">

@@ -7,7 +7,7 @@ import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
-import { MdComputer } from "react-icons/md";
+import { TbCode } from "react-icons/tb";
 
 type Props = {
   idea: Idea;
@@ -32,7 +32,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea }) => {
 
   return (
     <>
-      <PageHeader icon={MdComputer} pageName="お題の開発" />
+      <PageHeader icon={TbCode} pageName="お題の開発" />
       <Stack w="100%" maw={800} miw={300} m="auto" gap="lg">
         <Stack gap="xs">
           <Text c="gray.5">開発するお題</Text>

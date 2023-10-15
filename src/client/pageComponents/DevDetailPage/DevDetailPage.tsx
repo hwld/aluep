@@ -16,8 +16,7 @@ import { DevMemoFormData } from "@/models/devMemo";
 import { Idea } from "@/models/idea";
 import { Card, Center, Flex, Stack, Switch, Title } from "@mantine/core";
 import React, { useRef } from "react";
-import { MdComputer } from "react-icons/md";
-import { TbNote } from "react-icons/tb";
+import { TbCode, TbNote } from "react-icons/tb";
 
 type Props = { dev: Dev; idea: Idea };
 
@@ -86,7 +85,7 @@ export const DevDetailPage: React.FC<Props> = ({ dev, idea }) => {
 
   return (
     <>
-      <PageHeader icon={MdComputer} pageName="開発情報の詳細" />
+      <PageHeader icon={TbCode} pageName="開発情報の詳細" />
       <Stack maw={1200} w="100%" m="auto" gap={40}>
         <DevDetailCard
           dev={dev}

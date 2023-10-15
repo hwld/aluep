@@ -11,9 +11,7 @@ import { User } from "@/models/user";
 import { paginatedPageSchema } from "@/share/paging";
 import { Box, Flex, Stack, Text } from "@mantine/core";
 import React from "react";
-import { BiBookmarkHeart } from "react-icons/bi";
-import { BsFillPeopleFill } from "react-icons/bs";
-import { TbHeart } from "react-icons/tb";
+import { TbHeart, TbUserHeart, TbUsers } from "react-icons/tb";
 
 type Props = { user: User };
 
@@ -27,7 +25,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <PageHeader icon={BiBookmarkHeart} pageName="お気に入りユーザー" />
+      <PageHeader icon={TbUserHeart} pageName="お気に入りユーザー" />
       <Stack maw={800} m="auto" gap="lg">
         <Stack gap="sm">
           <Text c="gray.5">ユーザー</Text>
@@ -36,7 +34,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
         {favoritedUsers?.list.length === 0 ? (
           <Flex direction="column" align="center" gap={50}>
             <Flex align="flex-end" justify="center">
-              <BsFillPeopleFill size={70} color="var(--mantine-color-red-7)" />
+              <TbUsers size={70} color="var(--mantine-color-red-7)" />
               <TbHeart
                 size={70}
                 color="var(--mantine-color-red-3)"

@@ -11,14 +11,14 @@ import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
-import { IoMdLogIn } from "react-icons/io";
 import {
-  MdMailOutline,
-  MdOutlineHome,
-  MdOutlinePersonSearch,
-  MdPostAdd,
-  MdSearch,
-} from "react-icons/md";
+  TbFilePlus,
+  TbHome,
+  TbLogin2,
+  TbMail,
+  TbSearch,
+  TbUserSearch,
+} from "react-icons/tb";
 import classes from "./AppSidebar.module.css";
 
 type Props = { loggedInUser?: Session["user"] };
@@ -79,7 +79,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
           </Flex>
           <Stack gap={10}>
             <SidebarItem
-              icon={MdOutlineHome}
+              icon={TbHome}
               label="ホーム"
               asLink
               href={Routes.home}
@@ -87,7 +87,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={MdPostAdd}
+              icon={TbFilePlus}
               label="お題を投稿"
               onClick={handleClickCreateIdea}
               asLink
@@ -96,7 +96,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={MdSearch}
+              icon={TbSearch}
               label="お題を検索"
               asLink
               href={Routes.ideaSearch()}
@@ -104,7 +104,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={MdOutlinePersonSearch}
+              icon={TbUserSearch}
               label="ユーザーを検索"
               asLink
               href={Routes.userSearch}
@@ -112,7 +112,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={MdMailOutline}
+              icon={TbMail}
               label="お問い合わせ"
               asLink
               href={process.env.NEXT_PUBLIC_CONTACT_URL || Routes.serverError}
@@ -137,7 +137,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
           />
         ) : (
           <SidebarItem
-            icon={IoMdLogIn}
+            icon={TbLogin2}
             label="ログイン"
             onClick={handleLogin}
             tooltip={!isMenuOpen}

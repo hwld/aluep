@@ -1,7 +1,6 @@
 import { UserActivity } from "@/client/features/user/useUserActivityQuery";
 import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
-import { MdComputer } from "react-icons/md";
-import { TbFileText, TbHeart } from "react-icons/tb";
+import { TbCode, TbFileText, TbHeart } from "react-icons/tb";
 
 type Props = { userActivity: UserActivity; width?: number };
 export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
@@ -31,7 +30,7 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
             開発したお題の数
           </Text>
           <Flex align="center" gap={10}>
-            <MdComputer size={40} color="var(--mantine-color-blue-7)" />
+            <TbCode size={40} color="var(--mantine-color-blue-7)" />
             <Flex align="flex-end" gap={2}>
               <Text size="md" fw="bold" c="blue.7">
                 {userActivity.devCount}

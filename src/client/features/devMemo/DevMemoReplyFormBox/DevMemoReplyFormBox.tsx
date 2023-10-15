@@ -6,8 +6,7 @@ import { Box, Button, Divider, Flex, Text } from "@mantine/core";
 import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { MdOutlineInsertComment } from "react-icons/md";
-import { TbAlertCircle } from "react-icons/tb";
+import { TbAlertCircle, TbMessage2 } from "react-icons/tb";
 import classes from "./DevMemoReplyFormBox.module.css";
 
 type Props = {
@@ -98,7 +97,7 @@ export const DevMemoReplyFormBox: React.FC<Props> = ({
               type="submit"
               loading={debouncedSubmitting}
               leftSection={
-                <MdOutlineInsertComment
+                <TbMessage2
                   size={20}
                   style={{ opacity: debouncedSubmitting ? 0.3 : 1 }}
                 />

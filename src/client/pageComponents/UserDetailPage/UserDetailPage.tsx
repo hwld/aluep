@@ -12,8 +12,7 @@ import { User, userDetailPageSchame, UserDetailPageTab } from "@/models/user";
 import { assertNever } from "@/share/utils";
 import { Box, Flex, Stack } from "@mantine/core";
 import { useMemo } from "react";
-import { MdOutlinePerson } from "react-icons/md";
-import { TbCode, TbFileText, TbHeart } from "react-icons/tb";
+import { TbCode, TbFileText, TbHeart, TbUser } from "react-icons/tb";
 
 type Props = { user: User };
 
@@ -69,7 +68,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <PageHeader icon={MdOutlinePerson} pageName="ユーザーの詳細" />
+      <PageHeader icon={TbUser} pageName="ユーザーの詳細" />
       <Flex maw={1200} direction="column" align="center" m="auto">
         <UserDashboard
           user={user}

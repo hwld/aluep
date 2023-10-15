@@ -7,7 +7,7 @@ import { Idea } from "@/models/idea";
 import { Button, Flex, Stack, Title } from "@mantine/core";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { HiArrowRight } from "react-icons/hi";
+import { TbArrowRight } from "react-icons/tb";
 import classes from "./PickedUpIdeas.module.css";
 
 type Props = {
@@ -31,7 +31,7 @@ export const PickedUpIdeas: React.FC<Props> = ({
           <Title order={4}>{title}</Title>
         </Flex>
         <Button
-          rightSection={<HiArrowRight size={15} />}
+          rightSection={<TbArrowRight size={20} />}
           component={Link}
           href={readMoreHref}
           variant="outline"

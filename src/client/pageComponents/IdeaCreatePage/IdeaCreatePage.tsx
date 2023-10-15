@@ -10,7 +10,7 @@ import { IdeaFormData } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card } from "@mantine/core";
 import { useRouter } from "next/router";
-import { MdPostAdd } from "react-icons/md";
+import { TbFilePlus } from "react-icons/tb";
 
 export const IdeaCreatePage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
@@ -42,7 +42,7 @@ export const IdeaCreatePage: React.FC = () => {
 
   return (
     <>
-      <PageHeader icon={MdPostAdd} pageName="お題の投稿" />
+      <PageHeader icon={TbFilePlus} pageName="お題の投稿" />
       <Box w="100%" maw={800} miw={300} m="auto">
         <Card mt="md" style={{ position: "static" }}>
           <IdeaForm

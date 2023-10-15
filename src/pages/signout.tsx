@@ -4,7 +4,7 @@ import { Button, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { NextPage } from "next";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { MdLogout } from "react-icons/md";
+import { TbLogout } from "react-icons/tb";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ session }) => {
@@ -26,12 +26,12 @@ const Signout: NextPage = () => {
         <Stack align="center" gap="xs">
           <Flex align="center" justify="center">
             <Image src="/logo.svg" width={200} height={200} alt="app-logo" />
-            <MdLogout size="20%" color="var(--mantine-color-red-7)" />
+            <TbLogout size="20%" color="var(--mantine-color-red-7)" />
           </Flex>
           <Stack align="center" gap="sm">
             <Text>ログアウトしてもよろしいですか？</Text>
             <Button
-              leftSection={<MdLogout size={25} />}
+              leftSection={<TbLogout size={25} />}
               color="red"
               onClick={handleSignOut}
               w="fit-content"

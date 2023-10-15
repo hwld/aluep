@@ -9,8 +9,7 @@ import { Button, Card, Divider, Flex, Text } from "@mantine/core";
 import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { MdOutlineInsertComment } from "react-icons/md";
-import { TbAlertCircle } from "react-icons/tb";
+import { TbAlertCircle, TbMessage2 } from "react-icons/tb";
 import classes from "./IdeaCommentReplyFormCard.module.css";
 
 type Props = {
@@ -96,7 +95,7 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
             <Button
               type="submit"
               loading={debouncedSubmitting}
-              leftSection={<MdOutlineInsertComment size={20} />}
+              leftSection={<TbMessage2 size={20} />}
               loaderProps={{ size: 20 }}
             >
               返信

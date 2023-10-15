@@ -14,10 +14,7 @@ import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
-import { BiTrashAlt } from "react-icons/bi";
-import { MdFlag } from "react-icons/md";
-import { RiEdit2Fill } from "react-icons/ri";
-import { TbLink } from "react-icons/tb";
+import { TbFlag, TbLink, TbTrash } from "react-icons/tb";
 
 type Props = {
   ideaId: string;
@@ -87,7 +84,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
               <AppMenuItem
                 red
                 onClick={openDeleteModal}
-                leftSection={<RiEdit2Fill />}
+                leftSection={<TbTrash />}
               >
                 コメントを削除する
               </AppMenuItem>
@@ -98,7 +95,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
             <AppMenuItem leftSection={<TbLink />} onClick={handleCopyLink}>
               リンクをコピーする
             </AppMenuItem>
-            <AppMenuItem leftSection={<MdFlag />} onClick={openReportModal}>
+            <AppMenuItem leftSection={<TbFlag />} onClick={openReportModal}>
               通報する
             </AppMenuItem>
           </>
@@ -111,7 +108,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
         onClose={closeDeleteModal}
         onConfirm={onDeleteComment}
         isConfirming={isDeleting}
-        confirmIcon={BiTrashAlt}
+        confirmIcon={TbTrash}
         confirmText="削除する"
       />
       <AppModal

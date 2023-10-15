@@ -17,11 +17,7 @@ import { Routes } from "@/share/routes";
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/router";
-import { BiTrashAlt } from "react-icons/bi";
-import { BsThreeDots } from "react-icons/bs";
-import { FaTrash } from "react-icons/fa";
-import { MdFlag } from "react-icons/md";
-import { RiEdit2Fill } from "react-icons/ri";
+import { TbDots, TbEdit, TbFlag, TbTrash } from "react-icons/tb";
 import classes from "./IdeaOperationButton.module.css";
 
 type Props = { idea: Idea; isIdeaOwner: boolean };
@@ -90,20 +86,20 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
       <AppMenu position="bottom-start">
         <Menu.Target>
           <ActionIcon size={35} className={classes.icon}>
-            <BsThreeDots size="70%" color="var(--mantine-color-gray-5)" />
+            <TbDots size="70%" color="var(--mantine-color-gray-5)" />
           </ActionIcon>
         </Menu.Target>
         <AppMenuDropdown>
           {isIdeaOwner && (
             <>
               <AppMenuLinkItem
-                leftSection={<RiEdit2Fill />}
+                leftSection={<TbEdit />}
                 href={Routes.ideaUpdate(idea.id)}
               >
                 お題を編集する
               </AppMenuLinkItem>
               <AppMenuItem
-                leftSection={<FaTrash />}
+                leftSection={<TbTrash />}
                 red
                 onClick={openDeleteModal}
               >
@@ -113,7 +109,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
               <AppMenuDivider />
             </>
           )}
-          <AppMenuItem leftSection={<MdFlag />} onClick={openReportModal}>
+          <AppMenuItem leftSection={<TbFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>
@@ -131,7 +127,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
         onClose={closeDeleteModal}
         onConfirm={handleDeleteIdea}
         isConfirming={deleteIdeaMutation.isLoading}
-        confirmIcon={BiTrashAlt}
+        confirmIcon={TbTrash}
         confirmText="削除する"
       />
       <AppModal

@@ -10,7 +10,7 @@ import Link from "next/link";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { UnionToIntersection } from "react-hook-form/dist/types/path/common";
-import { MdComputer } from "react-icons/md";
+import { TbCode } from "react-icons/tb";
 
 type DevFormDefaultValues = Partial<
   UnionToIntersection<DistributiveOmit<DevFormData, "type">>
@@ -62,7 +62,7 @@ export const DevForm: React.FC<Props> = ({
     <AppForm
       onSubmit={handleSubmit(onSubmit)}
       onCancel={onCancel}
-      submitIcon={MdComputer}
+      submitIcon={TbCode}
       submitText={submitText}
       isSubmitting={isLoading}
     >

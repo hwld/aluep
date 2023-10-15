@@ -1,7 +1,7 @@
 import { IdeaInfoCardItem } from "@/client/features/idea/IdeaInfoCardItem/IdeaInfoCardItem";
 import { Text } from "@mantine/core";
 import { Meta, StoryObj } from "@storybook/react";
-import { MdPerson } from "react-icons/md";
+import { TbUser } from "react-icons/tb";
 
 const meta = { component: IdeaInfoCardItem } satisfies Meta<
   typeof IdeaInfoCardItem
@@ -12,7 +12,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: <Text>ユーザー名</Text>,
-    icon: <MdPerson size={30} />,
+    icon: <TbUser size={30} />,
     title: "ユーザー",
   },
 };

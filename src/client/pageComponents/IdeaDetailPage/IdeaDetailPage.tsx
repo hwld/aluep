@@ -18,9 +18,8 @@ import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
-import { FaUserAlt } from "react-icons/fa";
 import { MdAccessTime, MdUpdate } from "react-icons/md";
-import { TbFileText } from "react-icons/tb";
+import { TbFileText, TbUser } from "react-icons/tb";
 
 type Props = { idea: Idea };
 
@@ -132,9 +131,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
               w={300}
             >
               <IdeaInfoCardItem
-                icon={
-                  <FaUserAlt size={20} color="var(--mantine-color-gray-5)" />
-                }
+                icon={<TbUser size={20} color="var(--mantine-color-gray-5)" />}
                 title="投稿者"
               >
                 <Flex gap={5} mt={5} align="center">

@@ -10,8 +10,7 @@ import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
 import { IdeaComment, IdeaCommentFormData } from "@/models/ideaComment";
 import { Box, Card, Flex, Stack, Text, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { FaRegComment, FaUserAlt } from "react-icons/fa";
-import { HiOutlineChevronDoubleRight } from "react-icons/hi";
+import { TbChevronsRight, TbMessageCircle, TbUser } from "react-icons/tb";
 import classes from "./IdeaCommentCard.module.css";
 
 type Props = {
@@ -86,8 +85,12 @@ export const IdeaCommentCard: React.FC<Props> = ({
               />
               <Box>
                 {comment.fromUser.id === ideaOwnerId && (
-                  <Flex gap={5} align="center">
-                    <FaUserAlt size={14} fill="var(--mantine-color-red-7)" />
+                  <Flex gap={3} align="center">
+                    <TbUser
+                      size={18}
+                      fill="var(--mantine-color-red-7)"
+                      color="var(--mantine-color-red-7)"
+                    />
                     <Text c="red.7" size="xs">
                       お題の投稿者
                     </Text>
@@ -109,7 +112,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
           {/* 返信コメントは返信元が削除されている場合はnullになる */}
           {comment.inReplyToComment === null && (
             <Box color="red.7" className={classes["deleted-message"]}>
-              <HiOutlineChevronDoubleRight />
+              <TbChevronsRight size={20} />
               削除されたコメント
             </Box>
           )}
@@ -120,7 +123,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
                 color="red.7"
                 className={classes["replay-message"]}
               >
-                <HiOutlineChevronDoubleRight />
+                <TbChevronsRight size={20} />
                 {comment.inReplyToComment.fromUserName ?? "不明なユーザー名"}
               </UnstyledButton>
             </Flex>
@@ -129,7 +132,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
           <Flex justify="space-between" align="center" gap="xs">
             <Flex align="center">
               <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>
-                <FaRegComment size="70%" />
+                <TbMessageCircle size="70%" />
               </CardActionIcon>
             </Flex>
             <Text c="gray.5">{formatDate(comment.createdAt)}</Text>

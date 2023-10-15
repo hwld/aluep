@@ -1,7 +1,5 @@
 import { Card, Flex, Text } from "@mantine/core";
-import { BsDot } from "react-icons/bs";
-import { GoSearch } from "react-icons/go";
-import { RiQuestionMark } from "react-icons/ri";
+import { TbPointFilled, TbQuestionMark, TbSearch } from "react-icons/tb";
 import classes from "./EmptyIdeaSearchResult.module.css";
 
 export const EmptyIdeaSearchResult = () => {
@@ -16,12 +14,12 @@ export const EmptyIdeaSearchResult = () => {
     >
       <Card w={450} p="xl">
         <Flex justify="center" align="center">
-          <GoSearch size={70} color="var(--mantine-color-red-7)" />
-          <BsDot size={40} color="var(--mantine-color-red-3)" />
-          <BsDot size={40} color="var(--mantine-color-red-4)" />
-          <BsDot size={40} color="var(--mantine-color-red-5)" />
-          <BsDot size={40} color="var(--mantine-color-red-6)" />
-          <RiQuestionMark size={80} color="var(--mantine-color-red-7)" />
+          <TbSearch size={70} color="var(--mantine-color-red-7)" />
+          <TbPointFilled size={30} color="var(--mantine-color-red-3)" />
+          <TbPointFilled size={30} color="var(--mantine-color-red-4)" />
+          <TbPointFilled size={30} color="var(--mantine-color-red-5)" />
+          <TbPointFilled size={30} color="var(--mantine-color-red-6)" />
+          <TbQuestionMark size={90} color="var(--mantine-color-red-7)" />
         </Flex>
         <Text mt="md" c="gray.5" ta="center">
           条件に一致する検索結果はありません。<br></br>

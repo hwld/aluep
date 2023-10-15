@@ -1,8 +1,6 @@
 import { Flex, Text } from "@mantine/core";
 import { ReactElement } from "react";
-import { AiOutlineUser } from "react-icons/ai";
-import { MdOutlinePostAdd } from "react-icons/md";
-import { TbHeart } from "react-icons/tb";
+import { TbCode, TbHeart, TbUser } from "react-icons/tb";
 
 type Props = { page: "devs" | "posters" };
 
@@ -14,7 +12,7 @@ export const EmptyRankingContent: React.FC<Props> = ({ page }) => {
       target: "投稿者",
       icon: (
         <>
-          <AiOutlineUser size={60} />
+          <TbUser size={60} />
           <TbHeart size={80} color="var(--mantine-color-red-7)" />
         </>
       ),
@@ -23,7 +21,7 @@ export const EmptyRankingContent: React.FC<Props> = ({ page }) => {
       target: "開発者",
       icon: (
         <>
-          <MdOutlinePostAdd size={60} />
+          <TbCode size={60} />
           <TbHeart size={80} color="var(--mantine-color-red-7)" />
         </>
       ),

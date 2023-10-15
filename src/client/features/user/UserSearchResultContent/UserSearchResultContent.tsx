@@ -5,7 +5,7 @@ import {
 } from "@/client/features/user/UserCard/UserCard";
 import { User } from "@/models/user";
 import { Box, Flex, Text } from "@mantine/core";
-import { MdOutlinePersonSearch } from "react-icons/md";
+import { TbUserSearch } from "react-icons/tb";
 
 type Props = {
   userSearchResult: User[];
@@ -22,10 +22,7 @@ export const UserSearchResultContent: React.FC<Props> = ({
     return (
       <Flex direction="column">
         <Flex justify="center" align="center">
-          <MdOutlinePersonSearch
-            size={100}
-            color="var(--mantine-color-red-7)"
-          />
+          <TbUserSearch size={100} color="var(--mantine-color-red-7)" />
         </Flex>
         <Text ta="center" c="gray.5">
           ユーザを検索してみよう!

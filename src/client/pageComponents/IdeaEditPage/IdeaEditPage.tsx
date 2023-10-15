@@ -10,7 +10,7 @@ import { Idea, IdeaFormData } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card } from "@mantine/core";
 import { useRouter } from "next/router";
-import { MdOutlineEdit } from "react-icons/md";
+import { TbEdit } from "react-icons/tb";
 
 type Props = { idea: Idea };
 export const IdeaEditPage: React.FC<Props> = ({ idea }) => {
@@ -43,7 +43,7 @@ export const IdeaEditPage: React.FC<Props> = ({ idea }) => {
 
   return (
     <>
-      <PageHeader icon={MdOutlineEdit} pageName="お題の編集" />
+      <PageHeader icon={TbEdit} pageName="お題の編集" />
       <Box w="100%" miw={300} maw={800} m="auto">
         <Card mt="md" style={{ position: "static" }}>
           <IdeaForm

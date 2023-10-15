@@ -14,10 +14,7 @@ import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
-import { BiTrashAlt } from "react-icons/bi";
-import { FaTrash } from "react-icons/fa";
-import { MdFlag } from "react-icons/md";
-import { TbLink } from "react-icons/tb";
+import { TbFlag, TbLink, TbTrash } from "react-icons/tb";
 
 type Props = {
   ideaId: string;
@@ -92,7 +89,7 @@ export const DevMemoMenuButton: React.FC<Props> = ({
           {isOwner && (
             <>
               <AppMenuItem
-                leftSection={<FaTrash />}
+                leftSection={<TbTrash />}
                 red
                 onClick={openDeleteModal}
               >
@@ -104,7 +101,7 @@ export const DevMemoMenuButton: React.FC<Props> = ({
           <AppMenuItem leftSection={<TbLink />} onClick={handleCopyLink}>
             リンクをコピーする
           </AppMenuItem>
-          <AppMenuItem leftSection={<MdFlag />} onClick={openReportModal}>
+          <AppMenuItem leftSection={<TbFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>
@@ -121,7 +118,7 @@ export const DevMemoMenuButton: React.FC<Props> = ({
         onClose={closeDeleteModal}
         onConfirm={handleDeleteMemo}
         isConfirming={isDeleting}
-        confirmIcon={BiTrashAlt}
+        confirmIcon={TbTrash}
         confirmText="削除する"
       />
       <AppModal

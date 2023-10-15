@@ -11,8 +11,7 @@ import clsx from "clsx";
 import { User } from "next-auth";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { MdOutlineInsertComment } from "react-icons/md";
-import { TbAlertCircle } from "react-icons/tb";
+import { TbAlertCircle, TbMessage2 } from "react-icons/tb";
 import classes from "./IdeaCommentForm.module.css";
 
 type Props = {
@@ -102,10 +101,7 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
             type="submit"
             loading={debouncedSubmitting}
             leftSection={
-              <MdOutlineInsertComment
-                size={20}
-                opacity={debouncedSubmitting ? 0.3 : 1}
-              />
+              <TbMessage2 size={20} opacity={debouncedSubmitting ? 0.3 : 1} />
             }
             loaderProps={{ size: 20 }}
           >

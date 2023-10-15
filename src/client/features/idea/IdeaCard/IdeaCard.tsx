@@ -5,9 +5,7 @@ import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
-import { FaRegComment } from "react-icons/fa";
-import { MdComputer } from "react-icons/md";
-import { TbHeart } from "react-icons/tb";
+import { TbCode, TbHeart, TbMessageCircle } from "react-icons/tb";
 import classes from "./IdeaCard.module.css";
 
 export const ideaCardMinWidthPx = 450;
@@ -67,13 +65,13 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
                   </Text>
                 </Flex>
                 <Flex align="center" gap={3}>
-                  <MdComputer size="15px" color="var(--mantine-color-red-7)" />
+                  <TbCode size="15px" color="var(--mantine-color-red-7)" />
                   <Text size="xs" c="red.7">
                     {idea.devs}
                   </Text>
                 </Flex>
                 <Flex align="center" gap={3}>
-                  <FaRegComment
+                  <TbMessageCircle
                     size="15px"
                     color="var(--mantine-color-red-7)"
                   />
@@ -87,15 +85,17 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
         </Flex>
 
         {/* タグ */}
-        <Flex gap={5} wrap="wrap" miw={0}>
-          {idea.tags.map((tag) => {
-            return (
-              <IdeaTagBadge tagId={tag.id} size="md" key={tag.id}>
-                {tag.name}
-              </IdeaTagBadge>
-            );
-          })}
-        </Flex>
+        {idea.tags.length > 0 && (
+          <Flex gap={5} wrap="wrap" miw={0}>
+            {idea.tags.map((tag) => {
+              return (
+                <IdeaTagBadge tagId={tag.id} size="md" key={tag.id}>
+                  {tag.name}
+                </IdeaTagBadge>
+              );
+            })}
+          </Flex>
+        )}
       </Stack>
     </Card>
   );

@@ -14,10 +14,7 @@ import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
 import router from "next/router";
-import { BiTrashAlt } from "react-icons/bi";
-import { FaTrash } from "react-icons/fa";
-import { MdFlag } from "react-icons/md";
-import { RiEdit2Fill } from "react-icons/ri";
+import { TbEdit, TbFlag, TbTrash } from "react-icons/tb";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -96,14 +93,14 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
           {isOwner && (
             <>
               <AppMenuLinkItem
-                leftSection={<RiEdit2Fill />}
+                leftSection={<TbEdit />}
                 href={Routes.devUpdate(dev.ideaId, dev.id)}
               >
                 開発情報を編集する
               </AppMenuLinkItem>
               <AppMenuItem
                 red
-                leftSection={<FaTrash />}
+                leftSection={<TbTrash />}
                 onClick={openDeleteModal}
               >
                 開発情報を削除する
@@ -111,7 +108,7 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
               <AppMenuDivider />
             </>
           )}
-          <AppMenuItem leftSection={<MdFlag />} onClick={openReportModal}>
+          <AppMenuItem leftSection={<TbFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>
@@ -129,7 +126,7 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
         onClose={closeDeleteModal}
         onConfirm={handleDeleteDev}
         isConfirming={cancelDevelopMutation.isLoading}
-        confirmIcon={BiTrashAlt}
+        confirmIcon={TbTrash}
         confirmText="削除する"
       />
       <AppModal

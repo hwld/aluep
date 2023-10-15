@@ -6,7 +6,7 @@ import { IdeaTag } from "@/models/ideaTag";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, MultiSelect, Space, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
-import { MdPostAdd } from "react-icons/md";
+import { TbFilePlus } from "react-icons/tb";
 
 type Props = {
   allTags: IdeaTag[];
@@ -52,7 +52,7 @@ export const IdeaForm: React.FC<Props> = ({
       onSubmit={handleSubmit(onSubmit)}
       onCancel={onCancel}
       submitText={submitText}
-      submitIcon={MdPostAdd}
+      submitIcon={TbFilePlus}
       isSubmitting={isLoading}
     >
       <Controller

@@ -6,7 +6,7 @@ import { Dev, DevFormData } from "@/models/dev";
 import { Idea } from "@/models/idea";
 import { Card, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
-import { MdOutlineEdit } from "react-icons/md";
+import { TbEdit } from "react-icons/tb";
 
 type Props = {
   idea: Idea;
@@ -33,7 +33,7 @@ export const DevEditPage: React.FC<Props> = ({ idea, dev }) => {
 
   return (
     <>
-      <PageHeader icon={MdOutlineEdit} pageName="開発情報の編集" />
+      <PageHeader icon={TbEdit} pageName="開発情報の編集" />
       <Stack w="100%" maw={800} miw={300} m="auto" gap="lg">
         <Stack gap="xs">
           <Text c="gray.5">開発しているお題</Text>

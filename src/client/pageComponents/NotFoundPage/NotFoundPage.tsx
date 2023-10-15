@@ -1,7 +1,7 @@
 import { Routes } from "@/share/routes";
 import { Box, Button, Flex, Text, Title } from "@mantine/core";
 import Link from "next/link";
-import { MdOutlineErrorOutline } from "react-icons/md";
+import { TbExclamationCircle } from "react-icons/tb";
 
 export const NotFoundPage: React.FC = () => {
   return (
@@ -33,7 +33,7 @@ export const NotFoundPage: React.FC = () => {
               right: "-350px",
             }}
           >
-            <MdOutlineErrorOutline
+            <TbExclamationCircle
               size={600}
               color="var(--mantine-color-red-7)"
             />
