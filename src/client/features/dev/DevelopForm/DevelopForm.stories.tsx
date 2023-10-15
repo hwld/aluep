@@ -1,8 +1,8 @@
-import { DevelopForm } from "@/client/features/dev/DevelopForm/DevelopForm";
+import { DevForm } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { Meta, StoryObj } from "@storybook/react";
 
-const meta = { component: DevelopForm } satisfies Meta<typeof DevelopForm>;
+const meta = { component: DevForm } satisfies Meta<typeof DevForm>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;

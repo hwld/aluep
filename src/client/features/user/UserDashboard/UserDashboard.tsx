@@ -14,9 +14,9 @@ type Props = {
 };
 export const UserDashboard: React.FC<Props> = ({
   user,
-  receivedLikeCount = { ideaLikeCount: 0, developmentLikeCount: 0 },
+  receivedLikeCount = { ideaLikeCount: 0, devLikeCount: 0 },
   userActivity = {
-    developmentCount: 0,
+    devCount: 0,
     likedIdeaCount: 0,
     postedIdeaCount: 0,
   },

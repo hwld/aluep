@@ -1,6 +1,6 @@
 import { DevDetailCard } from "@/client/features/dev/DevDetailCard/DevDetailCard";
 import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
-import { DevelopmentHelper } from "@/models/tests/helpers";
+import { DevHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = { component: DevDetailCard } satisfies Meta<typeof DevDetailCard>;
@@ -10,14 +10,14 @@ type Story = StoryObj<typeof meta>;
 
 const baseHandlers = [
   mockTrpcQuery(trpcMsw.session, null),
-  mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+  mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
     developed: false,
   }),
 ];
 
 export const Default: Story = {
   args: {
-    development: DevelopmentHelper.create(),
+    dev: DevHelper.create(),
     isDeveloper: false,
   },
   parameters: {
@@ -29,7 +29,7 @@ export const Default: Story = {
 
 export const Filled: Story = {
   args: {
-    development: DevelopmentHelper.createFilled(),
+    dev: DevHelper.createFilled(),
     isDeveloper: false,
   },
   parameters: {

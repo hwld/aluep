@@ -1,7 +1,7 @@
 import { UserDashboard } from "@/client/features/user/UserDashboard/UserDashboard";
-import { UserDevelopments } from "@/client/features/user/UserDevelopments/UserDevelopments";
+import { UserDevs } from "@/client/features/user/UserDevs/UserDevs";
 import { useReceivedLikeCountQuery } from "@/client/features/user/useReceivedLikeCountQuery";
-import { UserLikedDevelopments } from "@/client/features/user/UserLikedDevelopments/UserLikedDevelopments";
+import { UserLikedDevs } from "@/client/features/user/UserLikedDevs/UserLikedDevs";
 import { UserLikedIdeas } from "@/client/features/user/UserLikedIdeas/UserLikedIdeas";
 import { UserPostedIdeas } from "@/client/features/user/UserPostedIdeas/UserPostedIdeas";
 import { useUserActivityQuery } from "@/client/features/user/useUserActivityQuery";
@@ -42,13 +42,9 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
             onChangePage={handleChangePage}
           />
         );
-      case "developments":
+      case "devs":
         return (
-          <UserDevelopments
-            user={user}
-            page={page}
-            onChangePage={handleChangePage}
-          />
+          <UserDevs user={user} page={page} onChangePage={handleChangePage} />
         );
       case "likedIdeas":
         return (
@@ -58,9 +54,9 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
             onChangePage={handleChangePage}
           />
         );
-      case "likedDevelopments":
+      case "likedDevs":
         return (
-          <UserLikedDevelopments
+          <UserLikedDevs
             user={user}
             page={page}
             onChangePage={handleChangePage}
@@ -91,7 +87,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
                 icon: TbFileText,
               },
               {
-                value: "developments",
+                value: "devs",
                 label: "お題の開発情報",
                 icon: TbCode,
               },
@@ -101,7 +97,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
                 icon: TbHeart,
               },
               {
-                value: "likedDevelopments",
+                value: "likedDevs",
                 label: "いいねした開発情報",
                 icon: TbHeart,
               },

@@ -80,7 +80,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
           >
             <DevelopButton
               ideaId={idea.id}
-              developments={idea.developments}
+              devs={idea.devs}
               loggedInUserDevelopedData={developedData}
               onDevelopIdea={handleClickDevelop}
             />

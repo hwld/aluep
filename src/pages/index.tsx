@@ -7,13 +7,13 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     await Promise.all([
       // ランキング
       trpcStore.aggregate.getTop10LikesIdeasInThisMonth.prefetch(),
-      trpcStore.aggregate.getTop10LikesDevelopmentsInThisMonth.prefetch(),
+      trpcStore.aggregate.getTop10LikesDevsInThisMonth.prefetch(),
       trpcStore.aggregate.getTop10LikesPostersInThisMonth.prefetch(),
 
       //　ピックアップされたお題
       trpcStore.aggregate.getPickedIdeas.prefetch({ order: "createdDesc" }),
       trpcStore.aggregate.getPickedIdeas.prefetch({ order: "likeDesc" }),
-      trpcStore.aggregate.getPickedIdeas.prefetch({ order: "developmentDesc" }),
+      trpcStore.aggregate.getPickedIdeas.prefetch({ order: "devDesc" }),
     ]);
   }
 );

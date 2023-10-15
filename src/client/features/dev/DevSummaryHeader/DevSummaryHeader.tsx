@@ -1,13 +1,13 @@
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
-import { Development } from "@/models/development";
+import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Text } from "@mantine/core";
 import { TbCode } from "react-icons/tb";
 
-type Props = { development: Development };
-export const DevSummaryHeader: React.FC<Props> = ({ development }) => {
+type Props = { dev: Dev };
+export const DevSummaryHeader: React.FC<Props> = ({ dev }) => {
   return (
     <Flex gap="md" align="flex-start">
       <Center
@@ -21,10 +21,10 @@ export const DevSummaryHeader: React.FC<Props> = ({ development }) => {
         <TbCode color="var(--mantine-color-red-7)" size={70} />
       </Center>
       <Stack gap="md" miw={0}>
-        <TextLink href={Routes.development(development.ideaId, development.id)}>
+        <TextLink href={Routes.dev(dev.ideaId, dev.id)}>
           <Flex align="flex-end" gap="5">
             <AppTitle order={4} size="h2" truncate>
-              {development.ideaTitle}
+              {dev.ideaTitle}
             </AppTitle>
             <Text
               span
@@ -40,12 +40,12 @@ export const DevSummaryHeader: React.FC<Props> = ({ development }) => {
         <Flex gap="xs" align="center">
           <UserIconLink
             size="md"
-            userId={development.developer.id}
-            iconSrc={development.developer.imageUrl}
+            userId={dev.developer.id}
+            iconSrc={dev.developer.imageUrl}
           />
-          <TextLink href={Routes.user(development.developer.id)}>
+          <TextLink href={Routes.user(dev.developer.id)}>
             <Text size="md" truncate>
-              {development.developer.name}
+              {dev.developer.name}
             </Text>
           </TextLink>
         </Flex>

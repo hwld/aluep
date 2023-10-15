@@ -8,7 +8,7 @@ import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
-import { Development } from "@/models/development";
+import { Dev } from "@/models/dev";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { Divider } from "@mantine/core";
@@ -23,8 +23,8 @@ import {
   showSuccessNotification,
 } from "../../../lib/utils";
 
-type Props = { development: Development; isOwner: boolean };
-export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
+type Props = { dev: Dev; isOwner: boolean };
+export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
   const [
     isDeleteModalOpen,
     { close: closeDeleteModal, open: openDeleteModal },
@@ -37,11 +37,11 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
 
   const {
     mutations: { cancelDevelopMutation },
-  } = useDevelop({ ideaId: development.ideaId });
+  } = useDevelop({ ideaId: dev.ideaId });
 
-  const handleDeleteDevelopment = () => {
+  const handleDeleteDev = () => {
     cancelDevelopMutation.mutate(
-      { developmentId: development.id },
+      { devId: dev.id },
       {
         onSuccess: () => {
           showSuccessNotification({
@@ -49,7 +49,7 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
             message: "開発情報を削除しました。",
           });
           closeDeleteModal();
-          router.push(Routes.idea(development.ideaId));
+          router.push(Routes.idea(dev.ideaId));
         },
         onError: () => {
           showErrorNotification({
@@ -61,7 +61,7 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
     );
   };
 
-  const reportDevelopmentMutation = trpc.report.development.useMutation({
+  const reportDevMutation = trpc.report.dev.useMutation({
     onSuccess: () => {
       showSuccessNotification({
         title: "開発情報の通報",
@@ -77,15 +77,12 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
     },
   });
 
-  const handleSubmitReportDevelopment = (data: ReportBaseForm) => {
-    reportDevelopmentMutation.mutate({
+  const handleSubmitReportDev = (data: ReportBaseForm) => {
+    reportDevMutation.mutate({
       reportDetail: data.reportDetail,
       targetDeveloepr: {
-        url: `${window.location.origin}${Routes.development(
-          development.ideaId,
-          development.id
-        )}`,
-        name: development.developer.name,
+        url: `${window.location.origin}${Routes.dev(dev.ideaId, dev.id)}`,
+        name: dev.developer.name,
       },
     });
   };
@@ -100,10 +97,7 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
             <>
               <AppMenuLinkItem
                 leftSection={<RiEdit2Fill size={20} />}
-                href={Routes.developmentUpdate(
-                  development.ideaId,
-                  development.id
-                )}
+                href={Routes.devUpdate(dev.ideaId, dev.id)}
               >
                 開発情報を編集する
               </AppMenuLinkItem>
@@ -136,7 +130,7 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
         }
         opened={isDeleteModalOpen}
         onClose={closeDeleteModal}
-        onConfirm={handleDeleteDevelopment}
+        onConfirm={handleDeleteDev}
         isConfirming={cancelDevelopMutation.isLoading}
         confirmIcon={BiTrashAlt}
         confirmText="削除する"
@@ -148,9 +142,9 @@ export const DevMenuButton: React.FC<Props> = ({ development, isOwner }) => {
       >
         <ReportForm
           submitText="開発情報を通報する"
-          onSubmit={handleSubmitReportDevelopment}
+          onSubmit={handleSubmitReportDev}
           onCancel={closeReportModal}
-          isLoading={reportDevelopmentMutation.isLoading}
+          isLoading={reportDevMutation.isLoading}
         />
       </AppModal>
     </>

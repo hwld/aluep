@@ -2,10 +2,7 @@ import { DevStatusSelect } from "@/client/features/dev/DevStatusSelect/DevStatus
 import { trpc } from "@/client/lib/trpc";
 import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { GitHubRepoSelect } from "@/client/ui/GitHubRepoSelect/GitHubRepoSelect";
-import {
-  DevelopmentFormData,
-  developmentFormSchema,
-} from "@/models/development";
+import { DevFormData, devFormSchema } from "@/models/dev";
 import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Group, Textarea, TextInput } from "@mantine/core";
@@ -15,8 +12,8 @@ import { Controller, useForm } from "react-hook-form";
 import { UnionToIntersection } from "react-hook-form/dist/types/path/common";
 import { MdComputer } from "react-icons/md";
 
-type DevelopmentFormDefaultValues = Partial<
-  UnionToIntersection<DistributiveOmit<DevelopmentFormData, "type">>
+type DevFormDefaultValues = Partial<
+  UnionToIntersection<DistributiveOmit<DevFormData, "type">>
 >;
 
 type Props = {
@@ -24,15 +21,15 @@ type Props = {
    * 非制御コンポーネントから制御コンポーネントに変わったというエラーを出さないためにstring型のフィールドには
    * 文字列を入れる。
    */
-  defaultValues?: DevelopmentFormDefaultValues;
+  defaultValues?: DevFormDefaultValues;
   ideaId: string;
-  onSubmit: (data: DevelopmentFormData) => void;
+  onSubmit: (data: DevFormData) => void;
   onCancel: () => void;
   submitText: string;
   isLoading?: boolean;
 };
 
-export const DevelopForm: React.FC<Props> = ({
+export const DevForm: React.FC<Props> = ({
   defaultValues,
   onSubmit,
   onCancel,
@@ -49,11 +46,11 @@ export const DevelopForm: React.FC<Props> = ({
     control,
     formState: { errors },
     getFieldState,
-  } = useForm<DevelopmentFormData>({
+  } = useForm<DevFormData>({
     defaultValues: {
       ...defaultValues,
     },
-    resolver: zodResolver(developmentFormSchema),
+    resolver: zodResolver(devFormSchema),
   });
 
   const utils = trpc.useContext();

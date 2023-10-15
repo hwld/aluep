@@ -1,7 +1,7 @@
-import { Development } from "@/models/development";
-import { DevelopmentLikers } from "@/models/developmentLike";
-import { DevelopmentMemo } from "@/models/developmentMemo";
-import { allDevStatuses } from "@/models/developmentStatus";
+import { Dev } from "@/models/dev";
+import { DevLikers } from "@/models/devLike";
+import { DevMemo } from "@/models/devMemo";
+import { allDevStatuses } from "@/models/devStatus";
 import { Idea } from "@/models/idea";
 import { IdeaComment } from "@/models/ideaComment";
 import { IdeaTag } from "@/models/ideaTag";
@@ -22,7 +22,7 @@ export const IdeaHelper = {
       title: fakeString({ min: 1, max: 50 }),
       descriptionHtml: descriptionHtmlSample,
       tags: [],
-      developments: 0,
+      devs: 0,
       comments: 0,
       createdAt: new Date().toLocaleString(),
       updatedAt: new Date().toLocaleString(),
@@ -42,7 +42,7 @@ export const IdeaHelper = {
         },
         likes: 10000,
         comments: 10000,
-        developments: 10000,
+        devs: 10000,
       }),
     };
   },
@@ -130,8 +130,8 @@ export const IdeaTagHelper = {
   },
 };
 
-export const DevelopmentHelper = {
-  create: (data?: Partial<Development>): Development => {
+export const DevHelper = {
+  create: (data?: Partial<Dev>): Dev => {
     return {
       id: faker.string.uuid(),
       developer: {
@@ -153,9 +153,9 @@ export const DevelopmentHelper = {
       ...data,
     };
   },
-  createFilled: (): Development => {
+  createFilled: (): Dev => {
     return {
-      ...DevelopmentHelper.create(),
+      ...DevHelper.create(),
       githubUrl: "https://github.com/hwld/aluep",
       developedItemUrl: "https://example.com",
       comment: faker.string.sample(300),
@@ -170,13 +170,13 @@ export const DevelopmentHelper = {
   },
 };
 
-export const DevelopmentMemoHelper = {
-  create: (data?: Partial<DevelopmentMemo>): DevelopmentMemo => {
+export const DevMemoHelper = {
+  create: (data?: Partial<DevMemo>): DevMemo => {
     return {
       id: faker.string.uuid(),
       text: fakeString({ min: 1, max: 2000 }),
       parentMemoId: null,
-      developmentId: faker.string.uuid(),
+      devId: faker.string.uuid(),
       fromUser: {
         id: faker.string.uuid(),
         imageUrl: "",
@@ -187,9 +187,9 @@ export const DevelopmentMemoHelper = {
       ...data,
     };
   },
-  createFilled: (): DevelopmentMemo => {
+  createFilled: (): DevMemo => {
     return {
-      ...DevelopmentMemoHelper.create(),
+      ...DevMemoHelper.create(),
       text: fakeString(2000),
       fromUser: {
         id: faker.string.uuid(),
@@ -200,8 +200,8 @@ export const DevelopmentMemoHelper = {
   },
 };
 
-export const DevelopmentLikerHelper = {
-  create: (data?: Partial<DevelopmentLikers>): DevelopmentLikers => {
+export const DevLikerHelper = {
+  create: (data?: Partial<DevLikers>): DevLikers => {
     return {
       id: faker.string.uuid(),
       name: fakeString({ min: 1, max: 50 }),
@@ -211,9 +211,9 @@ export const DevelopmentLikerHelper = {
       ...data,
     };
   },
-  createFilled: (): DevelopmentLikers => {
+  createFilled: (): DevLikers => {
     return {
-      ...DevelopmentLikerHelper.create(),
+      ...DevLikerHelper.create(),
       name: fakeString(50),
       profile: fakeString(200),
     };

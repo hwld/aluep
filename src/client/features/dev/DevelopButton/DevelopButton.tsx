@@ -1,6 +1,6 @@
 import { AppTooltip } from "@/client/ui/AppTooltip";
 import { ComputerIcon } from "@/client/ui/ComputerIcon";
-import { DevelopedData } from "@/models/development";
+import { DevelopedData } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Anchor, Flex, Stack, Text, Tooltip } from "@mantine/core";
 import clsx from "clsx";
@@ -10,14 +10,14 @@ import { SyntheticEvent } from "react";
 import classes from "./DevelopButton.module.css";
 
 type Props = {
-  developments: number;
+  devs: number;
   loggedInUserDevelopedData: DevelopedData | undefined;
   onDevelopIdea: (e: SyntheticEvent) => void;
   ideaId: string;
 };
 
 export const DevelopButton: React.FC<Props> = ({
-  developments,
+  devs,
   loggedInUserDevelopedData = { developed: false },
   onDevelopIdea,
   ideaId,
@@ -27,9 +27,7 @@ export const DevelopButton: React.FC<Props> = ({
   const handleClick = (e: SyntheticEvent) => {
     // すでに開発している場合は自身の開発情報へ遷移させる
     if (loggedInUserDevelopedData.developed) {
-      router.push(
-        Routes.development(ideaId, loggedInUserDevelopedData.developmentId)
-      );
+      router.push(Routes.dev(ideaId, loggedInUserDevelopedData.devId));
       return;
     }
 
@@ -62,13 +60,13 @@ export const DevelopButton: React.FC<Props> = ({
       <Tooltip offset={10} label="開発情報の一覧を表示する" position="right">
         <Anchor
           component={Link}
-          href={Routes.developments(ideaId)}
+          href={Routes.devs(ideaId)}
           size="sm"
           className={clsx(classes["developer-count"], {
-            [classes.link]: developments > 0,
+            [classes.link]: devs > 0,
           })}
         >
-          {developments}
+          {devs}
         </Anchor>
       </Tooltip>
     </Stack>

@@ -1,6 +1,6 @@
 import { Idea } from "@/models/idea";
+import { findIdea } from "@/server/finders/idea";
 import { publicProcedure } from "@/server/lib/trpc";
-import { findIdea } from "@/server/repositories/idea";
 import { z } from "zod";
 
 export const getIdea = publicProcedure

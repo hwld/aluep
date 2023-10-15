@@ -3,50 +3,50 @@ import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBa
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
-import { Development } from "@/models/development";
+import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Card, Flex, Stack, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbFileText, TbHeart } from "react-icons/tb";
 import classes from "./LikedDevCard.module.css";
 
-type Props = { development: Development };
+type Props = { dev: Dev };
 
 /**
  * いいねした開発情報を表示するカード
  *
  */
-export const LikedDevCard: React.FC<Props> = ({ development }) => {
+export const LikedDevCard: React.FC<Props> = ({ dev }) => {
   const router = useRouter();
 
-  const handleGoDevelopmentDetail = () => {
-    router.push(Routes.development(development.ideaId, development.id));
+  const handleGoDevDetail = () => {
+    router.push(Routes.dev(dev.ideaId, dev.id));
   };
 
   return (
-    <Card className={classes.root} onClick={handleGoDevelopmentDetail}>
+    <Card className={classes.root} onClick={handleGoDevDetail}>
       <Flex justify="space-between">
-        <DevStatusBadge status={development.status} />
+        <DevStatusBadge status={dev.status} />
         <Flex>
-          <GitHubCodeIconLink gitHubUrl={development.githubUrl} />
-          {development.developedItemUrl !== "" && (
-            <DevItemIconLink url={development.developedItemUrl} />
+          <GitHubCodeIconLink gitHubUrl={dev.githubUrl} />
+          {dev.developedItemUrl !== "" && (
+            <DevItemIconLink url={dev.developedItemUrl} />
           )}
         </Flex>
       </Flex>
       <Flex gap="xs" justify="space-between" align="flex-end">
         <Flex gap="xs">
           <UserIconLink
-            iconSrc={development.developer.imageUrl}
-            userId={development.developer.id}
+            iconSrc={dev.developer.imageUrl}
+            userId={dev.developer.id}
           />
           <Stack gap={0}>
             <TextLink
-              href={Routes.development(development.ideaId, development.id)}
-              className={classes["development-link"]}
+              href={Routes.dev(dev.ideaId, dev.id)}
+              className={classes["dev-link"]}
             >
               <Text fw="bold" size="lg">
-                {development.developer.name}
+                {dev.developer.name}
                 <Text span c="gray.5" size="sm" fw="normal">
                   {" の開発"}
                 </Text>
@@ -54,9 +54,9 @@ export const LikedDevCard: React.FC<Props> = ({ development }) => {
             </TextLink>
             <Flex align="center" gap={5} mt={5}>
               <TbFileText color="var(--mantine-color-gray-5)" size={25} />
-              <TextLink href={Routes.idea(development.ideaId)}>
+              <TextLink href={Routes.idea(dev.ideaId)}>
                 <Text c="gray.5" size="sm">
-                  {development.ideaTitle}
+                  {dev.ideaTitle}
                 </Text>
               </TextLink>
             </Flex>
@@ -67,7 +67,7 @@ export const LikedDevCard: React.FC<Props> = ({ development }) => {
             color="var(--mantine-color-pink[7]} fill={colors.pink-7)"
             size={20}
           />
-          <Text size="sm">{development.likes}</Text>
+          <Text size="sm">{dev.likes}</Text>
         </Flex>
       </Flex>
     </Card>

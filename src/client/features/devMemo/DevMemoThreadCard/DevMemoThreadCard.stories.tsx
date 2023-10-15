@@ -1,6 +1,6 @@
 import { DevMemoThreadCard } from "@/client/features/devMemo/DevMemoThreadCard/DevMemoThreadCard";
 import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
-import { DevelopmentMemoHelper } from "@/models/tests/helpers";
+import { DevMemoHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = { component: DevMemoThreadCard } satisfies Meta<
@@ -12,15 +12,15 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     ideaId: "",
-    developmentId: "",
-    memo: DevelopmentMemoHelper.create(),
-    childrenMemos: [...new Array(5)].map(() => DevelopmentMemoHelper.create()),
+    devId: "",
+    memo: DevMemoHelper.create(),
+    childrenMemos: [...new Array(5)].map(() => DevMemoHelper.create()),
   },
   parameters: {
     msw: {
       handlers: [
         mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.developmentMemo.getAll, []),
+        mockTrpcQuery(trpcMsw.devMemo.getAll, []),
       ],
     },
   },

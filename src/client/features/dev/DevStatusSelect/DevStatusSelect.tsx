@@ -1,9 +1,5 @@
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
-import {
-  allDevStatuses,
-  DevStatus,
-  devStatusSchema,
-} from "@/models/developmentStatus";
+import { allDevStatuses, DevStatus, devStatusSchema } from "@/models/devStatus";
 import { Combobox, Input, InputBase, useCombobox } from "@mantine/core";
 import { forwardRef } from "react";
 import classes from "./DevStatusSelect.module.css";

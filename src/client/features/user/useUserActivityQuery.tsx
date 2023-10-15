@@ -2,7 +2,7 @@ import { trpc } from "@/client/lib/trpc";
 
 export type UserActivity = {
   postedIdeaCount: number;
-  developmentCount: number;
+  devCount: number;
   likedIdeaCount: number;
 };
 

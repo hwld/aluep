@@ -1,9 +1,6 @@
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
 import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
-import {
-  DevelopmentMemoFormData,
-  developmentMemoFormSchema,
-} from "@/models/developmentMemo";
+import { DevMemoFormData, devMemoFormSchema } from "@/models/devMemo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Divider, Flex, Text } from "@mantine/core";
 import clsx from "clsx";
@@ -14,12 +11,12 @@ import { TbAlertCircle } from "react-icons/tb";
 import classes from "./DevMemoReplyFormBox.module.css";
 
 type Props = {
-  onSubmit: (data: DevelopmentMemoFormData) => void;
+  onSubmit: (data: DevMemoFormData) => void;
   onCancel: () => void;
   isSubmitting?: boolean;
 };
 
-// TODO: スタイルをDevelopmentMemoFormCardとある程度共通化したい
+// TODO: スタイルをDevMemoFormCardとある程度共通化したい
 export const DevMemoReplyFormBox: React.FC<Props> = ({
   onSubmit,
   onCancel,
@@ -31,11 +28,11 @@ export const DevMemoReplyFormBox: React.FC<Props> = ({
     control,
     handleSubmit: innerHandleSubmit,
     formState: { errors },
-  } = useForm<DevelopmentMemoFormData>({
+  } = useForm<DevMemoFormData>({
     defaultValues: {
       text: "",
     },
-    resolver: zodResolver(developmentMemoFormSchema),
+    resolver: zodResolver(devMemoFormSchema),
   });
 
   const { debouncedSubmitting, handleSubmit, handleCancel } =

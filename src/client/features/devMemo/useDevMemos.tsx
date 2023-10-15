@@ -1,35 +1,33 @@
 import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
-import { DevelopmentMemo } from "@/models/developmentMemo";
+import { DevMemo } from "@/models/devMemo";
 import { useMemo } from "react";
 
-type DevelopmentMemoThreads = {
-  rootMemo: DevelopmentMemo;
+type DevMemoThreads = {
+  rootMemo: DevMemo;
   /** 前の要素が次の要素の親になっている。 */
-  children: DevelopmentMemo[];
+  children: DevMemo[];
 };
 
-type UseDevelopmentMemoArgs = { developmentId: string };
-export const useDevMemos = ({ developmentId }: UseDevelopmentMemoArgs) => {
-  const utils = trpc.useContext();
-
-  const { data: developmentMemos } = trpc.developmentMemo.getAll.useQuery(
-    { developmentId },
+type UseDevMemoArgs = { devId: string };
+export const useDevMemos = ({ devId }: UseDevMemoArgs) => {
+  const { data: devMemos } = trpc.devMemo.getAll.useQuery(
+    { devId: devId },
     { initialData: [] }
   );
 
-  const developmentMemoThreads = useMemo(() => {
-    if (!developmentMemos) {
+  const devMemoThreads = useMemo(() => {
+    if (!devMemos) {
       return [];
     }
 
-    const roots = developmentMemos.filter((memo) => memo.parentMemoId === null);
-    return roots.map((root): DevelopmentMemoThreads => {
-      const children: DevelopmentMemo[] = [];
+    const roots = devMemos.filter((memo) => memo.parentMemoId === null);
+    return roots.map((root): DevMemoThreads => {
+      const children: DevMemo[] = [];
       let parentMemoId: string = root.id;
 
       while (true) {
-        const child = developmentMemos.find(
+        const child = devMemos.find(
           (memo) => memo.parentMemoId === parentMemoId
         );
 
@@ -43,9 +41,9 @@ export const useDevMemos = ({ developmentId }: UseDevelopmentMemoArgs) => {
 
       return { rootMemo: root, children: children };
     });
-  }, [developmentMemos]);
+  }, [devMemos]);
 
-  const createMemoMutation = trpc.developmentMemo.create.useMutation({
+  const createMemoMutation = trpc.devMemo.create.useMutation({
     onError: () => {
       showErrorNotification({
         title: "開発メモの作成",
@@ -54,7 +52,7 @@ export const useDevMemos = ({ developmentId }: UseDevelopmentMemoArgs) => {
     },
   });
 
-  const deleteMemoMutation = trpc.developmentMemo.delete.useMutation({
+  const deleteMemoMutation = trpc.devMemo.delete.useMutation({
     onError: () => {
       showErrorNotification({
         title: "メモの削除",
@@ -64,7 +62,7 @@ export const useDevMemos = ({ developmentId }: UseDevelopmentMemoArgs) => {
   });
 
   return {
-    developmentMemoThreads,
+    devMemoThreads,
     createMemoMutation,
     deleteMemoMutation,
   };

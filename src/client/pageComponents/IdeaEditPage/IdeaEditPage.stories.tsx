@@ -40,7 +40,7 @@ export const Default: Story = {
         }),
         mockTrpcQuery(trpcMsw.me.getMySummary, {
           allLikes: 100,
-          developments: 100,
+          devs: 100,
           ideas: 100,
         }),
         mockTrpcQuery(trpcMsw.idea.getAllTags, tagSamples),

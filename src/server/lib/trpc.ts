@@ -1,5 +1,5 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { findUser } from "@/server/repositories/user";
+import { findUser } from "@/server/finders/user";
 import { inferAsyncReturnType, initTRPC, TRPCError } from "@trpc/server";
 import { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { IncomingMessage } from "http";

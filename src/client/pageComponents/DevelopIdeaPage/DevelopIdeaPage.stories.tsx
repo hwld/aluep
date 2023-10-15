@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 
 const baseHandlers = [
   mockTrpcQuery(trpcMsw.session, null),
-  mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+  mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
     developed: false,
   }),
 ];

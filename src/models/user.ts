@@ -36,9 +36,9 @@ export type ProfileFormData = z.infer<typeof profileFormSchema>;
 
 const userDetailPageTabSchema = z.union([
   z.literal("postedIdeas"),
-  z.literal("developments"),
+  z.literal("devs"),
   z.literal("likedIdeas"),
-  z.literal("likedDevelopments"),
+  z.literal("likedDevs"),
 ]);
 export type UserDetailPageTab = z.infer<typeof userDetailPageTabSchema>;
 

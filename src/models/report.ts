@@ -20,7 +20,7 @@ export type ReportIdeaCommentInput = z.infer<
   typeof reportIdeaCommentInputSchema
 >;
 
-export const reportDevelopmentInputSchema = reportBaseFormSchema.and(
+export const reportDevInputSchema = reportBaseFormSchema.and(
   z.object({
     targetDeveloepr: z.object({
       url: z.string(),
@@ -28,9 +28,7 @@ export const reportDevelopmentInputSchema = reportBaseFormSchema.and(
     }),
   })
 );
-export type ReportDevelopmentInput = z.infer<
-  typeof reportDevelopmentInputSchema
->;
+export type ReportDevInput = z.infer<typeof reportDevInputSchema>;
 
 export const reportUserInputSchema = reportBaseFormSchema.and(
   z.object({
@@ -42,10 +40,8 @@ export const reportUserInputSchema = reportBaseFormSchema.and(
 );
 export type ReportUserInput = z.infer<typeof reportUserInputSchema>;
 
-export const reportDevelopmentMemoInputSchema = reportBaseFormSchema.and(
+export const reportDevMemoInputSchema = reportBaseFormSchema.and(
   z.object({ targetMemoUrl: z.string() })
 );
 
-export type ReportDevelopmentMemoInput = z.infer<
-  typeof reportDevelopmentMemoInputSchema
->;
+export type ReportDevMemoInput = z.infer<typeof reportDevMemoInputSchema>;

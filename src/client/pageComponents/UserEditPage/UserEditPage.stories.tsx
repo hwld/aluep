@@ -34,7 +34,7 @@ export const Default: Story = {
         }),
         mockTrpcQuery(trpcMsw.me.getMySummary, {
           allLikes: 0,
-          developments: 0,
+          devs: 0,
           ideas: 0,
         }),
       ],

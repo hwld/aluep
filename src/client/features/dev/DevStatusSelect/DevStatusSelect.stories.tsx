@@ -1,4 +1,4 @@
-import { DevStatus } from "@/models/developmentStatus";
+import { DevStatus } from "@/models/devStatus";
 import { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { DevStatusSelect } from "./DevStatusSelect";

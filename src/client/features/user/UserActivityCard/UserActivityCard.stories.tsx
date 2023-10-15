@@ -10,7 +10,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     userActivity: {
-      developmentCount: 10,
+      devCount: 10,
       likedIdeaCount: 3,
       postedIdeaCount: 9,
     },

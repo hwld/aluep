@@ -8,7 +8,7 @@ import classes from "./DevLikeButton.module.css";
 
 type Props = {
   ideaId: string;
-  developmentId: string;
+  devId: string;
   likes: number;
   likedByLoggedInUser: boolean;
   onToggleIdeaLike: () => void;
@@ -16,7 +16,7 @@ type Props = {
 };
 export const DevLikeButton: React.FC<Props> = ({
   ideaId,
-  developmentId,
+  devId,
   likes,
   likedByLoggedInUser,
   onToggleIdeaLike,
@@ -37,10 +37,7 @@ export const DevLikeButton: React.FC<Props> = ({
           })}
         />
       </ActionIcon>
-      <TextLink
-        href={Routes.developmentLikers(ideaId, developmentId)}
-        disabled={likes === 0}
-      >
+      <TextLink href={Routes.devLikers(ideaId, devId)} disabled={likes === 0}>
         <Text size="xl" fw="bold">
           {likes}
         </Text>

@@ -1,11 +1,8 @@
 import { UserDetailPage } from "@/client/pageComponents/UserDetailPage/UserDetailPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
-import {
-  DevelopmentHelper,
-  IdeaHelper,
-  UserHelper,
-} from "@/models/tests/helpers";
+import { DevHelper, IdeaHelper, UserHelper } from "@/models/tests/helpers";
+import { UserDetailPageTab } from "@/models/user";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
@@ -31,10 +28,10 @@ const baseHandlers = [
   mockTrpcQuery(trpcMsw.user.getFavoriteCountByUser, 8),
   mockTrpcQuery(trpcMsw.user.getReceivedLikeCount, {
     ideaLikeCount: 10,
-    developmentLikeCount: 2,
+    devLikeCount: 2,
   }),
   mockTrpcQuery(trpcMsw.user.getUserActivity, {
-    developmentCount: 3,
+    devCount: 3,
     likedIdeaCount: 4,
     postedIdeaCount: 1,
   }),
@@ -43,7 +40,9 @@ const baseHandlers = [
 type Story = StoryObj<typeof meta>;
 export const PostedIdeas: Story = {
   parameters: {
-    nextjs: { router: { query: { tab: "postedIdeas" } } },
+    nextjs: {
+      router: { query: { tab: "postedIdeas" satisfies UserDetailPageTab } },
+    },
     msw: {
       handlers: [
         ...baseHandlers,
@@ -56,14 +55,14 @@ export const PostedIdeas: Story = {
   },
 };
 
-export const Developments: Story = {
+export const Devs: Story = {
   parameters: {
-    nextjs: { router: { query: { tab: "developments" } } },
+    nextjs: { router: { query: { tab: "devs" satisfies UserDetailPageTab } } },
     msw: {
       handlers: [
         ...baseHandlers,
-        mockTrpcQuery(trpcMsw.development.getDevelopmentsByUser, {
-          list: [...new Array(10)].map(() => DevelopmentHelper.create()),
+        mockTrpcQuery(trpcMsw.dev.getDevsByUser, {
+          list: [...new Array(10)].map(() => DevHelper.create()),
           allPages: 2,
         }),
       ],
@@ -73,7 +72,9 @@ export const Developments: Story = {
 
 export const LikedIdeas: Story = {
   parameters: {
-    nextjs: { router: { query: { tab: "likedIdeas" } } },
+    nextjs: {
+      router: { query: { tab: "likedIdeas" satisfies UserDetailPageTab } },
+    },
     msw: {
       handlers: [
         ...baseHandlers,
@@ -86,14 +87,16 @@ export const LikedIdeas: Story = {
   },
 };
 
-export const LikedDevelopments: Story = {
+export const LikedDevs: Story = {
   parameters: {
-    nextjs: { router: { query: { tab: "likedDevelopments" } } },
+    nextjs: {
+      router: { query: { tab: "likedDevs" satisfies UserDetailPageTab } },
+    },
     msw: {
       handlers: [
         ...baseHandlers,
-        mockTrpcQuery(trpcMsw.development.getLikedDevelopmentsByUser, {
-          list: [...new Array(10)].map(() => DevelopmentHelper.create()),
+        mockTrpcQuery(trpcMsw.dev.getLikedDevsByUser, {
+          list: [...new Array(10)].map(() => DevHelper.create()),
           allPages: 2,
         }),
       ],

@@ -7,7 +7,7 @@ import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
-import { Development } from "@/models/development";
+import { Dev } from "@/models/dev";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Text } from "@mantine/core";
@@ -16,72 +16,72 @@ import classes from "./DevCard.module.css";
 
 type Props = {
   idea: Idea;
-  development: Development;
-  onLikeDevelopment: (developmentId: string) => void;
-  onUnlikeDevelopment: (developmentId: string) => void;
+  dev: Dev;
+  onLikeDev: (devId: string) => void;
+  onUnlikeDev: (devId: string) => void;
 };
 
-export const developmentCardMinWidthPx = 450;
+export const devCardMinWidthPx = 450;
 
 export const DevCard: React.FC<Props> = ({
   idea,
-  development,
-  onLikeDevelopment: onLike,
-  onUnlikeDevelopment: onUnlike,
+  dev,
+  onLikeDev: onLike,
+  onUnlikeDev: onUnlike,
 }) => {
   const router = useRouter();
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
 
-  const handleLikeDevelopment = () => {
+  const handleLikeDev = () => {
     //ログインしていなければログインモーダルを表示させる
     if (!session) {
       openLoginModal();
       return;
     }
 
-    if (development.likedByLoggedInUser) {
-      onUnlike(development.id);
+    if (dev.likedByLoggedInUser) {
+      onUnlike(dev.id);
     } else {
-      onLike(development.id);
+      onLike(dev.id);
     }
   };
 
-  const handleGoDevelopmentDetail = () => {
-    router.push(Routes.development(idea.id, development.id));
+  const handleGoDevDetail = () => {
+    router.push(Routes.dev(idea.id, dev.id));
   };
 
   // 開発者自身でなければいいねできる
-  const canLike = development.developer.id !== session?.user.id;
+  const canLike = dev.developer.id !== session?.user.id;
 
   return (
     <Card
       p="sm"
-      miw={developmentCardMinWidthPx}
+      miw={devCardMinWidthPx}
       className={classes.root}
-      onClick={handleGoDevelopmentDetail}
+      onClick={handleGoDevDetail}
     >
       <Flex justify="space-between">
-        <DevStatusBadge status={development.status} />
+        <DevStatusBadge status={dev.status} />
         <Flex>
-          <GitHubCodeIconLink gitHubUrl={development.githubUrl} />
-          {development.developedItemUrl && (
-            <DevItemIconLink url={development.developedItemUrl} />
+          <GitHubCodeIconLink gitHubUrl={dev.githubUrl} />
+          {dev.developedItemUrl && (
+            <DevItemIconLink url={dev.developedItemUrl} />
           )}
         </Flex>
       </Flex>
       <Flex justify="space-between">
         <Flex gap="xs">
           <UserIconLink
-            iconSrc={development.developer.imageUrl}
-            userId={development.developer.id}
+            iconSrc={dev.developer.imageUrl}
+            userId={dev.developer.id}
           />
           <TextLink
-            href={Routes.development(idea.id, development.id)}
-            className={classes["development-link"]}
+            href={Routes.dev(idea.id, dev.id)}
+            className={classes["dev-link"]}
           >
             <Text fw="bold" size="lg">
-              {development.developer.name}
+              {dev.developer.name}
               <Text span c="gray.5" size="sm" fw="normal">
                 {" の開発"}
               </Text>
@@ -91,13 +91,13 @@ export const DevCard: React.FC<Props> = ({
       </Flex>
       <Flex align="center" justify="space-between">
         <Text size="sm" c="gray.5">
-          開発開始日: {formatDate(new Date(development.createdAt))}
+          開発開始日: {formatDate(new Date(dev.createdAt))}
         </Text>
         <Box>
           <DevMiniLikeButton
-            likes={development.likes}
-            likedByLoggedInUser={development.likedByLoggedInUser}
-            onClick={handleLikeDevelopment}
+            likes={dev.likes}
+            likedByLoggedInUser={dev.likedByLoggedInUser}
+            onClick={handleLikeDev}
             disabled={!canLike}
           />
         </Box>

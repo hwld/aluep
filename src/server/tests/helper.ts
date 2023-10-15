@@ -1,5 +1,5 @@
+import { convertUser, findUser } from "@/server/finders/user";
 import { db } from "@/server/lib/prismadb";
-import { convertUser, findUser } from "@/server/repositories/user";
 import { appRouter } from "@/server/router";
 import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
@@ -86,7 +86,7 @@ export const TestHelpers = {
   },
 
   /** ユーザーを作成して、お題を開発する */
-  createDevelopmentAndUser: async (
+  createDevAndUser: async (
     args: Partial<
       OmitStrict<Prisma.DevelopmentUncheckedCreateInput, "ideaId">
     > & {
@@ -94,7 +94,7 @@ export const TestHelpers = {
     }
   ) => {
     const developer = await db.user.create({ data: { name: "developer" } });
-    const development = await db.development.create({
+    const dev = await db.development.create({
       data: {
         userId: developer.id,
         comment: "",
@@ -109,18 +109,14 @@ export const TestHelpers = {
       userId: developer.id,
     });
 
-    return { development, developer, developerCaller };
+    return { dev, developer, developerCaller };
   },
 
   /** 開発メモを作成する */
-  createDevelopmentMemoAndUser: async ({
-    developmentId,
-  }: {
-    developmentId: string;
-  }) => {
+  createDevMemoAndUser: async ({ devId }: { devId: string }) => {
     const memoer = await db.user.create({ data: { name: "user" } });
     const memo = await db.developmentMemo.create({
-      data: { developmentId, text: "memo", fromUserId: memoer.id },
+      data: { developmentId: devId, text: "memo", fromUserId: memoer.id },
     });
 
     return { memo, memoer };

@@ -45,7 +45,7 @@ export const LoggedInUserCard: React.FC<Props> = ({ user, iconWidth }) => {
             <Flex gap="2px" align="center">
               <TbCode size="20" color={textColor} />
               <Text size="sm" c={textColor} truncate>
-                {loggedInUserInfo?.developments ?? 0}
+                {loggedInUserInfo?.devs ?? 0}
               </Text>
             </Flex>
           </Flex>

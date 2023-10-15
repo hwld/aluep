@@ -4,7 +4,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { TbHeart } from "react-icons/tb";
 
-type Props = { page: "developments" | "posters" };
+type Props = { page: "devs" | "posters" };
 
 export const EmptyRankingContent: React.FC<Props> = ({ page }) => {
   const pageData: {
@@ -19,7 +19,7 @@ export const EmptyRankingContent: React.FC<Props> = ({ page }) => {
         </>
       ),
     },
-    developments: {
+    devs: {
       target: "開発者",
       icon: (
         <>

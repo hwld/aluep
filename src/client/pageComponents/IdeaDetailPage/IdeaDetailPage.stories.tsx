@@ -31,7 +31,7 @@ type Story = StoryObj<typeof meta>;
 const ideaSample = IdeaHelper.create({
   title: "TwitterのようなWebアプリケーション",
   likes: 10,
-  developments: 3,
+  devs: 3,
 });
 
 export const Guest: Story = {
@@ -50,7 +50,7 @@ export const Guest: Story = {
         }),
         mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.idea.isLikedByUser, false),
-        mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
           developed: false,
         }),
       ],
@@ -81,13 +81,13 @@ export const SignedIn: Story = {
         }),
         mockTrpcQuery(trpcMsw.me.getMySummary, {
           allLikes: 10,
-          developments: 3,
+          devs: 3,
           ideas: 1,
         }),
         mockTrpcQuery(trpcMsw.idea.isLikedByUser, true),
-        mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
           developed: true,
-          developmentId: "id",
+          devId: "id",
         }),
       ],
     },
@@ -107,13 +107,13 @@ export const EmptyComment: Story = {
         }),
         mockTrpcQuery(trpcMsw.me.getMySummary, {
           allLikes: 10,
-          developments: 3,
+          devs: 3,
           ideas: 1,
         }),
         mockTrpcQuery(trpcMsw.idea.isLikedByUser, true),
-        mockTrpcQuery(trpcMsw.development.isDevelopedByUser, {
+        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
           developed: true,
-          developmentId: "id",
+          devId: "id",
         }),
       ],
     },

@@ -17,12 +17,12 @@ describe("お題へのいいねAPI", () => {
 
   it("未ログインユーザーはお題にいいねすることはできない", async () => {
     const { idea } = await TestHelpers.createIdeaAndUser();
-    const { development } = await TestHelpers.createDevelopmentAndUser({
+    const { dev } = await TestHelpers.createDevAndUser({
       ideaId: idea.id,
     });
     const { caller } = await TestHelpers.createPublicCaller();
 
-    const promise = caller.development.like({ developmentId: development.id });
+    const promise = caller.dev.like({ devId: dev.id });
 
     await expect(promise).rejects.toThrow();
   });

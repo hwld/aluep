@@ -34,7 +34,7 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
             <MdComputer size={40} color="var(--mantine-color-blue-7)" />
             <Flex align="flex-end" gap={2}>
               <Text size="md" fw="bold" c="blue.7">
-                {userActivity.developmentCount}
+                {userActivity.devCount}
               </Text>
               <Text size="xs">件</Text>
             </Flex>

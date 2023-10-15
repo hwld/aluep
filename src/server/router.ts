@@ -1,6 +1,6 @@
 import { aggregateRoute } from "@/server/features/aggregate/router";
-import { developmentRoute } from "@/server/features/development/router";
-import { developmentMemoRoute } from "@/server/features/developmentMemo/router";
+import { devRoute } from "@/server/features/dev/router";
+import { devMemoRoute } from "@/server/features/devMemo/router";
 import { ideaRoute } from "@/server/features/idea/router";
 import { ideaCommentRoute } from "@/server/features/ideaComment/router";
 import { meRoute } from "@/server/features/me/router";
@@ -14,8 +14,8 @@ export const appRouter = router({
   user: userRoute,
   idea: ideaRoute,
   ideaComment: ideaCommentRoute,
-  development: developmentRoute,
-  developmentMemo: developmentMemoRoute,
+  dev: devRoute,
+  devMemo: devMemoRoute,
   session: publicProcedure.query(async ({ ctx }) => {
     return ctx.session;
   }),

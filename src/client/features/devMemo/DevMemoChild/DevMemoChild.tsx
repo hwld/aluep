@@ -4,25 +4,21 @@ import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
-import { DevelopmentMemo } from "@/models/developmentMemo";
+import { DevMemo } from "@/models/devMemo";
 import { Flex, Stack, Text } from "@mantine/core";
 import classes from "./DevMemoChild.module.css";
 
-type Props = { memo: DevelopmentMemo; developmentId: string; ideaId: string };
+type Props = { memo: DevMemo; devId: string; ideaId: string };
 
-export const DevMemoChild: React.FC<Props> = ({
-  memo,
-  developmentId,
-  ideaId,
-}) => {
+export const DevMemoChild: React.FC<Props> = ({ memo, devId, ideaId }) => {
   const { session } = useSessionQuery();
-  const { deleteMemoMutation } = useDevMemos({ developmentId });
+  const { deleteMemoMutation } = useDevMemos({ devId: devId });
   const memoRef = useHashRemoverOnClickOutside({
     canRemove: (hash) => hash === memo.id,
   });
 
   const handleDeleteMemo = (id: string) => {
-    deleteMemoMutation.mutate({ developmentMemoId: id });
+    deleteMemoMutation.mutate({ devMemoId: id });
   };
 
   return (
@@ -47,8 +43,8 @@ export const DevMemoChild: React.FC<Props> = ({
           </Stack>
           <DevMemoMenuButton
             ideaId={ideaId}
-            developmentId={developmentId}
-            developmentMemoId={memo.id}
+            devId={devId}
+            devMemoId={memo.id}
             isOwner={memo.fromUser.id === session?.user.id}
             onDeleteMemo={handleDeleteMemo}
             isDeleting={deleteMemoMutation.isLoading}

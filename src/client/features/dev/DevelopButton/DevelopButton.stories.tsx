@@ -8,7 +8,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     ideaId: "",
-    developments: 0,
+    devs: 0,
     loggedInUserDevelopedData: { developed: false },
   },
 };

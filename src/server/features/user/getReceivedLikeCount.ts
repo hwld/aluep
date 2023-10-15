@@ -17,14 +17,14 @@ export const getReceivedLikeCount = publicProcedure
     });
 
     // お題の開発者としてもらったいいねの数
-    const developmentIds = await db.development.findMany({
+    const devIds = await db.development.findMany({
       select: { id: true },
       where: { userId: input.userId },
     });
 
-    const developmentLikeCount = await db.developmentLike.count({
-      where: { developmentId: { in: developmentIds.map((i) => i.id) } },
+    const devLikeCount = await db.developmentLike.count({
+      where: { developmentId: { in: devIds.map((i) => i.id) } },
     });
 
-    return { ideaLikeCount, developmentLikeCount };
+    return { ideaLikeCount, devLikeCount };
   });

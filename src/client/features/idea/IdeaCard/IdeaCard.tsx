@@ -69,7 +69,7 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
                 <Flex align="center" gap={3}>
                   <MdComputer size="15px" color="var(--mantine-color-red-7)" />
                   <Text size="xs" c="red.7">
-                    {idea.developments}
+                    {idea.devs}
                   </Text>
                 </Flex>
                 <Flex align="center" gap={3}>

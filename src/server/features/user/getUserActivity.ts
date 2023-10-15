@@ -12,7 +12,7 @@ export const getUserActivity = publicProcedure
     });
 
     // 指定されたユーザーが開発したお題の数
-    const developmentCount = await db.development.count({
+    const devCount = await db.development.count({
       where: { userId: input.userId },
     });
 
@@ -23,7 +23,7 @@ export const getUserActivity = publicProcedure
 
     return {
       postedIdeaCount,
-      developmentCount,
+      devCount,
       likedIdeaCount,
     };
   });

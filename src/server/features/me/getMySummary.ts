@@ -13,7 +13,7 @@ export const getMySummary = requireLoggedInProcedure.query(async ({ ctx }) => {
   ).map((idea) => idea.id);
 
   // ユーザーの開発情報のidを取得する
-  const developmentIds = (
+  const devIds = (
     await db.development.findMany({
       select: { id: true },
       where: { userId: loggedInUserId },
@@ -27,14 +27,14 @@ export const getMySummary = requireLoggedInProcedure.query(async ({ ctx }) => {
 
   // ユーザーの開発情報に貰ったいいねの数
   const developLikes = await db.developmentLike.count({
-    where: { developmentId: { in: developmentIds } },
+    where: { developmentId: { in: devIds } },
   });
 
   return {
     // ユーザーが投稿したお題の数
     ideas: ideaIds.length,
     // ユーザーが開発したお題の数
-    developments: developmentIds.length,
+    devs: devIds.length,
     // ユーザーが貰ったすべてのいいねの数
     allLikes: ideaLikes + developLikes,
   };

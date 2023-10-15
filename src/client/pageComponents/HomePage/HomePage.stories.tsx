@@ -31,10 +31,7 @@ export const Empty: Story = {
         mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.aggregate.getTop10LikesIdeasInThisMonth, []),
         mockTrpcQuery(trpcMsw.aggregate.getTop10LikesPostersInThisMonth, []),
-        mockTrpcQuery(
-          trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth,
-          []
-        ),
+        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesDevsInThisMonth, []),
         mockTrpcQuery(trpcMsw.aggregate.getPickedIdeas, []),
       ],
     },
@@ -58,15 +55,13 @@ export const Small: Story = {
             case "likeDesc": {
               return res(
                 ctx.status(200),
-                ctx.data([create({ likes: 5, developments: 1 })])
+                ctx.data([create({ likes: 5, devs: 1 })])
               );
             }
-            case "developmentDesc": {
+            case "devDesc": {
               return res(
                 ctx.status(200),
-                ctx.data([
-                  create({ likes: 2, developments: 20, comments: 100 }),
-                ])
+                ctx.data([create({ likes: 2, devs: 20, comments: 100 })])
               );
             }
           }
@@ -79,8 +74,8 @@ export const Small: Story = {
         mockTrpcQuery(trpcMsw.aggregate.getTop10LikesPostersInThisMonth, [
           { ...UserHelper.create(), ideaLikes: 5 },
         ]),
-        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth, [
-          { ...UserHelper.create(), developmentLikes: 3 },
+        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesDevsInThisMonth, [
+          { ...UserHelper.create(), devLikes: 3 },
         ]),
       ],
     },
@@ -98,7 +93,7 @@ export const LargeFilled: Story = {
         }),
         mockTrpcQuery(trpcMsw.me.getMySummary, {
           allLikes: 100,
-          developments: 100,
+          devs: 100,
           ideas: 100,
         }),
         mockTrpcQuery(
@@ -106,10 +101,10 @@ export const LargeFilled: Story = {
           [...new Array(6)].map(() => IdeaHelper.createFilled())
         ),
         mockTrpcQuery(
-          trpcMsw.aggregate.getTop10LikesDevelopmentsInThisMonth,
+          trpcMsw.aggregate.getTop10LikesDevsInThisMonth,
           [...new Array(6)].map(() => ({
             ...UserHelper.createFilled(),
-            developmentLikes: 10,
+            devLikes: 10,
           }))
         ),
         mockTrpcQuery(
@@ -136,7 +131,7 @@ export const LargeFilled: Story = {
                 ctx.data([...new Array(6)].map(() => createFilled()))
               );
             }
-            case "developmentDesc": {
+            case "devDesc": {
               return res(
                 ctx.status(200),
                 ctx.data([...new Array(6)].map(() => createFilled()))

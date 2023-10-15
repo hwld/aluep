@@ -1,20 +1,20 @@
 import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
-import { Development } from "@/models/development";
+import { Dev } from "@/models/dev";
 
 /**
  * 開発情報詳細画面で開発情報にいいねを行う
  */
-export const useDevLikeOnDetail = (developmentId: string) => {
+export const useDevLikeOnDetail = (devId: string) => {
   const utils = trpc.useContext();
 
-  const likeDevelopmentMutation = trpc.development.like.useMutation({
-    onMutate: async ({ developmentId }) => {
-      return await optimisticUpdate({ developmentId, like: true });
+  const likeDevMutation = trpc.dev.like.useMutation({
+    onMutate: async ({ devId }) => {
+      return await optimisticUpdate({ devId: devId, like: true });
     },
     onError: (_, __, contexts) => {
       cancelOptimisticUpdate({
-        previousDevelopment: contexts?.previousDevelopment,
+        previousDev: contexts?.previousDev,
         like: true,
       });
     },
@@ -23,13 +23,13 @@ export const useDevLikeOnDetail = (developmentId: string) => {
     },
   });
 
-  const unlikeDevelopmentMutation = trpc.development.unlike.useMutation({
-    onMutate: async ({ developmentId }) => {
-      return await optimisticUpdate({ developmentId, like: false });
+  const unlikeDevMutation = trpc.dev.unlike.useMutation({
+    onMutate: async ({ devId }) => {
+      return await optimisticUpdate({ devId, like: false });
     },
     onError: (_, __, contexts) => {
       cancelOptimisticUpdate({
-        previousDevelopment: contexts?.previousDevelopment,
+        previousDev: contexts?.previousDev,
         like: false,
       });
     },
@@ -40,44 +40,44 @@ export const useDevLikeOnDetail = (developmentId: string) => {
 
   /** 楽観的更新のためにキャッシュを操作する */
   const optimisticUpdate = async ({
-    developmentId,
+    devId,
     like,
   }: {
-    developmentId: string;
+    devId: string;
     like: boolean;
   }): Promise<{
-    previousDevelopment: Development | undefined;
+    previousDev: Dev | undefined;
   }> => {
-    await utils.development.get.cancel({ developmentId });
+    await utils.dev.get.cancel({ devId: devId });
 
-    const previousDevelopment = utils.development.get.getData({
-      developmentId,
+    const previousDev = utils.dev.get.getData({
+      devId: devId,
     });
 
-    utils.development.get.setData({ developmentId }, (development) => {
-      if (development === undefined) {
+    utils.dev.get.setData({ devId: devId }, (dev) => {
+      if (dev === undefined) {
         return undefined;
       }
 
       return {
-        ...development,
-        likes: development.likes + (like ? 1 : -1),
+        ...dev,
+        likes: dev.likes + (like ? 1 : -1),
         likedByLoggedInUser: like,
       };
     });
 
-    return { previousDevelopment };
+    return { previousDev: previousDev };
   };
 
   /**　楽観的更新をキャンセルする */
   const cancelOptimisticUpdate = ({
-    previousDevelopment,
+    previousDev,
     like,
   }: {
-    previousDevelopment: Development | undefined;
+    previousDev: Dev | undefined;
     like: boolean;
   }) => {
-    utils.development.get.setData({ developmentId }, previousDevelopment);
+    utils.dev.get.setData({ devId: devId }, previousDev);
 
     const action = like ? "いいね" : "いいね解除";
 
@@ -87,5 +87,8 @@ export const useDevLikeOnDetail = (developmentId: string) => {
     });
   };
 
-  return { likeDevelopmentMutation, unlikeDevelopmentMutation };
+  return {
+    likeDevMutation,
+    unlikeDevMutation,
+  };
 };

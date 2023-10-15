@@ -1,5 +1,5 @@
-import { reportDevelopment } from "@/server/features/report/reportDevelopment";
-import { reportDevelopmentMemo } from "@/server/features/report/reportDevelopmentMemo";
+import { reportDev } from "@/server/features/report/reportDev";
+import { reportDevMemo } from "@/server/features/report/reportDevMemo";
 import { reportIdea } from "@/server/features/report/reportIdea";
 import { reportIdeaComment } from "@/server/features/report/reportIdeaComment";
 import { reportUser } from "@/server/features/report/reportUser";
@@ -13,11 +13,11 @@ export const reportRouter = router({
   ideaComment: reportIdeaComment,
 
   /**開発情報を通報する */
-  development: reportDevelopment,
+  dev: reportDev,
 
   /**ユーザーを通報する */
   user: reportUser,
 
   /**開発メモを通報する */
-  developmentMemo: reportDevelopmentMemo,
+  devMemo: reportDevMemo,
 });

@@ -1,6 +1,6 @@
 import { ideaOrderSchema } from "@/models/idea";
+import { pickUpIdeas as pickUp } from "@/server/finders/idea";
 import { publicProcedure } from "@/server/lib/trpc";
-import { pickUpIdeas as pickUp } from "@/server/repositories/idea";
 import { z } from "zod";
 
 export const getPickedIdeas = publicProcedure

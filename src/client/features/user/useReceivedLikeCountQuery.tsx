@@ -2,7 +2,7 @@ import { trpc } from "@/client/lib/trpc";
 
 export type ReceivedLikeCount = {
   ideaLikeCount: number;
-  developmentLikeCount: number;
+  devLikeCount: number;
 };
 
 type UseReceivedLikeCountQueryArgs = { userId: string };

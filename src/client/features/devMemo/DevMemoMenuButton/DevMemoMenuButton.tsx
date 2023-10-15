@@ -21,8 +21,8 @@ import { TbLink } from "react-icons/tb";
 
 type Props = {
   ideaId: string;
-  developmentId: string;
-  developmentMemoId: string;
+  devId: string;
+  devMemoId: string;
   /** ログインしているユーザーのプロフィールかどうか */
   isOwner: boolean;
   onDeleteMemo: (id: string) => void;
@@ -30,9 +30,9 @@ type Props = {
 };
 export const DevMemoMenuButton: React.FC<Props> = ({
   ideaId,
-  developmentId,
+  devId,
   isOwner,
-  developmentMemoId,
+  devMemoId,
   onDeleteMemo,
   isDeleting = false,
 }) => {
@@ -49,36 +49,31 @@ export const DevMemoMenuButton: React.FC<Props> = ({
   ] = useDisclosure(false);
 
   const handleDeleteMemo = () => {
-    onDeleteMemo(developmentMemoId);
+    onDeleteMemo(devMemoId);
   };
 
-  const reportDevelopmentMemoMutation = trpc.report.developmentMemo.useMutation(
-    {
-      onSuccess: () => {
-        showSuccessNotification({
-          title: "開発メモの通報",
-          message: "開発メモを通報しました。",
-        });
-        closeReportModal();
-      },
-      onError: () => {
-        showErrorNotification({
-          title: "開発メモの通報",
-          message: "開発メモを通報できませんでした。",
-        });
-      },
-    }
-  );
+  const reportDevMemoMutation = trpc.report.devMemo.useMutation({
+    onSuccess: () => {
+      showSuccessNotification({
+        title: "開発メモの通報",
+        message: "開発メモを通報しました。",
+      });
+      closeReportModal();
+    },
+    onError: () => {
+      showErrorNotification({
+        title: "開発メモの通報",
+        message: "開発メモを通報できませんでした。",
+      });
+    },
+  });
 
   const buildLink = () => {
-    return `${window.location.origin}${Routes.development(
-      ideaId,
-      developmentId
-    )}#${developmentMemoId}`;
+    return `${window.location.origin}${Routes.dev(ideaId, devId)}#${devMemoId}`;
   };
 
-  const handleSubmitReportDevelopmentMemo = (data: ReportBaseForm) => {
-    reportDevelopmentMemoMutation.mutate({
+  const handleSubmitReportDevMemo = (data: ReportBaseForm) => {
+    reportDevMemoMutation.mutate({
       reportDetail: data.reportDetail,
       targetMemoUrl: buildLink(),
     });
@@ -142,7 +137,7 @@ export const DevMemoMenuButton: React.FC<Props> = ({
       >
         <ReportForm
           submitText="開発メモを通報する"
-          onSubmit={handleSubmitReportDevelopmentMemo}
+          onSubmit={handleSubmitReportDevMemo}
           onCancel={closeReportModal}
           isLoading={false}
         />

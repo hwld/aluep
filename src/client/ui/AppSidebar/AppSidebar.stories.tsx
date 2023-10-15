@@ -17,7 +17,7 @@ export const LoggedIn: Story = {
       handlers: [
         mockTrpcQuery(trpcMsw.me.getMySummary, {
           allLikes: 10,
-          developments: 3,
+          devs: 3,
           ideas: 8,
         }),
       ],

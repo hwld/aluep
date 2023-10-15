@@ -6,10 +6,7 @@ import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
-import {
-  DevelopmentMemo,
-  DevelopmentMemoFormData,
-} from "@/models/developmentMemo";
+import { DevMemo, DevMemoFormData } from "@/models/devMemo";
 import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { FaRegComment } from "react-icons/fa";
@@ -17,21 +14,19 @@ import classes from "./DevMemoThreadCard.module.css";
 
 type Props = {
   ideaId: string;
-  developmentId: string;
-  memo: DevelopmentMemo;
-  childrenMemos: DevelopmentMemo[];
+  devId: string;
+  memo: DevMemo;
+  childrenMemos: DevMemo[];
   loggedInUserId?: string;
 };
 export const DevMemoThreadCard: React.FC<Props> = ({
   ideaId,
-  developmentId,
+  devId,
   memo,
   childrenMemos,
   loggedInUserId,
 }) => {
-  const { createMemoMutation, deleteMemoMutation } = useDevMemos({
-    developmentId,
-  });
+  const { createMemoMutation, deleteMemoMutation } = useDevMemos({ devId });
   const [isOpenReplyForm, setIsOpenReplyForm] = useState(false);
   const memoRef = useHashRemoverOnClickOutside({
     canRemove: (hash) => hash === memo.id,
@@ -53,16 +48,16 @@ export const DevMemoThreadCard: React.FC<Props> = ({
     setIsOpenReplyForm(false);
   };
 
-  const handleSubmitMemo = (data: DevelopmentMemoFormData) => {
+  const handleSubmitMemo = (data: DevMemoFormData) => {
     createMemoMutation.mutate({
       ...data,
-      developmentId,
+      devId,
       parentMemoId: replyTargetMemoId,
     });
   };
 
   const handleDeleteMemo = (id: string) => {
-    deleteMemoMutation.mutate({ developmentMemoId: id });
+    deleteMemoMutation.mutate({ devMemoId: id });
   };
 
   return (
@@ -80,8 +75,8 @@ export const DevMemoThreadCard: React.FC<Props> = ({
           </Flex>
           <DevMemoMenuButton
             ideaId={ideaId}
-            developmentId={developmentId}
-            developmentMemoId={memo.id}
+            devId={devId}
+            devMemoId={memo.id}
             isOwner={memo.fromUser.id === loggedInUserId}
             onDeleteMemo={handleDeleteMemo}
             isDeleting={deleteMemoMutation.isLoading}
@@ -106,7 +101,7 @@ export const DevMemoThreadCard: React.FC<Props> = ({
       </Stack>
       <DevMemoChildrenSection
         ideaId={ideaId}
-        developmentId={developmentId}
+        devId={devId}
         childMemos={childrenMemos}
         isOpenReplyForm={isOpenReplyForm}
         onOpenReplyForm={handleOpenReplyForm}

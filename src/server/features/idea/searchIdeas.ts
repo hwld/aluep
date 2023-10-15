@@ -1,6 +1,6 @@
 import { Idea, searchIdeaPageSchema } from "@/models/idea";
+import { findSearchedIdeas } from "@/server/finders/idea";
 import { publicProcedure } from "@/server/lib/trpc";
-import { findSearchedIdeas } from "@/server/repositories/idea";
 import { pageLimit } from "@/share/consts";
 
 export const searchIdeas = publicProcedure

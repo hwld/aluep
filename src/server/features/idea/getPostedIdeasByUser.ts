@@ -1,7 +1,7 @@
+import { findManyIdeas } from "@/server/finders/idea";
 import { paginate } from "@/server/lib/paginate";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { findManyIdeas } from "@/server/repositories/idea";
 import { pageLimit } from "@/share/consts";
 import { pagingSchema } from "@/share/paging";
 import { z } from "zod";

@@ -14,12 +14,12 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   const { session } = useSessionQuery();
 
   const { data: developedData, ...others } =
-    trpc.development.isDevelopedByUser.useQuery({
+    trpc.dev.isDevelopedByUser.useQuery({
       ideaId,
       userId: session?.user.id ?? null,
     });
 
-  const developMutation = trpc.development.create.useMutation({
+  const developMutation = trpc.dev.create.useMutation({
     onSuccess: async () => {
       showSuccessNotification({
         title: "お題の開発",
@@ -35,14 +35,14 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   });
 
   // お題の開発情報を更新する
-  const updateDevelopmentMutation = trpc.development.update.useMutation({
+  const updateDevMutation = trpc.dev.update.useMutation({
     onSuccess: (_, fields) => {
       showSuccessNotification({
         title: "お題開発情報の更新",
         message: "開発情報を更新しました。",
       });
 
-      router.push(Routes.development(fields.ideaId, fields.developmentId));
+      router.push(Routes.dev(fields.ideaId, fields.devId));
     },
     onError: () => {
       showErrorNotification({
@@ -53,13 +53,13 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   });
 
   // お題の開発をキャンセルする
-  const cancelDevelopMutation = trpc.development.delete.useMutation();
+  const cancelDevelopMutation = trpc.dev.delete.useMutation();
 
   return {
     data: { developedData, ...others },
     mutations: {
       developMutation,
-      updateDevelopmentMutation,
+      updateDevMutation,
       cancelDevelopMutation,
     },
   };

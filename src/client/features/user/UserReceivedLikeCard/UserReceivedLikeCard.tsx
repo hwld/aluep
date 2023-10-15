@@ -36,7 +36,7 @@ export const UserReceivedLikeCard: React.FC<Props> = ({
             <LikeDevIcon size="lg" />
             <Flex align="flex-end" gap={2}>
               <Text size="xl" fw="bold" c="red.7">
-                {receivedLikeCount.developmentLikeCount}
+                {receivedLikeCount.devLikeCount}
               </Text>
               <Text size="sm">likes</Text>
             </Flex>

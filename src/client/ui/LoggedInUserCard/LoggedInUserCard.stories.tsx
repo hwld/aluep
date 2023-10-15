@@ -17,7 +17,7 @@ export const Default: Story = {
         mockTrpcQuery(trpcMsw.me.getMySummary, {
           ideas: 10,
           allLikes: 5,
-          developments: 0,
+          devs: 0,
         }),
       ],
     },

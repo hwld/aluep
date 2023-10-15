@@ -1,21 +1,21 @@
 import { DevMemoChild } from "@/client/features/devMemo/DevMemoChild/DevMemoChild";
 import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
-import { DevelopmentMemo } from "@/models/developmentMemo";
+import { DevMemo } from "@/models/devMemo";
 import { Box, Button, Divider, Stack } from "@mantine/core";
 import { useRef } from "react";
 import classes from "./DevMemoChildrenSection.module.css";
 
 type Props = {
   ideaId: string;
-  developmentId: string;
-  childMemos: DevelopmentMemo[];
+  devId: string;
+  childMemos: DevMemo[];
   isOpenReplyForm: boolean;
   onOpenReplyForm: () => void;
   onCloseReplyForm: () => void;
 };
 export const DevMemoChildrenSection: React.FC<Props> = ({
   ideaId,
-  developmentId,
+  devId,
   childMemos,
   isOpenReplyForm,
   onOpenReplyForm,
@@ -48,7 +48,7 @@ export const DevMemoChildrenSection: React.FC<Props> = ({
               ideaId={ideaId}
               key={memo.id}
               memo={memo}
-              developmentId={developmentId}
+              devId={devId}
             />
           );
 

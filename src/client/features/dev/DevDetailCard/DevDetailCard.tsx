@@ -6,7 +6,7 @@ import { convertToGithubDevUrl } from "@/client/lib/convertToGithubDevUrl";
 import { formatDate } from "@/client/lib/utils";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
-import { Development } from "@/models/development";
+import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import {
   Box,
@@ -24,14 +24,14 @@ import { TbFileText, TbLink } from "react-icons/tb";
 import classes from "./DevDetailCard.module.css";
 
 type Props = {
-  development: Development;
-  onToggleDevelopmentLike: () => void;
+  dev: Dev;
+  onToggleDevLike: () => void;
   isDeveloper: boolean;
 };
 
 export const DevDetailCard: React.FC<Props> = ({
-  development,
-  onToggleDevelopmentLike,
+  dev,
+  onToggleDevLike,
   isDeveloper,
 }) => {
   return (
@@ -41,15 +41,15 @@ export const DevDetailCard: React.FC<Props> = ({
         <Grid.Col span={{ xs: 12, md: 7 }}>
           <Stack h="100%" gap={0} justify="space-between">
             <Stack gap="xs">
-              <DevStatusBadge status={development.status} size="xl" />
+              <DevStatusBadge status={dev.status} size="xl" />
               <Flex gap={5}>
                 <Box className={classes["icon-wrapper"]}>
                   <TbFileText color="var(--mantine-color-red-7)" size={30} />
                 </Box>
                 <Stack gap={0} miw={0}>
-                  <TextLink href={Routes.idea(development.ideaId)}>
+                  <TextLink href={Routes.idea(dev.ideaId)}>
                     <Text c="gray.7" size="xl" fw="bold" truncate>
-                      {development.ideaTitle}
+                      {dev.ideaTitle}
                     </Text>
                   </TextLink>
                   <Text c="red.7" size="lg" fw="bold" ml="md">
@@ -62,26 +62,26 @@ export const DevDetailCard: React.FC<Props> = ({
             <Stack gap={0}>
               <Flex justify="space-between" align="center">
                 <DevLikeButton
-                  developmentId={development.id}
-                  ideaId={development.ideaId}
-                  likes={development.likes}
-                  likedByLoggedInUser={development.likedByLoggedInUser}
-                  onToggleIdeaLike={onToggleDevelopmentLike}
+                  devId={dev.id}
+                  ideaId={dev.ideaId}
+                  likes={dev.likes}
+                  likedByLoggedInUser={dev.likedByLoggedInUser}
+                  onToggleIdeaLike={onToggleDevLike}
                   disabled={isDeveloper}
                 />
                 <Flex gap="md">
                   <Button
                     component={"a"}
-                    href={convertToGithubDevUrl(development.githubUrl)}
+                    href={convertToGithubDevUrl(dev.githubUrl)}
                     target="_blank"
                     leftSection={<BsGithub size={20} />}
                   >
                     コードを見る
                   </Button>
-                  {development.developedItemUrl !== "" && (
+                  {dev.developedItemUrl !== "" && (
                     <Button
                       component="a"
-                      href={development.developedItemUrl}
+                      href={dev.developedItemUrl}
                       target="_blank"
                       leftSection={<TbLink size={20} />}
                       color="gray.5"
@@ -97,11 +97,11 @@ export const DevDetailCard: React.FC<Props> = ({
               <Flex gap="xl">
                 <Flex align="center" gap={5}>
                   <MdAccessTime size={20} />
-                  <Text>{formatDate(new Date(development.createdAt))}</Text>
+                  <Text>{formatDate(new Date(dev.createdAt))}</Text>
                 </Flex>
                 <Flex align="center" gap={5}>
                   <MdUpdate size={20} />
-                  <Text>{formatDate(new Date(development.updatedAt))}</Text>
+                  <Text>{formatDate(new Date(dev.updatedAt))}</Text>
                 </Flex>
               </Flex>
             </Stack>
@@ -112,25 +112,25 @@ export const DevDetailCard: React.FC<Props> = ({
         <Grid.Col span={{ xs: 12, md: 5 }}>
           <Stack ml="sm" h="100%" pt="15px">
             <Box style={{ position: "absolute", top: "10px", right: "10px" }}>
-              <DevMenuButton development={development} isOwner={isDeveloper} />
+              <DevMenuButton dev={dev} isOwner={isDeveloper} />
             </Box>
             <Flex mt="sm" gap="xs" align="center">
               <UserIconLink
-                userId={development.developer.id}
-                iconSrc={development.developer.imageUrl}
+                userId={dev.developer.id}
+                iconSrc={dev.developer.imageUrl}
                 size="lg"
               />
-              <TextLink href={Routes.user(development.developer.id)}>
+              <TextLink href={Routes.user(dev.developer.id)}>
                 <AppTitle size={18} miw={0}>
-                  {development.developer.name}
+                  {dev.developer.name}
                 </AppTitle>
               </TextLink>
             </Flex>
             <Box w="100%" bg="gray.2" p="sm" className={classes.comment}>
-              {!development.comment ? (
+              {!dev.comment ? (
                 <Text c="gray.4">コメントはありません</Text>
               ) : (
-                <Text size="sm">{development.comment}</Text>
+                <Text size="sm">{dev.comment}</Text>
               )}
             </Box>
           </Stack>

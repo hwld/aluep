@@ -15,7 +15,7 @@ export type Idea = {
     id: string;
     name: string;
   }[];
-  developments: number;
+  devs: number;
   comments: number;
   createdAt: string;
   updatedAt: string;
@@ -64,7 +64,7 @@ export const ideaOrderSchema = z.union([
   z.literal("createdDesc"),
   z.literal("createdAsc"),
   z.literal("likeDesc"),
-  z.literal("developmentDesc"),
+  z.literal("devDesc"),
 ]);
 export type IdeaOrder = z.infer<typeof ideaOrderSchema>;
 

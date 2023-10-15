@@ -1,5 +1,5 @@
+import { findManyUsers } from "@/server/finders/user";
 import { publicProcedure } from "@/server/lib/trpc";
-import { findManyUsers } from "@/server/repositories/user";
 import { z } from "zod";
 
 export const searchUser = publicProcedure

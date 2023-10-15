@@ -1,7 +1,7 @@
+import { findManyUsers } from "@/server/finders/user";
 import { paginate } from "@/server/lib/paginate";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { findManyUsers } from "@/server/repositories/user";
 import { pageLimit } from "@/share/consts";
 import { pagingSchema } from "@/share/paging";
 import { z } from "zod";

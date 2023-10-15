@@ -5,7 +5,7 @@ import { PopularIdeaCarousel } from "@/client/features/idea/PopularIdeaCarousel/
 import { usePickedUpIdeasQuery } from "@/client/features/idea/usePickedUpIdeasQuery";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import {
-  useTop10LikesDevelopmentInThisMonth,
+  useTop10LikesDevsInThisMonth,
   useTop10LikesIdeasInThisMonth,
   useTop10LikesPostersInThisMonth,
 } from "@/client/features/user/useRankingQuery";
@@ -25,18 +25,16 @@ export const HomePage: React.FC = () => {
 
   // ランキング
   const { top10LikesIdeasInThisMonth } = useTop10LikesIdeasInThisMonth();
-  const { top10LikesDevelopmentsInThisMonth } =
-    useTop10LikesDevelopmentInThisMonth();
+  const { top10LikesDevsInThisMonth } = useTop10LikesDevsInThisMonth();
   const { top10LikesPostersInThisMonth } = useTop10LikesPostersInThisMonth();
 
   // ピックアップされたお題
   const { pickedUpIdeas: latestIdeas } = usePickedUpIdeasQuery("createdDesc");
   const { pickedUpIdeas: manyLikesIdeas } = usePickedUpIdeasQuery("likeDesc");
-  const { pickedUpIdeas: manyDevelopmentsIdeas } =
-    usePickedUpIdeasQuery("developmentDesc");
+  const { pickedUpIdeas: manyDevsIdeas } = usePickedUpIdeasQuery("devDesc");
 
   const isEmptyIdeas =
-    [...latestIdeas, ...manyLikesIdeas, ...manyDevelopmentsIdeas].length < 1;
+    [...latestIdeas, ...manyLikesIdeas, ...manyDevsIdeas].length < 1;
 
   return (
     <>
@@ -87,7 +85,7 @@ export const HomePage: React.FC = () => {
                   ideas={manyLikesIdeas}
                 />
               )}
-              {manyDevelopmentsIdeas.length !== 0 && (
+              {manyDevsIdeas.length !== 0 && (
                 <PickedUpIdeas
                   icon={
                     <MdComputer
@@ -96,8 +94,8 @@ export const HomePage: React.FC = () => {
                     />
                   }
                   title="開発者が多かったお題"
-                  readMoreHref={Routes.ideaSearch({ order: "developmentDesc" })}
-                  ideas={manyDevelopmentsIdeas}
+                  readMoreHref={Routes.ideaSearch({ order: "devDesc" })}
+                  ideas={manyDevsIdeas}
                 />
               )}
             </>
@@ -105,15 +103,15 @@ export const HomePage: React.FC = () => {
         </Stack>
         <Flex direction="column" gap={30} mt={35} visibleFrom="lg">
           <RankingCard title="今月のいいねが多かった開発者">
-            {top10LikesDevelopmentsInThisMonth?.length === 0 ? (
-              <EmptyRankingContent page="developments" />
+            {top10LikesDevsInThisMonth?.length === 0 ? (
+              <EmptyRankingContent page="devs" />
             ) : (
-              top10LikesDevelopmentsInThisMonth?.map((development, i) => (
+              top10LikesDevsInThisMonth?.map((dev, i) => (
                 <UserLikeRankingItem
                   ranking={i + 1}
-                  key={development.id}
-                  user={development}
-                  likeCount={development.developmentLikes}
+                  key={dev.id}
+                  user={dev}
+                  likeCount={dev.devLikes}
                 />
               ))
             )}

@@ -1,11 +1,11 @@
 import { trpc } from "@/client/lib/trpc";
 
-type UseDevelopmentQueryArgs = { developmentId: string };
+type UseDevQueryArgs = { devId: string };
 
-export const useDevQuery = ({ developmentId }: UseDevelopmentQueryArgs) => {
-  const { data: development, ...others } = trpc.development.get.useQuery({
-    developmentId,
+export const useDevQuery = ({ devId }: UseDevQueryArgs) => {
+  const { data: dev, ...others } = trpc.dev.get.useQuery({
+    devId: devId,
   });
 
-  return { development, ...others };
+  return { dev, ...others };
 };

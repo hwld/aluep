@@ -1,10 +1,7 @@
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
 import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
-import {
-  DevelopmentMemoFormData,
-  developmentMemoFormSchema,
-} from "@/models/developmentMemo";
+import { DevMemoFormData, devMemoFormSchema } from "@/models/devMemo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, Divider, Flex, Text } from "@mantine/core";
 import clsx from "clsx";
@@ -16,14 +13,13 @@ import { TbAlertCircle } from "react-icons/tb";
 import classes from "./DevMemoFormCard.module.css";
 
 type Props = {
-  developmentId: string;
-  onSubmit: (data: DevelopmentMemoFormData) => void;
+  onSubmit: (data: DevMemoFormData) => void;
   isSubmitting?: boolean;
   loggedInUser: User;
 };
 export const DevMemoFormCard = forwardRef<HTMLDivElement, Props>(
-  function DevelopmentMemoFormCard(
-    { developmentId, onSubmit, isSubmitting = false, loggedInUser },
+  function DevMemoFormCard(
+    { onSubmit, isSubmitting = false, loggedInUser },
     ref
   ) {
     const memoRef = useRef<HTMLTextAreaElement | null>(null);
@@ -32,9 +28,9 @@ export const DevMemoFormCard = forwardRef<HTMLDivElement, Props>(
       control,
       formState: { errors },
       handleSubmit: innerHandleSubmit,
-    } = useForm<DevelopmentMemoFormData>({
+    } = useForm<DevMemoFormData>({
       defaultValues: { text: "" },
-      resolver: zodResolver(developmentMemoFormSchema),
+      resolver: zodResolver(devMemoFormSchema),
     });
 
     const { debouncedSubmitting, handleSubmit } = useDebouncedSubmitting({

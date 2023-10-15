@@ -1,4 +1,4 @@
-import { DevStatus, DevStatusNames } from "@/models/developmentStatus";
+import { DevStatus, DevStatusNames } from "@/models/devStatus";
 import { Badge, MantineSize } from "@mantine/core";
 import clsx from "clsx";
 import classes from "./DevStatusBadge.module.css";

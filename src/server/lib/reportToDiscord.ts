@@ -1,6 +1,6 @@
 import {
-  ReportDevelopmentInput,
-  ReportDevelopmentMemoInput,
+  ReportDevInput,
+  ReportDevMemoInput,
   ReportIdeaCommentInput,
   ReportIdeaInput,
   ReportUserInput,
@@ -31,10 +31,10 @@ type Args = {
   reportedUser: ReportedUser;
 } & (
   | { type: "idea"; report: ReportIdeaInput }
-  | { type: "development"; report: ReportDevelopmentInput }
+  | { type: "dev"; report: ReportDevInput }
   | { type: "ideaComment"; report: ReportIdeaCommentInput }
   | { type: "user"; report: ReportUserInput }
-  | { type: "developmentMemo"; report: ReportDevelopmentMemoInput }
+  | { type: "devMemo"; report: ReportDevMemoInput }
 );
 
 const buildEmbedFields = ({
@@ -56,7 +56,7 @@ const buildEmbedFields = ({
         },
       };
     }
-    case "development": {
+    case "dev": {
       return {
         title: "開発情報の通報",
         color: 0x3b82f6,
@@ -88,7 +88,7 @@ const buildEmbedFields = ({
         },
       };
     }
-    case "developmentMemo": {
+    case "devMemo": {
       return {
         title: "開発メモの通報",
         color: 0xd946ef,

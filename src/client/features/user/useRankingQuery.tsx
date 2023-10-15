@@ -2,16 +2,16 @@
 
 import { trpc } from "@/client/lib/trpc";
 
-export const useTop10LikesDevelopmentInThisMonth = () => {
-  const { data: top10LikesDevelopmentsInThisMonth, ...others } =
-    trpc.aggregate.getTop10LikesDevelopmentsInThisMonth.useQuery(undefined, {
+export const useTop10LikesDevsInThisMonth = () => {
+  const { data: top10LikesDevsInThisMonth, ...others } =
+    trpc.aggregate.getTop10LikesDevsInThisMonth.useQuery(undefined, {
       // ランキングは最新のデータでなくても問題ないので、できる限りキャッシュから取ってこれるようにする
       // これをやらないと再レンダリングのたびにデータを持ってくるようになってしまう？
       staleTime: Infinity,
     });
 
   return {
-    top10LikesDevelopmentsInThisMonth: top10LikesDevelopmentsInThisMonth ?? [],
+    top10LikesDevsInThisMonth: top10LikesDevsInThisMonth ?? [],
     ...others,
   };
 };

@@ -15,13 +15,12 @@ export const Routes = {
 
   /** アプリ開発のお題の開発関連 */
   develop: (ideaId: string) => `${Routes.ideas}/${ideaId}/develop`,
-  developments: (ideaId: string) => `${Routes.ideas}/${ideaId}/developments`,
-  development: (ideaId: string, developmentId: string) =>
-    `${Routes.developments(ideaId)}/${developmentId}`,
-  developmentUpdate: (ideaId: string, developmentId: string) =>
-    `${Routes.development(ideaId, developmentId)}/update`,
-  developmentLikers: (ideaId: string, developmentId: string) =>
-    `${Routes.development(ideaId, developmentId)}/likers`,
+  devs: (ideaId: string) => `${Routes.ideas}/${ideaId}/devs`,
+  dev: (ideaId: string, devId: string) => `${Routes.devs(ideaId)}/${devId}`,
+  devUpdate: (ideaId: string, devId: string) =>
+    `${Routes.dev(ideaId, devId)}/update`,
+  devLikers: (ideaId: string, devId: string) =>
+    `${Routes.dev(ideaId, devId)}/likers`,
 
   /** ユーザー関連 */
   user: (id: string) => `/users/${id}`,

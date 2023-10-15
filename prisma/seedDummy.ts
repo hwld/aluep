@@ -36,7 +36,7 @@ async function main() {
   });
 
   // 開発情報の作成
-  const developmentIds = await createDevelopments({
+  const devIds = await createDevs({
     userIds,
     ideaIds: ideaIds,
     // 開発されるお題の数
@@ -46,9 +46,9 @@ async function main() {
   });
 
   // 開発者へのいいねを追加
-  await createDevelopmentLikes({
+  await createDevtLikes({
     userIds,
-    developmentIds: developmentIds,
+    devIds: devIds,
     // いいねされる開発者の数
     likedDevelopmentCounts: 25,
     // 開発者へのいいねの最大数 (自分にいいねができないので(ユーザー数 - 一つのお題の最大開発者) < いいねの最大数　の場合にはエラーになる可能性がある)
@@ -190,7 +190,7 @@ type CreateDevelopmentArgs = {
   maxDevelopmentCounts: number;
 };
 /** 開発情報を作成 */
-async function createDevelopments({
+async function createDevs({
   ideaIds,
   userIds,
   developedIdeaCounts,
@@ -204,28 +204,25 @@ async function createDevelopments({
     developedIdeaCounts
   );
   // お題それぞれに何人開発するかを決めておく
-  const developmentCountList = [...new Array(developedIdeaIds.length)].map(() =>
+  const devCountList = [...new Array(developedIdeaIds.length)].map(() =>
     faker.number.int({ min: 1, max: maxDevelopmentCounts })
   );
 
   // 開発者の総数を求める
-  const sumDevelopments = developmentCountList.reduce(
-    (prev, curr) => prev + curr,
-    0
-  );
-  bar.start(sumDevelopments, 0);
+  const sumDevs = devCountList.reduce((prev, curr) => prev + curr, 0);
+  bar.start(sumDevs, 0);
 
-  const developmentIds = [];
+  const devIds = [];
   for (let i = 0; i < developedIdeaIds.length; i++) {
     // 開発されるお題のインデックス
     const ideaId = developedIdeaIds[i];
     // 何人開発するか
-    const developmentCounts = developmentCountList[i];
+    const devCounts = devCountList[i];
 
     // ユーザーを先頭から走査して開発させる。
-    for (let userIndex = 0; userIndex < developmentCounts; userIndex++) {
+    for (let userIndex = 0; userIndex < devCounts; userIndex++) {
       const id = faker.string.uuid();
-      const development = await prisma.development.upsert({
+      const dev = await prisma.development.upsert({
         where: { id },
         create: {
           id,
@@ -242,57 +239,55 @@ async function createDevelopments({
         },
         update: { createdAt: new Date() },
       });
-      developmentIds.push(development.id);
+      devIds.push(dev.id);
       bar.increment();
     }
   }
   bar.stop();
   console.log("");
 
-  return developmentIds;
+  return devIds;
 }
 
-type CreateDevelopmentLikesArgs = {
+type CreateDevLikesArgs = {
   userIds: string[];
-  developmentIds: string[];
+  devIds: string[];
   // 何人の開発者がいいねされるか
   likedDevelopmentCounts: number;
   // 一人の開発者に最大何いいねされるか
   maxDevelopmentLikeCounts: number;
 };
 /** 開発者へのいいねを追加する */
-async function createDevelopmentLikes({
+async function createDevtLikes({
   userIds,
-  developmentIds,
+  devIds,
   likedDevelopmentCounts,
   maxDevelopmentLikeCounts,
-}: CreateDevelopmentLikesArgs) {
+}: CreateDevLikesArgs) {
   console.log("開発者へのいいねを追加");
 
   //　いいねされる開発者をランダムで選択する
   const likeDevelopmentIds = faker.helpers.arrayElements(
-    developmentIds,
+    devIds,
     likedDevelopmentCounts
   );
   // 開発者それぞれに何個いいねをつけるかを決めておく
-  const developmentLikeCountsList = [
-    ...new Array(likeDevelopmentIds.length),
-  ].map(() =>
+  const devLikeCountsList = [...new Array(likeDevelopmentIds.length)].map(() =>
     faker.number.int({
       min: 1,
       max: maxDevelopmentLikeCounts,
     })
   );
-  const sumDevelopmentLikes = developmentLikeCountsList.reduce(
+  const sumDevelopmentLikes = devLikeCountsList.reduce(
     (prev, curr) => prev + curr,
     0
   );
   bar.start(sumDevelopmentLikes, 0);
   for (let i = 0; i < likeDevelopmentIds.length; i++) {
     // いいねをつける開発者のid
-    const developmentId = likeDevelopmentIds[i];
+    const devId = likeDevelopmentIds[i];
     // いいねを何個つけるか
-    const likeCounts = developmentLikeCountsList[i];
+    const likeCounts = devLikeCountsList[i];
 
     // ユーザーを後ろから走査していいねをつけていく
     for (let userIndex = 0; userIndex < likeCounts; userIndex++) {
@@ -301,7 +296,7 @@ async function createDevelopmentLikes({
         where: { id },
         create: {
           id,
-          developmentId,
+          developmentId: devId,
           userId: userIds[userIds.length - 1 - userIndex],
         },
         update: { createdAt: new Date() },

@@ -1,7 +1,7 @@
+import { getFavoritedUsers } from "@/server/features/user/favoritedUsers";
 import { favoriteUser } from "@/server/features/user/favoriteUser";
 import { getFavoriteCountByUser } from "@/server/features/user/favoriteUserCount";
-import { getFavoritedUsers } from "@/server/features/user/favoritedUsers";
-import { getDevelopmentLikers } from "@/server/features/user/getDevelopmentLikers";
+import { getDevLikers } from "@/server/features/user/getDevLikers";
 import { getIdeaLikers } from "@/server/features/user/getIdeaLikers";
 import { getReceivedLikeCount } from "@/server/features/user/getReceivedLikeCount";
 import { getUser } from "@/server/features/user/getUser";
@@ -37,7 +37,7 @@ export const userRoute = router({
   getIdeaLikers: getIdeaLikers,
 
   /** 指定された開発情報をいいねしたユーザーを取得する */
-  getDevelopmentLikers: getDevelopmentLikers,
+  getDevLikers: getDevLikers,
 
   /** ユーザーのアクティビティを取得する */
   getUserActivity: getUserActivity,

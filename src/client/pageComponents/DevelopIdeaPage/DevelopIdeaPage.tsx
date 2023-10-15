@@ -1,8 +1,8 @@
-import { DevelopForm } from "@/client/features/dev/DevelopForm/DevelopForm";
+import { DevForm } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { useDevelop } from "@/client/features/dev/useDevelop";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
-import { DevelopmentFormData } from "@/models/development";
+import { DevFormData } from "@/models/dev";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Card, Stack, Text } from "@mantine/core";
@@ -19,7 +19,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea }) => {
     mutations: { developMutation },
   } = useDevelop({ ideaId: idea.id });
 
-  const handleDevelopIdea = (data: DevelopmentFormData) => {
+  const handleDevelopIdea = (data: DevFormData) => {
     developMutation.mutate(
       { ...data, ideaId: idea.id },
       { onSuccess: () => router.replace(Routes.idea(idea.id)) }
@@ -41,7 +41,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea }) => {
         <Stack gap="xs">
           <Text c="gray.5">開発情報</Text>
           <Card>
-            <DevelopForm
+            <DevForm
               onSubmit={handleDevelopIdea}
               onCancel={handleBack}
               ideaId={idea.id}

@@ -1,5 +1,5 @@
 import { getPickedIdeas } from "@/server/features/aggregate/getPickedIdeas";
-import { getTop10LikesDevelopmentsInThisMonth } from "@/server/features/aggregate/getTop10LikesDevelopmentsInThisMonth";
+import { getTop10LikesDevsInThisMonth } from "@/server/features/aggregate/getTop10LikesDevsInThisMonth";
 import { getTop10LikesIdeasInThisMonth } from "@/server/features/aggregate/getTop10LikesIdeasInThisMonth";
 import { getTop10LikesPostersInThisMonth } from "@/server/features/aggregate/getTop10LikesPostersInThisMonth";
 import { router } from "@/server/lib/trpc";
@@ -9,7 +9,7 @@ export const aggregateRoute = router({
   getTop10LikesIdeasInThisMonth: getTop10LikesIdeasInThisMonth,
 
   /** 1ヶ月間でいいねが多かった開発者Top10を取得する */
-  getTop10LikesDevelopmentsInThisMonth: getTop10LikesDevelopmentsInThisMonth,
+  getTop10LikesDevsInThisMonth: getTop10LikesDevsInThisMonth,
 
   /** 1ヶ月間でいいねが多かったお題投稿者Top10を取得する */
   getTop10LikesPostersInThisMonth: getTop10LikesPostersInThisMonth,

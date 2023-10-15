@@ -75,11 +75,11 @@ async function main() {
     }
   }
 
-  const developmentIds = [];
+  const devIds = [];
   const userDevelopmentMap = new Map<number, string[]>(
     userIds.map((_, userIndex) => [userIndex, []])
   );
-  const developmentMap = new Map<number, string[]>(
+  const devMap = new Map<number, string[]>(
     ideaIds.map((_, ideaIndex) => [ideaIndex, []])
   );
 
@@ -88,7 +88,7 @@ async function main() {
     // 自分よりindexが小さいユーザーが投稿したお題すべてを開発する
     for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
       const id = faker.string.uuid();
-      const development = await prisma.development.upsert({
+      const dev = await prisma.development.upsert({
         where: { id },
         create: {
           id,
@@ -107,15 +107,12 @@ async function main() {
       });
       console.log(`お題を開発 ユーザー:${userIndex} お題:${ideaIndex}`);
 
-      developmentIds.push(development.id);
+      devIds.push(dev.id);
       userDevelopmentMap.set(userIndex, [
         ...(userDevelopmentMap.get(userIndex) ?? []),
-        development.id,
+        dev.id,
       ]);
-      developmentMap.set(ideaIndex, [
-        ...(developmentMap.get(ideaIndex) ?? []),
-        development.id,
-      ]);
+      devMap.set(ideaIndex, [...(devMap.get(ideaIndex) ?? []), dev.id]);
     }
   }
 
@@ -123,8 +120,7 @@ async function main() {
   for (let userIndex = 0; userIndex < userIds.length; userIndex++) {
     for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
       // お題の最初の開発者のidを取得する
-      const firstDevelopmentId =
-        developmentMap.get(ideaIndex)?.[0] ?? undefined;
+      const firstDevelopmentId = devMap.get(ideaIndex)?.[0] ?? undefined;
       // 最初の開発者が存在しないか、自分が開発者だった場合は何もしない
       if (
         firstDevelopmentId === undefined ||
