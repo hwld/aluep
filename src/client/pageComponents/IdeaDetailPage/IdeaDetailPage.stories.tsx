@@ -49,9 +49,6 @@ export const Guest: Story = {
           ];
         }),
         mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
-          developed: false,
-        }),
       ],
     },
   },
@@ -83,10 +80,6 @@ export const SignedIn: Story = {
           devs: 3,
           ideas: 1,
         }),
-        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
-          developed: true,
-          devId: "id",
-        }),
       ],
     },
   },
@@ -107,10 +100,6 @@ export const EmptyComment: Story = {
           allLikes: 10,
           devs: 3,
           ideas: 1,
-        }),
-        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
-          developed: true,
-          devId: "id",
         }),
       ],
     },

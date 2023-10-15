@@ -34,9 +34,10 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
 
   const {
     mutations: { cancelDevelopMutation },
-  } = useDevelop({ ideaId: dev.ideaId });
+  } = useDevelop();
 
-  const handleDeleteDev = () => {
+  const utils = trpc.useContext();
+  const handleDeleteDev = async () => {
     cancelDevelopMutation.mutate(
       { devId: dev.id },
       {

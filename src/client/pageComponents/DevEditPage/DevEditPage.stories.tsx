@@ -30,12 +30,7 @@ export const Filled: Story = {
   },
   parameters: {
     msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
-          developed: false,
-        }),
-      ],
+      handlers: [mockTrpcQuery(trpcMsw.session, null)],
     },
   },
 };

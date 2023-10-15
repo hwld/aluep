@@ -42,11 +42,9 @@ const convertIdea = (
     likedByLoggedInUser: rawIdea.likes.find((l) => l.userId === loggedInUserId)
       ? true
       : false,
-    developedByLoggedInUser: rawIdea.developments.find(
+    loggedInUserDevId: rawIdea.developments.find(
       (d) => d.userId === loggedInUserId
-    )
-      ? true
-      : false,
+    )?.id,
   };
 
   return idea;

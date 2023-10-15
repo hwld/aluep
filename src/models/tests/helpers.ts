@@ -28,7 +28,7 @@ export const IdeaHelper = {
       updatedAt: new Date().toLocaleString(),
       elapsedSinceCreation: "1日前",
       likedByLoggedInUser: false,
-      developedByLoggedInUser: false,
+      loggedInUserDevId: undefined,
       ...data,
     };
   },

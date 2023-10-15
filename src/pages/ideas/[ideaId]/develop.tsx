@@ -22,11 +22,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     // すでに開発している場合はお題にリダイレクトする
-    const developedData = await trpcStore.dev.isDevelopedByUser.fetch({
-      ideaId: idea.id,
-      userId: session.user.id,
-    });
-    if (developedData.developed) {
+    if (idea.loggedInUserDevId) {
       return {
         redirect: { destination: Routes.idea(ideaId), permanent: false },
       };

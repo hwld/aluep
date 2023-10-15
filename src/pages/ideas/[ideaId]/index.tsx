@@ -22,7 +22,6 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     await Promise.all([
       trpcStore.idea.get.prefetch({ ideaId }),
-      trpcStore.dev.isDevelopedByUser.prefetch({ ideaId, userId }),
       trpcStore.ideaComment.getAll.prefetch({ ideaId }),
     ]);
   }

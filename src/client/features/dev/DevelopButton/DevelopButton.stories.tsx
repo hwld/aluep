@@ -9,6 +9,5 @@ export const Default: Story = {
   args: {
     ideaId: "",
     devs: 0,
-    loggedInUserDevelopedData: { developed: false },
   },
 };

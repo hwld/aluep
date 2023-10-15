@@ -1,4 +1,3 @@
-import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
@@ -7,17 +6,11 @@ import {
 import { Routes } from "@/share/routes";
 import { useRouter } from "next/router";
 
-type UseDevelopArgs = { ideaId: string };
-
-export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
+/**
+ * お題の開発情報を操作するhooks
+ */
+export const useDevelop = () => {
   const router = useRouter();
-  const { session } = useSessionQuery();
-
-  const { data: developedData, ...others } =
-    trpc.dev.isDevelopedByUser.useQuery({
-      ideaId,
-      userId: session?.user.id ?? null,
-    });
 
   const developMutation = trpc.dev.create.useMutation({
     onSuccess: async () => {
@@ -56,7 +49,6 @@ export const useDevelop = ({ ideaId }: UseDevelopArgs) => {
   const cancelDevelopMutation = trpc.dev.delete.useMutation();
 
   return {
-    data: { developedData, ...others },
     mutations: {
       developMutation,
       updateDevMutation,

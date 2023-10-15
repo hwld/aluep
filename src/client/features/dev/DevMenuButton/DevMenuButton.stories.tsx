@@ -11,12 +11,7 @@ export const Default: Story = {
   args: { dev: DevHelper.create(), isOwner: false },
   parameters: {
     msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
-          developed: false,
-        }),
-      ],
+      handlers: [mockTrpcQuery(trpcMsw.session, null)],
     },
   },
 };

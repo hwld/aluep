@@ -1,7 +1,6 @@
 import { AppTooltip } from "@/client/ui/AppTooltip";
 import { ComputerIcon } from "@/client/ui/ComputerIcon";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
-import { DevelopedData } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Anchor, Flex, Stack, Tooltip } from "@mantine/core";
 import clsx from "clsx";
@@ -12,14 +11,14 @@ import classes from "./DevelopButton.module.css";
 
 type Props = {
   devs: number;
-  loggedInUserDevelopedData: DevelopedData | undefined;
+  loggedInUserDevId?: string | undefined;
   onDevelopIdea: (e: SyntheticEvent) => void;
   ideaId: string;
 };
 
 export const DevelopButton: React.FC<Props> = ({
   devs,
-  loggedInUserDevelopedData = { developed: false },
+  loggedInUserDevId,
   onDevelopIdea,
   ideaId,
 }) => {
@@ -27,8 +26,8 @@ export const DevelopButton: React.FC<Props> = ({
 
   const handleClick = (e: SyntheticEvent) => {
     // すでに開発している場合は自身の開発情報へ遷移させる
-    if (loggedInUserDevelopedData.developed) {
-      router.push(Routes.dev(ideaId, loggedInUserDevelopedData.devId));
+    if (loggedInUserDevId) {
+      router.push(Routes.dev(ideaId, loggedInUserDevId));
       return;
     }
 
@@ -38,14 +37,10 @@ export const DevelopButton: React.FC<Props> = ({
   return (
     <Stack align="center" gap={3}>
       <Flex direction="column" justify="center" align="center" gap="5px">
-        <MutedText>
-          {loggedInUserDevelopedData.developed ? "開発中" : "開発する"}
-        </MutedText>
+        <MutedText>{loggedInUserDevId ? "開発中" : "開発する"}</MutedText>
         <AppTooltip
           label={
-            loggedInUserDevelopedData.developed
-              ? "自分の開発情報を表示する"
-              : "お題を開発する"
+            loggedInUserDevId ? "自分の開発情報を表示する" : "お題を開発する"
           }
           position="right"
         >

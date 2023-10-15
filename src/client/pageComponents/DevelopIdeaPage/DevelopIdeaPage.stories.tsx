@@ -24,12 +24,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const baseHandlers = [
-  mockTrpcQuery(trpcMsw.session, null),
-  mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
-    developed: false,
-  }),
-];
+const baseHandlers = [mockTrpcQuery(trpcMsw.session, null)];
 
 export const FilledIdea: Story = {
   args: { idea: IdeaHelper.createFilled() },

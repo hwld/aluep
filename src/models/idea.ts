@@ -18,7 +18,7 @@ export type Idea = {
   devs: number;
   comments: number;
   likedByLoggedInUser: boolean;
-  developedByLoggedInUser: boolean;
+  loggedInUserDevId: string | undefined;
   createdAt: string;
   updatedAt: string;
   /** 作成してから取得するまでの経過時間 */

@@ -4,7 +4,6 @@ import { getDev } from "@/server/features/dev/getDev";
 import { getDevsByIdea } from "@/server/features/dev/getDevsByIdea";
 import { getDevsByUser } from "@/server/features/dev/getDevsByUser";
 import { getLikedDevsByUser } from "@/server/features/dev/getLikedDevsByUser";
-import { isDevelopedByUser } from "@/server/features/dev/isDevelopedByUser";
 import { likeDev } from "@/server/features/dev/likeDev";
 import { unlikeDev } from "@/server/features/dev/unlikeDev";
 import { updateAllowOtherUserMemos } from "@/server/features/dev/updateAllowOtherUserMemos";
@@ -20,9 +19,6 @@ export const devRoute = router({
 
   /** 指定されたお題の開発情報一覧を取得する */
   getManyByIdea: getDevsByIdea,
-
-  /** 指定されたユーザーの開発情報が存在するか */
-  isDevelopedByUser: isDevelopedByUser,
 
   /** 開発情報を削除する */
   delete: deleteDev,

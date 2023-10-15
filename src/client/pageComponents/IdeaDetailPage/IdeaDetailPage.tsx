@@ -1,5 +1,4 @@
 import { DevelopButton } from "@/client/features/dev/DevelopButton/DevelopButton";
-import { useDevelop } from "@/client/features/dev/useDevelop";
 import { IdeaDescriptionView } from "@/client/features/idea/IdeaDescriptionView/IdeaDescriptionView";
 import { IdeaInfoCardItem } from "@/client/features/idea/IdeaInfoCardItem/IdeaInfoCardItem";
 import { IdeaLikeButton } from "@/client/features/idea/IdeaLikeButton/IdeaLikeButton";
@@ -30,9 +29,6 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
   const { likeIdeaMutation, unlikeIdeaMutation } = useIdeaLike({
     ideaId: idea.id,
   });
-  const {
-    data: { developedData },
-  } = useDevelop({ ideaId: idea.id });
 
   const handleLikeIdea = () => {
     //ログインしていなければログインモーダルを表示する
@@ -81,7 +77,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
             <DevelopButton
               ideaId={idea.id}
               devs={idea.devs}
-              loggedInUserDevelopedData={developedData}
+              loggedInUserDevId={idea.loggedInUserDevId}
               onDevelopIdea={handleClickDevelop}
             />
             <IdeaLikeButton

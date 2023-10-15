@@ -49,10 +49,6 @@ export const Me: Story = {
           devs: 1,
           ideas: 1,
         }),
-        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
-          developed: true,
-          devId: "",
-        }),
         mockTrpcQuery(trpcMsw.devMemo.getAll, []),
       ],
     },
@@ -65,9 +61,6 @@ export const EmptyMemo: Story = {
     msw: {
       handlers: [
         mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
-          developed: false,
-        }),
         mockTrpcQuery(trpcMsw.devMemo.getAll, []),
       ],
     },
@@ -83,9 +76,6 @@ export const FilledMemos: Story = {
     msw: {
       handlers: [
         mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.dev.isDevelopedByUser, {
-          developed: false,
-        }),
         mockTrpcQuery(trpcMsw.devMemo.getAll, [
           DevMemoHelper.createFilled(),
           DevMemoHelper.createFilled(),

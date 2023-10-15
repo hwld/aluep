@@ -18,7 +18,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea }) => {
 
   const {
     mutations: { developMutation },
-  } = useDevelop({ ideaId: idea.id });
+  } = useDevelop();
 
   const handleDevelopIdea = (data: DevFormData) => {
     developMutation.mutate(
