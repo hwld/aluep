@@ -36,18 +36,18 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
     mutations: { cancelDevelopMutation },
   } = useDevelop();
 
-  const utils = trpc.useContext();
   const handleDeleteDev = async () => {
     cancelDevelopMutation.mutate(
       { devId: dev.id },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           showSuccessNotification({
             title: "開発情報の削除",
             message: "開発情報を削除しました。",
           });
+
+          await router.replace(Routes.idea(dev.ideaId));
           closeDeleteModal();
-          router.push(Routes.idea(dev.ideaId));
         },
         onError: () => {
           showErrorNotification({

@@ -1,6 +1,7 @@
 import { Idea } from "@/models/idea";
 import { findIdea } from "@/server/finders/idea";
 import { publicProcedure } from "@/server/lib/trpc";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 export const getIdea = publicProcedure
@@ -10,5 +11,10 @@ export const getIdea = publicProcedure
       where: { id: input.ideaId },
       loggedInUserId: ctx.session?.user.id,
     });
+
+    if (!idea) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+
     return idea;
   });

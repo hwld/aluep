@@ -34,13 +34,14 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
 
   // お題の削除
   const deleteIdeaMutation = trpc.idea.delete.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       showSuccessNotification({
         title: "お題の削除",
         message: "お題を削除しました",
       });
+
+      await router.replace(Routes.home);
       closeDeleteModal();
-      router.push(Routes.home);
     },
     onError: () => {
       showErrorNotification({

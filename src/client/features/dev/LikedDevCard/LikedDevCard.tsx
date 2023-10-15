@@ -40,29 +40,29 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
             )}
           </Flex>
         }
+        leftFooter={
+          <Group align="center" gap={5} mt={5}>
+            <TbFileText color="var(--mantine-color-gray-5)" size={25} />
+            <TextLink href={Routes.idea(dev.ideaId)}>
+              <MutedText>{dev.ideaTitle}</MutedText>
+            </TextLink>
+          </Group>
+        }
+        rightFooter={
+          <Flex align="center" gap={3}>
+            <TbHeart
+              color="var(--mantine-color-pink-7)"
+              fill="var(--mantine-color-pink-7)"
+              size={20}
+            />
+            <Text size="sm">{dev.likes}</Text>
+          </Flex>
+        }
       >
         <UserSection
           userIconSrc={dev.developer.imageUrl}
           userId={dev.developer.id}
           title={<DeveloperTitle dev={dev} className={classes["dev-link"]} />}
-          content={
-            <Group justify="space-between" align="flex-end">
-              <Group align="center" gap={5} mt={5}>
-                <TbFileText color="var(--mantine-color-gray-5)" size={25} />
-                <TextLink href={Routes.idea(dev.ideaId)}>
-                  <MutedText>{dev.ideaTitle}</MutedText>
-                </TextLink>
-              </Group>
-              <Flex align="center" gap={3}>
-                <TbHeart
-                  color="var(--mantine-color-pink-7)"
-                  fill="var(--mantine-color-pink-7)"
-                  size={20}
-                />
-                <Text size="sm">{dev.likes}</Text>
-              </Flex>
-            </Group>
-          }
         />
       </ItemCard>
     </>

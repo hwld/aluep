@@ -88,6 +88,8 @@ export const IdeaForm: React.FC<Props> = ({
       />
       <Input.Wrapper
         label="お題の説明"
+        // tiptap(ProseMirror)はinput要素を使わないみたいなので・・・
+        labelProps={{ htmlFor: undefined }}
         error={errors.descriptionHtml?.message}
         required
       >
