@@ -1,3 +1,4 @@
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import {
   ActionIcon,
   Combobox,
@@ -5,7 +6,6 @@ import {
   Input,
   InputBase,
   ScrollArea,
-  Text,
   useCombobox,
 } from "@mantine/core";
 import { FocusEventHandler, forwardRef, useMemo, useState } from "react";
@@ -103,9 +103,7 @@ export const GitHubRepoSelect: React.FC<Props> = forwardRef<
           <Group justify="space-between">
             <Group gap={5} align="center">
               <TbBook color="var(--mantine-color-gray-5)" />
-              <Text size="sm" c="gray.5">
-                リポジトリ一覧
-              </Text>
+              <MutedText>リポジトリ一覧</MutedText>
             </Group>
             <ActionIcon size="sm" bg="gray.2" onClick={onUpdateList}>
               <TbReload color="var(--mantine-color-gray-7)" />

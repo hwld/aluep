@@ -7,10 +7,11 @@ import { useDevLikers } from "@/client/features/user/useDevLikers";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev } from "@/models/dev";
 import { paginatedPageSchema } from "@/share/paging";
-import { Stack, Text } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { TbHeart } from "react-icons/tb";
 
 type Props = { dev: Dev };
@@ -32,14 +33,12 @@ export const DevLikersPage: React.FC<Props> = ({ dev }) => {
       {/* // TODO */}
       <Stack w="100%" maw={1200} m="auto" gap="xl">
         <Stack gap="sm">
-          <Text c="gray.5">開発情報</Text>
+          <MutedText>開発情報</MutedText>
           <DevSummaryHeader dev={dev} />
         </Stack>
 
         <Stack gap="sm">
-          <Text c="gray.5" ta="left">
-            いいねしたユーザー
-          </Text>
+          <MutedText>いいねしたユーザー</MutedText>
           <GridContainer minItemWidthPx={ideaLikerCardMinWidthPx}>
             {devLikers?.list.map((user) => {
               return <IdeaLikerCard key={user.id} liker={user} />;

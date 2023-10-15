@@ -4,6 +4,7 @@ import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { DevMemo } from "@/models/devMemo";
 import { Flex, Stack, Text } from "@mantine/core";
 import classes from "./DevMemoChild.module.css";
@@ -32,9 +33,7 @@ export const DevMemoChild: React.FC<Props> = ({ memo, devId, ideaId }) => {
       <Stack gap="md" className={classes.content}>
         <Flex justify="space-between">
           <Stack gap={0}>
-            <Text c="gray.5" size="xs">
-              {memo.fromUser.name}
-            </Text>
+            <MutedText>{memo.fromUser.name}</MutedText>
             <Flex>
               <Text c="gray.7" size="xs">
                 {formatDate(memo.createdAt)}

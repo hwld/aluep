@@ -4,6 +4,7 @@
   &:hover {
     text-decoration-line: underline;
     text-decoration-color: var(--mantine-color-red-7);
+    text-decoration-style: solid;
     text-underline-offset: 3px;
 
     & * {

@@ -7,6 +7,7 @@ import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { IdeaComment, IdeaCommentFormData } from "@/models/ideaComment";
 import { Box, Card, Flex, Stack, Text, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -135,7 +136,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
                 <TbMessageCircle size="70%" />
               </CardActionIcon>
             </Flex>
-            <Text c="gray.5">{formatDate(comment.createdAt)}</Text>
+            <MutedText>{formatDate(comment.createdAt)}</MutedText>
           </Flex>
         </Stack>
       </Card>

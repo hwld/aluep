@@ -1,4 +1,4 @@
-import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
+import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
@@ -37,18 +37,18 @@ export const DevSummaryHeader: React.FC<Props> = ({ dev }) => {
             </Text>
           </Flex>
         </TextLink>
-        <Flex gap="xs" align="center">
-          <UserIconLink
-            size="md"
-            userId={dev.developer.id}
-            iconSrc={dev.developer.imageUrl}
-          />
-          <TextLink href={Routes.user(dev.developer.id)}>
-            <Text size="md" truncate>
-              {dev.developer.name}
-            </Text>
-          </TextLink>
-        </Flex>
+
+        <UserSection
+          userIconSrc={dev.developer.imageUrl}
+          userId={dev.developer.id}
+          title={
+            <TextLink href={Routes.user(dev.developer.id)}>
+              <Text size="md" truncate>
+                {dev.developer.name}
+              </Text>
+            </TextLink>
+          }
+        />
       </Stack>
     </Flex>
   );

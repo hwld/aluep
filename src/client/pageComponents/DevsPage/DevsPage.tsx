@@ -8,10 +8,11 @@ import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/Idea
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Idea } from "@/models/idea";
 import { paginatedPageSchema } from "@/share/paging";
-import { Stack, Text } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { TbCode } from "react-icons/tb";
 
 type Props = { idea: Idea };
@@ -33,17 +34,16 @@ export const DevsPage: React.FC<Props> = ({ idea }) => {
       <PageHeader icon={TbCode} pageName="開発情報の一覧" />
       <Stack w="100%" miw={300} maw={1200} m="auto" gap="lg">
         <Stack gap="sm">
-          <Text c="gray.5">お題</Text>
+          <MutedText>お題</MutedText>
           <IdeaSummaryHeader idea={idea} />
         </Stack>
         <Stack gap="sm">
-          <Text c="gray.5">開発情報</Text>
+          <MutedText>開発情報</MutedText>
           <GridContainer minItemWidthPx={devCardMinWidthPx}>
             {devs?.list.map((dev) => {
               return (
                 <DevCard
                   key={dev.id}
-                  idea={idea}
                   dev={dev}
                   onLikeDev={(devId) => {
                     likeDevMutation.mutate({ devId });

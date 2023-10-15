@@ -1,8 +1,9 @@
-import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
+import { UserSection } from "@/client/features/user/UserSection/UserSection";
+import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { User } from "@/models/user";
 import { Routes } from "@/share/routes";
-import { Card, Stack, Text } from "@mantine/core";
+import { Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import classes from "./UserCard.module.css";
 
@@ -17,33 +18,30 @@ export const UserCard: React.FC<Props> = ({ user }) => {
   };
 
   return (
-    <Card
+    <ItemCard
       miw={userCardMinWidthPx}
-      w="100%"
       className={classes.root}
       onClick={handleGoUserDetail}
     >
-      <UserIcon iconSrc={user.image} />
-      <Stack gap={3} style={{ flexShrink: 1, minWidth: 0 }}>
-        <TextLink href={Routes.user(user.id)}>
+      <UserSection
+        userIconSrc={user.image}
+        title={
+          <TextLink href={Routes.user(user.id)}>
+            <Text style={{ flexShrink: 0 }} truncate>
+              {user.name}
+            </Text>
+          </TextLink>
+        }
+        content={
           <Text
-            style={{
-              flexShrink: 0,
-            }}
-            truncate
+            style={{ flexShrink: 1, minHeight: 0, overflow: "hidden" }}
+            size="sm"
+            c="gray.5"
           >
-            {user.name}
+            {user.profile}
           </Text>
-        </TextLink>
-
-        <Text
-          style={{ flexShrink: 1, minHeight: 0, overflow: "hidden" }}
-          size="sm"
-          c="gray.5"
-        >
-          {user.profile}
-        </Text>
-      </Stack>
-    </Card>
+        }
+      />
+    </ItemCard>
   );
 };

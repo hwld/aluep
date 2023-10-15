@@ -1,8 +1,9 @@
 import { AppTooltip } from "@/client/ui/AppTooltip";
 import { ComputerIcon } from "@/client/ui/ComputerIcon";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { DevelopedData } from "@/models/dev";
 import { Routes } from "@/share/routes";
-import { ActionIcon, Anchor, Flex, Stack, Text, Tooltip } from "@mantine/core";
+import { ActionIcon, Anchor, Flex, Stack, Tooltip } from "@mantine/core";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -37,9 +38,9 @@ export const DevelopButton: React.FC<Props> = ({
   return (
     <Stack align="center" gap={3}>
       <Flex direction="column" justify="center" align="center" gap="5px">
-        <Text c="gray.5" size="sm">
+        <MutedText>
           {loggedInUserDevelopedData.developed ? "開発中" : "開発する"}
-        </Text>
+        </MutedText>
         <AppTooltip
           label={
             loggedInUserDevelopedData.developed

@@ -1,5 +1,6 @@
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
 import { DevMemoFormData, devMemoFormSchema } from "@/models/devMemo";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -48,9 +49,7 @@ export const DevMemoFormCard = forwardRef<HTMLDivElement, Props>(
         <form onSubmit={handleSubmit}>
           <Flex align="center" gap="xs">
             <UserIcon iconSrc={loggedInUser.image} />
-            <Text truncate size="xs" c="gray.5">
-              {loggedInUser.name}
-            </Text>
+            <MutedText truncate>{loggedInUser.name}</MutedText>
           </Flex>
           <Controller
             control={control}

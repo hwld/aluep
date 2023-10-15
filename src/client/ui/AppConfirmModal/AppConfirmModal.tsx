@@ -28,9 +28,7 @@ export const AppConfirmModal: React.FC<Props> = ({
 
   return (
     <AppModal opened={opened} onClose={onClose} title={title}>
-      <Text c="gray.5" size="md">
-        {message}
-      </Text>
+      <Text>{message}</Text>
       <Flex mt="lg" gap="sm" justify="flex-end">
         <Button
           variant="outline"

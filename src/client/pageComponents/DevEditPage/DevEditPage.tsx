@@ -1,10 +1,11 @@
 import { DevForm } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { useDevelop } from "@/client/features/dev/useDevelop";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev, DevFormData } from "@/models/dev";
 import { Idea } from "@/models/idea";
-import { Card, Stack, Text } from "@mantine/core";
+import { Card, Stack } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbEdit } from "react-icons/tb";
 
@@ -36,11 +37,11 @@ export const DevEditPage: React.FC<Props> = ({ idea, dev }) => {
       <PageHeader icon={TbEdit} pageName="開発情報の編集" />
       <Stack w="100%" maw={800} miw={300} m="auto" gap="lg">
         <Stack gap="xs">
-          <Text c="gray.5">開発しているお題</Text>
+          <MutedText>開発しているお題</MutedText>
           <IdeaSummaryHeader idea={idea} />
         </Stack>
         <Stack gap="xs">
-          <Text c="gray.5">開発情報</Text>
+          <MutedText>開発情報</MutedText>
           <Card>
             <DevForm
               onSubmit={handleUpdateDev}

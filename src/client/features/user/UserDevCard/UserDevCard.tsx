@@ -2,10 +2,12 @@ import { DevItemIconLink } from "@/client/features/dev/DevItemIconLink/DevItemIc
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
 import { formatDate } from "@/client/lib/utils";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
+import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
-import { Card, Flex, Text } from "@mantine/core";
+import { Flex, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbHeart } from "react-icons/tb";
 import classes from "./UserDevCard.module.css";
@@ -27,44 +29,41 @@ export const UserDevCard: React.FC<Props> = ({ dev }) => {
   };
 
   return (
-    <Card
-      key={dev.id}
+    <ItemCard
       miw={userDevCardMinWidthPx}
       className={classes.root}
       onClick={handleGoDevDetail}
-    >
-      <Flex justify="space-between" align="center">
-        <DevStatusBadge status={dev.status} />
+      leftHeader={<DevStatusBadge status={dev.status} />}
+      rightHeader={
         <Flex>
           <GitHubCodeIconLink gitHubUrl={dev.githubUrl} />
           {dev.developedItemUrl !== "" && (
             <DevItemIconLink url={dev.developedItemUrl} />
           )}
         </Flex>
-      </Flex>
-      <Flex justify="space-between" mt="xs">
-        <Flex gap={10}>
-          <TextLink href={Routes.dev(dev.ideaId, dev.id)} className="dev-link">
-            <Text c="red.7" fw="bold" size="lg">
-              {dev.ideaTitle}
-              <Text span c="gray.5" size="sm" fw="normal">
-                の開発情報
-              </Text>
-            </Text>
-          </TextLink>
-        </Flex>
-      </Flex>
-      <Flex align="center" justify="space-between" mt="xs" ml="xs">
-        <Text size="sm" c="gray.5">
-          開発開始日: {formatDate(new Date(dev.createdAt))}
-        </Text>
+      }
+      leftFooter={
+        <MutedText>開発開始日: {formatDate(new Date(dev.createdAt))}</MutedText>
+      }
+      rightFooter={
+        // TODO: 共通化できそう
         <Flex align="center" gap={3}>
           <TbHeart size="20px" color="var(--mantine-color-red-7)" />
           <Text size="sm" c="red.7">
             {dev.likes}
           </Text>
         </Flex>
-      </Flex>
-    </Card>
+      }
+    >
+      <TextLink
+        href={Routes.dev(dev.ideaId, dev.id)}
+        className={classes["dev-link"]}
+      >
+        <Text c="red.7" fw="bold" size="lg">
+          {dev.ideaTitle}
+          <MutedText span>の開発情報</MutedText>
+        </Text>
+      </TextLink>
+    </ItemCard>
   );
 };

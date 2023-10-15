@@ -4,7 +4,7 @@
   transition: all 100ms;
   outline: transparent solid 0px;
 
-  &:not(:has(a:not(.dev-link):hover), button:hover):hover {
+  &:not(:has(a:not(.dev-link):hover, button:hover)):hover {
     outline: var(--mantine-color-red-6) solid 2px;
     outline-offset: 3px;
   }

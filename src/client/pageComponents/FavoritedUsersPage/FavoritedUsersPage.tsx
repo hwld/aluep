@@ -6,6 +6,7 @@ import {
 import { UserSummaryHeader } from "@/client/features/user/UserSummaryHeader/UserSummaryHeader";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { User } from "@/models/user";
 import { paginatedPageSchema } from "@/share/paging";
@@ -28,7 +29,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
       <PageHeader icon={TbUserHeart} pageName="お気に入りユーザー" />
       <Stack maw={800} m="auto" gap="lg">
         <Stack gap="sm">
-          <Text c="gray.5">ユーザー</Text>
+          <MutedText>ユーザー</MutedText>
           <UserSummaryHeader user={user} />
         </Stack>
         {favoritedUsers?.list.length === 0 ? (

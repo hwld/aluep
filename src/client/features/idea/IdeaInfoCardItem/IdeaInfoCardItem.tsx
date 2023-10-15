@@ -1,4 +1,5 @@
-import { Box, Divider, Flex, Stack, Text } from "@mantine/core";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
+import { Box, Divider, Flex, Stack } from "@mantine/core";
 import { ReactNode } from "react";
 
 type Props = {
@@ -18,9 +19,7 @@ export const IdeaInfoCardItem: React.FC<Props> = ({
     <Stack gap={0}>
       <Flex gap="xs" align="center">
         {icon}
-        <Text c="gray.5" size="sm">
-          {title}
-        </Text>
+        <MutedText>{title}</MutedText>
       </Flex>
       <Box mt={5} ml="xs">
         {children}

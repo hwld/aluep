@@ -22,7 +22,7 @@ export const UserLikeRankingItem: React.FC<Props> = ({
       case 3:
         return <BiMedal size="30px" color="rgb(172, 109, 77)" />;
       default:
-        return <Text c="gray.5">{ranking}</Text>;
+        return <Text>{ranking}</Text>;
     }
   }, [ranking]);
 

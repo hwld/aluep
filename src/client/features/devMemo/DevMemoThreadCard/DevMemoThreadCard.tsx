@@ -6,6 +6,7 @@ import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
+import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { DevMemo, DevMemoFormData } from "@/models/devMemo";
 import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
@@ -69,9 +70,7 @@ export const DevMemoThreadCard: React.FC<Props> = ({
               userId={memo.fromUser.id}
               iconSrc={memo.fromUser.imageUrl}
             />
-            <Text c="gray.5" size="xs" truncate>
-              {memo.fromUser.name}
-            </Text>
+            <MutedText truncate>{memo.fromUser.name}</MutedText>
           </Flex>
           <DevMemoMenuButton
             ideaId={ideaId}
@@ -89,14 +88,10 @@ export const DevMemoThreadCard: React.FC<Props> = ({
               <TbMessageCircle2 size={20} />
             </CardActionIcon>
             {childrenMemos.length > 0 && (
-              <Text c="gray.5" size="sm">
-                {childrenMemos.length}
-              </Text>
+              <MutedText>{childrenMemos.length}</MutedText>
             )}
           </Flex>
-          <Text c="gray.5" size="sm">
-            {formatDate(memo.createdAt)}
-          </Text>
+          <MutedText>{formatDate(memo.createdAt)}</MutedText>
         </Flex>
       </Stack>
       <DevMemoChildrenSection
