@@ -1,7 +1,7 @@
 .root {
   & svg {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
 
     color: var(--mantine-color-red-7);
   }

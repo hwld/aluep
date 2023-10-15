@@ -1,4 +1,5 @@
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
+import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { Flex, Text } from "@mantine/core";
@@ -41,19 +42,21 @@ export const UserLikeRankingItem: React.FC<Props> = ({
           <UserIconLink userId={user.id} iconSrc={user.image} />
           <Flex miw={0} direction="column">
             <TextLink href={Routes.user(user.id)}>
-              <Text size="xs" truncate>
+              <Text size="xs" truncate mb="3px">
                 {user.name}
               </Text>
             </TextLink>
             <Flex align="center" gap={5}>
-              <TbHeart
-                size="20px"
-                color="transparent"
-                fill="var(--mantine-color-red-7)"
+              <IconCounter
+                icon={
+                  <TbHeart
+                    style={{ width: "16px", height: "16px" }}
+                    color="var(--mantine-color-red-7)"
+                    fill="var(--mantine-color-red-7)"
+                  />
+                }
+                counter={likeCount}
               />
-              <Text size="xs" c="red.7">
-                {likeCount}
-              </Text>
             </Flex>
           </Flex>
         </Flex>

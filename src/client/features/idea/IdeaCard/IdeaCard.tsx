@@ -1,6 +1,6 @@
-import { IdeaCardIconCounter } from "@/client/features/idea/IdeaCardIconCounter/IdeaCardIconCounter";
 import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
+import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
@@ -63,13 +63,18 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
             <MutedText style={{ whiteSpace: "nowrap" }}>
               {idea.elapsedSinceCreation}
             </MutedText>
-            <Group gap="sm">
-              <IdeaCardIconCounter icon={<TbHeart />} counter={idea.likes} />
-              <IdeaCardIconCounter icon={<TbCode />} counter={idea.devs} />
-              <IdeaCardIconCounter
-                icon={<TbMessageCircle />}
-                counter={idea.comments}
+            <Group gap="sm" align="center">
+              <IconCounter
+                active={idea.likedByLoggedInUser}
+                icon={<TbHeart />}
+                counter={idea.likes}
               />
+              <IconCounter
+                active={Boolean(idea.loggedInUserDevId)}
+                icon={<TbCode />}
+                counter={idea.devs}
+              />
+              <IconCounter icon={<TbMessageCircle />} counter={idea.comments} />
             </Group>
           </Group>
         }

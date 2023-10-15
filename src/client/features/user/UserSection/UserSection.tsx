@@ -17,14 +17,14 @@ export const UserSection: React.FC<Props> = ({
   content,
 }) => {
   return (
-    <Flex gap="xs" align="flex-start" w="100%">
+    <Flex gap="xs" align="flex-start" w="100%" p="2px">
       {userId ? (
         <UserIconLink iconSrc={userIconSrc} userId={userId} />
       ) : (
         <UserIcon iconSrc={userIconSrc} />
       )}
       <Stack
-        gap={0}
+        gap="xs"
         miw={0}
         w="100%"
         justify="center"

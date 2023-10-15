@@ -2,7 +2,6 @@ import {
   DevCard,
   devCardMinWidthPx,
 } from "@/client/features/dev/DevCard/DevCard";
-import { useDevLikeOnList } from "@/client/features/dev/useDevLikeOnList";
 import { useDevsByIdea } from "@/client/features/dev/useDevsByIdea";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { useURLParams } from "@/client/lib/useURLParams";
@@ -20,10 +19,6 @@ type Props = { idea: Idea };
 export const DevsPage: React.FC<Props> = ({ idea }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { devs } = useDevsByIdea({ ideaId: idea.id, page });
-  const { likeDevMutation, unlikeDevMutation } = useDevLikeOnList(
-    idea.id,
-    page
-  );
 
   const handleChangePage = (page: number) => {
     setURLParams({ page });
@@ -41,18 +36,7 @@ export const DevsPage: React.FC<Props> = ({ idea }) => {
           <MutedText>開発情報</MutedText>
           <GridContainer minItemWidthPx={devCardMinWidthPx}>
             {devs?.list.map((dev) => {
-              return (
-                <DevCard
-                  key={dev.id}
-                  dev={dev}
-                  onLikeDev={(devId) => {
-                    likeDevMutation.mutate({ devId });
-                  }}
-                  onUnlikeDev={(devId) => {
-                    unlikeDevMutation.mutate({ devId });
-                  }}
-                />
-              );
+              return <DevCard key={dev.id} dev={dev} />;
             })}
           </GridContainer>
         </Stack>

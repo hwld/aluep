@@ -2,6 +2,7 @@ import { DevItemIconLink } from "@/client/features/dev/DevItemIconLink/DevItemIc
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
 import { formatDate } from "@/client/lib/utils";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
+import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
@@ -46,13 +47,11 @@ export const UserDevCard: React.FC<Props> = ({ dev }) => {
         <MutedText>開発開始日: {formatDate(new Date(dev.createdAt))}</MutedText>
       }
       rightFooter={
-        // TODO: 共通化できそう
-        <Flex align="center" gap={3}>
-          <TbHeart size="20px" color="var(--mantine-color-red-7)" />
-          <Text size="sm" c="red.7">
-            {dev.likes}
-          </Text>
-        </Flex>
+        <IconCounter
+          active={dev.likedByLoggedInUser}
+          icon={<TbHeart />}
+          counter={dev.likes}
+        />
       }
     >
       <TextLink

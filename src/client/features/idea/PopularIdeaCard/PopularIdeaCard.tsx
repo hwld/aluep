@@ -1,15 +1,16 @@
-import { IdeaCardIconCounter } from "@/client/features/idea/IdeaCardIconCounter/IdeaCardIconCounter";
+import { IdeaCardLikeCounter } from "@/client/features/idea/IdeaCardLikeCounter/IdeaCardLikeCounter";
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { useSamePositionLeftClick } from "@/client/lib/useSamePositionLeftClick";
+import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
-import { Flex, Group, Text, Title } from "@mantine/core";
+import { Group, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { MouseEventHandler } from "react";
-import { TbCode, TbHeart, TbMessageCircle } from "react-icons/tb";
+import { TbCode, TbMessageCircle } from "react-icons/tb";
 import classes from "./PopularIdeaCard.module.css";
 
 export const popularIdeaCardWidthPx = 400;
@@ -65,8 +66,12 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
                 {idea.elapsedSinceCreation}
               </MutedText>
               <Group align="center" gap="sm">
-                <IdeaCardIconCounter icon={<TbCode />} counter={idea.devs} />
-                <IdeaCardIconCounter
+                <IconCounter
+                  active={Boolean(idea.loggedInUserDevId)}
+                  icon={<TbCode />}
+                  counter={idea.devs}
+                />
+                <IconCounter
                   icon={<TbMessageCircle />}
                   counter={idea.comments}
                 />
@@ -75,23 +80,7 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
           }
         />
       }
-      rightFooter={
-        <Flex align="center" gap={5}>
-          <TbHeart
-            size="55px"
-            color="transparent"
-            fill="var(--mantine-color-red-7)"
-          />
-          <Text
-            size="xl"
-            fw="bold"
-            c="red.7"
-            style={{ fontSize: "25px", whiteSpace: "nowrap" }}
-          >
-            {idea.likes}
-          </Text>
-        </Flex>
-      }
+      rightFooter={<IdeaCardLikeCounter idea={idea} />}
     />
   );
 };

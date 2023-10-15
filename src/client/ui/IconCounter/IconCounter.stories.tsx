@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { TbHeart } from "react-icons/tb";
-import { IdeaCardIconCounter } from "./IdeaCardIconCounter";
+import { IconCounter } from "./IconCounter";
 
 const meta = {
-  component: IdeaCardIconCounter,
-} satisfies Meta<typeof IdeaCardIconCounter>;
+  component: IconCounter,
+} satisfies Meta<typeof IconCounter>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;

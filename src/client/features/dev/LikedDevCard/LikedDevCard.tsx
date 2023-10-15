@@ -3,12 +3,13 @@ import { DevItemIconLink } from "@/client/features/dev/DevItemIconLink/DevItemIc
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
+import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
-import { Flex, Group, Text } from "@mantine/core";
+import { Box, Flex, Group } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbFileText, TbHeart } from "react-icons/tb";
 import classes from "./LikedDevCard.module.css";
@@ -31,7 +32,17 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
       <ItemCard
         className={classes.root}
         onClick={handleGoDevDetail}
-        leftHeader={<DevStatusBadge status={dev.status} />}
+        leftHeader={
+          <Group>
+            <DevStatusBadge status={dev.status} />
+            <Group align="center" gap={5} mt={5}>
+              <TbFileText color="var(--mantine-color-gray-5)" size={25} />
+              <TextLink href={Routes.idea(dev.ideaId)}>
+                <MutedText>{dev.ideaTitle}</MutedText>
+              </TextLink>
+            </Group>
+          </Group>
+        }
         rightHeader={
           <Flex>
             <GitHubCodeIconLink gitHubUrl={dev.githubUrl} />
@@ -40,29 +51,20 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
             )}
           </Flex>
         }
-        leftFooter={
-          <Group align="center" gap={5} mt={5}>
-            <TbFileText color="var(--mantine-color-gray-5)" size={25} />
-            <TextLink href={Routes.idea(dev.ideaId)}>
-              <MutedText>{dev.ideaTitle}</MutedText>
-            </TextLink>
-          </Group>
-        }
-        rightFooter={
-          <Flex align="center" gap={3}>
-            <TbHeart
-              color="var(--mantine-color-pink-7)"
-              fill="var(--mantine-color-pink-7)"
-              size={20}
-            />
-            <Text size="sm">{dev.likes}</Text>
-          </Flex>
-        }
       >
         <UserSection
           userIconSrc={dev.developer.imageUrl}
           userId={dev.developer.id}
           title={<DeveloperTitle dev={dev} className={classes["dev-link"]} />}
+          content={
+            <Box w="min-content">
+              <IconCounter
+                active={dev.likedByLoggedInUser}
+                icon={<TbHeart />}
+                counter={dev.likes}
+              />
+            </Box>
+          }
         />
       </ItemCard>
     </>
