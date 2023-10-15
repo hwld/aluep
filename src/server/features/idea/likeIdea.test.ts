@@ -2,17 +2,13 @@ import { TestHelpers } from "@/server/tests/helper";
 
 describe("お題へのいいねAPI", () => {
   it("いいねができる", async () => {
-    const { caller, loginUserId } =
-      await TestHelpers.createNewUserSessionCaller();
+    const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { idea } = await TestHelpers.createIdeaAndUser();
 
     await caller.idea.like({ ideaId: idea.id });
 
-    const liked = await caller.idea.isLikedByUser({
-      userId: loginUserId ?? null,
-      ideaId: idea.id,
-    });
-    expect(liked).toBe(true);
+    const changedIdea = await caller.idea.get({ ideaId: idea.id });
+    expect(changedIdea?.likedByLoggedInUser).toBe(true);
   });
 
   it("未ログインユーザーはお題にいいねすることはできない", async () => {

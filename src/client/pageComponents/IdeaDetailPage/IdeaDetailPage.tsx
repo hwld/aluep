@@ -27,8 +27,9 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
   const { session } = useSessionQuery();
   const router = useRouter();
   const { openLoginModal } = useRequireLoginModal();
-  const { likeIdeaMutation, unlikeIdeaMutation, likedByLoggedInUser } =
-    useIdeaLike({ ideaId: idea.id });
+  const { likeIdeaMutation, unlikeIdeaMutation } = useIdeaLike({
+    ideaId: idea.id,
+  });
   const {
     data: { developedData },
   } = useDevelop({ ideaId: idea.id });
@@ -40,7 +41,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
       return;
     }
 
-    if (likedByLoggedInUser) {
+    if (idea.likedByLoggedInUser) {
       unlikeIdeaMutation.mutate({ ideaId: idea.id });
     } else {
       likeIdeaMutation.mutate({ ideaId: idea.id });
@@ -86,7 +87,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
             <IdeaLikeButton
               ideaId={idea.id}
               likes={idea.likes}
-              likedByLoggedInUser={likedByLoggedInUser}
+              likedByLoggedInUser={idea.likedByLoggedInUser}
               onLikeIdea={handleLikeIdea}
               disabled={isIdeaOwner}
             />

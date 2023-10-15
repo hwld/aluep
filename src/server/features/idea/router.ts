@@ -4,7 +4,6 @@ import { getAllTags } from "@/server/features/idea/getAllTags";
 import { getIdea } from "@/server/features/idea/getIdea";
 import { getLikedIdeasByUser } from "@/server/features/idea/getLikedIdeasByUser";
 import { getPostedIdeasByUser } from "@/server/features/idea/getPostedIdeasByUser";
-import { isLikedByUser } from "@/server/features/idea/isLikedByUser";
 import { likeIdea } from "@/server/features/idea/likeIdea";
 import { searchIdeas } from "@/server/features/idea/searchIdeas";
 import { unlikeIdea } from "@/server/features/idea/unlikeIdea";
@@ -35,9 +34,6 @@ export const ideaRoute = router({
 
   /** お題のいいねを解除する */
   unlike: unlikeIdea,
-
-  /** ログインユーザーがお題をいいねしているか */
-  isLikedByUser: isLikedByUser,
 
   /** 指定されたユーザーが投稿したお題を取得する */
   getPostedIdeasByUser: getPostedIdeasByUser,

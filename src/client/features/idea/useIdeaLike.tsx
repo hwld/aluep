@@ -1,19 +1,14 @@
-import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 import { Idea } from "@/models/idea";
 
 type UseIdeaLikeArgs = { ideaId: string };
 
-// ログインユーザーと指定されたお題とのいいね状況
+/**
+ * お題をいいね・いいね解除するためのhooks
+ */
 export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
   const utils = trpc.useContext();
-  const { session } = useSessionQuery();
-
-  const { data: likedByLoggedInUser } = trpc.idea.isLikedByUser.useQuery({
-    ideaId,
-    userId: session?.user.id ?? null,
-  });
 
   const likeIdeaMutation = trpc.idea.like.useMutation({
     onMutate: async () => {
@@ -48,27 +43,21 @@ export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
   /** 楽観的更新のためにキャッシュを操作する */
   const optimisticUpdate = async ({ like }: { like: boolean }) => {
     await utils.idea.get.cancel({ ideaId });
-    await utils.idea.isLikedByUser.cancel({
-      ideaId,
-      userId: session?.user.id ?? null,
-    });
 
     // お題(いいね数を含む)
     const previousIdea = utils.idea.get.getData({ ideaId });
 
-    // いいねを反映させる
-    utils.idea.isLikedByUser.setData(
-      { ideaId, userId: session?.user.id ?? null },
-      like
-    );
-
-    // いいね数を変える
+    // いいね数といいねしたかを変える
     utils.idea.get.setData({ ideaId }, (old) => {
       if (!old) {
         return old;
       }
 
-      return { ...old, likes: old.likes + (like ? 1 : -1) };
+      return {
+        ...old,
+        likes: old.likes + (like ? 1 : -1),
+        likedByLoggedInUser: like,
+      };
     });
 
     return { previousIdea };
@@ -82,10 +71,6 @@ export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
     like: boolean;
     previousIdea: Idea | undefined;
   }) => {
-    utils.idea.isLikedByUser.setData(
-      { ideaId, userId: session?.user.id ?? null },
-      !like
-    );
     utils.idea.get.setData({ ideaId }, previousIdea);
 
     const action = like ? "いいね" : "いいね解除";
@@ -97,7 +82,6 @@ export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
   };
 
   return {
-    likedByLoggedInUser: likedByLoggedInUser ?? false,
     likeIdeaMutation,
     unlikeIdeaMutation,
   };
