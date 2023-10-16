@@ -23,7 +23,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea }) => {
   const handleDevelopIdea = (data: DevFormData) => {
     developMutation.mutate(
       { ...data, ideaId: idea.id },
-      { onSuccess: () => router.replace(Routes.idea(idea.id)) }
+      { onSuccess: ({ devId }) => router.replace(Routes.dev(idea.id, devId)) }
     );
   };
 

@@ -9,7 +9,7 @@ import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
-import { Box, Flex, Group } from "@mantine/core";
+import { Flex, Group } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbFileText, TbHeart } from "react-icons/tb";
 import classes from "./LikedDevCard.module.css";
@@ -32,17 +32,7 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
       <ItemCard
         className={classes.root}
         onClick={handleGoDevDetail}
-        leftHeader={
-          <Group>
-            <DevStatusBadge status={dev.status} />
-            <Group align="center" gap={5} mt={5}>
-              <TbFileText color="var(--mantine-color-gray-5)" size={25} />
-              <TextLink href={Routes.idea(dev.ideaId)}>
-                <MutedText>{dev.ideaTitle}</MutedText>
-              </TextLink>
-            </Group>
-          </Group>
-        }
+        leftHeader={<DevStatusBadge status={dev.status} />}
         rightHeader={
           <Flex>
             <GitHubCodeIconLink gitHubUrl={dev.githubUrl} />
@@ -57,13 +47,32 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
           userId={dev.developer.id}
           title={<DeveloperTitle dev={dev} className={classes["dev-link"]} />}
           content={
-            <Box w="min-content">
+            <Group align="flex-end" wrap="nowrap" gap="xs">
               <IconCounter
                 active={dev.likedByLoggedInUser}
                 icon={<TbHeart />}
                 counter={dev.likes}
               />
-            </Box>
+              <Group
+                align="center"
+                gap={5}
+                mt={5}
+                wrap="nowrap"
+                style={{ overflow: "hidden" }}
+              >
+                <TbFileText
+                  color="var(--mantine-color-gray-5)"
+                  size={25}
+                  style={{ flexShrink: 0 }}
+                />
+                <TextLink
+                  href={Routes.idea(dev.ideaId)}
+                  wrapperStyle={{ overflow: "hidden" }}
+                >
+                  <MutedText truncate>{dev.ideaTitle}</MutedText>
+                </TextLink>
+              </Group>
+            </Group>
           }
         />
       </ItemCard>

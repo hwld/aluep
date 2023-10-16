@@ -4,6 +4,7 @@ import {
   showSuccessNotification,
 } from "@/client/lib/utils";
 import { Routes } from "@/share/routes";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
 /**
@@ -11,6 +12,7 @@ import { useRouter } from "next/router";
  */
 export const useDevelop = () => {
   const router = useRouter();
+  const client = useQueryClient();
 
   const developMutation = trpc.dev.create.useMutation({
     onSuccess: async () => {
@@ -46,7 +48,11 @@ export const useDevelop = () => {
   });
 
   // お題の開発をキャンセルする
-  const cancelDevelopMutation = trpc.dev.delete.useMutation();
+  const cancelDevelopMutation = trpc.dev.delete.useMutation({
+    onSuccess: () => {
+      client.removeQueries();
+    },
+  });
 
   return {
     mutations: {

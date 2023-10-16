@@ -1,5 +1,5 @@
 import { stopPropagation } from "@/client/lib/utils";
-import { Box } from "@mantine/core";
+import { Box, Flex, MantineStyleProp } from "@mantine/core";
 import Link from "next/link";
 import { PropsWithChildren, SyntheticEvent } from "react";
 import classes from "./TextLink.module.css";
@@ -9,6 +9,7 @@ type Props = {
   className?: string;
   disabled?: boolean;
   onClick?: () => void;
+  wrapperStyle?: MantineStyleProp;
 } & PropsWithChildren;
 
 export const TextLink: React.FC<Props> = ({
@@ -17,6 +18,7 @@ export const TextLink: React.FC<Props> = ({
   children,
   disabled = false,
   onClick,
+  wrapperStyle,
 }) => {
   if (disabled) {
     return <>{children}</>;
@@ -28,16 +30,20 @@ export const TextLink: React.FC<Props> = ({
   };
 
   return (
-    <Box
-      component={Link}
-      className={`${className} ${classes.root}`}
-      href={href}
-      miw={0}
-      onClick={handleClick}
-      onMouseDown={stopPropagation}
-      onMouseUp={stopPropagation}
-    >
-      {children}
-    </Box>
+    // Flexの子になったときにもLinkの幅が伸びないようにFlexでラップしておく
+    <Flex style={wrapperStyle}>
+      <Box
+        component={Link}
+        className={`${className} ${classes.root}`}
+        href={href}
+        miw={0}
+        onClick={handleClick}
+        onMouseDown={stopPropagation}
+        onMouseUp={stopPropagation}
+        style={{ display: "inline-block" }}
+      >
+        {children}
+      </Box>
+    </Flex>
   );
 };

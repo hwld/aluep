@@ -103,3 +103,20 @@ export const LikedDevs: Story = {
     },
   },
 };
+
+export const LikedDevsFilled: Story = {
+  parameters: {
+    nextjs: {
+      router: { query: { tab: "likedDevs" satisfies UserDetailPageTab } },
+    },
+    msw: {
+      handlers: [
+        ...baseHandlers,
+        mockTrpcQuery(trpcMsw.dev.getLikedDevsByUser, {
+          list: [...new Array(10)].map(() => DevHelper.createFilled()),
+          allPages: 2,
+        }),
+      ],
+    },
+  },
+};

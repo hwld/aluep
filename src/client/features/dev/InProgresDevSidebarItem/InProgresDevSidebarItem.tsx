@@ -46,10 +46,12 @@ export const DevInProgresSidebarItem: React.FC<Props> = ({
                 <>
                   気になるアプリを検索してみましょう。<br></br>
                   アプリの検索は
-                  <TextLink href={Routes.ideaSearch()} onClick={close}>
-                    <Text span c="red.7">
-                      こちら
-                    </Text>
+                  <TextLink
+                    wrapperStyle={{ display: "inline" }}
+                    href={Routes.ideaSearch()}
+                    onClick={close}
+                  >
+                    <Text c="red.7">こちら</Text>
                   </TextLink>
                   からどうぞ！
                 </>

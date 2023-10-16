@@ -7,10 +7,11 @@ type Props = { idea: Idea };
 export const IdeaCardLikeCounter: React.FC<Props> = ({ idea }) => {
   const style: MantineStyleProp = idea.likedByLoggedInUser
     ? {
-        borderBottom: "2px solid var(--mantine-color-red-5)",
         backgroundColor: "var(--mantine-color-red-1)",
+        borderRadius: "10px",
+        padding: "0px 5px",
       }
-    : { borderBottom: "2px solid transparent" };
+    : { padding: "0px 5px" };
 
   return (
     <Flex align="center" gap={5} style={style}>

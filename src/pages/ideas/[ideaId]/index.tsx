@@ -9,12 +9,11 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
-  async ({ gsspContext: { query }, session, trpcStore }) => {
-    const userId = session?.user.id ?? null;
+  async ({ gsspContext: { query }, trpcStore }) => {
     const ideaId = assertString(query.ideaId);
 
     // テーマがなければ404に飛ばす
-    const idea = await trpcStore.idea.get.fetch({ ideaId: ideaId });
+    const idea = await trpcStore.idea.get.fetch({ ideaId });
     if (!idea) {
       console.trace("指定されたお題が存在しない");
       return { notFound: true };

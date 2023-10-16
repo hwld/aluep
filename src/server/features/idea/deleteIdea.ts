@@ -14,5 +14,7 @@ export const deleteIdea = requireLoggedInProcedure
       throw new TRPCError({ code: "BAD_REQUEST" });
     }
 
-    await db.idea.delete({ where: { id: input.ideaId } });
+    const deleted = await db.idea.delete({ where: { id: input.ideaId } });
+
+    return deleted;
   });
