@@ -1,3 +1,4 @@
+import { DevInProgresSidebarItem } from "@/client/features/dev/InProgresDevSidebarItem/InProgresDevSidebarItem";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { LoggedInUserCard } from "@/client/ui/LoggedInUserCard/LoggedInUserCard";
 import { LoggedInUserMenu } from "@/client/ui/LoggedInUserMenu/LoggedInUserMenu";
@@ -103,6 +104,14 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
               active={router.route === Routes.ideaSearch()}
               tooltip={!isMenuOpen}
             />
+
+            {loggedInUser && (
+              <DevInProgresSidebarItem
+                tooltip={!isMenuOpen}
+                loggedInUserId={loggedInUser.id}
+              />
+            )}
+
             <SidebarItem
               icon={TbUserSearch}
               label="ユーザーを検索"

@@ -3,6 +3,7 @@ import { deleteDev } from "@/server/features/dev/deleteDev";
 import { getDev } from "@/server/features/dev/getDev";
 import { getDevsByIdea } from "@/server/features/dev/getDevsByIdea";
 import { getDevsByUser } from "@/server/features/dev/getDevsByUser";
+import { getInProgresDevsByUser } from "@/server/features/dev/getInProgresDevsByUser";
 import { getLikedDevsByUser } from "@/server/features/dev/getLikedDevsByUser";
 import { likeDev } from "@/server/features/dev/likeDev";
 import { unlikeDev } from "@/server/features/dev/unlikeDev";
@@ -37,6 +38,9 @@ export const devRoute = router({
 
   /** 指定したユーザーが開発しているお題と開発情報の概要を取得する */
   getDevsByUser: getDevsByUser,
+
+  /** 指定したユーザーが開発中のお題情報の一覧を取得する */
+  getInProgresDevsByUser: getInProgresDevsByUser,
 
   /** 指定したユーザーがいいねした開発情報を取得する */
   getLikedDevsByUser: getLikedDevsByUser,

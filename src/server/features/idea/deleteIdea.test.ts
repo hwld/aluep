@@ -29,7 +29,7 @@ describe("お題の削除API", () => {
 
     await caller.idea.delete({ ideaId });
 
-    const idea = await caller.idea.get({ ideaId });
-    expect(idea).toBeUndefined();
+    const promise = caller.idea.get({ ideaId });
+    expect(promise).rejects.toThrow();
   });
 });
