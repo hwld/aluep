@@ -243,4 +243,6 @@ model RecommendedIdea {
   idea      Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("recommended_ideas")
 }

@@ -65,6 +65,7 @@ jobs:
         with:
           args: >
             -repo=${{ env.IMAGE_REPOSITORY_NAME }}
+            -keep=3
             -tag-filter-any=.*
 
       - uses: "sarisia/actions-status-discord@v1"
