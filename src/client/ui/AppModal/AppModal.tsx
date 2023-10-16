@@ -12,6 +12,7 @@ export const AppModal: React.FC<ModalProps> = ({ children, ...props }) => {
         centered
         transitionProps={{ exitDuration: 150 }}
         overlayProps={{ backgroundOpacity: 0.4 }}
+        radius="lg"
         classNames={{
           root: classes.root,
           title: classes.title,
