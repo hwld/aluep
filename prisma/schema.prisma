@@ -90,8 +90,9 @@ model Idea {
 
   comments IdeaComment[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  recommendedIdea RecommendedIdea?
 
   @@map("ideas")
 }
@@ -235,4 +236,11 @@ model IdeaCommentParentChild {
   createdAt DateTime @default(now())
 
   @@map("idea_comment_parent_child")
+}
+
+model RecommendedIdea {
+  ideaId    String   @id
+  idea      Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

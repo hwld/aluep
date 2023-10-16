@@ -13,7 +13,7 @@ import classes from "./PickedUpIdeas.module.css";
 type Props = {
   title: string;
   ideas: Idea[];
-  readMoreHref: string;
+  readMoreHref?: string;
   icon?: ReactNode;
 };
 
@@ -30,15 +30,17 @@ export const PickedUpIdeas: React.FC<Props> = ({
           {icon}
           <Title order={4}>{title}</Title>
         </Flex>
-        <Button
-          rightSection={<TbArrowRight size={20} />}
-          component={Link}
-          href={readMoreHref}
-          variant="outline"
-          className={classes["read-more"]}
-        >
-          もっと見る
-        </Button>
+        {readMoreHref && (
+          <Button
+            rightSection={<TbArrowRight size={20} />}
+            component={Link}
+            href={readMoreHref}
+            variant="outline"
+            className={classes["read-more"]}
+          >
+            もっと見る
+          </Button>
+        )}
       </Flex>
       <GridContainer minItemWidthPx={ideaCardMinWidthPx}>
         {ideas.map((idea) => (

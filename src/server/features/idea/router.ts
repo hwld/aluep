@@ -4,6 +4,7 @@ import { getAllTags } from "@/server/features/idea/getAllTags";
 import { getIdea } from "@/server/features/idea/getIdea";
 import { getLikedIdeasByUser } from "@/server/features/idea/getLikedIdeasByUser";
 import { getPostedIdeasByUser } from "@/server/features/idea/getPostedIdeasByUser";
+import { getRecommendedIdeas } from "@/server/features/idea/getRecommendedIdeas";
 import { likeIdea } from "@/server/features/idea/likeIdea";
 import { searchIdeas } from "@/server/features/idea/searchIdeas";
 import { unlikeIdea } from "@/server/features/idea/unlikeIdea";
@@ -40,4 +41,7 @@ export const ideaRoute = router({
 
   /** 指定されたユーザーがいいねしたお題を取得する */
   getLikedIdeasByUser: getLikedIdeasByUser,
+
+  /** おすすめのお題を取得する */
+  getRecommendedIdeas: getRecommendedIdeas,
 });

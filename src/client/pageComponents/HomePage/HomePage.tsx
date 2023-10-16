@@ -10,15 +10,28 @@ import {
   useTop10LikesPostersInThisMonth,
 } from "@/client/features/user/useRankingQuery";
 import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem/UserLikeRankingItem";
+import { trpc } from "@/client/lib/trpc";
 import { EmptyRankingContent } from "@/client/ui/EmptyRankingContent/EmptyRankingContent";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { RankingCard } from "@/client/ui/RankingCard/RankingCard";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Title } from "@mantine/core";
-import { TbBulb, TbCode, TbFlame, TbHeart, TbHome } from "react-icons/tb";
+import {
+  TbBulb,
+  TbCode,
+  TbFlame,
+  TbHeart,
+  TbHome,
+  TbThumbUp,
+} from "react-icons/tb";
 
 export const HomePage: React.FC = () => {
   const { session } = useSessionQuery();
+  // おすすめのお題
+  const { data: recommendedIdeas } = trpc.idea.getRecommendedIdeas.useQuery(
+    undefined,
+    { initialData: [] }
+  );
 
   // ランキング
   const { top10LikesIdeasInThisMonth } = useTop10LikesIdeasInThisMonth();
@@ -40,13 +53,15 @@ export const HomePage: React.FC = () => {
         <Stack miw={0} style={{ flexGrow: 1, flexShrink: 1 }} gap={35}>
           {top10LikesIdeasInThisMonth.length > 0 && (
             <Stack gap="sm">
-              <Flex gap="5px">
+              <Flex gap={0} align="center">
                 <TbFlame
-                  size="25px"
+                  size="35px"
                   color="var(--mantine-color-red-6)"
                   fill="var(--mantine-color-red-6)"
                 />
-                <Title order={4}>人気のお題</Title>
+                <Title order={4} size="h3" c="red.7">
+                  人気のお題
+                </Title>
               </Flex>
               <PopularIdeaCarousel
                 ideas={top10LikesIdeasInThisMonth}
@@ -61,32 +76,39 @@ export const HomePage: React.FC = () => {
             </Center>
           ) : (
             <>
+              {recommendedIdeas.length > 0 && (
+                <PickedUpIdeas
+                  icon={
+                    <TbThumbUp
+                      size="30px"
+                      color="var(--mantine-color-green-7)"
+                    />
+                  }
+                  title="おすすめのお題"
+                  ideas={recommendedIdeas}
+                />
+              )}
+
               <PickedUpIdeas
                 icon={
-                  <TbBulb
-                    size="30px"
-                    color="var(--mantine-color-yellow-7)"
-                    fill="var(--mantine-color-yellow-7)"
-                  />
+                  <TbBulb size="30px" color="var(--mantine-color-yellow-7)" />
                 }
                 title="最新のお題"
                 readMoreHref={Routes.ideaSearch({ order: "createdDesc" })}
                 ideas={latestIdeas}
               />
+
               {manyLikesIdeas.length !== 0 && (
                 <PickedUpIdeas
                   icon={
-                    <TbHeart
-                      size="30px"
-                      color="transparent"
-                      fill="var(--mantine-color-pink-7)"
-                    />
+                    <TbHeart size="30px" color="var(--mantine-color-pink-7)" />
                   }
                   title="いいねが多かったお題"
                   readMoreHref={Routes.ideaSearch({ order: "likeDesc" })}
                   ideas={manyLikesIdeas}
                 />
               )}
+
               {manyDevsIdeas.length !== 0 && (
                 <PickedUpIdeas
                   icon={

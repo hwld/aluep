@@ -5,6 +5,8 @@ import { NextPage } from "next";
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ trpcStore }) => {
     await Promise.all([
+      trpcStore.idea.getRecommendedIdeas.prefetch(),
+
       // ランキング
       trpcStore.aggregate.getTop10LikesIdeasInThisMonth.prefetch(),
       trpcStore.aggregate.getTop10LikesDevsInThisMonth.prefetch(),

@@ -25,6 +25,8 @@ async function main() {
   // お題の作成
   const ideaIds = await createIdeas(userIds, 50);
 
+  await prisma.recommendedIdea.create({ data: { ideaId: ideaIds[0] } });
+
   // お題へのいいねの追加
   await createIdeaLike({
     userIds,
