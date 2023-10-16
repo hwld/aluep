@@ -13,6 +13,7 @@ import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.layer.css";
 import "@mantine/nprogress/styles.layer.css";
 import "@mantine/tiptap/styles.layer.css";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppProps } from "next/app";
 import Head from "next/head";
 
@@ -34,6 +35,8 @@ function App({ Component }: AppProps) {
           content="G0JQ3h-VhmlLPCpmRn_9QWm60jiSIVy9F6UGjxnb_cc"
         />
       </Head>
+
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
 
       <MantineProvider theme={theme}>
         <ModalsProvider>
