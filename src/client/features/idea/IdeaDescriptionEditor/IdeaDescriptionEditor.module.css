@@ -32,10 +32,11 @@
     display: block;
     max-width: 100%;
     height: auto;
+    margin: 1rem auto;
 
     &[class="ProseMirror-selectednode"] {
-      outline: 2px solid var(--mantine-color-gray-3);
-      outline-offset: 1px;
+      outline: 3px solid var(--mantine-color-blue-3);
+      outline-offset: 3px;
     }
   }
 }

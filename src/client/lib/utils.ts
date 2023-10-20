@@ -55,3 +55,23 @@ export const showErrorNotification = (
 export const formatDate = (date: Date) => {
   return format(date, "yyyy年MM月dd日", { locale: ja });
 };
+
+export const formatDateTime = (date: Date) => {
+  return format(date, "yyyy年MM月dd日 HH:mm:ss");
+};
+
+const KB = 2 ** 10;
+const MB = KB ** 2;
+
+/**
+ * bytesをKB,MB,Bに変換する
+ */
+export const formatBytes = (bytes: number): string => {
+  if (bytes >= MB) {
+    return `${(bytes / MB).toFixed(2)} MB`;
+  } else if (bytes >= KB) {
+    return `${(bytes / KB).toFixed(2)} KB`;
+  } else {
+    return `${bytes} B`;
+  }
+};

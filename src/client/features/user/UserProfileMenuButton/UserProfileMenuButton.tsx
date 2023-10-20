@@ -15,7 +15,7 @@ import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
 import { User } from "next-auth";
-import { TbEdit, TbFlag } from "react-icons/tb";
+import { TbEdit, TbFlag, TbPhoto } from "react-icons/tb";
 
 type Props = {
   user: User;
@@ -62,6 +62,12 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
         <AppMenuDropdown>
           {isOwner && (
             <>
+              <AppMenuLinkItem
+                leftSection={<TbPhoto />}
+                href={Routes.userUploadedImages(user.id)}
+              >
+                アップロードした画像
+              </AppMenuLinkItem>
               <AppMenuLinkItem
                 leftSection={<TbEdit />}
                 href={Routes.userUpdate}

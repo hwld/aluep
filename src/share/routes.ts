@@ -27,7 +27,9 @@ export const Routes = {
   userUpdate: "/users/profile",
   userDelete: "/users/delete",
   userSearch: "/users/search",
-  userFavorites: (userId: string) => `/users/${userId}/favorited-users`,
+  userFavorites: (userId: string) => `${Routes.user(userId)}/favorited-users`,
+  userUploadedImages: (userId: string) =>
+    `${Routes.user(userId)}/uploaded-images`,
 
   signout: "/signout",
   serverError: "/505",

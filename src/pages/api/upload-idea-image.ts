@@ -1,5 +1,5 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { uploadImage } from "@/server/lib/googleStorage";
+import { uploadImage } from "@/server/services/gcs/uploadImage";
 import { NextApiHandler } from "next";
 import { getServerSession } from "next-auth";
 
