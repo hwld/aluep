@@ -6,6 +6,7 @@ import HardBreak from "@tiptap/extension-hard-break";
 import Heading from "@tiptap/extension-heading";
 import History from "@tiptap/extension-history";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
+import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
@@ -36,6 +37,7 @@ export const useIdeaDescriptionEditor = (
         autolink: false,
         validate: (href) => /^https?:\/\//.test(href),
       }),
+      Image,
     ],
     ...opts,
   });

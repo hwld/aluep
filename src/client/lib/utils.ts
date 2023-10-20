@@ -13,6 +13,7 @@ export const showLoadingNotification = (props: NotificationData) => {
   showNotification({
     color: "blue",
     styles: (idea) => ({ title: { color: idea.colors.blue[7] } }),
+    withCloseButton: true,
     ...props,
   });
 };
@@ -29,6 +30,7 @@ export const showSuccessNotification = (
   notification({
     color: "green",
     styles: (idea) => ({ title: { color: idea.colors.green[7] } }),
+    withCloseButton: true,
     ...props,
   });
 };
@@ -45,6 +47,7 @@ export const showErrorNotification = (
   notification({
     color: "red",
     styles: (idea) => ({ title: { color: idea.colors.red[7] } }),
+    withCloseButton: true,
     ...props,
   });
 };

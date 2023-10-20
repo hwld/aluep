@@ -33,5 +33,8 @@ export const Routes = {
   serverError: "/505",
   notFoundError: "/400",
 
-  api: { uploadAvatar: "/api/upload-avatar" },
+  api: {
+    uploadAvatar: "/api/upload-avatar",
+    uploadIdeaImage: "/api/upload-idea-image",
+  },
 } as const;

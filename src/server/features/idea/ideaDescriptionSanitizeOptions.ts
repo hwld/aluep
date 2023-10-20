@@ -20,9 +20,11 @@ export const ideaDescriptionSanitizeOptions: IOptions = {
     "a",
     "hr",
     "br",
+    "img",
   ],
   allowedAttributes: {
     a: ["href", "target"],
+    img: ["src"],
   },
   transformTags: { a: simpleTransform("a", { target: "_blank" }) },
   allowedSchemes: ["http", "https"],

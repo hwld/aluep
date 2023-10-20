@@ -1,3 +1,4 @@
+import { RichTextEditorImageUploader } from "@/client/ui/RichTextEditorImageUploader/RichTextEditorImageUploader";
 import { Stack } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import { Editor } from "@tiptap/react";
@@ -38,6 +39,7 @@ export const IdeaDescriptionEditor: React.FC<Props> = ({
             <RichTextEditor.Hr />
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
+            <RichTextEditorImageUploader />
             {/* sanitize-htmlでaたぐにtarget="_blank"を強制的に付与しているが、
             このコントロールでそれがなくせるように見えてしまう */}
             <RichTextEditor.Link />

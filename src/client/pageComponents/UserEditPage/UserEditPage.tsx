@@ -48,6 +48,8 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
         {
           title: "ユーザーアイコンの更新",
           message: "ユーザーアイコンを更新できませんでした。",
+          loading: false,
+          autoClose: true,
         },
         { update: true, id: uploadNotificationId }
       );
@@ -61,6 +63,8 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
         id: uploadNotificationId,
         title: "ユーザーアイコンの更新",
         message: "ユーザーアイコンを更新しました。",
+        loading: false,
+        autoClose: true,
       },
       { update: true, id: uploadNotificationId }
     );

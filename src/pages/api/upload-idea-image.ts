@@ -1,6 +1,5 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { uploadImage } from "@/server/lib/googleStorage";
-import { db } from "@/server/lib/prismadb";
 import { NextApiHandler } from "next";
 import { getServerSession } from "next-auth";
 
@@ -16,18 +15,17 @@ const handler: NextApiHandler = async (req, res) => {
     return res.status(403).end();
   }
 
-  const { imageUrl: avatarUrl } = await uploadImage({
-    type: "avatar",
+  const { imageUrl } = await uploadImage({
     req,
+    imageName: "image",
     userId: session.user.id,
-    imageName: "avatar",
-  });
-  await db.user.update({
-    where: { id: session.user.id },
-    data: { image: avatarUrl },
+    type: "idea-image",
   });
 
-  res.json({ status: "ok", avatarUrl });
+  res.json({
+    status: "ok",
+    imageUrl,
+  });
 };
 
 export default handler;

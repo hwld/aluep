@@ -1,0 +1,15 @@
+.control {
+  & svg {
+    transition: all 150ms;
+  }
+
+  &[disabled] {
+    transition: all 150ms;
+    background-color: var(--mantine-color-gray-2);
+    pointer-events: none;
+
+    & svg {
+      color: var(--mantine-color-gray-4) !important;
+    }
+  }
+}
