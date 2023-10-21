@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100px" src="https://raw.githubusercontent.com/hwld/aluep/main/public/logo.svg?raw=true" alt="aluep-logo" >
+  <img width="100px" src="https://raw.githubusercontent.com/hwld/aluep/main/public/app-logo.svg?raw=true" alt="aluep-logo" >
 </p>
 
 # Aluep

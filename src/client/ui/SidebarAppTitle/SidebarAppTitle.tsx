@@ -9,7 +9,7 @@ export const SidebarAppTitle: React.FC = () => {
     <Anchor component={Link} href={Routes.home} className={classes.root}>
       <Box bg="red.2" className={classes.contaienr}>
         <Image
-          src="/logo.svg"
+          src="/app-logo.svg"
           alt="app-log"
           width={40}
           height={40}

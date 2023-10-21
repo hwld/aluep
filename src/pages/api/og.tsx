@@ -10,7 +10,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   const fontMedium = fs.readFileSync("public/NotoSansJP-Medium.ttf");
   const fontBold = fs.readFileSync("public/NotoSansJP-Bold.ttf");
-  const logo = fs.readFileSync("public/logo.svg");
+  const logo = fs.readFileSync("public/app-logo.svg");
 
   // svgのまま表示させようとしても消えちゃうので、一旦pngに変換する
   const logoPng = await sharp(Buffer.from(logo))

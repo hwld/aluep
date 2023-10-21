@@ -9,7 +9,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
-    imageUrl: "/logo.svg",
+    imageUrl: "/app-logo.svg",
     created: new Date().toString(),
     size: 10,
     onDelete: (item) => {},

@@ -25,7 +25,12 @@ const Signout: NextPage = () => {
         <Title order={2}>ログアウト</Title>
         <Stack align="center" gap="xs">
           <Flex align="center" justify="center">
-            <Image src="/logo.svg" width={200} height={200} alt="app-logo" />
+            <Image
+              src="/app-logo.svg"
+              width={200}
+              height={200}
+              alt="app-logo"
+            />
             <TbLogout size="20%" color="var(--mantine-color-red-7)" />
           </Flex>
           <Stack align="center" gap="sm">
