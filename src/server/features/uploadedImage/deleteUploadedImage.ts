@@ -1,5 +1,5 @@
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
-import { deleteImage } from "@/server/services/gcs/deleteImage";
+import { deleteImage } from "@/server/services/googleStorage/deleteImage";
 import { z } from "zod";
 
 export const deleteUploadedImage = requireLoggedInProcedure

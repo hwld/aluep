@@ -1,4 +1,4 @@
-import { GCS, GCSFileType } from "@/server/services/gcs";
+import { GCSFileType, googleStorage } from "@/server/services/googleStorage";
 
 type getUploadedImagesOptions = {
   type: GCSFileType;
@@ -14,7 +14,7 @@ type GetUploadedImagesResult = {
 export const getUploadedImages = async (
   opts: getUploadedImagesOptions
 ): Promise<GetUploadedImagesResult> => {
-  const [files] = await GCS.getFiles(opts.type, opts.userId);
+  const [files] = await googleStorage.getFiles(opts.type, opts.userId);
 
   const promise = files.map(async (file) => {
     const [meta] = await file.getMetadata();
@@ -29,7 +29,6 @@ export const getUploadedImages = async (
   const uploadedImages = await Promise.all(promise);
 
   const undefinedCreated = uploadedImages.filter((i) => !i.created);
-
   const notUndefinedCreated = uploadedImages
     .filter((i) => i.created)
     .sort(

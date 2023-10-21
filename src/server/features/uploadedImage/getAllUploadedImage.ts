@@ -1,5 +1,5 @@
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
-import { getUploadedImages } from "@/server/services/gcs/getUploadedImages";
+import { getUploadedImages } from "@/server/services/googleStorage/getUploadedImages";
 
 export const getAllUploadedImages = requireLoggedInProcedure.query(
   async ({ ctx }) => {

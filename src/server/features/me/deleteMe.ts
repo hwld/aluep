@@ -2,8 +2,8 @@ import { userDeletePageSchema } from "@/models/user";
 import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
 import { validateReCaptchaToken } from "@/server/lib/validateReCaptchaToken";
-import { GCS } from "@/server/services/gcs";
-import { deleteImage } from "@/server/services/gcs/deleteImage";
+import { googleStorage } from "@/server/services/googleStorage";
+import { deleteImage } from "@/server/services/googleStorage/deleteImage";
 import { TRPCError } from "@trpc/server";
 
 export const deleteMe = requireLoggedInProcedure
@@ -20,7 +20,7 @@ export const deleteMe = requireLoggedInProcedure
 
     if (
       deleted.image &&
-      GCS.isUploadedFileUrl(deleted.image, ctx.session.user.id)
+      googleStorage.isUploadedFileUrl(deleted.image, ctx.session.user.id)
     ) {
       await deleteImage({
         imageUrl: deleted.image,

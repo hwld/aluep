@@ -1,4 +1,4 @@
-import { getUploadedImages } from "@/server/services/gcs/getUploadedImages";
+import { getUploadedImages } from "@/server/services/googleStorage/getUploadedImages";
 
 type GetTotalUploadedImageSizeOptions = { userId: string };
 export const getTotalUploadedImageSize = async ({

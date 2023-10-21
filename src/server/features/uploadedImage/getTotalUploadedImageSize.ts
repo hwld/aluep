@@ -1,5 +1,5 @@
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
-import { getTotalUploadedImageSize as _getTotalUploadedImageSize } from "@/server/services/gcs/getTotalUploadedImageSize";
+import { getTotalUploadedImageSize as _getTotalUploadedImageSize } from "@/server/services/googleStorage/getTotalUploadedImageSize";
 
 export const getTotalUploadedImageSize = requireLoggedInProcedure.query(
   async ({ ctx }) => {
