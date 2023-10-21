@@ -2,7 +2,7 @@ import { findManyIdeas } from "@/server/finders/idea";
 import { paginate } from "@/server/lib/paginate";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { pageLimit } from "@/share/consts";
+import { PAGE_LIMIT } from "@/share/consts";
 import { pagingSchema } from "@/share/paging";
 import { z } from "zod";
 
@@ -16,7 +16,7 @@ export const getPostedIdeasByUser = publicProcedure
         loggedInUserId: ctx.session?.user.id,
       },
       counter: ({ args }) => db.idea.count(args),
-      pagingData: { page, limit: pageLimit.postedIdeas },
+      pagingData: { page, limit: PAGE_LIMIT.postedIdeas },
     });
 
     return { list: postedIdeas, allPages };

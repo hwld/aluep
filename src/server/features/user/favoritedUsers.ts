@@ -2,7 +2,7 @@ import { findManyUsers } from "@/server/finders/user";
 import { paginate } from "@/server/lib/paginate";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { pageLimit } from "@/share/consts";
+import { PAGE_LIMIT } from "@/share/consts";
 import { pagingSchema } from "@/share/paging";
 import { z } from "zod";
 
@@ -24,7 +24,7 @@ export const getFavoritedUsers = publicProcedure
       finderInput: { where: { id: { in: favoritedUserIds } } },
       finder: findManyUsers,
       counter: db.user.count,
-      pagingData: { page, limit: pageLimit.favoritedUsers },
+      pagingData: { page, limit: PAGE_LIMIT.favoritedUsers },
     });
 
     return { list: favoritedUsers, allPages };

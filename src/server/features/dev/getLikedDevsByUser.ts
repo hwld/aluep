@@ -2,7 +2,7 @@ import { findManyDevs } from "@/server/finders/dev";
 import { paginate } from "@/server/lib/paginate";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { pageLimit } from "@/share/consts";
+import { PAGE_LIMIT } from "@/share/consts";
 import { pagingSchema } from "@/share/paging";
 import { sortedInSameOrder } from "@/share/utils";
 import { Prisma } from "@prisma/client";
@@ -19,7 +19,7 @@ export const getLikedDevsByUser = publicProcedure
         where: { userId: input.userId },
       } satisfies Prisma.DevelopmentLikeFindManyArgs,
       counter: ({ select, ...args }) => db.developmentLike.count(args),
-      pagingData: { page, limit: pageLimit.likedDevs },
+      pagingData: { page, limit: PAGE_LIMIT.likedDevs },
     });
     const likedDevIds = likedDevIdsObj.map((d) => d.developmentId);
 

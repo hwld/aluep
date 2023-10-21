@@ -3,7 +3,7 @@ import { findManyUsers } from "@/server/finders/user";
 import { paginate } from "@/server/lib/paginate";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
-import { pageLimit } from "@/share/consts";
+import { PAGE_LIMIT } from "@/share/consts";
 import { pagingSchema } from "@/share/paging";
 import { sortedInSameOrder } from "@/share/utils";
 import { z } from "zod";
@@ -18,7 +18,7 @@ export const getIdeaLikers = publicProcedure
         orderBy: { createdAt: "desc" as const },
       },
       counter: db.ideaLike.count,
-      pagingData: { page: input.page, limit: pageLimit.ideaLikers },
+      pagingData: { page: input.page, limit: PAGE_LIMIT.ideaLikers },
     });
 
     const likerId = ideaLikes.map(({ userId }) => userId);

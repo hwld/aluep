@@ -104,7 +104,7 @@
     "@storybook/testing-library": "^0.2.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
-    "@types/formidable": "^3.0.0",
+    "@types/formidable": "^3.4.4",
     "@types/grecaptcha": "^3.0.4",
     "@types/sanitize-html": "^2.8.0",
     "cross-env": "^7.0.3",

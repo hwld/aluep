@@ -111,7 +111,7 @@ export const UploadedImageCard: React.FC<Props> = ({
           <>
             アップロードした画像を削除してもよろしいですか？
             <br />
-            お題に画像が含まれている場合、正しく表示されなくなる可能性があります。
+            お題に画像が含まれている場合、正しく表示されなくなります。
           </>
         }
         opened={isDeleteModalOpen}

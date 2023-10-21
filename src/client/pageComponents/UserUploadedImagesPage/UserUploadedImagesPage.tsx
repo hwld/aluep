@@ -12,10 +12,10 @@ import { TbPhoto } from "react-icons/tb";
 type Props = {};
 
 export const UserUploadedImagesPage: React.FC<Props> = () => {
-  const { data: images } = trpc.user.getUserUploadedImages.useQuery(undefined, {
+  const { data: images } = trpc.uploadedImage.getAll.useQuery(undefined, {
     initialData: [],
   });
-  const deleteMutation = trpc.user.deleteUserUploadedImage.useMutation({
+  const deleteMutation = trpc.uploadedImage.delete.useMutation({
     onSuccess: () => {
       showSuccessNotification({
         title: "画像の削除",

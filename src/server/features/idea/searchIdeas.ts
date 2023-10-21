@@ -1,7 +1,7 @@
 import { Idea, searchIdeaPageSchema } from "@/models/idea";
 import { findSearchedIdeas } from "@/server/finders/idea";
 import { publicProcedure } from "@/server/lib/trpc";
-import { pageLimit } from "@/share/consts";
+import { PAGE_LIMIT } from "@/share/consts";
 
 export const searchIdeas = publicProcedure
   .input(searchIdeaPageSchema)
@@ -14,7 +14,7 @@ export const searchIdeas = publicProcedure
           order: input.order,
           period: input.period,
         },
-        pagingData: { page: input.page, limit: pageLimit.searchedIdeas },
+        pagingData: { page: input.page, limit: PAGE_LIMIT.searchedIdeas },
         loggedInUserId: ctx.session?.user.id,
       });
 

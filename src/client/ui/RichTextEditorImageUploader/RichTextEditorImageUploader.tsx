@@ -1,8 +1,14 @@
+import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showLoadingNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
+import {
+  Bytes,
+  TOTAL_UPLOAD_IMAGE_LIMIT_MB,
+  UPLOAD_IMAGE_LIMIT_MB,
+} from "@/share/consts";
 import { Routes } from "@/share/routes";
 import { RichTextEditor, useRichTextEditorContext } from "@mantine/tiptap";
 import { ChangeEventHandler, useRef, useState } from "react";
@@ -15,6 +21,11 @@ type Props = {};
 const uploadNotificationId = "upload-image";
 
 export const RichTextEditorImageUploader: React.FC<Props> = () => {
+  const {
+    data: { totalSize },
+  } = trpc.uploadedImage.getTotalSize.useQuery(undefined, {
+    initialData: { totalSize: 0 },
+  });
   const ref = useRef<HTMLInputElement | null>(null);
   const { editor } = useRichTextEditorContext();
   const [loading, setLoading] = useState(false);
@@ -38,15 +49,20 @@ export const RichTextEditorImageUploader: React.FC<Props> = () => {
     try {
       await uploadImageAndSetImage(e);
     } catch (e) {
+      let message: string = "画像をアップロードすることができませんでした。";
+      if (e instanceof Error && e.message) {
+        message = e.message;
+      }
       showErrorNotification(
         {
           title: "画像のアップロード",
-          message: "画像をアップロードすることができませんでした。",
+          message: message,
           loading: false,
-          autoClose: true,
+          autoClose: 10000,
         },
         { update: true, id: uploadNotificationId }
       );
+      return;
     } finally {
       setLoading(false);
     }
@@ -72,6 +88,21 @@ export const RichTextEditorImageUploader: React.FC<Props> = () => {
     }
     target.value = "";
 
+    // ファイルのアップロードサイズはサーバーに送る前にも検証する
+    if (file.size > UPLOAD_IMAGE_LIMIT_MB * Bytes.MB) {
+      throw new Error(
+        `ユーザーがアップロードできる画像のサイズを超えています。アップロードできる画像は ${UPLOAD_IMAGE_LIMIT_MB} MBまでです。`
+      );
+    }
+
+    // ユーザーがアップロードできる上限を超えた場合
+    const availableBytes = TOTAL_UPLOAD_IMAGE_LIMIT_MB * Bytes.MB - totalSize;
+    if (file.size > availableBytes) {
+      throw new Error(
+        `ユーザーがアップロードできる画像の上限を超えました。プロフィールからアップロードした画像を削除することができます。`
+      );
+    }
+
     const formData = new FormData();
     formData.append("image", file);
 
@@ -79,6 +110,7 @@ export const RichTextEditorImageUploader: React.FC<Props> = () => {
       method: "POST",
       body: formData,
     });
+
     if (!response.ok) {
       throw new Error();
     }

@@ -9,7 +9,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       return { redirect: { destination: Routes.home, permanent: false } };
     }
 
-    await trpcStore.user.getUserUploadedImages.prefetch();
+    await trpcStore.uploadedImage.getAll.prefetch();
   }
 );
 
