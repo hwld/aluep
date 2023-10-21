@@ -1,9 +1,4 @@
-import {
-  gcsBucketPath,
-  gcsUploadBucket,
-  generateGcsFilePath,
-  UploadImageType,
-} from "@/server/services/gcs";
+import { GCS, GCSFileType } from "@/server/services/gcs";
 import { getTotalUploadedImageSize } from "@/server/services/gcs/getTotalUploadedImageSize";
 import {
   Bytes,
@@ -18,7 +13,7 @@ type UploadImageOptions = {
   req: NextApiRequest;
   userId: string;
   imageName: string;
-  type: UploadImageType;
+  type: GCSFileType;
 };
 
 export const uploadImage = async (
@@ -28,15 +23,12 @@ export const uploadImage = async (
     userId: opts.userId,
   });
   const availableBytes = TOTAL_UPLOAD_IMAGE_LIMIT_MB * Bytes.MB - totalUploaded;
-
   let maxFileSize = UPLOAD_IMAGE_LIMIT_MB * Bytes.MB;
   if (availableBytes < maxFileSize) {
     maxFileSize = availableBytes;
   }
 
-  const filePath = generateGcsFilePath(opts);
-  const file = gcsUploadBucket.file(filePath);
-  const writableStream = file.createWriteStream();
+  const { file, writableStream } = GCS.createFile(opts.type, opts.userId);
 
   const form = formidable({
     maxFileSize,
@@ -56,11 +48,9 @@ export const uploadImage = async (
   const image = imageFile[0];
   const ext = path.extname(image.originalFilename || "");
 
-  await file.setMetadata({
-    cacheControl: "no-cache",
-    contentType: image.mimetype ?? undefined,
+  const { renamedFileUrl } = await GCS.setFileMetaData(file, {
+    mimetype: image.mimetype,
+    ext,
   });
-  await file.rename(`${filePath}${ext}`);
-
-  return { imageUrl: `${gcsBucketPath}/${filePath}${ext}` };
+  return { imageUrl: renamedFileUrl };
 };

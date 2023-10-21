@@ -2,7 +2,7 @@ import { userDeletePageSchema } from "@/models/user";
 import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
 import { validateReCaptchaToken } from "@/server/lib/validateReCaptchaToken";
-import { isGcsImage } from "@/server/services/gcs";
+import { GCS } from "@/server/services/gcs";
 import { deleteImage } from "@/server/services/gcs/deleteImage";
 import { TRPCError } from "@trpc/server";
 
@@ -18,7 +18,10 @@ export const deleteMe = requireLoggedInProcedure
       where: { id: ctx.session.user.id },
     });
 
-    if (deleted.image && isGcsImage(deleted.image)) {
+    if (
+      deleted.image &&
+      GCS.isUploadedFileUrl(deleted.image, ctx.session.user.id)
+    ) {
       await deleteImage({
         imageUrl: deleted.image,
         loggedInUserId: ctx.session.user.id,

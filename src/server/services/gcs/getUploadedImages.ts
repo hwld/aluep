@@ -1,11 +1,7 @@
-import {
-  gcsUploadBucket,
-  generateGcsPrefix,
-  UploadImageType,
-} from "@/server/services/gcs";
+import { GCS, GCSFileType } from "@/server/services/gcs";
 
 type getUploadedImagesOptions = {
-  type: UploadImageType;
+  type: GCSFileType;
   userId: string;
 };
 
@@ -18,10 +14,7 @@ type GetUploadedImagesResult = {
 export const getUploadedImages = async (
   opts: getUploadedImagesOptions
 ): Promise<GetUploadedImagesResult> => {
-  const [files] = await gcsUploadBucket.getFiles({
-    delimiter: "/",
-    prefix: generateGcsPrefix(opts),
-  });
+  const [files] = await GCS.getFiles(opts.type, opts.userId);
 
   const promise = files.map(async (file) => {
     const [meta] = await file.getMetadata();
