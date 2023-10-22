@@ -5,6 +5,7 @@ import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
+import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { DevMemo, DevMemoFormData } from "@/models/devMemo";
@@ -81,7 +82,9 @@ export const DevMemoThreadCard: React.FC<Props> = ({
             isDeleting={deleteMemoMutation.isLoading}
           />
         </Flex>
-        <Text className={classes["memo-text"]}>{memo.text}</Text>
+        <AppLinkify>
+          <Text className={classes["memo-text"]}>{memo.text}</Text>
+        </AppLinkify>
         <Flex justify="space-between" align="center">
           <Flex align="center" gap={3}>
             <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>

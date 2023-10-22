@@ -6,6 +6,7 @@ import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
+import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { IdeaComment, IdeaCommentFormData } from "@/models/ideaComment";
@@ -129,7 +130,9 @@ export const IdeaCommentCard: React.FC<Props> = ({
               </UnstyledButton>
             </Flex>
           )}
-          <Text className={classes.comment}>{comment.text}</Text>
+          <AppLinkify>
+            <Text className={classes.comment}>{comment.text}</Text>
+          </AppLinkify>
           <Flex justify="space-between" align="center" gap="xs">
             <Flex align="center">
               <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>

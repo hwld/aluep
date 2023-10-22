@@ -1,4 +1,5 @@
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
+import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { User } from "@/models/user";
@@ -33,13 +34,15 @@ export const UserCard: React.FC<Props> = ({ user }) => {
           </TextLink>
         }
         content={
-          <Text
-            style={{ flexShrink: 1, minHeight: 0, overflow: "hidden" }}
-            size="sm"
-            c="gray.5"
-          >
-            {user.profile}
-          </Text>
+          <AppLinkify>
+            <Text
+              style={{ flexShrink: 1, minHeight: 0, overflow: "hidden" }}
+              size="sm"
+              c="gray.5"
+            >
+              {user.profile}
+            </Text>
+          </AppLinkify>
         }
       />
     </ItemCard>

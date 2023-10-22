@@ -4,6 +4,7 @@ import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
+import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { DevMemo } from "@/models/devMemo";
 import { Flex, Stack, Text } from "@mantine/core";
@@ -49,7 +50,9 @@ export const DevMemoChild: React.FC<Props> = ({ memo, devId, ideaId }) => {
             isDeleting={deleteMemoMutation.isLoading}
           />
         </Flex>
-        <Text className={classes["text-wrapper"]}>{memo.text}</Text>
+        <AppLinkify>
+          <Text className={classes["text-wrapper"]}>{memo.text}</Text>
+        </AppLinkify>
       </Stack>
     </Flex>
   );

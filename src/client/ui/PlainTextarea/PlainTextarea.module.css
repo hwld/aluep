@@ -1,6 +1,7 @@
 .input {
   border-width: 0px;
   transition: background-color 250ms;
+  outline: none !important;
 
   &[data-error] {
     color: var(--mantine-color-red-7) !important;

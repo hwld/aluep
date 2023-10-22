@@ -6,13 +6,14 @@ import {
 import { UserSummaryHeader } from "@/client/features/user/UserSummaryHeader/UserSummaryHeader";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
+import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { User } from "@/models/user";
 import { paginatedPageSchema } from "@/share/paging";
-import { Box, Flex, Stack, Text } from "@mantine/core";
+import { Box, Card, Center, Stack, Text } from "@mantine/core";
 import React from "react";
-import { TbHeart, TbUserHeart, TbUsers } from "react-icons/tb";
+import { TbHeart, TbUserHeart } from "react-icons/tb";
 
 type Props = { user: User };
 
@@ -33,37 +34,26 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
           <UserSummaryHeader user={user} />
         </Stack>
         {favoritedUsers?.list.length === 0 ? (
-          <Flex direction="column" align="center" gap={50}>
-            <Flex align="flex-end" justify="center">
-              <TbUsers size={70} color="var(--mantine-color-red-7)" />
-              <TbHeart
-                size={70}
-                color="var(--mantine-color-red-3)"
-                fill="var(--mantine-color-red-3)"
+          <Center>
+            <Card w="100%" style={{ alignItems: "center" }} py="xl">
+              <EmptyContentItem
+                icon={
+                  <TbHeart
+                    size={100}
+                    color="var(--mantine-color-red-6)"
+                    fill="var(--mantine-color-red-6)"
+                  />
+                }
+                text={"ユーザーをお気に入り登録していません"}
+                description={
+                  <>
+                    ユーザーがお気に入り登録すると、<br></br>
+                    ここに表示されます。
+                  </>
+                }
               />
-              <TbHeart
-                size={100}
-                color="var(--mantine-color-red-4)"
-                fill="var(--mantine-color-red-4)"
-              />
-              <TbHeart
-                size={130}
-                color="var(--mantine-color-red-5)"
-                fill="var(--mantine-color-red-5)"
-              />
-              <TbHeart
-                size={160}
-                color="var(--mantine-color-red-6)"
-                fill="var(--mantine-color-red-6)"
-              />
-            </Flex>
-
-            <Text size="xl">ユーザのお気に入りをまだしていません</Text>
-
-            <Text c="gray.5">
-              他のユーザをお気に入りすると、ここに表示されます。
-            </Text>
-          </Flex>
+            </Card>
+          </Center>
         ) : (
           <Stack gap="sm">
             <Text c="gray.5">お気に入りユーザー</Text>

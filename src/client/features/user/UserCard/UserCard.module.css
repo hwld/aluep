@@ -8,7 +8,7 @@
   transition: all 100ms;
   outline: transparent solid 0px;
 
-  &:hover {
+  &:not(:has(a:hover)):hover {
     outline: var(--mantine-color-red-6) solid 2px;
     outline-offset: 2px;
   }

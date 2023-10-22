@@ -28,7 +28,7 @@ export type IdeaCommentFormRef = {
 
 export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
   function IdeaCommentForm(
-    { ideaId, onSubmit, isSubmitting = false, loggedInUser },
+    { onSubmit, isSubmitting = false, loggedInUser },
     ref
   ) {
     const formRef = useRef<HTMLFormElement | null>(null);

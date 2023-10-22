@@ -5,6 +5,7 @@ import { useFavoriteUserCountQuery } from "@/client/features/user/useFavoriteUse
 import { UserFavoriteButton } from "@/client/features/user/UserFavoriteButton/UserFavoriteButton";
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { UserProfileMenuButton } from "@/client/features/user/UserProfileMenuButton/UserProfileMenuButton";
+import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { User } from "@/models/user";
@@ -95,7 +96,9 @@ export const UserProfileCard: React.FC<Props> = ({ user, maxWidth }) => {
           {!user.profile ? (
             <Text c="gray.4">自己紹介はありません</Text>
           ) : (
-            <Text size="sm">{user.profile}</Text>
+            <AppLinkify>
+              <Text size="sm">{user.profile}</Text>
+            </AppLinkify>
           )}
         </Box>
       </Stack>

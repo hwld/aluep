@@ -1,4 +1,5 @@
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
+import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
@@ -25,13 +26,15 @@ export const UserSummaryHeader: React.FC<Props> = ({ user }) => {
             {user.name}
           </AppTitle>
         </TextLink>
-        <Text
-          style={{ flexShrink: 1, minHeight: 0, overflow: "hidden" }}
-          size="sm"
-          c="gray.5"
-        >
-          {user.profile}
-        </Text>
+        <AppLinkify>
+          <Text
+            style={{ flexShrink: 1, minHeight: 0, overflow: "hidden" }}
+            size="sm"
+            c="gray.5"
+          >
+            {user.profile}
+          </Text>
+        </AppLinkify>
       </Stack>
     </Flex>
   );
