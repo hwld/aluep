@@ -1,10 +1,4 @@
 import { trpc } from "@/client/lib/trpc";
-import { Dev } from "@/models/dev";
-
-export type DevsData = {
-  list: Dev[];
-  allPages: number;
-};
 
 type UseDevsByIdeaArgs = { ideaId: string; page: number };
 

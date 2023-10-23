@@ -3,7 +3,7 @@ import { Opts } from "linkifyjs";
 import { ReactNode } from "react";
 import classes from "./AppLinkify.module.css";
 
-export const options: Opts = {
+const options: Opts = {
   className: classes.link,
   target: "_blank",
   rel: "noopener noreferrer",

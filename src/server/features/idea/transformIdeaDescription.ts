@@ -17,7 +17,7 @@ export const transformIdeaDescription = (rawHtml: string) => {
   return dom.serialize();
 };
 
-export const addHeadingId = (heading: Element, ids: string[]) => {
+const addHeadingId = (heading: Element, ids: string[]) => {
   const title = heading.textContent;
   if (!title) {
     return;
@@ -33,7 +33,7 @@ export const addHeadingId = (heading: Element, ids: string[]) => {
   ids.push(id);
 };
 
-export const addHeadingLink = (heading: Element, dom: JSDOM) => {
+const addHeadingLink = (heading: Element, dom: JSDOM) => {
   const beforeLink = heading.querySelector("a");
   if (beforeLink) {
     heading.removeChild(beforeLink);

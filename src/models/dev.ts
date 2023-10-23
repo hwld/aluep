@@ -60,7 +60,3 @@ export const createDevInputSchema = devFormSchema.and(
 export const updateDevInputSchema = devFormSchema.and(
   z.object({ ideaId: z.string().min(1).max(100), devId: z.string() })
 );
-
-export type DevelopedData =
-  | { developed: false }
-  | { developed: true; devId: string };
