@@ -12,6 +12,7 @@ import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
+import { TocCard } from "@/client/ui/TocCard/TocCard";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
@@ -102,7 +103,9 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
                   ))}
                 </Flex>
               )}
-              <IdeaDescriptionView descriptionHtml={idea.descriptionHtml} />
+              <div className="description">
+                <IdeaDescriptionView descriptionHtml={idea.descriptionHtml} />
+              </div>
             </Card>
 
             <IdeaComments
@@ -115,17 +118,15 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
           {/* 右カラム */}
           <Stack
             h="min-content"
+            w={300}
             // 左カラムで表示するダイアログがお題の説明の下にならないように、中カラムよりも上に配置する
-            style={{ position: "sticky", top: 10, zIndex: 1 }}
+            style={{ position: "sticky", top: 10, zIndex: 1, flexShrink: 0 }}
             visibleFrom="lg"
           >
             <Card
               style={{
-                flexShrink: 0,
-                flexGrow: 0,
                 height: "min-content",
               }}
-              w={300}
             >
               <IdeaInfoCardItem
                 icon={<TbUser size={20} color="var(--mantine-color-gray-5)" />}
@@ -164,6 +165,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
                 <Text>{formatDate(new Date(idea.updatedAt))}</Text>
               </IdeaInfoCardItem>
             </Card>
+            <TocCard contentClassName="description" />
           </Stack>
         </Flex>
       </Flex>

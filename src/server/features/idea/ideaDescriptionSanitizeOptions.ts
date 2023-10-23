@@ -25,6 +25,9 @@ export const ideaDescriptionSanitizeOptions: IOptions = {
   allowedAttributes: {
     a: ["href", "target", "rel"],
     img: ["src"],
+    h2: ["id"],
+    h3: ["id"],
+    h4: ["id"],
   },
   transformTags: {
     a: simpleTransform("a", { target: "_blank", rel: "noopener noreferrer" }),

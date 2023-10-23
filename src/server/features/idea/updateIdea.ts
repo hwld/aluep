@@ -1,9 +1,8 @@
 import { updateIdeaInputSchema } from "@/models/idea";
-import { ideaDescriptionSanitizeOptions } from "@/server/features/idea/ideaDescriptionSanitizeOptions";
+import { transformIdeaDescription } from "@/server/features/idea/transformIdeaDescription";
 import { db } from "@/server/lib/prismadb";
 import { requireLoggedInProcedure } from "@/server/lib/trpc";
 import { TRPCError } from "@trpc/server";
-import sanitize from "sanitize-html";
 
 export const updateIdea = requireLoggedInProcedure
   .input(updateIdeaInputSchema)
@@ -21,18 +20,14 @@ export const updateIdea = requireLoggedInProcedure
       where: { ideaId: input.ideaId },
     });
 
-    // htmlをサニタイズする
-    const sanitizedIdeaDescriptionHtml = sanitize(
-      input.descriptionHtml,
-      ideaDescriptionSanitizeOptions
-    );
+    const descriptionHtml = transformIdeaDescription(input.descriptionHtml);
 
     // 入力されたタグを全て付ける
     const attachTags = db.idea.update({
       where: { id: input.ideaId },
       data: {
         title: input.title,
-        description: sanitizedIdeaDescriptionHtml,
+        description: descriptionHtml,
         tags: { create: input.tags.map((tagId) => ({ tagId })) },
       },
     });

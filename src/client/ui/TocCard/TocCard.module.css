@@ -1,0 +1,66 @@
+.toc {
+  flex-grow: 0;
+  font-size: var(--mantine-font-size-sm);
+
+  /* h2, h3, h4しか使わないことが前提 */
+  /* h2以降 */
+  & ul {
+    padding-left: 0px;
+    list-style: none;
+    margin: 0px;
+
+    & a::before {
+      display: block;
+      content: "";
+      width: 8px;
+      height: 8px;
+      background-color: var(--mantine-color-red-6);
+      border-radius: 50%;
+      transition: all 100ms;
+    }
+
+    & a.is-active::before {
+      outline: 2px solid var(--mantine-color-red-3);
+    }
+
+    /* h3以降 */
+    & ul {
+      padding-left: var(--mantine-spacing-sm);
+
+      & a::before {
+        width: 6px;
+        height: 6px;
+      }
+
+      /* h4以降 */
+      & ul {
+        & a:before {
+          width: 4px;
+          height: 4px;
+        }
+      }
+    }
+
+    & a {
+      margin: 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+      padding: 4px 8px;
+      border-radius: var(--mantine-radius-md);
+      text-decoration: none;
+      color: var(--mantine-color-gray-7);
+      transition: all 100ms;
+
+      &:hover {
+        background-color: var(--mantine-color-gray-2);
+      }
+
+      &.is-active {
+        font-weight: bold;
+        background-color: var(--mantine-color-red-1);
+      }
+    }
+  }
+}

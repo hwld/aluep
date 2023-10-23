@@ -74,6 +74,7 @@
     "embla-carousel-react": "^7.0.5",
     "formidable": "^3.0.0",
     "https-proxy-agent": "^7.0.0",
+    "jsdom": "^22.1.0",
     "linkify-react": "^4.1.1",
     "linkifyjs": "^4.1.1",
     "lowlight": "^3.0.0",
@@ -89,6 +90,7 @@
     "satori": "^0.10.9",
     "sharp": "^0.32.6",
     "superjson": "^1.12.0",
+    "tocbot": "^4.21.2",
     "typescript": "4.9.5",
     "zod": "^3.19.1"
   },
@@ -108,6 +110,7 @@
     "@testing-library/react": "^14.0.0",
     "@types/formidable": "^3.4.4",
     "@types/grecaptcha": "^3.0.4",
+    "@types/jsdom": "^21.1.4",
     "@types/sanitize-html": "^2.8.0",
     "cross-env": "^7.0.3",
     "dotenv-cli": "^7.0.0",

@@ -28,7 +28,7 @@ export const useIdeaDescriptionEditor = (
       History,
       Bold,
       Strike,
-      Heading,
+      Heading.configure({ levels: [2, 3, 4] }),
       BulletList,
       OrderedList,
       HorizontalRule,
