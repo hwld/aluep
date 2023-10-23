@@ -10,21 +10,42 @@ export const transformIdeaDescription = (rawHtml: string) => {
   const headings = dom.window.document.querySelectorAll("h1,h2,h3,h4,h5,h6");
   const ids: string[] = [];
   headings.forEach((h) => {
-    if (!h.textContent) {
-      return;
-    }
-
-    let id = h.textContent;
-
-    // idが重複しているかチェックする
-    const count = ids.filter((i) => i === id).length;
-    if (count > 0) {
-      id = id + "-" + count;
-    }
-
-    h.setAttribute("id", encodeURIComponent(id));
-    ids.push(id);
+    addHeadingId(h, ids);
+    addHeadingLink(h, dom);
   });
 
   return dom.serialize();
+};
+
+export const addHeadingId = (heading: Element, ids: string[]) => {
+  const title = heading.textContent;
+  if (!title) {
+    return;
+  }
+
+  let id = title;
+  const count = ids.filter((i) => i === id).length;
+  if (count > 0) {
+    id = id + "-" + count;
+  }
+
+  heading.setAttribute("id", encodeURIComponent(id));
+  ids.push(id);
+};
+
+export const addHeadingLink = (heading: Element, dom: JSDOM) => {
+  const beforeLink = heading.querySelector("a");
+  if (beforeLink) {
+    heading.removeChild(beforeLink);
+  }
+
+  const link = dom.window.document.createElement("a");
+
+  const headingId = heading.getAttribute("id");
+  if (!headingId) {
+    return;
+  }
+
+  link.setAttribute("href", `#${headingId}`);
+  heading.insertBefore(link, heading.firstChild);
 };

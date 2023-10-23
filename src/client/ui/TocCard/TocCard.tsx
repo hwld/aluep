@@ -13,6 +13,7 @@ export const TocCard: React.FC<Props> = ({ contentClassName }) => {
       contentSelector: `.${contentClassName}`,
       headingSelector: "h2,h3,h4",
       hasInnerContainers: true,
+      scrollSmooth: false,
       orderedList: false,
     });
 
