@@ -8,7 +8,7 @@ type Props = { dev: Dev; className?: string };
 
 export const DeveloperTitle: React.FC<Props> = ({ dev, className }) => {
   return (
-    <TextLink href={Routes.dev(dev.ideaId, dev.id)} className={className}>
+    <TextLink href={Routes.dev(dev.idea.id, dev.id)} className={className}>
       <Text fw="bold" size="lg">
         {dev.developer.name}
         <MutedText span>{" の開発"}</MutedText>

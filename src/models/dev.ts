@@ -4,8 +4,7 @@ import { z } from "zod";
 
 export type Dev = {
   id: string;
-  ideaId: string;
-  ideaTitle: string;
+  idea: { id: string; title: string };
   developer: { id: string; name: string | null; imageUrl: string | null };
   githubUrl: string;
   comment: string;

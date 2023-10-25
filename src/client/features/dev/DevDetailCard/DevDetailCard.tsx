@@ -47,9 +47,9 @@ export const DevDetailCard: React.FC<Props> = ({
                   <TbFileText color="var(--mantine-color-red-7)" size={30} />
                 </Box>
                 <Stack gap={0} miw={0}>
-                  <TextLink href={Routes.idea(dev.ideaId)}>
+                  <TextLink href={Routes.idea(dev.idea.id)}>
                     <Text c="gray.7" size="xl" fw="bold" truncate>
-                      {dev.ideaTitle}
+                      {dev.idea.title}
                     </Text>
                   </TextLink>
                   <Text c="red.7" size="lg" fw="bold" ml="md">
@@ -63,7 +63,7 @@ export const DevDetailCard: React.FC<Props> = ({
               <Flex justify="space-between" align="center">
                 <DevLikeButton
                   devId={dev.id}
-                  ideaId={dev.ideaId}
+                  ideaId={dev.idea.id}
                   likes={dev.likes}
                   likedByLoggedInUser={dev.likedByLoggedInUser}
                   onToggleIdeaLike={onToggleDevLike}

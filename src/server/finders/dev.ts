@@ -17,8 +17,7 @@ const convertDev = (
 ): Dev => {
   const dev: Dev = {
     id: raw.id,
-    ideaId: raw.ideaId,
-    ideaTitle: raw.idea.title,
+    idea: { id: raw.ideaId, title: raw.idea.title },
     developer: {
       id: raw.user.id,
       name: raw.user.name,

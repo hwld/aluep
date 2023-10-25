@@ -21,10 +21,10 @@ export const DevSummaryHeader: React.FC<Props> = ({ dev }) => {
         <TbCode color="var(--mantine-color-red-7)" size={70} />
       </Center>
       <Stack gap="md" miw={0}>
-        <TextLink href={Routes.dev(dev.ideaId, dev.id)}>
+        <TextLink href={Routes.dev(dev.idea.id, dev.id)}>
           <Flex align="flex-end" gap="5">
             <AppTitle order={4} size="h2" truncate>
-              {dev.ideaTitle}
+              {dev.idea.title}
             </AppTitle>
             <Text
               span

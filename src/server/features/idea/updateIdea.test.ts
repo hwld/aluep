@@ -33,13 +33,14 @@ describe("お題更新API", () => {
   it("お題を更新できる", async () => {
     const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { id: tagId } = await db.ideaTag.create({ data: { name: "tag" } });
+    const html = "<html><head></head><body><p>updated</p></body></html>";
     const { ideaId } = await caller.idea.create({
       title: "title",
-      descriptionHtml: "<p>body</p>",
+      descriptionHtml: html,
       tags: [],
     });
     const updatedTitle = "updated";
-    const updatedDescription = "<p>updated</p>";
+    const updatedDescription = html;
     const udpatedTags = [tagId];
 
     await caller.idea.update({

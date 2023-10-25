@@ -24,7 +24,7 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
   const router = useRouter();
 
   const handleGoDevDetail = () => {
-    router.push(Routes.dev(dev.ideaId, dev.id));
+    router.push(Routes.dev(dev.idea.id, dev.id));
   };
 
   return (
@@ -66,10 +66,10 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
                   style={{ flexShrink: 0 }}
                 />
                 <TextLink
-                  href={Routes.idea(dev.ideaId)}
+                  href={Routes.idea(dev.idea.id)}
                   wrapperStyle={{ overflow: "hidden" }}
                 >
-                  <MutedText truncate>{dev.ideaTitle}</MutedText>
+                  <MutedText truncate>{dev.idea.title}</MutedText>
                 </TextLink>
               </Group>
             </Group>

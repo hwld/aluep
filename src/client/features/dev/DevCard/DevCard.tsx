@@ -24,7 +24,7 @@ export const DevCard: React.FC<Props> = ({ dev }) => {
   const router = useRouter();
 
   const handleGoDevDetail = () => {
-    router.push(Routes.dev(dev.ideaId, dev.id));
+    router.push(Routes.dev(dev.idea.id, dev.id));
   };
 
   return (

@@ -18,10 +18,10 @@ export const InProgresDevLinkList: React.FC<Props> = ({
           <NavLink
             onClick={onCloseModal}
             component={Link}
-            href={Routes.dev(dev.ideaId, dev.id)}
+            href={Routes.dev(dev.idea.id, dev.id)}
             key={dev.id}
             noWrap
-            label={dev.ideaTitle}
+            label={dev.idea.title}
             leftSection={<TbFileText size={25} />}
             classNames={{ root: classes.link }}
             color="gray.7"

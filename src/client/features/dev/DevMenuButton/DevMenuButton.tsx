@@ -46,7 +46,7 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
             message: "開発情報を削除しました。",
           });
 
-          await router.replace(Routes.idea(dev.ideaId));
+          await router.replace(Routes.idea(dev.idea.id));
           closeDeleteModal();
         },
         onError: () => {
@@ -79,7 +79,7 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
     reportDevMutation.mutate({
       reportDetail: data.reportDetail,
       targetDeveloepr: {
-        url: `${window.location.origin}${Routes.dev(dev.ideaId, dev.id)}`,
+        url: `${window.location.origin}${Routes.dev(dev.idea.id, dev.id)}`,
         name: dev.developer.name,
       },
     });
@@ -95,7 +95,7 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
             <>
               <AppMenuLinkItem
                 leftSection={<TbEdit />}
-                href={Routes.devUpdate(dev.ideaId, dev.id)}
+                href={Routes.devUpdate(dev.idea.id, dev.id)}
               >
                 開発情報を編集する
               </AppMenuLinkItem>

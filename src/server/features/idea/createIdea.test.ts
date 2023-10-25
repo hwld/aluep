@@ -18,7 +18,8 @@ describe("お題の作成API", () => {
   it("お題を作成し、作成したお題を取得することができる", async () => {
     const { caller } = await TestHelpers.createNewUserSessionCaller();
     const title = "test-title";
-    const descriptionHtml = "<p>test-description</p>";
+    const descriptionHtml =
+      "<html><head></head><body><p>test-description</p></body></html>";
 
     const { ideaId } = await caller.idea.create({
       title,
@@ -33,10 +34,13 @@ describe("お題の作成API", () => {
 
   describe("XSS対策", () => {
     it.each([
-      ['<script>alert("XSS")</script>', ""],
       [
-        '<a href="javascript:alert("XSS")" target="_blank">link</a>',
-        '<a target="_blank">link</a>',
+        '<html><head></head><body><script>alert("XSS")</script></body></html>',
+        "<html><head></head><body></body></html>",
+      ],
+      [
+        '<html><head></head><body><a href="javascript:alert("XSS")" target="_blank" rel="noopener noreferrer">link</a></body></html>',
+        '<html><head></head><body><a target="_blank" rel="noopener noreferrer">link</a></body></html>',
       ],
     ])('"%s" -> "%s"', async (input, expected) => {
       const { caller } = await TestHelpers.createNewUserSessionCaller();

@@ -136,6 +136,10 @@ export const DevHelper = {
   create: (data?: Partial<Dev>): Dev => {
     return {
       id: faker.string.uuid(),
+      idea: {
+        id: faker.string.uuid(),
+        title: fakeString({ min: 1, max: 50 }),
+      },
       developer: {
         id: faker.string.uuid(),
         name: fakeString({ min: 1, max: 50 }),
@@ -146,8 +150,6 @@ export const DevHelper = {
       comment: fakeString({ min: 1, max: 300 }),
       createdAt: new Date().toLocaleString(),
       githubUrl: "",
-      ideaId: faker.string.uuid(),
-      ideaTitle: fakeString({ min: 1, max: 50 }),
       likedByLoggedInUser: true,
       likes: 100,
       status: data?.status ?? faker.helpers.arrayElement(allDevStatuses),
@@ -166,7 +168,7 @@ export const DevHelper = {
         id: faker.string.uuid(),
         imageUrl: "",
       },
-      ideaTitle: fakeString(50),
+      idea: { ...DevHelper.create(), title: fakeString(50) },
       likes: 999,
     };
   },
