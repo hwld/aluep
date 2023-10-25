@@ -1,10 +1,11 @@
 import { DevForm } from "@/client/features/dev/DevelopForm/DevelopForm";
-import { useDevelop } from "@/client/features/dev/useDevelop";
+import { useDevMutations } from "@/client/features/dev/useDevMutations";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev, DevFormData } from "@/models/dev";
 import { Idea } from "@/models/idea";
+import { Routes } from "@/share/routes";
 import { Card, Stack } from "@mantine/core";
 import { useRouter } from "next/router";
 import { TbEdit } from "react-icons/tb";
@@ -16,16 +17,17 @@ type Props = {
 export const DevEditPage: React.FC<Props> = ({ idea, dev }) => {
   const router = useRouter();
 
-  const {
-    mutations: { updateDevMutation },
-  } = useDevelop();
+  const { updateDevMutation } = useDevMutations();
 
   const handleUpdateDev = (data: DevFormData) => {
-    updateDevMutation.mutate({
-      ...data,
-      ideaId: idea.id,
-      devId: dev.id,
-    });
+    updateDevMutation.mutate(
+      { ...data, devId: dev.id },
+      {
+        onSuccess: () => {
+          router.push(Routes.dev(dev.idea.id, dev.id));
+        },
+      }
+    );
   };
 
   const handleBack = () => {

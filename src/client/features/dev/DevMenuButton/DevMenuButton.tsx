@@ -1,4 +1,4 @@
-import { useDevelop } from "@/client/features/dev/useDevelop";
+import { useDevMutations } from "@/client/features/dev/useDevMutations";
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
 import { trpc } from "@/client/lib/trpc";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
@@ -32,12 +32,10 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
     { close: closeReportModal, open: openReportModal },
   ] = useDisclosure(false);
 
-  const {
-    mutations: { cancelDevelopMutation },
-  } = useDevelop();
+  const { deleteDevMutation } = useDevMutations();
 
   const handleDeleteDev = async () => {
-    cancelDevelopMutation.mutate(
+    deleteDevMutation.mutate(
       { devId: dev.id },
       {
         onSuccess: async () => {
@@ -126,7 +124,7 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
         opened={isDeleteModalOpen}
         onClose={closeDeleteModal}
         onConfirm={handleDeleteDev}
-        isConfirming={cancelDevelopMutation.isLoading}
+        isConfirming={deleteDevMutation.isLoading}
         confirmIcon={TbTrash}
         confirmText="削除する"
       />

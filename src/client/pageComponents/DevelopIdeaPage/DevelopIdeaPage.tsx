@@ -1,5 +1,5 @@
 import { DevForm } from "@/client/features/dev/DevelopForm/DevelopForm";
-import { useDevelop } from "@/client/features/dev/useDevelop";
+import { useDevMutations } from "@/client/features/dev/useDevMutations";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
@@ -16,9 +16,7 @@ type Props = {
 export const DevelopIdeaPage: React.FC<Props> = ({ idea }) => {
   const router = useRouter();
 
-  const {
-    mutations: { developMutation },
-  } = useDevelop();
+  const { developMutation } = useDevMutations();
 
   const handleDevelopIdea = (data: DevFormData) => {
     developMutation.mutate(

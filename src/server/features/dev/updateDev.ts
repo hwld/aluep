@@ -10,7 +10,6 @@ export const updateDev = requireLoggedInProcedure
     const dev = await db.development.findFirst({
       where: {
         id: input.devId,
-        ideaId: input.ideaId,
         userId: ctx.session.user.id,
       },
     });

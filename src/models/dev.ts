@@ -57,5 +57,5 @@ export const createDevInputSchema = devFormSchema.and(
   z.object({ ideaId: z.string().min(1).max(100) })
 );
 export const updateDevInputSchema = devFormSchema.and(
-  z.object({ ideaId: z.string().min(1).max(100), devId: z.string() })
+  z.object({ devId: z.string() })
 );

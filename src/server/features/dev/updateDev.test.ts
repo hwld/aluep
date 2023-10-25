@@ -13,7 +13,6 @@ describe("開発情報更新API", () => {
       status: "ABORTED",
       devId: dev.id,
       comment: "new comment",
-      ideaId: dev.ideaId,
     });
 
     await expect(promise).rejects.toThrow();
@@ -28,7 +27,6 @@ describe("開発情報更新API", () => {
 
     const promise = caller.dev.update({
       devId: dev.id,
-      ideaId: dev.ideaId,
       status: "ABORTED",
       githubRepositoryUrl: "https://github.com/hwld/me",
       comment: "new comment",
@@ -51,7 +49,6 @@ describe("開発情報更新API", () => {
 
     await caller.dev.update({
       devId: devId,
-      ideaId: idea.id,
       status: "COMPLETED",
       githubRepositoryUrl: updatedRepoUrl,
       comment: updatedComment,
