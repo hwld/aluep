@@ -48,7 +48,6 @@ export const Guest: Story = {
             create({ text: "返信コメント2" }),
           ];
         }),
-        mockTrpcQuery(trpcMsw.session, null),
       ],
     },
   },
@@ -75,11 +74,6 @@ export const SignedIn: Story = {
           user: UserHelper.create(),
           expires: "",
         }),
-        mockTrpcQuery(trpcMsw.me.getMySummary, {
-          allLikes: 10,
-          devs: 3,
-          ideas: 1,
-        }),
       ],
     },
   },
@@ -88,20 +82,4 @@ export const SignedIn: Story = {
 export const EmptyComment: Story = {
   name: "コメントなし",
   args: { idea: ideaSample },
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.ideaComment.getAll, []),
-        mockTrpcQuery(trpcMsw.session, {
-          user: UserHelper.create(),
-          expires: "",
-        }),
-        mockTrpcQuery(trpcMsw.me.getMySummary, {
-          allLikes: 10,
-          devs: 3,
-          ideas: 1,
-        }),
-      ],
-    },
-  },
 };

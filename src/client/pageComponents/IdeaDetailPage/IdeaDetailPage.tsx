@@ -138,7 +138,6 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
                     userId={idea.user.id}
                   />
                   <TextLink href={Routes.user(idea.user.id)}>
-                    {/* todo: u */}
                     <Text size="sm" truncate>
                       {idea.user.name}
                     </Text>

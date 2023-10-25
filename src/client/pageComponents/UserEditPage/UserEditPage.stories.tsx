@@ -32,11 +32,6 @@ export const Default: Story = {
           user: UserHelper.create(),
           expires: "",
         }),
-        mockTrpcQuery(trpcMsw.me.getMySummary, {
-          allLikes: 0,
-          devs: 0,
-          ideas: 0,
-        }),
       ],
     },
   },

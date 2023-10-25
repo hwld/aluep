@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useContext, useState } from "react";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 type RequireLoginModalContext = {
   isLoginModalOpen: boolean;
@@ -48,7 +48,7 @@ export const RequireLoginModalProvider: React.FC<PropsWithChildren> = ({
 export const useRequireLoginModal = () => {
   const context = useContext(requireLoginModalContext);
   if (!context) {
-    throw new Error("LoginModalProviderが必要です");
+    throw new Error("RequireLoginModalProviderが必要です");
   }
   return context;
 };

@@ -1,6 +1,5 @@
 import { DevEditPage } from "@/client/pageComponents/DevEditPage/DevEditPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
-import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { DevHelper, IdeaHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -28,24 +27,8 @@ export const Filled: Story = {
     idea: IdeaHelper.createFilled(),
     dev: DevHelper.createFilled(),
   },
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.me.getMyGitHubRepositories, []),
-      ],
-    },
-  },
 };
 
 export const DeletedIdea: Story = {
   args: { idea: undefined, dev: DevHelper.create() },
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.me.getMyGitHubRepositories, []),
-      ],
-    },
-  },
 };

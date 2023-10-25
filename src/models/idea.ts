@@ -35,7 +35,6 @@ const IdeaFields = {
 };
 const { title, descriptionHtml } = IdeaFields;
 
-// TODO: 最大・最小文字数などを定数として管理したい。
 export const ideaFormSchema = z.object({
   title: z
     .string()

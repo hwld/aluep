@@ -1,5 +1,4 @@
 import { DevMemoThreadCard } from "@/client/features/devMemo/DevMemoThreadCard/DevMemoThreadCard";
-import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { DevMemoHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
@@ -14,13 +13,5 @@ export const Default: Story = {
     devId: "",
     memo: DevMemoHelper.create(),
     childrenMemos: [...new Array(5)].map(() => DevMemoHelper.create()),
-  },
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.devMemo.getAll, []),
-      ],
-    },
   },
 };

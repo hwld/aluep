@@ -26,7 +26,6 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.user.getIdeaLikers, {
           list: [...new Array(10)].map(() => ({
             ...UserHelper.createFilled(),

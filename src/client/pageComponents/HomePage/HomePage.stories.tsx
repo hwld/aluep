@@ -25,17 +25,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Empty: Story = {
   name: "空のデータ",
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesIdeasInThisMonth, []),
-        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesPostersInThisMonth, []),
-        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesDevsInThisMonth, []),
-        mockTrpcQuery(trpcMsw.aggregate.getPickedIdeas, []),
-      ],
-    },
-  },
 };
 
 export const Small: Story = {
@@ -43,7 +32,7 @@ export const Small: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.idea.getRecommendedIdeas, [IdeaHelper.create()]),
         trpcMsw.aggregate.getPickedIdeas.query((req, res, ctx) => {
           const { order } = req.getInput();
           const { create } = IdeaHelper;
@@ -87,10 +76,10 @@ export const LargeFilled: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, {
-          user: UserHelper.createFilled(),
-          expires: "",
-        }),
+        mockTrpcQuery(
+          trpcMsw.idea.getRecommendedIdeas,
+          [...new Array(6)].map((_) => IdeaHelper.create())
+        ),
         mockTrpcQuery(trpcMsw.me.getMySummary, {
           allLikes: 100,
           devs: 100,

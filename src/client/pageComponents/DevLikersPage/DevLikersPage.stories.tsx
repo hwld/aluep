@@ -28,7 +28,6 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.user.getDevLikers, {
           list: [...new Array(3)].map(() => DevLikerHelper.create()),
           allPages: 1,
@@ -43,7 +42,6 @@ export const Filled: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.user.getDevLikers, {
           list: [...new Array(9)].map(() => DevLikerHelper.createFilled()),
           allPages: 2,
@@ -58,7 +56,6 @@ export const DeletedIdea: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.user.getDevLikers, {
           list: [...new Array(3)].map(() => DevLikerHelper.create()),
           allPages: 1,

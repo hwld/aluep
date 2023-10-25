@@ -30,7 +30,6 @@ export const DevLikersPage: React.FC<Props> = ({ dev }) => {
   return (
     <>
       <PageHeader icon={TbHeart} pageName="開発情報をいいねしたユーザー" />
-      {/* // TODO */}
       <Stack w="100%" maw={1200} m="auto" gap="xl">
         <Stack gap="sm">
           <MutedText>開発情報</MutedText>

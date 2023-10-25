@@ -25,14 +25,4 @@ export const Default: Story = {
 
 export const Empty: Story = {
   args: { page: 1, user: UserHelper.create() },
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.idea.getLikedIdeasByUser, {
-          list: [],
-          allPages: 1,
-        }),
-      ],
-    },
-  },
 };

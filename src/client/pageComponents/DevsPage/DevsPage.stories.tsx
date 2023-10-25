@@ -28,7 +28,6 @@ export const Filled: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.dev.getManyByIdea, {
           list: [...new Array(10)].map(() => DevHelper.createFilled()),
           allPages: 2,

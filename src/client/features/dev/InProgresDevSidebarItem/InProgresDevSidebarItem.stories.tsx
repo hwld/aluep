@@ -21,10 +21,5 @@ export const Default: Story = {
 };
 
 export const Empty: Story = {
-  parameters: {
-    msw: {
-      handlers: [mockTrpcQuery(trpcMsw.dev.getInProgresDevsByUser, [])],
-    },
-  },
   args: { tooltip: true, loggedInUserId: "user-id" },
 };

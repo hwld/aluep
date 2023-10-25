@@ -38,12 +38,6 @@ export const Me: Story = {
           user: me,
           expires: "",
         }),
-        mockTrpcQuery(trpcMsw.me.getMySummary, {
-          allLikes: 1,
-          devs: 1,
-          ideas: 1,
-        }),
-        mockTrpcQuery(trpcMsw.devMemo.getAll, []),
       ],
     },
   },
@@ -51,14 +45,6 @@ export const Me: Story = {
 
 export const EmptyMemo: Story = {
   args: { dev: DevHelper.create() },
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.devMemo.getAll, []),
-      ],
-    },
-  },
 };
 
 export const FilledMemos: Story = {
@@ -68,7 +54,6 @@ export const FilledMemos: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.devMemo.getAll, [
           DevMemoHelper.createFilled(),
           DevMemoHelper.createFilled(),
@@ -80,12 +65,4 @@ export const FilledMemos: Story = {
 
 export const DeletedIdea: Story = {
   args: { dev: DevHelper.create({ idea: null }) },
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.devMemo.getAll, []),
-      ],
-    },
-  },
 };

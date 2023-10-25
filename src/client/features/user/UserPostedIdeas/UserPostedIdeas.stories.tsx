@@ -11,16 +11,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 export const Empty: Story = {
   args: { page: 1, user: UserHelper.create() },
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.idea.getPostedIdeasByUser, {
-          list: [],
-          allPages: 1,
-        }),
-      ],
-    },
-  },
 };
 
 export const Default: Story = {

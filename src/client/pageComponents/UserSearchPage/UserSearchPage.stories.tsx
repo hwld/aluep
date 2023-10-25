@@ -27,12 +27,6 @@ export const BeforeSearch: Story = {
   name: "検索前",
   parameters: {
     nextjs: { router: { query: {} } },
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.user.search, []),
-      ],
-    },
   },
 };
 
@@ -40,21 +34,15 @@ export const NotFound: Story = {
   name: "結果なし",
   parameters: {
     nextjs: { router: { query: { userName: "no" } } },
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.user.search, []),
-      ],
-    },
   },
 };
+
 export const Found: Story = {
   name: "結果あり",
   parameters: {
     nextjs: { router: { query: { userName: "user" } } },
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(
           trpcMsw.user.search,
           [...new Array(3)].map(() => UserHelper.create())

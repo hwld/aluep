@@ -29,8 +29,6 @@ export const Found: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.idea.getAllTags, []),
         mockTrpcQuery(trpcMsw.idea.search, {
           ideas: [...new Array(10)].map(() => IdeaHelper.createFilled()),
           allPages: 2,
@@ -42,13 +40,4 @@ export const Found: Story = {
 
 export const NotFound: Story = {
   name: "結果なし",
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.idea.getAllTags, []),
-        mockTrpcQuery(trpcMsw.idea.search, { ideas: [], allPages: 1 }),
-      ],
-    },
-  },
 };

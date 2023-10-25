@@ -29,7 +29,6 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.user.getFavoritedUsers, {
           list: [...new Array(3)].map(() => UserHelper.create()),
           allPages: 1,
@@ -41,17 +40,6 @@ export const Default: Story = {
 
 export const Empty: Story = {
   args: { user: UserHelper.create() },
-  parameters: {
-    msw: {
-      handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
-        mockTrpcQuery(trpcMsw.user.getFavoritedUsers, {
-          list: [],
-          allPages: 1,
-        }),
-      ],
-    },
-  },
 };
 
 export const Filled: Story = {
@@ -59,7 +47,6 @@ export const Filled: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.session, null),
         mockTrpcQuery(trpcMsw.user.getFavoritedUsers, {
           list: [...new Array(10)].map(() => UserHelper.createFilled()),
           allPages: 2,
