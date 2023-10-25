@@ -1,7 +1,6 @@
 import { RequireLoginModalProvider } from "@/client/features/session/RequireLoginModalProvider";
 import { theme } from "@/client/style/theme";
 import { mockTRPC, mockTRPCClient } from "@/client/__mocks__/trpc";
-import { faker } from "@faker-js/faker";
 import "@mantine/carousel/styles.layer.css";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.layer.css";
@@ -13,7 +12,7 @@ import { useState } from "react";
 
 initialize({ serviceWorker: { url: "/apiMockServiceWorker.js" } });
 
-faker.seed(42);
+// faker.seed(42);
 
 const preview: Preview = {
   parameters: {

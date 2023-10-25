@@ -7,7 +7,7 @@ const devArgs = {
   include: {
     user: true,
     likes: true,
-    idea: { select: { title: true } },
+    idea: { select: { id: true, title: true } },
   },
 } satisfies Prisma.DevelopmentDefaultArgs;
 
@@ -15,9 +15,10 @@ const convertDev = (
   raw: Prisma.DevelopmentGetPayload<typeof devArgs>,
   loggedInUserId: string | undefined
 ): Dev => {
+  const idea = raw.idea ? { id: raw.idea.id, title: raw.idea.title } : null;
   const dev: Dev = {
     id: raw.id,
-    idea: { id: raw.ideaId, title: raw.idea.title },
+    idea,
     developer: {
       id: raw.user.id,
       name: raw.user.name,

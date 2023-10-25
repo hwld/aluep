@@ -30,7 +30,22 @@ export const Filled: Story = {
   },
   parameters: {
     msw: {
-      handlers: [mockTrpcQuery(trpcMsw.session, null)],
+      handlers: [
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.me.getMyGitHubRepositories, []),
+      ],
+    },
+  },
+};
+
+export const DeletedIdea: Story = {
+  args: { idea: undefined, dev: DevHelper.create() },
+  parameters: {
+    msw: {
+      handlers: [
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.me.getMyGitHubRepositories, []),
+      ],
     },
   },
 };

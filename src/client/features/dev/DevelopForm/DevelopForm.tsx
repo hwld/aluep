@@ -22,7 +22,6 @@ type Props = {
    * 文字列を入れる。
    */
   defaultValues?: DevFormDefaultValues;
-  ideaId: string;
   onSubmit: (data: DevFormData) => void;
   onCancel: () => void;
   submitText: string;

@@ -34,7 +34,9 @@ export const DevInProgresSidebarItem: React.FC<Props> = ({
         opened={opened}
         onClose={close}
         title="開発中のお題"
-        styles={{ body: { padding: "8px 4px", minHeight: "300px" } }}
+        styles={{
+          body: { padding: "var(--mantine-spacing-md)", minHeight: "300px" },
+        }}
       >
         {devs.length > 0 ? (
           <InProgresDevLinkList devs={devs} onCloseModal={close} />

@@ -13,7 +13,6 @@ export const Default: Story = {
     },
   },
   args: {
-    ideaId: "",
     submitText: "開発する",
   },
 };

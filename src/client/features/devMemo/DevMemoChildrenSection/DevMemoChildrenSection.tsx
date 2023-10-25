@@ -6,7 +6,6 @@ import { useRef } from "react";
 import classes from "./DevMemoChildrenSection.module.css";
 
 type Props = {
-  ideaId: string;
   devId: string;
   childMemos: DevMemo[];
   isOpenReplyForm: boolean;
@@ -14,7 +13,6 @@ type Props = {
   onCloseReplyForm: () => void;
 };
 export const DevMemoChildrenSection: React.FC<Props> = ({
-  ideaId,
   devId,
   childMemos,
   isOpenReplyForm,
@@ -44,12 +42,7 @@ export const DevMemoChildrenSection: React.FC<Props> = ({
       <Stack gap="xl" py="md" className={classes.root}>
         {childMemos.map((memo, i) => {
           const child = (
-            <DevMemoChild
-              ideaId={ideaId}
-              key={memo.id}
-              memo={memo}
-              devId={devId}
-            />
+            <DevMemoChild key={memo.id} memo={memo} devId={devId} />
           );
 
           // 最後のメモの上部にBoxを追加して、スクロールできるようにする

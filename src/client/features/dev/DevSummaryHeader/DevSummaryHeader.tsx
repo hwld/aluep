@@ -21,23 +21,31 @@ export const DevSummaryHeader: React.FC<Props> = ({ dev }) => {
         <TbCode color="var(--mantine-color-red-7)" size={70} />
       </Center>
       <Stack gap="md" miw={0}>
-        <TextLink href={Routes.dev(dev.id)}>
-          <Flex align="flex-end" gap="5">
-            <AppTitle order={4} size="h2" truncate>
-              {dev.idea.title}
-            </AppTitle>
-            <Text
-              span
-              c="red.7"
-              size="lg"
-              fw="bold"
-              style={{ whiteSpace: "nowrap" }}
-            >
-              {"の開発情報"}
+        {dev.idea ? (
+          <TextLink href={Routes.dev(dev.id)}>
+            <Flex align="flex-end" gap="5">
+              <AppTitle order={4} size="h2" truncate>
+                {dev?.idea.title}
+              </AppTitle>
+              <Text
+                span
+                c="red.7"
+                size="lg"
+                fw="bold"
+                style={{ whiteSpace: "nowrap" }}
+              >
+                {"の開発情報"}
+              </Text>
+            </Flex>
+          </TextLink>
+        ) : (
+          <Text c="gray.5" size="xl">
+            削除されたお題
+            <Text span c="red.7" size="lg" fw="bold" ml="xs">
+              の開発情報
             </Text>
-          </Flex>
-        </TextLink>
-
+          </Text>
+        )}
         <UserSection
           userIconSrc={dev.developer.imageUrl}
           userId={dev.developer.id}

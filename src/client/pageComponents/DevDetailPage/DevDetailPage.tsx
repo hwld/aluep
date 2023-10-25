@@ -130,7 +130,6 @@ export const DevDetailPage: React.FC<Props> = ({ dev }) => {
               {devMemoThreads.map((thread) => {
                 return (
                   <DevMemoThreadCard
-                    ideaId={dev.idea.id}
                     key={thread.rootMemo.id}
                     memo={thread.rootMemo}
                     devId={dev.id}

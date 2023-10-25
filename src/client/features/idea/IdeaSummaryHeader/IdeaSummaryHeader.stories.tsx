@@ -16,3 +16,7 @@ export const Default: Story = {
     }),
   },
 };
+
+export const DeletedIdea: Story = {
+  args: { idea: undefined },
+};

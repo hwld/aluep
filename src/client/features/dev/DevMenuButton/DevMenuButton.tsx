@@ -44,7 +44,12 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
             message: "開発情報を削除しました。",
           });
 
-          await router.replace(Routes.idea(dev.idea.id));
+          if (dev?.idea) {
+            await router.replace(Routes.idea(dev.idea.id));
+          } else {
+            await router.replace(Routes.user(dev.developer.id));
+          }
+
           closeDeleteModal();
         },
         onError: () => {

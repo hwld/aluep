@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { TbEdit } from "react-icons/tb";
 
 type Props = {
-  idea: Idea;
+  idea: Idea | undefined;
   dev: Dev;
 };
 export const DevEditPage: React.FC<Props> = ({ idea, dev }) => {
@@ -48,7 +48,6 @@ export const DevEditPage: React.FC<Props> = ({ idea, dev }) => {
             <DevForm
               onSubmit={handleUpdateDev}
               onCancel={handleBack}
-              ideaId={idea.id}
               defaultValues={{
                 comment: dev.comment,
                 developedItemUrl: dev.developedItemUrl,

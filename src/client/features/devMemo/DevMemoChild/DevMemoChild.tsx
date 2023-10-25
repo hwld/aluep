@@ -10,9 +10,9 @@ import { DevMemo } from "@/models/devMemo";
 import { Flex, Stack, Text } from "@mantine/core";
 import classes from "./DevMemoChild.module.css";
 
-type Props = { memo: DevMemo; devId: string; ideaId: string };
+type Props = { memo: DevMemo; devId: string };
 
-export const DevMemoChild: React.FC<Props> = ({ memo, devId, ideaId }) => {
+export const DevMemoChild: React.FC<Props> = ({ memo, devId }) => {
   const { session } = useSessionQuery();
   const { deleteMemoMutation } = useDevMemos({ devId: devId });
   const memoRef = useHashRemoverOnClickOutside({

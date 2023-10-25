@@ -12,6 +12,5 @@ export const Default: Story = {
     imageUrl: "/app-logo.svg",
     created: new Date().toString(),
     size: 10,
-    onDelete: (item) => {},
   },
 };

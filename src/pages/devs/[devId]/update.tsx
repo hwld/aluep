@@ -16,10 +16,11 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     }
 
     const devId = assertString(query.devId);
-    let ideaId;
+    let ideaId: string | undefined;
     try {
       const dev = await trpcStore.dev.get.fetch({ devId });
-      ideaId = dev.idea.id;
+      // 削除されてる可能性がある
+      ideaId = dev?.idea?.id;
     } catch (e) {
       if (e instanceof TRPCError && e.code === "NOT_FOUND") {
         return { notFound: true };
@@ -29,7 +30,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 
     await Promise.all([
       trpcStore.dev.get.prefetch({ devId }),
-      trpcStore.idea.get.prefetch({ ideaId }),
+      ideaId && trpcStore.idea.get.prefetch({ ideaId }),
       trpcStore.me.getMyGitHubRepositories.prefetch(),
     ]);
   }
@@ -40,15 +41,15 @@ const DevUpdate: NextPage = () => {
   const devId = assertString(router.query.devId);
 
   const { dev, isLoading: devLoading } = useDevQuery({ devId });
-  const { idea, isLoading: ideaLoading } = useIdeaQuery({
-    ideaId: dev?.idea.id,
+  const { idea, isFetching: ideaFetching } = useIdeaQuery({
+    ideaId: dev?.idea?.id,
   });
 
-  // テーマが取得できないときはサーバーでエラーが出るから
-  // ここには到達しない
-  if (devLoading || ideaLoading) {
+  // 開発情報が読み込み中、または、お題情報がフェッチ中の場合はローディングを出す。
+  // 開発情報にお題が含まれない可能性があるので、ideaはloadingではなくfetchingを使用する
+  if (devLoading || ideaFetching) {
     return <></>;
-  } else if (!dev || !idea) {
+  } else if (!dev) {
     return <NotFoundPage />;
   }
 

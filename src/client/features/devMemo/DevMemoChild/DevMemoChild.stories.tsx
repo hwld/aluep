@@ -11,7 +11,6 @@ export const Default: Story = {
   args: {
     memo: DevMemoHelper.create({ id: "memo-id" }),
     devId: "",
-    ideaId: "",
   },
   parameters: {
     msw: {

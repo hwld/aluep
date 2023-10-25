@@ -43,7 +43,6 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea }) => {
             <DevForm
               onSubmit={handleDevelopIdea}
               onCancel={handleBack}
-              ideaId={idea.id}
               submitText="開発する"
               isLoading={developMutation.isLoading || developMutation.isSuccess}
               defaultValues={{

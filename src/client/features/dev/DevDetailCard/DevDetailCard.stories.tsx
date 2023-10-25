@@ -33,3 +33,10 @@ export const Filled: Story = {
     },
   },
 };
+
+export const DeletedIdea: Story = {
+  args: { dev: DevHelper.create({ idea: null }), isDeveloper: false },
+  parameters: {
+    msw: { handlers: [...baseHandlers] },
+  },
+};

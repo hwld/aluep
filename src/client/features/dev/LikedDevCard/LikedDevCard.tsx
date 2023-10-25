@@ -60,17 +60,32 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
                 wrap="nowrap"
                 style={{ overflow: "hidden" }}
               >
-                <TbFileText
-                  color="var(--mantine-color-gray-5)"
-                  size={25}
-                  style={{ flexShrink: 0 }}
-                />
-                <TextLink
-                  href={Routes.idea(dev.idea.id)}
-                  wrapperStyle={{ overflow: "hidden" }}
-                >
-                  <MutedText truncate>{dev.idea.title}</MutedText>
-                </TextLink>
+                {dev.idea ? (
+                  <>
+                    <TbFileText
+                      color="var(--mantine-color-gray-5)"
+                      size={25}
+                      style={{ flexShrink: 0 }}
+                    />
+                    <TextLink
+                      href={Routes.idea(dev.idea.id)}
+                      wrapperStyle={{ overflow: "hidden" }}
+                    >
+                      <MutedText truncate>{dev.idea.title}</MutedText>
+                    </TextLink>
+                  </>
+                ) : (
+                  <>
+                    <TbFileText
+                      color="var(--mantine-color-gray-4)"
+                      size={25}
+                      style={{ flexShrink: 0 }}
+                    />
+                    <MutedText c="gray.4" truncate>
+                      削除されたお題
+                    </MutedText>
+                  </>
+                )}
               </Group>
             </Group>
           }

@@ -15,14 +15,12 @@ import { TbMessageCircle2 } from "react-icons/tb";
 import classes from "./DevMemoThreadCard.module.css";
 
 type Props = {
-  ideaId: string;
   devId: string;
   memo: DevMemo;
   childrenMemos: DevMemo[];
   loggedInUserId?: string;
 };
 export const DevMemoThreadCard: React.FC<Props> = ({
-  ideaId,
   devId,
   memo,
   childrenMemos,
@@ -97,7 +95,6 @@ export const DevMemoThreadCard: React.FC<Props> = ({
         </Flex>
       </Stack>
       <DevMemoChildrenSection
-        ideaId={ideaId}
         devId={devId}
         childMemos={childrenMemos}
         isOpenReplyForm={isOpenReplyForm}

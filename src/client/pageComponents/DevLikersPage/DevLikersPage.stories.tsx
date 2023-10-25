@@ -52,3 +52,18 @@ export const Filled: Story = {
     },
   },
 };
+
+export const DeletedIdea: Story = {
+  args: { dev: DevHelper.create({ idea: null }) },
+  parameters: {
+    msw: {
+      handlers: [
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.user.getDevLikers, {
+          list: [...new Array(3)].map(() => DevLikerHelper.create()),
+          allPages: 1,
+        }),
+      ],
+    },
+  },
+};

@@ -1,3 +1,4 @@
+import { DevDetailCardTitle } from "@/client/features/dev/DevDetailCardTitle/DevDetailCardTitle";
 import { DevLikeButton } from "@/client/features/dev/DevLikeButton/DevLikeButton";
 import { DevMenuButton } from "@/client/features/dev/DevMenuButton/DevMenuButton";
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
@@ -20,7 +21,7 @@ import {
 } from "@mantine/core";
 import { BsGithub } from "react-icons/bs";
 import { MdAccessTime, MdUpdate } from "react-icons/md";
-import { TbFileText, TbLink } from "react-icons/tb";
+import { TbLink } from "react-icons/tb";
 import classes from "./DevDetailCard.module.css";
 
 type Props = {
@@ -42,21 +43,7 @@ export const DevDetailCard: React.FC<Props> = ({
           <Stack h="100%" gap={0} justify="space-between">
             <Stack gap="xs">
               <DevStatusBadge status={dev.status} size="xl" />
-              <Flex gap={5}>
-                <Box className={classes["icon-wrapper"]}>
-                  <TbFileText color="var(--mantine-color-red-7)" size={30} />
-                </Box>
-                <Stack gap={0} miw={0}>
-                  <TextLink href={Routes.idea(dev.idea.id)}>
-                    <Text c="gray.7" size="xl" fw="bold" truncate>
-                      {dev.idea.title}
-                    </Text>
-                  </TextLink>
-                  <Text c="red.7" size="lg" fw="bold" ml="md">
-                    の開発情報
-                  </Text>
-                </Stack>
-              </Flex>
+              <DevDetailCardTitle dev={dev} />
             </Stack>
             <Divider my="sm" />
             <Stack gap={0}>

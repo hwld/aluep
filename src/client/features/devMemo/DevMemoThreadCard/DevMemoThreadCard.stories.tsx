@@ -11,7 +11,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
-    ideaId: "",
     devId: "",
     memo: DevMemoHelper.create(),
     childrenMemos: [...new Array(5)].map(() => DevMemoHelper.create()),

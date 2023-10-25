@@ -136,8 +136,8 @@ model Development {
   id                  String            @id @default(cuid())
   userId              String
   user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  ideaId              String
-  idea                Idea              @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  ideaId              String?
+  idea                Idea?             @relation(fields: [ideaId], references: [id], onDelete: SetNull)
   githubUrl           String
   comment             String            @db.Text
   developedItemUrl    String

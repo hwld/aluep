@@ -77,3 +77,15 @@ export const FilledMemos: Story = {
     },
   },
 };
+
+export const DeletedIdea: Story = {
+  args: { dev: DevHelper.create({ idea: null }) },
+  parameters: {
+    msw: {
+      handlers: [
+        mockTrpcQuery(trpcMsw.session, null),
+        mockTrpcQuery(trpcMsw.devMemo.getAll, []),
+      ],
+    },
+  },
+};

@@ -9,3 +9,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: { dev: DevHelper.create() },
 };
+
+export const DeletedIdea: Story = {
+  args: { dev: DevHelper.create({ idea: null }) },
+};
