@@ -6,7 +6,7 @@ import { z } from "zod";
 
 export const getIdea = publicProcedure
   .input(z.object({ ideaId: z.string() }))
-  .query(async ({ input, ctx }): Promise<Idea | undefined> => {
+  .query(async ({ input, ctx }): Promise<Idea> => {
     const idea = await findIdea({
       where: { id: input.ideaId },
       loggedInUserId: ctx.session?.user.id,

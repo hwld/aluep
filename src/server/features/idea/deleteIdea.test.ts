@@ -30,6 +30,6 @@ describe("お題の削除API", () => {
     await caller.idea.delete({ ideaId });
 
     const promise = caller.idea.get({ ideaId });
-    expect(promise).rejects.toThrow();
+    await expect(promise).rejects.toThrow();
   });
 });

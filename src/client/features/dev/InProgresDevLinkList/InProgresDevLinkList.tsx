@@ -18,7 +18,7 @@ export const InProgresDevLinkList: React.FC<Props> = ({
           <NavLink
             onClick={onCloseModal}
             component={Link}
-            href={Routes.dev(dev.idea.id, dev.id)}
+            href={Routes.dev(dev.id)}
             key={dev.id}
             noWrap
             label={dev.idea.title}

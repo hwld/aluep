@@ -26,7 +26,7 @@ export const UserDevCard: React.FC<Props> = ({ dev }) => {
   const router = useRouter();
 
   const handleGoDevDetail = () => {
-    router.push(Routes.dev(dev.idea.id, dev.id));
+    router.push(Routes.dev(dev.id));
   };
 
   return (
@@ -54,10 +54,7 @@ export const UserDevCard: React.FC<Props> = ({ dev }) => {
         />
       }
     >
-      <TextLink
-        href={Routes.dev(dev.idea.id, dev.id)}
-        className={classes["dev-link"]}
-      >
+      <TextLink href={Routes.dev(dev.id)} className={classes["dev-link"]}>
         <Text c="red.7" fw="bold" size="lg">
           {dev.idea.title}
           <MutedText span>の開発情報</MutedText>

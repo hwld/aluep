@@ -24,7 +24,7 @@ export const DevEditPage: React.FC<Props> = ({ idea, dev }) => {
       { ...data, devId: dev.id },
       {
         onSuccess: () => {
-          router.push(Routes.dev(dev.idea.id, dev.id));
+          router.push(Routes.dev(dev.id));
         },
       }
     );

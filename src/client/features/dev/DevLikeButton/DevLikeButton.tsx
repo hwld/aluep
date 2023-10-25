@@ -7,7 +7,6 @@ import { TbHeart } from "react-icons/tb";
 import classes from "./DevLikeButton.module.css";
 
 type Props = {
-  ideaId: string;
   devId: string;
   likes: number;
   likedByLoggedInUser: boolean;
@@ -15,7 +14,6 @@ type Props = {
   disabled?: boolean;
 };
 export const DevLikeButton: React.FC<Props> = ({
-  ideaId,
   devId,
   likes,
   likedByLoggedInUser,
@@ -37,7 +35,7 @@ export const DevLikeButton: React.FC<Props> = ({
           })}
         />
       </ActionIcon>
-      <TextLink href={Routes.devLikers(ideaId, devId)} disabled={likes === 0}>
+      <TextLink href={Routes.devLikers(devId)} disabled={likes === 0}>
         <Text size="xl" fw="bold">
           {likes}
         </Text>

@@ -11,7 +11,6 @@ export const Default: Story = {
   args: {
     devId: "",
     devMemoId: "",
-    ideaId: "",
     isOwner: true,
     isDeleting: false,
   },

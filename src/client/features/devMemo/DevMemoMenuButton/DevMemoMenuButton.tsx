@@ -17,7 +17,6 @@ import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { TbFlag, TbLink, TbTrash } from "react-icons/tb";
 
 type Props = {
-  ideaId: string;
   devId: string;
   devMemoId: string;
   /** ログインしているユーザーのプロフィールかどうか */
@@ -26,7 +25,6 @@ type Props = {
   isDeleting?: boolean;
 };
 export const DevMemoMenuButton: React.FC<Props> = ({
-  ideaId,
   devId,
   isOwner,
   devMemoId,
@@ -66,7 +64,7 @@ export const DevMemoMenuButton: React.FC<Props> = ({
   });
 
   const buildLink = () => {
-    return `${window.location.origin}${Routes.dev(ideaId, devId)}#${devMemoId}`;
+    return `${window.location.origin}${Routes.dev(devId)}#${devMemoId}`;
   };
 
   const handleSubmitReportDevMemo = (data: ReportBaseForm) => {

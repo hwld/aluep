@@ -63,7 +63,6 @@ export const DevDetailCard: React.FC<Props> = ({
               <Flex justify="space-between" align="center">
                 <DevLikeButton
                   devId={dev.id}
-                  ideaId={dev.idea.id}
                   likes={dev.likes}
                   likedByLoggedInUser={dev.likedByLoggedInUser}
                   onToggleIdeaLike={onToggleDevLike}

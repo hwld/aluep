@@ -42,7 +42,6 @@ export const DevMemoChild: React.FC<Props> = ({ memo, devId, ideaId }) => {
             </Flex>
           </Stack>
           <DevMemoMenuButton
-            ideaId={ideaId}
             devId={devId}
             devMemoId={memo.id}
             isOwner={memo.fromUser.id === session?.user.id}

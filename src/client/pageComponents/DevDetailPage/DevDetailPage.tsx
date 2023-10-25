@@ -13,14 +13,13 @@ import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem"
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev } from "@/models/dev";
 import { DevMemoFormData } from "@/models/devMemo";
-import { Idea } from "@/models/idea";
 import { Card, Center, Flex, Stack, Switch, Title } from "@mantine/core";
 import React, { useRef } from "react";
 import { TbCode, TbNote } from "react-icons/tb";
 
-type Props = { dev: Dev; idea: Idea };
+type Props = { dev: Dev };
 
-export const DevDetailPage: React.FC<Props> = ({ dev, idea }) => {
+export const DevDetailPage: React.FC<Props> = ({ dev }) => {
   const memoFormCardRef = useRef<HTMLDivElement | null>(null);
 
   const { session } = useSessionQuery();
@@ -131,7 +130,7 @@ export const DevDetailPage: React.FC<Props> = ({ dev, idea }) => {
               {devMemoThreads.map((thread) => {
                 return (
                   <DevMemoThreadCard
-                    ideaId={idea.id}
+                    ideaId={dev.idea.id}
                     key={thread.rootMemo.id}
                     memo={thread.rootMemo}
                     devId={dev.id}

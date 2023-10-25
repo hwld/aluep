@@ -27,7 +27,7 @@ export const DevelopButton: React.FC<Props> = ({
   const handleClick = (e: SyntheticEvent) => {
     // すでに開発している場合は自身の開発情報へ遷移させる
     if (loggedInUserDevId) {
-      router.push(Routes.dev(ideaId, loggedInUserDevId));
+      router.push(Routes.dev(loggedInUserDevId));
       return;
     }
 

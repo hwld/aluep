@@ -3,9 +3,10 @@ import { DevLikersPage } from "@/client/pageComponents/DevLikersPage/DevLikersPa
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { paginatedPageSchema } from "@/share/paging";
 import { assertString } from "@/share/utils";
+import { TRPCError } from "@trpc/server";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import NotFoundPage from "../../../../404";
+import NotFoundPage from "../../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, trpcStore }) => {
@@ -17,10 +18,14 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const { page } = parsePageResult.data;
 
     const devId = assertString(query.devId);
-    const dev = await trpcStore.dev.get.fetch({ devId });
-    if (!dev) {
-      console.trace("指定された開発情報が存在しない");
-      return { notFound: true };
+    try {
+      await trpcStore.dev.get.fetch({ devId });
+    } catch (e) {
+      if (e instanceof TRPCError && e.code === "NOT_FOUND") {
+        return { notFound: true };
+      }
+
+      throw e;
     }
 
     await Promise.all([

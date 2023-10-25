@@ -13,7 +13,7 @@ describe("お題開発情報削除API", () => {
     await caller.dev.delete({ devId });
 
     const promise = caller.dev.get({ devId });
-    expect(promise).rejects.toThrow();
+    await expect(promise).rejects.toThrow();
   });
 
   it("自分以外の開発情報は削除できない", async () => {

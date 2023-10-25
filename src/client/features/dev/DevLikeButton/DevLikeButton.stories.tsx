@@ -7,7 +7,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
-    ideaId: "idea-id",
     devId: "dev-id",
     likedByLoggedInUser: false,
     likes: 1,

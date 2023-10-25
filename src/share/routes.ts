@@ -16,11 +16,9 @@ export const Routes = {
   /** アプリ開発のお題の開発関連 */
   develop: (ideaId: string) => `${Routes.ideas}/${ideaId}/develop`,
   devs: (ideaId: string) => `${Routes.ideas}/${ideaId}/devs`,
-  dev: (ideaId: string, devId: string) => `${Routes.devs(ideaId)}/${devId}`,
-  devUpdate: (ideaId: string, devId: string) =>
-    `${Routes.dev(ideaId, devId)}/update`,
-  devLikers: (ideaId: string, devId: string) =>
-    `${Routes.dev(ideaId, devId)}/likers`,
+  dev: (devId: string) => `/devs/${devId}`,
+  devUpdate: (devId: string) => `${Routes.dev(devId)}/update`,
+  devLikers: (devId: string) => `${Routes.dev(devId)}/likers`,
 
   /** ユーザー関連 */
   user: (id: string) => `/users/${id}`,

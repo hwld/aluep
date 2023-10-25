@@ -74,7 +74,6 @@ export const DevMemoThreadCard: React.FC<Props> = ({
             <MutedText truncate>{memo.fromUser.name}</MutedText>
           </Flex>
           <DevMemoMenuButton
-            ideaId={ideaId}
             devId={devId}
             devMemoId={memo.id}
             isOwner={memo.fromUser.id === loggedInUserId}

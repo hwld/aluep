@@ -1,12 +1,7 @@
 import { DevDetailPage } from "@/client/pageComponents/DevDetailPage/DevDetailPage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
-import {
-  DevHelper,
-  DevMemoHelper,
-  IdeaHelper,
-  UserHelper,
-} from "@/models/tests/helpers";
+import { DevHelper, DevMemoHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
@@ -32,7 +27,6 @@ type Story = StoryObj<typeof meta>;
 const me = UserHelper.create();
 export const Me: Story = {
   args: {
-    idea: IdeaHelper.create(),
     dev: DevHelper.create({
       developer: { id: me.id, name: me.name, imageUrl: "" },
     }),
@@ -56,7 +50,7 @@ export const Me: Story = {
 };
 
 export const EmptyMemo: Story = {
-  args: { idea: IdeaHelper.create(), dev: DevHelper.create() },
+  args: { dev: DevHelper.create() },
   parameters: {
     msw: {
       handlers: [
@@ -69,7 +63,6 @@ export const EmptyMemo: Story = {
 
 export const FilledMemos: Story = {
   args: {
-    idea: IdeaHelper.createFilled(),
     dev: DevHelper.createFilled(),
   },
   parameters: {
