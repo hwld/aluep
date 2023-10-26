@@ -57,13 +57,11 @@ export const Small: Story = {
 
           return res(ctx.status(200), ctx.data([]));
         }),
-        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesIdeasInThisMonth, [
-          IdeaHelper.create(),
-        ]),
-        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesPostersInThisMonth, [
+        mockTrpcQuery(trpcMsw.aggregate.getPopularIdeas, [IdeaHelper.create()]),
+        mockTrpcQuery(trpcMsw.aggregate.getPopularIdeaAuthors, [
           { ...UserHelper.create(), ideaLikes: 5 },
         ]),
-        mockTrpcQuery(trpcMsw.aggregate.getTop10LikesDevsInThisMonth, [
+        mockTrpcQuery(trpcMsw.aggregate.getPopularDevelopers, [
           { ...UserHelper.create(), devLikes: 3 },
         ]),
         mockTrpcQuery(trpcMsw.aggregate.getPopularIdeaTags, [
@@ -89,18 +87,18 @@ export const LargeFilled: Story = {
           ideas: 100,
         }),
         mockTrpcQuery(
-          trpcMsw.aggregate.getTop10LikesIdeasInThisMonth,
+          trpcMsw.aggregate.getPopularIdeas,
           [...new Array(6)].map(() => IdeaHelper.createFilled())
         ),
         mockTrpcQuery(
-          trpcMsw.aggregate.getTop10LikesDevsInThisMonth,
+          trpcMsw.aggregate.getPopularDevelopers,
           [...new Array(6)].map(() => ({
             ...UserHelper.createFilled(),
             devLikes: 10,
           }))
         ),
         mockTrpcQuery(
-          trpcMsw.aggregate.getTop10LikesPostersInThisMonth,
+          trpcMsw.aggregate.getPopularIdeaAuthors,
           [...new Array(6)].map(() => ({
             ...UserHelper.createFilled(),
             ideaLikes: 10,

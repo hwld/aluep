@@ -2,9 +2,11 @@ import { findManyIdeas } from "@/server/finders/idea";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
 import { sortedInSameOrder } from "@/share/utils";
+import { z } from "zod";
 
-export const getTop10LikesIdeasInThisMonth = publicProcedure.query(
-  async ({ ctx }) => {
+export const getPopularIdeas = publicProcedure
+  .input(z.object({ limit: z.number() }))
+  .query(async ({ input: { limit }, ctx }) => {
     const ideas = await db.$transaction(async (tx) => {
       // お題のidのリストを取得する
       type IdeaIdObjs = { ideaId: string }[];
@@ -17,15 +19,13 @@ export const getTop10LikesIdeasInThisMonth = publicProcedure.query(
         idea_likes
         LEFT JOIN ideas
           ON (idea_likes."ideaId" = ideas.id)
-      WHERE
-        ideas."createdAt" > (NOW() - INTERVAL '1 MONTH')
       GROUP BY
         ideas.id
       ORDER BY
         "likeCount" DESC
         , "firstPostDatetime" ASC
       LIMIT
-        10
+        ${limit}
     `;
       const ideaIds = ideaIdObjs.map(({ ideaId }) => ideaId);
 
@@ -46,5 +46,4 @@ export const getTop10LikesIdeasInThisMonth = publicProcedure.query(
     });
 
     return ideas;
-  }
-);
+  });

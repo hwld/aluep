@@ -11,7 +11,7 @@ type Props = {};
 
 export const IdeaSearchByTagCard: React.FC<Props> = () => {
   const { data: popularTags } = trpc.aggregate.getPopularIdeaTags.useQuery(
-    undefined,
+    { limit: 10 },
     {
       initialData: [],
     }

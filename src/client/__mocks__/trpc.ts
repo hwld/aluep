@@ -78,9 +78,9 @@ export const initialTrpcHandlers = [
   mockTrpcQuery(trpcMsw.uploadedImage.getAll, []),
   mockTrpcQuery(trpcMsw.uploadedImage.getTotalSize, { totalSize: 0 }),
 
-  mockTrpcQuery(trpcMsw.aggregate.getTop10LikesIdeasInThisMonth, []),
-  mockTrpcQuery(trpcMsw.aggregate.getTop10LikesPostersInThisMonth, []),
-  mockTrpcQuery(trpcMsw.aggregate.getTop10LikesDevsInThisMonth, []),
+  mockTrpcQuery(trpcMsw.aggregate.getPopularIdeas, []),
+  mockTrpcQuery(trpcMsw.aggregate.getPopularIdeaAuthors, []),
+  mockTrpcQuery(trpcMsw.aggregate.getPopularDevelopers, []),
   mockTrpcQuery(trpcMsw.aggregate.getPickedIdeas, []),
   mockTrpcQuery(trpcMsw.aggregate.getPopularIdeaTags, []),
 ];

@@ -13,18 +13,6 @@ const convertIdeaTag = (
   updatedAt: raw.createdAt.toUTCString(),
 });
 
-export const findIdeaTag = async (
-  args: OmitStrict<Prisma.IdeaTagFindFirstArgs, "include" | "select">
-) => {
-  const raw = await db.ideaTag.findFirst({ ...ideaTagArgs, ...args });
-
-  if (!raw) {
-    return undefined;
-  }
-
-  return convertIdeaTag(raw);
-};
-
 export const findManyIdeaTags = async (
   args: OmitStrict<Prisma.IdeaTagFindManyArgs, "include" | "select">,
   tx?: Prisma.TransactionClient

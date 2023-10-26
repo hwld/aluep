@@ -2,42 +2,51 @@
 
 import { trpc } from "@/client/lib/trpc";
 
-export const useTop10LikesDevsInThisMonth = () => {
-  const { data: top10LikesDevsInThisMonth, ...others } =
-    trpc.aggregate.getTop10LikesDevsInThisMonth.useQuery(undefined, {
-      // ランキングは最新のデータでなくても問題ないので、できる限りキャッシュから取ってこれるようにする
-      // これをやらないと再レンダリングのたびにデータを持ってくるようになってしまう？
-      staleTime: Infinity,
-    });
+export const useTop10LikedDevelopers = () => {
+  const { data: top10LikedDevelopers, ...others } =
+    trpc.aggregate.getPopularDevelopers.useQuery(
+      { limit: 10 },
+      {
+        // ランキングは最新のデータでなくても問題ないので、できる限りキャッシュから取ってこれるようにする
+        // これをやらないと再レンダリングのたびにデータを持ってくるようになってしまう？
+        staleTime: Infinity,
+      }
+    );
 
   return {
-    top10LikesDevsInThisMonth: top10LikesDevsInThisMonth ?? [],
+    top10LikedDevelopers: top10LikedDevelopers ?? [],
     ...others,
   };
 };
 
-export const useTop10LikesPostersInThisMonth = () => {
-  const { data: top10LikesPostersInThisMonth, ...others } =
-    trpc.aggregate.getTop10LikesPostersInThisMonth.useQuery(undefined, {
-      // ランキングは最新のデータではなくても問題ないので、できる限りキャッシュから取ってこれるようにする
-      staleTime: Infinity,
-    });
+export const useTop10LikedIdeaAuthors = () => {
+  const { data: top10LikedIdeaAuthors, ...others } =
+    trpc.aggregate.getPopularIdeaAuthors.useQuery(
+      { limit: 10 },
+      {
+        // ランキングは最新のデータではなくても問題ないので、できる限りキャッシュから取ってこれるようにする
+        staleTime: Infinity,
+      }
+    );
 
   return {
-    top10LikesPostersInThisMonth: top10LikesPostersInThisMonth ?? [],
+    top10LikedIdeaAuthors: top10LikedIdeaAuthors ?? [],
     ...others,
   };
 };
 
-export const useTop10LikesIdeasInThisMonth = () => {
-  const { data: top10LikesIdeasInThisMonth, ...others } =
-    trpc.aggregate.getTop10LikesIdeasInThisMonth.useQuery(undefined, {
-      // ランキングは最新のデータではなくても問題ないので、できる限りキャッシュから取ってこれるようにする
-      staleTime: Infinity,
-    });
+export const useTop10LikedIdeas = () => {
+  const { data: top10LikedIdeas, ...others } =
+    trpc.aggregate.getPopularIdeas.useQuery(
+      { limit: 10 },
+      {
+        // ランキングは最新のデータではなくても問題ないので、できる限りキャッシュから取ってこれるようにする
+        staleTime: Infinity,
+      }
+    );
 
   return {
-    top10LikesIdeasInThisMonth: top10LikesIdeasInThisMonth ?? [],
+    top10LikedIdeas: top10LikedIdeas ?? [],
     ...others,
   };
 };

@@ -2,14 +2,16 @@ import { UserAndIdeaLikes } from "@/server/finders/user";
 import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
 import { sortedInSameOrder } from "@/share/utils";
+import { z } from "zod";
 
-export const getTop10LikesPostersInThisMonth = publicProcedure.query(
-  async () => {
-    const posterUsers: UserAndIdeaLikes[] = await db.$transaction(
+export const getPopularIdeaAuthors = publicProcedure
+  .input(z.object({ limit: z.number() }))
+  .query(async ({ input: { limit } }) => {
+    const ideaAuthors: UserAndIdeaLikes[] = await db.$transaction(
       async (tx) => {
-        type RawPosterUser = { userId: string; likeCount: BigInt }[];
+        type RawIdeaAuthor = { userId: string; likeCount: BigInt }[];
         // このクエリが原因?
-        const rawPosterUser = await tx.$queryRaw<RawPosterUser>`
+        const rawIdeaAuthor = await tx.$queryRaw<RawIdeaAuthor>`
         SELECT
           users.id as "userId"
           , COUNT(idea_likes.id) as "likeCount"
@@ -28,28 +30,28 @@ export const getTop10LikesPostersInThisMonth = publicProcedure.query(
           "likeCount" DESC
           , "firstPostDatetime" ASC
         LIMIT
-          10
+          ${limit}
       `;
 
-        const posterUserIds = rawPosterUser.map(({ userId }) => userId);
+        const ideaAuthorIds = rawIdeaAuthor.map(({ userId }) => userId);
 
         // ユーザーを取得する
         const users = await tx.user.findMany({
-          where: { id: { in: posterUserIds } },
+          where: { id: { in: ideaAuthorIds } },
         });
 
-        // posterUserIdsはランキング順通りになっているが、prismaでinを通すと順番が不定になるので
-        // posterUseridsの順に並び変える
+        // ideaAuthorIdsはランキング順通りになっているが、prismaでinを通すと順番が不定になるので
+        // ideaAuthorIdsの順に並び変える
         const sortedUsers = sortedInSameOrder({
           target: users,
-          base: posterUserIds,
+          base: ideaAuthorIds,
           getKey: (t) => t.id,
         });
 
         const usersAndIdeaLikes = sortedUsers.map(
           (user, i): UserAndIdeaLikes => ({
             ...user,
-            ideaLikes: Number(rawPosterUser[i]?.likeCount) ?? 0,
+            ideaLikes: Number(rawIdeaAuthor[i]?.likeCount) ?? 0,
           })
         );
 
@@ -57,6 +59,5 @@ export const getTop10LikesPostersInThisMonth = publicProcedure.query(
       }
     );
 
-    return posterUsers;
-  }
-);
+    return ideaAuthors;
+  });

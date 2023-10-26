@@ -6,13 +6,13 @@ import { PopularIdeaCarousel } from "@/client/features/idea/PopularIdeaCarousel/
 import { usePickedUpIdeasQuery } from "@/client/features/idea/usePickedUpIdeasQuery";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import {
-  useTop10LikesDevsInThisMonth,
-  useTop10LikesIdeasInThisMonth,
-  useTop10LikesPostersInThisMonth,
+  useTop10LikedDevelopers,
+  useTop10LikedIdeaAuthors,
+  useTop10LikedIdeas,
 } from "@/client/features/user/useRankingQuery";
 import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem/UserLikeRankingItem";
 import { trpc } from "@/client/lib/trpc";
-import { EmptyRankingContent } from "@/client/ui/EmptyRankingContent/EmptyRankingContent";
+import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { RankingCard } from "@/client/ui/RankingCard/RankingCard";
 import { Routes } from "@/share/routes";
@@ -35,9 +35,9 @@ export const HomePage: React.FC = () => {
   );
 
   // ランキング
-  const { top10LikesIdeasInThisMonth } = useTop10LikesIdeasInThisMonth();
-  const { top10LikesDevsInThisMonth } = useTop10LikesDevsInThisMonth();
-  const { top10LikesPostersInThisMonth } = useTop10LikesPostersInThisMonth();
+  const { top10LikedIdeas } = useTop10LikedIdeas();
+  const { top10LikedDevelopers } = useTop10LikedDevelopers();
+  const { top10LikedIdeaAuthors } = useTop10LikedIdeaAuthors();
 
   // ピックアップされたお題
   const { pickedUpIdeas: latestIdeas } = usePickedUpIdeasQuery("createdDesc");
@@ -52,7 +52,7 @@ export const HomePage: React.FC = () => {
       <PageHeader icon={TbHome} pageName="ホーム" />
       <Flex w="100%" gap="xl">
         <Stack miw={0} style={{ flexGrow: 1, flexShrink: 1 }} gap={35}>
-          {top10LikesIdeasInThisMonth.length > 0 && (
+          {top10LikedIdeas.length > 0 && (
             <Stack gap="sm">
               <Flex gap={0} align="center">
                 <TbFlame
@@ -65,7 +65,7 @@ export const HomePage: React.FC = () => {
                 </Title>
               </Flex>
               <PopularIdeaCarousel
-                ideas={top10LikesIdeasInThisMonth}
+                ideas={top10LikedIdeas}
                 miw={`${ideaCardMinWidthPx}px`}
               />
             </Stack>
@@ -127,11 +127,15 @@ export const HomePage: React.FC = () => {
         <Flex direction="column" gap={30} mt={45} visibleFrom="lg">
           <IdeaSearchByTagCard />
 
-          <RankingCard title="今月のいいねが多かった開発者">
-            {top10LikesDevsInThisMonth?.length === 0 ? (
-              <EmptyRankingContent page="devs" />
+          <RankingCard title="いいねが多かった開発者">
+            {top10LikedDevelopers?.length === 0 ? (
+              <EmptyContentItem
+                icon={<TbHeart size={100} color="var(--mantine-color-red-7)" />}
+                text="いいねがありません"
+                description="開発者のいいねのランキングがここに表示されます"
+              />
             ) : (
-              top10LikesDevsInThisMonth?.map((dev, i) => (
+              top10LikedDevelopers?.map((dev, i) => (
                 <UserLikeRankingItem
                   ranking={i + 1}
                   key={dev.id}
@@ -142,16 +146,20 @@ export const HomePage: React.FC = () => {
             )}
           </RankingCard>
 
-          <RankingCard title="今月のいいねが多かった投稿者">
-            {top10LikesPostersInThisMonth?.length === 0 ? (
-              <EmptyRankingContent page="posters" />
+          <RankingCard title="いいねが多かった投稿者">
+            {top10LikedIdeaAuthors?.length === 0 ? (
+              <EmptyContentItem
+                icon={<TbHeart size={100} color="var(--mantine-color-red-7)" />}
+                text="いいねがありません"
+                description="投稿者のいいねのランキングがここに表示されます"
+              />
             ) : (
-              top10LikesPostersInThisMonth?.map((poster, i) => (
+              top10LikedIdeaAuthors?.map((author, i) => (
                 <UserLikeRankingItem
                   ranking={i + 1}
-                  key={poster.id}
-                  user={poster}
-                  likeCount={poster.ideaLikes}
+                  key={author.id}
+                  user={author}
+                  likeCount={author.ideaLikes}
                 />
               ))
             )}

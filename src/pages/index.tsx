@@ -8,9 +8,10 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
       trpcStore.idea.getRecommendedIdeas.prefetch(),
 
       // ランキング
-      trpcStore.aggregate.getTop10LikesIdeasInThisMonth.prefetch(),
-      trpcStore.aggregate.getTop10LikesDevsInThisMonth.prefetch(),
-      trpcStore.aggregate.getTop10LikesPostersInThisMonth.prefetch(),
+      trpcStore.aggregate.getPopularIdeas.prefetch({ limit: 10 }),
+      trpcStore.aggregate.getPopularDevelopers.prefetch({ limit: 10 }),
+      trpcStore.aggregate.getPopularIdeaAuthors.prefetch({ limit: 10 }),
+      trpcStore.aggregate.getPopularIdeaTags.prefetch({ limit: 10 }),
 
       //　ピックアップされたお題
       trpcStore.aggregate.getPickedIdeas.prefetch({ order: "createdDesc" }),
