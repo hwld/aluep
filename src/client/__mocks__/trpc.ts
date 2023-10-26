@@ -82,4 +82,5 @@ export const initialTrpcHandlers = [
   mockTrpcQuery(trpcMsw.aggregate.getTop10LikesPostersInThisMonth, []),
   mockTrpcQuery(trpcMsw.aggregate.getTop10LikesDevsInThisMonth, []),
   mockTrpcQuery(trpcMsw.aggregate.getPickedIdeas, []),
+  mockTrpcQuery(trpcMsw.aggregate.getPopularIdeaTags, []),
 ];

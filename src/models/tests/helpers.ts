@@ -251,7 +251,9 @@ export const IdeaCommentHelper = {
   },
 };
 
-const fakeString = (opt?: number | { max: number; min: number }): string => {
+export const fakeString = (
+  opt?: number | { max: number; min: number }
+): string => {
   return faker.string.fromCharacters(characters, opt);
 };
 

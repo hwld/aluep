@@ -1,4 +1,5 @@
 import { getPickedIdeas } from "@/server/features/aggregate/getPickedIdeas";
+import { getPopularIdeaTags } from "@/server/features/aggregate/getPopularIdeaTags";
 import { getTop10LikesDevsInThisMonth } from "@/server/features/aggregate/getTop10LikesDevsInThisMonth";
 import { getTop10LikesIdeasInThisMonth } from "@/server/features/aggregate/getTop10LikesIdeasInThisMonth";
 import { getTop10LikesPostersInThisMonth } from "@/server/features/aggregate/getTop10LikesPostersInThisMonth";
@@ -13,6 +14,9 @@ export const aggregateRoute = router({
 
   /** 1ヶ月間でいいねが多かったお題投稿者Top10を取得する */
   getTop10LikesPostersInThisMonth: getTop10LikesPostersInThisMonth,
+
+  /** 投稿の多いアイデアのタグを取得する */
+  getPopularIdeaTags: getPopularIdeaTags,
 
   /** お題をいくつかピックアップする */
   getPickedIdeas: getPickedIdeas,

@@ -1,5 +1,6 @@
 import { EmptyHomeIdeas } from "@/client/features/idea/EmptyHomeIdeas/EmptyHomeIdeas";
 import { ideaCardMinWidthPx } from "@/client/features/idea/IdeaCard/IdeaCard";
+import { IdeaSearchByTagCard } from "@/client/features/idea/IdeaSearchByTagCard/IdeaSearchByTagCard";
 import { PickedUpIdeas } from "@/client/features/idea/PickedUpIdeas/PickedUpIdeas";
 import { PopularIdeaCarousel } from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCarousel";
 import { usePickedUpIdeasQuery } from "@/client/features/idea/usePickedUpIdeasQuery";
@@ -122,7 +123,10 @@ export const HomePage: React.FC = () => {
             </>
           )}
         </Stack>
-        <Flex direction="column" gap={30} mt={35} visibleFrom="lg">
+
+        <Flex direction="column" gap={30} mt={45} visibleFrom="lg">
+          <IdeaSearchByTagCard />
+
           <RankingCard title="今月のいいねが多かった開発者">
             {top10LikesDevsInThisMonth?.length === 0 ? (
               <EmptyRankingContent page="devs" />

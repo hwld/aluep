@@ -1,7 +1,7 @@
 import { HomePage } from "@/client/pageComponents/HomePage/HomePage";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
-import { IdeaHelper, UserHelper } from "@/models/tests/helpers";
+import { IdeaHelper, IdeaTagHelper, UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
@@ -65,6 +65,9 @@ export const Small: Story = {
         ]),
         mockTrpcQuery(trpcMsw.aggregate.getTop10LikesDevsInThisMonth, [
           { ...UserHelper.create(), devLikes: 3 },
+        ]),
+        mockTrpcQuery(trpcMsw.aggregate.getPopularIdeaTags, [
+          { ...IdeaTagHelper.create(), ideaCount: 10 },
         ]),
       ],
     },
@@ -130,6 +133,15 @@ export const LargeFilled: Story = {
 
           return res(ctx.status(200), ctx.data([]));
         }),
+        mockTrpcQuery(
+          trpcMsw.aggregate.getPopularIdeaTags,
+          [...new Array(10)].map(() => {
+            return {
+              ...IdeaTagHelper.create(),
+              ideaCount: 99,
+            };
+          })
+        ),
       ],
     },
   },

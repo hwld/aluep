@@ -1,15 +1,38 @@
 import { IdeaTag } from "@/models/ideaTag";
 import { db } from "@/server/lib/prismadb";
+import { OmitStrict } from "@/types/OmitStrict";
+import { Prisma } from "@prisma/client";
 
-export const findAllIdeaTags = async (): Promise<IdeaTag[]> => {
-  const rawTags = await db.ideaTag.findMany();
+const ideaTagArgs = {} satisfies Prisma.IdeaTagDefaultArgs;
 
-  const tags: IdeaTag[] = rawTags.map((raw) => ({
-    id: raw.id,
-    name: raw.name,
-    createdAt: raw.createdAt.toUTCString(),
-    updatedAt: raw.updatedAt.toUTCString(),
-  }));
+const convertIdeaTag = (
+  raw: Prisma.IdeaTagGetPayload<typeof ideaTagArgs>
+): IdeaTag => ({
+  ...raw,
+  createdAt: raw.createdAt.toUTCString(),
+  updatedAt: raw.createdAt.toUTCString(),
+});
 
+export const findIdeaTag = async (
+  args: OmitStrict<Prisma.IdeaTagFindFirstArgs, "include" | "select">
+) => {
+  const raw = await db.ideaTag.findFirst({ ...ideaTagArgs, ...args });
+
+  if (!raw) {
+    return undefined;
+  }
+
+  return convertIdeaTag(raw);
+};
+
+export const findManyIdeaTags = async (
+  args: OmitStrict<Prisma.IdeaTagFindManyArgs, "include" | "select">,
+  tx?: Prisma.TransactionClient
+): Promise<IdeaTag[]> => {
+  const client = tx ? tx : db;
+
+  const rawTags = await client.ideaTag.findMany({ ...args });
+
+  const tags: IdeaTag[] = rawTags.map(convertIdeaTag);
   return tags;
 };
