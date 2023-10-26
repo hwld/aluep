@@ -31,7 +31,7 @@ export const TextLink: React.FC<Props> = ({
 
   return (
     // Flexの子になったときにもLinkの幅が伸びないようにFlexでラップしておく
-    <Flex style={wrapperStyle}>
+    <Flex miw={0} style={wrapperStyle}>
       <Box
         component={Link}
         className={`${className} ${classes.root}`}

@@ -6,6 +6,7 @@ import {
   IdeaHelper,
   UserHelper,
 } from "@/models/tests/helpers";
+import { faker } from "@faker-js/faker";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
@@ -33,6 +34,13 @@ const ideaSample = IdeaHelper.create({
   likes: 10,
   devs: 3,
 });
+
+export const Filled: Story = {
+  name: "アルファベットのみ",
+  args: {
+    idea: IdeaHelper.create({ descriptionHtml: faker.string.alpha(2000) }),
+  },
+};
 
 export const Guest: Story = {
   name: "未ログイン",

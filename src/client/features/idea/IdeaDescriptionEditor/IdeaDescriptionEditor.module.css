@@ -5,6 +5,7 @@
 
 .content {
   color: var(--mantine-color-gray-7);
+  word-break: break-all;
 
   & *:first-child {
     margin-top: 0px;

@@ -10,6 +10,7 @@
     margin: 0px;
 
     & a::before {
+      flex-shrink: 0;
       display: block;
       content: "";
       width: 8px;
