@@ -11,18 +11,18 @@ import {
 import { getServerSession, Session } from "next-auth";
 import superjson from "superjson";
 
-type PageProps = {
+export type PageProps = {
   trpcState: DehydratedState;
 };
 
-type Callback = (args: {
+type Callback<Props> = (args: {
   gsspContext: GetServerSidePropsContext;
   trpcStore: TRPCStore;
   session: Session | null;
-}) => Promise<GetServerSidePropsResult<PageProps> | void>;
+}) => Promise<GetServerSidePropsResult<Props> | void>;
 
-export const withReactQueryGetServerSideProps = <T>(
-  callback: Callback
+export const withReactQueryGetServerSideProps = <Props>(
+  callback: Callback<Props>
 ): GetServerSideProps<PageProps> => {
   return async (args) => {
     const session = await getServerSession(args.req, args.res, authOptions);
@@ -36,15 +36,17 @@ export const withReactQueryGetServerSideProps = <T>(
     // セッション情報をプリフェッチする
     await trpcStore.session.prefetch();
 
-    const result = await callback({
-      gsspContext: args,
-      trpcStore,
-      session,
-    });
+    const result =
+      (await callback({
+        gsspContext: args,
+        trpcStore,
+        session,
+      })) ?? {};
 
     return {
       ...result,
       props: {
+        ...("props" in result ? result.props : {})!,
         trpcState: trpcStore.dehydrate(),
       },
     };

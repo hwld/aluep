@@ -1,0 +1,18 @@
+.close-button {
+  transition: all 250ms;
+  background-color: transparent;
+  top: 15px;
+  right: 15px;
+  position: absolute;
+  z-index: 1;
+
+  &:hover {
+    background-color: var(--mantine-color-gray-7);
+  }
+}
+
+.more-button {
+  width: min-content;
+  background-color: var(--mantine-color-red-7);
+  color: var(--mantine-color-gray-2);
+}

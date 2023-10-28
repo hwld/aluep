@@ -4,6 +4,7 @@ import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
 import { assertString } from "@/share/utils";
+import { TRPCError } from "@trpc/server";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
@@ -13,10 +14,14 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     const ideaId = assertString(query.ideaId);
 
     // テーマがなければ404に飛ばす
-    const idea = await trpcStore.idea.get.fetch({ ideaId });
-    if (!idea) {
-      console.trace("指定されたお題が存在しない");
-      return { notFound: true };
+    try {
+      await trpcStore.idea.get.fetch({ ideaId });
+    } catch (e) {
+      if (e instanceof TRPCError && e.code === "NOT_FOUND") {
+        return { notFound: true };
+      }
+
+      throw e;
     }
 
     await Promise.all([

@@ -5,6 +5,7 @@ import { theme } from "@/client/style/theme";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { AppNavigationProgress } from "@/client/ui/AppNavigationProgress";
 import { ErrorBoundary } from "@/client/ui/ErrorBoundary";
+import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import "@mantine/carousel/styles.layer.css";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.layer.css";
@@ -17,7 +18,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppProps } from "next/app";
 import Head from "next/head";
 
-function App({ Component }: AppProps) {
+function App({
+  Component,
+  pageProps: { trpcState, ...others },
+}: AppProps<PageProps>) {
   return (
     <ErrorBoundary>
       <Head>
@@ -44,7 +48,7 @@ function App({ Component }: AppProps) {
             <Notifications />
             <AppLayout>
               <AppNavigationProgress />
-              <Component />
+              <Component {...others} />
             </AppLayout>
           </RequireLoginModalProvider>
         </ModalsProvider>

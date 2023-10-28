@@ -15,6 +15,7 @@ import { trpc } from "@/client/lib/trpc";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { RankingCard } from "@/client/ui/RankingCard/RankingCard";
+import { WelcomeMessageSection } from "@/client/ui/WelcomeMessageSection/WelcomeMessageSection";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Title } from "@mantine/core";
 import {
@@ -26,8 +27,13 @@ import {
   TbThumbUp,
 } from "react-icons/tb";
 
-export const HomePage: React.FC = () => {
+type Props = {
+  welcomeMessageHidden?: boolean;
+};
+
+export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
   const { session } = useSessionQuery();
+
   // おすすめのお題
   const { data: recommendedIdeas } = trpc.idea.getRecommendedIdeas.useQuery(
     undefined,
@@ -52,6 +58,9 @@ export const HomePage: React.FC = () => {
       <PageHeader icon={TbHome} pageName="ホーム" />
       <Flex w="100%" gap="xl">
         <Stack miw={0} style={{ flexGrow: 1, flexShrink: 1 }} gap={35}>
+          <WelcomeMessageSection
+            defaultWelcomeMessageHidden={welcomeMessageHidden}
+          />
           {top10LikedIdeas.length > 0 && (
             <Stack gap="sm">
               <Flex gap={0} align="center">
@@ -124,7 +133,7 @@ export const HomePage: React.FC = () => {
           )}
         </Stack>
 
-        <Flex direction="column" gap={30} mt={45} visibleFrom="lg">
+        <Flex direction="column" gap={30} visibleFrom="lg">
           <IdeaSearchByTagCard />
 
           <RankingCard title="いいねが多かった開発者">
