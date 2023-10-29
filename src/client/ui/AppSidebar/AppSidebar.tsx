@@ -15,6 +15,7 @@ import { SyntheticEvent } from "react";
 import {
   TbFilePlus,
   TbHome,
+  TbInfoCircle,
   TbLogin2,
   TbMail,
   TbSearch,
@@ -104,20 +105,25 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
               active={router.route === Routes.ideaSearch()}
               tooltip={!isMenuOpen}
             />
-
             {loggedInUser && (
               <DevInProgresSidebarItem
                 tooltip={!isMenuOpen}
                 loggedInUserId={loggedInUser.id}
               />
             )}
-
             <SidebarItem
               icon={TbUserSearch}
               label="ユーザーを検索"
               asLink
               href={Routes.userSearch}
               active={router.route === Routes.userSearch}
+              tooltip={!isMenuOpen}
+            />
+            <SidebarItem
+              icon={TbInfoCircle}
+              label="Aluepについて"
+              asLink
+              href={Routes.about}
               tooltip={!isMenuOpen}
             />
             <SidebarItem

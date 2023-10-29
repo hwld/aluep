@@ -7,4 +7,5 @@
   width: 100%;
   min-width: 0;
   margin: 0 auto;
+  container-type: inline-size;
 }

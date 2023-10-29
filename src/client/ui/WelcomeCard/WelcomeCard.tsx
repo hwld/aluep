@@ -1,3 +1,4 @@
+import { Routes } from "@/share/routes";
 import {
   ActionIcon,
   Button,
@@ -7,6 +8,7 @@ import {
   Text,
 } from "@mantine/core";
 import Image from "next/image";
+import Link from "next/link";
 import { TbArrowRight, TbX } from "react-icons/tb";
 import classes from "./WelcomeCard.module.css";
 
@@ -47,6 +49,8 @@ export const WelcomeCard: React.FC<Props> = ({ onClose, ...props }) => {
           </Text>
         </Stack>
         <Button
+          component={Link}
+          href={Routes.about}
           className={classes["more-button"]}
           rightSection={<TbArrowRight size={20} />}
         >

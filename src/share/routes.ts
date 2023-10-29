@@ -4,6 +4,8 @@ import { buildSearchParamsString } from "@/share/utils";
 export const Routes = {
   home: "/",
 
+  about: "/about",
+
   /** アプリ開発のお題関連 */
   ideas: `/ideas`,
   idea: (id: string) => `${Routes.ideas}/${id}`,
