@@ -26,6 +26,7 @@ import {
   TbHome,
   TbThumbUp,
 } from "react-icons/tb";
+import classes from "./HomePage.module.css";
 
 type Props = {
   welcomeMessageHidden?: boolean;
@@ -57,7 +58,12 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
     <>
       <PageHeader icon={TbHome} pageName="ホーム" />
       <Flex w="100%" gap="xl">
-        <Stack miw={0} style={{ flexGrow: 1, flexShrink: 1 }} gap={35}>
+        <Stack
+          className={classes.content}
+          miw={0}
+          style={{ flexGrow: 1, flexShrink: 1 }}
+          gap={35}
+        >
           <WelcomeMessageSection
             defaultWelcomeMessageHidden={welcomeMessageHidden}
           />

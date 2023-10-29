@@ -1,3 +1,14 @@
+.root {
+  padding: 40px 100px;
+
+  /* TODO:  
+  https://github.com/microsoft/vscode-css-languageservice/pull/365#issuecomment-1759099713 
+  */
+  @container (max-width: 800px) {
+    padding: 20px 50px;
+  }
+}
+
 .close-button {
   transition: all 250ms;
   background-color: transparent;

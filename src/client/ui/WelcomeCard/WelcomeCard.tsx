@@ -16,8 +16,7 @@ export const WelcomeCard: React.FC<Props> = ({ onClose, ...props }) => {
   return (
     <Group
       {...props}
-      py={40}
-      px={100}
+      className={classes.root}
       style={{
         position: "relative",
         borderRadius: "var(--mantine-spacing-md)",

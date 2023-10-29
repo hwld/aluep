@@ -11,6 +11,10 @@
   border-radius: var(--mantine-radius-xl);
   transition: all 200ms;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .title-wrapper {
