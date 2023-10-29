@@ -108,6 +108,7 @@ export const UserHelper = {
       name: fakeString({ min: 1, max: 50 }),
       image: "",
       profile: fakeString({ min: 1, max: 200 }),
+      welcomeMessageHidden: false,
       ...data,
     };
   },
@@ -212,6 +213,7 @@ export const DevLikerHelper = {
       profile: fakeString({ min: 1, max: 200 }),
       image: "",
       likedDate: new Date(),
+      welcomeMessageHidden: false,
       ...data,
     };
   },

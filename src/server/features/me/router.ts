@@ -5,7 +5,7 @@ import { updateMe } from "@/server/features/me/updateMe";
 import { router } from "@/server/lib/trpc";
 
 export const meRoute = router({
-  /** プロフィールを更新する */
+  /** ユーザー情報を更新する */
   update: updateMe,
 
   /** ユーザーを削除する */

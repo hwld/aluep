@@ -6,6 +6,11 @@ export type User = {
   name: string | null;
   image: string | null;
   profile: string | null;
+
+  /**
+   * ホーム画面のウェルカムメッセージが非表示か
+   */
+  welcomeMessageHidden: boolean;
 };
 
 const UserFields = {
@@ -23,13 +28,16 @@ export const profileFormSchema = z.object({
     .max(
       name.maxLength,
       `ユーザー名は${name.maxLength}文字以内で入力してください。`
-    ),
+    )
+    .optional(),
   profile: z
     .string()
     .max(
       profile.maxLength,
       `自己紹介文は${profile.maxLength}文字以内で入力してください。`
-    ),
+    )
+    .optional(),
+  welcomeMessageHidden: z.boolean().optional(),
 });
 
 export type ProfileFormData = z.infer<typeof profileFormSchema>;

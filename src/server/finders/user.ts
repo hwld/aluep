@@ -3,7 +3,13 @@ import { db } from "@/server/lib/prismadb";
 import { Prisma } from "@prisma/client";
 
 const userArgs = {
-  select: { id: true, name: true, image: true, profile: true },
+  select: {
+    id: true,
+    name: true,
+    image: true,
+    profile: true,
+    welcomeMessageHidden: true,
+  },
 } satisfies Prisma.UserDefaultArgs;
 
 export const convertUser = (
@@ -14,6 +20,7 @@ export const convertUser = (
     image: rawUser.image,
     name: rawUser.name,
     profile: rawUser.profile,
+    welcomeMessageHidden: rawUser.welcomeMessageHidden,
   };
 };
 

@@ -88,8 +88,12 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
     },
   });
 
-  const handleUpdateUser = ({ name, profile }: ProfileFormData) => {
-    updateMutation.mutate({ name, profile });
+  const handleUpdateUser = ({
+    name,
+    profile,
+    welcomeMessageHidden,
+  }: ProfileFormData) => {
+    updateMutation.mutate({ name, profile, welcomeMessageHidden });
   };
 
   const handleCancel = () => {
@@ -115,6 +119,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
                 defaultValues={{
                   name: user.name ?? "",
                   profile: user.profile ?? "",
+                  welcomeMessageHidden: user.welcomeMessageHidden,
                 }}
                 isLoading={updateMutation.isLoading || updateMutation.isSuccess}
               />

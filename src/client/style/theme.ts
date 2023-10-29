@@ -11,6 +11,7 @@ import {
   Paper,
   Radio,
   Select,
+  Switch,
   Text,
   TextInput,
   Title,
@@ -27,6 +28,7 @@ import paperClasses from "./components/paper.module.css";
 import radioClasses from "./components/radio.module.css";
 import richTextEditorClasses from "./components/rich-text-editor.module.css";
 import selectClasses from "./components/select.module.css";
+import switchClasses from "./components/switch.module.css";
 import textClasses from "./components/text.module.css";
 import titleClasses from "./components/title.module.css";
 import tooltipClasses from "./components/tooltip.module.css";
@@ -161,5 +163,6 @@ export const theme = createTheme({
         content: richTextEditorClasses.content,
       },
     }),
+    Switch: Switch.extend({ classNames: { label: switchClasses.label } }),
   },
 });

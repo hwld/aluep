@@ -42,22 +42,23 @@ model Session {
 }
 
 model User {
-  id               String            @id @default(cuid())
-  name             String?
-  email            String?           @unique
-  emailVerified    DateTime?
-  image            String?
-  profile          String?           @db.Text
-  accounts         Account[]
-  sessions         Session[]
-  ideas            Idea[]
-  developments     Development[]
-  idealikes        IdeaLike[]
-  developmentLikes DevelopmentLike[]
-  ideaComments     IdeaComment[]
-  favoriteByUsers  FavoriteUser[]    @relation("asFavoriteByUser")
-  faboritedUsers   FavoriteUser[]    @relation("asFavoritedUser")
-  developmentMemos DevelopmentMemo[]
+  id                   String            @id @default(cuid())
+  name                 String?
+  email                String?           @unique
+  emailVerified        DateTime?
+  image                String?
+  profile              String?           @db.Text
+  welcomeMessageHidden Boolean           @default(false)
+  accounts             Account[]
+  sessions             Session[]
+  ideas                Idea[]
+  developments         Development[]
+  idealikes            IdeaLike[]
+  developmentLikes     DevelopmentLike[]
+  ideaComments         IdeaComment[]
+  favoriteByUsers      FavoriteUser[]    @relation("asFavoriteByUser")
+  faboritedUsers       FavoriteUser[]    @relation("asFavoritedUser")
+  developmentMemos     DevelopmentMemo[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

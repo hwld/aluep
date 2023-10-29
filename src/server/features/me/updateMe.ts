@@ -7,6 +7,10 @@ export const updateMe = requireLoggedInProcedure
   .mutation(async ({ input, ctx }) => {
     await db.user.update({
       where: { id: ctx.session.user.id },
-      data: { name: input.name, profile: input.profile },
+      data: {
+        name: input.name,
+        profile: input.profile,
+        welcomeMessageHidden: input.welcomeMessageHidden,
+      },
     });
   });

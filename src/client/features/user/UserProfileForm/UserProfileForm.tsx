@@ -1,7 +1,7 @@
 import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { ProfileFormData, profileFormSchema } from "@/models/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea, TextInput } from "@mantine/core";
+import { Switch, Textarea, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { TbEdit } from "react-icons/tb";
 
@@ -16,7 +16,7 @@ export const UserProfileForm: React.FC<Props> = ({
   onSubmit,
   onCancel,
   submitText,
-  defaultValues = { name: "", profile: "" },
+  defaultValues = { name: "", profile: "", welcomeMessageHidden: false },
   isLoading,
 }) => {
   const {
@@ -58,6 +58,18 @@ export const UserProfileForm: React.FC<Props> = ({
             autosize
             minRows={4}
             {...field}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="welcomeMessageHidden"
+        render={({ field: { value, ...others } }) => (
+          <Switch
+            mt="xl"
+            label="ホーム画面のWelcomeメッセージを非表示にする"
+            {...others}
+            checked={value}
           />
         )}
       />
