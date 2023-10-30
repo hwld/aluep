@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+let nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: "standalone",
@@ -9,8 +9,9 @@ const nextConfig = {
   experimental: { scrollRestoration: true },
 };
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
+if (process.env.ANALYZE === "true") {
+  const withNextBundleAnalyzer = require("next-bundle-analyzer")();
+  nextConfig = withNextBundleAnalyzer(nextConfig);
+}
 
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = nextConfig;
