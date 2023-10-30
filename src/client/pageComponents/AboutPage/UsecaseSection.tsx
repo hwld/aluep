@@ -1,4 +1,4 @@
-import { Box, Card, Group, Stack, Title } from "@mantine/core";
+import { Card, Group, Stack, Title } from "@mantine/core";
 import { ReactNode } from "react";
 import { IconType } from "react-icons";
 import classes from "./AboutPage.module.css";
@@ -23,7 +23,6 @@ export const UsecaseSection: React.FC<Props> = ({
           </Title>
           <Icon className={classes["usecase-title-icon"]} />
         </Group>
-        <Box className={classes["usecase-title-under"]} />
       </Stack>
 
       <Card className={classes["usecase-flow"]}>

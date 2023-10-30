@@ -56,8 +56,20 @@
 }
 
 .section {
-  margin-top: calc(130px * var(--about-scale));
+  margin-top: calc(200px * var(--about-scale));
   gap: calc(40px * var(--about-scale));
+
+  & .section-separator {
+    align-self: center;
+    background-image: radial-gradient(
+      var(--mantine-color-red-7) 2px,
+      transparent 2px
+    );
+    width: 500px;
+    height: 90px;
+    background-size: 30px 30px;
+    background-repeat: repeat;
+  }
 
   & .section-number {
     color: var(--mantine-color-red-7);
@@ -88,6 +100,13 @@
   }
 
   &.dark {
+    & .section-separator {
+      background-image: radial-gradient(
+        var(--mantine-color-red-6) 3px,
+        transparent 3px
+      );
+    }
+
     & .section-number {
       color: var(--mantine-color-red-6);
     }
@@ -193,12 +212,6 @@
         font-size: calc(25px * var(--about-scale));
         color: var(--mantine-color-red-7);
       }
-    }
-
-    & .usecase-title-under {
-      width: 100%;
-      height: 2px;
-      background-color: var(--mantine-color-red-7);
     }
   }
 

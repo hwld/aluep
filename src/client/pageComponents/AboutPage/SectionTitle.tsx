@@ -17,6 +17,7 @@ export const SectionTitle: React.FC<Props> = ({
 }) => {
   return (
     <Stack gap={0} className={clsx({ [classes.dark]: dark })}>
+      <Box className={classes["section-separator"]} />
       <Text className={classes["section-number"]}>
         {String(number).padStart(2, "0")}.
       </Text>
