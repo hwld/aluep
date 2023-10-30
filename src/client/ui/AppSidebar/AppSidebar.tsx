@@ -5,6 +5,7 @@ import { LoggedInUserMenu } from "@/client/ui/LoggedInUserMenu/LoggedInUserMenu"
 import { SidebarAppTitle } from "@/client/ui/SidebarAppTitle/SidebarAppTitle";
 import { SidebarItem } from "@/client/ui/SidebarItem/SidebarItem";
 import { SidebarToggle } from "@/client/ui/SidebarToggle/SidebarToggle";
+import { setAppConfigCookie } from "@/share/cookie";
 import { Routes } from "@/share/routes";
 import { Box, Flex, Stack, UnstyledButton } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
@@ -23,19 +24,22 @@ import {
 } from "react-icons/tb";
 import classes from "./AppSidebar.module.css";
 
-type Props = { loggedInUser?: Session["user"] };
+type Props = { loggedInUser?: Session["user"]; isOpen?: boolean | undefined };
 
 const barMinWidth = 70;
 const barPadding = 12;
 const iconWidth = barMinWidth - barPadding * 2;
 
-export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
+export const AppSidebar: React.FC<Props> = ({
+  loggedInUser,
+  isOpen = false,
+}) => {
   const router = useRouter();
-  const [isOpen, { toggle }] = useDisclosure(true);
+  const [_isOpen, { toggle }] = useDisclosure(isOpen);
   const { openLoginModal } = useRequireLoginModal();
 
   const isWideDisplay = useMediaQuery("(min-width: 1200px)", true);
-  const isMenuOpen = isWideDisplay && isOpen;
+  const isMenuOpen = isWideDisplay && _isOpen;
 
   const handleClickCreateIdea = (e: SyntheticEvent) => {
     if (!loggedInUser) {
@@ -47,6 +51,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
 
   const handleToggle = () => {
     toggle();
+    setAppConfigCookie({ isSideBarOpen: !_isOpen });
   };
 
   const handleLogin = () => {
@@ -73,7 +78,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
 
             {isWideDisplay && (
               <SidebarToggle
-                isOpen={isOpen}
+                isOpen={_isOpen}
                 onToggle={handleToggle}
                 width={`${iconWidth}px`}
               />

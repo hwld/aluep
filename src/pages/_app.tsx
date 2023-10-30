@@ -20,7 +20,7 @@ import Head from "next/head";
 
 function App({
   Component,
-  pageProps: { trpcState, ...others },
+  pageProps: { trpcState, isSideBarOpen, ...others },
 }: AppProps<PageProps>) {
   return (
     <ErrorBoundary>
@@ -46,7 +46,7 @@ function App({
         <ModalsProvider>
           <RequireLoginModalProvider>
             <Notifications />
-            <AppLayout>
+            <AppLayout isSideBarOpen={isSideBarOpen}>
               <AppNavigationProgress />
               <Component {...others} />
             </AppLayout>

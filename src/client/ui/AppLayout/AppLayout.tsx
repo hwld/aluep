@@ -7,9 +7,12 @@ import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { ReactNode } from "react";
 import classes from "./AppLayout.module.css";
 
-type Props = { children: ReactNode };
+type Props = { children: ReactNode; isSideBarOpen?: boolean | undefined };
 
-export const AppLayout: React.FC<Props> = ({ children }) => {
+export const AppLayout: React.FC<Props> = ({
+  children,
+  isSideBarOpen = true,
+}) => {
   const { session } = useSessionQuery();
   const unsupportedDisplay = useMediaQuery("(max-width: 600px)");
   const [isOpen, { close }] = useDisclosure(true);
@@ -17,7 +20,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
   return (
     <>
       <Box className={classes.root}>
-        <AppSidebar loggedInUser={session?.user} />
+        <AppSidebar loggedInUser={session?.user} isOpen={isSideBarOpen} />
         <Box component="main" p="sm" className={classes.content}>
           {children}
         </Box>
