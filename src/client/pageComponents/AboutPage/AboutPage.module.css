@@ -57,7 +57,7 @@
 
 .section {
   margin-top: calc(130px * var(--about-scale));
-  gap: calc(80px * var(--about-scale));
+  gap: calc(40px * var(--about-scale));
 
   & .section-number {
     color: var(--mantine-color-red-7);
@@ -67,9 +67,7 @@
 
   & .section-title-wrapper {
     align-items: stretch;
-    padding: calc(15px * var(--about-scale));
     gap: var(--mantine-spacing-lg);
-    background-color: rgba(0, 0, 0, 1.5%);
     border-radius: var(--mantine-radius-md);
 
     & .section-title-decoration {
@@ -86,6 +84,24 @@
       font-size: calc(25px * var(--about-scale));
       color: var(--mantine-color-gray-4);
       font-weight: bold;
+    }
+  }
+
+  &.dark {
+    & .section-number {
+      color: var(--mantine-color-red-6);
+    }
+
+    & .section-title-decoration {
+      background-color: var(--mantine-color-red-6);
+    }
+
+    & .section-title {
+      color: var(--mantine-color-gray-2);
+    }
+
+    & .section-sub-title {
+      color: var(--mantine-color-gray-5);
     }
   }
 }
@@ -135,6 +151,27 @@
     width: calc(80% * var(--about-scale));
     height: calc(80% * var(--about-scale));
   }
+}
+
+.text {
+  /* font-size: calc(20px * var(--about-scale)); */
+  font-size: 20px;
+}
+
+.dark {
+  & .text {
+    color: var(--mantine-color-gray-3);
+  }
+
+  & .link {
+    color: var(--mantine-color-red-5);
+    text-decoration: underline;
+    margin-inline: 3px;
+  }
+}
+
+.usecase-section {
+  gap: calc(80px * var(--about-scale));
 }
 
 .usecase-root {

@@ -4,7 +4,10 @@ import { FunctionIcon } from "@/client/pageComponents/AboutPage/FunctionIcon";
 import { SectionTitle } from "@/client/pageComponents/AboutPage/SectionTitle";
 import { UsecaseSection } from "@/client/pageComponents/AboutPage/UsecaseSection";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
+import { Routes } from "@/share/routes";
 import { Box, Center, Image, Stack, Text } from "@mantine/core";
+import clsx from "clsx";
+import Link from "next/link";
 import {
   TbArrowBigLeftLine,
   TbArrowBigRightLine,
@@ -19,6 +22,8 @@ import {
 import classes from "./AboutPage.module.css";
 
 type Props = {};
+
+const blackHeight = 720;
 
 export const AboutPage: React.FC<Props> = () => {
   return (
@@ -50,11 +55,34 @@ export const AboutPage: React.FC<Props> = () => {
       </Center>
 
       <Stack className={classes.content}>
-        <Stack className={classes["section"]}>
+        <Stack className={classes.section}>
           <SectionTitle
             number={1}
-            title="Aluepの使いかた"
-            subTitle="Start Guide"
+            title="Aluepとは？"
+            subTitle="What is Aluep?"
+          />
+
+          <Text className={classes.text}>
+            プログラミングを学んでいると、「作りたいものがある人のほうがプログラミングが上達しやすい」という言葉をどこかで耳にしたことがあると思います。
+            作りたいものがたくさんあって、常に手を動かし続けている人の上達速度が早いのは確かだと思います。
+            しかし、重要なのは作りたいものがあることではなく、実際に様々なものを作り込んだという経験です。
+            <br />
+            <br />
+            Aluepは、作りたいものが思い浮かばないという方が、そういった言葉を耳にして諦めてしまわないように、作りたいと思えるアプリのアイデアが集まるWebサービスを目指しています。
+            <br />
+            <br />
+            しかし、お題を投稿するという形のWebサービスであるため、皆さまのご協力が必要です。
+            ご自身がこれまでに作ってきたアプリ、作ると勉強になりそうなアプリをお題として投稿してもらいたいのです。
+            <br />
+            ぜひご協力をお願いします。
+          </Text>
+        </Stack>
+
+        <Stack className={clsx(classes["section"], classes["usecase-section"])}>
+          <SectionTitle
+            number={2}
+            title="Aluepの使い方"
+            subTitle="How to use Aluep"
           />
 
           <UsecaseSection
@@ -120,7 +148,74 @@ export const AboutPage: React.FC<Props> = () => {
             }
           />
         </Stack>
+
+        <Stack className={classes.section}>
+          <SectionTitle number={3} title="開発メンバー" subTitle="Member" />
+          <Text className={classes.text}>僕です</Text>
+        </Stack>
       </Stack>
+
+      <Box h="300px" />
+      <Box
+        style={{
+          position: "fixed",
+          backgroundImage: "url(/black-wave.svg)",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "top",
+          height: "450px",
+          bottom: blackHeight,
+          left: -400,
+          right: -10,
+          zIndex: -100,
+        }}
+      />
+      <Box
+        style={{
+          position: "fixed",
+          backgroundColor: "var(--mantine-color-gray-8)",
+          height: `${blackHeight}px`,
+          bottom: 0,
+          left: -400,
+          right: 0,
+          zIndex: -100,
+        }}
+      />
+
+      <Stack className={clsx(classes.section, classes.content, classes.dark)}>
+        <SectionTitle
+          number={4}
+          title="動機 / 開発方針"
+          subTitle="Motivation / Policy"
+        />
+        <Text className={classes.text}>
+          Aluepは、僕がそこそこの規模のWebアプリケーションを開発してみたいという動機から作り始めたものです。
+          僕はこれまで小さなものはいくつか作ってきましたが、多機能で複雑なWebアプリは作ったことがありませんでした。
+          <br />
+          <br />
+          そこで、Aluepはできるだけ多くの機能を実装し、複雑なWebアプリを目指しています。
+          機能を実装する目的は、ユーザーのことを考えてというより、どういう機能を作ってみたいか、どういう機能の実装を経験したいかを重視しています。
+          そのため、操作が複雑になったり、必要な機能が存在しない事があると思います。
+          <br />
+          <br />
+          しかし、こういった機能がほしい、こういった機能はやめてほしいといった要望はどんどんお待ちしています。
+          想像のユーザーのための機能に対しては消極的ですが、実際のユーザーの声には応えていきたいです。
+          <br />
+          要望のある方は、ぜひ
+          <Text
+            component={Link}
+            href={Routes.contact()}
+            target="_blank"
+            span
+            className={clsx(classes.text, classes.link)}
+          >
+            お問い合わせフォーム
+          </Text>
+          からお願いします。
+        </Text>
+      </Stack>
+
+      <Box h={100} />
     </Box>
   );
 };

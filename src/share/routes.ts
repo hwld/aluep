@@ -6,6 +6,8 @@ export const Routes = {
 
   about: "/about",
 
+  contact: () => process.env.NEXT_PUBLIC_CONTACT_URL || Routes.serverError,
+
   /** アプリ開発のお題関連 */
   ideas: `/ideas`,
   idea: (id: string) => `${Routes.ideas}/${id}`,

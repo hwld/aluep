@@ -130,7 +130,7 @@ export const AppSidebar: React.FC<Props> = ({ loggedInUser }) => {
               icon={TbMail}
               label="お問い合わせ"
               asLink
-              href={process.env.NEXT_PUBLIC_CONTACT_URL || Routes.serverError}
+              href={Routes.contact()}
               target="_blank"
               tooltip={!isMenuOpen}
             />
