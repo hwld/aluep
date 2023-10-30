@@ -1,8 +1,7 @@
 import { Box } from "@mantine/core";
-import { IconType } from "react-icons";
 import classes from "./AboutPage.module.css";
 
-type Props = { icon: IconType };
+type Props = { icon: React.FC };
 
 export const ArrowIcon: React.FC<Props> = ({ icon: Icon }) => {
   return (

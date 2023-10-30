@@ -1,7 +1,7 @@
+import { SvgExclamationCircle } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import { Box, Button, Flex, Text, Title } from "@mantine/core";
 import Link from "next/link";
-import { TbExclamationCircle } from "react-icons/tb";
 
 export const NotFoundPage: React.FC = () => {
   return (
@@ -33,8 +33,9 @@ export const NotFoundPage: React.FC = () => {
               right: "-350px",
             }}
           >
-            <TbExclamationCircle
-              size={600}
+            <SvgExclamationCircle
+              width={600}
+              height={600}
               color="var(--mantine-color-red-7)"
             />
           </Box>

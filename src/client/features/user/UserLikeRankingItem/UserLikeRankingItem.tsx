@@ -1,12 +1,11 @@
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
+import { SvgHeartFilled, SvgMedal } from "@/client/ui/Icons";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { Flex, Text } from "@mantine/core";
 import { User } from "next-auth";
 import { useMemo } from "react";
-import { BiMedal } from "react-icons/bi";
-import { TbHeart } from "react-icons/tb";
 
 type Props = { ranking: number; user: User; likeCount: number };
 export const UserLikeRankingItem: React.FC<Props> = ({
@@ -17,11 +16,11 @@ export const UserLikeRankingItem: React.FC<Props> = ({
   const rank = useMemo(() => {
     switch (ranking) {
       case 1:
-        return <BiMedal size="30px" color="rgb(255, 196, 0)" />;
+        return <SvgMedal width={30} height={30} color="rgb(255, 196, 0)" />;
       case 2:
-        return <BiMedal size="30px" color="rgb(201, 201, 201)" />;
+        return <SvgMedal width={30} height={30} color="rgb(201, 201, 201)" />;
       case 3:
-        return <BiMedal size="30px" color="rgb(172, 109, 77)" />;
+        return <SvgMedal width={30} height={30} color="rgb(172, 109, 77)" />;
       default:
         return <Text>{ranking}</Text>;
     }
@@ -49,10 +48,9 @@ export const UserLikeRankingItem: React.FC<Props> = ({
             <Flex align="center" gap={5}>
               <IconCounter
                 icon={
-                  <TbHeart
+                  <SvgHeartFilled
                     style={{ width: "16px", height: "16px" }}
                     color="var(--mantine-color-red-7)"
-                    fill="var(--mantine-color-red-7)"
                   />
                 }
                 counter={likeCount}

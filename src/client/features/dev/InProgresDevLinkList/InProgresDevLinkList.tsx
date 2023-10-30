@@ -1,8 +1,8 @@
+import { SvgFileText } from "@/client/ui/Icons";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { NavLink, Stack } from "@mantine/core";
 import Link from "next/link";
-import { TbFileText } from "react-icons/tb";
 import classes from "./InProgresDevLinkList.module.css";
 
 type Props = { devs: Dev[]; onCloseModal: () => void };
@@ -22,7 +22,7 @@ export const InProgresDevLinkList: React.FC<Props> = ({
             key={dev.id}
             noWrap
             label={dev?.idea?.title ?? "削除されたお題"}
-            leftSection={<TbFileText size={25} />}
+            leftSection={<SvgFileText width={25} height={25} />}
             classNames={{ root: classes.link }}
             color="gray.7"
           />

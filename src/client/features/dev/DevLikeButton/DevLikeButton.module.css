@@ -27,7 +27,6 @@
 
     &.liked {
       color: var(--mantine-color-pink-7);
-      fill: var(--mantine-color-pink-7);
     }
   }
 

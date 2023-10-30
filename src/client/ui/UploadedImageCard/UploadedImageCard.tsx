@@ -1,5 +1,6 @@
 import { formatBytes, formatDateTime } from "@/client/lib/utils";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
+import { SvgCopy, SvgTrash } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import {
   Button,
@@ -13,7 +14,6 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { TbCopy, TbTrash } from "react-icons/tb";
 
 type Props = {
   imageUrl: string;
@@ -71,7 +71,11 @@ export const UploadedImageCard: React.FC<Props> = ({
             <Group>
               <Button
                 leftSection={
-                  <TbTrash size={20} color="var(--mantine-color-gray-1)" />
+                  <SvgTrash
+                    width={20}
+                    height={20}
+                    color="var(--mantine-color-gray-1)"
+                  />
                 }
                 style={{ flex: 1 }}
                 onClick={open}
@@ -90,7 +94,11 @@ export const UploadedImageCard: React.FC<Props> = ({
                       bg="gray.7"
                       c="gray.1"
                       leftSection={
-                        <TbCopy size={20} color="var(--mantine-color-gray-1)" />
+                        <SvgCopy
+                          width={20}
+                          height={20}
+                          color="var(--mantine-color-gray-1)"
+                        />
                       }
                       style={{ flex: 1 }}
                       onClick={copy}
@@ -118,7 +126,7 @@ export const UploadedImageCard: React.FC<Props> = ({
         onClose={close}
         onConfirm={handleDelete}
         isConfirming={isDeleting}
-        confirmIcon={TbTrash}
+        confirmIcon={SvgTrash}
         confirmText="削除する"
       />
     </>

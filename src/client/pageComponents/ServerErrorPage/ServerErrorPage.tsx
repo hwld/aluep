@@ -1,7 +1,7 @@
+import { SvgTool } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import { Box, Button, Flex, Text, Title } from "@mantine/core";
 import Link from "next/link";
-import { BiWrench } from "react-icons/bi";
 
 export const ServerErrorPage: React.FC = () => {
   return (
@@ -32,7 +32,11 @@ export const ServerErrorPage: React.FC = () => {
               right: "-350px",
             }}
           >
-            <BiWrench size={600} color="var(--mantine-color-red-7)" />
+            <SvgTool
+              width={600}
+              height={600}
+              color="var(--mantine-color-red-7)"
+            />
           </Box>
           <Title size={200} fw={900} style={{ lineHeight: "180px" }}>
             500

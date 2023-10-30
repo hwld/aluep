@@ -19,7 +19,7 @@
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "stoprybook build",
     "test-storybook": "test-storybook",
-    "svgr": "npx @svgr/cli -d src/client/ui/Icons public/icons"
+    "svgr": "npx @svgr/cli -d src/client/ui/Icons .svgr/icons"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -41,7 +41,6 @@
     "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^5.0.0",
     "@slack/webhook": "^7.0.0",
-    "@tabler/icons": "^2.0.0",
     "@tanstack/react-query": "^4.16.1",
     "@tanstack/react-query-devtools": "^4.36.1",
     "@tiptap/extension-bold": "^2.0.0-beta.217",
@@ -85,7 +84,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.7",
-    "react-icons": "^4.6.0",
     "sanitize-html": "^2.9.0",
     "satori": "^0.10.9",
     "sharp": "^0.32.6",

@@ -5,13 +5,13 @@ import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { formatDate } from "@/client/lib/utils";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
+import { SvgHeart } from "@/client/ui/Icons";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Flex } from "@mantine/core";
 import { useRouter } from "next/router";
-import { TbHeart } from "react-icons/tb";
 import classes from "./DevCard.module.css";
 
 type Props = {
@@ -47,7 +47,7 @@ export const DevCard: React.FC<Props> = ({ dev }) => {
       rightFooter={
         <IconCounter
           active={dev.likedByLoggedInUser}
-          icon={<TbHeart />}
+          icon={<SvgHeart />}
           counter={dev.likes}
         />
       }

@@ -11,11 +11,11 @@ import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
+import { SvgEdit, SvgFlag, SvgPhoto } from "@/client/ui/Icons";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
 import { User } from "next-auth";
-import { TbEdit, TbFlag, TbPhoto } from "react-icons/tb";
 
 type Props = {
   user: User;
@@ -63,13 +63,13 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
           {isOwner && (
             <>
               <AppMenuLinkItem
-                leftSection={<TbPhoto />}
+                leftSection={<SvgPhoto />}
                 href={Routes.userUploadedImages(user.id)}
               >
                 アップロードした画像
               </AppMenuLinkItem>
               <AppMenuLinkItem
-                leftSection={<TbEdit />}
+                leftSection={<SvgEdit />}
                 href={Routes.userUpdate}
               >
                 ユーザー情報を編集する
@@ -78,7 +78,7 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
             </>
           )}
 
-          <AppMenuItem leftSection={<TbFlag />} onClick={openReportModal}>
+          <AppMenuItem leftSection={<SvgFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>

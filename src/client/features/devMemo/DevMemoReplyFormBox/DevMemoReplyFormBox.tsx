@@ -1,4 +1,5 @@
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
+import { SvgAlertCircle, SvgMessage2 } from "@/client/ui/Icons";
 import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
 import { DevMemoFormData, devMemoFormSchema } from "@/models/devMemo";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,7 +7,6 @@ import { Box, Button, Divider, Flex, Text } from "@mantine/core";
 import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { TbAlertCircle, TbMessage2 } from "react-icons/tb";
 import classes from "./DevMemoReplyFormBox.module.css";
 
 type Props = {
@@ -82,7 +82,11 @@ export const DevMemoReplyFormBox: React.FC<Props> = ({
               [classes.show]: errors.text,
             })}
           >
-            <TbAlertCircle size={30} color="var(--mantine-color-red-7)" />
+            <SvgAlertCircle
+              width={30}
+              height={30}
+              color="var(--mantine-color-red-7)"
+            />
             <Text c="red">{errors.text?.message}</Text>
           </Flex>
           <Flex gap="xs">
@@ -97,8 +101,9 @@ export const DevMemoReplyFormBox: React.FC<Props> = ({
               type="submit"
               loading={debouncedSubmitting}
               leftSection={
-                <TbMessage2
-                  size={20}
+                <SvgMessage2
+                  width={20}
+                  height={20}
                   style={{ opacity: debouncedSubmitting ? 0.3 : 1 }}
                 />
               }

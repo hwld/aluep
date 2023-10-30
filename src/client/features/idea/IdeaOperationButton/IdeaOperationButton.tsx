@@ -11,13 +11,13 @@ import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
+import { SvgDots, SvgEdit, SvgFlag, SvgTrash } from "@/client/ui/Icons";
 import { Idea } from "@/models/idea";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/router";
-import { TbDots, TbEdit, TbFlag, TbTrash } from "react-icons/tb";
 import classes from "./IdeaOperationButton.module.css";
 
 type Props = { idea: Idea; isIdeaOwner: boolean };
@@ -87,20 +87,24 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
       <AppMenu position="bottom-start">
         <Menu.Target>
           <ActionIcon size={35} className={classes.icon}>
-            <TbDots size="70%" color="var(--mantine-color-gray-5)" />
+            <SvgDots
+              width="70%"
+              height="70%"
+              color="var(--mantine-color-gray-5)"
+            />
           </ActionIcon>
         </Menu.Target>
         <AppMenuDropdown>
           {isIdeaOwner && (
             <>
               <AppMenuLinkItem
-                leftSection={<TbEdit />}
+                leftSection={<SvgEdit />}
                 href={Routes.ideaUpdate(idea.id)}
               >
                 お題を編集する
               </AppMenuLinkItem>
               <AppMenuItem
-                leftSection={<TbTrash />}
+                leftSection={<SvgTrash />}
                 red
                 onClick={openDeleteModal}
               >
@@ -110,7 +114,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
               <AppMenuDivider />
             </>
           )}
-          <AppMenuItem leftSection={<TbFlag />} onClick={openReportModal}>
+          <AppMenuItem leftSection={<SvgFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>
@@ -128,7 +132,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
         onClose={closeDeleteModal}
         onConfirm={handleDeleteIdea}
         isConfirming={deleteIdeaMutation.isLoading}
-        confirmIcon={TbTrash}
+        confirmIcon={SvgTrash}
         confirmText="削除する"
       />
       <AppModal

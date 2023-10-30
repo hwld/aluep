@@ -1,6 +1,7 @@
 import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
+import { SvgCode, SvgHeart, SvgMessageCircle } from "@/client/ui/Icons";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
@@ -8,7 +9,6 @@ import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Flex, Group, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
-import { TbCode, TbHeart, TbMessageCircle } from "react-icons/tb";
 import classes from "./IdeaCard.module.css";
 
 export const ideaCardMinWidthPx = 450;
@@ -66,15 +66,18 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
             <Group gap="sm" align="center">
               <IconCounter
                 active={idea.likedByLoggedInUser}
-                icon={<TbHeart />}
+                icon={<SvgHeart />}
                 counter={idea.likes}
               />
               <IconCounter
                 active={Boolean(idea.loggedInUserDevId)}
-                icon={<TbCode />}
+                icon={<SvgCode />}
                 counter={idea.devs}
               />
-              <IconCounter icon={<TbMessageCircle />} counter={idea.comments} />
+              <IconCounter
+                icon={<SvgMessageCircle />}
+                counter={idea.comments}
+              />
             </Group>
           </Group>
         }

@@ -1,9 +1,14 @@
 import { useLoggedInUserInfoQuery } from "@/client/features/session/useLoggedInUserInfoQuery";
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
+import {
+  SvgChevronDown,
+  SvgCode,
+  SvgFileText,
+  SvgHeart,
+} from "@/client/ui/Icons";
 import { Flex, Stack, Text } from "@mantine/core";
 import { Session } from "next-auth";
-import { TbChevronDown, TbCode, TbFileText, TbHeart } from "react-icons/tb";
 
 type Props = { user: Session["user"]; iconWidth: number };
 
@@ -32,27 +37,29 @@ export const LoggedInUserCard: React.FC<Props> = ({ user, iconWidth }) => {
           {/* アイコン類 */}
           <Flex gap="xs">
             <IconCounter
-              icon={<TbHeart color={textColor} />}
+              // color属性がclassに負けるのstyleにして詳細度を高くする
+              icon={<SvgHeart style={{ color: textColor }} />}
               counter={loggedInUserInfo?.allLikes ?? 0}
               counterProps={{ c: textColor, fz: "md" }}
             />
 
             <IconCounter
-              icon={<TbFileText color={textColor} />}
+              icon={<SvgFileText style={{ color: textColor }} />}
               counter={loggedInUserInfo?.ideas ?? 0}
               counterProps={{ c: textColor, fz: "md" }}
             />
 
             <IconCounter
-              icon={<TbCode color={textColor} />}
+              icon={<SvgCode style={{ color: textColor }} />}
               counter={loggedInUserInfo?.devs ?? 0}
               counterProps={{ c: textColor, fz: "md" }}
             />
           </Flex>
         </Stack>
       </Flex>
-      <TbChevronDown
-        size="30"
+      <SvgChevronDown
+        width="30"
+        height="30"
         color="var(--mantine-color-gray-3)"
         style={{ paddingTop: "3px", flexShrink: 0 }}
       />

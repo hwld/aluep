@@ -4,8 +4,8 @@ import {
   UserDevCard,
   userDevCardMinWidthPx,
 } from "@/client/features/user/UserDevCard/UserDevCard";
+import { SvgCode } from "@/client/ui/Icons";
 import { User } from "next-auth";
-import { TbCode } from "react-icons/tb";
 
 type Props = {
   user: User;
@@ -26,7 +26,13 @@ export const UserDevs: React.FC<Props> = ({ user, page, onChangePage }) => {
       totalPages={devsByUser?.allPages ?? 0}
       emptyProps={{
         isEmpty: devsByUser?.list.length === 0,
-        icon: <TbCode size="100" color="var(--mantine-color-red-7)" />,
+        icon: (
+          <SvgCode
+            width="100"
+            height="100"
+            color="var(--mantine-color-red-7)"
+          />
+        ),
         text: "お題の開発情報がありません",
         description: (
           <>

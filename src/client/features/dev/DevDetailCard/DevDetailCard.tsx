@@ -6,6 +6,12 @@ import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { convertToGithubDevUrl } from "@/client/lib/convertToGithubDevUrl";
 import { formatDate } from "@/client/lib/utils";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
+import {
+  SvgClock,
+  SvgGithubMark,
+  SvgLink,
+  SvgRotateClockwise2,
+} from "@/client/ui/Icons";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
@@ -19,9 +25,6 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import { BsGithub } from "react-icons/bs";
-import { MdAccessTime, MdUpdate } from "react-icons/md";
-import { TbLink } from "react-icons/tb";
 import classes from "./DevDetailCard.module.css";
 
 type Props = {
@@ -60,7 +63,7 @@ export const DevDetailCard: React.FC<Props> = ({
                     component={"a"}
                     href={convertToGithubDevUrl(dev.githubUrl)}
                     target="_blank"
-                    leftSection={<BsGithub size={20} />}
+                    leftSection={<SvgGithubMark height={20} width={20} />}
                   >
                     コードを見る
                   </Button>
@@ -69,7 +72,7 @@ export const DevDetailCard: React.FC<Props> = ({
                       component="a"
                       href={dev.developedItemUrl}
                       target="_blank"
-                      leftSection={<TbLink size={20} />}
+                      leftSection={<SvgLink width={20} height={20} />}
                       color="gray.5"
                     >
                       リンクを開く
@@ -82,11 +85,11 @@ export const DevDetailCard: React.FC<Props> = ({
             <Stack gap={0}>
               <Flex gap="xl">
                 <Flex align="center" gap={5}>
-                  <MdAccessTime size={20} />
+                  <SvgClock height={20} width={20} />
                   <Text>{formatDate(new Date(dev.createdAt))}</Text>
                 </Flex>
                 <Flex align="center" gap={5}>
-                  <MdUpdate size={20} />
+                  <SvgRotateClockwise2 width={20} height={20} />
                   <Text>{formatDate(new Date(dev.updatedAt))}</Text>
                 </Flex>
               </Flex>

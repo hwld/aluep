@@ -1,9 +1,8 @@
 import { FunctionIcon } from "@/client/pageComponents/AboutPage/FunctionIcon";
 import { Card, Group, Stack, Text } from "@mantine/core";
-import { IconType } from "react-icons";
 import classes from "./AboutPage.module.css";
 
-type Props = { icon: IconType; title: string; description: string };
+type Props = { icon: React.FC; title: string; description: string };
 
 export const FunctionCard: React.FC<Props> = ({ icon, title, description }) => {
   return (

@@ -1,4 +1,5 @@
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
+import { SvgAlertCircle, SvgMessage2 } from "@/client/ui/Icons";
 import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
 import {
   IdeaCommentFormData,
@@ -9,7 +10,6 @@ import { Button, Card, Divider, Flex, Text } from "@mantine/core";
 import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { TbAlertCircle, TbMessage2 } from "react-icons/tb";
 import classes from "./IdeaCommentReplyFormCard.module.css";
 
 type Props = {
@@ -81,7 +81,11 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
               [classes.show]: errors.text,
             })}
           >
-            <TbAlertCircle size={30} color="var(--mantine-color-red-7)" />
+            <SvgAlertCircle
+              width={30}
+              height={30}
+              color="var(--mantine-color-red-7)"
+            />
             <Text c="red">{errors.text?.message}</Text>
           </Flex>
           <Flex gap="xs">
@@ -95,7 +99,7 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
             <Button
               type="submit"
               loading={debouncedSubmitting}
-              leftSection={<TbMessage2 size={20} />}
+              leftSection={<SvgMessage2 width={20} height={20} />}
               loaderProps={{ size: 20 }}
             >
               返信

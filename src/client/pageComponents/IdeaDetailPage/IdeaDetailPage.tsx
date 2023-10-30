@@ -10,6 +10,12 @@ import { useRequireLoginModal } from "@/client/features/session/RequireLoginModa
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
+import {
+  SvgClock,
+  SvgFileText,
+  SvgRotateClockwise2,
+  SvgUser,
+} from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { TocCard } from "@/client/ui/TocCard/TocCard";
@@ -18,8 +24,6 @@ import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
-import { MdAccessTime, MdUpdate } from "react-icons/md";
-import { TbFileText, TbUser } from "react-icons/tb";
 
 type Props = { idea: Idea };
 
@@ -60,7 +64,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
 
   return (
     <>
-      <PageHeader icon={TbFileText} pageName="お題の詳細" />
+      <PageHeader icon={SvgFileText} pageName="お題の詳細" />
       <Flex maw={1200} direction="column" align="center" m="auto">
         <Title ta="center" c="red.7" style={{ wordBreak: "break-all" }}>
           {idea.title}
@@ -129,7 +133,13 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
               }}
             >
               <IdeaInfoCardItem
-                icon={<TbUser size={20} color="var(--mantine-color-gray-5)" />}
+                icon={
+                  <SvgUser
+                    width={20}
+                    height={20}
+                    color="var(--mantine-color-gray-5)"
+                  />
+                }
                 title="投稿者"
               >
                 <Flex gap={5} mt={5} align="center">
@@ -147,7 +157,11 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
 
               <IdeaInfoCardItem
                 icon={
-                  <MdAccessTime size={20} color="var(--mantine-color-gray-5)" />
+                  <SvgClock
+                    width={20}
+                    height={20}
+                    color="var(--mantine-color-gray-5)"
+                  />
                 }
                 title="作成日"
               >
@@ -156,7 +170,11 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
 
               <IdeaInfoCardItem
                 icon={
-                  <MdUpdate size={20} color="var(--mantine-color-gray-5)" />
+                  <SvgRotateClockwise2
+                    width={20}
+                    height={20}
+                    color="var(--mantine-color-gray-5)"
+                  />
                 }
                 title="更新日"
                 disabledDivider

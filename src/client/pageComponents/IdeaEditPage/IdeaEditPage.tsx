@@ -5,12 +5,12 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
+import { SvgEdit } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Idea, IdeaFormData } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card } from "@mantine/core";
 import { useRouter } from "next/router";
-import { TbEdit } from "react-icons/tb";
 
 type Props = { idea: Idea };
 export const IdeaEditPage: React.FC<Props> = ({ idea }) => {
@@ -43,7 +43,7 @@ export const IdeaEditPage: React.FC<Props> = ({ idea }) => {
 
   return (
     <>
-      <PageHeader icon={TbEdit} pageName="お題の編集" />
+      <PageHeader icon={SvgEdit} pageName="お題の編集" />
       <Box w="100%" miw={300} maw={800} m="auto">
         <Card mt="md" style={{ position: "static" }}>
           <IdeaForm

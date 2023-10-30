@@ -1,10 +1,10 @@
+import { SvgLogout } from "@/client/ui/Icons";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
 import { Button, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import { NextPage } from "next";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { TbLogout } from "react-icons/tb";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ session }) => {
@@ -31,12 +31,16 @@ const Signout: NextPage = () => {
               height={200}
               alt="app-logo"
             />
-            <TbLogout size="20%" color="var(--mantine-color-red-7)" />
+            <SvgLogout
+              width="20%"
+              height="20%"
+              color="var(--mantine-color-red-7)"
+            />
           </Flex>
           <Stack align="center" gap="sm">
             <Text>ログアウトしてもよろしいですか？</Text>
             <Button
-              leftSection={<TbLogout size={25} />}
+              leftSection={<SvgLogout width={25} height={25} />}
               color="red"
               onClick={handleSignOut}
               w="fit-content"

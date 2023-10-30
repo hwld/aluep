@@ -1,5 +1,5 @@
+import { SvgPointFilled, SvgQuestionMark, SvgSearch } from "@/client/ui/Icons";
 import { Card, Flex, Text } from "@mantine/core";
-import { TbPointFilled, TbQuestionMark, TbSearch } from "react-icons/tb";
 import classes from "./EmptyIdeaSearchResult.module.css";
 
 export const EmptyIdeaSearchResult = () => {
@@ -14,12 +14,36 @@ export const EmptyIdeaSearchResult = () => {
     >
       <Card w={450} p="xl">
         <Flex justify="center" align="center">
-          <TbSearch size={70} color="var(--mantine-color-red-7)" />
-          <TbPointFilled size={30} color="var(--mantine-color-red-3)" />
-          <TbPointFilled size={30} color="var(--mantine-color-red-4)" />
-          <TbPointFilled size={30} color="var(--mantine-color-red-5)" />
-          <TbPointFilled size={30} color="var(--mantine-color-red-6)" />
-          <TbQuestionMark size={90} color="var(--mantine-color-red-7)" />
+          <SvgSearch
+            width={70}
+            height={70}
+            color="var(--mantine-color-red-7)"
+          />
+          <SvgPointFilled
+            width={30}
+            height={30}
+            color="var(--mantine-color-red-3)"
+          />
+          <SvgPointFilled
+            width={30}
+            height={30}
+            color="var(--mantine-color-red-4)"
+          />
+          <SvgPointFilled
+            width={30}
+            height={30}
+            color="var(--mantine-color-red-5)"
+          />
+          <SvgPointFilled
+            width={30}
+            height={30}
+            color="var(--mantine-color-red-6)"
+          />
+          <SvgQuestionMark
+            width={90}
+            height={90}
+            color="var(--mantine-color-red-7)"
+          />
         </Flex>
         <Text mt="md" c="gray.5" ta="center">
           条件に一致する検索結果はありません。<br></br>

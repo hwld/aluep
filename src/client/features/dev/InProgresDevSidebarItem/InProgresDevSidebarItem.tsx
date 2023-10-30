@@ -2,12 +2,12 @@ import { InProgresDevLinkList } from "@/client/features/dev/InProgresDevLinkList
 import { trpc } from "@/client/lib/trpc";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
+import { SvgCode } from "@/client/ui/Icons";
 import { SidebarItem } from "@/client/ui/SidebarItem/SidebarItem";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { Center, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { TbCode } from "react-icons/tb";
 
 type Props = { tooltip?: boolean; loggedInUserId: string };
 
@@ -24,7 +24,7 @@ export const DevInProgresSidebarItem: React.FC<Props> = ({
   return (
     <>
       <SidebarItem
-        icon={TbCode}
+        icon={SvgCode}
         label="開発中のお題"
         tooltip={tooltip}
         onClick={open}
@@ -43,7 +43,13 @@ export const DevInProgresSidebarItem: React.FC<Props> = ({
         ) : (
           <Center mt="xl">
             <EmptyContentItem
-              icon={<TbCode size={100} color="var(--mantine-color-red-7)" />}
+              icon={
+                <SvgCode
+                  width={100}
+                  height={100}
+                  color="var(--mantine-color-red-7)"
+                />
+              }
               description={
                 <>
                   気になるアプリを検索してみましょう。<br></br>

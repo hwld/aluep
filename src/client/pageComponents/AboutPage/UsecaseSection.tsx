@@ -1,10 +1,9 @@
 import { Card, Group, Stack, Title } from "@mantine/core";
 import { ReactNode } from "react";
-import { IconType } from "react-icons";
 import classes from "./AboutPage.module.css";
 
 type Props = {
-  usecase: { icon: IconType; name: string };
+  usecase: { icon: React.FC<{ className: string }>; name: string };
   flow: ReactNode;
   functions: ReactNode;
 };

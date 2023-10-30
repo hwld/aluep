@@ -6,6 +6,7 @@ import {
   showLoadingNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
+import { SvgEdit } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ProfileFormData } from "@/models/user";
 import { Routes } from "@/share/routes";
@@ -13,7 +14,6 @@ import { Box, Card, Flex } from "@mantine/core";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { TbEdit } from "react-icons/tb";
 
 const uploadNotificationId = "upload-icon";
 
@@ -102,7 +102,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <PageHeader icon={TbEdit} pageName="ユーザーの編集" />
+      <PageHeader icon={SvgEdit} pageName="ユーザーの編集" />
       <Box w="100%" maw={800} miw={400} m="auto">
         <Card mt="md">
           <Flex gap="md">

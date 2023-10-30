@@ -10,12 +10,12 @@ import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
 import { showErrorNotification } from "@/client/lib/utils";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
+import { SvgCode, SvgNote } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev } from "@/models/dev";
 import { DevMemoFormData } from "@/models/devMemo";
 import { Card, Center, Flex, Stack, Switch, Title } from "@mantine/core";
 import React, { useRef } from "react";
-import { TbCode, TbNote } from "react-icons/tb";
 
 type Props = { dev: Dev };
 
@@ -84,7 +84,7 @@ export const DevDetailPage: React.FC<Props> = ({ dev }) => {
 
   return (
     <>
-      <PageHeader icon={TbCode} pageName="開発情報の詳細" />
+      <PageHeader icon={SvgCode} pageName="開発情報の詳細" />
       <Stack maw={1200} w="100%" m="auto" gap={40}>
         <DevDetailCard
           dev={dev}
@@ -113,7 +113,11 @@ export const DevDetailPage: React.FC<Props> = ({ dev }) => {
               <Center h="100%">
                 <EmptyContentItem
                   icon={
-                    <TbNote size={120} color="var(--mantine-color-gray-7)" />
+                    <SvgNote
+                      width={120}
+                      height={120}
+                      color="var(--mantine-color-gray-7)"
+                    />
                   }
                   text="開発メモがありません"
                   description={

@@ -13,19 +13,19 @@ import {
 import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem/UserLikeRankingItem";
 import { trpc } from "@/client/lib/trpc";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
+import {
+  SvgBulb,
+  SvgCode,
+  SvgFlame,
+  SvgHeart,
+  SvgHome,
+  SvgThumbUp,
+} from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { RankingCard } from "@/client/ui/RankingCard/RankingCard";
 import { WelcomeMessageSection } from "@/client/ui/WelcomeMessageSection/WelcomeMessageSection";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Title } from "@mantine/core";
-import {
-  TbBulb,
-  TbCode,
-  TbFlame,
-  TbHeart,
-  TbHome,
-  TbThumbUp,
-} from "react-icons/tb";
 import classes from "./HomePage.module.css";
 
 type Props = {
@@ -56,7 +56,7 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
 
   return (
     <>
-      <PageHeader icon={TbHome} pageName="ホーム" />
+      <PageHeader icon={SvgHome} pageName="ホーム" />
       <Flex w="100%" gap="xl">
         <Stack
           className={classes.content}
@@ -70,10 +70,10 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
           {top10LikedIdeas.length > 0 && (
             <Stack gap="sm">
               <Flex gap={0} align="center">
-                <TbFlame
-                  size="35px"
+                <SvgFlame
+                  width="35px"
+                  height="35px"
                   color="var(--mantine-color-red-6)"
-                  fill="var(--mantine-color-red-6)"
                 />
                 <Title order={4} size="h3" c="red.7">
                   人気のお題
@@ -95,8 +95,9 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
               {recommendedIdeas.length > 0 && (
                 <PickedUpIdeas
                   icon={
-                    <TbThumbUp
-                      size="30px"
+                    <SvgThumbUp
+                      width="30px"
+                      height="30px"
                       color="var(--mantine-color-green-7)"
                     />
                   }
@@ -107,7 +108,11 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
 
               <PickedUpIdeas
                 icon={
-                  <TbBulb size="30px" color="var(--mantine-color-yellow-7)" />
+                  <SvgBulb
+                    width="30px"
+                    height="30px"
+                    color="var(--mantine-color-yellow-7)"
+                  />
                 }
                 title="最新のお題"
                 readMoreHref={Routes.ideaSearch({ order: "createdDesc" })}
@@ -117,7 +122,11 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
               {manyLikesIdeas.length !== 0 && (
                 <PickedUpIdeas
                   icon={
-                    <TbHeart size="30px" color="var(--mantine-color-pink-7)" />
+                    <SvgHeart
+                      width="30px"
+                      height="30px"
+                      color="var(--mantine-color-pink-7)"
+                    />
                   }
                   title="いいねが多かったお題"
                   readMoreHref={Routes.ideaSearch({ order: "likeDesc" })}
@@ -128,7 +137,11 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
               {manyDevsIdeas.length !== 0 && (
                 <PickedUpIdeas
                   icon={
-                    <TbCode size="30px" color="var(--mantine-color-blue-7)" />
+                    <SvgCode
+                      width="30px"
+                      height="30px"
+                      color="var(--mantine-color-blue-7)"
+                    />
                   }
                   title="開発者が多かったお題"
                   readMoreHref={Routes.ideaSearch({ order: "devDesc" })}
@@ -145,7 +158,13 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
           <RankingCard title="いいねが多かった開発者">
             {top10LikedDevelopers?.length === 0 ? (
               <EmptyContentItem
-                icon={<TbHeart size={100} color="var(--mantine-color-red-7)" />}
+                icon={
+                  <SvgHeart
+                    width={100}
+                    height={100}
+                    color="var(--mantine-color-red-7)"
+                  />
+                }
                 text="いいねがありません"
                 description="開発者のいいねのランキングがここに表示されます"
               />
@@ -164,7 +183,13 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
           <RankingCard title="いいねが多かった投稿者">
             {top10LikedIdeaAuthors?.length === 0 ? (
               <EmptyContentItem
-                icon={<TbHeart size={100} color="var(--mantine-color-red-7)" />}
+                icon={
+                  <SvgHeart
+                    width={100}
+                    height={100}
+                    color="var(--mantine-color-red-7)"
+                  />
+                }
                 text="いいねがありません"
                 description="投稿者のいいねのランキングがここに表示されます"
               />

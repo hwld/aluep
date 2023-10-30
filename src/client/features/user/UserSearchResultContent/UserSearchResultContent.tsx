@@ -3,9 +3,9 @@ import {
   UserCard,
   userCardMinWidthPx,
 } from "@/client/features/user/UserCard/UserCard";
+import { SvgUserSearch } from "@/client/ui/Icons";
 import { User } from "@/models/user";
 import { Box, Flex, Text } from "@mantine/core";
-import { TbUserSearch } from "react-icons/tb";
 
 type Props = {
   userSearchResult: User[];
@@ -22,7 +22,11 @@ export const UserSearchResultContent: React.FC<Props> = ({
     return (
       <Flex direction="column">
         <Flex justify="center" align="center">
-          <TbUserSearch size={100} color="var(--mantine-color-red-7)" />
+          <SvgUserSearch
+            width={100}
+            height={100}
+            color="var(--mantine-color-red-7)"
+          />
         </Flex>
         <Text ta="center" c="gray.5">
           ユーザを検索してみよう!

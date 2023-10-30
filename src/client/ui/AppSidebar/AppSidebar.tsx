@@ -1,5 +1,14 @@
 import { DevInProgresSidebarItem } from "@/client/features/dev/InProgresDevSidebarItem/InProgresDevSidebarItem";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import {
+  SvgFilePlus,
+  SvgHome,
+  SvgInfoCircle,
+  SvgLogin2,
+  SvgMail,
+  SvgSearch,
+  SvgUserSearch,
+} from "@/client/ui/Icons";
 import { LoggedInUserCard } from "@/client/ui/LoggedInUserCard/LoggedInUserCard";
 import { LoggedInUserMenu } from "@/client/ui/LoggedInUserMenu/LoggedInUserMenu";
 import { SidebarAppTitle } from "@/client/ui/SidebarAppTitle/SidebarAppTitle";
@@ -13,15 +22,6 @@ import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
-import {
-  TbFilePlus,
-  TbHome,
-  TbInfoCircle,
-  TbLogin2,
-  TbMail,
-  TbSearch,
-  TbUserSearch,
-} from "react-icons/tb";
 import classes from "./AppSidebar.module.css";
 
 type Props = { loggedInUser?: Session["user"]; isOpen?: boolean | undefined };
@@ -86,7 +86,7 @@ export const AppSidebar: React.FC<Props> = ({
           </Flex>
           <Stack gap={10}>
             <SidebarItem
-              icon={TbHome}
+              icon={SvgHome}
               label="ホーム"
               asLink
               href={Routes.home}
@@ -94,7 +94,7 @@ export const AppSidebar: React.FC<Props> = ({
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={TbFilePlus}
+              icon={SvgFilePlus}
               label="お題を投稿"
               onClick={handleClickCreateIdea}
               asLink
@@ -103,7 +103,7 @@ export const AppSidebar: React.FC<Props> = ({
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={TbSearch}
+              icon={SvgSearch}
               label="お題を検索"
               asLink
               href={Routes.ideaSearch()}
@@ -117,7 +117,7 @@ export const AppSidebar: React.FC<Props> = ({
               />
             )}
             <SidebarItem
-              icon={TbUserSearch}
+              icon={SvgUserSearch}
               label="ユーザーを検索"
               asLink
               href={Routes.userSearch}
@@ -125,14 +125,14 @@ export const AppSidebar: React.FC<Props> = ({
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={TbInfoCircle}
+              icon={SvgInfoCircle}
               label="Aluepについて"
               asLink
               href={Routes.about}
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={TbMail}
+              icon={SvgMail}
               label="お問い合わせ"
               asLink
               href={Routes.contact()}
@@ -157,7 +157,7 @@ export const AppSidebar: React.FC<Props> = ({
           />
         ) : (
           <SidebarItem
-            icon={TbLogin2}
+            icon={SvgLogin2}
             label="ログイン"
             onClick={handleLogin}
             tooltip={!isMenuOpen}

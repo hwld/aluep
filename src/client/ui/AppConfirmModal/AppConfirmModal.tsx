@@ -1,8 +1,7 @@
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Button, Flex, Text } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
-import { ReactNode } from "react";
-import { IconType } from "react-icons/lib";
+import { ReactNode, SVGProps } from "react";
 
 type Props = {
   title: string;
@@ -11,7 +10,7 @@ type Props = {
   onClose: () => void;
   onConfirm: () => void;
   isConfirming?: boolean;
-  confirmIcon: IconType;
+  confirmIcon: React.FC<SVGProps<SVGSVGElement>>;
   confirmText: string;
 };
 export const AppConfirmModal: React.FC<Props> = ({
@@ -41,7 +40,11 @@ export const AppConfirmModal: React.FC<Props> = ({
           loading={debouncedConfirming}
           onClick={onConfirm}
           leftSection={
-            <ConfirmIcon size={20} opacity={debouncedConfirming ? 0.2 : 1} />
+            <ConfirmIcon
+              width={20}
+              height={20}
+              opacity={debouncedConfirming ? 0.2 : 1}
+            />
           }
           loaderProps={{ size: 20 }}
         >

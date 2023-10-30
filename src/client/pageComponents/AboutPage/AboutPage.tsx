@@ -3,22 +3,22 @@ import { FunctionCard } from "@/client/pageComponents/AboutPage/FunctionCard";
 import { FunctionIcon } from "@/client/pageComponents/AboutPage/FunctionIcon";
 import { SectionTitle } from "@/client/pageComponents/AboutPage/SectionTitle";
 import { UsecaseSection } from "@/client/pageComponents/AboutPage/UsecaseSection";
+import {
+  SvgArrowBigLeftLine,
+  SvgArrowBigRightLine,
+  SvgBulb,
+  SvgCode,
+  SvgFileText,
+  SvgInfoCircle,
+  SvgSearch,
+  SvgUserCode,
+  SvgUserEdit,
+} from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Routes } from "@/share/routes";
 import { Box, Center, Image, Stack, Text } from "@mantine/core";
 import clsx from "clsx";
 import Link from "next/link";
-import {
-  TbArrowBigLeftLine,
-  TbArrowBigRightLine,
-  TbBulb,
-  TbCode,
-  TbFileText,
-  TbInfoCircle,
-  TbSearch,
-  TbUserCode,
-  TbUserEdit,
-} from "react-icons/tb";
 import classes from "./AboutPage.module.css";
 
 type Props = {};
@@ -28,7 +28,7 @@ const blackHeight = 720;
 export const AboutPage: React.FC<Props> = () => {
   return (
     <Box className={classes.root}>
-      <PageHeader icon={TbInfoCircle} pageName="Aluepについて" />
+      <PageHeader icon={SvgInfoCircle} pageName="Aluepについて" />
 
       <Center className={classes["hero-card"]}>
         <Stack align="center" className={classes["hero-container"]}>
@@ -86,33 +86,33 @@ export const AboutPage: React.FC<Props> = () => {
           />
 
           <UsecaseSection
-            usecase={{ icon: TbUserCode, name: "お題の開発者" }}
+            usecase={{ icon: SvgUserCode, name: "お題の開発者" }}
             flow={
               <>
-                <FunctionIcon icon={TbSearch} />
-                <ArrowIcon icon={TbArrowBigRightLine} />
-                <FunctionIcon icon={TbCode} />
+                <FunctionIcon icon={SvgSearch} />
+                <ArrowIcon icon={SvgArrowBigRightLine} />
+                <FunctionIcon icon={SvgCode} />
                 <Stack gap={0}>
-                  <ArrowIcon icon={TbArrowBigRightLine} />
-                  <ArrowIcon icon={TbArrowBigLeftLine} />
+                  <ArrowIcon icon={SvgArrowBigRightLine} />
+                  <ArrowIcon icon={SvgArrowBigLeftLine} />
                 </Stack>
-                <FunctionIcon icon={TbBulb} />
+                <FunctionIcon icon={SvgBulb} />
               </>
             }
             functions={
               <>
                 <FunctionCard
-                  icon={TbSearch}
+                  icon={SvgSearch}
                   title="お題を探そう!"
                   description="ホーム画面には人気のお題やオススメのお題があります。検索画面で条件を詳しく入力することもできます。気になったお題を見つけてみましょう！"
                 />
                 <FunctionCard
-                  icon={TbCode}
+                  icon={SvgCode}
                   title="開発を始めよう！"
                   description="気になったお題が見つかったら、開発に使用するリポジトリを登録して、開発を始めてみましょう！開発中には、学んだことをメモすることもできます。"
                 />
                 <FunctionCard
-                  icon={TbBulb}
+                  icon={SvgBulb}
                   title="みんなの開発を参考にしよう！"
                   description="開発に行き詰まったときには、ほかの開発者のコードを参考にしてみましょう！参考になった開発者には、いいねを送ることもできます。"
                 />
@@ -121,26 +121,26 @@ export const AboutPage: React.FC<Props> = () => {
           />
 
           <UsecaseSection
-            usecase={{ icon: TbUserEdit, name: "お題の投稿者" }}
+            usecase={{ icon: SvgUserEdit, name: "お題の投稿者" }}
             flow={
               <>
-                <FunctionIcon icon={TbFileText} />
+                <FunctionIcon icon={SvgFileText} />
                 <Stack gap={0}>
-                  <ArrowIcon icon={TbArrowBigRightLine} />
-                  <ArrowIcon icon={TbArrowBigRightLine} />
+                  <ArrowIcon icon={SvgArrowBigRightLine} />
+                  <ArrowIcon icon={SvgArrowBigRightLine} />
                 </Stack>
-                <FunctionIcon icon={TbBulb} />
+                <FunctionIcon icon={SvgBulb} />
               </>
             }
             functions={
               <>
                 <FunctionCard
-                  icon={TbFileText}
+                  icon={SvgFileText}
                   title="お題を投稿しよう！"
                   description="アイデアを思いついて、みんなの実装を見てみたいときや、自分が作っているアプリの実装に詰まったときには、お題を投稿することで解決するかもしれません。"
                 />
                 <FunctionCard
-                  icon={TbBulb}
+                  icon={SvgBulb}
                   title="みんなの開発を参考にしよう！"
                   description="投稿したら、お題のURLを共有することで開発者を募集することができます。お題にはコメントを残せるので、お題の実装に関する疑問を書くと、誰かが回答してくれるかもしれません。"
                 />

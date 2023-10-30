@@ -1,12 +1,12 @@
 import { IdeaDescriptionEditor } from "@/client/features/idea/IdeaDescriptionEditor/IdeaDescriptionEditor";
 import { useIdeaDescriptionEditor } from "@/client/features/idea/useIdeaDescriptionEditor";
 import { AppForm } from "@/client/ui/AppForm/AppForm";
+import { SvgFilePlus } from "@/client/ui/Icons";
 import { IdeaFormData, ideaFormSchema } from "@/models/idea";
 import { IdeaTag } from "@/models/ideaTag";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, MultiSelect, Space, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
-import { TbFilePlus } from "react-icons/tb";
 
 type Props = {
   allTags: IdeaTag[];
@@ -52,7 +52,7 @@ export const IdeaForm: React.FC<Props> = ({
       onSubmit={handleSubmit(onSubmit)}
       onCancel={onCancel}
       submitText={submitText}
-      submitIcon={TbFilePlus}
+      submitIcon={SvgFilePlus}
       isSubmitting={isLoading}
     >
       <Controller

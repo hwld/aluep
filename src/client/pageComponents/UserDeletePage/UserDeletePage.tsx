@@ -1,5 +1,6 @@
 import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
+import { SvgTrash } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ReCaptchaCheckBox } from "@/client/ui/ReCaptchaCheckBox";
 import { Routes } from "@/share/routes";
@@ -7,7 +8,6 @@ import { Box, Button, List, Mark, Text, Title } from "@mantine/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { TbTrash } from "react-icons/tb";
 
 export const UserDeletepage: React.FC = () => {
   const router = useRouter();
@@ -43,7 +43,7 @@ export const UserDeletepage: React.FC = () => {
 
   return (
     <>
-      <PageHeader icon={TbTrash} pageName="アカウントの削除" />
+      <PageHeader icon={SvgTrash} pageName="アカウントの削除" />
       <Box w="100%" maw={600} m="auto">
         <Box mt="xl">
           <Text>一度ユーザーを削除すると、</Text>

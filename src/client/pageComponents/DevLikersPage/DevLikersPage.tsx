@@ -7,12 +7,12 @@ import { useDevLikers } from "@/client/features/user/useDevLikers";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
+import { SvgHeart } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev } from "@/models/dev";
 import { paginatedPageSchema } from "@/share/paging";
 import { Stack } from "@mantine/core";
-import { TbHeart } from "react-icons/tb";
 
 type Props = { dev: Dev };
 
@@ -29,7 +29,7 @@ export const DevLikersPage: React.FC<Props> = ({ dev }) => {
 
   return (
     <>
-      <PageHeader icon={TbHeart} pageName="開発情報をいいねしたユーザー" />
+      <PageHeader icon={SvgHeart} pageName="開発情報をいいねしたユーザー" />
       <Stack w="100%" maw={1200} m="auto" gap="xl">
         <Stack gap="sm">
           <MutedText>開発情報</MutedText>

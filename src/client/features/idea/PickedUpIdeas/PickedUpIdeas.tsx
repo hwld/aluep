@@ -3,11 +3,11 @@ import {
   ideaCardMinWidthPx,
 } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
+import { SvgArrowRight } from "@/client/ui/Icons";
 import { Idea } from "@/models/idea";
 import { Button, Flex, Stack, Title } from "@mantine/core";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { TbArrowRight } from "react-icons/tb";
 import classes from "./PickedUpIdeas.module.css";
 
 type Props = {
@@ -32,7 +32,7 @@ export const PickedUpIdeas: React.FC<Props> = ({
         </Flex>
         {readMoreHref && (
           <Button
-            rightSection={<TbArrowRight size={20} />}
+            rightSection={<SvgArrowRight width={20} height={20} />}
             component={Link}
             href={readMoreHref}
             variant="outline"

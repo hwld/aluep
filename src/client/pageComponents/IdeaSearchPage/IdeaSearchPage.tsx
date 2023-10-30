@@ -13,6 +13,7 @@ import { ideaOrderItems, ideaPeriodItems } from "@/client/lib/consts";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
+import { SvgSearch } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import {
   ideaOrderSchema,
@@ -21,7 +22,6 @@ import {
 } from "@/models/idea";
 import { Box, Card, Flex, Select, Title } from "@mantine/core";
 import React from "react";
-import { TbSearch } from "react-icons/tb";
 
 export const IdeaSearchPage: React.FC = () => {
   const { allTags } = useAllTagsQuery();
@@ -61,7 +61,7 @@ export const IdeaSearchPage: React.FC = () => {
 
   return (
     <>
-      <PageHeader icon={TbSearch} pageName="お題の検索" />
+      <PageHeader icon={SvgSearch} pageName="お題の検索" />
       <Box>
         <Flex w="100%" direction="column">
           <Card

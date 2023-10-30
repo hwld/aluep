@@ -1,8 +1,8 @@
+import { SvgHeart, SvgHeartFilled } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Anchor, Stack, Tooltip } from "@mantine/core";
 import clsx from "clsx";
 import Link from "next/link";
-import { TbHeart } from "react-icons/tb";
 import classes from "./IdeaLikeButton.module.css";
 
 type Props = {
@@ -30,16 +30,21 @@ export const IdeaLikeButton: React.FC<Props> = ({
         })}
         onClick={onLikeIdea}
       >
-        <TbHeart
-          {...(likedByLoggedInUser
-            ? {
-                size: "75%",
-                color: "transparent",
-                fill: "var(--mantine-color-pink-7)",
-              }
-            : { size: "70%", color: "var(--mantine-color-gray-5)" })}
-          style={{ marginTop: "4px" }}
-        />
+        {likedByLoggedInUser ? (
+          <SvgHeartFilled
+            width="75%"
+            height="75%"
+            color="var(--mantine-color-pink-7)"
+            style={{ marginTop: "5px" }}
+          />
+        ) : (
+          <SvgHeart
+            width="75%"
+            height="75%"
+            color="var(--mantine-color-gray-5)"
+            style={{ marginTop: "5px" }}
+          />
+        )}
       </ActionIcon>
       <Tooltip
         offset={10}

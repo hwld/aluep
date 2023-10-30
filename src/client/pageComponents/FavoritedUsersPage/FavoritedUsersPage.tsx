@@ -7,13 +7,13 @@ import { UserSummaryHeader } from "@/client/features/user/UserSummaryHeader/User
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
+import { SvgHeartFilled, SvgUserHeart } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { User } from "@/models/user";
 import { paginatedPageSchema } from "@/share/paging";
 import { Box, Card, Center, Stack, Text } from "@mantine/core";
 import React from "react";
-import { TbHeart, TbUserHeart } from "react-icons/tb";
 
 type Props = { user: User };
 
@@ -27,7 +27,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <PageHeader icon={TbUserHeart} pageName="お気に入りユーザー" />
+      <PageHeader icon={SvgUserHeart} pageName="お気に入りユーザー" />
       <Stack maw={800} m="auto" gap="lg">
         <Stack gap="sm">
           <MutedText>ユーザー</MutedText>
@@ -38,10 +38,10 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
             <Card w="100%" style={{ alignItems: "center" }} py="xl">
               <EmptyContentItem
                 icon={
-                  <TbHeart
-                    size={100}
+                  <SvgHeartFilled
+                    width={100}
+                    height={100}
                     color="var(--mantine-color-red-6)"
-                    fill="var(--mantine-color-red-6)"
                   />
                 }
                 text={"ユーザーをお気に入り登録していません"}

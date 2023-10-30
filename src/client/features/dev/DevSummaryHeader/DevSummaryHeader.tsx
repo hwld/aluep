@@ -1,10 +1,10 @@
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
+import { SvgCode } from "@/client/ui/Icons";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Text } from "@mantine/core";
-import { TbCode } from "react-icons/tb";
 
 type Props = { dev: Dev };
 export const DevSummaryHeader: React.FC<Props> = ({ dev }) => {
@@ -18,7 +18,7 @@ export const DevSummaryHeader: React.FC<Props> = ({ dev }) => {
           padding: "var(--mantine-spacing-xs)",
         }}
       >
-        <TbCode color="var(--mantine-color-red-7)" size={70} />
+        <SvgCode color="var(--mantine-color-red-7)" width={70} height={70} />
       </Center>
       <Stack gap="md" miw={0}>
         {dev.idea ? (

@@ -1,6 +1,6 @@
+import { SvgHeartFilled } from "@/client/ui/Icons";
 import { Idea } from "@/models/idea";
 import { Flex, MantineStyleProp, Text } from "@mantine/core";
-import { TbHeart } from "react-icons/tb";
 
 type Props = { idea: Idea };
 
@@ -15,10 +15,10 @@ export const IdeaCardLikeCounter: React.FC<Props> = ({ idea }) => {
 
   return (
     <Flex align="center" gap={5} style={style}>
-      <TbHeart
-        size="55px"
-        color="transparent"
-        fill="var(--mantine-color-red-7)"
+      <SvgHeartFilled
+        width="55px"
+        height="55px"
+        color="var(--mantine-color-red-7)"
       />
       <Text
         size="xl"

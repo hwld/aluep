@@ -1,5 +1,5 @@
+import { SvgHeart } from "@/client/ui/Icons";
 import { Meta, StoryObj } from "@storybook/react";
-import { TbHeart } from "react-icons/tb";
 import { IconCounter } from "./IconCounter";
 
 const meta = {
@@ -8,4 +8,4 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-export const Default: Story = { args: { icon: <TbHeart />, counter: 10 } };
+export const Default: Story = { args: { icon: <SvgHeart />, counter: 10 } };

@@ -1,11 +1,11 @@
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
+import { SvgFileText } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Text } from "@mantine/core";
-import { TbFileText } from "react-icons/tb";
 
 type Props = { idea: Idea | undefined };
 
@@ -20,11 +20,12 @@ export const IdeaSummaryHeader: React.FC<Props> = ({ idea }) => {
           padding: "var(--mantine-spacing-xs)",
         }}
       >
-        <TbFileText
+        <SvgFileText
           color={
             idea ? "var(--mantine-color-red-7)" : "var(--mantine-color-gray-5)"
           }
-          size={70}
+          width={70}
+          height={70}
         />
       </Center>
       <Stack gap="md" miw={0}>

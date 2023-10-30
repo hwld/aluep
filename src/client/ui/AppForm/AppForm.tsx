@@ -1,14 +1,13 @@
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
 import { Button, Flex, Stack } from "@mantine/core";
-import { FormEventHandler, PropsWithChildren, useId } from "react";
-import { IconType } from "react-icons/lib";
+import { FormEventHandler, PropsWithChildren, SVGProps, useId } from "react";
 
 type Props = {
   onSubmit: FormEventHandler<HTMLFormElement>;
   onCancel: () => void;
   isSubmitting?: boolean;
   submitText: string;
-  submitIcon: IconType;
+  submitIcon: React.FC<SVGProps<SVGSVGElement>>;
 } & PropsWithChildren;
 
 export const AppForm: React.FC<Props> = ({
@@ -43,7 +42,11 @@ export const AppForm: React.FC<Props> = ({
             type="submit"
             loading={debouncedSubmitting}
             leftSection={
-              <SubmitIcon size={20} opacity={debouncedSubmitting ? 0.2 : 1} />
+              <SubmitIcon
+                width={20}
+                height={20}
+                opacity={debouncedSubmitting ? 0.2 : 1}
+              />
             }
             loaderProps={{ size: 20 }}
           >

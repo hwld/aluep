@@ -1,3 +1,4 @@
+import { SvgBook, SvgReload } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import {
   ActionIcon,
@@ -9,7 +10,6 @@ import {
   useCombobox,
 } from "@mantine/core";
 import { FocusEventHandler, forwardRef, useMemo, useState } from "react";
-import { TbBook, TbReload } from "react-icons/tb";
 import classes from "./GitHubRepoSelect.module.css";
 
 type Props = {
@@ -102,11 +102,11 @@ export const GitHubRepoSelect: React.FC<Props> = forwardRef<
         <Combobox.Header style={{}}>
           <Group justify="space-between">
             <Group gap={5} align="center">
-              <TbBook color="var(--mantine-color-gray-5)" />
+              <SvgBook color="var(--mantine-color-gray-5)" />
               <MutedText>リポジトリ一覧</MutedText>
             </Group>
             <ActionIcon size="sm" bg="gray.2" onClick={onUpdateList}>
-              <TbReload color="var(--mantine-color-gray-7)" />
+              <SvgReload color="var(--mantine-color-gray-7)" />
             </ActionIcon>
           </Group>
         </Combobox.Header>

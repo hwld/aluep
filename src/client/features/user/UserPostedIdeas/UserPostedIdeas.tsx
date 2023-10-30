@@ -4,8 +4,8 @@ import {
 } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { usePostedIdeasQuery } from "@/client/features/idea/usePostedIdeasQuery";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
+import { SvgFileText } from "@/client/ui/Icons";
 import { User } from "next-auth";
-import { TbFileText } from "react-icons/tb";
 
 type Props = {
   user: User;
@@ -27,7 +27,13 @@ export const UserPostedIdeas: React.FC<Props> = ({
       totalPages={postedIdeas?.allPages ?? 0}
       emptyProps={{
         isEmpty: postedIdeas?.list.length === 0,
-        icon: <TbFileText size="100" color="var(--mantine-color-red-7)" />,
+        icon: (
+          <SvgFileText
+            width="100"
+            height="100"
+            color="var(--mantine-color-red-7)"
+          />
+        ),
         text: "お題がありません",
         description: (
           <>

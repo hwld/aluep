@@ -1,7 +1,7 @@
 import { UserActivity } from "@/client/features/user/useUserActivityQuery";
+import { SvgCode, SvgFileText, SvgHeart } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
-import { TbCode, TbFileText, TbHeart } from "react-icons/tb";
 
 type Props = { userActivity: UserActivity; width?: number };
 export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
@@ -12,7 +12,11 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
         <Stack gap={5}>
           <MutedText>投稿したお題の数</MutedText>
           <Flex align="center" gap={10}>
-            <TbFileText size={40} color="var(--mantine-color-red-7)" />
+            <SvgFileText
+              width={40}
+              height={40}
+              color="var(--mantine-color-red-7)"
+            />
             <Flex align="flex-end" gap={2}>
               <Text size="md" fw="bold" c="red.7">
                 {userActivity.postedIdeaCount}
@@ -25,7 +29,11 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
         <Stack gap={5}>
           <MutedText>開発したお題の数</MutedText>
           <Flex align="center" gap={10}>
-            <TbCode size={40} color="var(--mantine-color-blue-7)" />
+            <SvgCode
+              width={40}
+              height={40}
+              color="var(--mantine-color-blue-7)"
+            />
             <Flex align="flex-end" gap={2}>
               <Text size="md" fw="bold" c="blue.7">
                 {userActivity.devCount}
@@ -38,7 +46,11 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
         <Stack gap={5}>
           <MutedText>いいねしたお題の数</MutedText>
           <Flex align="center" gap={10}>
-            <TbHeart size={40} color="var(--mantine-color-pink-6)" />
+            <SvgHeart
+              width={40}
+              height={40}
+              color="var(--mantine-color-pink-6)"
+            />
             <Flex align="flex-end" gap={2}>
               <Text size="md" fw="bold" c="pink.6">
                 {userActivity.likedIdeaCount}

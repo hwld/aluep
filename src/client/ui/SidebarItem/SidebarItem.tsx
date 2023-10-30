@@ -2,12 +2,11 @@ import { AppTooltip } from "@/client/ui/AppTooltip";
 import { WrapperLink } from "@/client/ui/WrapperLink";
 import { Box, Button } from "@mantine/core";
 import clsx from "clsx";
-import React, { MouseEventHandler } from "react";
-import { IconType } from "react-icons/lib";
+import React, { MouseEventHandler, SVGProps } from "react";
 import classes from "./SidebarItem.module.css";
 
 type Props = {
-  icon: IconType;
+  icon: React.FC<SVGProps<SVGSVGElement>>;
   active?: boolean;
   label: string;
   tooltip?: boolean;
@@ -49,7 +48,7 @@ export const SidebarItem: React.FC<Props> = ({
               [classes.active]: active,
             })}
           >
-            <Icon size="100%" />
+            <Icon width="100%" height="100%" />
           </Box>
           {label}
         </Button>

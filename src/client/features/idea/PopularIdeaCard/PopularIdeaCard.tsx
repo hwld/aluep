@@ -2,6 +2,7 @@ import { IdeaCardLikeCounter } from "@/client/features/idea/IdeaCardLikeCounter/
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { useSamePositionLeftClick } from "@/client/lib/useSamePositionLeftClick";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
+import { SvgCode, SvgMessageCircle } from "@/client/ui/Icons";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
@@ -10,7 +11,6 @@ import { Routes } from "@/share/routes";
 import { Group, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { MouseEventHandler } from "react";
-import { TbCode, TbMessageCircle } from "react-icons/tb";
 import classes from "./PopularIdeaCard.module.css";
 
 export const popularIdeaCardWidthPx = 400;
@@ -68,11 +68,11 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
               <Group align="center" gap="sm">
                 <IconCounter
                   active={Boolean(idea.loggedInUserDevId)}
-                  icon={<TbCode />}
+                  icon={<SvgCode />}
                   counter={idea.devs}
                 />
                 <IconCounter
-                  icon={<TbMessageCircle />}
+                  icon={<SvgMessageCircle />}
                   counter={idea.comments}
                 />
               </Group>

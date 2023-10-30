@@ -6,13 +6,13 @@ import { UserLikedIdeas } from "@/client/features/user/UserLikedIdeas/UserLikedI
 import { UserPostedIdeas } from "@/client/features/user/UserPostedIdeas/UserPostedIdeas";
 import { useUserActivityQuery } from "@/client/features/user/useUserActivityQuery";
 import { useURLParams } from "@/client/lib/useURLParams";
+import { SvgCode, SvgFileText, SvgHeart, SvgUser } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { TabControl } from "@/client/ui/TabControl/TabControl";
 import { User, userDetailPageSchame, UserDetailPageTab } from "@/models/user";
 import { assertNever } from "@/share/utils";
 import { Box, Flex, Stack } from "@mantine/core";
 import { useMemo } from "react";
-import { TbCode, TbFileText, TbHeart, TbUser } from "react-icons/tb";
 
 type Props = { user: User };
 
@@ -68,7 +68,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <PageHeader icon={TbUser} pageName="ユーザーの詳細" />
+      <PageHeader icon={SvgUser} pageName="ユーザーの詳細" />
       <Flex maw={1200} direction="column" align="center" m="auto">
         <UserDashboard
           user={user}
@@ -83,22 +83,22 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
               {
                 value: "postedIdeas",
                 label: "投稿したお題",
-                icon: TbFileText,
+                icon: SvgFileText,
               },
               {
                 value: "devs",
                 label: "お題の開発情報",
-                icon: TbCode,
+                icon: SvgCode,
               },
               {
                 value: "likedIdeas",
                 label: "いいねしたお題",
-                icon: TbHeart,
+                icon: SvgHeart,
               },
               {
                 value: "likedDevs",
                 label: "いいねした開発情報",
-                icon: TbHeart,
+                icon: SvgHeart,
               },
             ]}
           />

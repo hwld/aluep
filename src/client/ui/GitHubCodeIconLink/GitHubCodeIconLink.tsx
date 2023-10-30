@@ -1,6 +1,6 @@
 import { DevCardIconLink } from "@/client/features/dev/DevCardLinkIcon/DevCardLinkIcon";
 import { convertToGithubDevUrl } from "@/client/lib/convertToGithubDevUrl";
-import { BsGithub } from "react-icons/bs";
+import { SvgGithubMark } from "@/client/ui/Icons";
 
 type Props = { gitHubUrl: string };
 
@@ -10,7 +10,13 @@ export const GitHubCodeIconLink: React.FC<Props> = ({ gitHubUrl }) => {
     <DevCardIconLink
       label="コードを見に行く"
       url={convertToGithubDevUrl(gitHubUrl)}
-      icon={<BsGithub size="80%" fill="var(--mantine-color-gray-7)" />}
+      icon={
+        <SvgGithubMark
+          height="80%"
+          width="80%"
+          color="var(--mantine-color-gray-7)"
+        />
+      }
     />
   );
 };

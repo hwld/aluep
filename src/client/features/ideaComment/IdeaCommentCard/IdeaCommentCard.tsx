@@ -8,11 +8,11 @@ import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClick
 import { formatDate } from "@/client/lib/utils";
 import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
+import { SvgChevronsRight, SvgMessageCircle, SvgUser } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { IdeaComment, IdeaCommentFormData } from "@/models/ideaComment";
 import { Box, Card, Flex, Stack, Text, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { TbChevronsRight, TbMessageCircle, TbUser } from "react-icons/tb";
 import classes from "./IdeaCommentCard.module.css";
 
 type Props = {
@@ -88,8 +88,9 @@ export const IdeaCommentCard: React.FC<Props> = ({
               <Box>
                 {comment.fromUser.id === ideaOwnerId && (
                   <Flex gap={3} align="center">
-                    <TbUser
-                      size={18}
+                    <SvgUser
+                      width={18}
+                      height={18}
                       fill="var(--mantine-color-red-7)"
                       color="var(--mantine-color-red-7)"
                     />
@@ -114,7 +115,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
           {/* 返信コメントは返信元が削除されている場合はnullになる */}
           {comment.inReplyToComment === null && (
             <Box color="red.7" className={classes["deleted-message"]}>
-              <TbChevronsRight size={20} />
+              <SvgChevronsRight width={20} height={20} />
               削除されたコメント
             </Box>
           )}
@@ -125,7 +126,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
                 color="red.7"
                 className={classes["replay-message"]}
               >
-                <TbChevronsRight size={20} />
+                <SvgChevronsRight width={20} height={20} />
                 {comment.inReplyToComment.fromUserName ?? "不明なユーザー名"}
               </UnstyledButton>
             </Flex>
@@ -136,7 +137,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
           <Flex justify="space-between" align="center" gap="xs">
             <Flex align="center">
               <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>
-                <TbMessageCircle size="70%" />
+                <SvgMessageCircle width="70%" height="70%" />
               </CardActionIcon>
             </Flex>
             <MutedText>{formatDate(comment.createdAt)}</MutedText>

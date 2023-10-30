@@ -1,6 +1,6 @@
 import { stopPropagation } from "@/client/lib/utils";
+import { SvgDots } from "@/client/ui/Icons";
 import { ActionIcon, Menu } from "@mantine/core";
-import { TbDots } from "react-icons/tb";
 import classes from "./AppMenuButton.module.css";
 
 type Props = {};
@@ -13,7 +13,7 @@ export const AppMenuButton: React.FC<Props> = () => {
         className={classes.button}
         onClick={stopPropagation}
       >
-        <TbDots size="70%" />
+        <SvgDots width="70%" height="70%" />
       </ActionIcon>
     </Menu.Target>
   );

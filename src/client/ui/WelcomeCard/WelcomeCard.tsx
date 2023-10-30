@@ -1,3 +1,4 @@
+import { SvgArrowRight, SvgX } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import {
   ActionIcon,
@@ -9,7 +10,6 @@ import {
 } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
-import { TbArrowRight, TbX } from "react-icons/tb";
 import classes from "./WelcomeCard.module.css";
 
 type Props = { onClose: () => void } & GroupProps;
@@ -32,7 +32,7 @@ export const WelcomeCard: React.FC<Props> = ({ onClose, ...props }) => {
         size={40}
         onClick={onClose}
       >
-        <TbX size="100%" />
+        <SvgX width="100%" height="100%" />
       </ActionIcon>
       <Stack style={{ zIndex: 10 }} gap="xl">
         <Stack gap="xs">
@@ -52,7 +52,7 @@ export const WelcomeCard: React.FC<Props> = ({ onClose, ...props }) => {
           component={Link}
           href={Routes.about}
           className={classes["more-button"]}
-          rightSection={<TbArrowRight size={20} />}
+          rightSection={<SvgArrowRight width={20} height={20} />}
         >
           このアプリについて
         </Button>

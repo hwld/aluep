@@ -11,10 +11,10 @@ import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
+import { SvgFlag, SvgLink, SvgTrash } from "@/client/ui/Icons";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
-import { TbFlag, TbLink, TbTrash } from "react-icons/tb";
 
 type Props = {
   ideaId: string;
@@ -84,7 +84,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
               <AppMenuItem
                 red
                 onClick={openDeleteModal}
-                leftSection={<TbTrash />}
+                leftSection={<SvgTrash />}
               >
                 コメントを削除する
               </AppMenuItem>
@@ -92,10 +92,10 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
             </>
           )}
           <>
-            <AppMenuItem leftSection={<TbLink />} onClick={handleCopyLink}>
+            <AppMenuItem leftSection={<SvgLink />} onClick={handleCopyLink}>
               リンクをコピーする
             </AppMenuItem>
-            <AppMenuItem leftSection={<TbFlag />} onClick={openReportModal}>
+            <AppMenuItem leftSection={<SvgFlag />} onClick={openReportModal}>
               通報する
             </AppMenuItem>
           </>
@@ -108,7 +108,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
         onClose={closeDeleteModal}
         onConfirm={onDeleteComment}
         isConfirming={isDeleting}
-        confirmIcon={TbTrash}
+        confirmIcon={SvgTrash}
         confirmText="削除する"
       />
       <AppModal

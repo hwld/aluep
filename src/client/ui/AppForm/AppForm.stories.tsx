@@ -1,11 +1,11 @@
 import { AppForm } from "@/client/ui/AppForm/AppForm";
+import { SvgCode } from "@/client/ui/Icons";
 import { Meta, StoryObj } from "@storybook/react";
-import { TbCode } from "react-icons/tb";
 
 const meta = { component: AppForm } satisfies Meta<typeof AppForm>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
-  args: { submitIcon: TbCode, submitText: "送信" },
+  args: { submitIcon: SvgCode, submitText: "送信" },
 };

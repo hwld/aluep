@@ -1,8 +1,8 @@
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import { SvgFileText } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import { Button, Card, Text } from "@mantine/core";
 import { useRouter } from "next/router";
-import { TbFileText } from "react-icons/tb";
 import classes from "./EmptyFomeIdeas.module.css";
 
 type Props = { isLoggedIn: boolean };
@@ -22,7 +22,11 @@ export const EmptyHomeIdeas: React.FC<Props> = ({ isLoggedIn }) => {
 
   return (
     <Card w={450} p="xl" className={classes.root}>
-      <TbFileText size={100} color="var(--mantine-color-red-7)" />
+      <SvgFileText
+        width={100}
+        height={100}
+        color="var(--mantine-color-red-7)"
+      />
       <Text size="lg" c="gray.5" fw="bold" mt="sm">
         お題が投稿されていません
       </Text>

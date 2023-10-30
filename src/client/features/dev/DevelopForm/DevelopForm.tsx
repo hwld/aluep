@@ -2,6 +2,7 @@ import { DevStatusSelect } from "@/client/features/dev/DevStatusSelect/DevStatus
 import { trpc } from "@/client/lib/trpc";
 import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { GitHubRepoSelect } from "@/client/ui/GitHubRepoSelect/GitHubRepoSelect";
+import { SvgCode } from "@/client/ui/Icons";
 import { DevFormData, devFormSchema } from "@/models/dev";
 import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,7 +11,6 @@ import Link from "next/link";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { UnionToIntersection } from "react-hook-form/dist/types/path/common";
-import { TbCode } from "react-icons/tb";
 
 type DevFormDefaultValues = Partial<
   UnionToIntersection<DistributiveOmit<DevFormData, "type">>
@@ -61,7 +61,7 @@ export const DevForm: React.FC<Props> = ({
     <AppForm
       onSubmit={handleSubmit(onSubmit)}
       onCancel={onCancel}
-      submitIcon={TbCode}
+      submitIcon={SvgCode}
       submitText={submitText}
       isSubmitting={isLoading}
     >

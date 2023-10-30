@@ -1,7 +1,7 @@
 import { IdeaInfoCardItem } from "@/client/features/idea/IdeaInfoCardItem/IdeaInfoCardItem";
+import { SvgUser } from "@/client/ui/Icons";
 import { Text } from "@mantine/core";
 import { Meta, StoryObj } from "@storybook/react";
-import { TbUser } from "react-icons/tb";
 
 const meta = { component: IdeaInfoCardItem } satisfies Meta<
   typeof IdeaInfoCardItem
@@ -12,7 +12,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: <Text>ユーザー名</Text>,
-    icon: <TbUser size={30} />,
+    icon: <SvgUser width={30} height={30} />,
     title: "ユーザー",
   },
 };

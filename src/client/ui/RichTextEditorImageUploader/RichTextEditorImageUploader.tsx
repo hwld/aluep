@@ -4,6 +4,7 @@ import {
   showLoadingNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
+import { SvgPhotoPlus } from "@/client/ui/Icons";
 import {
   Bytes,
   TOTAL_UPLOAD_IMAGE_LIMIT_MB,
@@ -12,7 +13,6 @@ import {
 import { Routes } from "@/share/routes";
 import { RichTextEditor, useRichTextEditorContext } from "@mantine/tiptap";
 import { ChangeEventHandler, useRef, useState } from "react";
-import { TbPhotoPlus } from "react-icons/tb";
 import { z } from "zod";
 import classes from "./RichTextEditorImageUploader.module.css";
 
@@ -137,7 +137,7 @@ export const RichTextEditorImageUploader: React.FC<Props> = () => {
         accept="image/*"
         onChange={uploadImageWithLoading}
       />
-      <TbPhotoPlus color="var(--mantine-color-gray-7)" />
+      <SvgPhotoPlus color="var(--mantine-color-gray-7)" />
     </RichTextEditor.Control>
   );
 };

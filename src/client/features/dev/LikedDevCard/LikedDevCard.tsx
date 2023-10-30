@@ -4,6 +4,7 @@ import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBa
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
+import { SvgFileText, SvgHeart } from "@/client/ui/Icons";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
@@ -11,7 +12,6 @@ import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Flex, Group } from "@mantine/core";
 import { useRouter } from "next/router";
-import { TbFileText, TbHeart } from "react-icons/tb";
 import classes from "./LikedDevCard.module.css";
 
 type Props = { dev: Dev };
@@ -50,7 +50,7 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
             <Group align="flex-end" wrap="nowrap" gap="xs">
               <IconCounter
                 active={dev.likedByLoggedInUser}
-                icon={<TbHeart />}
+                icon={<SvgHeart />}
                 counter={dev.likes}
               />
               <Group
@@ -62,9 +62,10 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
               >
                 {dev.idea ? (
                   <>
-                    <TbFileText
+                    <SvgFileText
                       color="var(--mantine-color-gray-5)"
-                      size={25}
+                      width={25}
+                      height={25}
                       style={{ flexShrink: 0 }}
                     />
                     <TextLink
@@ -76,9 +77,10 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
                   </>
                 ) : (
                   <>
-                    <TbFileText
+                    <SvgFileText
                       color="var(--mantine-color-gray-4)"
-                      size={25}
+                      width={25}
+                      height={25}
                       style={{ flexShrink: 0 }}
                     />
                     <MutedText c="gray.4" truncate>

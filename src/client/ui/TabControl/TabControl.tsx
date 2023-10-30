@@ -1,12 +1,11 @@
 import { Box, Center, SegmentedControl } from "@mantine/core";
-import { useMemo } from "react";
-import { IconType } from "react-icons/lib";
+import { SVGProps, useMemo } from "react";
 import classes from "./TabControl.module.css";
 
 type Props<T extends string> = {
   activeTab: T;
   onChange: (value: T) => void;
-  data: { value: T; label: string; icon?: IconType }[];
+  data: { value: T; label: string; icon?: React.FC<SVGProps<SVGSVGElement>> }[];
 };
 export const TabControl = <T extends string>({
   activeTab,
@@ -18,7 +17,7 @@ export const TabControl = <T extends string>({
       return {
         label: (
           <Center>
-            {Icon && <Icon size={19} />}
+            {Icon && <Icon width={19} height={19} />}
             <Box ml={5}>{label}</Box>
           </Center>
         ),

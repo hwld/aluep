@@ -1,10 +1,10 @@
 import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";
 import { trpc } from "@/client/lib/trpc";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
+import { SvgArrowRight, SvgTag } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import { Button, Card, Flex, Group, Stack, Text } from "@mantine/core";
 import Link from "next/link";
-import { TbArrowRight, TbTag } from "react-icons/tb";
 import classes from "./IdeaSearchByTagCard.module.css";
 
 type Props = {};
@@ -22,7 +22,11 @@ export const IdeaSearchByTagCard: React.FC<Props> = () => {
       <Stack>
         <Group justify="space-between">
           <Group gap={5}>
-            <TbTag size={20} color="var(--mantine-color-gray-1)" />
+            <SvgTag
+              width={20}
+              height={20}
+              color="var(--mantine-color-gray-1)"
+            />
             <Text c="gray.1" fw="bold">
               タグから探す
             </Text>
@@ -31,7 +35,7 @@ export const IdeaSearchByTagCard: React.FC<Props> = () => {
             component={Link}
             href={Routes.ideaSearch()}
             size="xs"
-            rightSection={<TbArrowRight size={14} />}
+            rightSection={<SvgArrowRight width={14} height={14} />}
             className={classes["search-more-button"]}
           >
             もっと探す
@@ -46,7 +50,13 @@ export const IdeaSearchByTagCard: React.FC<Props> = () => {
         >
           {popularTags.length === 0 ? (
             <EmptyContentItem
-              icon={<TbTag size={100} color="var(--mantine-color-gray-7)" />}
+              icon={
+                <SvgTag
+                  width={100}
+                  height={100}
+                  color="var(--mantine-color-gray-7)"
+                />
+              }
               text="投稿されたタグがありません"
               description={
                 <>
