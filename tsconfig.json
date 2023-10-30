@@ -37,12 +37,11 @@
   },
   "include": [
     "next-env.d.ts",
+    "**/*.js",
     "**/*.ts",
     "**/*.tsx",
-    "src/client/__mocks__/trpc.ts",
-    ".storybook/**/*",
-    "plopfile.mjs",
-    "postcss.config.js"
+    "**/*.mjs",
+    ".storybook/**/*"
   ],
   "exclude": [
     "node_modules"

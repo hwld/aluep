@@ -18,7 +18,8 @@
     "ts-prune": "ts-prune | grep -v default | grep -v getServerSideProps | grep -v config | grep -v __sleep",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "stoprybook build",
-    "test-storybook": "test-storybook"
+    "test-storybook": "test-storybook",
+    "svgr": "npx @svgr/cli -d src/client/ui/Icons public/icons"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -105,6 +106,7 @@
     "@storybook/react": "^7.5.1",
     "@storybook/test-runner": "^0.13.0",
     "@storybook/testing-library": "^0.2.2",
+    "@svgr/cli": "^8.1.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
     "@types/formidable": "^3.4.4",
