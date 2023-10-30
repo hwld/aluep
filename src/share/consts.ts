@@ -18,8 +18,3 @@ export const Bytes = {
 export const UPLOAD_IMAGE_LIMIT_MB = 1;
 
 export const TOTAL_UPLOAD_IMAGE_LIMIT_MB = 100;
-
-/**
- * welcomeメッセージを非表示にしたときにセットされるクッキーの名前
- */
-export const welcomeMessageHiddenCookie = "welcome-message-hidden";

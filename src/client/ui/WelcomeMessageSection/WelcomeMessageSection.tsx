@@ -1,8 +1,7 @@
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { trpc } from "@/client/lib/trpc";
 import { WelcomeCard } from "@/client/ui/WelcomeCard/WelcomeCard";
-import { welcomeMessageHiddenCookie } from "@/share/consts";
-import { addYears } from "date-fns";
+import { setAppConfigCookie } from "@/share/cookie";
 import { useState } from "react";
 
 type Props = { defaultWelcomeMessageHidden?: boolean };
@@ -15,20 +14,14 @@ export const WelcomeMessageSection: React.FC<Props> = ({
     defaultWelcomeMessageHidden
   );
 
-  const updateMutation = trpc.me.update.useMutation({
-    onSuccess: () => {},
-    onError: () => {},
-  });
+  const updateMutation = trpc.me.update.useMutation();
 
   const handleHideWelcomeOpen = () => {
     if (session) {
       updateMutation.mutate({ welcomeMessageHidden: true });
     }
 
-    document.cookie = `${welcomeMessageHiddenCookie}=true;expires=${addYears(
-      new Date(),
-      1
-    )}`;
+    setAppConfigCookie({ welcomeMessageHidden: true });
     setWelcomeMessageHidden(true);
   };
 

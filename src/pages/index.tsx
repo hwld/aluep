@@ -1,10 +1,10 @@
 import { HomePage } from "@/client/pageComponents/HomePage/HomePage";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
-import { welcomeMessageHiddenCookie } from "@/share/consts";
+import { getAppConfigCookie } from "@/share/cookie";
 import { NextPage } from "next";
 
 export type HomePageProps = {
-  welcomeMessageHidden: boolean;
+  welcomeMessageHidden: boolean | null;
 };
 
 export const getServerSideProps =
@@ -25,9 +25,11 @@ export const getServerSideProps =
         trpcStore.aggregate.getPickedIdeas.prefetch({ order: "devDesc" }),
       ]);
 
-      const welcomeMessageHidden =
-        req.cookies[welcomeMessageHiddenCookie] === "true";
-      return { props: { welcomeMessageHidden } };
+      const config = getAppConfigCookie(req.cookies);
+
+      return {
+        props: { welcomeMessageHidden: config.welcomeMessageHidden ?? null },
+      };
     }
   );
 
@@ -35,6 +37,6 @@ export const getServerSideProps =
 // こういった集計はリアルタイム性を必要としないから、バッチ処理として集計用のテーブルに追加していった方が良い？
 // 負荷がかかってから対処する
 const Home: NextPage<HomePageProps> = ({ welcomeMessageHidden }) => {
-  return <HomePage welcomeMessageHidden={welcomeMessageHidden} />;
+  return <HomePage welcomeMessageHidden={welcomeMessageHidden ?? undefined} />;
 };
 export default Home;
