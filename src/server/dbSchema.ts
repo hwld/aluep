@@ -35,7 +35,9 @@ export const users = pgTable(
     updatedAt: timestamp("updatedAt", {
       precision: 3,
       mode: "string",
-    }).notNull(),
+    })
+      .notNull()
+      .defaultNow(),
     welcomeMessageHidden: boolean("welcomeMessageHidden")
       .default(false)
       .notNull(),
@@ -113,7 +115,9 @@ export const ideas = pgTable("ideas", {
   createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),
-  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" }).notNull(),
+  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" })
+    .notNull()
+    .defaultNow(),
 });
 
 export const ideaTags = pgTable(
@@ -130,7 +134,9 @@ export const ideaTags = pgTable(
     updatedAt: timestamp("updatedAt", {
       precision: 3,
       mode: "string",
-    }).notNull(),
+    })
+      .notNull()
+      .defaultNow(),
   },
   (table) => {
     return {
@@ -307,7 +313,9 @@ export const developments = pgTable(
     updatedAt: timestamp("updatedAt", {
       precision: 3,
       mode: "string",
-    }).notNull(),
+    })
+      .notNull()
+      .defaultNow(),
     status: developmentStatus("status").default("IN_PROGRESS").notNull(),
   },
   (table) => {
@@ -328,7 +336,9 @@ export const recommendedIdeas = pgTable("recommended_ideas", {
   createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),
-  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" }).notNull(),
+  updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" })
+    .defaultNow()
+    .notNull(),
 });
 
 export const ideaTagOnIdeas = pgTable(

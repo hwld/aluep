@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS "developments" (
 	"developedItemUrl" text NOT NULL,
 	"allowOtherUserMemos" boolean DEFAULT true NOT NULL,
 	"createdAt" timestamp(3) DEFAULT now() NOT NULL,
-	"updatedAt" timestamp(3) NOT NULL,
+	"updatedAt" timestamp(3) DEFAULT now() NOT NULL,
 	"status" "DevelopmentStatus" DEFAULT 'IN_PROGRESS' NOT NULL
 );
 --> statement-breakpoint
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS "idea_tags" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
 	"createdAt" timestamp(3) DEFAULT now() NOT NULL,
-	"updatedAt" timestamp(3) NOT NULL
+	"updatedAt" timestamp(3) DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "ideas" (
@@ -95,13 +95,13 @@ CREATE TABLE IF NOT EXISTS "ideas" (
 	"description" text NOT NULL,
 	"userId" text NOT NULL,
 	"createdAt" timestamp(3) DEFAULT now() NOT NULL,
-	"updatedAt" timestamp(3) NOT NULL
+	"updatedAt" timestamp(3) DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "recommended_ideas" (
 	"ideaId" text PRIMARY KEY NOT NULL,
 	"createdAt" timestamp(3) DEFAULT now() NOT NULL,
-	"updatedAt" timestamp(3) NOT NULL
+	"updatedAt" timestamp(3) DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "sessions" (
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"image" text,
 	"profile" text,
 	"createdAt" timestamp(3) DEFAULT now() NOT NULL,
-	"updatedAt" timestamp(3) NOT NULL,
+	"updatedAt" timestamp(3) DEFAULT now() NOT NULL,
 	"welcomeMessageHidden" boolean DEFAULT false NOT NULL
 );
 --> statement-breakpoint

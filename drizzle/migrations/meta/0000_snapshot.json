@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "c03091ee-dbc8-4c04-a554-fccd0e9d1c84",
+  "id": "682cc4d2-5e9c-4688-8a16-e338b8b60365",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "accounts": {
@@ -339,7 +339,8 @@
           "name": "updatedAt",
           "type": "timestamp(3)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         },
         "status": {
           "name": "status",
@@ -726,7 +727,8 @@
           "name": "updatedAt",
           "type": "timestamp(3)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {
@@ -781,7 +783,8 @@
           "name": "updatedAt",
           "type": "timestamp(3)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -824,7 +827,8 @@
           "name": "updatedAt",
           "type": "timestamp(3)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -953,7 +957,8 @@
           "name": "updatedAt",
           "type": "timestamp(3)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         },
         "welcomeMessageHidden": {
           "name": "welcomeMessageHidden",
