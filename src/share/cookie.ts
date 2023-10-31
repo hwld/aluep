@@ -27,7 +27,7 @@ export const setAppConfigCookie = (config: AppConfigCookie) => {
   window.document.cookie = `${appConfigCookieKey}=${JSON.stringify({
     ...parsedPrev,
     ...config,
-  })};expires=${addYears(new Date(), 1)}`;
+  })}; path=/; expires=${addYears(new Date(), 1)}`;
 };
 
 export const getAppConfigCookie = (
