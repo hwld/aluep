@@ -137,7 +137,7 @@ export const RichTextEditorImageUploader: React.FC<Props> = () => {
         accept="image/*"
         onChange={uploadImageWithLoading}
       />
-      <IconPhotoPlus color="var(--mantine-color-gray-7)" />
+      <IconPhotoPlus size={16} color="var(--mantine-color-gray-6)" />
     </RichTextEditor.Control>
   );
 };
