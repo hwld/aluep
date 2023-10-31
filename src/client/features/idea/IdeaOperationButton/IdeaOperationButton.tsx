@@ -16,7 +16,7 @@ import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { SvgDots, SvgEdit, SvgFlag, SvgTrash } from "@tabler/icons-react";
+import { IconDots, IconEdit, IconFlag, IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./IdeaOperationButton.module.css";
 
@@ -87,7 +87,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
       <AppMenu position="bottom-start">
         <Menu.Target>
           <ActionIcon size={35} className={classes.icon}>
-            <SvgDots
+            <IconDots
               width="70%"
               height="70%"
               color="var(--mantine-color-gray-5)"
@@ -98,13 +98,13 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
           {isIdeaOwner && (
             <>
               <AppMenuLinkItem
-                leftSection={<SvgEdit />}
+                leftSection={<IconEdit />}
                 href={Routes.ideaUpdate(idea.id)}
               >
                 お題を編集する
               </AppMenuLinkItem>
               <AppMenuItem
-                leftSection={<SvgTrash />}
+                leftSection={<IconTrash />}
                 red
                 onClick={openDeleteModal}
               >
@@ -114,7 +114,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
               <AppMenuDivider />
             </>
           )}
-          <AppMenuItem leftSection={<SvgFlag />} onClick={openReportModal}>
+          <AppMenuItem leftSection={<IconFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>
@@ -132,7 +132,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
         onClose={closeDeleteModal}
         onConfirm={handleDeleteIdea}
         isConfirming={deleteIdeaMutation.isLoading}
-        confirmIcon={SvgTrash}
+        confirmIcon={IconTrash}
         confirmText="削除する"
       />
       <AppModal

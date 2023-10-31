@@ -6,7 +6,7 @@ import { DevFormData, devFormSchema } from "@/models/dev";
 import { DistributiveOmit } from "@emotion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Group, Textarea, TextInput } from "@mantine/core";
-import { SvgCode } from "@tabler/icons-react";
+import { IconCode } from "@tabler/icons-react";
 import Link from "next/link";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -61,7 +61,7 @@ export const DevForm: React.FC<Props> = ({
     <AppForm
       onSubmit={handleSubmit(onSubmit)}
       onCancel={onCancel}
-      submitIcon={SvgCode}
+      submitIcon={IconCode}
       submitText={submitText}
       isSubmitting={isLoading}
     >

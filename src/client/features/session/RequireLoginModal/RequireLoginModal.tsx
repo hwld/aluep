@@ -1,7 +1,7 @@
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Button, Stack, Text } from "@mantine/core";
-import { SvgGithubMark } from "@tabler/icons-react";
+import { IconBrandGithub } from "@tabler/icons-react";
 import { signIn } from "next-auth/react";
 
 type Props = {};
@@ -23,7 +23,7 @@ export const RequireLoginModal: React.FC<Props> = () => {
       <Stack>
         <Text>この機能を利用するためには、ログインをする必要があります。</Text>
         <Button
-          leftSection={<SvgGithubMark width={21} height={21} />}
+          leftSection={<IconBrandGithub width={21} height={21} />}
           onClick={handleLogin}
         >
           GitHubでログイン

@@ -12,7 +12,7 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { User } from "@/models/user";
 import { paginatedPageSchema } from "@/share/paging";
 import { Box, Card, Center, Stack, Text } from "@mantine/core";
-import { SvgHeartFilled, SvgUserHeart } from "@tabler/icons-react";
+import { IconHeartFilled, IconUserHeart } from "@tabler/icons-react";
 import React from "react";
 
 type Props = { user: User };
@@ -27,7 +27,8 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <PageHeader icon={SvgUserHeart} pageName="お気に入りユーザー" />
+      <PageHeader icon={IconUserHeart} pageName="お気に入りユーザー" />
+      <IconHeartFilled color="blue" fill="blue" />
       <Stack maw={800} m="auto" gap="lg">
         <Stack gap="sm">
           <MutedText>ユーザー</MutedText>
@@ -38,7 +39,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
             <Card w="100%" style={{ alignItems: "center" }} py="xl">
               <EmptyContentItem
                 icon={
-                  <SvgHeartFilled
+                  <IconHeartFilled
                     width={100}
                     height={100}
                     color="var(--mantine-color-red-6)"

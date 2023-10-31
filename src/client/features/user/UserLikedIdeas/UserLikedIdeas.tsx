@@ -4,7 +4,7 @@ import {
 } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { useLikedIdeas } from "@/client/features/idea/useLikedIdeas";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
-import { SvgHeartFilled } from "@tabler/icons-react";
+import { IconHeartFilled } from "@tabler/icons-react";
 import { User } from "next-auth";
 
 type Props = {
@@ -28,7 +28,7 @@ export const UserLikedIdeas: React.FC<Props> = ({
       emptyProps={{
         isEmpty: likedIdeas?.list.length === 0,
         icon: (
-          <SvgHeartFilled
+          <IconHeartFilled
             width="100"
             height="100"
             color="var(--mantine-color-red-7)"

@@ -9,7 +9,7 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { IdeaFormData } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card } from "@mantine/core";
-import { SvgFilePlus } from "@tabler/icons-react";
+import { IconFilePlus } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
 export const IdeaCreatePage: React.FC = () => {
@@ -42,7 +42,7 @@ export const IdeaCreatePage: React.FC = () => {
 
   return (
     <>
-      <PageHeader icon={SvgFilePlus} pageName="お題の投稿" />
+      <PageHeader icon={IconFilePlus} pageName="お題の投稿" />
       <Box w="100%" maw={800} miw={300} m="auto">
         <Card mt="md" style={{ position: "static" }}>
           <IdeaForm

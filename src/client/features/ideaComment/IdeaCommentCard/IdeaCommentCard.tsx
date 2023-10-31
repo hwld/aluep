@@ -13,9 +13,9 @@ import { IdeaComment, IdeaCommentFormData } from "@/models/ideaComment";
 import { Box, Card, Flex, Stack, Text, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
-  SvgChevronsRight,
-  SvgMessageCircle,
-  SvgUser,
+  IconChevronsRight,
+  IconMessageCircle,
+  IconUser,
 } from "@tabler/icons-react";
 import classes from "./IdeaCommentCard.module.css";
 
@@ -91,7 +91,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
               <Box>
                 {comment.fromUser.id === ideaOwnerId && (
                   <Flex gap={3} align="center">
-                    <SvgUser
+                    <IconUser
                       width={18}
                       height={18}
                       fill="var(--mantine-color-red-7)"
@@ -118,7 +118,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
           {/* 返信コメントは返信元が削除されている場合はnullになる */}
           {comment.inReplyToComment === null && (
             <Box color="red.7" className={classes["deleted-message"]}>
-              <SvgChevronsRight width={20} height={20} />
+              <IconChevronsRight width={20} height={20} />
               削除されたコメント
             </Box>
           )}
@@ -129,7 +129,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
                 color="red.7"
                 className={classes["replay-message"]}
               >
-                <SvgChevronsRight width={20} height={20} />
+                <IconChevronsRight width={20} height={20} />
                 {comment.inReplyToComment.fromUserName ?? "不明なユーザー名"}
               </UnstyledButton>
             </Flex>
@@ -140,7 +140,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
           <Flex justify="space-between" align="center" gap="xs">
             <Flex align="center">
               <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>
-                <SvgMessageCircle width="70%" height="70%" />
+                <IconMessageCircle width="70%" height="70%" />
               </CardActionIcon>
             </Flex>
             <MutedText>{formatDate(comment.createdAt)}</MutedText>

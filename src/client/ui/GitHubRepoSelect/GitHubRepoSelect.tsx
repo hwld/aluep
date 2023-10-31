@@ -8,7 +8,7 @@ import {
   ScrollArea,
   useCombobox,
 } from "@mantine/core";
-import { SvgBook, SvgReload } from "@tabler/icons-react";
+import { IconBook, IconReload } from "@tabler/icons-react";
 import { FocusEventHandler, forwardRef, useMemo, useState } from "react";
 import classes from "./GitHubRepoSelect.module.css";
 
@@ -102,11 +102,11 @@ export const GitHubRepoSelect: React.FC<Props> = forwardRef<
         <Combobox.Header style={{}}>
           <Group justify="space-between">
             <Group gap={5} align="center">
-              <SvgBook color="var(--mantine-color-gray-5)" />
+              <IconBook color="var(--mantine-color-gray-5)" />
               <MutedText>リポジトリ一覧</MutedText>
             </Group>
             <ActionIcon size="sm" bg="gray.2" onClick={onUpdateList}>
-              <SvgReload color="var(--mantine-color-gray-7)" />
+              <IconReload color="var(--mantine-color-gray-7)" />
             </ActionIcon>
           </Group>
         </Combobox.Header>

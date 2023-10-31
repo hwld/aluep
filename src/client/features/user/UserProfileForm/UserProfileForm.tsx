@@ -2,7 +2,7 @@ import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { ProfileFormData, profileFormSchema } from "@/models/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Switch, Textarea, TextInput } from "@mantine/core";
-import { SvgEdit } from "@tabler/icons-react";
+import { IconEdit } from "@tabler/icons-react";
 import { Controller, useForm } from "react-hook-form";
 
 type Props = {
@@ -33,7 +33,7 @@ export const UserProfileForm: React.FC<Props> = ({
       onSubmit={handleSubmit(onSubmit)}
       onCancel={onCancel}
       submitText={submitText}
-      submitIcon={SvgEdit}
+      submitIcon={IconEdit}
       isSubmitting={isLoading}
     >
       <Controller

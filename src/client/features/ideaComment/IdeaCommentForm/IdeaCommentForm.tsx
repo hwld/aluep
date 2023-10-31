@@ -7,7 +7,7 @@ import {
 } from "@/models/ideaComment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Divider, Flex, Text } from "@mantine/core";
-import { SvgAlertCircle, SvgMessage2 } from "@tabler/icons-react";
+import { IconAlertCircle, IconMessage2 } from "@tabler/icons-react";
 import clsx from "clsx";
 import { User } from "next-auth";
 import { forwardRef, useImperativeHandle, useRef } from "react";
@@ -94,7 +94,7 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
               [classes.show]: errors.text,
             })}
           >
-            <SvgAlertCircle
+            <IconAlertCircle
               width={30}
               height={30}
               color="var(--mantine-color-red-7)"
@@ -105,7 +105,7 @@ export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
             type="submit"
             loading={debouncedSubmitting}
             leftSection={
-              <SvgMessage2
+              <IconMessage2
                 width={20}
                 height={20}
                 opacity={debouncedSubmitting ? 0.3 : 1}

@@ -7,7 +7,7 @@ import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { Center, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { SvgCode } from "@tabler/icons-react";
+import { IconCode } from "@tabler/icons-react";
 
 type Props = { tooltip?: boolean; loggedInUserId: string };
 
@@ -24,7 +24,7 @@ export const DevInProgresSidebarItem: React.FC<Props> = ({
   return (
     <>
       <SidebarItem
-        icon={SvgCode}
+        icon={IconCode}
         label="開発中のお題"
         tooltip={tooltip}
         onClick={open}
@@ -44,7 +44,7 @@ export const DevInProgresSidebarItem: React.FC<Props> = ({
           <Center mt="xl">
             <EmptyContentItem
               icon={
-                <SvgCode
+                <IconCode
                   width={100}
                   height={100}
                   color="var(--mantine-color-red-7)"

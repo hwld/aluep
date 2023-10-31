@@ -4,7 +4,7 @@ import { useSearchedUsersQuery } from "@/client/features/user/useSearchedUsersQu
 import { useURLParams } from "@/client/lib/useURLParams";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Box, Card, Flex, Stack, TextInput, Title } from "@mantine/core";
-import { SvgSearch } from "@tabler/icons-react";
+import { IconSearch } from "@tabler/icons-react";
 import { useRef, useState } from "react";
 import { z } from "zod";
 
@@ -32,7 +32,7 @@ export const UserSearchPage: React.FC = () => {
 
   return (
     <>
-      <PageHeader icon={SvgSearch} pageName="ユーザーの検索" />
+      <PageHeader icon={IconSearch} pageName="ユーザーの検索" />
       <Box>
         <Flex
           direction="column"

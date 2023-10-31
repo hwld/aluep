@@ -3,7 +3,7 @@ import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { Flex, Text } from "@mantine/core";
-import { SvgHeartFilled, SvgMedal } from "@tabler/icons-react";
+import { IconHeartFilled, IconMedal } from "@tabler/icons-react";
 import { User } from "next-auth";
 import { useMemo } from "react";
 
@@ -16,11 +16,11 @@ export const UserLikeRankingItem: React.FC<Props> = ({
   const rank = useMemo(() => {
     switch (ranking) {
       case 1:
-        return <SvgMedal width={30} height={30} color="rgb(255, 196, 0)" />;
+        return <IconMedal width={30} height={30} color="rgb(255, 196, 0)" />;
       case 2:
-        return <SvgMedal width={30} height={30} color="rgb(201, 201, 201)" />;
+        return <IconMedal width={30} height={30} color="rgb(201, 201, 201)" />;
       case 3:
-        return <SvgMedal width={30} height={30} color="rgb(172, 109, 77)" />;
+        return <IconMedal width={30} height={30} color="rgb(172, 109, 77)" />;
       default:
         return <Text>{ranking}</Text>;
     }
@@ -48,7 +48,7 @@ export const UserLikeRankingItem: React.FC<Props> = ({
             <Flex align="center" gap={5}>
               <IconCounter
                 icon={
-                  <SvgHeartFilled
+                  <IconHeartFilled
                     style={{ width: "16px", height: "16px" }}
                     color="var(--mantine-color-red-7)"
                   />

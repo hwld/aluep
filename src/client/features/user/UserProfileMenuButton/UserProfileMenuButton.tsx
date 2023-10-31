@@ -14,7 +14,7 @@ import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
-import { SvgEdit, SvgFlag, SvgPhoto } from "@tabler/icons-react";
+import { IconEdit, IconFlag, IconPhoto } from "@tabler/icons-react";
 import { User } from "next-auth";
 
 type Props = {
@@ -63,13 +63,13 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
           {isOwner && (
             <>
               <AppMenuLinkItem
-                leftSection={<SvgPhoto />}
+                leftSection={<IconPhoto />}
                 href={Routes.userUploadedImages(user.id)}
               >
                 アップロードした画像
               </AppMenuLinkItem>
               <AppMenuLinkItem
-                leftSection={<SvgEdit />}
+                leftSection={<IconEdit />}
                 href={Routes.userUpdate}
               >
                 ユーザー情報を編集する
@@ -78,7 +78,7 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
             </>
           )}
 
-          <AppMenuItem leftSection={<SvgFlag />} onClick={openReportModal}>
+          <AppMenuItem leftSection={<IconFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>

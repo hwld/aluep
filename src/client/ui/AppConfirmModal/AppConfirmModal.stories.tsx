@@ -1,6 +1,6 @@
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { Meta, StoryObj } from "@storybook/react";
-import { SvgCode } from "@tabler/icons-react";
+import { IconCode } from "@tabler/icons-react";
 
 const meta = { component: AppConfirmModal } satisfies Meta<
   typeof AppConfirmModal
@@ -15,7 +15,7 @@ export const Default: Story = {
     title: "確認モーダル",
     message: "続けますか？",
     isConfirming: false,
-    confirmIcon: SvgCode,
+    confirmIcon: IconCode,
     confirmText: "確認",
   },
 };

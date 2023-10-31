@@ -7,7 +7,7 @@ import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Flex, Group, Text, Title } from "@mantine/core";
-import { SvgCode, SvgHeart, SvgMessageCircle } from "@tabler/icons-react";
+import { IconCode, IconHeart, IconMessageCircle } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./IdeaCard.module.css";
 
@@ -66,16 +66,16 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
             <Group gap="sm" align="center">
               <IconCounter
                 active={idea.likedByLoggedInUser}
-                icon={<SvgHeart />}
+                icon={<IconHeart />}
                 counter={idea.likes}
               />
               <IconCounter
                 active={Boolean(idea.loggedInUserDevId)}
-                icon={<SvgCode />}
+                icon={<IconCode />}
                 counter={idea.devs}
               />
               <IconCounter
-                icon={<SvgMessageCircle />}
+                icon={<IconMessageCircle />}
                 counter={idea.comments}
               />
             </Group>

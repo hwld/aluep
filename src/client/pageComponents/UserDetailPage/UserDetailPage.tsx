@@ -11,7 +11,12 @@ import { TabControl } from "@/client/ui/TabControl/TabControl";
 import { User, userDetailPageSchame } from "@/models/user";
 import { assertNever } from "@/share/utils";
 import { Box, Flex, Stack } from "@mantine/core";
-import { SvgCode, SvgFileText, SvgHeart, SvgUser } from "@tabler/icons-react";
+import {
+  IconCode,
+  IconFileText,
+  IconHeart,
+  IconUser,
+} from "@tabler/icons-react";
 import { useMemo } from "react";
 
 type Props = { user: User };
@@ -69,7 +74,7 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <PageHeader icon={SvgUser} pageName="ユーザーの詳細" />
+      <PageHeader icon={IconUser} pageName="ユーザーの詳細" />
       <Flex maw={1200} direction="column" align="center" m="auto">
         <UserDashboard
           user={user}
@@ -84,22 +89,22 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
               {
                 value: "postedIdeas",
                 label: "投稿したお題",
-                icon: SvgFileText,
+                icon: IconFileText,
               },
               {
                 value: "devs",
                 label: "お題の開発情報",
-                icon: SvgCode,
+                icon: IconCode,
               },
               {
                 value: "likedIdeas",
                 label: "いいねしたお題",
-                icon: SvgHeart,
+                icon: IconHeart,
               },
               {
                 value: "likedDevs",
                 label: "いいねした開発情報",
-                icon: SvgHeart,
+                icon: IconHeart,
               },
             ]}
           />

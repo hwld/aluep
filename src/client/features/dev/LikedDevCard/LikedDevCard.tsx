@@ -10,7 +10,7 @@ import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Flex, Group } from "@mantine/core";
-import { SvgFileText, SvgHeart } from "@tabler/icons-react";
+import { IconFileText, IconHeart } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./LikedDevCard.module.css";
 
@@ -50,7 +50,7 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
             <Group align="flex-end" wrap="nowrap" gap="xs">
               <IconCounter
                 active={dev.likedByLoggedInUser}
-                icon={<SvgHeart />}
+                icon={<IconHeart />}
                 counter={dev.likes}
               />
               <Group
@@ -62,7 +62,7 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
               >
                 {dev.idea ? (
                   <>
-                    <SvgFileText
+                    <IconFileText
                       color="var(--mantine-color-gray-5)"
                       width={25}
                       height={25}
@@ -77,7 +77,7 @@ export const LikedDevCard: React.FC<Props> = ({ dev }) => {
                   </>
                 ) : (
                   <>
-                    <SvgFileText
+                    <IconFileText
                       color="var(--mantine-color-gray-4)"
                       width={25}
                       height={25}

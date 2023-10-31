@@ -5,10 +5,10 @@ import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
 import { Routes } from "@/share/routes";
 import { BadgeProps, Menu } from "@mantine/core";
 import {
-  SvgLogout2,
-  SvgTrash,
-  SvgUserCircle,
-  SvgUserHeart,
+  IconLogout2,
+  IconTrash,
+  IconUserCircle,
+  IconUserHeart,
 } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
@@ -30,22 +30,22 @@ export const LoggedInUserMenu: React.FC<Props> = ({ user, trigger }) => {
       <Menu.Target>{trigger}</Menu.Target>
       <AppMenuDropdown maw={180} className={classes.dropdown}>
         <AppMenuLinkItem
-          leftSection={<SvgUserCircle />}
+          leftSection={<IconUserCircle />}
           href={Routes.user(user.id)}
         >
           プロフィール
         </AppMenuLinkItem>
         <AppMenuLinkItem
-          leftSection={<SvgUserHeart />}
+          leftSection={<IconUserHeart />}
           href={Routes.userFavorites(user.id)}
         >
           お気に入りユーザー
         </AppMenuLinkItem>
-        <AppMenuItem leftSection={<SvgLogout2 />} onClick={handleLogOut}>
+        <AppMenuItem leftSection={<IconLogout2 />} onClick={handleLogOut}>
           ログアウト
         </AppMenuItem>
         <AppMenuLinkItem
-          leftSection={<SvgTrash />}
+          leftSection={<IconTrash />}
           href={Routes.userDelete}
           red
         >

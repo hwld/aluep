@@ -2,7 +2,7 @@ import { stopPropagation } from "@/client/lib/utils";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Flex, Text } from "@mantine/core";
-import { SvgHeart, SvgHeartFilled } from "@tabler/icons-react";
+import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import clsx from "clsx";
 import classes from "./DevLikeButton.module.css";
 
@@ -30,11 +30,11 @@ export const DevLikeButton: React.FC<Props> = ({
         className={clsx(classes.root, { [classes.liked]: likedByLoggedInUser })}
       >
         {likedByLoggedInUser ? (
-          <SvgHeartFilled
+          <IconHeartFilled
             className={clsx(classes["like-icon"], classes.liked)}
           />
         ) : (
-          <SvgHeart className={clsx(classes["like-icon"])} />
+          <IconHeart className={clsx(classes["like-icon"])} />
         )}
       </ActionIcon>
       <TextLink href={Routes.devLikers(devId)} disabled={likes === 0}>

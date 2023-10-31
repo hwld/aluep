@@ -4,7 +4,7 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ReCaptchaCheckBox } from "@/client/ui/ReCaptchaCheckBox";
 import { Routes } from "@/share/routes";
 import { Box, Button, List, Mark, Text, Title } from "@mantine/core";
-import { SvgTrash } from "@tabler/icons-react";
+import { IconTrash } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -43,7 +43,7 @@ export const UserDeletepage: React.FC = () => {
 
   return (
     <>
-      <PageHeader icon={SvgTrash} pageName="アカウントの削除" />
+      <PageHeader icon={IconTrash} pageName="アカウントの削除" />
       <Box w="100%" maw={600} m="auto">
         <Box mt="xl">
           <Text>一度ユーザーを削除すると、</Text>

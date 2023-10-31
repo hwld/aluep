@@ -2,7 +2,7 @@ import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Box, Flex, Stack, Text } from "@mantine/core";
-import { SvgFileText } from "@tabler/icons-react";
+import { IconFileText } from "@tabler/icons-react";
 
 type Props = { dev: Dev };
 
@@ -10,7 +10,7 @@ export const DevDetailCardTitle: React.FC<Props> = ({ dev }) => {
   return (
     <Flex gap={5}>
       <Box style={{ flexShrink: 0 }}>
-        <SvgFileText
+        <IconFileText
           color={
             dev.idea
               ? "var(--mantine-color-red-7)"

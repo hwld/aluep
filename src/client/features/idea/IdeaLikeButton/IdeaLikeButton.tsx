@@ -1,6 +1,6 @@
 import { Routes } from "@/share/routes";
 import { ActionIcon, Anchor, Stack, Tooltip } from "@mantine/core";
-import { SvgHeart, SvgHeartFilled } from "@tabler/icons-react";
+import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import classes from "./IdeaLikeButton.module.css";
@@ -31,14 +31,14 @@ export const IdeaLikeButton: React.FC<Props> = ({
         onClick={onLikeIdea}
       >
         {likedByLoggedInUser ? (
-          <SvgHeartFilled
+          <IconHeartFilled
             width="75%"
             height="75%"
             color="var(--mantine-color-pink-7)"
             style={{ marginTop: "5px" }}
           />
         ) : (
-          <SvgHeart
+          <IconHeart
             width="75%"
             height="75%"
             color="var(--mantine-color-gray-5)"

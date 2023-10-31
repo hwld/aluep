@@ -19,12 +19,12 @@ import { WelcomeMessageSection } from "@/client/ui/WelcomeMessageSection/Welcome
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Title } from "@mantine/core";
 import {
-  SvgBulb,
-  SvgCode,
-  SvgFlame,
-  SvgHeart,
-  SvgHome,
-  SvgThumbUp,
+  IconBulb,
+  IconCode,
+  IconFlame,
+  IconHeart,
+  IconHome,
+  IconThumbUp,
 } from "@tabler/icons-react";
 import classes from "./HomePage.module.css";
 
@@ -56,7 +56,7 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
 
   return (
     <>
-      <PageHeader icon={SvgHome} pageName="ホーム" />
+      <PageHeader icon={IconHome} pageName="ホーム" />
       <Flex w="100%" gap="xl">
         <Stack
           className={classes.content}
@@ -70,7 +70,7 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
           {top10LikedIdeas.length > 0 && (
             <Stack gap="sm">
               <Flex gap={0} align="center">
-                <SvgFlame
+                <IconFlame
                   width="35px"
                   height="35px"
                   color="var(--mantine-color-red-6)"
@@ -95,7 +95,7 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
               {recommendedIdeas.length > 0 && (
                 <PickedUpIdeas
                   icon={
-                    <SvgThumbUp
+                    <IconThumbUp
                       width="30px"
                       height="30px"
                       color="var(--mantine-color-green-7)"
@@ -108,7 +108,7 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
 
               <PickedUpIdeas
                 icon={
-                  <SvgBulb
+                  <IconBulb
                     width="30px"
                     height="30px"
                     color="var(--mantine-color-yellow-7)"
@@ -122,7 +122,7 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
               {manyLikesIdeas.length !== 0 && (
                 <PickedUpIdeas
                   icon={
-                    <SvgHeart
+                    <IconHeart
                       width="30px"
                       height="30px"
                       color="var(--mantine-color-pink-7)"
@@ -137,7 +137,7 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
               {manyDevsIdeas.length !== 0 && (
                 <PickedUpIdeas
                   icon={
-                    <SvgCode
+                    <IconCode
                       width="30px"
                       height="30px"
                       color="var(--mantine-color-blue-7)"
@@ -159,7 +159,7 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
             {top10LikedDevelopers?.length === 0 ? (
               <EmptyContentItem
                 icon={
-                  <SvgHeart
+                  <IconHeart
                     width={100}
                     height={100}
                     color="var(--mantine-color-red-7)"
@@ -184,7 +184,7 @@ export const HomePage: React.FC<Props> = ({ welcomeMessageHidden }) => {
             {top10LikedIdeaAuthors?.length === 0 ? (
               <EmptyContentItem
                 icon={
-                  <SvgHeart
+                  <IconHeart
                     width={100}
                     height={100}
                     color="var(--mantine-color-red-7)"

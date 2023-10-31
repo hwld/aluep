@@ -20,7 +20,7 @@ import {
   searchIdeaPageSchema,
 } from "@/models/idea";
 import { Box, Card, Flex, Select, Title } from "@mantine/core";
-import { SvgSearch } from "@tabler/icons-react";
+import { IconSearch } from "@tabler/icons-react";
 import React from "react";
 
 export const IdeaSearchPage: React.FC = () => {
@@ -69,7 +69,7 @@ export const IdeaSearchPage: React.FC = () => {
 
   return (
     <>
-      <PageHeader icon={SvgSearch} pageName="お題の検索" />
+      <PageHeader icon={IconSearch} pageName="お題の検索" />
       <Box>
         <Flex w="100%" direction="column">
           <Card

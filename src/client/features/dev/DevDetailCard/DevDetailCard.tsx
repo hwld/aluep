@@ -20,10 +20,10 @@ import {
   Text,
 } from "@mantine/core";
 import {
-  SvgClock,
-  SvgGithubMark,
-  SvgLink,
-  SvgRotateClockwise2,
+  IconBrandGithub,
+  IconClock,
+  IconLink,
+  IconRotateClockwise2,
 } from "@tabler/icons-react";
 import classes from "./DevDetailCard.module.css";
 
@@ -63,7 +63,7 @@ export const DevDetailCard: React.FC<Props> = ({
                     component={"a"}
                     href={convertToGithubDevUrl(dev.githubUrl)}
                     target="_blank"
-                    leftSection={<SvgGithubMark height={20} width={20} />}
+                    leftSection={<IconBrandGithub height={20} width={20} />}
                   >
                     コードを見る
                   </Button>
@@ -72,7 +72,7 @@ export const DevDetailCard: React.FC<Props> = ({
                       component="a"
                       href={dev.developedItemUrl}
                       target="_blank"
-                      leftSection={<SvgLink width={20} height={20} />}
+                      leftSection={<IconLink width={20} height={20} />}
                       color="gray.5"
                     >
                       リンクを開く
@@ -85,11 +85,14 @@ export const DevDetailCard: React.FC<Props> = ({
             <Stack gap={0}>
               <Flex gap="xl">
                 <Flex align="center" gap={5}>
-                  <SvgClock height={20} width={20} />
+                  <IconClock size={20} color="var(--mantine-color-gray-7)" />
                   <Text>{formatDate(new Date(dev.createdAt))}</Text>
                 </Flex>
                 <Flex align="center" gap={5}>
-                  <SvgRotateClockwise2 width={20} height={20} />
+                  <IconRotateClockwise2
+                    size={20}
+                    color="var(--mantine-color-gray-7)"
+                  />
                   <Text>{formatDate(new Date(dev.updatedAt))}</Text>
                 </Flex>
               </Flex>

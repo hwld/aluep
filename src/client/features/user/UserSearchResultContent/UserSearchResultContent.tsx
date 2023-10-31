@@ -5,7 +5,7 @@ import {
 } from "@/client/features/user/UserCard/UserCard";
 import { User } from "@/models/user";
 import { Box, Flex, Text } from "@mantine/core";
-import { SvgUserSearch } from "@tabler/icons-react";
+import { IconUserSearch } from "@tabler/icons-react";
 
 type Props = {
   userSearchResult: User[];
@@ -22,7 +22,7 @@ export const UserSearchResultContent: React.FC<Props> = ({
     return (
       <Flex direction="column">
         <Flex justify="center" align="center">
-          <SvgUserSearch
+          <IconUserSearch
             width={100}
             height={100}
             color="var(--mantine-color-red-7)"

@@ -13,7 +13,7 @@ import { Dev } from "@/models/dev";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
-import { SvgEdit, SvgFlag, SvgTrash } from "@tabler/icons-react";
+import { IconEdit, IconFlag, IconTrash } from "@tabler/icons-react";
 import router from "next/router";
 import {
   showErrorNotification,
@@ -97,14 +97,14 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
           {isOwner && (
             <>
               <AppMenuLinkItem
-                leftSection={<SvgEdit />}
+                leftSection={<IconEdit />}
                 href={Routes.devUpdate(dev.id)}
               >
                 開発情報を編集する
               </AppMenuLinkItem>
               <AppMenuItem
                 red
-                leftSection={<SvgTrash />}
+                leftSection={<IconTrash />}
                 onClick={openDeleteModal}
               >
                 開発情報を削除する
@@ -112,7 +112,7 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
               <AppMenuDivider />
             </>
           )}
-          <AppMenuItem leftSection={<SvgFlag />} onClick={openReportModal}>
+          <AppMenuItem leftSection={<IconFlag />} onClick={openReportModal}>
             通報する
           </AppMenuItem>
         </AppMenuDropdown>
@@ -130,7 +130,7 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
         onClose={closeDeleteModal}
         onConfirm={handleDeleteDev}
         isConfirming={deleteDevMutation.isLoading}
-        confirmIcon={SvgTrash}
+        confirmIcon={IconTrash}
         confirmText="削除する"
       />
       <AppModal

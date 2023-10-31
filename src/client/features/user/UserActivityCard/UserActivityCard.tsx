@@ -1,7 +1,7 @@
 import { UserActivity } from "@/client/features/user/useUserActivityQuery";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
-import { SvgCode, SvgFileText, SvgHeart } from "@tabler/icons-react";
+import { IconCode, IconFileText, IconHeart } from "@tabler/icons-react";
 
 type Props = { userActivity: UserActivity; width?: number };
 export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
@@ -12,7 +12,7 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
         <Stack gap={5}>
           <MutedText>投稿したお題の数</MutedText>
           <Flex align="center" gap={10}>
-            <SvgFileText
+            <IconFileText
               width={40}
               height={40}
               color="var(--mantine-color-red-7)"
@@ -29,7 +29,7 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
         <Stack gap={5}>
           <MutedText>開発したお題の数</MutedText>
           <Flex align="center" gap={10}>
-            <SvgCode
+            <IconCode
               width={40}
               height={40}
               color="var(--mantine-color-blue-7)"
@@ -46,7 +46,7 @@ export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {
         <Stack gap={5}>
           <MutedText>いいねしたお題の数</MutedText>
           <Flex align="center" gap={10}>
-            <SvgHeart
+            <IconHeart
               width={40}
               height={40}
               color="var(--mantine-color-pink-6)"

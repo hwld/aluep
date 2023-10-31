@@ -1,7 +1,7 @@
 import { LikedDevCard } from "@/client/features/dev/LikedDevCard/LikedDevCard";
 import { useLikedDevs } from "@/client/features/dev/useLikedDevs";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
-import { SvgHeartFilled } from "@tabler/icons-react";
+import { IconHeartFilled } from "@tabler/icons-react";
 import { User } from "next-auth";
 
 type Props = { user: User; page: number; onChangePage: (page: number) => void };
@@ -25,7 +25,7 @@ export const UserLikedDevs: React.FC<Props> = ({
       emptyProps={{
         isEmpty: likedDevs?.list.length === 0,
         icon: (
-          <SvgHeartFilled
+          <IconHeartFilled
             width="100"
             height="100"
             color="var(--mantine-color-red-7)"

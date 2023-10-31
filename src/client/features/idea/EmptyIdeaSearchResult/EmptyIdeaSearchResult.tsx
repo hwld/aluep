@@ -1,8 +1,8 @@
 import { Card, Flex, Text } from "@mantine/core";
 import {
-  SvgPointFilled,
-  SvgQuestionMark,
-  SvgSearch,
+  IconPointFilled,
+  IconQuestionMark,
+  IconSearch,
 } from "@tabler/icons-react";
 import classes from "./EmptyIdeaSearchResult.module.css";
 
@@ -18,32 +18,32 @@ export const EmptyIdeaSearchResult = () => {
     >
       <Card w={450} p="xl">
         <Flex justify="center" align="center">
-          <SvgSearch
+          <IconSearch
             width={70}
             height={70}
             color="var(--mantine-color-red-7)"
           />
-          <SvgPointFilled
+          <IconPointFilled
             width={30}
             height={30}
             color="var(--mantine-color-red-3)"
           />
-          <SvgPointFilled
+          <IconPointFilled
             width={30}
             height={30}
             color="var(--mantine-color-red-4)"
           />
-          <SvgPointFilled
+          <IconPointFilled
             width={30}
             height={30}
             color="var(--mantine-color-red-5)"
           />
-          <SvgPointFilled
+          <IconPointFilled
             width={30}
             height={30}
             color="var(--mantine-color-red-6)"
           />
-          <SvgQuestionMark
+          <IconQuestionMark
             width={90}
             height={90}
             color="var(--mantine-color-red-7)"

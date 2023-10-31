@@ -4,7 +4,7 @@ import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Text } from "@mantine/core";
-import { SvgCode } from "@tabler/icons-react";
+import { IconCode } from "@tabler/icons-react";
 
 type Props = { dev: Dev };
 export const DevSummaryHeader: React.FC<Props> = ({ dev }) => {
@@ -18,7 +18,7 @@ export const DevSummaryHeader: React.FC<Props> = ({ dev }) => {
           padding: "var(--mantine-spacing-xs)",
         }}
       >
-        <SvgCode color="var(--mantine-color-red-7)" width={70} height={70} />
+        <IconCode color="var(--mantine-color-red-7)" width={70} height={70} />
       </Center>
       <Stack gap="md" miw={0}>
         {dev.idea ? (

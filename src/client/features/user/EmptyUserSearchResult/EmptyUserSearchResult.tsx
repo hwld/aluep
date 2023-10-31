@@ -1,40 +1,40 @@
 import { Flex, Stack, Text } from "@mantine/core";
 import {
-  SvgPointFilled,
-  SvgQuestionMark,
-  SvgUserSearch,
+  IconPointFilled,
+  IconQuestionMark,
+  IconUserSearch,
 } from "@tabler/icons-react";
 
 export const EmptyUserSearchResult: React.FC = () => {
   return (
     <Flex direction="column">
       <Flex justify="center" align="center">
-        <SvgUserSearch
+        <IconUserSearch
           width={70}
           height={70}
           color="var(--mantine-color-red-7)"
         />
-        <SvgPointFilled
+        <IconPointFilled
           width={30}
           height={30}
           color="var(--mantine-color-red-3)"
         />
-        <SvgPointFilled
+        <IconPointFilled
           width={30}
           height={30}
           color="var(--mantine-color-red-4)"
         />
-        <SvgPointFilled
+        <IconPointFilled
           width={30}
           height={30}
           color="var(--mantine-color-red-5)"
         />
-        <SvgPointFilled
+        <IconPointFilled
           width={30}
           height={30}
           color="var(--mantine-color-red-6)"
         />
-        <SvgQuestionMark
+        <IconQuestionMark
           width={80}
           height={80}
           color="var(--mantine-color-red-7)"

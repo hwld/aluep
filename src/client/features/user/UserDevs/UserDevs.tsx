@@ -4,7 +4,7 @@ import {
   UserDevCard,
   userDevCardMinWidthPx,
 } from "@/client/features/user/UserDevCard/UserDevCard";
-import { SvgCode } from "@tabler/icons-react";
+import { IconCode } from "@tabler/icons-react";
 import { User } from "next-auth";
 
 type Props = {
@@ -27,7 +27,7 @@ export const UserDevs: React.FC<Props> = ({ user, page, onChangePage }) => {
       emptyProps={{
         isEmpty: devsByUser?.list.length === 0,
         icon: (
-          <SvgCode
+          <IconCode
             width="100"
             height="100"
             color="var(--mantine-color-red-7)"

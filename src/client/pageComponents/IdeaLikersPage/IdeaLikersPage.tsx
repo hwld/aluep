@@ -12,7 +12,7 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Idea } from "@/models/idea";
 import { paginatedPageSchema } from "@/share/paging";
 import { Stack } from "@mantine/core";
-import { SvgHeart } from "@tabler/icons-react";
+import { IconHeart } from "@tabler/icons-react";
 
 type Props = { idea: Idea };
 export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {
@@ -25,7 +25,7 @@ export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {
 
   return (
     <>
-      <PageHeader icon={SvgHeart} pageName="お題をいいねしたユーザー" />
+      <PageHeader icon={IconHeart} pageName="お題をいいねしたユーザー" />
       <Stack w="100%" maw={1200} m="auto" gap="lg">
         <Stack gap="sm">
           <MutedText>お題</MutedText>

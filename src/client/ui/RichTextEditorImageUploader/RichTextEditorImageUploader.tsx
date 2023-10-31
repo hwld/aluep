@@ -11,7 +11,7 @@ import {
 } from "@/share/consts";
 import { Routes } from "@/share/routes";
 import { RichTextEditor, useRichTextEditorContext } from "@mantine/tiptap";
-import { SvgPhotoPlus } from "@tabler/icons-react";
+import { IconPhotoPlus } from "@tabler/icons-react";
 import { ChangeEventHandler, useRef, useState } from "react";
 import { z } from "zod";
 import classes from "./RichTextEditorImageUploader.module.css";
@@ -137,7 +137,7 @@ export const RichTextEditorImageUploader: React.FC<Props> = () => {
         accept="image/*"
         onChange={uploadImageWithLoading}
       />
-      <SvgPhotoPlus color="var(--mantine-color-gray-7)" />
+      <IconPhotoPlus color="var(--mantine-color-gray-7)" />
     </RichTextEditor.Control>
   );
 };

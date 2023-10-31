@@ -9,7 +9,7 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Idea, IdeaFormData } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card } from "@mantine/core";
-import { SvgEdit } from "@tabler/icons-react";
+import { IconEdit } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
 type Props = { idea: Idea };
@@ -43,7 +43,7 @@ export const IdeaEditPage: React.FC<Props> = ({ idea }) => {
 
   return (
     <>
-      <PageHeader icon={SvgEdit} pageName="お題の編集" />
+      <PageHeader icon={IconEdit} pageName="お題の編集" />
       <Box w="100%" miw={300} maw={800} m="auto">
         <Card mt="md" style={{ position: "static" }}>
           <IdeaForm

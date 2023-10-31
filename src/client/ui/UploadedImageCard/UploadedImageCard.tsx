@@ -13,7 +13,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { SvgCopy, SvgTrash } from "@tabler/icons-react";
+import { IconCopy, IconTrash } from "@tabler/icons-react";
 
 type Props = {
   imageUrl: string;
@@ -71,7 +71,7 @@ export const UploadedImageCard: React.FC<Props> = ({
             <Group>
               <Button
                 leftSection={
-                  <SvgTrash
+                  <IconTrash
                     width={20}
                     height={20}
                     color="var(--mantine-color-gray-1)"
@@ -94,7 +94,7 @@ export const UploadedImageCard: React.FC<Props> = ({
                       bg="gray.7"
                       c="gray.1"
                       leftSection={
-                        <SvgCopy
+                        <IconCopy
                           width={20}
                           height={20}
                           color="var(--mantine-color-gray-1)"
@@ -126,7 +126,7 @@ export const UploadedImageCard: React.FC<Props> = ({
         onClose={close}
         onConfirm={handleDelete}
         isConfirming={isDeleting}
-        confirmIcon={SvgTrash}
+        confirmIcon={IconTrash}
         confirmText="削除する"
       />
     </>

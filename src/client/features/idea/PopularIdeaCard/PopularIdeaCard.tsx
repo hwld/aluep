@@ -8,7 +8,7 @@ import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Group, Text, Title } from "@mantine/core";
-import { SvgCode, SvgMessageCircle } from "@tabler/icons-react";
+import { IconCode, IconMessageCircle } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { MouseEventHandler } from "react";
 import classes from "./PopularIdeaCard.module.css";
@@ -68,11 +68,11 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
               <Group align="center" gap="sm">
                 <IconCounter
                   active={Boolean(idea.loggedInUserDevId)}
-                  icon={<SvgCode />}
+                  icon={<IconCode />}
                   counter={idea.devs}
                 />
                 <IconCounter
-                  icon={<SvgMessageCircle />}
+                  icon={<IconMessageCircle />}
                   counter={idea.comments}
                 />
               </Group>

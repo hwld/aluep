@@ -1,7 +1,7 @@
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Button, Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { SvgUserOff } from "@tabler/icons-react";
+import { IconUserOff } from "@tabler/icons-react";
 
 type Props = {
   onFavorite: () => void;
@@ -41,7 +41,7 @@ export const UserFavoriteButton: React.FC<Props> = ({
                 onFavorite();
                 close();
               }}
-              leftSection={<SvgUserOff width={20} height={20} />}
+              leftSection={<IconUserOff width={20} height={20} />}
               loaderProps={{ size: 20 }}
             >
               解除する

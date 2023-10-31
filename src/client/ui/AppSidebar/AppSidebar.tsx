@@ -10,13 +10,13 @@ import { Routes } from "@/share/routes";
 import { Box, Flex, Stack, UnstyledButton } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import {
-  SvgFilePlus,
-  SvgHome,
-  SvgInfoCircle,
-  SvgLogin2,
-  SvgMail,
-  SvgSearch,
-  SvgUserSearch,
+  IconFilePlus,
+  IconHome,
+  IconInfoCircle,
+  IconLogin2,
+  IconMail,
+  IconSearch,
+  IconUserSearch,
 } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
@@ -86,7 +86,7 @@ export const AppSidebar: React.FC<Props> = ({
           </Flex>
           <Stack gap={10}>
             <SidebarItem
-              icon={SvgHome}
+              icon={IconHome}
               label="ホーム"
               asLink
               href={Routes.home}
@@ -94,7 +94,7 @@ export const AppSidebar: React.FC<Props> = ({
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={SvgFilePlus}
+              icon={IconFilePlus}
               label="お題を投稿"
               onClick={handleClickCreateIdea}
               asLink
@@ -103,7 +103,7 @@ export const AppSidebar: React.FC<Props> = ({
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={SvgSearch}
+              icon={IconSearch}
               label="お題を検索"
               asLink
               href={Routes.ideaSearch()}
@@ -117,7 +117,7 @@ export const AppSidebar: React.FC<Props> = ({
               />
             )}
             <SidebarItem
-              icon={SvgUserSearch}
+              icon={IconUserSearch}
               label="ユーザーを検索"
               asLink
               href={Routes.userSearch}
@@ -125,14 +125,14 @@ export const AppSidebar: React.FC<Props> = ({
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={SvgInfoCircle}
+              icon={IconInfoCircle}
               label="Aluepについて"
               asLink
               href={Routes.about}
               tooltip={!isMenuOpen}
             />
             <SidebarItem
-              icon={SvgMail}
+              icon={IconMail}
               label="お問い合わせ"
               asLink
               href={Routes.contact()}
@@ -157,7 +157,7 @@ export const AppSidebar: React.FC<Props> = ({
           />
         ) : (
           <SidebarItem
-            icon={SvgLogin2}
+            icon={IconLogin2}
             label="ログイン"
             onClick={handleLogin}
             tooltip={!isMenuOpen}

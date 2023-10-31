@@ -5,7 +5,7 @@ import {
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
 import { Idea } from "@/models/idea";
 import { Button, Flex, Stack, Title } from "@mantine/core";
-import { SvgArrowRight } from "@tabler/icons-react";
+import { IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
 import { ReactNode } from "react";
 import classes from "./PickedUpIdeas.module.css";
@@ -32,7 +32,7 @@ export const PickedUpIdeas: React.FC<Props> = ({
         </Flex>
         {readMoreHref && (
           <Button
-            rightSection={<SvgArrowRight width={20} height={20} />}
+            rightSection={<IconArrowRight width={20} height={20} />}
             component={Link}
             href={readMoreHref}
             variant="outline"

@@ -3,10 +3,10 @@ import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
 import { Flex, Stack, Text } from "@mantine/core";
 import {
-  SvgChevronDown,
-  SvgCode,
-  SvgFileText,
-  SvgHeart,
+  IconChevronDown,
+  IconCode,
+  IconFileText,
+  IconHeart,
 } from "@tabler/icons-react";
 import { Session } from "next-auth";
 
@@ -38,26 +38,26 @@ export const LoggedInUserCard: React.FC<Props> = ({ user, iconWidth }) => {
           <Flex gap="xs">
             <IconCounter
               // color属性がclassに負けるのstyleにして詳細度を高くする
-              icon={<SvgHeart style={{ color: textColor }} />}
+              icon={<IconHeart style={{ color: textColor }} />}
               counter={loggedInUserInfo?.allLikes ?? 0}
               counterProps={{ c: textColor, fz: "md" }}
             />
 
             <IconCounter
-              icon={<SvgFileText style={{ color: textColor }} />}
+              icon={<IconFileText style={{ color: textColor }} />}
               counter={loggedInUserInfo?.ideas ?? 0}
               counterProps={{ c: textColor, fz: "md" }}
             />
 
             <IconCounter
-              icon={<SvgCode style={{ color: textColor }} />}
+              icon={<IconCode style={{ color: textColor }} />}
               counter={loggedInUserInfo?.devs ?? 0}
               counterProps={{ c: textColor, fz: "md" }}
             />
           </Flex>
         </Stack>
       </Flex>
-      <SvgChevronDown
+      <IconChevronDown
         width="30"
         height="30"
         color="var(--mantine-color-gray-3)"

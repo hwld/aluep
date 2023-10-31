@@ -1,6 +1,6 @@
 import { DevCardIconLink } from "@/client/features/dev/DevCardLinkIcon/DevCardLinkIcon";
 import { Meta, StoryObj } from "@storybook/react";
-import { SvgFileText } from "@tabler/icons-react";
+import { IconFileText } from "@tabler/icons-react";
 
 const meta = { component: DevCardIconLink } satisfies Meta<
   typeof DevCardIconLink
@@ -11,7 +11,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     icon: (
-      <SvgFileText
+      <IconFileText
         width="80%"
         height="80%"
         color="var(--mantine-color-gray-7)"

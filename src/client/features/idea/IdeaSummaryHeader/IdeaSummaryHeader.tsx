@@ -5,7 +5,7 @@ import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Text } from "@mantine/core";
-import { SvgFileText } from "@tabler/icons-react";
+import { IconFileText } from "@tabler/icons-react";
 
 type Props = { idea: Idea | undefined };
 
@@ -20,7 +20,7 @@ export const IdeaSummaryHeader: React.FC<Props> = ({ idea }) => {
           padding: "var(--mantine-spacing-xs)",
         }}
       >
-        <SvgFileText
+        <IconFileText
           color={
             idea ? "var(--mantine-color-red-7)" : "var(--mantine-color-gray-5)"
           }

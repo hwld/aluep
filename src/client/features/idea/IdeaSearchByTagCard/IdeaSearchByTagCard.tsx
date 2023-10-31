@@ -3,7 +3,7 @@ import { trpc } from "@/client/lib/trpc";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { Routes } from "@/share/routes";
 import { Button, Card, Flex, Group, Stack, Text } from "@mantine/core";
-import { SvgArrowRight, SvgTag } from "@tabler/icons-react";
+import { IconArrowRight, IconTag } from "@tabler/icons-react";
 import Link from "next/link";
 import classes from "./IdeaSearchByTagCard.module.css";
 
@@ -22,7 +22,7 @@ export const IdeaSearchByTagCard: React.FC<Props> = () => {
       <Stack>
         <Group justify="space-between">
           <Group gap={5}>
-            <SvgTag
+            <IconTag
               width={20}
               height={20}
               color="var(--mantine-color-gray-1)"
@@ -35,7 +35,7 @@ export const IdeaSearchByTagCard: React.FC<Props> = () => {
             component={Link}
             href={Routes.ideaSearch()}
             size="xs"
-            rightSection={<SvgArrowRight width={14} height={14} />}
+            rightSection={<IconArrowRight width={14} height={14} />}
             className={classes["search-more-button"]}
           >
             もっと探す
@@ -51,7 +51,7 @@ export const IdeaSearchByTagCard: React.FC<Props> = () => {
           {popularTags.length === 0 ? (
             <EmptyContentItem
               icon={
-                <SvgTag
+                <IconTag
                   width={100}
                   height={100}
                   color="var(--mantine-color-gray-7)"

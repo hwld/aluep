@@ -6,7 +6,7 @@ import {
 } from "@/models/ideaComment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, Divider, Flex, Text } from "@mantine/core";
-import { SvgAlertCircle, SvgMessage2 } from "@tabler/icons-react";
+import { IconAlertCircle, IconMessage2 } from "@tabler/icons-react";
 import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -81,7 +81,7 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
               [classes.show]: errors.text,
             })}
           >
-            <SvgAlertCircle
+            <IconAlertCircle
               width={30}
               height={30}
               color="var(--mantine-color-red-7)"
@@ -99,7 +99,7 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
             <Button
               type="submit"
               loading={debouncedSubmitting}
-              leftSection={<SvgMessage2 width={20} height={20} />}
+              leftSection={<IconMessage2 width={20} height={20} />}
               loaderProps={{ size: 20 }}
             >
               返信

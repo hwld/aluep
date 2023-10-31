@@ -9,7 +9,7 @@ import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Flex, Text } from "@mantine/core";
-import { SvgHeart } from "@tabler/icons-react";
+import { IconHeart } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./UserDevCard.module.css";
 
@@ -49,7 +49,7 @@ export const UserDevCard: React.FC<Props> = ({ dev }) => {
       rightFooter={
         <IconCounter
           active={dev.likedByLoggedInUser}
-          icon={<SvgHeart />}
+          icon={<IconHeart />}
           counter={dev.likes}
         />
       }

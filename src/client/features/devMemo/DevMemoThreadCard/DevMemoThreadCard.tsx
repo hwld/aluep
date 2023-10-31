@@ -10,7 +10,7 @@ import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { DevMemo, DevMemoFormData } from "@/models/devMemo";
 import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
-import { SvgMessageCircle2 } from "@tabler/icons-react";
+import { IconMessageCircle2 } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 import classes from "./DevMemoThreadCard.module.css";
 
@@ -85,7 +85,7 @@ export const DevMemoThreadCard: React.FC<Props> = ({
         <Flex justify="space-between" align="center">
           <Flex align="center" gap={3}>
             <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>
-              <SvgMessageCircle2 width={20} height={20} />
+              <IconMessageCircle2 width={20} height={20} />
             </CardActionIcon>
             {childrenMemos.length > 0 && (
               <MutedText>{childrenMemos.length}</MutedText>

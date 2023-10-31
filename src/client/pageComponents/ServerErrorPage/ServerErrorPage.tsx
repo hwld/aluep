@@ -1,6 +1,6 @@
 import { Routes } from "@/share/routes";
 import { Box, Button, Flex, Text, Title } from "@mantine/core";
-import { SvgTool } from "@tabler/icons-react";
+import { IconTool } from "@tabler/icons-react";
 import Link from "next/link";
 
 export const ServerErrorPage: React.FC = () => {
@@ -32,7 +32,7 @@ export const ServerErrorPage: React.FC = () => {
               right: "-350px",
             }}
           >
-            <SvgTool
+            <IconTool
               width={600}
               height={600}
               color="var(--mantine-color-red-7)"

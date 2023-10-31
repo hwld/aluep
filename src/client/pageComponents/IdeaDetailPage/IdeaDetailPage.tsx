@@ -17,10 +17,10 @@ import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
 import {
-  SvgClock,
-  SvgFileText,
-  SvgRotateClockwise2,
-  SvgUser,
+  IconClock,
+  IconFileText,
+  IconRotateClockwise2,
+  IconUser,
 } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
@@ -64,7 +64,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
 
   return (
     <>
-      <PageHeader icon={SvgFileText} pageName="お題の詳細" />
+      <PageHeader icon={IconFileText} pageName="お題の詳細" />
       <Flex maw={1200} direction="column" align="center" m="auto">
         <Title ta="center" c="red.7" style={{ wordBreak: "break-all" }}>
           {idea.title}
@@ -134,7 +134,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
             >
               <IdeaInfoCardItem
                 icon={
-                  <SvgUser
+                  <IconUser
                     width={20}
                     height={20}
                     color="var(--mantine-color-gray-5)"
@@ -157,11 +157,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
 
               <IdeaInfoCardItem
                 icon={
-                  <SvgClock
-                    width={20}
-                    height={20}
-                    color="var(--mantine-color-gray-5)"
-                  />
+                  <IconClock size={20} color="var(--mantine-color-gray-5)" />
                 }
                 title="作成日"
               >
@@ -170,7 +166,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
 
               <IdeaInfoCardItem
                 icon={
-                  <SvgRotateClockwise2
+                  <IconRotateClockwise2
                     width={20}
                     height={20}
                     color="var(--mantine-color-gray-5)"

@@ -7,7 +7,7 @@ import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem"
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { UploadedImageCard } from "@/client/ui/UploadedImageCard/UploadedImageCard";
 import { Center, Flex } from "@mantine/core";
-import { SvgPhoto } from "@tabler/icons-react";
+import { IconPhoto } from "@tabler/icons-react";
 
 type Props = {};
 
@@ -36,12 +36,12 @@ export const UserUploadedImagesPage: React.FC<Props> = () => {
 
   return (
     <>
-      <PageHeader icon={SvgPhoto} pageName="アップロードした画像" />
+      <PageHeader icon={IconPhoto} pageName="アップロードした画像" />
       {images.length === 0 ? (
         <Center mt={100}>
           <EmptyContentItem
             icon={
-              <SvgPhoto
+              <IconPhoto
                 width={120}
                 height={120}
                 color="var(--mantine-color-gray-7)"

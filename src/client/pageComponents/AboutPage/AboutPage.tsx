@@ -7,15 +7,15 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Routes } from "@/share/routes";
 import { Box, Center, Image, Stack, Text } from "@mantine/core";
 import {
-  SvgArrowBigLeftLine,
-  SvgArrowBigRightLine,
-  SvgBulb,
-  SvgCode,
-  SvgFileText,
-  SvgInfoCircle,
-  SvgSearch,
-  SvgUserCode,
-  SvgUserEdit,
+  IconArrowBigLeftLine,
+  IconArrowBigRightLine,
+  IconBulb,
+  IconCode,
+  IconFileText,
+  IconInfoCircle,
+  IconSearch,
+  IconUserCode,
+  IconUserEdit,
 } from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
@@ -29,7 +29,7 @@ export const AboutPage: React.FC<Props> = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.container}>
-        <PageHeader icon={SvgInfoCircle} pageName="Aluepについて" />
+        <PageHeader icon={IconInfoCircle} pageName="Aluepについて" />
 
         <Center className={classes["hero-card"]}>
           <Stack align="center" className={classes["hero-container"]}>
@@ -89,33 +89,33 @@ export const AboutPage: React.FC<Props> = () => {
             />
 
             <UsecaseSection
-              usecase={{ icon: SvgUserCode, name: "お題の開発者" }}
+              usecase={{ icon: IconUserCode, name: "お題の開発者" }}
               flow={
                 <>
-                  <FunctionIcon icon={SvgSearch} />
-                  <ArrowIcon icon={SvgArrowBigRightLine} />
-                  <FunctionIcon icon={SvgCode} />
+                  <FunctionIcon icon={IconSearch} />
+                  <ArrowIcon icon={IconArrowBigRightLine} />
+                  <FunctionIcon icon={IconCode} />
                   <Stack gap={0}>
-                    <ArrowIcon icon={SvgArrowBigRightLine} />
-                    <ArrowIcon icon={SvgArrowBigLeftLine} />
+                    <ArrowIcon icon={IconArrowBigRightLine} />
+                    <ArrowIcon icon={IconArrowBigLeftLine} />
                   </Stack>
-                  <FunctionIcon icon={SvgBulb} />
+                  <FunctionIcon icon={IconBulb} />
                 </>
               }
               functions={
                 <>
                   <FunctionCard
-                    icon={SvgSearch}
+                    icon={IconSearch}
                     title="お題を探そう!"
                     description="ホーム画面には人気のお題やオススメのお題があります。検索画面で条件を詳しく入力することもできます。気になったお題を見つけてみましょう！"
                   />
                   <FunctionCard
-                    icon={SvgCode}
+                    icon={IconCode}
                     title="開発を始めよう！"
                     description="気になったお題が見つかったら、開発に使用するリポジトリを登録して、開発を始めてみましょう！開発中には、学んだことをメモすることもできます。"
                   />
                   <FunctionCard
-                    icon={SvgBulb}
+                    icon={IconBulb}
                     title="みんなの開発を参考にしよう！"
                     description="開発に行き詰まったときには、ほかの開発者のコードを参考にしてみましょう！参考になった開発者には、いいねを送ることもできます。"
                   />
@@ -124,26 +124,26 @@ export const AboutPage: React.FC<Props> = () => {
             />
 
             <UsecaseSection
-              usecase={{ icon: SvgUserEdit, name: "お題の投稿者" }}
+              usecase={{ icon: IconUserEdit, name: "お題の投稿者" }}
               flow={
                 <>
-                  <FunctionIcon icon={SvgFileText} />
+                  <FunctionIcon icon={IconFileText} />
                   <Stack gap={0}>
-                    <ArrowIcon icon={SvgArrowBigRightLine} />
-                    <ArrowIcon icon={SvgArrowBigRightLine} />
+                    <ArrowIcon icon={IconArrowBigRightLine} />
+                    <ArrowIcon icon={IconArrowBigRightLine} />
                   </Stack>
-                  <FunctionIcon icon={SvgBulb} />
+                  <FunctionIcon icon={IconBulb} />
                 </>
               }
               functions={
                 <>
                   <FunctionCard
-                    icon={SvgFileText}
+                    icon={IconFileText}
                     title="お題を投稿しよう！"
                     description="アイデアを思いついて、みんなの実装を見てみたいときや、自分が作っているアプリの実装に詰まったときには、お題を投稿することで解決するかもしれません。"
                   />
                   <FunctionCard
-                    icon={SvgBulb}
+                    icon={IconBulb}
                     title="みんなの開発を参考にしよう！"
                     description="投稿したら、お題のURLを共有することで開発者を募集することができます。お題にはコメントを残せるので、お題の実装に関する疑問を書くと、誰かが回答してくれるかもしれません。"
                   />

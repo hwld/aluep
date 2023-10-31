@@ -5,7 +5,7 @@ import { IdeaFormData, ideaFormSchema } from "@/models/idea";
 import { IdeaTag } from "@/models/ideaTag";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, MultiSelect, Space, TextInput } from "@mantine/core";
-import { SvgFilePlus } from "@tabler/icons-react";
+import { IconFilePlus } from "@tabler/icons-react";
 import { Controller, useForm } from "react-hook-form";
 
 type Props = {
@@ -52,7 +52,7 @@ export const IdeaForm: React.FC<Props> = ({
       onSubmit={handleSubmit(onSubmit)}
       onCancel={onCancel}
       submitText={submitText}
-      submitIcon={SvgFilePlus}
+      submitIcon={IconFilePlus}
       isSubmitting={isLoading}
     >
       <Controller

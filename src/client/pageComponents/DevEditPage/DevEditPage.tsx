@@ -7,7 +7,7 @@ import { Dev, DevFormData } from "@/models/dev";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Card, Stack } from "@mantine/core";
-import { SvgEdit } from "@tabler/icons-react";
+import { IconEdit } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -36,7 +36,7 @@ export const DevEditPage: React.FC<Props> = ({ idea, dev }) => {
 
   return (
     <>
-      <PageHeader icon={SvgEdit} pageName="開発情報の編集" />
+      <PageHeader icon={IconEdit} pageName="開発情報の編集" />
       <Stack w="100%" maw={800} miw={300} m="auto" gap="lg">
         <Stack gap="xs">
           <MutedText>開発しているお題</MutedText>

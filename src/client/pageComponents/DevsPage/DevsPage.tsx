@@ -12,7 +12,7 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Idea } from "@/models/idea";
 import { paginatedPageSchema } from "@/share/paging";
 import { Stack } from "@mantine/core";
-import { SvgCode } from "@tabler/icons-react";
+import { IconCode } from "@tabler/icons-react";
 
 type Props = { idea: Idea };
 
@@ -26,7 +26,7 @@ export const DevsPage: React.FC<Props> = ({ idea }) => {
 
   return (
     <>
-      <PageHeader icon={SvgCode} pageName="開発情報の一覧" />
+      <PageHeader icon={IconCode} pageName="開発情報の一覧" />
       <Stack w="100%" miw={300} maw={1200} m="auto" gap="lg">
         <Stack gap="sm">
           <MutedText>お題</MutedText>

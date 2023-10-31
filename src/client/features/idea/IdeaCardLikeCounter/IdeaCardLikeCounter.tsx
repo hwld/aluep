@@ -1,6 +1,6 @@
 import { Idea } from "@/models/idea";
 import { Flex, MantineStyleProp, Text } from "@mantine/core";
-import { SvgHeartFilled } from "@tabler/icons-react";
+import { IconHeartFilled } from "@tabler/icons-react";
 
 type Props = { idea: Idea };
 
@@ -15,10 +15,10 @@ export const IdeaCardLikeCounter: React.FC<Props> = ({ idea }) => {
 
   return (
     <Flex align="center" gap={5} style={style}>
-      <SvgHeartFilled
+      <IconHeartFilled
         width="55px"
         height="55px"
-        color="var(--mantine-color-red-7)"
+        style={{ color: "var(--mantine-color-red-7)" }}
       />
       <Text
         size="xl"

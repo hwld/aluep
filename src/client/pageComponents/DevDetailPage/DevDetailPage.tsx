@@ -14,7 +14,7 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev } from "@/models/dev";
 import { DevMemoFormData } from "@/models/devMemo";
 import { Card, Center, Flex, Stack, Switch, Title } from "@mantine/core";
-import { SvgCode, SvgNote } from "@tabler/icons-react";
+import { IconCode, IconNote } from "@tabler/icons-react";
 import React, { useRef } from "react";
 
 type Props = { dev: Dev };
@@ -84,7 +84,7 @@ export const DevDetailPage: React.FC<Props> = ({ dev }) => {
 
   return (
     <>
-      <PageHeader icon={SvgCode} pageName="開発情報の詳細" />
+      <PageHeader icon={IconCode} pageName="開発情報の詳細" />
       <Stack maw={1200} w="100%" m="auto" gap={40}>
         <DevDetailCard
           dev={dev}
@@ -113,7 +113,7 @@ export const DevDetailPage: React.FC<Props> = ({ dev }) => {
               <Center h="100%">
                 <EmptyContentItem
                   icon={
-                    <SvgNote
+                    <IconNote
                       width={120}
                       height={120}
                       color="var(--mantine-color-gray-7)"

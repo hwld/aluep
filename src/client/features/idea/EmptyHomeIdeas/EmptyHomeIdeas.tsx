@@ -1,7 +1,7 @@
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { Routes } from "@/share/routes";
 import { Button, Card, Text } from "@mantine/core";
-import { SvgFileText } from "@tabler/icons-react";
+import { IconFileText } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./EmptyFomeIdeas.module.css";
 
@@ -22,7 +22,7 @@ export const EmptyHomeIdeas: React.FC<Props> = ({ isLoggedIn }) => {
 
   return (
     <Card w={450} p="xl" className={classes.root}>
-      <SvgFileText
+      <IconFileText
         width={100}
         height={100}
         color="var(--mantine-color-red-7)"

@@ -4,7 +4,7 @@ import {
 } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { usePostedIdeasQuery } from "@/client/features/idea/usePostedIdeasQuery";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
-import { SvgFileText } from "@tabler/icons-react";
+import { IconFileText } from "@tabler/icons-react";
 import { User } from "next-auth";
 
 type Props = {
@@ -28,7 +28,7 @@ export const UserPostedIdeas: React.FC<Props> = ({
       emptyProps={{
         isEmpty: postedIdeas?.list.length === 0,
         icon: (
-          <SvgFileText
+          <IconFileText
             width="100"
             height="100"
             color="var(--mantine-color-red-7)"

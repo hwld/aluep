@@ -2,7 +2,7 @@ import { AppForm } from "@/client/ui/AppForm/AppForm";
 import { ReportBaseForm, reportBaseFormSchema } from "@/models/report";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@mantine/core";
-import { SvgFlag } from "@tabler/icons-react";
+import { IconFlag } from "@tabler/icons-react";
 import { Controller, useForm } from "react-hook-form";
 
 type Props = {
@@ -32,7 +32,7 @@ export const ReportForm: React.FC<Props> = ({
       onSubmit={handleSubmit(onSubmit)}
       onCancel={onCancel}
       submitText={submitText}
-      submitIcon={SvgFlag}
+      submitIcon={IconFlag}
       isSubmitting={isLoading}
     >
       <Controller

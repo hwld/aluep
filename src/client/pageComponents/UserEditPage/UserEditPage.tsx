@@ -10,7 +10,7 @@ import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ProfileFormData } from "@/models/user";
 import { Routes } from "@/share/routes";
 import { Box, Card, Flex } from "@mantine/core";
-import { SvgEdit } from "@tabler/icons-react";
+import { IconEdit } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -102,7 +102,7 @@ export const UserEditPage: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <PageHeader icon={SvgEdit} pageName="ユーザーの編集" />
+      <PageHeader icon={IconEdit} pageName="ユーザーの編集" />
       <Box w="100%" maw={800} miw={400} m="auto">
         <Card mt="md">
           <Flex gap="md">

@@ -7,7 +7,7 @@ import { DevFormData } from "@/models/dev";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Card, Stack } from "@mantine/core";
-import { SvgCode } from "@tabler/icons-react";
+import { IconCode } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -31,7 +31,7 @@ export const DevelopIdeaPage: React.FC<Props> = ({ idea }) => {
 
   return (
     <>
-      <PageHeader icon={SvgCode} pageName="お題の開発" />
+      <PageHeader icon={IconCode} pageName="お題の開発" />
       <Stack w="100%" maw={800} miw={300} m="auto" gap="lg">
         <Stack gap="xs">
           <MutedText>開発するお題</MutedText>

@@ -3,7 +3,7 @@ import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
 import { DevMemoFormData, devMemoFormSchema } from "@/models/devMemo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Divider, Flex, Text } from "@mantine/core";
-import { SvgAlertCircle, SvgMessage2 } from "@tabler/icons-react";
+import { IconAlertCircle, IconMessage2 } from "@tabler/icons-react";
 import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -82,7 +82,7 @@ export const DevMemoReplyFormBox: React.FC<Props> = ({
               [classes.show]: errors.text,
             })}
           >
-            <SvgAlertCircle
+            <IconAlertCircle
               width={30}
               height={30}
               color="var(--mantine-color-red-7)"
@@ -101,7 +101,7 @@ export const DevMemoReplyFormBox: React.FC<Props> = ({
               type="submit"
               loading={debouncedSubmitting}
               leftSection={
-                <SvgMessage2
+                <IconMessage2
                   width={20}
                   height={20}
                   style={{ opacity: debouncedSubmitting ? 0.3 : 1 }}

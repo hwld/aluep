@@ -1,7 +1,7 @@
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { NavLink, Stack } from "@mantine/core";
-import { SvgFileText } from "@tabler/icons-react";
+import { IconFileText } from "@tabler/icons-react";
 import Link from "next/link";
 import classes from "./InProgresDevLinkList.module.css";
 
@@ -22,7 +22,7 @@ export const InProgresDevLinkList: React.FC<Props> = ({
             key={dev.id}
             noWrap
             label={dev?.idea?.title ?? "削除されたお題"}
-            leftSection={<SvgFileText width={25} height={25} />}
+            leftSection={<IconFileText width={25} height={25} />}
             classNames={{ root: classes.link }}
             color="gray.7"
           />
