@@ -23,25 +23,25 @@ export const IdeaDescriptionEditor: React.FC<Props> = ({
       >
         <RichTextEditor.Toolbar sticky>
           <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Bold title="太文字" />
-            <RichTextEditor.Strikethrough title="打ち消し" />
+            <RichTextEditor.Bold title="太文字" icon={() => <></>} />
+            <RichTextEditor.Strikethrough title="打ち消し" icon={() => <></>} />
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
-            <RichTextEditor.H2 />
-            <RichTextEditor.H3 />
-            <RichTextEditor.H4 />
+            <RichTextEditor.H2 icon={() => <></>} />
+            <RichTextEditor.H3 icon={() => <></>} />
+            <RichTextEditor.H4 icon={() => <></>} />
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
-            <RichTextEditor.BulletList />
-            <RichTextEditor.OrderedList />
-            <RichTextEditor.Hr />
+            <RichTextEditor.BulletList icon={() => <></>} />
+            <RichTextEditor.OrderedList icon={() => <></>} />
+            <RichTextEditor.Hr icon={() => <></>} />
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
             <RichTextEditorImageUploader />
             {/* sanitize-htmlでaたぐにtarget="_blank"を強制的に付与しているが、
             このコントロールでそれがなくせるように見えてしまう */}
-            <RichTextEditor.Link />
-            <RichTextEditor.Unlink />
+            <RichTextEditor.Link icon={() => <></>} />
+            <RichTextEditor.Unlink icon={() => <></>} />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
         <RichTextEditor.Content />
