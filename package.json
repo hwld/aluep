@@ -40,6 +40,7 @@
     "@mantine/nprogress": "^7.1.2",
     "@mantine/tiptap": "^7.1.2",
     "@next-auth/prisma-adapter": "^1.0.5",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^5.0.0",
     "@slack/webhook": "^7.0.0",
     "@tabler/icons-react": "^2.40.0",
