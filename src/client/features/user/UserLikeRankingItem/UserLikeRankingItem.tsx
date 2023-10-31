@@ -49,8 +49,11 @@ export const UserLikeRankingItem: React.FC<Props> = ({
               <IconCounter
                 icon={
                   <IconHeartFilled
-                    style={{ width: "16px", height: "16px" }}
-                    color="var(--mantine-color-red-7)"
+                    style={{
+                      width: "16px",
+                      height: "16px",
+                      color: "var(--mantine-color-red-7)",
+                    }}
                   />
                 }
                 counter={likeCount}

@@ -17,22 +17,22 @@ export const EmptyUserSearchResult: React.FC = () => {
         <IconPointFilled
           width={30}
           height={30}
-          color="var(--mantine-color-red-3)"
+          style={{ color: "var(--mantine-color-red-3)" }}
         />
         <IconPointFilled
           width={30}
           height={30}
-          color="var(--mantine-color-red-4)"
+          style={{ color: "var(--mantine-color-red-4)" }}
         />
         <IconPointFilled
           width={30}
           height={30}
-          color="var(--mantine-color-red-5)"
+          style={{ color: "var(--mantine-color-red-5)" }}
         />
         <IconPointFilled
           width={30}
           height={30}
-          color="var(--mantine-color-red-6)"
+          style={{ color: "var(--mantine-color-red-6)" }}
         />
         <IconQuestionMark
           width={80}

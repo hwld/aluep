@@ -31,8 +31,11 @@ export const UserLikedIdeas: React.FC<Props> = ({
           <IconHeartFilled
             width="100"
             height="100"
-            color="var(--mantine-color-red-7)"
-            style={{ position: "relative", top: "10px" }}
+            style={{
+              position: "relative",
+              top: "10px",
+              color: "var(--mantine-color-red-7)",
+            }}
           />
         ),
         text: "お題のいいねがありません",

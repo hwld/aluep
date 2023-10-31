@@ -28,7 +28,6 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
   return (
     <>
       <PageHeader icon={IconUserHeart} pageName="お気に入りユーザー" />
-      <IconHeartFilled color="blue" fill="blue" />
       <Stack maw={800} m="auto" gap="lg">
         <Stack gap="sm">
           <MutedText>ユーザー</MutedText>
@@ -42,7 +41,7 @@ export const FavoritedUsersPage: React.FC<Props> = ({ user }) => {
                   <IconHeartFilled
                     width={100}
                     height={100}
-                    color="var(--mantine-color-red-6)"
+                    style={{ color: "var(--mantine-color-red-6)" }}
                   />
                 }
                 text={"ユーザーをお気に入り登録していません"}

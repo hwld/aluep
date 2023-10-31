@@ -34,8 +34,7 @@ export const IdeaLikeButton: React.FC<Props> = ({
           <IconHeartFilled
             width="75%"
             height="75%"
-            color="var(--mantine-color-pink-7)"
-            style={{ marginTop: "5px" }}
+            style={{ marginTop: "5px", color: "var(--mantine-color-pink-7)" }}
           />
         ) : (
           <IconHeart
