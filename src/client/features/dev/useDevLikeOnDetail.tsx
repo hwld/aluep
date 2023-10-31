@@ -6,7 +6,7 @@ import { Dev } from "@/models/dev";
  * 開発情報詳細画面で開発情報にいいねを行う
  */
 export const useDevLikeOnDetail = (devId: string) => {
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
 
   const likeDevMutation = trpc.dev.like.useMutation({
     onMutate: async ({ devId }) => {

@@ -45,7 +45,6 @@ export const IdeaCommentCard: React.FC<Props> = ({
     useDisclosure(false);
 
   const { replyMutation } = useIdeaCommentReply({
-    ideaId,
     closeReplyForm,
     onSuccess: () => {
       closeReplyForm();

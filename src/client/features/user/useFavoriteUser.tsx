@@ -1,12 +1,7 @@
 import { trpc } from "@/client/lib/trpc";
 
-type UseFavoriteUserArgs = { userId: string; loggedInUserId?: string };
-export const useFavoriteUser = ({
-  userId,
-  loggedInUserId,
-}: UseFavoriteUserArgs) => {
-  const utils = trpc.useContext();
-
+type UseFavoriteUserArgs = { userId: string };
+export const useFavoriteUser = ({ userId }: UseFavoriteUserArgs) => {
   const { data: favorited } = trpc.user.isFavoritedByLoggedInUser.useQuery({
     userId,
   });

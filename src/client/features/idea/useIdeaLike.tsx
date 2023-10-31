@@ -8,7 +8,7 @@ type UseIdeaLikeArgs = { ideaId: string };
  * お題をいいね・いいね解除するためのhooks
  */
 export const useIdeaLike = ({ ideaId }: UseIdeaLikeArgs) => {
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
 
   const likeIdeaMutation = trpc.idea.like.useMutation({
     onMutate: async () => {

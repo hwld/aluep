@@ -4,8 +4,6 @@ import { showErrorNotification } from "@/client/lib/utils";
 type UseIdeaCommentsArgs = { ideaId: string };
 
 export const useIdeaComments = ({ ideaId }: UseIdeaCommentsArgs) => {
-  const utils = trpc.useContext();
-
   // 指定されたお題のコメントを取得する
   const { data: ideaComments } = trpc.ideaComment.getAll.useQuery(
     { ideaId },

@@ -2,16 +2,10 @@ import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
 
 type UseIdeaCommentReplyArgs = {
-  ideaId: string;
   closeReplyForm: () => void;
   onSuccess?: () => void;
 };
-export const useIdeaCommentReply = ({
-  ideaId,
-  onSuccess,
-}: UseIdeaCommentReplyArgs) => {
-  const utils = trpc.useContext();
-
+export const useIdeaCommentReply = ({ onSuccess }: UseIdeaCommentReplyArgs) => {
   const replyMutation = trpc.ideaComment.create.useMutation({
     onSuccess: () => {
       onSuccess?.();

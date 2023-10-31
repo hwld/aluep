@@ -52,7 +52,7 @@ export const DevForm: React.FC<Props> = ({
     resolver: zodResolver(devFormSchema),
   });
 
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
   const handleReloadRepositories = () => {
     utils.me.getMyGitHubRepositories.refetch();
   };

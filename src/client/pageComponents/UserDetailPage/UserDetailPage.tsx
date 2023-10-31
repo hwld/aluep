@@ -9,7 +9,7 @@ import { useURLParams } from "@/client/lib/useURLParams";
 import { SvgCode, SvgFileText, SvgHeart, SvgUser } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { TabControl } from "@/client/ui/TabControl/TabControl";
-import { User, userDetailPageSchame, UserDetailPageTab } from "@/models/user";
+import { User, userDetailPageSchame } from "@/models/user";
 import { assertNever } from "@/share/utils";
 import { Box, Flex, Stack } from "@mantine/core";
 import { useMemo } from "react";
@@ -23,8 +23,9 @@ export const UserDetailPage: React.FC<Props> = ({ user }) => {
   const { recievedLikeCount } = useReceivedLikeCountQuery({ userId: user.id });
   const { userActivity } = useUserActivityQuery({ userId: user.id });
 
-  const handleChangeTab = (tab: UserDetailPageTab) => {
-    setURLParam({ tab, page: 1 });
+  const handleChangeTab = (tab: string) => {
+    const data = userDetailPageSchame.parse({ tab, page: 1 });
+    setURLParam(data);
   };
 
   const tabContent = useMemo(() => {

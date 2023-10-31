@@ -4,7 +4,7 @@ import classes from "./TabControl.module.css";
 
 type Props<T extends string> = {
   activeTab: T;
-  onChange: (value: T) => void;
+  onChange: (value: string) => void;
   data: { value: T; label: string; icon?: React.FC<SVGProps<SVGSVGElement>> }[];
 };
 export const TabControl = <T extends string>({

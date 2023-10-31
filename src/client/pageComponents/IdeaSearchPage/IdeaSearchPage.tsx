@@ -45,12 +45,20 @@ export const IdeaSearchPage: React.FC = () => {
     });
   };
 
-  const handleChangeOrder = (value: string) => {
+  const handleChangeOrder = (value: string | null) => {
+    if (value === null) {
+      return;
+    }
+
     const order = ideaOrderSchema.parse(value);
     setQueryParams({ order, page: 1 });
   };
 
-  const handleChangePeriod = (value: string) => {
+  const handleChangePeriod = (value: string | null) => {
+    if (value === null) {
+      return;
+    }
+
     const period = ideaPeriodSchema.parse(value);
     setQueryParams({ period, page: 1 });
   };
