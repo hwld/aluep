@@ -5,12 +5,24 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "extends": [
     "next/core-web-vitals",
     "plugin:storybook/recommended",
     "plugin:deprecation/recommended"
   ],
   "rules": {
-    "react/no-deprecated": "error"
+    "react/no-deprecated": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_"
+      }
+    ]
   }
 }

@@ -4,9 +4,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2,
   },
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true,
-  },
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
@@ -16,11 +13,4 @@
     "watch": false,
     "onSave": "test-file"
   },
-  "cssVariables.lookupFiles": [
-    "**/*.css",
-    "**/*.scss",
-    "**/*.sass",
-    "**/*.less",
-    "node_modules/@mantine/core/esm/index.css",
-  ]
 }
