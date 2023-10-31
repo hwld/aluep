@@ -20,9 +20,7 @@
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "stoprybook build",
     "test-storybook": "test-storybook",
-    "svgr": "npx @svgr/cli -d src/client/ui/Icons .svgr/icons",
-
-    "postinstall": "patch-package"
+    "svgr": "npx @svgr/cli -d src/client/ui/Icons .svgr/icons"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -84,7 +82,6 @@
     "next": "13.5.4",
     "next-auth": "^4.20.1",
     "node-mocks-http": "^1.12.1",
-    "patch-package": "^8.0.0",
     "prisma": "^5.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
