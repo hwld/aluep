@@ -5,6 +5,92 @@ import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
 import { formatDistanceStrict } from "date-fns";
 import { ja } from "date-fns/locale";
+import { __new_db__ } from "@/server/lib/db";
+
+//TODO: columnsとwithだけに制限したいけどPickがうまく効かない・・・
+type _Args = Parameters<typeof __new_db__.query.ideas.findFirst>[0];
+const _ideaArgs = {
+  with: {
+    ideaTagOnIdea: { with: { ideaTag: true } },
+    user: true,
+    likes: true,
+    developments: true,
+    comments: true,
+  },
+} satisfies _Args;
+
+type _Payload = NonNullable<
+  Awaited<ReturnType<typeof __new_db__.query.ideas.findFirst<typeof _ideaArgs>>>
+>;
+
+const _convertIdea = (
+  raw: _Payload,
+  loggedInUserId: string | undefined
+): Idea => {
+  return {
+    id: raw.id,
+    title: raw.title,
+    tags: raw.ideaTagOnIdea.map((t) => ({ id: t.tagId, name: t.ideaTag.name })),
+    descriptionHtml: raw.description,
+    createdAt: raw.createdAt,
+    elapsedSinceCreation: formatDistanceStrict(
+      new Date(raw.createdAt),
+      new Date(),
+      { addSuffix: true, locale: ja }
+    ),
+    updatedAt: raw.updatedAt,
+    user: {
+      id: raw.user.id,
+      name: raw.user.name,
+      image: raw.user.image,
+    },
+    likes: raw.likes.length,
+    devs: raw.developments.length,
+    comments: raw.comments.length,
+    likedByLoggedInUser: raw.likes.find((l) => l.userId === loggedInUserId)
+      ? true
+      : false,
+    loggedInUserDevId: raw.developments.find((d) => d.userId === loggedInUserId)
+      ?.id,
+  };
+};
+
+export const _findIdea = async ({
+  args,
+  loggedInUserId,
+}: {
+  //TODO: columnsとwithを消したいがOmitが動かない・・・
+  args: _Args;
+  loggedInUserId: string | undefined;
+}): Promise<Idea | undefined> => {
+  const raw = await __new_db__.query.ideas.findFirst({ ...args, ..._ideaArgs });
+
+  if (!raw) {
+    return undefined;
+  }
+
+  const idea = _convertIdea(raw, loggedInUserId);
+  return idea;
+};
+
+export const _findManyIdeas = async ({
+  args,
+  loggedInUserId,
+  transactionClient,
+}: {
+  args: _Args;
+  loggedInUserId: string | undefined;
+  transactionClient?: typeof __new_db__;
+}): Promise<Idea[]> => {
+  const client = transactionClient ?? __new_db__;
+
+  const raws = await client.query.ideas.findMany({ ...args, ..._ideaArgs });
+  const ideas = raws.map((r) => _convertIdea(r, loggedInUserId));
+  return ideas;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// prisma
 
 const ideaArgs = {
   include: {

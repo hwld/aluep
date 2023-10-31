@@ -1,4 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
+import { relations } from "drizzle-orm";
 import {
   pgTable,
   uniqueIndex,
@@ -120,6 +121,14 @@ export const ideas = pgTable("ideas", {
     .defaultNow(),
 });
 
+export const ideasRelations = relations(ideas, ({ many, one }) => ({
+  ideaTagOnIdea: many(ideaTagOnIdeas),
+  user: one(users, { fields: [ideas.userId], references: [users.id] }),
+  developments: many(developments),
+  likes: many(ideaLikes),
+  comments: many(ideaComments),
+}));
+
 export const ideaTags = pgTable(
   "idea_tags",
   {
@@ -144,6 +153,10 @@ export const ideaTags = pgTable(
     };
   }
 );
+
+export const ideaTagsRelations = relations(ideaTags, ({ many }) => ({
+  ideaTagOnIdeas: many(ideaTagOnIdeas),
+}));
 
 export const ideaLikes = pgTable(
   "idea_likes",
@@ -171,6 +184,10 @@ export const ideaLikes = pgTable(
     };
   }
 );
+
+export const ideaLikesRelations = relations(ideaLikes, ({ one }) => ({
+  idea: one(ideas, { fields: [ideaLikes.ideaId], references: [ideas.id] }),
+}));
 
 export const verificationTokens = pgTable(
   "verification_tokens",
@@ -289,6 +306,10 @@ export const ideaComments = pgTable("idea_comments", {
   text: text("text").notNull(),
 });
 
+export const ideaCommentsRelations = relations(ideaComments, ({ one }) => ({
+  idea: one(ideas, { fields: [ideaComments.ideaId], references: [ideas.id] }),
+}));
+
 export const developments = pgTable(
   "developments",
   {
@@ -328,6 +349,10 @@ export const developments = pgTable(
   }
 );
 
+export const developmentsRelations = relations(developments, ({ one }) => ({
+  idea: one(ideas, { fields: [developments.ideaId], references: [ideas.id] }),
+}));
+
 export const recommendedIdeas = pgTable("recommended_ideas", {
   ideaId: text("ideaId")
     .primaryKey()
@@ -360,6 +385,17 @@ export const ideaTagOnIdeas = pgTable(
     };
   }
 );
+
+export const ideaTagOnIdeasRelations = relations(ideaTagOnIdeas, ({ one }) => ({
+  idea: one(ideas, {
+    fields: [ideaTagOnIdeas.ideaId],
+    references: [ideas.id],
+  }),
+  ideaTag: one(ideaTags, {
+    fields: [ideaTagOnIdeas.tagId],
+    references: [ideaTags.id],
+  }),
+}));
 
 export const favoriteUsers = pgTable(
   "favorite_users",

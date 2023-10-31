@@ -21,4 +21,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // TODO:
-export const __new_db__ = drizzle(connection, { schema });
+export const __new_db__ = drizzle(connection, {
+  schema,
+  logger: process.env.NODE_ENV === "development",
+});
