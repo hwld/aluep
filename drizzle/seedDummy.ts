@@ -8,9 +8,10 @@ import { cwd } from "process";
 import { loadEnvConfig } from "@next/env";
 import { faker } from "@faker-js/faker/locale/ja";
 import { Presets, SingleBar } from "cli-progress";
+import { DATABASE_URL } from "@/../drizzle/standaloneEnv";
 
 loadEnvConfig(cwd());
-const connection = postgres(process.env.DATABASE_URL || "", { max: 1 });
+const connection = postgres(DATABASE_URL, { max: 1 });
 const db = drizzle(connection, {
   schema,
 });

@@ -18,9 +18,10 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { cwd } from "process";
 import { loadEnvConfig } from "@next/env";
+import { DATABASE_URL } from "@/../drizzle/standaloneEnv";
 
 loadEnvConfig(cwd());
-const connection = postgres(process.env.DATABASE_URL || "", { max: 1 });
+const connection = postgres(DATABASE_URL, { max: 1 });
 const db = drizzle(connection, {
   schema,
 });
