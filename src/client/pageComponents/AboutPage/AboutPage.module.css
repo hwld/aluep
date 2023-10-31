@@ -1,7 +1,10 @@
 .root {
   --about-scale: 1;
+  container-type: inline-size;
+}
 
-  @container (max-width: 1100px) {
+@container (max-width: 1100px) {
+  .container {
     --about-scale: 0.7;
   }
 }
