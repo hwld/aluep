@@ -10,18 +10,18 @@ import { useRequireLoginModal } from "@/client/features/session/RequireLoginModa
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
-import {
-  SvgClock,
-  SvgFileText,
-  SvgRotateClockwise2,
-  SvgUser,
-} from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { TocCard } from "@/client/ui/TocCard/TocCard";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card, Flex, Stack, Text, Title } from "@mantine/core";
+import {
+  SvgClock,
+  SvgFileText,
+  SvgRotateClockwise2,
+  SvgUser,
+} from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 

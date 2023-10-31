@@ -1,6 +1,6 @@
-import { SvgHome } from "@/client/ui/Icons";
 import { SidebarItem } from "@/client/ui/SidebarItem/SidebarItem";
 import { Meta, StoryObj } from "@storybook/react";
+import { SvgHome } from "@tabler/icons-react";
 
 const meta = { component: SidebarItem } satisfies Meta<typeof SidebarItem>;
 export default meta;

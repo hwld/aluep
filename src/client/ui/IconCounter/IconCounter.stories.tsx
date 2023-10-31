@@ -1,5 +1,5 @@
-import { SvgHeart } from "@/client/ui/Icons";
 import { Meta, StoryObj } from "@storybook/react";
+import { SvgHeart } from "@tabler/icons-react";
 import { IconCounter } from "./IconCounter";
 
 const meta = {

@@ -1,8 +1,8 @@
-import { SvgFileText } from "@/client/ui/Icons";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Box, Flex, Stack, Text } from "@mantine/core";
+import { SvgFileText } from "@tabler/icons-react";
 
 type Props = { dev: Dev };
 

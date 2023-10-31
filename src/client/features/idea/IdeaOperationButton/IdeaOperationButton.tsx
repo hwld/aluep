@@ -11,12 +11,12 @@ import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
-import { SvgDots, SvgEdit, SvgFlag, SvgTrash } from "@/client/ui/Icons";
 import { Idea } from "@/models/idea";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { SvgDots, SvgEdit, SvgFlag, SvgTrash } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./IdeaOperationButton.module.css";
 

@@ -13,6 +13,11 @@ import {
 import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem/UserLikeRankingItem";
 import { trpc } from "@/client/lib/trpc";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
+import { RankingCard } from "@/client/ui/RankingCard/RankingCard";
+import { WelcomeMessageSection } from "@/client/ui/WelcomeMessageSection/WelcomeMessageSection";
+import { Routes } from "@/share/routes";
+import { Center, Flex, Stack, Title } from "@mantine/core";
 import {
   SvgBulb,
   SvgCode,
@@ -20,12 +25,7 @@ import {
   SvgHeart,
   SvgHome,
   SvgThumbUp,
-} from "@/client/ui/Icons";
-import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
-import { RankingCard } from "@/client/ui/RankingCard/RankingCard";
-import { WelcomeMessageSection } from "@/client/ui/WelcomeMessageSection/WelcomeMessageSection";
-import { Routes } from "@/share/routes";
-import { Center, Flex, Stack, Title } from "@mantine/core";
+} from "@tabler/icons-react";
 import classes from "./HomePage.module.css";
 
 type Props = {

@@ -1,13 +1,13 @@
 import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
-import { SvgCode, SvgHeart, SvgMessageCircle } from "@/client/ui/Icons";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Flex, Group, Text, Title } from "@mantine/core";
+import { SvgCode, SvgHeart, SvgMessageCircle } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./IdeaCard.module.css";
 

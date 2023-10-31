@@ -8,11 +8,15 @@ import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClick
 import { formatDate } from "@/client/lib/utils";
 import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
-import { SvgChevronsRight, SvgMessageCircle, SvgUser } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { IdeaComment, IdeaCommentFormData } from "@/models/ideaComment";
 import { Box, Card, Flex, Stack, Text, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import {
+  SvgChevronsRight,
+  SvgMessageCircle,
+  SvgUser,
+} from "@tabler/icons-react";
 import classes from "./IdeaCommentCard.module.css";
 
 type Props = {

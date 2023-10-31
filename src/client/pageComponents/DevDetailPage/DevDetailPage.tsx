@@ -10,11 +10,11 @@ import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
 import { showErrorNotification } from "@/client/lib/utils";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
-import { SvgCode, SvgNote } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev } from "@/models/dev";
 import { DevMemoFormData } from "@/models/devMemo";
 import { Card, Center, Flex, Stack, Switch, Title } from "@mantine/core";
+import { SvgCode, SvgNote } from "@tabler/icons-react";
 import React, { useRef } from "react";
 
 type Props = { dev: Dev };

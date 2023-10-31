@@ -1,7 +1,7 @@
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
-import { SvgFileText } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import { Button, Card, Text } from "@mantine/core";
+import { SvgFileText } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./EmptyFomeIdeas.module.css";
 

@@ -1,6 +1,6 @@
 import { stopPropagation } from "@/client/lib/utils";
-import { SvgDots } from "@/client/ui/Icons";
 import { ActionIcon, Menu } from "@mantine/core";
+import { SvgDots } from "@tabler/icons-react";
 import classes from "./AppMenuButton.module.css";
 
 type Props = {};

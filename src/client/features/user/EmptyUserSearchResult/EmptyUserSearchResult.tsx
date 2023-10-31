@@ -1,9 +1,9 @@
+import { Flex, Stack, Text } from "@mantine/core";
 import {
   SvgPointFilled,
   SvgQuestionMark,
   SvgUserSearch,
-} from "@/client/ui/Icons";
-import { Flex, Stack, Text } from "@mantine/core";
+} from "@tabler/icons-react";
 
 export const EmptyUserSearchResult: React.FC = () => {
   return (

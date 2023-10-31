@@ -1,7 +1,7 @@
 import { AppModal } from "@/client/ui/AppModal/AppModal";
-import { SvgUserOff } from "@/client/ui/Icons";
 import { Button, Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { SvgUserOff } from "@tabler/icons-react";
 
 type Props = {
   onFavorite: () => void;

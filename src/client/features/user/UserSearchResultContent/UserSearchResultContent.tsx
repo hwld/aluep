@@ -3,9 +3,9 @@ import {
   UserCard,
   userCardMinWidthPx,
 } from "@/client/features/user/UserCard/UserCard";
-import { SvgUserSearch } from "@/client/ui/Icons";
 import { User } from "@/models/user";
 import { Box, Flex, Text } from "@mantine/core";
+import { SvgUserSearch } from "@tabler/icons-react";
 
 type Props = {
   userSearchResult: User[];

@@ -1,7 +1,7 @@
 import { UserActivity } from "@/client/features/user/useUserActivityQuery";
-import { SvgCode, SvgFileText, SvgHeart } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
+import { SvgCode, SvgFileText, SvgHeart } from "@tabler/icons-react";
 
 type Props = { userActivity: UserActivity; width?: number };
 export const UserActivityCard: React.FC<Props> = ({ userActivity, width }) => {

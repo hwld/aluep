@@ -1,9 +1,9 @@
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
-import { SvgHeartFilled, SvgMedal } from "@/client/ui/Icons";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { Flex, Text } from "@mantine/core";
+import { SvgHeartFilled, SvgMedal } from "@tabler/icons-react";
 import { User } from "next-auth";
 import { useMemo } from "react";
 

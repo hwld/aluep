@@ -1,11 +1,11 @@
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
-import { SvgFileText } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Text } from "@mantine/core";
+import { SvgFileText } from "@tabler/icons-react";
 
 type Props = { idea: Idea | undefined };
 

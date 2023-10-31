@@ -4,10 +4,10 @@ import {
   showSuccessNotification,
 } from "@/client/lib/utils";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
-import { SvgPhoto } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { UploadedImageCard } from "@/client/ui/UploadedImageCard/UploadedImageCard";
 import { Center, Flex } from "@mantine/core";
+import { SvgPhoto } from "@tabler/icons-react";
 
 type Props = {};
 

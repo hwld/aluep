@@ -1,6 +1,6 @@
 import { AppForm } from "@/client/ui/AppForm/AppForm";
-import { SvgCode } from "@/client/ui/Icons";
 import { Meta, StoryObj } from "@storybook/react";
+import { SvgCode } from "@tabler/icons-react";
 
 const meta = { component: AppForm } satisfies Meta<typeof AppForm>;
 export default meta;

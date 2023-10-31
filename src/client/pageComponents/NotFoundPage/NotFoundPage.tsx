@@ -1,6 +1,6 @@
-import { SvgExclamationCircle } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import { Box, Button, Flex, Text, Title } from "@mantine/core";
+import { SvgExclamationCircle } from "@tabler/icons-react";
 import Link from "next/link";
 
 export const NotFoundPage: React.FC = () => {

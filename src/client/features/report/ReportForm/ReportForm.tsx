@@ -1,8 +1,8 @@
 import { AppForm } from "@/client/ui/AppForm/AppForm";
-import { SvgFlag } from "@/client/ui/Icons";
 import { ReportBaseForm, reportBaseFormSchema } from "@/models/report";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@mantine/core";
+import { SvgFlag } from "@tabler/icons-react";
 import { Controller, useForm } from "react-hook-form";
 
 type Props = {

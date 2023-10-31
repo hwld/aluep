@@ -2,12 +2,12 @@ import { InProgresDevLinkList } from "@/client/features/dev/InProgresDevLinkList
 import { trpc } from "@/client/lib/trpc";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
-import { SvgCode } from "@/client/ui/Icons";
 import { SidebarItem } from "@/client/ui/SidebarItem/SidebarItem";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { Center, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { SvgCode } from "@tabler/icons-react";
 
 type Props = { tooltip?: boolean; loggedInUserId: string };
 

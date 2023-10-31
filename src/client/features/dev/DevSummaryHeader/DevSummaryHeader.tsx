@@ -1,10 +1,10 @@
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
-import { SvgCode } from "@/client/ui/Icons";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Text } from "@mantine/core";
+import { SvgCode } from "@tabler/icons-react";
 
 type Props = { dev: Dev };
 export const DevSummaryHeader: React.FC<Props> = ({ dev }) => {

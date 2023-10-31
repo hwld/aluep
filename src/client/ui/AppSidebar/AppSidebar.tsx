@@ -1,14 +1,5 @@
 import { DevInProgresSidebarItem } from "@/client/features/dev/InProgresDevSidebarItem/InProgresDevSidebarItem";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
-import {
-  SvgFilePlus,
-  SvgHome,
-  SvgInfoCircle,
-  SvgLogin2,
-  SvgMail,
-  SvgSearch,
-  SvgUserSearch,
-} from "@/client/ui/Icons";
 import { LoggedInUserCard } from "@/client/ui/LoggedInUserCard/LoggedInUserCard";
 import { LoggedInUserMenu } from "@/client/ui/LoggedInUserMenu/LoggedInUserMenu";
 import { SidebarAppTitle } from "@/client/ui/SidebarAppTitle/SidebarAppTitle";
@@ -18,6 +9,15 @@ import { setAppConfigCookie } from "@/share/cookie";
 import { Routes } from "@/share/routes";
 import { Box, Flex, Stack, UnstyledButton } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import {
+  SvgFilePlus,
+  SvgHome,
+  SvgInfoCircle,
+  SvgLogin2,
+  SvgMail,
+  SvgSearch,
+  SvgUserSearch,
+} from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";

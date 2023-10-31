@@ -1,6 +1,6 @@
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
-import { SvgMessageCircle } from "@/client/ui/Icons";
 import { Meta, StoryObj } from "@storybook/react";
+import { SvgMessageCircle } from "@tabler/icons-react";
 
 const meta = { component: CardActionIcon } satisfies Meta<
   typeof CardActionIcon

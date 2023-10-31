@@ -2,14 +2,14 @@ import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
+import { Routes } from "@/share/routes";
+import { BadgeProps, Menu } from "@mantine/core";
 import {
   SvgLogout2,
   SvgTrash,
   SvgUserCircle,
   SvgUserHeart,
-} from "@/client/ui/Icons";
-import { Routes } from "@/share/routes";
-import { BadgeProps, Menu } from "@mantine/core";
+} from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { ReactNode } from "react";

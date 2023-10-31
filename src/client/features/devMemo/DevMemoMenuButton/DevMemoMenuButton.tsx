@@ -11,10 +11,10 @@ import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
-import { SvgFlag, SvgLink, SvgTrash } from "@/client/ui/Icons";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
+import { SvgFlag, SvgLink, SvgTrash } from "@tabler/icons-react";
 
 type Props = {
   devId: string;

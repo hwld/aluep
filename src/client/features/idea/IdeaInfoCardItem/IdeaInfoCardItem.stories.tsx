@@ -1,7 +1,7 @@
 import { IdeaInfoCardItem } from "@/client/features/idea/IdeaInfoCardItem/IdeaInfoCardItem";
-import { SvgUser } from "@/client/ui/Icons";
 import { Text } from "@mantine/core";
 import { Meta, StoryObj } from "@storybook/react";
+import { SvgUser } from "@tabler/icons-react";
 
 const meta = { component: IdeaInfoCardItem } satisfies Meta<
   typeof IdeaInfoCardItem

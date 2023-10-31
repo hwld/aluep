@@ -1,4 +1,3 @@
-import { SvgArrowRight, SvgX } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import {
   ActionIcon,
@@ -8,6 +7,7 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
+import { SvgArrowRight, SvgX } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import classes from "./WelcomeCard.module.css";

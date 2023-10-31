@@ -6,12 +6,12 @@ import { UserLikedIdeas } from "@/client/features/user/UserLikedIdeas/UserLikedI
 import { UserPostedIdeas } from "@/client/features/user/UserPostedIdeas/UserPostedIdeas";
 import { useUserActivityQuery } from "@/client/features/user/useUserActivityQuery";
 import { useURLParams } from "@/client/lib/useURLParams";
-import { SvgCode, SvgFileText, SvgHeart, SvgUser } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { TabControl } from "@/client/ui/TabControl/TabControl";
 import { User, userDetailPageSchame } from "@/models/user";
 import { assertNever } from "@/share/utils";
 import { Box, Flex, Stack } from "@mantine/core";
+import { SvgCode, SvgFileText, SvgHeart, SvgUser } from "@tabler/icons-react";
 import { useMemo } from "react";
 
 type Props = { user: User };

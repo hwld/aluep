@@ -4,7 +4,6 @@ import {
   showLoadingNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
-import { SvgPhotoPlus } from "@/client/ui/Icons";
 import {
   Bytes,
   TOTAL_UPLOAD_IMAGE_LIMIT_MB,
@@ -12,6 +11,7 @@ import {
 } from "@/share/consts";
 import { Routes } from "@/share/routes";
 import { RichTextEditor, useRichTextEditorContext } from "@mantine/tiptap";
+import { SvgPhotoPlus } from "@tabler/icons-react";
 import { ChangeEventHandler, useRef, useState } from "react";
 import { z } from "zod";
 import classes from "./RichTextEditorImageUploader.module.css";

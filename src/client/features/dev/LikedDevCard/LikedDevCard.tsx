@@ -4,13 +4,13 @@ import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBa
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
-import { SvgFileText, SvgHeart } from "@/client/ui/Icons";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Flex, Group } from "@mantine/core";
+import { SvgFileText, SvgHeart } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./LikedDevCard.module.css";
 

@@ -6,11 +6,11 @@ import {
   showLoadingNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
-import { SvgEdit } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ProfileFormData } from "@/models/user";
 import { Routes } from "@/share/routes";
 import { Box, Card, Flex } from "@mantine/core";
+import { SvgEdit } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { useState } from "react";

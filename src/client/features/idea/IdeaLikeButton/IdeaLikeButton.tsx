@@ -1,6 +1,6 @@
-import { SvgHeart, SvgHeartFilled } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Anchor, Stack, Tooltip } from "@mantine/core";
+import { SvgHeart, SvgHeartFilled } from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import classes from "./IdeaLikeButton.module.css";

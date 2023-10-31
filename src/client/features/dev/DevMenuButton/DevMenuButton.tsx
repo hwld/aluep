@@ -9,11 +9,11 @@ import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
-import { SvgEdit, SvgFlag, SvgTrash } from "@/client/ui/Icons";
 import { Dev } from "@/models/dev";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
+import { SvgEdit, SvgFlag, SvgTrash } from "@tabler/icons-react";
 import router from "next/router";
 import {
   showErrorNotification,

@@ -3,6 +3,9 @@ import { FunctionCard } from "@/client/pageComponents/AboutPage/FunctionCard";
 import { FunctionIcon } from "@/client/pageComponents/AboutPage/FunctionIcon";
 import { SectionTitle } from "@/client/pageComponents/AboutPage/SectionTitle";
 import { UsecaseSection } from "@/client/pageComponents/AboutPage/UsecaseSection";
+import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
+import { Routes } from "@/share/routes";
+import { Box, Center, Image, Stack, Text } from "@mantine/core";
 import {
   SvgArrowBigLeftLine,
   SvgArrowBigRightLine,
@@ -13,10 +16,7 @@ import {
   SvgSearch,
   SvgUserCode,
   SvgUserEdit,
-} from "@/client/ui/Icons";
-import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
-import { Routes } from "@/share/routes";
-import { Box, Center, Image, Stack, Text } from "@mantine/core";
+} from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import classes from "./AboutPage.module.css";

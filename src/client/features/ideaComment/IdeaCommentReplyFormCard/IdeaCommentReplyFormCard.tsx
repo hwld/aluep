@@ -1,5 +1,4 @@
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
-import { SvgAlertCircle, SvgMessage2 } from "@/client/ui/Icons";
 import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
 import {
   IdeaCommentFormData,
@@ -7,6 +6,7 @@ import {
 } from "@/models/ideaComment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, Divider, Flex, Text } from "@mantine/core";
+import { SvgAlertCircle, SvgMessage2 } from "@tabler/icons-react";
 import clsx from "clsx";
 import { useLayoutEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";

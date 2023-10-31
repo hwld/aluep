@@ -1,8 +1,8 @@
 import { stopPropagation } from "@/client/lib/utils";
-import { SvgHeart, SvgHeartFilled } from "@/client/ui/Icons";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Flex, Text } from "@mantine/core";
+import { SvgHeart, SvgHeartFilled } from "@tabler/icons-react";
 import clsx from "clsx";
 import classes from "./DevLikeButton.module.css";
 

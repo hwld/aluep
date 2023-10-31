@@ -1,6 +1,6 @@
 import { DevCardIconLink } from "@/client/features/dev/DevCardLinkIcon/DevCardLinkIcon";
 import { convertToGithubDevUrl } from "@/client/lib/convertToGithubDevUrl";
-import { SvgGithubMark } from "@/client/ui/Icons";
+import { SvgGithubMark } from "@tabler/icons-react";
 
 type Props = { gitHubUrl: string };
 

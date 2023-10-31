@@ -1,7 +1,7 @@
 import { LikedDevCard } from "@/client/features/dev/LikedDevCard/LikedDevCard";
 import { useLikedDevs } from "@/client/features/dev/useLikedDevs";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
-import { SvgHeartFilled } from "@/client/ui/Icons";
+import { SvgHeartFilled } from "@tabler/icons-react";
 import { User } from "next-auth";
 
 type Props = { user: User; page: number; onChangePage: (page: number) => void };

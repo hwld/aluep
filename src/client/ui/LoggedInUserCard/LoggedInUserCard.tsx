@@ -1,13 +1,13 @@
 import { useLoggedInUserInfoQuery } from "@/client/features/session/useLoggedInUserInfoQuery";
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
+import { Flex, Stack, Text } from "@mantine/core";
 import {
   SvgChevronDown,
   SvgCode,
   SvgFileText,
   SvgHeart,
-} from "@/client/ui/Icons";
-import { Flex, Stack, Text } from "@mantine/core";
+} from "@tabler/icons-react";
 import { Session } from "next-auth";
 
 type Props = { user: Session["user"]; iconWidth: number };

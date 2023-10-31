@@ -1,11 +1,11 @@
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
-import { SvgAlertCircle, SvgMessage2 } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
 import { DevMemoFormData, devMemoFormSchema } from "@/models/devMemo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, Divider, Flex, Text } from "@mantine/core";
+import { SvgAlertCircle, SvgMessage2 } from "@tabler/icons-react";
 import clsx from "clsx";
 import { User } from "next-auth";
 import { forwardRef, useRef } from "react";

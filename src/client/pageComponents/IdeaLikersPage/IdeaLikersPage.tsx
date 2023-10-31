@@ -7,12 +7,12 @@ import { useIdeaLikers } from "@/client/features/user/useIdeaLikers";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
-import { SvgHeart } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Idea } from "@/models/idea";
 import { paginatedPageSchema } from "@/share/paging";
 import { Stack } from "@mantine/core";
+import { SvgHeart } from "@tabler/icons-react";
 
 type Props = { idea: Idea };
 export const IdeaLikersPage: React.FC<Props> = ({ idea }) => {

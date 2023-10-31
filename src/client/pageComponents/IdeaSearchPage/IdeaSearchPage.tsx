@@ -13,7 +13,6 @@ import { ideaOrderItems, ideaPeriodItems } from "@/client/lib/consts";
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
-import { SvgSearch } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import {
   ideaOrderSchema,
@@ -21,6 +20,7 @@ import {
   searchIdeaPageSchema,
 } from "@/models/idea";
 import { Box, Card, Flex, Select, Title } from "@mantine/core";
+import { SvgSearch } from "@tabler/icons-react";
 import React from "react";
 
 export const IdeaSearchPage: React.FC = () => {

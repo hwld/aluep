@@ -1,5 +1,9 @@
-import { SvgPointFilled, SvgQuestionMark, SvgSearch } from "@/client/ui/Icons";
 import { Card, Flex, Text } from "@mantine/core";
+import {
+  SvgPointFilled,
+  SvgQuestionMark,
+  SvgSearch,
+} from "@tabler/icons-react";
 import classes from "./EmptyIdeaSearchResult.module.css";
 
 export const EmptyIdeaSearchResult = () => {

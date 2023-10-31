@@ -3,9 +3,9 @@ import {
   ideaCardMinWidthPx,
 } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
-import { SvgArrowRight } from "@/client/ui/Icons";
 import { Idea } from "@/models/idea";
 import { Button, Flex, Stack, Title } from "@mantine/core";
+import { SvgArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
 import { ReactNode } from "react";
 import classes from "./PickedUpIdeas.module.css";

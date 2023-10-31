@@ -1,6 +1,6 @@
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
-import { SvgCode } from "@/client/ui/Icons";
 import { Meta, StoryObj } from "@storybook/react";
+import { SvgCode } from "@tabler/icons-react";
 
 const meta = { component: AppConfirmModal } satisfies Meta<
   typeof AppConfirmModal

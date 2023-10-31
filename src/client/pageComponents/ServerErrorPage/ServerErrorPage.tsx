@@ -1,6 +1,6 @@
-import { SvgTool } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import { Box, Button, Flex, Text, Title } from "@mantine/core";
+import { SvgTool } from "@tabler/icons-react";
 import Link from "next/link";
 
 export const ServerErrorPage: React.FC = () => {

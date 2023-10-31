@@ -4,7 +4,7 @@ import {
   UserDevCard,
   userDevCardMinWidthPx,
 } from "@/client/features/user/UserDevCard/UserDevCard";
-import { SvgCode } from "@/client/ui/Icons";
+import { SvgCode } from "@tabler/icons-react";
 import { User } from "next-auth";
 
 type Props = {

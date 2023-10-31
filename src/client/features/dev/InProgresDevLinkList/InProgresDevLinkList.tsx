@@ -1,7 +1,7 @@
-import { SvgFileText } from "@/client/ui/Icons";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { NavLink, Stack } from "@mantine/core";
+import { SvgFileText } from "@tabler/icons-react";
 import Link from "next/link";
 import classes from "./InProgresDevLinkList.module.css";
 

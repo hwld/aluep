@@ -11,10 +11,10 @@ import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
-import { SvgEdit, SvgFlag, SvgPhoto } from "@/client/ui/Icons";
 import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
+import { SvgEdit, SvgFlag, SvgPhoto } from "@tabler/icons-react";
 import { User } from "next-auth";
 
 type Props = {

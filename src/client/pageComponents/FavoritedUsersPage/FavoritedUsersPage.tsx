@@ -7,12 +7,12 @@ import { UserSummaryHeader } from "@/client/features/user/UserSummaryHeader/User
 import { useURLParams } from "@/client/lib/useURLParams";
 import { AppPagination } from "@/client/ui/AppPagination/AppPagination";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
-import { SvgHeartFilled, SvgUserHeart } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { User } from "@/models/user";
 import { paginatedPageSchema } from "@/share/paging";
 import { Box, Card, Center, Stack, Text } from "@mantine/core";
+import { SvgHeartFilled, SvgUserHeart } from "@tabler/icons-react";
 import React from "react";
 
 type Props = { user: User };

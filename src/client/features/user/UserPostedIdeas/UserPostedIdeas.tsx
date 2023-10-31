@@ -4,7 +4,7 @@ import {
 } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { usePostedIdeasQuery } from "@/client/features/idea/usePostedIdeasQuery";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
-import { SvgFileText } from "@/client/ui/Icons";
+import { SvgFileText } from "@tabler/icons-react";
 import { User } from "next-auth";
 
 type Props = {

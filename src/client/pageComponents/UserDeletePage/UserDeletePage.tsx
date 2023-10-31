@@ -1,10 +1,10 @@
 import { trpc } from "@/client/lib/trpc";
 import { showErrorNotification } from "@/client/lib/utils";
-import { SvgTrash } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ReCaptchaCheckBox } from "@/client/ui/ReCaptchaCheckBox";
 import { Routes } from "@/share/routes";
 import { Box, Button, List, Mark, Text, Title } from "@mantine/core";
+import { SvgTrash } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";

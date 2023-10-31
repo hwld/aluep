@@ -5,12 +5,12 @@ import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { formatDate } from "@/client/lib/utils";
 import { GitHubCodeIconLink } from "@/client/ui/GitHubCodeIconLink/GitHubCodeIconLink";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
-import { SvgHeart } from "@/client/ui/Icons";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { Flex } from "@mantine/core";
+import { SvgHeart } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./DevCard.module.css";
 

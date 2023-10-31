@@ -5,11 +5,11 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
-import { SvgFilePlus } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { IdeaFormData } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card } from "@mantine/core";
+import { SvgFilePlus } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
 export const IdeaCreatePage: React.FC = () => {

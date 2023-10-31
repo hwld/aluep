@@ -1,7 +1,7 @@
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
-import { SvgGithubMark } from "@/client/ui/Icons";
 import { Button, Stack, Text } from "@mantine/core";
+import { SvgGithubMark } from "@tabler/icons-react";
 import { signIn } from "next-auth/react";
 
 type Props = {};

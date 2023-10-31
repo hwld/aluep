@@ -1,13 +1,13 @@
 import { DevForm } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { useDevMutations } from "@/client/features/dev/useDevMutations";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
-import { SvgCode } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { DevFormData } from "@/models/dev";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Card, Stack } from "@mantine/core";
+import { SvgCode } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
 type Props = {

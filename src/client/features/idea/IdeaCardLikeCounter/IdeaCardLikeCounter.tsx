@@ -1,6 +1,6 @@
-import { SvgHeartFilled } from "@/client/ui/Icons";
 import { Idea } from "@/models/idea";
 import { Flex, MantineStyleProp, Text } from "@mantine/core";
+import { SvgHeartFilled } from "@tabler/icons-react";
 
 type Props = { idea: Idea };
 

@@ -1,5 +1,5 @@
 import { DevCardIconLink } from "@/client/features/dev/DevCardLinkIcon/DevCardLinkIcon";
-import { SvgLink } from "@/client/ui/Icons";
+import { SvgLink } from "@tabler/icons-react";
 
 type Props = { url: string };
 export const DevItemIconLink: React.FC<Props> = ({ url }) => {

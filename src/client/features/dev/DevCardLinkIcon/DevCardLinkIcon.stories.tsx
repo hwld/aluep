@@ -1,6 +1,6 @@
 import { DevCardIconLink } from "@/client/features/dev/DevCardLinkIcon/DevCardLinkIcon";
-import { SvgFileText } from "@/client/ui/Icons";
 import { Meta, StoryObj } from "@storybook/react";
+import { SvgFileText } from "@tabler/icons-react";
 
 const meta = { component: DevCardIconLink } satisfies Meta<
   typeof DevCardIconLink

@@ -1,4 +1,3 @@
-import { SvgBook, SvgReload } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import {
   ActionIcon,
@@ -9,6 +8,7 @@ import {
   ScrollArea,
   useCombobox,
 } from "@mantine/core";
+import { SvgBook, SvgReload } from "@tabler/icons-react";
 import { FocusEventHandler, forwardRef, useMemo, useState } from "react";
 import classes from "./GitHubRepoSelect.module.css";
 

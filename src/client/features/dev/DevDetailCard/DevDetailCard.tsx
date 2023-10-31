@@ -6,12 +6,6 @@ import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { convertToGithubDevUrl } from "@/client/lib/convertToGithubDevUrl";
 import { formatDate } from "@/client/lib/utils";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
-import {
-  SvgClock,
-  SvgGithubMark,
-  SvgLink,
-  SvgRotateClockwise2,
-} from "@/client/ui/Icons";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
@@ -25,6 +19,12 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
+import {
+  SvgClock,
+  SvgGithubMark,
+  SvgLink,
+  SvgRotateClockwise2,
+} from "@tabler/icons-react";
 import classes from "./DevDetailCard.module.css";
 
 type Props = {

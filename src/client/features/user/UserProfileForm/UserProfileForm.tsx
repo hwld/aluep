@@ -1,8 +1,8 @@
 import { AppForm } from "@/client/ui/AppForm/AppForm";
-import { SvgEdit } from "@/client/ui/Icons";
 import { ProfileFormData, profileFormSchema } from "@/models/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Switch, Textarea, TextInput } from "@mantine/core";
+import { SvgEdit } from "@tabler/icons-react";
 import { Controller, useForm } from "react-hook-form";
 
 type Props = {

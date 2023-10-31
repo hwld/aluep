@@ -5,11 +5,11 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "@/client/lib/utils";
-import { SvgEdit } from "@/client/ui/Icons";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Idea, IdeaFormData } from "@/models/idea";
 import { Routes } from "@/share/routes";
 import { Box, Card } from "@mantine/core";
+import { SvgEdit } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
 type Props = { idea: Idea };

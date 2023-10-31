@@ -1,6 +1,6 @@
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
-import { SvgMail } from "@/client/ui/Icons";
 import { Meta, StoryObj } from "@storybook/react";
+import { SvgMail } from "@tabler/icons-react";
 
 const meta = { component: EmptyContentItem } satisfies Meta<
   typeof EmptyContentItem

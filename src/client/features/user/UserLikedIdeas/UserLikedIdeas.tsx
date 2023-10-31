@@ -4,7 +4,7 @@ import {
 } from "@/client/features/idea/IdeaCard/IdeaCard";
 import { useLikedIdeas } from "@/client/features/idea/useLikedIdeas";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
-import { SvgHeartFilled } from "@/client/ui/Icons";
+import { SvgHeartFilled } from "@tabler/icons-react";
 import { User } from "next-auth";
 
 type Props = {

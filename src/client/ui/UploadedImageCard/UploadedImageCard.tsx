@@ -1,6 +1,5 @@
 import { formatBytes, formatDateTime } from "@/client/lib/utils";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
-import { SvgCopy, SvgTrash } from "@/client/ui/Icons";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import {
   Button,
@@ -14,6 +13,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { SvgCopy, SvgTrash } from "@tabler/icons-react";
 
 type Props = {
   imageUrl: string;

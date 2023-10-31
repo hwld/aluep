@@ -1,9 +1,9 @@
 import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";
 import { trpc } from "@/client/lib/trpc";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
-import { SvgArrowRight, SvgTag } from "@/client/ui/Icons";
 import { Routes } from "@/share/routes";
 import { Button, Card, Flex, Group, Stack, Text } from "@mantine/core";
+import { SvgArrowRight, SvgTag } from "@tabler/icons-react";
 import Link from "next/link";
 import classes from "./IdeaSearchByTagCard.module.css";
 
