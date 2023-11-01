@@ -21,11 +21,15 @@ export const getLikedIdeasByUser = publicProcedure
     // });
     // const likedIdeaIds = likedIdeaIdObjs.map((l) => l.ideaId);
 
+    // TODO:
     // いいねしたお題の情報を取得
-    const likedIdeas = await findManyIdeas({
-      args: { where: (ideas, { inArray }) => inArray(ideas.id, []) },
-      loggedInUserId: ctx.session?.user.id,
-    });
+    const likedIdeas =
+      [].length === 0
+        ? []
+        : await findManyIdeas({
+            args: { where: (ideas, { inArray }) => inArray(ideas.id, []) },
+            loggedInUserId: ctx.session?.user.id,
+          });
 
     const sortedLikedIdeas = sortedInSameOrder({
       target: likedIdeas,

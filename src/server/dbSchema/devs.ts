@@ -10,6 +10,7 @@ import {
 import { relations } from "drizzle-orm";
 import { users } from "@/server/dbSchema/users";
 import { ideas } from "@/server/dbSchema/ideas";
+import { developmentLikes } from "@/server/dbSchema/devLikes";
 
 export const developmentStatus = pgEnum("DevelopmentStatus", [
   "COMPLETED",
@@ -55,6 +56,11 @@ export const developments = pgTable(
   }
 );
 
-export const developmentsRelations = relations(developments, ({ one }) => ({
-  idea: one(ideas, { fields: [developments.ideaId], references: [ideas.id] }),
-}));
+export const developmentsRelations = relations(
+  developments,
+  ({ one, many }) => ({
+    user: one(users, { fields: [developments.userId], references: [users.id] }),
+    likes: many(developmentLikes),
+    idea: one(ideas, { fields: [developments.ideaId], references: [ideas.id] }),
+  })
+);

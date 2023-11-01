@@ -29,12 +29,17 @@ export const getPopularIdeas = publicProcedure
     `;
       const ideaIds = ideaIdObjs.map(({ ideaId }) => ideaId);
 
-      const ideas = await findManyIdeas({
-        args: { where: (ideas, { inArray }) => inArray(ideas.id, ideaIds) },
-        // TODO:
-        // transactionClient: tx,
-        loggedInUserId: ctx.session?.user.id,
-      });
+      const ideas =
+        ideaIds.length === 0
+          ? []
+          : await findManyIdeas({
+              args: {
+                where: (ideas, { inArray }) => inArray(ideas.id, ideaIds),
+              },
+              // TODO:
+              // transactionClient: tx,
+              loggedInUserId: ctx.session?.user.id,
+            });
 
       // ideaIdsに並び順を合わせる
       const sortedIdeas = sortedInSameOrder({

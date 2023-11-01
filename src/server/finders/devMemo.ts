@@ -1,21 +1,15 @@
 import { DevMemo } from "@/models/devMemo";
-import { db } from "@/server/lib/prismadb";
-import { OmitStrict } from "@/types/OmitStrict";
-import { Prisma } from "@prisma/client";
+import { DbArgs, DbPayload, __new_db__ } from "@/server/lib/db";
 
+type FindManyArgs = DbArgs<"developmentMemos", "findMany">;
 const devMemoArgs = {
-  select: {
-    id: true,
-    developmentId: true,
-    text: true,
-    fromUser: { select: { id: true, name: true, image: true } },
-    parentMemoId: true,
-    createdAt: true,
-  },
-} satisfies Prisma.DevelopmentMemoDefaultArgs;
+  with: { fromUser: { columns: { id: true, name: true, image: true } } },
+} satisfies FindManyArgs;
 
 const convertDevMemo = (
-  raw: Prisma.DevelopmentMemoGetPayload<typeof devMemoArgs>
+  raw: DbPayload<
+    typeof __new_db__.query.developmentMemos.findFirst<typeof devMemoArgs>
+  >
 ): DevMemo => {
   return {
     id: raw.id,
@@ -26,23 +20,19 @@ const convertDevMemo = (
       name: raw.fromUser.name,
       imageUrl: raw.fromUser.image,
     },
-    parentMemoId: raw.parentMemoId,
-    createdAt: raw.createdAt,
+    parentMemoId: raw.parentCommentId,
+    createdAt: new Date(raw.createdAt),
   };
 };
 
-type FindManyDevMemoArgs = OmitStrict<
-  Prisma.DevelopmentMemoFindManyArgs,
-  "select" | "include" | "orderBy"
->;
-export const findManyDevMemos = async (args: FindManyDevMemoArgs) => {
-  const rawMemos = await db.developmentMemo.findMany({
-    orderBy: { createdAt: "asc" },
-    ...devMemoArgs,
+export const findManyDevMemos = async (
+  args: FindManyArgs
+): Promise<DevMemo[]> => {
+  const raws = await __new_db__.query.developmentMemos.findMany({
     ...args,
+    ...devMemoArgs,
   });
 
-  const memos = rawMemos.map((raw) => convertDevMemo(raw));
-
+  const memos = raws.map((r) => convertDevMemo(r));
   return memos;
 };

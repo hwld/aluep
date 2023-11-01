@@ -6,7 +6,9 @@ export const getAllIdeaComments = publicProcedure
   .input(z.object({ ideaId: z.string().min(1) }))
   .query(async ({ input }) => {
     const comments = await findManyIdeaComments({
-      where: { ideaId: input.ideaId },
+      where: (comments, { eq }) => {
+        return eq(comments.ideaId, input.ideaId);
+      },
     });
 
     return comments;

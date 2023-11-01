@@ -9,6 +9,7 @@ import * as devsSchema from "./devs";
 import * as devMemosSchema from "./devMemos";
 import * as favoriteUserseSchema from "./favoriteUsers";
 import * as devLikesSchema from "./devLikes";
+import * as ideaCommentParentChild from "./ideaCommentParentChild";
 
 export const dbSchema = {
   ...sessionsSchema,
@@ -22,4 +23,5 @@ export const dbSchema = {
   ...devMemosSchema,
   ...favoriteUserseSchema,
   ...devLikesSchema,
+  ...ideaCommentParentChild,
 } as const;

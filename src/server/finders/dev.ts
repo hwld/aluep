@@ -1,22 +1,25 @@
 import { Dev } from "@/models/dev";
-import { db } from "@/server/lib/prismadb";
-import { OmitStrict } from "@/types/OmitStrict";
-import { Prisma } from "@prisma/client";
+import { DbArgs, DbPayload, __new_db__ } from "@/server/lib/db";
 
+type FindFristArgs = DbArgs<"developments", "findFirst">;
+type FindManyArgs = DbArgs<"developments", "findMany">;
 const devArgs = {
-  include: {
+  with: {
     user: true,
     likes: true,
-    idea: { select: { id: true, title: true } },
+    idea: { columns: { id: true, title: true } },
   },
-} satisfies Prisma.DevelopmentDefaultArgs;
+} satisfies FindFristArgs;
 
 const convertDev = (
-  raw: Prisma.DevelopmentGetPayload<typeof devArgs>,
+  raw: DbPayload<
+    typeof __new_db__.query.developments.findFirst<typeof devArgs>
+  >,
   loggedInUserId: string | undefined
 ): Dev => {
   const idea = raw.idea ? { id: raw.idea.id, title: raw.idea.title } : null;
-  const dev: Dev = {
+
+  return {
     id: raw.id,
     idea,
     developer: {
@@ -28,58 +31,48 @@ const convertDev = (
     comment: raw.comment,
     developedItemUrl: raw.developedItemUrl,
     likes: raw.likes.length,
-    // ログインユーザーがいいねしているか
-    likedByLoggedInUser: raw.likes.find(
-      (like) => like.userId === loggedInUserId
-    )
+    likedByLoggedInUser: raw.likes.find((l) => l.userId === loggedInUserId)
       ? true
       : false,
-    createdAt: raw.createdAt.toUTCString(),
-    updatedAt: raw.updatedAt.toUTCString(),
+    createdAt: raw.createdAt,
+    updatedAt: raw.updatedAt,
     status: raw.status,
     allowOtherUserMemos: raw.allowOtherUserMemos,
   };
-
-  return dev;
 };
 
-export type FindDevsArgs = OmitStrict<
-  Prisma.DevelopmentFindManyArgs,
-  "include" | "select"
-> & {
-  loggedInUserId: string | undefined;
-};
 export const findManyDevs = async ({
-  orderBy,
+  args,
   loggedInUserId,
-  ...args
-}: FindDevsArgs): Promise<Dev[]> => {
-  const rawDevs = await db.development.findMany({
-    orderBy: { createdAt: "desc", ...orderBy },
+}: {
+  args: FindManyArgs;
+  loggedInUserId: string | undefined;
+}): Promise<Dev[]> => {
+  const raws = await __new_db__.query.developments.findMany({
+    ...args,
+    ...devArgs,
+    orderBy: (devs, { desc }) => [desc(devs.createdAt)],
+  });
+
+  const devs = raws.map((r) => convertDev(r, loggedInUserId));
+  return devs;
+};
+
+export const findDev = async ({
+  args,
+  loggedInuserId,
+}: {
+  args: FindFristArgs;
+  loggedInuserId: string | undefined;
+}): Promise<Dev | undefined> => {
+  const raw = await __new_db__.query.developments.findFirst({
     ...args,
     ...devArgs,
   });
 
-  const devs = rawDevs.map((raw) => {
-    return convertDev(raw, loggedInUserId);
-  });
-
-  return devs;
-};
-
-export const findDev = async (
-  devId: string,
-  loggedInUserId: string | undefined
-): Promise<Dev | undefined> => {
-  const rawDev = await db.development.findUnique({
-    where: { id: devId },
-    ...devArgs,
-  });
-
-  if (!rawDev) {
+  if (!raw) {
     return undefined;
   }
 
-  const dev = convertDev(rawDev, loggedInUserId);
-  return dev;
+  return convertDev(raw, loggedInuserId);
 };

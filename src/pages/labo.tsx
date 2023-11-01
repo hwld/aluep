@@ -1,19 +1,15 @@
-import { pickUpIdeas, findSearchedIdeas } from "@/server/finders/idea";
+import { findManyIdeaComments } from "@/server/finders/ideaComment";
 import { __new_db__ } from "@/server/lib/db";
 import { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const pick = await findSearchedIdeas({
-    loggedInUserId: undefined,
-    pagingData: { limit: 3, page: 2 },
-    searchArgs: {
-      keyword: "f",
-      period: "monthly",
-      tagIds: ["f4fdtum9zgyqpy11bilfwx04"],
-      order: "createdAsc",
+  const comments = await findManyIdeaComments({
+    where: (comments, { eq }) => {
+      return eq(comments.id, "1");
     },
   });
-  console.log(pick);
+
+  console.log(comments);
   return { props: {} };
 };
 export default function Page() {

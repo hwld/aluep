@@ -25,10 +25,17 @@ export const getLikedDevsByUser = publicProcedure
     const likedDevIds = likedDevIdsObj.map((d) => d.developmentId);
 
     // いいねした開発情報を取得
-    const likedDevs = await findManyDevs({
-      loggedInUserId: ctx.session?.user.id,
-      where: { id: { in: likedDevIds } },
-    });
+    const likedDevs =
+      likedDevIds.length === 0
+        ? []
+        : await findManyDevs({
+            loggedInUserId: ctx.session?.user.id,
+            args: {
+              where: (devs, { inArray }) => {
+                return inArray(devs.id, likedDevIds);
+              },
+            },
+          });
 
     const sortedLikedDevs = sortedInSameOrder({
       target: likedDevs,

@@ -1,6 +1,7 @@
 import { developments } from "@/server/dbSchema/devs";
 import { users } from "@/server/dbSchema/users";
 import { createId } from "@paralleldrive/cuid2";
+import { relations } from "drizzle-orm";
 import { pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 export const developmentLikes = pgTable(
@@ -30,4 +31,14 @@ export const developmentLikes = pgTable(
       ).on(table.developmentId, table.userId),
     };
   }
+);
+
+export const developmentLikesRelations = relations(
+  developmentLikes,
+  ({ one }) => ({
+    development: one(developments, {
+      fields: [developmentLikes.developmentId],
+      references: [developments.id],
+    }),
+  })
 );

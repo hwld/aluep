@@ -25,3 +25,14 @@ export const __new_db__ = drizzle(connection, {
   schema: { ...dbSchema },
   logger: process.env.NODE_ENV === "development",
 });
+
+type TableName = keyof typeof __new_db__.query;
+
+//TODO: columnsとwithだけに制限したいけどPickがうまく効かない・・・
+export type DbArgs<
+  T extends TableName,
+  K extends "findFirst" | "findMany"
+> = Parameters<(typeof __new_db__.query)[T][K]>[0];
+export type DbPayload<T extends () => void> = NonNullable<
+  Awaited<ReturnType<T>>
+>;

@@ -1,6 +1,7 @@
 import { developments } from "@/server/dbSchema/devs";
 import { users } from "@/server/dbSchema/users";
 import { createId } from "@paralleldrive/cuid2";
+import { relations } from "drizzle-orm";
 import {
   foreignKey,
   pgTable,
@@ -16,6 +17,7 @@ export const developmentMemos = pgTable(
       .primaryKey()
       .notNull()
       .$defaultFn(() => createId()),
+    // TODO: なんでcomment?
     parentCommentId: text("parentCommentId"),
     fromUserId: text("fromUserId")
       .notNull()
@@ -44,4 +46,14 @@ export const developmentMemos = pgTable(
         .onDelete("cascade"),
     };
   }
+);
+
+export const developmentMemosRelations = relations(
+  developmentMemos,
+  ({ one }) => ({
+    fromUser: one(users, {
+      fields: [developmentMemos.fromUserId],
+      references: [users.id],
+    }),
+  })
 );
