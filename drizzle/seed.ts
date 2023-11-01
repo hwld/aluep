@@ -1,4 +1,4 @@
-import * as schema from "@/server/dbSchema";
+import { dbSchema } from "@/server/dbSchema";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { cwd } from "process";
@@ -8,7 +8,7 @@ import { DATABASE_URL } from "@/../drizzle/standaloneEnv";
 loadEnvConfig(cwd());
 const connection = postgres(DATABASE_URL, { max: 1 });
 const db = drizzle(connection, {
-  schema,
+  schema: { ...dbSchema },
 });
 
 function upsertIdeaTags(tx: typeof db) {
@@ -49,9 +49,9 @@ function upsertIdeaTags(tx: typeof db) {
   ];
 
   return tx
-    .insert(schema.ideaTags)
+    .insert(dbSchema.ideaTags)
     .values(tags.map((tag) => ({ name: tag })))
-    .onConflictDoNothing({ target: schema.ideaTags.name });
+    .onConflictDoNothing({ target: dbSchema.ideaTags.name });
 }
 
 async function main() {

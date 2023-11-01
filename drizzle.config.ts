@@ -6,7 +6,7 @@ import { DATABASE_URL } from "@/../drizzle/standaloneEnv";
 loadEnvConfig(cwd());
 
 export default {
-  schema: "./src/server/dbSchema.ts",
+  schema: "./src/server/dbSchema/*",
   out: "./drizzle/migrations",
   driver: "pg",
   dbCredentials: {

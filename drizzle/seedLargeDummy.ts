@@ -13,7 +13,7 @@
  */
 
 import { faker } from "@faker-js/faker/locale/ja";
-import * as schema from "@/server/dbSchema";
+import { dbSchema } from "@/server/dbSchema";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { cwd } from "process";
@@ -23,7 +23,7 @@ import { DATABASE_URL } from "@/../drizzle/standaloneEnv";
 loadEnvConfig(cwd());
 const connection = postgres(DATABASE_URL, { max: 1 });
 const db = drizzle(connection, {
-  schema,
+  schema: { ...dbSchema },
 });
 
 async function main() {
@@ -37,10 +37,10 @@ async function main() {
     const id = faker.string.uuid();
     // 既に存在すれば作成日だけ更新する作成しない
     const user = await db
-      .insert(schema.users)
+      .insert(dbSchema.users)
       .values({ id, name: faker.person.fullName() })
       .onConflictDoNothing()
-      .returning({ id: schema.users.id });
+      .returning({ id: dbSchema.users.id });
 
     userIds.push(user[0].id);
     console.log(`ユーザーを追加 ${i}`);
@@ -51,7 +51,7 @@ async function main() {
   for (let i = 0; i < userIds.length; i++) {
     const id = faker.string.uuid();
     const idea = await db
-      .insert(schema.ideas)
+      .insert(dbSchema.ideas)
       .values({
         id,
         title: faker.lorem.words(3),
@@ -59,7 +59,7 @@ async function main() {
         userId: userIds[i],
       })
       .onConflictDoNothing()
-      .returning({ id: schema.ideas.id });
+      .returning({ id: dbSchema.ideas.id });
 
     console.log(`お題を追加 ${i}`);
 
@@ -72,7 +72,7 @@ async function main() {
     for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
       const id = faker.string.uuid();
       await db
-        .insert(schema.ideaLikes)
+        .insert(dbSchema.ideaLikes)
         .values({ id, ideaId: ideaIds[ideaIndex], userId: userIds[userIndex] })
         .onConflictDoNothing();
 
@@ -96,7 +96,7 @@ async function main() {
     for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
       const id = faker.string.uuid();
       const dev = await db
-        .insert(schema.developments)
+        .insert(dbSchema.developments)
         .values({
           id,
           githubUrl: "",
@@ -111,7 +111,7 @@ async function main() {
           ]),
         })
         .onConflictDoNothing()
-        .returning({ id: schema.developments.id });
+        .returning({ id: dbSchema.developments.id });
 
       console.log(`お題を開発 ユーザー:${userIndex} お題:${ideaIndex}`);
 
@@ -139,7 +139,7 @@ async function main() {
 
       const id = faker.string.uuid();
       await db
-        .insert(schema.developmentLikes)
+        .insert(dbSchema.developmentLikes)
         .values({
           id,
           userId: userIds[userIndex],

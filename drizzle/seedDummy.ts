@@ -1,7 +1,7 @@
 /**
  * ダミーデータを生成
  */
-import * as schema from "@/server/dbSchema";
+import { dbSchema } from "@/server/dbSchema";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { cwd } from "process";
@@ -13,7 +13,7 @@ import { DATABASE_URL } from "@/../drizzle/standaloneEnv";
 loadEnvConfig(cwd());
 const connection = postgres(DATABASE_URL, { max: 1 });
 const db = drizzle(connection, {
-  schema,
+  schema: { ...dbSchema },
 });
 
 const bar = new SingleBar(
@@ -43,7 +43,7 @@ async function main() {
   // お題の作成
   const ideaIds = await createIdeas(userIds, 50);
 
-  await db.insert(schema.recommendedIdeas).values({ ideaId: ideaIds[0] });
+  await db.insert(dbSchema.recommendedIdeas).values({ ideaId: ideaIds[0] });
 
   // お題へのいいねの追加
   await createIdeaLike({
@@ -89,10 +89,10 @@ async function createUsers(counts: number): Promise<string[]> {
   for (let i = 0; i < counts; i++) {
     const id = faker.string.uuid();
     const user = await db
-      .insert(schema.users)
+      .insert(dbSchema.users)
       .values({ id, name: faker.person.fullName() })
       .onConflictDoNothing()
-      .returning({ id: schema.users.id });
+      .returning({ id: dbSchema.users.id });
     userIds.push(user[0].id);
     bar.increment();
   }
@@ -118,7 +118,7 @@ async function createIdeas(
   for (let i = 0; i < counts; i++) {
     const id = faker.string.uuid();
     const idea = await db
-      .insert(schema.ideas)
+      .insert(dbSchema.ideas)
       .values({
         id,
         title: faker.lorem.words(3),
@@ -126,7 +126,7 @@ async function createIdeas(
         userId: userIds[i],
       })
       .onConflictDoNothing()
-      .returning({ id: schema.ideas.id });
+      .returning({ id: dbSchema.ideas.id });
 
     ideaIds.push(idea[0].id);
     bar.increment();
@@ -184,7 +184,7 @@ async function createIdeaLike({
     for (let userIndex = 0; userIndex < likeCounts; userIndex++) {
       const id = faker.string.uuid();
       await db
-        .insert(schema.ideaLikes)
+        .insert(dbSchema.ideaLikes)
         .values({
           id,
           ideaId,
@@ -240,7 +240,7 @@ async function createDevs({
     for (let userIndex = 0; userIndex < devCounts; userIndex++) {
       const id = faker.string.uuid();
       const dev = await db
-        .insert(schema.developments)
+        .insert(dbSchema.developments)
         .values({
           id,
           githubUrl: "",
@@ -255,7 +255,7 @@ async function createDevs({
           ]),
         })
         .onConflictDoNothing()
-        .returning({ id: schema.developments.id });
+        .returning({ id: dbSchema.developments.id });
 
       devIds.push(dev[0].id);
       bar.increment();
@@ -311,7 +311,7 @@ async function createDevtLikes({
     for (let userIndex = 0; userIndex < likeCounts; userIndex++) {
       const id = faker.string.uuid();
       await db
-        .insert(schema.developmentLikes)
+        .insert(dbSchema.developmentLikes)
         .values({
           id,
           developmentId: devId,
