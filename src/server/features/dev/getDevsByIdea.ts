@@ -14,8 +14,9 @@ export const getDevsByIdea = publicProcedure
         where: { ideaId: input.ideaId },
         loggedInUserId: ctx.session?.user.id,
       },
-      finder: findManyDevs,
-      counter: ({ loggedInUserId, ...others }) => db.development.count(others),
+      finder: (args) => findManyDevs({ ...args.input, ...args }),
+      counter: ({ loggedInUserId: _, ...others }) =>
+        db.development.count(others),
       pagingData: { page, limit: PAGE_LIMIT.devs },
     });
 

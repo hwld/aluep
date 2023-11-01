@@ -7,7 +7,7 @@ export const getRecommendedIdeas = publicProcedure.query(async ({ ctx }) => {
   const ids = recommendedIdeas.map((r) => r.ideaId);
 
   const ideas = await findManyIdeas({
-    args: { where: { id: { in: ids } } },
+    args: { where: (ideas, { inArray }) => inArray(ideas.id, ids) },
     loggedInUserId: ctx.session?.user.id,
   });
 

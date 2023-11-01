@@ -13,11 +13,12 @@ export const getDevLikers = publicProcedure
   .input(z.object({ devId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page } }) => {
     const [devLikes, { allPages }] = await paginate({
-      finder: db.developmentLike.findMany,
       finderInput: {
         where: { developmentId: input.devId },
         orderBy: { createdAt: "desc" },
       } satisfies Prisma.DevelopmentLikeFindManyArgs,
+      finder: ({ input, ...args }) =>
+        db.developmentLike.findMany({ ...input, ...args }),
       counter: db.developmentLike.count,
       pagingData: { page, limit: PAGE_LIMIT.ideaLikers },
     });

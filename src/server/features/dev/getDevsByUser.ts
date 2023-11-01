@@ -10,12 +10,12 @@ export const getDevsByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page }, ctx }) => {
     const [devs, { allPages }] = await paginate({
-      finder: findManyDevs,
+      finder: ({ input, ...args }) => findManyDevs({ ...input, ...args }),
       finderInput: {
         where: { userId: input.userId },
         loggedInUserId: ctx.session?.user.id,
       } satisfies FindDevsArgs,
-      counter: ({ loggedInUserId, ...others }) => {
+      counter: ({ loggedInUserId: _, ...others }) => {
         return db.development.count(others);
       },
       pagingData: { page, limit: PAGE_LIMIT.devsByUser },

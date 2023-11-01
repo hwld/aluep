@@ -13,12 +13,13 @@ export const getLikedDevsByUser = publicProcedure
   .query(async ({ input, input: { page }, ctx }) => {
     // 指定されたユーザーがいいねした開発情報のidを取得する
     const [likedDevIdsObj, { allPages }] = await paginate({
-      finder: db.developmentLike.findMany,
+      finder: ({ input, ...args }) =>
+        db.developmentLike.findMany({ ...input, ...args }),
       finderInput: {
         select: { developmentId: true },
         where: { userId: input.userId },
       } satisfies Prisma.DevelopmentLikeFindManyArgs,
-      counter: ({ select, ...args }) => db.developmentLike.count(args),
+      counter: ({ select: _, ...args }) => db.developmentLike.count(args),
       pagingData: { page, limit: PAGE_LIMIT.likedDevs },
     });
     const likedDevIds = likedDevIdsObj.map((d) => d.developmentId);

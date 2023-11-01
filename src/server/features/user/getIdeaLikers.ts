@@ -12,7 +12,8 @@ export const getIdeaLikers = publicProcedure
   .input(z.object({ ideaId: z.string(), page: pagingSchema }))
   .query(async ({ input }) => {
     const [ideaLikes, { allPages }] = await paginate({
-      finder: db.ideaLike.findMany,
+      finder: ({ input, ...args }) =>
+        db.ideaLike.findMany({ ...input, ...args }),
       finderInput: {
         where: { ideaId: input.ideaId },
         orderBy: { createdAt: "desc" as const },

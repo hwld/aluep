@@ -22,7 +22,7 @@ export const getFavoritedUsers = publicProcedure
 
     const [favoritedUsers, { allPages }] = await paginate({
       finderInput: { where: { id: { in: favoritedUserIds } } },
-      finder: findManyUsers,
+      finder: ({ input, ...args }) => findManyUsers({ ...input, ...args }),
       counter: db.user.count,
       pagingData: { page, limit: PAGE_LIMIT.favoritedUsers },
     });

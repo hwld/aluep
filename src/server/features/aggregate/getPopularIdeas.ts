@@ -30,8 +30,9 @@ export const getPopularIdeas = publicProcedure
       const ideaIds = ideaIdObjs.map(({ ideaId }) => ideaId);
 
       const ideas = await findManyIdeas({
-        args: { where: { id: { in: ideaIds } } },
-        transactionClient: tx,
+        args: { where: (ideas, { inArray }) => inArray(ideas.id, ideaIds) },
+        // TODO:
+        // transactionClient: tx,
         loggedInUserId: ctx.session?.user.id,
       });
 
