@@ -1,13 +1,14 @@
 import { convertUser } from "@/server/finders/user";
 import { db } from "@/server/lib/prismadb";
 import { Routes } from "@/share/routes";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { User as PrismaUser } from "@prisma/client";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import { __new_db__ } from "@/server/lib/db";
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
+  adapter: DrizzleAdapter(__new_db__),
   pages: {
     signOut: Routes.signout,
     error: Routes.serverError,
@@ -25,6 +26,7 @@ export const authOptions: NextAuthOptions = {
       // それを推論できないので強制的にキャストする。
       const prismaUser = user as PrismaUser;
 
+      // TODO
       const appUser = convertUser(prismaUser);
       session.user = appUser;
 

@@ -23,13 +23,19 @@ export const getDevLikers = publicProcedure
       pagingData: { page, limit: PAGE_LIMIT.ideaLikers },
     });
 
-    const likerId = devLikes.map(({ userId }) => userId);
+    const likerIds = devLikes.map(({ userId }) => userId);
 
-    const users = await findManyUsers({ where: { id: { in: likerId } } });
+    const users = likerIds.length
+      ? await findManyUsers({
+          where: (users, { inArray }) => {
+            return inArray(users.id, likerIds);
+          },
+        })
+      : [];
 
     const sortedUsers = sortedInSameOrder({
       target: users,
-      base: likerId,
+      base: likerIds,
       getKey: (t) => t.id,
     });
 

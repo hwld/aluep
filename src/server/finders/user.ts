@@ -1,53 +1,49 @@
 import { User } from "@/models/user";
-import { db } from "@/server/lib/prismadb";
-import { Prisma } from "@prisma/client";
+import { DbArgs, DbPayload, __new_db__ } from "@/server/lib/db";
 
+type FindFirstArgs = DbArgs<"users", "findFirst">;
+type FindManyArgs = DbArgs<"users", "findMany">;
 const userArgs = {
-  select: {
+  columns: {
     id: true,
     name: true,
     image: true,
     profile: true,
     welcomeMessageHidden: true,
   },
-} satisfies Prisma.UserDefaultArgs;
+} satisfies FindFirstArgs;
 
-export const convertUser = (
-  rawUser: Prisma.UserGetPayload<typeof userArgs>
-): User => {
+type Payload = DbPayload<
+  typeof __new_db__.query.users.findFirst<typeof userArgs>
+>;
+
+export const convertUser = (raw: Payload): User => {
   return {
-    id: rawUser.id,
-    image: rawUser.image,
-    name: rawUser.name,
-    profile: rawUser.profile,
-    welcomeMessageHidden: rawUser.welcomeMessageHidden,
+    id: raw.id,
+    image: raw.image,
+    name: raw.name,
+    profile: raw.profile,
+    welcomeMessageHidden: raw.welcomeMessageHidden,
   };
 };
 
-type FindUserArgs = Omit<
-  Prisma.UserFindFirstArgs,
-  keyof Prisma.UserDefaultArgs
->;
 export const findUser = async (
-  args: FindUserArgs
+  args: FindFirstArgs
 ): Promise<User | undefined> => {
-  const rawUser = await db.user.findFirst({ ...args, ...userArgs });
-  if (!rawUser) {
+  const raw = await __new_db__.query.users.findFirst({ ...args, ...userArgs });
+  if (!raw) {
     return undefined;
   }
 
-  return rawUser;
+  const user = convertUser(raw);
+  return user;
 };
 
-type FindManyUsersArgs = Omit<
-  Prisma.UserFindManyArgs,
-  keyof Prisma.UserDefaultArgs
->;
-export const findManyUsers = async (
-  args: FindManyUsersArgs
-): Promise<User[]> => {
-  const rawUsers = await db.user.findMany({ ...args, ...userArgs });
-  return rawUsers;
+export const findManyUsers = async (args: FindManyArgs): Promise<User[]> => {
+  const raws = await __new_db__.query.users.findMany({ ...args, ...userArgs });
+  const users = raws.map(convertUser);
+
+  return users;
 };
 
 // ユーザー情報と投稿したお題のいいね数

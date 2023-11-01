@@ -1,4 +1,4 @@
-import { convertUser, findUser } from "@/server/finders/user";
+import { findUser } from "@/server/finders/user";
 import { db } from "@/server/lib/prismadb";
 import { appRouter } from "@/server/router";
 import { OmitStrict } from "@/types/OmitStrict";
@@ -45,14 +45,18 @@ export const TestHelpers = {
 
   /** 指定されたユーザーでログイン済みのセッションCallerを作成する */
   createSessionCaller: async ({ userId }: { userId: string }) => {
-    const loginUser = await findUser({ where: { id: userId } });
+    const loginUser = await findUser({
+      where: (users, { eq }) => {
+        return eq(users.id, userId);
+      },
+    });
     if (!loginUser) {
       throw new Error("指定されたユーザーは存在しません。");
     }
 
     const caller = appRouter.createCaller({
       session: {
-        user: convertUser(loginUser),
+        user: loginUser,
         expires: addYears(new Date(), 1).toUTCString(),
       },
       req: createRequest(),

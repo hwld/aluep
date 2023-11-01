@@ -25,9 +25,13 @@ export const getIdeaLikers = publicProcedure
     const likerId = ideaLikes.map(({ userId }) => userId);
 
     //ユーザーの情報を取得する
-    const users = await findManyUsers({
-      where: { id: { in: likerId } },
-    });
+    const users = likerId.length
+      ? await findManyUsers({
+          where: (users, { inArray }) => {
+            return inArray(users.id, likerId);
+          },
+        })
+      : [];
 
     //userIdsに並び順を合わせる
     const sortedUsers = sortedInSameOrder({

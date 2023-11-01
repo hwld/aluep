@@ -26,6 +26,7 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^0.3.5",
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
     "@google-cloud/recaptcha-enterprise": "^4.0.1",

@@ -29,12 +29,18 @@ export const router = t.router;
 
 // middlewares
 const middleware = t.middleware;
-const isLoggedIn = middleware(async ({ ctx, next, meta }) => {
-  if (!ctx.session?.user) {
+const isLoggedIn = middleware(async ({ ctx, next }) => {
+  const user = ctx.session?.user;
+  if (!user) {
     throw new TRPCError({ code: "FORBIDDEN" });
   }
 
-  const loggedInUser = await findUser({ where: { id: ctx.session.user.id } });
+  const loggedInUser = await findUser({
+    where: (users, { eq }) => {
+      return eq(users.id, user.id);
+    },
+  });
+
   if (!loggedInUser) {
     throw new TRPCError({ code: "FORBIDDEN" });
   }
