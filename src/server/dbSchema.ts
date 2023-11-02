@@ -1,4 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
+import { relations } from "drizzle-orm";
 import {
   pgTable,
   uniqueIndex,
@@ -115,6 +116,10 @@ export const ideas = pgTable("ideas", {
     .notNull(),
   updatedAt: timestamp("updatedAt", { precision: 3, mode: "string" }).notNull(),
 });
+
+export const ideasRelations = relations(ideas, ({ one }) => ({
+  user: one(users, { fields: [ideas.userId], references: [users.id] }),
+}));
 
 export const ideaTags = pgTable(
   "idea_tags",
