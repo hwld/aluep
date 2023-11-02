@@ -18,7 +18,7 @@ export const getLikedDevsByUser = publicProcedure
         select: { developmentId: true },
         where: { userId: input.userId },
       } satisfies Prisma.DevelopmentLikeFindManyArgs,
-      counter: ({ select, ...args }) => db.developmentLike.count(args),
+      counter: ({ select: _, ...args }) => db.developmentLike.count(args),
       pagingData: { page, limit: PAGE_LIMIT.likedDevs },
     });
     const likedDevIds = likedDevIdsObj.map((d) => d.developmentId);

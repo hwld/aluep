@@ -17,7 +17,7 @@ export const getLikedIdeasByUser = publicProcedure
         select: { ideaId: true },
         where: { userId: input.userId },
       },
-      counter: ({ select, ...args }) => db.ideaLike.count(args),
+      counter: ({ select: _, ...args }) => db.ideaLike.count(args),
       pagingData: { page, limit: PAGE_LIMIT.likedIdeas },
     });
     const likedIdeaIds = likedIdeaIdObjs.map((l) => l.ideaId);
