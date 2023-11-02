@@ -42,9 +42,9 @@ export const IdeaHelper = {
           id: faker.string.uuid(),
           image: "",
         },
-        likes: 10000,
-        comments: 10000,
-        devs: 10000,
+        likes: 100,
+        comments: 100,
+        devs: 100,
       }),
     };
   },

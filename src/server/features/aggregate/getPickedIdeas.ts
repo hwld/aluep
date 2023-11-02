@@ -11,5 +11,6 @@ export const getPickedIdeas = publicProcedure
       limit: 6,
       loggedInUserId: ctx.session?.user.id,
     });
+
     return ideas;
   });

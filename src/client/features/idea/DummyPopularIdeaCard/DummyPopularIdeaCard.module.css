@@ -1,0 +1,21 @@
+.root {
+  background-color: var(--mantine-color-gray-4);
+
+  animation-name: skelton;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes skelton {
+  from {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 0.8;
+  }
+}

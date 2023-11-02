@@ -9,5 +9,5 @@ export const usePickedUpIdeasQuery = (order: IdeaOrder) => {
       { staleTime: Infinity }
     );
 
-  return { pickedUpIdeas: pickedUpIdeas ?? [], ...others };
+  return { pickedUpIdeas: pickedUpIdeas, ...others };
 };

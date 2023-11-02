@@ -24,7 +24,7 @@ export const UserSection: React.FC<Props> = ({
         <UserIcon iconSrc={userIconSrc} />
       )}
       <Stack
-        gap={0}
+        gap="xs"
         miw={0}
         w="100%"
         justify="center"

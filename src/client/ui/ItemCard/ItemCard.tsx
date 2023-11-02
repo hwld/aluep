@@ -20,7 +20,7 @@ export const ItemCard: React.FC<Props> = ({
 }) => {
   return (
     <Card p="md" {...cardProps}>
-      <Stack gap={5} h="100%" style={{ overflow: "hidden" }}>
+      <Stack gap="xs" h="100%" style={{ overflow: "hidden" }}>
         {(leftHeader || rightHeader) && (
           <Group justify="space-between" align="flex-start" wrap="nowrap">
             <Box>{leftHeader}</Box>

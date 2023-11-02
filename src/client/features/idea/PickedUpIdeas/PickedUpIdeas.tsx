@@ -1,3 +1,4 @@
+import { DummyIdeaCard } from "@/client/features/idea/DummyIdeaCard/DummyIdeaCard";
 import {
   IdeaCard,
   ideaCardMinWidthPx,
@@ -15,6 +16,7 @@ type Props = {
   ideas: Idea[];
   readMoreHref?: string;
   icon?: ReactNode;
+  dummyProps?: { isDummy: boolean; count?: number };
 };
 
 export const PickedUpIdeas: React.FC<Props> = ({
@@ -22,6 +24,7 @@ export const PickedUpIdeas: React.FC<Props> = ({
   ideas,
   readMoreHref,
   icon,
+  dummyProps,
 }) => {
   return (
     <Stack gap="sm">
@@ -43,9 +46,11 @@ export const PickedUpIdeas: React.FC<Props> = ({
         )}
       </Flex>
       <GridContainer minItemWidthPx={ideaCardMinWidthPx}>
-        {ideas.map((idea) => (
-          <IdeaCard key={idea.id} idea={idea} />
-        ))}
+        {dummyProps?.isDummy
+          ? [...new Array(dummyProps.count ?? 6)].map((_, i) => {
+              return <DummyIdeaCard key={i} />;
+            })
+          : ideas.map((idea) => <IdeaCard key={idea.id} idea={idea} />)}
       </GridContainer>
     </Stack>
   );

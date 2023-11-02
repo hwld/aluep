@@ -13,6 +13,12 @@
 .idea-title {
   line-height: 1.4;
   word-break: break-all;
+  height: 4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .user-content {

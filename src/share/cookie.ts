@@ -5,8 +5,8 @@ const cookieBool = z
   .union([z.boolean(), z.literal("true"), z.literal("false")])
   .transform((v) => v === true || v === "true");
 
-export const appConfigCookieKey = "app-config";
-export const appConfigCookieSchema = z.object({
+const appConfigCookieKey = "app-config";
+const appConfigCookieSchema = z.object({
   welcomeMessageHidden: cookieBool.optional(),
   isSideBarOpen: cookieBool.optional(),
 });

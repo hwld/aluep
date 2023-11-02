@@ -2,7 +2,7 @@ import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";
 import { trpc } from "@/client/lib/trpc";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { Routes } from "@/share/routes";
-import { Button, Card, Flex, Group, Stack, Text } from "@mantine/core";
+import { Box, Button, Card, Flex, Group, Stack, Text } from "@mantine/core";
 import { IconArrowRight, IconTag } from "@tabler/icons-react";
 import Link from "next/link";
 import classes from "./IdeaSearchByTagCard.module.css";
@@ -10,12 +10,10 @@ import classes from "./IdeaSearchByTagCard.module.css";
 type Props = {};
 
 export const IdeaSearchByTagCard: React.FC<Props> = () => {
-  const { data: popularTags } = trpc.aggregate.getPopularIdeaTags.useQuery(
-    { limit: 10 },
-    {
-      initialData: [],
-    }
-  );
+  const { data: popularTags, isInitialLoading: fetchingTags } =
+    trpc.aggregate.getPopularIdeaTags.useQuery({
+      limit: 10,
+    });
 
   return (
     <Card bg="red.7" w="300">
@@ -48,7 +46,9 @@ export const IdeaSearchByTagCard: React.FC<Props> = () => {
           gap="xs"
           style={{ borderRadius: "var(--mantine-radius-md)" }}
         >
-          {popularTags.length === 0 ? (
+          {fetchingTags ? (
+            <Box className={classes["dummy-content"]}></Box>
+          ) : (popularTags?.length ?? []) === 0 ? (
             <EmptyContentItem
               icon={
                 <IconTag
@@ -65,7 +65,7 @@ export const IdeaSearchByTagCard: React.FC<Props> = () => {
               }
             />
           ) : (
-            popularTags.slice(0, 10).map((tag) => (
+            popularTags?.slice(0, 10).map((tag) => (
               <IdeaTagBadge
                 tagId={tag.id}
                 size="lg"

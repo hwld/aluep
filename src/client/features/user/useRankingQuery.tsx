@@ -14,7 +14,7 @@ export const useTop10LikedDevelopers = () => {
     );
 
   return {
-    top10LikedDevelopers: top10LikedDevelopers ?? [],
+    top10LikedDevelopers: top10LikedDevelopers,
     ...others,
   };
 };
@@ -30,7 +30,7 @@ export const useTop10LikedIdeaAuthors = () => {
     );
 
   return {
-    top10LikedIdeaAuthors: top10LikedIdeaAuthors ?? [],
+    top10LikedIdeaAuthors: top10LikedIdeaAuthors,
     ...others,
   };
 };
@@ -46,7 +46,7 @@ export const useTop10LikedIdeas = () => {
     );
 
   return {
-    top10LikedIdeas: top10LikedIdeas ?? [],
+    top10LikedIdeas: top10LikedIdeas,
     ...others,
   };
 };

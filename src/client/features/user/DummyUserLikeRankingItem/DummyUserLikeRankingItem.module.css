@@ -1,16 +1,4 @@
-.search-more-button {
-  color: var(--mantine-color-gray-1);
-  transition: all 150ms;
-  background-color: var(--mantine-color-red-6);
-
-  &:hover {
-    background-color: var(--mantine-color-red-8);
-  }
-}
-
-.dummy-content {
-  width: 100%;
-  height: 300px;
+.root {
   background-color: var(--mantine-color-gray-4);
   border-radius: var(--mantine-radius-md);
 

@@ -92,14 +92,14 @@ export const LargeFilled: Story = {
         ),
         mockTrpcQuery(
           trpcMsw.aggregate.getPopularDevelopers,
-          [...new Array(6)].map(() => ({
+          [...new Array(10)].map(() => ({
             ...UserHelper.createFilled(),
             devLikes: 10,
           }))
         ),
         mockTrpcQuery(
           trpcMsw.aggregate.getPopularIdeaAuthors,
-          [...new Array(6)].map(() => ({
+          [...new Array(10)].map(() => ({
             ...UserHelper.createFilled(),
             ideaLikes: 10,
           }))

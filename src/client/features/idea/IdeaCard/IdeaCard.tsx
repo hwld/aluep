@@ -1,4 +1,3 @@
-import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";
 import { UserSection } from "@/client/features/user/UserSection/UserSection";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
 import { ItemCard } from "@/client/ui/ItemCard/ItemCard";
@@ -6,12 +5,13 @@ import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Idea } from "@/models/idea";
 import { Routes } from "@/share/routes";
-import { Flex, Group, Text, Title } from "@mantine/core";
+import { Group, Text, Title } from "@mantine/core";
 import { IconCode, IconHeart, IconMessageCircle } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./IdeaCard.module.css";
 
 export const ideaCardMinWidthPx = 450;
+export const ideaCardHeightPx = 160;
 
 type Props = { idea: Idea };
 export const IdeaCard: React.FC<Props> = ({ idea }) => {
@@ -24,6 +24,7 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
   return (
     <ItemCard
       miw={ideaCardMinWidthPx}
+      h={ideaCardHeightPx}
       className={classes.root}
       onClick={handleGoIdeaDetail}
       leftHeader={
@@ -32,20 +33,6 @@ export const IdeaCard: React.FC<Props> = ({ idea }) => {
             {idea.title}
           </Title>
         </TextLink>
-      }
-      leftFooter={
-        // タグ
-        idea.tags.length > 0 && (
-          <Flex gap={5} wrap="wrap" miw={0}>
-            {idea.tags.map((tag) => {
-              return (
-                <IdeaTagBadge tagId={tag.id} size="md" key={tag.id}>
-                  {tag.name}
-                </IdeaTagBadge>
-              );
-            })}
-          </Flex>
-        )
       }
     >
       <UserSection

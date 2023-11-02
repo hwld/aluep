@@ -1,3 +1,4 @@
+import { DummyPopularIdeaCard } from "@/client/features/idea/DummyPopularIdeaCard/DummyPopularIdeaCard";
 import {
   PopularIdeaCard,
   popularIdeaCardWidthPx,
@@ -7,8 +8,16 @@ import { Carousel } from "@mantine/carousel";
 import { Box, Flex } from "@mantine/core";
 import classes from "./PopularIdeaCarouse.module.css";
 
-type Props = { ideas: Idea[] | undefined; miw?: string };
-export const PopularIdeaCarousel: React.FC<Props> = ({ ideas, miw }) => {
+type Props = {
+  ideas: Idea[];
+  miw?: string;
+  dummyProps?: { isDummy: boolean; count?: number };
+};
+export const PopularIdeaCarousel: React.FC<Props> = ({
+  ideas,
+  miw,
+  dummyProps,
+}) => {
   return (
     <Carousel
       align="center"
@@ -30,7 +39,19 @@ export const PopularIdeaCarousel: React.FC<Props> = ({ ideas, miw }) => {
         controls: { top: "calc(50% - 25px)" },
       }}
     >
-      {ideas && ideas.length > 0 ? (
+      {dummyProps?.isDummy ? (
+        [...new Array(dummyProps.count ?? 6)].map((_, i) => {
+          return (
+            <Carousel.Slide key={i}>
+              <Flex h="100%" w={`${popularIdeaCardWidthPx}px`} align="center">
+                <Box w="100%" h="200px">
+                  <DummyPopularIdeaCard />
+                </Box>
+              </Flex>
+            </Carousel.Slide>
+          );
+        })
+      ) : ideas.length > 0 ? (
         ideas.map((idea) => (
           <Carousel.Slide key={idea.id}>
             <Flex h="100%" w={`${popularIdeaCardWidthPx}px`} align="center">
