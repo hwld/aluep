@@ -1,6 +1,6 @@
 import { IdeaComment } from "@/models/ideaComment";
+import { FindManyArgs } from "@/server/finders";
 import { db } from "@/server/lib/prismadb";
-import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
 
 const ideaCommentArgs = {
@@ -56,17 +56,14 @@ const convertIdeaComment = (
   return comment;
 };
 
-type FindManyIdeaCommentsArgs = OmitStrict<
-  Prisma.IdeaCommentFindManyArgs,
-  "include" | "select" | "orderBy"
->;
+type FindIdeaCommentsArgs = FindManyArgs<typeof db.ideaComment>;
 export const findManyIdeaComments = async (
-  args: FindManyIdeaCommentsArgs
+  args: FindIdeaCommentsArgs
 ): Promise<IdeaComment[]> => {
   const rawComments = await db.ideaComment.findMany({
-    orderBy: { createdAt: "asc" },
     ...args,
     ...ideaCommentArgs,
+    orderBy: { createdAt: "asc" },
   });
 
   const comments = rawComments.map((raw) => {

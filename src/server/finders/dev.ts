@@ -1,6 +1,6 @@
 import { Dev } from "@/models/dev";
+import { FindFirstArgs, FindManyArgs } from "@/server/finders";
 import { db } from "@/server/lib/prismadb";
-import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
 
 const devArgs = {
@@ -43,12 +43,11 @@ const convertDev = (
   return dev;
 };
 
-export type FindDevsArgs = OmitStrict<
-  Prisma.DevelopmentFindManyArgs,
-  "include" | "select"
-> & {
-  loggedInUserId: string | undefined;
-};
+export type FindDevsArgs = FindManyArgs<
+  typeof db.development,
+  { loggedInUserId: string | undefined }
+>;
+
 export const findManyDevs = async ({
   orderBy,
   loggedInUserId,
@@ -67,12 +66,17 @@ export const findManyDevs = async ({
   return devs;
 };
 
-export const findDev = async (
-  devId: string,
-  loggedInUserId: string | undefined
-): Promise<Dev | undefined> => {
-  const rawDev = await db.development.findUnique({
-    where: { id: devId },
+type FindDevArgs = FindFirstArgs<
+  typeof db.development,
+  { loggedInUserId: string | undefined }
+>;
+
+export const findDev = async ({
+  loggedInUserId,
+  ...args
+}: FindDevArgs): Promise<Dev | undefined> => {
+  const rawDev = await db.development.findFirst({
+    ...args,
     ...devArgs,
   });
 

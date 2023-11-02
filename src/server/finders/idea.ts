@@ -1,7 +1,7 @@
 import { Idea, IdeaOrder, IdeaPeriod } from "@/models/idea";
+import { FindFirstArgs, FindManyArgs } from "@/server/finders";
 import { db } from "@/server/lib/prismadb";
 import { sortedInSameOrder } from "@/share/utils";
-import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
 import { formatDistanceStrict } from "date-fns";
 import { ja } from "date-fns/locale";
@@ -50,17 +50,17 @@ const convertIdea = (
   return idea;
 };
 
-type FindIdeaArgs = {
-  where: Prisma.IdeaWhereUniqueInput;
-  loggedInUserId: string | undefined;
-};
+type FindIdeaArgs = FindFirstArgs<
+  typeof db.idea,
+  { loggedInUserId: string | undefined }
+>;
 
 export const findIdea = async ({
-  where,
   loggedInUserId,
+  ...args
 }: FindIdeaArgs): Promise<Idea | undefined> => {
   const rawIdea = await db.idea.findFirst({
-    where,
+    ...args,
     ...ideaArgs,
   });
 
@@ -72,17 +72,20 @@ export const findIdea = async ({
   return idea;
 };
 
-type FindManyIdeasArgs = {
-  args: OmitStrict<Prisma.IdeaFindManyArgs, "include" | "select">;
-  loggedInUserId: string | undefined;
-  transactionClient?: Prisma.TransactionClient;
-};
+type FindIdeasArgs = FindManyArgs<
+  typeof db.idea,
+  {
+    loggedInUserId: string | undefined;
+    transactionClient?: Prisma.TransactionClient;
+  }
+>;
 
 export const findManyIdeas = async ({
-  args: { orderBy, ...args },
+  orderBy,
   loggedInUserId,
   transactionClient,
-}: FindManyIdeasArgs) => {
+  ...args
+}: FindIdeasArgs) => {
   const client = transactionClient ?? db;
 
   const rawIdeas = await client.idea.findMany({
@@ -184,7 +187,7 @@ export const pickUpIdeas = async ({
     const pickUpedIdeaIds = ideaIdObjs.map(({ ideaId }) => ideaId);
 
     const ideas = await findManyIdeas({
-      args: { where: { id: { in: pickUpedIdeaIds } } },
+      where: { id: { in: pickUpedIdeaIds } },
       transactionClient: tx,
       loggedInUserId,
     });
@@ -309,7 +312,7 @@ export const findSearchedIdeas = async ({
     const allPages = Math.ceil(allItems / pagingData?.limit);
 
     const ideas = await findManyIdeas({
-      args: { where: { id: { in: searchedIdeaIds } } },
+      where: { id: { in: searchedIdeaIds } },
       transactionClient: tx,
       loggedInUserId,
     });

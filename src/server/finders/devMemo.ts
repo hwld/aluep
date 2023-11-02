@@ -1,6 +1,6 @@
 import { DevMemo } from "@/models/devMemo";
+import { FindManyArgs } from "@/server/finders";
 import { db } from "@/server/lib/prismadb";
-import { OmitStrict } from "@/types/OmitStrict";
 import { Prisma } from "@prisma/client";
 
 const devMemoArgs = {
@@ -31,15 +31,13 @@ const convertDevMemo = (
   };
 };
 
-type FindManyDevMemoArgs = OmitStrict<
-  Prisma.DevelopmentMemoFindManyArgs,
-  "select" | "include" | "orderBy"
->;
-export const findManyDevMemos = async (args: FindManyDevMemoArgs) => {
+type FindDevMemosArgs = FindManyArgs<typeof db.developmentMemo>;
+
+export const findManyDevMemos = async (args: FindDevMemosArgs) => {
   const rawMemos = await db.developmentMemo.findMany({
-    orderBy: { createdAt: "asc" },
     ...devMemoArgs,
     ...args,
+    orderBy: { createdAt: "asc" },
   });
 
   const memos = rawMemos.map((raw) => convertDevMemo(raw));

@@ -1,4 +1,5 @@
 import { User } from "@/models/user";
+import { FindFirstArgs, FindManyArgs } from "@/server/finders";
 import { db } from "@/server/lib/prismadb";
 import { Prisma } from "@prisma/client";
 
@@ -24,10 +25,8 @@ export const convertUser = (
   };
 };
 
-type FindUserArgs = Omit<
-  Prisma.UserFindFirstArgs,
-  keyof Prisma.UserDefaultArgs
->;
+type FindUserArgs = FindFirstArgs<typeof db.user>;
+
 export const findUser = async (
   args: FindUserArgs
 ): Promise<User | undefined> => {
@@ -39,10 +38,7 @@ export const findUser = async (
   return rawUser;
 };
 
-type FindManyUsersArgs = Omit<
-  Prisma.UserFindManyArgs,
-  keyof Prisma.UserDefaultArgs
->;
+type FindManyUsersArgs = FindManyArgs<typeof db.user>;
 export const findManyUsers = async (
   args: FindManyUsersArgs
 ): Promise<User[]> => {

@@ -12,10 +12,10 @@ export const getPostedIdeasByUser = publicProcedure
     const [postedIdeas, { allPages }] = await paginate({
       finder: findManyIdeas,
       finderInput: {
-        args: { where: { userId: input.userId } },
+        where: { userId: input.userId },
         loggedInUserId: ctx.session?.user.id,
       },
-      counter: ({ args }) => db.idea.count(args),
+      counter: ({ loggedInUserId: _, ...args }) => db.idea.count(args),
       pagingData: { page, limit: PAGE_LIMIT.postedIdeas },
     });
 

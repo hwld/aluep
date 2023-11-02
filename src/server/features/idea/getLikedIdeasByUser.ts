@@ -24,7 +24,7 @@ export const getLikedIdeasByUser = publicProcedure
 
     // いいねしたお題の情報を取得
     const likedIdeas = await findManyIdeas({
-      args: { where: { id: { in: likedIdeaIds } } },
+      where: { id: { in: likedIdeaIds } },
       loggedInUserId: ctx.session?.user.id,
     });
 
