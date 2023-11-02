@@ -1,37 +1,19 @@
 /**
  * ダミーデータを生成
  */
-import { dbSchema } from "@/server/dbSchema";
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-import { cwd } from "process";
-import { loadEnvConfig } from "@next/env";
-import { faker } from "@faker-js/faker/locale/ja";
-import { Presets, SingleBar } from "cli-progress";
-import { DATABASE_URL } from "@/../drizzle/standaloneEnv";
 
-loadEnvConfig(cwd());
-const connection = postgres(DATABASE_URL, { max: 1 });
-const db = drizzle(connection, {
-  schema: { ...dbSchema },
-});
+import { faker } from "@faker-js/faker/locale/ja";
+import { PrismaClient } from "@prisma/client";
+import { Presets, SingleBar } from "cli-progress";
+
+const prisma = new PrismaClient();
 
 const bar = new SingleBar(
   { format: "{bar} | {percentage}% | {value}/{total}" },
   Presets.shades_classic
 );
 
-main()
-  .then(() => {
-    console.log("success");
-    connection.end();
-    process.exit(0);
-  })
-  .catch((e) => {
-    console.error(e);
-    connection.end();
-    process.exit(1);
-  });
+main();
 
 async function main() {
   // シードを固定して、実行のたびに同じ値が生成されるようにする
@@ -43,7 +25,7 @@ async function main() {
   // お題の作成
   const ideaIds = await createIdeas(userIds, 50);
 
-  await db.insert(dbSchema.recommendedIdeas).values({ ideaId: ideaIds[0] });
+  await prisma.recommendedIdea.create({ data: { ideaId: ideaIds[0] } });
 
   // お題へのいいねの追加
   await createIdeaLike({
@@ -88,12 +70,13 @@ async function createUsers(counts: number): Promise<string[]> {
 
   for (let i = 0; i < counts; i++) {
     const id = faker.string.uuid();
-    const user = await db
-      .insert(dbSchema.users)
-      .values({ id, name: faker.person.fullName() })
-      .onConflictDoNothing()
-      .returning({ id: dbSchema.users.id });
-    userIds.push(user[0].id);
+    // 既に存在すれば作成日だけ更新する作成しない
+    const user = await prisma.user.upsert({
+      where: { id },
+      create: { id, name: faker.person.fullName() },
+      update: { createdAt: new Date() },
+    });
+    userIds.push(user.id);
     bar.increment();
   }
   bar.stop();
@@ -117,18 +100,19 @@ async function createIdeas(
 
   for (let i = 0; i < counts; i++) {
     const id = faker.string.uuid();
-    const idea = await db
-      .insert(dbSchema.ideas)
-      .values({
+    const idea = await prisma.idea.upsert({
+      where: { id },
+      create: {
         id,
         title: faker.lorem.words(3),
         description: faker.lorem.lines(),
+        // 先頭のユーザーから投稿していく
         userId: userIds[i],
-      })
-      .onConflictDoNothing()
-      .returning({ id: dbSchema.ideas.id });
+      },
+      update: { createdAt: new Date() },
+    });
 
-    ideaIds.push(idea[0].id);
+    ideaIds.push(idea.id);
     bar.increment();
   }
   bar.stop();
@@ -183,14 +167,15 @@ async function createIdeaLike({
     // ユーザーを後ろから走査していいねをつけていく。
     for (let userIndex = 0; userIndex < likeCounts; userIndex++) {
       const id = faker.string.uuid();
-      await db
-        .insert(dbSchema.ideaLikes)
-        .values({
+      await prisma.ideaLike.upsert({
+        where: { id },
+        create: {
           id,
           ideaId,
           userId: userIds[userIds.length - 1 - userIndex],
-        })
-        .onConflictDoNothing();
+        },
+        update: { createdAt: new Date() },
+      });
       bar.increment();
     }
   }
@@ -239,9 +224,9 @@ async function createDevs({
     // ユーザーを先頭から走査して開発させる。
     for (let userIndex = 0; userIndex < devCounts; userIndex++) {
       const id = faker.string.uuid();
-      const dev = await db
-        .insert(dbSchema.developments)
-        .values({
+      const dev = await prisma.development.upsert({
+        where: { id },
+        create: {
           id,
           githubUrl: "",
           comment: faker.lorem.words(3),
@@ -253,11 +238,10 @@ async function createDevs({
             "COMPLETED",
             "ABORTED",
           ]),
-        })
-        .onConflictDoNothing()
-        .returning({ id: dbSchema.developments.id });
-
-      devIds.push(dev[0].id);
+        },
+        update: { createdAt: new Date() },
+      });
+      devIds.push(dev.id);
       bar.increment();
     }
   }
@@ -310,15 +294,15 @@ async function createDevtLikes({
     // ユーザーを後ろから走査していいねをつけていく
     for (let userIndex = 0; userIndex < likeCounts; userIndex++) {
       const id = faker.string.uuid();
-      await db
-        .insert(dbSchema.developmentLikes)
-        .values({
+      await prisma.developmentLike.upsert({
+        where: { id },
+        create: {
           id,
           developmentId: devId,
           userId: userIds[userIds.length - 1 - userIndex],
-        })
-        .onConflictDoNothing();
-
+        },
+        update: { createdAt: new Date() },
+      });
       bar.increment();
     }
   }

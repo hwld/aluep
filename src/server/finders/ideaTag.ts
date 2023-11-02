@@ -1,19 +1,26 @@
 import { IdeaTag } from "@/models/ideaTag";
-import { DbArgs, DbPayload, __new_db__ } from "@/server/lib/db";
+import { db } from "@/server/lib/prismadb";
+import { OmitStrict } from "@/types/OmitStrict";
+import { Prisma } from "@prisma/client";
 
-type FindManyArgs = DbArgs<"ideaTags", "findMany">;
-type Payload = DbPayload<typeof __new_db__.query.ideaTags.findFirst>;
+const ideaTagArgs = {} satisfies Prisma.IdeaTagDefaultArgs;
 
-const convertIdeaTag = (raw: Payload): IdeaTag => ({ ...raw });
+const convertIdeaTag = (
+  raw: Prisma.IdeaTagGetPayload<typeof ideaTagArgs>
+): IdeaTag => ({
+  ...raw,
+  createdAt: raw.createdAt.toUTCString(),
+  updatedAt: raw.createdAt.toUTCString(),
+});
 
 export const findManyIdeaTags = async (
-  args: FindManyArgs,
-  tx?: typeof __new_db__
+  args: OmitStrict<Prisma.IdeaTagFindManyArgs, "include" | "select">,
+  tx?: Prisma.TransactionClient
 ): Promise<IdeaTag[]> => {
-  const client = tx ? tx : __new_db__;
+  const client = tx ? tx : db;
 
-  const raws = await client.query.ideaTags.findMany({ ...args });
+  const rawTags = await client.ideaTag.findMany({ ...args });
 
-  const tags = raws.map(convertIdeaTag);
+  const tags: IdeaTag[] = rawTags.map(convertIdeaTag);
   return tags;
 };

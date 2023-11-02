@@ -18,14 +18,14 @@ export const WrapperLink = forwardRef<HTMLElement, WrapperLinkProps>(
   ({ children, ...props }, ref) => {
     if (props.noWrap) {
       // Tooltip直下で使用すると、様々なpropsが渡されるので、それを直接childrenに渡す
-      const { noWrap: _, ...outerProps } = props;
+      const { noWrap, ...outerProps } = props;
       return React.cloneElement(children as ReactElement, {
         ...outerProps,
         ...(children as any)?.props,
         ref,
       });
     } else {
-      const { noWrap: _, ...linkProps } = props;
+      const { noWrap, ...linkProps } = props;
       return (
         <Link ref={ref as any} {...linkProps}>
           {children}

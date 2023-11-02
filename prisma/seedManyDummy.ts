@@ -13,18 +13,9 @@
  */
 
 import { faker } from "@faker-js/faker/locale/ja";
-import { dbSchema } from "@/server/dbSchema";
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-import { cwd } from "process";
-import { loadEnvConfig } from "@next/env";
-import { DATABASE_URL } from "@/../drizzle/standaloneEnv";
+import { PrismaClient } from "@prisma/client";
 
-loadEnvConfig(cwd());
-const connection = postgres(DATABASE_URL, { max: 1 });
-const db = drizzle(connection, {
-  schema: { ...dbSchema },
-});
+const prisma = new PrismaClient();
 
 async function main() {
   // シードを固定する
@@ -36,13 +27,12 @@ async function main() {
   for (let i = 0; i < numOfUsers; i++) {
     const id = faker.string.uuid();
     // 既に存在すれば作成日だけ更新する作成しない
-    const user = await db
-      .insert(dbSchema.users)
-      .values({ id, name: faker.person.fullName() })
-      .onConflictDoNothing()
-      .returning({ id: dbSchema.users.id });
-
-    userIds.push(user[0].id);
+    const user = await prisma.user.upsert({
+      where: { id },
+      create: { id, name: faker.person.fullName() },
+      update: { createdAt: new Date() },
+    });
+    userIds.push(user.id);
     console.log(`ユーザーを追加 ${i}`);
   }
 
@@ -50,20 +40,19 @@ async function main() {
   const ideaIds = [];
   for (let i = 0; i < userIds.length; i++) {
     const id = faker.string.uuid();
-    const idea = await db
-      .insert(dbSchema.ideas)
-      .values({
+    const idea1 = await prisma.idea.upsert({
+      where: { id },
+      create: {
         id,
         title: faker.lorem.words(3),
         description: faker.lorem.lines(),
         userId: userIds[i],
-      })
-      .onConflictDoNothing()
-      .returning({ id: dbSchema.ideas.id });
-
+      },
+      update: { createdAt: new Date() },
+    });
     console.log(`お題を追加 ${i}`);
 
-    ideaIds.push(idea[0].id);
+    ideaIds.push(idea1.id);
   }
 
   // お題に良いねする
@@ -71,11 +60,15 @@ async function main() {
     // 自分よりindexが小さいユーザーが投稿したお題すべてにいいねして、いいね数に差をつける
     for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
       const id = faker.string.uuid();
-      await db
-        .insert(dbSchema.ideaLikes)
-        .values({ id, ideaId: ideaIds[ideaIndex], userId: userIds[userIndex] })
-        .onConflictDoNothing();
-
+      await prisma.ideaLike.upsert({
+        where: { id },
+        create: {
+          id,
+          ideaId: ideaIds[ideaIndex],
+          userId: userIds[userIndex],
+        },
+        update: { createdAt: new Date() },
+      });
       console.log(
         `お題へのいいねを追加 ユーザー:${userIndex} お題:${ideaIndex}`
       );
@@ -95,9 +88,9 @@ async function main() {
     // 自分よりindexが小さいユーザーが投稿したお題すべてを開発する
     for (let ideaIndex = 0; ideaIndex < userIndex; ideaIndex++) {
       const id = faker.string.uuid();
-      const dev = await db
-        .insert(dbSchema.developments)
-        .values({
+      const dev = await prisma.development.upsert({
+        where: { id },
+        create: {
           id,
           githubUrl: "",
           comment: faker.lorem.words(3),
@@ -109,18 +102,17 @@ async function main() {
             "COMPLETED",
             "ABORTED",
           ]),
-        })
-        .onConflictDoNothing()
-        .returning({ id: dbSchema.developments.id });
-
+        },
+        update: { createdAt: new Date() },
+      });
       console.log(`お題を開発 ユーザー:${userIndex} お題:${ideaIndex}`);
 
-      devIds.push(dev[0].id);
+      devIds.push(dev.id);
       userDevelopmentMap.set(userIndex, [
         ...(userDevelopmentMap.get(userIndex) ?? []),
-        dev[0].id,
+        dev.id,
       ]);
-      devMap.set(ideaIndex, [...(devMap.get(ideaIndex) ?? []), dev[0].id]);
+      devMap.set(ideaIndex, [...(devMap.get(ideaIndex) ?? []), dev.id]);
     }
   }
 
@@ -138,30 +130,19 @@ async function main() {
       }
 
       const id = faker.string.uuid();
-      await db
-        .insert(dbSchema.developmentLikes)
-        .values({
+      await prisma.developmentLike.upsert({
+        where: { id },
+        create: {
           id,
           userId: userIds[userIndex],
           developmentId: firstDevelopmentId,
-        })
-        .onConflictDoNothing();
-
+        },
+        update: { createdAt: new Date() },
+      });
       console.log(
         `開発者へのいいねを追加 ユーザー:${userIndex} 開発者:${firstDevelopmentId}`
       );
     }
   }
 }
-
-main()
-  .then(() => {
-    console.log("success");
-    connection.end();
-    process.exit(0);
-  })
-  .catch((e) => {
-    console.error(e);
-    connection.end();
-    process.exit(1);
-  });
+main();

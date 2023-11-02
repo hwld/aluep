@@ -1,4 +1,5 @@
-import { DevStatus, devStatusSchema } from "@/models/devStatus";
+import { devStatusSchema } from "@/models/devStatus";
+import { DevelopmentStatus } from "@prisma/client";
 import { z } from "zod";
 
 export type Dev = {
@@ -13,7 +14,7 @@ export type Dev = {
   likedByLoggedInUser: boolean;
   createdAt: string;
   updatedAt: string;
-  status: DevStatus;
+  status: DevelopmentStatus;
   allowOtherUserMemos: boolean;
 };
 const DevFields = {

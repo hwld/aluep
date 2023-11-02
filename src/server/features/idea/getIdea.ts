@@ -8,7 +8,7 @@ export const getIdea = publicProcedure
   .input(z.object({ ideaId: z.string() }))
   .query(async ({ input, ctx }): Promise<Idea> => {
     const idea = await findIdea({
-      args: { where: (ideas, { eq }) => eq(ideas.id, input.ideaId) },
+      where: { id: input.ideaId },
       loggedInUserId: ctx.session?.user.id,
     });
 

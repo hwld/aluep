@@ -9,9 +9,7 @@ export const searchUser = publicProcedure
       return [];
     } else {
       const searchUsers = await findManyUsers({
-        where: (users, { like }) => {
-          return like(users.name, input.userName);
-        },
+        where: { name: { contains: input.userName } },
       });
 
       return searchUsers;

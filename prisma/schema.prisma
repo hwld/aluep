@@ -1,0 +1,249 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  refresh_token_expires_in Int?
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model User {
+  id                   String            @id @default(cuid())
+  name                 String?
+  email                String?           @unique
+  emailVerified        DateTime?
+  image                String?
+  profile              String?           @db.Text
+  welcomeMessageHidden Boolean           @default(false)
+  accounts             Account[]
+  sessions             Session[]
+  ideas                Idea[]
+  developments         Development[]
+  idealikes            IdeaLike[]
+  developmentLikes     DevelopmentLike[]
+  ideaComments         IdeaComment[]
+  favoriteByUsers      FavoriteUser[]    @relation("asFavoriteByUser")
+  faboritedUsers       FavoriteUser[]    @relation("asFavoritedUser")
+  developmentMemos     DevelopmentMemo[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// アプリ開発のお題を表す
+model Idea {
+  id          String          @id @default(cuid())
+  tags        IdeaTagOnIdea[]
+  title       String
+  description String          @db.Text
+  userId      String
+  // とりあえずお題も削除されるようにする
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  developments Development[]
+
+  likes IdeaLike[]
+
+  comments IdeaComment[]
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  recommendedIdea RecommendedIdea?
+
+  @@map("ideas")
+}
+
+model IdeaTag {
+  id    String          @id @default(cuid())
+  name  String          @unique
+  ideas IdeaTagOnIdea[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("idea_tags")
+}
+
+model IdeaTagOnIdea {
+  ideaId String
+  idea   Idea    @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  tagId  String
+  tag    IdeaTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([ideaId, tagId])
+  @@map("idea_tag_on_ideas")
+}
+
+model IdeaLike {
+  id     String @id @default(cuid())
+  ideaId String
+  idea   Idea   @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, ideaId])
+  @@map("idea_likes")
+}
+
+// アプリ開発のお題の開発情報
+model Development {
+  id                  String            @id @default(cuid())
+  userId              String
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ideaId              String?
+  idea                Idea?             @relation(fields: [ideaId], references: [id], onDelete: SetNull)
+  githubUrl           String
+  comment             String            @db.Text
+  developedItemUrl    String
+  likes               DevelopmentLike[]
+  status              DevelopmentStatus @default(IN_PROGRESS)
+  developmentMemos    DevelopmentMemo[]
+  allowOtherUserMemos Boolean           @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, ideaId])
+  @@map("developments")
+}
+
+model DevelopmentLike {
+  id            String      @id @default(cuid())
+  developmentId String
+  development   Development @relation(fields: [developmentId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, developmentId])
+  @@map("development_likes")
+}
+
+enum DevelopmentStatus {
+  IN_PROGRESS
+  ABORTED
+  COMPLETED
+}
+
+model DevelopmentMemo {
+  id   String @id @default(cuid())
+  text String @db.Text
+
+  // 一つのメモには一つの返信しか出来ない
+  parentMemoId String?          @unique @map("parentCommentId")
+  parentMemo   DevelopmentMemo? @relation(name: "parentChild", fields: [parentMemoId], references: [id], onDelete: Cascade)
+  childMemo    DevelopmentMemo? @relation("parentChild")
+
+  fromUserId String
+  fromUser   User   @relation(fields: [fromUserId], references: [id], onDelete: Cascade)
+
+  developmentId String
+  development   Development @relation(fields: [developmentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("development_memos")
+}
+
+model FavoriteUser {
+  // お気に入り登録したユーザー
+  favoriteByUserId String
+  favoriteByUser   User   @relation("asFavoriteByUser", fields: [favoriteByUserId], references: [id], onDelete: Cascade)
+
+  // お気に入り登録されたユーザー
+  favoritedUserId String
+  favoritedUser   User   @relation("asFavoritedUser", fields: [favoritedUserId], references: [id], onDelete: Cascade)
+
+  @@id([favoriteByUserId, favoritedUserId])
+  @@map("favorite_users")
+}
+
+model IdeaComment {
+  id   String @id @default(cuid())
+  text String @db.Text
+
+  ideaId     String
+  idea       Idea   @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  fromUserId String
+  fromUser   User   @relation(fields: [fromUserId], references: [id], onDelete: Cascade)
+
+  asParent IdeaCommentParentChild[] @relation("asParent")
+  // 親は一つなので、あるコメントが返信となるParentChildは一つ
+  asChild  IdeaCommentParentChild?  @relation("asChild")
+
+  createdAt DateTime @default(now())
+
+  @@map("idea_comments")
+}
+
+model IdeaCommentParentChild {
+  // 返信元コメントが削除されたときにNullに設定することで、childに該当するコメントが返信であることを表現できるようにする
+  parentCommentId String?
+  parentComment   IdeaComment? @relation("asParent", fields: [parentCommentId], references: [id], onDelete: SetNull)
+
+  // 一つのコメントは最大で一つの返信元を持つので、childCommentIdを主キーにできる？
+  childCommentId String      @id @default(cuid())
+  // 返信コメントが削除れたときに返信元コメントから見えなくしても問題ないため、行を削除する 
+  childComment   IdeaComment @relation("asChild", fields: [childCommentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("idea_comment_parent_child")
+}
+
+model RecommendedIdea {
+  ideaId    String   @id
+  idea      Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("recommended_ideas")
+}

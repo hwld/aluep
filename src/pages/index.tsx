@@ -1,5 +1,4 @@
 import { HomePage } from "@/client/pageComponents/HomePage/HomePage";
-import { __new_db__ } from "@/server/lib/db";
 import {
   PageProps,
   withReactQueryGetServerSideProps,

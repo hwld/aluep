@@ -1,43 +1,38 @@
 import { findManyIdeas } from "@/server/finders/idea";
-import { __new_db__ } from "@/server/lib/db";
+import { paginate } from "@/server/lib/paginate";
+import { db } from "@/server/lib/prismadb";
 import { publicProcedure } from "@/server/lib/trpc";
+import { PAGE_LIMIT } from "@/share/consts";
 import { pagingSchema } from "@/share/paging";
 import { sortedInSameOrder } from "@/share/utils";
 import { z } from "zod";
 
 export const getLikedIdeasByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
-  .query(async ({ ctx }) => {
+  .query(async ({ input, input: { page }, ctx }) => {
     // 指定されたユーザーがいいねしたお題のidを取得する
-    // TODO
-    // const [likedIdeaIdObjs, { allPages }] = await paginate({
-    //   finder: __new_db__.query.ideaLikes.findMany,
-    //   finderInput: {
-    //     columns: { ideaId: true },
-    //     where: (likes, { eq }) => eq(likes.userId, input.userId),
-    //   },
-    //   counter: ({ select, ...args }) => db.ideaLike.count(args),
-    //   pagingData: { page, limit: PAGE_LIMIT.likedIdeas },
-    // });
-    // const likedIdeaIds = likedIdeaIdObjs.map((l) => l.ideaId);
+    const [likedIdeaIdObjs, { allPages }] = await paginate({
+      finder: db.ideaLike.findMany,
+      finderInput: {
+        select: { ideaId: true },
+        where: { userId: input.userId },
+      },
+      counter: ({ select, ...args }) => db.ideaLike.count(args),
+      pagingData: { page, limit: PAGE_LIMIT.likedIdeas },
+    });
+    const likedIdeaIds = likedIdeaIdObjs.map((l) => l.ideaId);
 
-    // TODO:
     // いいねしたお題の情報を取得
-    const likedIdeas =
-      [].length === 0
-        ? []
-        : await findManyIdeas({
-            args: { where: (ideas, { inArray }) => inArray(ideas.id, []) },
-            loggedInUserId: ctx.session?.user.id,
-          });
+    const likedIdeas = await findManyIdeas({
+      args: { where: { id: { in: likedIdeaIds } } },
+      loggedInUserId: ctx.session?.user.id,
+    });
 
     const sortedLikedIdeas = sortedInSameOrder({
       target: likedIdeas,
-      // base: likedIdeaIds,
-      base: [],
+      base: likedIdeaIds,
       getKey: (t) => t.id,
     });
 
-    // TODO:
-    return { list: sortedLikedIdeas, allPages: 0 };
+    return { list: sortedLikedIdeas, allPages };
   });

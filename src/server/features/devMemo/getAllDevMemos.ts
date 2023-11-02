@@ -6,9 +6,7 @@ export const getAllDevMemos = publicProcedure
   .input(z.object({ devId: z.string() }))
   .query(async ({ input }) => {
     const memos = await findManyDevMemos({
-      where: (devMemos, { eq }) => {
-        return eq(devMemos.developmentId, input.devId);
-      },
+      where: { developmentId: input.devId },
     });
 
     return memos;
