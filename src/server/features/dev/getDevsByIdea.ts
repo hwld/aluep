@@ -9,14 +9,14 @@ import { z } from "zod";
 export const getDevsByIdea = publicProcedure
   .input(z.object({ ideaId: z.string(), page: pagingSchema }))
   .query(async ({ input: { page }, input, ctx }) => {
-    const [devs, { allPages }] = await paginate({
+    const [devs, { allPages }] = await paginate(findManyDevs)({
       finderInput: {
         where: { ideaId: input.ideaId },
         loggedInUserId: ctx.session?.user.id,
       },
-      finder: findManyDevs,
-      counter: ({ loggedInUserId: _, ...others }) =>
-        db.development.count(others),
+      counter: ({ loggedInUserId: _, ...others }) => {
+        return db.development.count(others);
+      },
       pagingData: { page, limit: PAGE_LIMIT.devs },
     });
 

@@ -33,7 +33,9 @@ const convertDevMemo = (
 
 type FindDevMemosArgs = FindManyArgs<typeof db.developmentMemo>;
 
-export const findManyDevMemos = async (args: FindDevMemosArgs) => {
+export const findManyDevMemos = async (
+  args: FindDevMemosArgs
+): Promise<DevMemo[]> => {
   const rawMemos = await db.developmentMemo.findMany({
     ...devMemoArgs,
     ...args,

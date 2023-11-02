@@ -43,7 +43,7 @@ const convertDev = (
   return dev;
 };
 
-export type FindDevsArgs = FindManyArgs<
+type FindDevsArgs = FindManyArgs<
   typeof db.development,
   { loggedInUserId: string | undefined }
 >;

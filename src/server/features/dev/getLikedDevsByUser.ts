@@ -5,19 +5,19 @@ import { publicProcedure } from "@/server/lib/trpc";
 import { PAGE_LIMIT } from "@/share/consts";
 import { pagingSchema } from "@/share/paging";
 import { sortedInSameOrder } from "@/share/utils";
-import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 export const getLikedDevsByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page }, ctx }) => {
     // 指定されたユーザーがいいねした開発情報のidを取得する
-    const [likedDevIdsObj, { allPages }] = await paginate({
-      finder: db.developmentLike.findMany,
+    const [likedDevIdsObj, { allPages }] = await paginate(
+      db.developmentLike.findMany
+    )({
       finderInput: {
         select: { developmentId: true },
         where: { userId: input.userId },
-      } satisfies Prisma.DevelopmentLikeFindManyArgs,
+      },
       counter: ({ select: _, ...args }) => db.developmentLike.count(args),
       pagingData: { page, limit: PAGE_LIMIT.likedDevs },
     });

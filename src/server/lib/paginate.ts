@@ -1,30 +1,34 @@
 // ページング用のラッパー
 
-type PaginateArgs<FinderInput, FinderResult> = {
-  finder: (
-    input: FinderInput & { take: number; skip: number }
-  ) => Promise<FinderResult>;
-  finderInput: FinderInput;
-  // 全ページ数を取得するために、finderInputを受け取って全データの数を数える関数が必要になる
-  counter: (input: FinderInput) => Promise<number>;
-  pagingData: { page: number; limit: number };
-};
-export const paginate = async <FinderInput, FinderResult>({
-  finder,
-  finderInput,
-  counter,
-  pagingData: { page, limit },
-}: PaginateArgs<FinderInput, FinderResult>): Promise<
-  [FinderResult, { allPages: number }]
-> => {
-  const allDataCount = await counter(finderInput);
-  const allPages = Math.ceil(allDataCount / limit);
+type PaginatedArgs = { take?: number; skip?: number };
 
-  const data = await finder({
-    ...finderInput,
-    skip: (page - 1) * limit,
-    take: limit,
-  });
+export const paginate = <T extends PaginatedArgs, K>(
+  // extendsしてもPaginatedArgsのスーパータイプが入ってきちゃう可能性がある。
+  // なので{} | {take: number} | {skip: number}みたいなのが入ってくるかも
+  // これどうすることもできない？
+  finder: (input: T) => Promise<K>
+) => {
+  // & {}をつけると補完してくれる気がする
+  return async <U extends Omit<T, "take" | "skip"> & {}>(args: {
+    finderInput: U;
+    counter: (args: U) => Promise<number>;
+    pagingData: { page: number; limit: number };
+  }) => {
+    const {
+      finderInput,
+      counter,
+      pagingData: { limit, page },
+    } = args;
 
-  return [data, { allPages }];
+    const allDataCount = await counter(finderInput);
+    const allPages = Math.ceil(allDataCount / limit);
+
+    const data = await finder({
+      ...finderInput,
+      skip: (page - 1) * limit,
+      take: limit,
+    } as unknown as T);
+
+    return [data, { allPages }] as const;
+  };
 };

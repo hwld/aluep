@@ -11,8 +11,9 @@ export const getLikedIdeasByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page }, ctx }) => {
     // 指定されたユーザーがいいねしたお題のidを取得する
-    const [likedIdeaIdObjs, { allPages }] = await paginate({
-      finder: db.ideaLike.findMany,
+    const [likedIdeaIdObjs, { allPages }] = await paginate(
+      db.ideaLike.findMany
+    )({
       finderInput: {
         select: { ideaId: true },
         where: { userId: input.userId },

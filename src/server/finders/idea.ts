@@ -85,7 +85,7 @@ export const findManyIdeas = async ({
   loggedInUserId,
   transactionClient,
   ...args
-}: FindIdeasArgs) => {
+}: FindIdeasArgs): Promise<Idea[]> => {
   const client = transactionClient ?? db;
 
   const rawIdeas = await client.idea.findMany({
