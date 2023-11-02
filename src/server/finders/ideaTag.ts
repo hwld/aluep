@@ -14,7 +14,7 @@ const convertIdeaTag = (
 });
 
 type FindIdeaTagsArgs = FindManyArgs<
-  typeof db.ideaTag,
+  "ideaTag",
   { tx?: Prisma.TransactionClient }
 >;
 

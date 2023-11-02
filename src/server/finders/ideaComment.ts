@@ -56,7 +56,7 @@ const convertIdeaComment = (
   return comment;
 };
 
-type FindIdeaCommentsArgs = FindManyArgs<typeof db.ideaComment>;
+type FindIdeaCommentsArgs = FindManyArgs<"ideaComment">;
 export const findManyIdeaComments = async (
   args: FindIdeaCommentsArgs
 ): Promise<IdeaComment[]> => {

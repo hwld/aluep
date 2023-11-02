@@ -44,7 +44,7 @@ const convertDev = (
 };
 
 type FindDevsArgs = FindManyArgs<
-  typeof db.development,
+  "development",
   { loggedInUserId: string | undefined }
 >;
 
@@ -67,7 +67,7 @@ export const findManyDevs = async ({
 };
 
 type FindDevArgs = FindFirstArgs<
-  typeof db.development,
+  "development",
   { loggedInUserId: string | undefined }
 >;
 

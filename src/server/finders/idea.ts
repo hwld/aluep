@@ -51,7 +51,7 @@ const convertIdea = (
 };
 
 type FindIdeaArgs = FindFirstArgs<
-  typeof db.idea,
+  "idea",
   { loggedInUserId: string | undefined }
 >;
 
@@ -73,7 +73,7 @@ export const findIdea = async ({
 };
 
 type FindIdeasArgs = FindManyArgs<
-  typeof db.idea,
+  "idea",
   {
     loggedInUserId: string | undefined;
     transactionClient?: Prisma.TransactionClient;

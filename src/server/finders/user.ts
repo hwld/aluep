@@ -25,7 +25,7 @@ export const convertUser = (
   };
 };
 
-type FindUserArgs = FindFirstArgs<typeof db.user>;
+type FindUserArgs = FindFirstArgs<"user">;
 
 export const findUser = async (
   args: FindUserArgs
@@ -38,7 +38,7 @@ export const findUser = async (
   return rawUser;
 };
 
-type FindManyUsersArgs = FindManyArgs<typeof db.user>;
+type FindManyUsersArgs = FindManyArgs<"user">;
 export const findManyUsers = async (
   args: FindManyUsersArgs
 ): Promise<User[]> => {

@@ -31,7 +31,7 @@ const convertDevMemo = (
   };
 };
 
-type FindDevMemosArgs = FindManyArgs<typeof db.developmentMemo>;
+type FindDevMemosArgs = FindManyArgs<"developmentMemo">;
 
 export const findManyDevMemos = async (
   args: FindDevMemosArgs
