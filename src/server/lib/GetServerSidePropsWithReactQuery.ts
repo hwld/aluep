@@ -25,6 +25,9 @@ type Callback<Props> = (args: {
 export const withReactQueryGetServerSideProps = <Props>(
   callback: Callback<Props>
 ): GetServerSideProps<PageProps> => {
+  // TODO:
+  console.log("start gssp");
+
   return async (args) => {
     const session = await getServerSession(args.req, args.res, authOptions);
 

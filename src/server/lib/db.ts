@@ -3,7 +3,7 @@ import postgres, { Sql } from "postgres";
 import { dbSchema } from "@/server/dbSchema";
 
 // TODO
-const DATABASE_URL = process.env.__NEW_DATABASE_URL__ || "";
+const DATABASE_URL = process.env.DATABASE_URL || "";
 
 let connection: Sql<{}>;
 if (process.env.NODE_ENV === "production") {

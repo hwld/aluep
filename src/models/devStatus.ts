@@ -1,7 +1,6 @@
-import type { DevelopmentStatus } from "@prisma/client";
 import { z } from "zod";
 
-export type DevStatus = DevelopmentStatus;
+export type DevStatus = any;
 export const DevStatusNames: { [T in DevStatus]: string } = {
   /** 開発中 */
   IN_PROGRESS: "開発中",

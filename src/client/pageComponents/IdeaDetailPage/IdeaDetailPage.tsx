@@ -23,7 +23,6 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import { useRouter } from "next/router";
-import { SyntheticEvent } from "react";
 
 type Props = { idea: Idea };
 
@@ -49,7 +48,7 @@ export const IdeaDetailPage: React.FC<Props> = ({ idea }) => {
     }
   };
 
-  const handleClickDevelop = (e: SyntheticEvent) => {
+  const handleClickDevelop = () => {
     // ログインしていなければログインモーダルを表示する
     if (!session) {
       openLoginModal(Routes.develop(idea.id));

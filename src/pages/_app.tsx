@@ -20,7 +20,7 @@ import Head from "next/head";
 
 function App({
   Component,
-  pageProps: { trpcState, isSideBarOpen, ...others },
+  pageProps: { trpcState: _, isSideBarOpen, ...others },
 }: AppProps<PageProps>) {
   return (
     <ErrorBoundary>
