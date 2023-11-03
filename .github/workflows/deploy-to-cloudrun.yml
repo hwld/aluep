@@ -15,13 +15,16 @@ env:
 jobs:
   deploy:
     runs-on: "ubuntu-latest"
+    permissions:
+      id-token: "write"
     steps:
       - name: "Checkout the repository"
         uses: "actions/checkout@v4"
 
       - uses: "google-github-actions/auth@v1"
         with:
-          credentials_json: "${{ secrets.GCP_SERVICE_ACCOUNT_CREDENTIALS }}"
+          workload_identity_provider: "projects/860685261660/locations/global/workloadIdentityPools/github-actions-for-deploy/providers/githbu-actions-provider"
+          service_account: "github-actions-service@aluep-web.iam.gserviceaccount.com"
 
       - name: "Set up Cloud SDK"
         uses: "google-github-actions/setup-gcloud@v1"
