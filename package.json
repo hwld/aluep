@@ -20,7 +20,9 @@
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "stoprybook build",
     "test-storybook": "test-storybook",
-    "svgr": "npx @svgr/cli -d src/client/ui/Icons .svgr/icons"
+    "svgr": "npx @svgr/cli -d src/client/ui/Icons .svgr/icons",
+    "test": "jest",
+    "push-db": "prisma db push"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
