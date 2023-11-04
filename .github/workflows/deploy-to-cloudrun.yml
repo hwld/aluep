@@ -95,9 +95,12 @@ jobs:
     if: always()
     needs: [test, deploy]
     steps:
+      # workflowの結果を取得して環境変数に入れる
+      - uses: technote-space/workflow-conclusion-action@v3
+
       - name: "Notify Discord"
         uses: "sarisia/actions-status-discord@v1"
         env:
           DISCORD_WEBHOOK: ${{ secrets.REPORT_DISCORD_WEBHOOK_URL }}
         with:
-          status: ${{ job.status }}
+          status: ${{ env.WORKFLOW_CONCLUSION }}
