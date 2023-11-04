@@ -1,5 +1,5 @@
 import { useDevQuery } from "@/client/features/dev/useDevQuery";
-import { DevLikersPage } from "@/client/pageComponents/DevLikersPage/DevLikersPage";
+import { DevLikers } from "@/client/pageComponents/DevLikers/DevLikers";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { paginatedPageSchema } from "@/share/paging";
 import { assertString } from "@/share/utils";
@@ -35,7 +35,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const DevLikers: NextPage = () => {
+const DevLikersPage: NextPage = () => {
   const router = useRouter();
   const devId = assertString(router.query.devId);
   const { dev, isLoading } = useDevQuery({ devId });
@@ -46,7 +46,7 @@ const DevLikers: NextPage = () => {
     return <NotFoundPage></NotFoundPage>;
   }
 
-  return <DevLikersPage dev={dev} />;
+  return <DevLikers dev={dev} />;
 };
 
-export default DevLikers;
+export default DevLikersPage;

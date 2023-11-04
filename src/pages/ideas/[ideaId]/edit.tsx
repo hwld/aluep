@@ -1,5 +1,5 @@
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { IdeaEditPage } from "@/client/pageComponents/IdeaEditPage/IdeaEditPage";
+import { IdeaEdit } from "@/client/pageComponents/IdeaEdit/IdeaEdit";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
@@ -32,7 +32,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const UpdateIdea: NextPage = () => {
+const IdeaEditPage: NextPage = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.ideaId);
   const { idea, isLoading } = useIdeaQuery({ ideaId });
@@ -43,7 +43,7 @@ const UpdateIdea: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return <IdeaEditPage idea={idea} />;
+  return <IdeaEdit idea={idea} />;
 };
 
-export default UpdateIdea;
+export default IdeaEditPage;

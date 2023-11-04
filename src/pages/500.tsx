@@ -1,3 +1,3 @@
-import { ServerErrorPage } from "@/client/pageComponents/ServerErrorPage/ServerErrorPage";
+import { ServerError } from "@/client/pageComponents/ServerError/ServerError";
 
-export default ServerErrorPage;
+export default ServerError;

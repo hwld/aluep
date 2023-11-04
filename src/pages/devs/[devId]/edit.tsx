@@ -1,6 +1,6 @@
 import { useDevQuery } from "@/client/features/dev/useDevQuery";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { DevEditPage } from "@/client/pageComponents/DevEditPage/DevEditPage";
+import { DevEdit } from "@/client/pageComponents/DevEdit/DevEdit";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
@@ -36,7 +36,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const DevEdit: NextPage = () => {
+const DevEditPage: NextPage = () => {
   const router = useRouter();
   const devId = assertString(router.query.devId);
 
@@ -53,6 +53,6 @@ const DevEdit: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return <DevEditPage idea={idea} dev={dev} />;
+  return <DevEdit idea={idea} dev={dev} />;
 };
-export default DevEdit;
+export default DevEditPage;

@@ -1,5 +1,5 @@
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { IdeaDetailPage } from "@/client/pageComponents/IdeaDetailPage/IdeaDetailPage";
+import { IdeaDetail } from "@/client/pageComponents/IdeaDetail/IdeaDetail";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
@@ -31,7 +31,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const IdeaDetail = () => {
+const IdeaDetailPage = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.ideaId);
   const { idea, isLoading } = useIdeaQuery({ ideaId });
@@ -71,8 +71,8 @@ const IdeaDetail = () => {
         <meta property="og:site_name" content="Aluep" />
         <meta property="og:locale" content="ja_JP" />
       </Head>
-      <IdeaDetailPage idea={idea} />
+      <IdeaDetail idea={idea} />
     </>
   );
 };
-export default IdeaDetail;
+export default IdeaDetailPage;

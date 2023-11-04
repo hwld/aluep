@@ -1,4 +1,4 @@
-import { IdeaSearchPage } from "@/client/pageComponents/IdeaSearchPage/IdeaSearchPage";
+import { IdeaSearch } from "@/client/pageComponents/IdeaSearch/IdeaSearch";
 import { searchIdeaPageSchema } from "@/models/idea";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { NextPage } from "next";
@@ -19,7 +19,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const SearchIdea: NextPage = () => {
-  return <IdeaSearchPage />;
+const IdeaSearchPage: NextPage = () => {
+  return <IdeaSearch />;
 };
-export default SearchIdea;
+export default IdeaSearchPage;

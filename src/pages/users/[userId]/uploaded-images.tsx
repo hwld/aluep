@@ -1,4 +1,4 @@
-import { UserUploadedImagesPage } from "@/client/pageComponents/UserUploadedImagesPage/UserUploadedImagesPage";
+import { UserUploadedImages } from "@/client/pageComponents/UserUploadedImages/UserUploadedImages";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
 import { NextPage } from "next";
@@ -13,8 +13,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const UserUploadedImages: NextPage = () => {
-  return <UserUploadedImagesPage />;
+const UserUploadedImagesPage: NextPage = () => {
+  return <UserUploadedImages />;
 };
 
-export default UserUploadedImages;
+export default UserUploadedImagesPage;

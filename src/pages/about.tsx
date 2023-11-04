@@ -1,3 +1,3 @@
-import { AboutPage } from "@/client/pageComponents/AboutPage/AboutPage";
+import { About } from "@/client/pageComponents/About/About";
 
-export default AboutPage;
+export default About;

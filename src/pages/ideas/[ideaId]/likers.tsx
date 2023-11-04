@@ -1,5 +1,5 @@
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { IdeaLikersPage } from "@/client/pageComponents/IdeaLikersPage/IdeaLikersPage";
+import { IdeaLikers } from "@/client/pageComponents/IdeaLikers/IdeaLikers";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { paginatedPageSchema } from "@/share/paging";
 import { assertString } from "@/share/utils";
@@ -43,7 +43,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 /**
  * お題にいいねしているユーザー一覧を表示するページ
  */
-const IdeaLikers: NextPage = () => {
+const IdeaLikersPage: NextPage = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.ideaId);
   const { idea, isLoading } = useIdeaQuery({ ideaId });
@@ -54,6 +54,6 @@ const IdeaLikers: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return <IdeaLikersPage idea={idea} />;
+  return <IdeaLikers idea={idea} />;
 };
-export default IdeaLikers;
+export default IdeaLikersPage;

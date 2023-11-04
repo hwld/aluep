@@ -1,3 +1,3 @@
-import { NotFoundPage } from "@/client/pageComponents/NotFoundPage/NotFoundPage";
+import { NotFound } from "@/client/pageComponents/NotFound/NotFound";
 
-export default NotFoundPage;
+export default NotFound;

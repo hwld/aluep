@@ -1,8 +1,9 @@
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { UserEditPage } from "@/client/pageComponents/UserEditPage/UserEditPage";
+import { UserEdit } from "@/client/pageComponents/UserEdit/UserEdit";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
+import { NextPage } from "next";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ session }) => {
@@ -12,7 +13,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-export default function UserEdit() {
+const UserEditPage: NextPage = () => {
   const { session, isLoading } = useSessionQuery();
 
   if (isLoading) {
@@ -21,5 +22,7 @@ export default function UserEdit() {
     return <NotFoundPage />;
   }
 
-  return <UserEditPage user={session.user} />;
-}
+  return <UserEdit user={session.user} />;
+};
+
+export default UserEditPage;

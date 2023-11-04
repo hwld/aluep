@@ -1,5 +1,5 @@
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
-import { DevsPage as DevsPageComponent } from "@/client/pageComponents/DevsPage/DevsPage";
+import { Devs } from "@/client/pageComponents/Devs/Devs";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { paginatedPageSchema } from "@/share/paging";
@@ -42,6 +42,6 @@ const DevsPage: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return <DevsPageComponent idea={idea} />;
+  return <Devs idea={idea} />;
 };
 export default DevsPage;

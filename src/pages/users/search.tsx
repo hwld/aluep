@@ -1,4 +1,4 @@
-import { UserSearchPage } from "@/client/pageComponents/UserSearchPage/UserSearchPage";
+import { UserSearch } from "@/client/pageComponents/UserSearch/UserSearch";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { urlParamToString } from "@/server/lib/urlParam";
 import { NextPage } from "next";
@@ -11,7 +11,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const UserSearch: NextPage = () => {
-  return <UserSearchPage />;
+const UserSearchPage: NextPage = () => {
+  return <UserSearch />;
 };
-export default UserSearch;
+export default UserSearchPage;

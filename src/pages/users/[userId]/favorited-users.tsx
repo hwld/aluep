@@ -1,5 +1,5 @@
 import { useUserQuery } from "@/client/features/user/useUserQuery";
-import { FavoritedUsersPage } from "@/client/pageComponents/FavoritedUsersPage/FavoritedUsersPage";
+import { FavoritedUsers } from "@/client/pageComponents/FavoritedUsers/FavoritedUsers";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { paginatedPageSchema } from "@/share/paging";
 import { assertString } from "@/share/utils";
@@ -33,7 +33,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const UserDetail: NextPage = () => {
+const UserDetailPage: NextPage = () => {
   const router = useRouter();
   const userId = assertString(router.query.userId);
   const { user, isLoading } = useUserQuery({ userId });
@@ -44,6 +44,6 @@ const UserDetail: NextPage = () => {
     return <NotFoundPage />;
   }
 
-  return <FavoritedUsersPage user={user} />;
+  return <FavoritedUsers user={user} />;
 };
-export default UserDetail;
+export default UserDetailPage;

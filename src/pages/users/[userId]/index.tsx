@@ -1,8 +1,9 @@
 import { useUserQuery } from "@/client/features/user/useUserQuery";
-import { UserDetailPage } from "@/client/pageComponents/UserDetailPage/UserDetailPage";
+import { UserDetail } from "@/client/pageComponents/UserDetail/UserDetail";
 import { userDetailPageSchame } from "@/models/user";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { assertNever, assertString } from "@/share/utils";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import NotFoundPage from "../../404";
 
@@ -73,7 +74,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
 /**
  *  ユーザーの詳細ページ
  */
-function UserDetail() {
+const UserDetailPage: NextPage = () => {
   const router = useRouter();
   const userId = assertString(router.query.userId);
   const { user, isLoading } = useUserQuery({ userId });
@@ -84,6 +85,6 @@ function UserDetail() {
     return <NotFoundPage />;
   }
 
-  return <UserDetailPage user={user} />;
-}
-export default UserDetail;
+  return <UserDetail user={user} />;
+};
+export default UserDetailPage;

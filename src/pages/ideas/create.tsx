@@ -1,6 +1,7 @@
-import { IdeaCreatePage } from "@/client/pageComponents/IdeaCreatePage/IdeaCreatePage";
+import { IdeaCreate } from "@/client/pageComponents/IdeaCreate/IdeaCreate";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
+import { NextPage } from "next";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ session, trpcStore }) => {
@@ -12,6 +13,8 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-export default function CreateIdea() {
-  return <IdeaCreatePage />;
-}
+const IdeaCreatePage: NextPage = () => {
+  return <IdeaCreate />;
+};
+
+export default IdeaCreatePage;
