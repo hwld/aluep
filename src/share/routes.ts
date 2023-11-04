@@ -12,7 +12,7 @@ export const Routes = {
   ideas: `/ideas`,
   idea: (id: string) => `${Routes.ideas}/${id}`,
   ideaCreate: "/ideas/create",
-  ideaUpdate: (ideaId: string) => `${Routes.idea(ideaId)}/update`,
+  ideaEdit: (ideaId: string) => `${Routes.idea(ideaId)}/edit`,
   ideaSearch: (query?: { order?: IdeaOrder; tagIds?: string }) =>
     `${Routes.ideas}/search${buildSearchParamsString(query)}`,
   ideaLikers: (ideaId: string) => `${Routes.ideas}/${ideaId}/likers`,
@@ -21,12 +21,12 @@ export const Routes = {
   develop: (ideaId: string) => `${Routes.ideas}/${ideaId}/develop`,
   devs: (ideaId: string) => `${Routes.ideas}/${ideaId}/devs`,
   dev: (devId: string) => `/devs/${devId}`,
-  devUpdate: (devId: string) => `${Routes.dev(devId)}/update`,
+  devEdit: (devId: string) => `${Routes.dev(devId)}/edit`,
   devLikers: (devId: string) => `${Routes.dev(devId)}/likers`,
 
   /** ユーザー関連 */
   user: (id: string) => `/users/${id}`,
-  userUpdate: "/users/profile",
+  userEdit: (userId: string) => `${Routes.user(userId)}/edit`,
   userDelete: "/users/delete",
   userSearch: "/users/search",
   userFavorites: (userId: string) => `${Routes.user(userId)}/favorited-users`,

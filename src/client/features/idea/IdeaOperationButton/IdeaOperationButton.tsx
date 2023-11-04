@@ -99,7 +99,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
             <>
               <AppMenuLinkItem
                 leftSection={<IconEdit />}
-                href={Routes.ideaUpdate(idea.id)}
+                href={Routes.ideaEdit(idea.id)}
               >
                 お題を編集する
               </AppMenuLinkItem>

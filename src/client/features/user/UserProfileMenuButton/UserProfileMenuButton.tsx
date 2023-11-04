@@ -70,7 +70,7 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
               </AppMenuLinkItem>
               <AppMenuLinkItem
                 leftSection={<IconEdit />}
-                href={Routes.userUpdate}
+                href={Routes.userEdit(user.id)}
               >
                 ユーザー情報を編集する
               </AppMenuLinkItem>

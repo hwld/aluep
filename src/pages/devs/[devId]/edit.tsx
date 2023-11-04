@@ -36,7 +36,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const DevUpdate: NextPage = () => {
+const DevEdit: NextPage = () => {
   const router = useRouter();
   const devId = assertString(router.query.devId);
 
@@ -55,4 +55,4 @@ const DevUpdate: NextPage = () => {
 
   return <DevEditPage idea={idea} dev={dev} />;
 };
-export default DevUpdate;
+export default DevEdit;

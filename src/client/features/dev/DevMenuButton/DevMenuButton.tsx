@@ -98,7 +98,7 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
             <>
               <AppMenuLinkItem
                 leftSection={<IconEdit />}
-                href={Routes.devUpdate(dev.id)}
+                href={Routes.devEdit(dev.id)}
               >
                 開発情報を編集する
               </AppMenuLinkItem>

@@ -1,8 +1,8 @@
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserEditPage } from "@/client/pageComponents/UserEditPage/UserEditPage";
+import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
-import NotFoundPage from "../404";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ session }) => {
@@ -12,7 +12,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-export default function Profile() {
+export default function UserEdit() {
   const { session, isLoading } = useSessionQuery();
 
   if (isLoading) {
