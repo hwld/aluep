@@ -92,11 +92,11 @@ jobs:
 
   notify:
     runs-on: "ubuntu-latest"
+    if: always()
     needs: [test, deploy]
     steps:
       - name: "Notify Discord"
         uses: "sarisia/actions-status-discord@v1"
-        if: always()
         env:
           DISCORD_WEBHOOK: ${{ secrets.REPORT_DISCORD_WEBHOOK_URL }}
         with:
