@@ -6,7 +6,6 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig: Config = {
-  testTimeout: 20000,
   moduleDirectories: ["node_modules"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/../$1",
