@@ -58,7 +58,7 @@ jobs:
 
       # seedを実行するための環境をインストールする
       - name: "Set up ts-node"
-        run: npm install typescript ts-node
+        run: npm install -g typescript ts-node
 
       - name: "Detabase seeding"
         run: npx prisma db seed

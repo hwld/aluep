@@ -87,65 +87,63 @@ export const Home: React.FC<Props> = ({ welcomeMessageHidden }) => {
             />
           </Stack>
 
-          <>
-            <PickedUpIdeas
-              dummyProps={{
-                isDummy: fetchingRecommended,
-                count: 1,
-              }}
-              icon={
-                <IconThumbUp
-                  width="30px"
-                  height="30px"
-                  color="var(--mantine-color-green-7)"
-                />
-              }
-              title="おすすめのお題"
-              ideas={recommendedIdeas ?? []}
-            />
+          <PickedUpIdeas
+            dummyProps={{
+              isDummy: fetchingRecommended,
+              count: 1,
+            }}
+            icon={
+              <IconThumbUp
+                width="30px"
+                height="30px"
+                color="var(--mantine-color-green-7)"
+              />
+            }
+            title="おすすめのお題"
+            ideas={recommendedIdeas ?? []}
+          />
 
-            <PickedUpIdeas
-              dummyProps={{ isDummy: fetchingLatest }}
-              icon={
-                <IconBulb
-                  width="30px"
-                  height="30px"
-                  color="var(--mantine-color-yellow-7)"
-                />
-              }
-              title="最新のお題"
-              readMoreHref={Routes.ideaSearch({ order: "createdDesc" })}
-              ideas={latestIdeas ?? []}
-            />
+          <PickedUpIdeas
+            dummyProps={{ isDummy: fetchingLatest }}
+            icon={
+              <IconBulb
+                width="30px"
+                height="30px"
+                color="var(--mantine-color-yellow-7)"
+              />
+            }
+            title="最新のお題"
+            readMoreHref={Routes.ideaSearch({ order: "createdDesc" })}
+            ideas={latestIdeas ?? []}
+          />
 
-            <PickedUpIdeas
-              dummyProps={{ isDummy: fetchingLikes }}
-              icon={
-                <IconHeart
-                  width="30px"
-                  height="30px"
-                  color="var(--mantine-color-pink-7)"
-                />
-              }
-              title="いいねが多かったお題"
-              readMoreHref={Routes.ideaSearch({ order: "likeDesc" })}
-              ideas={manyLikesIdeas ?? []}
-            />
+          <PickedUpIdeas
+            dummyProps={{ isDummy: fetchingLikes }}
+            icon={
+              <IconHeart
+                width="30px"
+                height="30px"
+                color="var(--mantine-color-pink-7)"
+              />
+            }
+            title="いいねが多かったお題"
+            readMoreHref={Routes.ideaSearch({ order: "likeDesc" })}
+            ideas={manyLikesIdeas ?? []}
+          />
 
-            <PickedUpIdeas
-              dummyProps={{ isDummy: fetchingDevs }}
-              icon={
-                <IconCode
-                  width="30px"
-                  height="30px"
-                  color="var(--mantine-color-blue-7)"
-                />
-              }
-              title="開発者が多かったお題"
-              readMoreHref={Routes.ideaSearch({ order: "devDesc" })}
-              ideas={manyDevsIdeas ?? []}
-            />
-          </>
+          <PickedUpIdeas
+            dummyProps={{ isDummy: fetchingDevs }}
+            icon={
+              <IconCode
+                width="30px"
+                height="30px"
+                color="var(--mantine-color-blue-7)"
+              />
+            }
+            title="開発者が多かったお題"
+            readMoreHref={Routes.ideaSearch({ order: "devDesc" })}
+            ideas={manyDevsIdeas ?? []}
+          />
         </Stack>
 
         <Flex direction="column" gap={30} visibleFrom="lg">
