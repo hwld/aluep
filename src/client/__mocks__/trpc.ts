@@ -2,6 +2,7 @@ import { AppRouter } from "@/server/router";
 import { httpLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import { createTRPCMsw } from "msw-trpc";
+import { ContextWithDataTransformer, Query } from "msw-trpc/dist/types";
 import SuperJSON from "superjson";
 
 const apiUrl = "http://localhost:6006/api/trpc";
@@ -22,20 +23,17 @@ export const trpcMsw = createTRPCMsw<AppRouter>({
   transformer: { output: SuperJSON, input: SuperJSON },
 });
 
-// TODO: エラーなく型を付けられなかった・・・
-type InputData<Query extends any> = Parameters<
-  /** @ts-ignore */
-  Parameters<Parameters<Query["query"]>[0]>[2]["data"]
->[0];
+type MockData<T> = T extends Query<infer Route, infer Procedure>
+  ? Parameters<ContextWithDataTransformer<Route[Procedure]>["data"]>[0]
+  : never;
 
-// TODO: エラーなく型を付けられなかった・・・
-export const mockTrpcQuery = <T>(
+export const mockTrpcQuery = <T extends Query<unknown, never>>(
   route: T,
-  data: InputData<T> | (() => InputData<T>)
+  data: MockData<T> | (() => MockData<T>)
 ) => {
-  const query: any = (route as any).query;
-  return query((req: any, res: any, ctx: any) => {
-    const _data = typeof data === "function" ? (data as any)() : data;
+  const query = route.query;
+  return query((_, res, ctx) => {
+    const _data = typeof data === "function" ? data() : data;
 
     return res(ctx.status(200), ctx.data(_data));
   });
