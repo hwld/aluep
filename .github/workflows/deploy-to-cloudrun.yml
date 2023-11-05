@@ -19,9 +19,9 @@ jobs:
       - name: "Checkout the repository"
         uses: "actions/checkout@v4"
 
-      - uses: "actions/setup-node@v3"
+      - uses: "actions/setup-node@v4"
         with:
-          node-version: "20"
+          node-version: "20.9.0"
           cache: "npm"
 
       - name: "Build db container"
@@ -45,6 +45,11 @@ jobs:
       - name: "Checkout the repository"
         uses: "actions/checkout@v4"
 
+      - uses: "actions/setup-node@v4"
+        with:
+          node-version: "20.9.0"
+          cache: "npm"
+
       - uses: "google-github-actions/auth@v1"
         with:
           workload_identity_provider: "projects/860685261660/locations/global/workloadIdentityPools/github-actions-for-deploy/providers/githbu-actions-provider"
@@ -58,12 +63,11 @@ jobs:
       - name: "Configure docker to use the gcloud cli"
         run: gcloud auth configure-docker --quiet asia-northeast1-docker.pkg.dev
 
+      - name: "Install dependencies"
+        run: npm ci
+
       - name: "Database migration"
         run: npx prisma migrate deploy
-
-      # seedを実行するための環境をインストールする
-      - name: "Set up ts-node"
-        run: npm install -g typescript ts-node
 
       - name: "Detabase seeding"
         run: npx prisma db seed
