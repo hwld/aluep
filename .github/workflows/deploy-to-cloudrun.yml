@@ -24,11 +24,11 @@ jobs:
           node-version: "20.9.0"
           cache: "npm"
 
-      - name: "Build db container"
-        run: docker compose up -d db
-
       - name: "Install dependencies"
         run: npm ci
+
+      - name: "Build db container"
+        run: docker compose up -d db
 
       - name: "Setup test db"
         run: npm run setup:test-db
