@@ -50,6 +50,8 @@ jobs:
           node-version: "20.9.0"
           cache: "npm"
 
+      - uses: "docker/setup-buildx-action@v3"
+
       - uses: "google-github-actions/auth@v1"
         with:
           workload_identity_provider: "projects/860685261660/locations/global/workloadIdentityPools/github-actions-for-deploy/providers/githbu-actions-provider"
@@ -63,6 +65,9 @@ jobs:
       - name: "Configure docker to use the gcloud cli"
         run: gcloud auth configure-docker --quiet asia-northeast1-docker.pkg.dev
 
+      # TODO
+      # DBのマイグレーションとseedingのためだけに全部インストールするの非効率な気がする。
+      # どうにかしたい
       - name: "Install dependencies"
         run: npm ci
 
@@ -72,17 +77,37 @@ jobs:
       - name: "Detabase seeding"
         run: npx prisma db seed
 
-      - name: "Build docker image"
-        run: >
-          docker build
-          -t ${{ env.IMAGE_NAME }}
-          --build-arg NEXT_PUBLIC_URL=${{ vars.NEXT_PUBLIC_URL }}
-          --build-arg NEXT_PUBLIC_CONTACT_URL=${{ vars.NEXT_PUBLIC_CONTACT_URL }}
-          --build-arg NEXT_PUBLIC_RECAPTCHA_KEY=${{ vars.NEXT_PUBLIC_RECAPTCHA_KEY }}
-          .
+      # キャッシュをコントロールするために自前で用意する
+      # ここで作ったキャッシュをbuild-push-actionで指定する
+      # その後自分で古いキャッシュを消す
+      # https://github.com/docker/build-push-action/issues/252
+      - name: "Cache Docker layers"
+        uses: "actions/cache@v3"
+        with:
+          path: "/tmp/.buildx-cache"
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
-      - name: "Push docker image"
-        run: docker push ${{ env.IMAGE_NAME }}
+      - name: "Build and push image"
+        uses: "docker/build-push-action@v5"
+        with:
+          context: .
+          target: runner
+          push: true
+          tags: ${{ env.IMAGE_NAME }}
+          build-args: |
+            NEXT_PUBLIC_URL=${{ vars.NEXT_PUBLIC_URL }}
+            NEXT_PUBLIC_CONTACT_URL=${{ vars.NEXT_PUBLIC_CONTACT_URL }}
+            NEXT_PUBLIC_RECAPTCHA_KEY=${{ vars.NEXT_PUBLIC_RECAPTCHA_KEY }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+
+      # https://github.com/docker/build-push-action/issues/252
+      - name: "Move cache"
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - name: "Deploy to Cloud Run"
         uses: "google-github-actions/deploy-cloudrun@v1"
