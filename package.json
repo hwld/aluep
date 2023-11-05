@@ -21,7 +21,7 @@
     "build-storybook": "stoprybook build",
     "test-storybook": "test-storybook",
     "svgr": "npx @svgr/cli -d src/client/ui/Icons .svgr/icons",
-    "test": "jest",
+    "test": "jest -i",
     "push-db": "prisma db push"
   },
   "prisma": {
