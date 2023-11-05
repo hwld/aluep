@@ -3,7 +3,7 @@ import {
   showErrorNotification,
   showLoadingNotification,
   showSuccessNotification,
-} from "@/client/lib/utils";
+} from "@/client/lib/notification";
 import {
   Bytes,
   TOTAL_UPLOAD_IMAGE_LIMIT_MB,

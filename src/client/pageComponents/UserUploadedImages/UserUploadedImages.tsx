@@ -2,7 +2,7 @@ import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
-} from "@/client/lib/utils";
+} from "@/client/lib/notification";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { UploadedImageCard } from "@/client/ui/UploadedImageCard/UploadedImageCard";

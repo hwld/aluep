@@ -1,5 +1,5 @@
 import { trpc } from "@/client/lib/trpc";
-import { showErrorNotification } from "@/client/lib/utils";
+import { showErrorNotification } from "@/client/lib/notification";
 import { DevMemo } from "@/models/devMemo";
 import { useMemo } from "react";
 

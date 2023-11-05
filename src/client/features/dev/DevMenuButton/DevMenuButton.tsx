@@ -18,7 +18,7 @@ import router from "next/router";
 import {
   showErrorNotification,
   showSuccessNotification,
-} from "../../../lib/utils";
+} from "@/client/lib/notification";
 
 type Props = { dev: Dev; isOwner: boolean };
 export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {

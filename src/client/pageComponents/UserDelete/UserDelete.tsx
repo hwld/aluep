@@ -1,5 +1,5 @@
 import { trpc } from "@/client/lib/trpc";
-import { showErrorNotification } from "@/client/lib/utils";
+import { showErrorNotification } from "@/client/lib/notification";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ReCaptchaCheckBox } from "@/client/ui/ReCaptchaCheckBox";
 import { Routes } from "@/share/routes";

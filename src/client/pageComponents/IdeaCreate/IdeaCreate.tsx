@@ -4,7 +4,7 @@ import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
-} from "@/client/lib/utils";
+} from "@/client/lib/notification";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { IdeaFormData } from "@/models/idea";
 import { Routes } from "@/share/routes";

@@ -3,7 +3,7 @@ import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
-} from "@/client/lib/utils";
+} from "@/client/lib/notification";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";

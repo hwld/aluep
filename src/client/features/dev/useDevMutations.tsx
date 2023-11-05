@@ -2,7 +2,7 @@ import { trpc } from "@/client/lib/trpc";
 import {
   showErrorNotification,
   showSuccessNotification,
-} from "@/client/lib/utils";
+} from "@/client/lib/notification";
 import { useQueryClient } from "@tanstack/react-query";
 
 /**

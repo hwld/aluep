@@ -8,7 +8,7 @@ import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { trpc } from "@/client/lib/trpc";
 import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
-import { showErrorNotification } from "@/client/lib/utils";
+import { showErrorNotification } from "@/client/lib/notification";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev } from "@/models/dev";

@@ -5,7 +5,7 @@ import {
   showErrorNotification,
   showLoadingNotification,
   showSuccessNotification,
-} from "@/client/lib/utils";
+} from "@/client/lib/notification";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ProfileFormData } from "@/models/user";
 import { Routes } from "@/share/routes";
