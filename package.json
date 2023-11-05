@@ -9,9 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ts-node": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"}",
-    "create:dummy": "npm run ts-node -- prisma/seedDummy.ts",
-    "create:manyDummy": "npm run ts-node -- prisma/seedManyDummy.ts",
+    "create:dummy": "tsx prisma/seedDummy.ts",
+    "create:manyDummy": "tsx prisma/seedManyDummy.ts",
     "test-dotenv": "dotenv -e  .env.test",
     "test-db-dbpush": "npm run test-dotenv  -- prisma db push --accept-data-loss",
     "test-db-seed": "npm run test-dotenv -- prisma db seed",
@@ -25,7 +24,7 @@
     "push-db": "prisma db push"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -135,9 +134,8 @@
     "postcss-nesting": "^12.0.1",
     "postcss-preset-env": "^9.1.4",
     "storybook": "^7.5.1",
-    "ts-node": "^10.9.1",
     "ts-prune": "^0.10.3",
-    "tsconfig-paths": "^4.2.0"
+    "tsx": "^3.14.0"
   },
   "msw": {
     "workerDirectory": "test"
