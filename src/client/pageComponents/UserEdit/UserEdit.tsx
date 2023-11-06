@@ -5,6 +5,7 @@ import {
   showErrorNotification,
   showLoadingNotification,
   showSuccessNotification,
+  useMutationWithNotification,
 } from "@/client/lib/notification";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ProfileFormData } from "@/models/user";
@@ -18,6 +19,9 @@ import { useState } from "react";
 const uploadNotificationId = "upload-icon";
 
 type Props = { user: Session["user"] };
+
+// TODO
+// アイコンアップロードとプロフィール更新を分割する
 export const UserEdit: React.FC<Props> = ({ user }) => {
   const router = useRouter();
   const [uploading, setUploading] = useState(false);
@@ -72,19 +76,17 @@ export const UserEdit: React.FC<Props> = ({ user }) => {
     router.reload();
   };
 
-  const updateMutation = trpc.me.update.useMutation({
-    onSuccess: () => {
-      showSuccessNotification({
-        title: "プロフィールの更新",
-        message: "プロフィールを更新しました。",
-      });
-      router.push(Routes.user(user.id));
+  const updateMutation = useMutationWithNotification(trpc.me.update, {
+    succsesNotification: {
+      title: "プロフィールの更新",
+      message: "プロフィールを更新しました。",
     },
-    onError: () => {
-      showErrorNotification({
-        title: "プロフィールの更新",
-        message: "プロフィールを更新できませんでした。",
-      });
+    errorNotification: {
+      title: "プロフィールの更新",
+      message: "プロフィールを更新できませんでした。",
+    },
+    onSuccess: () => {
+      router.push(Routes.user(user.id));
     },
   });
 

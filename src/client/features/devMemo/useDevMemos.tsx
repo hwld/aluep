@@ -1,5 +1,5 @@
 import { trpc } from "@/client/lib/trpc";
-import { showErrorNotification } from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { DevMemo } from "@/models/devMemo";
 import { useMemo } from "react";
 
@@ -43,21 +43,17 @@ export const useDevMemos = ({ devId }: UseDevMemoArgs) => {
     });
   }, [devMemos]);
 
-  const createMemoMutation = trpc.devMemo.create.useMutation({
-    onError: () => {
-      showErrorNotification({
-        title: "開発メモの作成",
-        message: "開発メモを作成できませんでした。",
-      });
+  const createMemoMutation = useMutationWithNotification(trpc.devMemo.create, {
+    errorNotification: {
+      title: "開発メモの作成",
+      message: "開発メモを作成できませんでした。",
     },
   });
 
-  const deleteMemoMutation = trpc.devMemo.delete.useMutation({
-    onError: () => {
-      showErrorNotification({
-        title: "メモの削除",
-        message: "メモを削除できませんでした。",
-      });
+  const deleteMemoMutation = useMutationWithNotification(trpc.devMemo.delete, {
+    errorNotification: {
+      title: "メモの削除",
+      message: "メモを削除できませんでした。",
     },
   });
 

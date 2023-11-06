@@ -1,9 +1,6 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
 import { trpc } from "@/client/lib/trpc";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
@@ -33,21 +30,15 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
   const router = useRouter();
 
   // お題の削除
-  const deleteIdeaMutation = trpc.idea.delete.useMutation({
+  const deleteIdeaMutation = useMutationWithNotification(trpc.idea.delete, {
+    succsesNotification: { title: "お題の削除", message: "お題を削除しました" },
+    errorNotification: {
+      title: "お題の削除",
+      message: "お題を削除できませんでした。",
+    },
     onSuccess: async () => {
-      showSuccessNotification({
-        title: "お題の削除",
-        message: "お題を削除しました",
-      });
-
       await router.replace(Routes.home);
       closeDeleteModal();
-    },
-    onError: () => {
-      showErrorNotification({
-        title: "お題の削除",
-        message: "お題を削除できませんでした。",
-      });
     },
   });
 
@@ -56,19 +47,14 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
   };
 
   // お題の通報
-  const reportIdeaMutation = trpc.report.idea.useMutation({
-    onSuccess: () => {
-      showSuccessNotification({
-        title: "お題の通報",
-        message: "お題を通報しました。",
-      });
-      closeReportModal();
+  const reportIdeaMutation = useMutationWithNotification(trpc.report.idea, {
+    succsesNotification: {
+      title: "お題の通報",
+      message: "お題を通報しました。",
     },
-    onError: () => {
-      showErrorNotification({
-        title: "お題の通報",
-        message: "お題を通報できませんでした。",
-      });
+    errorNotification: {
+      title: "お題の通報",
+      message: "お題を通報できませんでした。",
     },
   });
 

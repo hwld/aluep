@@ -1,5 +1,5 @@
 import { trpc } from "@/client/lib/trpc";
-import { showErrorNotification } from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { ReCaptchaCheckBox } from "@/client/ui/ReCaptchaCheckBox";
 import { Routes } from "@/share/routes";
@@ -19,18 +19,16 @@ export const UserDelete: React.FC = () => {
   const disableDeleteButton = reCaptchaToken === undefined;
 
   const queryClient = useQueryClient();
-  const deleteMutation = trpc.me.delete.useMutation({
+  const deleteMutation = useMutationWithNotification(trpc.me.delete, {
+    errorNotification: {
+      title: "ユーザーの削除",
+      message: "ユーザーを削除できませんでした。",
+    },
     onMutate: () => {
       queryClient.clear();
     },
     onSuccess: () => {
       router.replace(Routes.home);
-    },
-    onError: () => {
-      showErrorNotification({
-        title: "ユーザーの削除",
-        message: "ユーザーを削除できませんでした。",
-      });
     },
   });
 

@@ -67,7 +67,6 @@ jobs:
       - name: "Configure docker to use the gcloud cli"
         run: gcloud auth configure-docker --quiet asia-northeast1-docker.pkg.dev
 
-      # TODO
       # DBのマイグレーションとseedingのためだけに全部インストールするの非効率な気がする。
       # どうにかしたい
       - name: "Install dependencies"

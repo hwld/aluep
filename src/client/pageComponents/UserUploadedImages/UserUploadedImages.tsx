@@ -1,8 +1,5 @@
 import { trpc } from "@/client/lib/trpc";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { UploadedImageCard } from "@/client/ui/UploadedImageCard/UploadedImageCard";
@@ -15,20 +12,20 @@ export const UserUploadedImages: React.FC<Props> = () => {
   const { data: images } = trpc.uploadedImage.getAll.useQuery(undefined, {
     initialData: [],
   });
-  const deleteMutation = trpc.uploadedImage.delete.useMutation({
-    onSuccess: () => {
-      showSuccessNotification({
+
+  const deleteMutation = useMutationWithNotification(
+    trpc.uploadedImage.delete,
+    {
+      succsesNotification: {
         title: "画像の削除",
         message: "画像を削除しました",
-      });
-    },
-    onError: () => {
-      showErrorNotification({
+      },
+      errorNotification: {
         title: "画像の削除",
         message: "お題を削除できませんでした",
-      });
-    },
-  });
+      },
+    }
+  );
 
   const handleDelete = (imageUrl: string) => {
     deleteMutation.mutate({ imageUrl });

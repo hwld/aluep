@@ -1,9 +1,6 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
 import { trpc } from "@/client/lib/trpc";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
@@ -42,21 +39,22 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
     { close: closeReportModal, open: openReportModal },
   ] = useDisclosure(false);
 
-  const reportIdeaCommentMutation = trpc.report.ideaComment.useMutation({
-    onSuccess: () => {
-      showSuccessNotification({
+  const reportIdeaCommentMutation = useMutationWithNotification(
+    trpc.report.ideaComment,
+    {
+      succsesNotification: {
         title: "コメントの通報",
         message: "コメントを通報しました。",
-      });
-      closeReportModal();
-    },
-    onError: () => {
-      showErrorNotification({
+      },
+      errorNotification: {
         title: "コメントの通報",
         message: "コメントを通報できませんでした。",
-      });
-    },
-  });
+      },
+      onSuccess: () => {
+        closeReportModal();
+      },
+    }
+  );
 
   const buildLink = () => {
     return `${window.location.origin}${Routes.idea(ideaId)}#${commentId}`;

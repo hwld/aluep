@@ -15,10 +15,7 @@ import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
 import { IconEdit, IconFlag, IconTrash } from "@tabler/icons-react";
 import router from "next/router";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 
 type Props = { dev: Dev; isOwner: boolean };
 export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
@@ -39,11 +36,6 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
       { devId: dev.id },
       {
         onSuccess: async () => {
-          showSuccessNotification({
-            title: "開発情報の削除",
-            message: "開発情報を削除しました。",
-          });
-
           if (dev?.idea) {
             await router.replace(Routes.idea(dev.idea.id));
           } else {
@@ -52,29 +44,18 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
 
           closeDeleteModal();
         },
-        onError: () => {
-          showErrorNotification({
-            title: "開発情報の削除",
-            message: "開発情報を削除できませんでした。",
-          });
-        },
       }
     );
   };
 
-  const reportDevMutation = trpc.report.dev.useMutation({
-    onSuccess: () => {
-      showSuccessNotification({
-        title: "開発情報の通報",
-        message: "開発情報を通報しました。",
-      });
-      closeReportModal();
+  const reportDevMutation = useMutationWithNotification(trpc.report.dev, {
+    succsesNotification: {
+      title: "開発情報の通報",
+      message: "開発情報を通報しました。",
     },
-    onError: () => {
-      showErrorNotification({
-        title: "開発情報の通報",
-        message: "開発情報を通報できませんでした。",
-      });
+    errorNotification: {
+      title: "開発情報の通報",
+      message: "開発情報を通報できませんでした。",
     },
   });
 

@@ -8,7 +8,7 @@ import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { trpc } from "@/client/lib/trpc";
 import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
 import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
-import { showErrorNotification } from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev } from "@/models/dev";
@@ -32,15 +32,15 @@ export const DevDetail: React.FC<Props> = ({ dev }) => {
 
   const { likeDevMutation, unlikeDevMutation } = useDevLikeOnDetail(dev.id);
 
-  const toggleAllowOtherUserMemosMutation =
-    trpc.dev.updateAllowOtherUserMemos.useMutation({
-      onError: () => {
-        showErrorNotification({
-          title: "開発メモの返信権限の更新",
-          message: "開発メモの返信権限を更新できませんでした。",
-        });
+  const toggleAllowOtherUserMemosMutation = useMutationWithNotification(
+    trpc.dev.updateAllowOtherUserMemos,
+    {
+      errorNotification: {
+        title: "開発メモの返信権限の更新",
+        message: "開発メモの返信権限を更新できませんでした。",
       },
-    });
+    }
+  );
 
   const { openLoginModal } = useRequireLoginModal();
   const [formKey, nextFormKey] = useCyclicRandom();

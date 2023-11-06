@@ -1,10 +1,7 @@
 import { IdeaForm } from "@/client/features/idea/IdeaForm/IdeaForm";
 import { useAllTagsQuery } from "@/client/features/idea/useAllTagsQuery";
 import { trpc } from "@/client/lib/trpc";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { IdeaFormData } from "@/models/idea";
 import { Routes } from "@/share/routes";
@@ -16,20 +13,16 @@ export const IdeaCreate: React.FC = () => {
   const { allTags } = useAllTagsQuery();
   const router = useRouter();
 
-  const createMutate = trpc.idea.create.useMutation({
-    onSuccess: ({ ideaId }) => {
-      showSuccessNotification({
-        title: "お題の投稿",
-        message: "お題を投稿しました。",
-      });
-      router.replace(Routes.idea(ideaId));
+  const createMutate = useMutationWithNotification(trpc.idea.create, {
+    succsesNotification: {
+      title: "お題の投稿",
+      message: "お題を投稿しました。",
     },
-    onError: () => {
-      showErrorNotification({
-        title: "お題の投稿",
-        message: "お題が投稿できませんでした。",
-      });
+    errorNotification: {
+      title: "お題の投稿",
+      message: "お題が投稿できませんでした。",
     },
+    onSuccess: ({ ideaId }) => router.replace(Routes.idea(ideaId)),
   });
 
   const handleCreateIdea = (data: IdeaFormData) => {

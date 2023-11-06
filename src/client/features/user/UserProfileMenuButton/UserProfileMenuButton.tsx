@@ -1,9 +1,6 @@
 import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
 import { trpc } from "@/client/lib/trpc";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
@@ -28,19 +25,17 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
     { close: closeReportModal, open: openReportModal },
   ] = useDisclosure(false);
 
-  const reportUserMutation = trpc.report.user.useMutation({
-    onSuccess: () => {
-      showSuccessNotification({
-        title: "ユーザーの通報",
-        message: "ユーザーを通報しました。",
-      });
-      closeReportModal();
+  const reportUserMutation = useMutationWithNotification(trpc.report.user, {
+    succsesNotification: {
+      title: "ユーザーの通報",
+      message: "ユーザーを通報しました。",
     },
-    onError: () => {
-      showErrorNotification({
-        title: "ユーザーの通報",
-        message: "ユーザーを通報できませんでした。",
-      });
+    errorNotification: {
+      title: "ユーザーの通報",
+      message: "ユーザーを通報できませんでした。",
+    },
+    onSuccess: () => {
+      closeReportModal();
     },
   });
 

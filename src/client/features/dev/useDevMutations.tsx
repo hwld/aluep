@@ -1,8 +1,5 @@
 import { trpc } from "@/client/lib/trpc";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { useQueryClient } from "@tanstack/react-query";
 
 /**
@@ -11,39 +8,37 @@ import { useQueryClient } from "@tanstack/react-query";
 export const useDevMutations = () => {
   const client = useQueryClient();
 
-  const developMutation = trpc.dev.create.useMutation({
-    onSuccess: async () => {
-      showSuccessNotification({
-        title: "お題の開発",
-        message: "お題の開発を開始しました。",
-      });
+  const developMutation = useMutationWithNotification(trpc.dev.create, {
+    succsesNotification: {
+      title: "お題の開発",
+      message: "お題の開発を開始しました。",
     },
-    onError: () => {
-      showErrorNotification({
-        title: "お題の開発",
-        message: "お題の開発を開始できませんでした。",
-      });
+    errorNotification: {
+      title: "お題の開発",
+      message: "お題の開発を開始できませんでした。",
     },
   });
 
-  // お題の開発情報を更新する
-  const updateDevMutation = trpc.dev.update.useMutation({
-    onSuccess: () => {
-      showSuccessNotification({
-        title: "お題開発情報の更新",
-        message: "開発情報を更新しました。",
-      });
+  const updateDevMutation = useMutationWithNotification(trpc.dev.update, {
+    succsesNotification: {
+      title: "お題開発情報の更新",
+      message: "開発情報を更新しました。",
     },
-    onError: () => {
-      showErrorNotification({
-        title: "お題開発情報の更新",
-        message: "お題開発情報を更新できませんでした。",
-      });
+    errorNotification: {
+      title: "お題開発情報の更新",
+      message: "お題開発情報を更新できませんでした。",
     },
   });
 
-  // お題の開発情報を削除する
-  const deleteDevMutation = trpc.dev.delete.useMutation({
+  const deleteDevMutation = useMutationWithNotification(trpc.dev.delete, {
+    succsesNotification: {
+      title: "開発情報の削除",
+      message: "開発情報を削除しました。",
+    },
+    errorNotification: {
+      title: "開発情報の削除",
+      message: "開発情報を削除できませんでした。",
+    },
     onSuccess: () => {
       client.removeQueries();
     },

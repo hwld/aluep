@@ -15,7 +15,6 @@ type Props = {
   isSubmitting?: boolean;
 };
 
-// TODO: スタイルをDevMemoFormCardとある程度共通化したい
 export const DevMemoReplyFormBox: React.FC<Props> = ({
   onSubmit,
   onCancel,

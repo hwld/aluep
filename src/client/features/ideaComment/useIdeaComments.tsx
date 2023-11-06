@@ -1,5 +1,5 @@
 import { trpc } from "@/client/lib/trpc";
-import { showErrorNotification } from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 
 type UseIdeaCommentsArgs = { ideaId: string };
 
@@ -10,23 +10,25 @@ export const useIdeaComments = ({ ideaId }: UseIdeaCommentsArgs) => {
     { keepPreviousData: true }
   );
 
-  const postCommentMutation = trpc.ideaComment.create.useMutation({
-    onError: () => {
-      showErrorNotification({
+  const postCommentMutation = useMutationWithNotification(
+    trpc.ideaComment.create,
+    {
+      errorNotification: {
         title: "お題へのコメント",
         message: "コメントを送信できませんでした。",
-      });
-    },
-  });
+      },
+    }
+  );
 
-  const deleteCommentMutation = trpc.ideaComment.delete.useMutation({
-    onError: () => {
-      showErrorNotification({
+  const deleteCommentMutation = useMutationWithNotification(
+    trpc.ideaComment.delete,
+    {
+      errorNotification: {
         title: "コメントの削除",
         message: "コメントを削除できませんでした。",
-      });
-    },
-  });
+      },
+    }
+  );
 
   return { ideaComments, postCommentMutation, deleteCommentMutation };
 };

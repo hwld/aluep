@@ -3,6 +3,13 @@ import {
   showNotification,
   updateNotification,
 } from "@mantine/notifications";
+import { TRPCClientErrorLike } from "@trpc/client";
+import {
+  UseTRPCMutationOptions,
+  UseTRPCMutationResult,
+} from "@trpc/react-query/shared";
+import { AnyMutationProcedure, inferProcedureInput } from "@trpc/server";
+import { inferTransformedProcedureOutput } from "@trpc/server/shared";
 
 export const showLoadingNotification = (props: NotificationData) => {
   showNotification({
@@ -45,4 +52,58 @@ export const showErrorNotification = (
     withCloseButton: true,
     ...props,
   });
+};
+
+/**
+ * 成功、失敗時に通知を出してくれるMutation
+ */
+export const useMutationWithNotification = <T extends AnyMutationProcedure>(
+  mutator: Mutator<T>,
+  opts?: MutationOpt<T>
+) => {
+  return mutator.useMutation({
+    ...opts,
+    onSuccess: async (...args) => {
+      if (opts?.succsesNotification) {
+        showSuccessNotification({ ...opts.succsesNotification });
+      }
+
+      if (opts?.onSuccess) {
+        await opts.onSuccess(...args);
+      }
+    },
+    onError: async (...args) => {
+      if (opts?.errorNotification) {
+        showErrorNotification({ ...opts.errorNotification });
+      }
+
+      if (opts?.onError) {
+        await opts.onError(...args);
+      }
+    },
+  });
+};
+
+// @trpc/react-queryの定義をそのまま持ってきてる
+type Mutator<T extends AnyMutationProcedure> = {
+  useMutation: <TContext = unknown>(
+    opts?: UseTRPCMutationOptions<
+      inferProcedureInput<T>,
+      TRPCClientErrorLike<T>,
+      inferTransformedProcedureOutput<T>,
+      TContext
+    >
+  ) => UseTRPCMutationResult<
+    inferTransformedProcedureOutput<T>,
+    TRPCClientErrorLike<T>,
+    inferProcedureInput<T>,
+    TContext
+  >;
+};
+
+type MutationOpt<T extends AnyMutationProcedure> = Parameters<
+  Mutator<T>["useMutation"]
+>[0] & {
+  succsesNotification?: NotificationData;
+  errorNotification?: NotificationData;
 };

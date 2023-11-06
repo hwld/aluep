@@ -1,9 +1,10 @@
 import { IdeaCommentMenuButton } from "@/client/features/ideaComment/IdeaCommentMenuButton/IdeaCommentMenuButton";
 import { IdeaCommentReplyFormCard } from "@/client/features/ideaComment/IdeaCommentReplyFormCard/IdeaCommentReplyFormCard";
-import { useIdeaCommentReply } from "@/client/features/ideaComment/useIdeaCommentReply";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
+import { useMutationWithNotification } from "@/client/lib/notification";
+import { trpc } from "@/client/lib/trpc";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
@@ -48,8 +49,11 @@ export const IdeaCommentCard: React.FC<Props> = ({
   const [isReplyFormOpen, { close: closeReplyForm, open: openReplyForm }] =
     useDisclosure(false);
 
-  const { replyMutation } = useIdeaCommentReply({
-    closeReplyForm,
+  const replyMutation = useMutationWithNotification(trpc.ideaComment.create, {
+    errorNotification: {
+      title: "お題への返信",
+      message: "お題に返信できませんでした。",
+    },
     onSuccess: () => {
       closeReplyForm();
     },

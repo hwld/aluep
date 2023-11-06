@@ -1,10 +1,7 @@
 import { IdeaForm } from "@/client/features/idea/IdeaForm/IdeaForm";
 import { useAllTagsQuery } from "@/client/features/idea/useAllTagsQuery";
 import { trpc } from "@/client/lib/trpc";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Idea, IdeaFormData } from "@/models/idea";
 import { Routes } from "@/share/routes";
@@ -17,19 +14,17 @@ export const IdeaEdit: React.FC<Props> = ({ idea }) => {
   const router = useRouter();
   const { allTags } = useAllTagsQuery();
 
-  const updateMutation = trpc.idea.update.useMutation({
-    onSuccess: () => {
-      showSuccessNotification({
-        title: "お題の更新",
-        message: "お題を更新しました。",
-      });
-      router.push(Routes.idea(idea.id));
+  const updateMutation = useMutationWithNotification(trpc.idea.update, {
+    succsesNotification: {
+      title: "お題の更新",
+      message: "お題を更新しました。",
     },
-    onError: () => {
-      showErrorNotification({
-        title: "お題の更新",
-        message: "お題を更新できませんでした。",
-      });
+    errorNotification: {
+      title: "お題の更新",
+      message: "お題を更新できませんでした。",
+    },
+    onSuccess: () => {
+      router.push(Routes.idea(idea.id));
     },
   });
 
