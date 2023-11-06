@@ -12,6 +12,5 @@ export const Default: Story = {
     devId: "",
     devMemoId: "",
     isOwner: true,
-    isDeleting: false,
   },
 };

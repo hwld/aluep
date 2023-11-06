@@ -1,4 +1,3 @@
-import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
@@ -9,26 +8,23 @@ import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { IconFlag, IconLink, IconTrash } from "@tabler/icons-react";
 import { ReportDevMemoModal } from "@/client/features/report/ReportDevMemoModal/ReportDevMemoModal";
 import { useMemo } from "react";
+import { DeleteDevMemoModal } from "@/client/features/devMemo/DeleteDevMemoModal/DeleteDevMemoModal";
 
 type Props = {
   devId: string;
   devMemoId: string;
   /** ログインしているユーザーのプロフィールかどうか */
   isOwner: boolean;
-  onDeleteMemo: (id: string) => void;
-  isDeleting?: boolean;
 };
 export const DevMemoMenuButton: React.FC<Props> = ({
   devId,
   isOwner,
   devMemoId,
-  onDeleteMemo,
-  isDeleting = false,
 }) => {
   const clipboard = useClipboard();
 
   const [
-    isOpenDeleteModal,
+    isDeleteModalOpen,
     { close: closeDeleteModal, open: openDeleteModal },
   ] = useDisclosure(false);
 
@@ -44,10 +40,6 @@ export const DevMemoMenuButton: React.FC<Props> = ({
 
     return `${window.location.origin}${Routes.dev(devId)}#${devMemoId}`;
   }, [devId, devMemoId]);
-
-  const handleDeleteMemo = () => {
-    onDeleteMemo(devMemoId);
-  };
 
   const handleCopyLink = () => {
     clipboard.copy(devMemoLink);
@@ -79,20 +71,11 @@ export const DevMemoMenuButton: React.FC<Props> = ({
           </AppMenuItem>
         </AppMenuDropdown>
       </AppMenu>
-      <AppConfirmModal
-        title="開発メモの削除"
-        message={
-          <>
-            開発メモを削除してもよろしいですか？<br></br>
-            開発メモを削除すると、もらった返信が完全に削除されます。
-          </>
-        }
-        opened={isOpenDeleteModal}
+      <DeleteDevMemoModal
+        isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
-        onConfirm={handleDeleteMemo}
-        isConfirming={isDeleting}
-        confirmIcon={IconTrash}
-        confirmText="削除する"
+        devId={devId}
+        devMemoId={devMemoId}
       />
       <ReportDevMemoModal
         isOpen={isReportModalOpen}

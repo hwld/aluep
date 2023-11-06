@@ -1,4 +1,3 @@
-import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
@@ -9,19 +8,16 @@ import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { IconFlag, IconLink, IconTrash } from "@tabler/icons-react";
 import { ReportIdeaCommentModal } from "@/client/features/report/ReportIdeaCommentModal/ReportIdeaCommentModal";
 import { useMemo } from "react";
+import { DeleteIdeaCommentModal } from "@/client/features/ideaComment/DeleteIdeaCommentModal/DeleteIdeaCommentModal";
 
 type Props = {
   ideaId: string;
   commentId: string;
-  onDeleteComment: () => void;
-  isDeleting: boolean;
   isOwner: boolean;
 };
 export const IdeaCommentMenuButton: React.FC<Props> = ({
   ideaId,
   commentId,
-  onDeleteComment,
-  isDeleting,
   isOwner,
 }) => {
   const clipboard = useClipboard();
@@ -76,15 +72,11 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
           </>
         </AppMenuDropdown>
       </AppMenu>
-      <AppConfirmModal
-        title="コメントの削除"
-        message={<>コメントを削除してもよろしいですか？</>}
-        opened={isDeleteModalOpen}
+      <DeleteIdeaCommentModal
+        isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
-        onConfirm={onDeleteComment}
-        isConfirming={isDeleting}
-        confirmIcon={IconTrash}
-        confirmText="削除する"
+        commentId={commentId}
+        ideaId={ideaId}
       />
       <ReportIdeaCommentModal
         isOpen={isReportModalOpen}

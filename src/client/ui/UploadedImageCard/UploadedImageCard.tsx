@@ -1,5 +1,5 @@
 import { formatBytes, formatDateTime } from "@/client/lib/utils";
-import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
+import { DeleteUploadedImageModal } from "@/client/ui/DeleteUploadedImageModal/DeleteUploadedImageModal";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import {
   Button,
@@ -19,22 +19,18 @@ type Props = {
   imageUrl: string;
   created: string | undefined;
   size: number;
-  onDelete: (url: string) => void;
-  isDeleting?: boolean;
 };
 
+// TODO: ここ以外でもアップロードしたsvgがちゃんと表示できてなさそう
 export const UploadedImageCard: React.FC<Props> = ({
   imageUrl,
   size,
   created,
-  onDelete,
-  isDeleting,
 }) => {
-  const [isDeleteModalOpen, { open, close }] = useDisclosure(false);
-
-  const handleDelete = () => {
-    onDelete(imageUrl);
-  };
+  const [
+    isDeleteModalOpen,
+    { open: openDeleteModal, close: closeDeleteModal },
+  ] = useDisclosure(false);
 
   return (
     <>
@@ -78,7 +74,7 @@ export const UploadedImageCard: React.FC<Props> = ({
                   />
                 }
                 style={{ flex: 1 }}
-                onClick={open}
+                onClick={openDeleteModal}
               >
                 削除
               </Button>
@@ -113,21 +109,10 @@ export const UploadedImageCard: React.FC<Props> = ({
         </Stack>
       </Card>
 
-      <AppConfirmModal
-        title="画像の削除"
-        message={
-          <>
-            アップロードした画像を削除してもよろしいですか？
-            <br />
-            お題に画像が含まれている場合、正しく表示されなくなります。
-          </>
-        }
-        opened={isDeleteModalOpen}
-        onClose={close}
-        onConfirm={handleDelete}
-        isConfirming={isDeleting}
-        confirmIcon={IconTrash}
-        confirmText="削除する"
+      <DeleteUploadedImageModal
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        imageUrl={imageUrl}
       />
     </>
   );

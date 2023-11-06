@@ -8,5 +8,5 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
-  args: { ideaId: "", commentId: "", isDeleting: false, isOwner: false },
+  args: { ideaId: "", commentId: "", isOwner: false },
 };

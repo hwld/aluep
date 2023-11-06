@@ -23,8 +23,6 @@ import classes from "./IdeaCommentCard.module.css";
 type Props = {
   ideaId: string;
   comment: IdeaComment;
-  onDeleteComment: (id: string) => void;
-  isDeleting?: boolean;
   isOwner: boolean;
   ideaOwnerId: string;
 };
@@ -32,8 +30,6 @@ type Props = {
 export const IdeaCommentCard: React.FC<Props> = ({
   ideaId,
   comment,
-  onDeleteComment,
-  isDeleting = false,
   isOwner,
   ideaOwnerId,
 }) => {
@@ -58,10 +54,6 @@ export const IdeaCommentCard: React.FC<Props> = ({
       closeReplyForm();
     },
   });
-
-  const handleDelete = () => {
-    onDeleteComment(comment.id);
-  };
 
   const handleOpenReplyForm = () => {
     if (!session) {
@@ -114,8 +106,6 @@ export const IdeaCommentCard: React.FC<Props> = ({
                 ideaId={ideaId}
                 commentId={comment.id}
                 isOwner={isOwner}
-                onDeleteComment={handleDelete}
-                isDeleting={isDeleting}
               />
             </Box>
           </Flex>

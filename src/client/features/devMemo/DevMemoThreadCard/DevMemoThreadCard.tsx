@@ -26,7 +26,7 @@ export const DevMemoThreadCard: React.FC<Props> = ({
   childrenMemos,
   loggedInUserId,
 }) => {
-  const { createMemoMutation, deleteMemoMutation } = useDevMemos({ devId });
+  const { createMemoMutation } = useDevMemos({ devId });
   const [isOpenReplyForm, setIsOpenReplyForm] = useState(false);
   const memoRef = useHashRemoverOnClickOutside({
     canRemove: (hash) => hash === memo.id,
@@ -56,10 +56,6 @@ export const DevMemoThreadCard: React.FC<Props> = ({
     });
   };
 
-  const handleDeleteMemo = (id: string) => {
-    deleteMemoMutation.mutate({ devMemoId: id });
-  };
-
   return (
     <Card>
       <Stack ref={memoRef} gap="md" id={memo.id} className={classes.root}>
@@ -75,8 +71,6 @@ export const DevMemoThreadCard: React.FC<Props> = ({
             devId={devId}
             devMemoId={memo.id}
             isOwner={memo.fromUser.id === loggedInUserId}
-            onDeleteMemo={handleDeleteMemo}
-            isDeleting={deleteMemoMutation.isLoading}
           />
         </Flex>
         <AppLinkify>

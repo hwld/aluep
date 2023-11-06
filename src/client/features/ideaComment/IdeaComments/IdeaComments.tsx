@@ -26,8 +26,7 @@ export const IdeaComments: React.FC<Props> = ({
   const commentFormRef = useRef<IdeaCommentFormRef | null>(null);
 
   // お題のコメント操作
-  const { ideaComments, postCommentMutation, deleteCommentMutation } =
-    useIdeaComments({ ideaId });
+  const { ideaComments, postCommentMutation } = useIdeaComments({ ideaId });
 
   // コメント送信後にformを再マウントさせるために使用するkey
   const [formKey, nextFormKey] = useCyclicRandom();
@@ -49,10 +48,6 @@ export const IdeaComments: React.FC<Props> = ({
         },
       }
     );
-  };
-
-  const handleDeleteComment = (commentId: string) => {
-    deleteCommentMutation.mutate({ commentId });
   };
 
   const handleFocusCommentInput = () => {
@@ -78,8 +73,6 @@ export const IdeaComments: React.FC<Props> = ({
                 key={comment.id}
                 comment={comment}
                 ideaId={ideaId}
-                onDeleteComment={handleDeleteComment}
-                isDeleting={deleteCommentMutation.isLoading}
                 isOwner={session?.user.id === comment.fromUser.id}
                 ideaOwnerId={ideaOwnerId}
               />

@@ -1,5 +1,4 @@
 import { DevMemoMenuButton } from "@/client/features/devMemo/DevMemoMenuButton/DevMemoMenuButton";
-import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
@@ -14,14 +13,9 @@ type Props = { memo: DevMemo; devId: string };
 
 export const DevMemoChild: React.FC<Props> = ({ memo, devId }) => {
   const { session } = useSessionQuery();
-  const { deleteMemoMutation } = useDevMemos({ devId: devId });
   const memoRef = useHashRemoverOnClickOutside({
     canRemove: (hash) => hash === memo.id,
   });
-
-  const handleDeleteMemo = (id: string) => {
-    deleteMemoMutation.mutate({ devMemoId: id });
-  };
 
   return (
     <Flex ref={memoRef} id={memo.id} gap="xs" className={classes.root}>
@@ -45,8 +39,6 @@ export const DevMemoChild: React.FC<Props> = ({ memo, devId }) => {
             devId={devId}
             devMemoId={memo.id}
             isOwner={memo.fromUser.id === session?.user.id}
-            onDeleteMemo={handleDeleteMemo}
-            isDeleting={deleteMemoMutation.isLoading}
           />
         </Flex>
         <AppLinkify>
