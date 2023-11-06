@@ -7,7 +7,7 @@ import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { Routes } from "@/share/routes";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { IconFlag, IconLink, IconTrash } from "@tabler/icons-react";
-import { ReportIdeaComment } from "@/client/features/report/ReportIdeaComment/ReportIdeaComment";
+import { ReportIdeaCommentModal } from "@/client/features/report/ReportIdeaCommentModal/ReportIdeaCommentModal";
 import { useMemo } from "react";
 
 type Props = {
@@ -86,7 +86,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
         confirmIcon={IconTrash}
         confirmText="削除する"
       />
-      <ReportIdeaComment
+      <ReportIdeaCommentModal
         isOpen={isReportModalOpen}
         onClose={closeReportModal}
         reportMeta={{ targetCommentUrl: ideaCommentLink }}

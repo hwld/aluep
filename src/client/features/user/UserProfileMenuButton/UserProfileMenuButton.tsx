@@ -8,7 +8,7 @@ import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
 import { IconEdit, IconFlag, IconPhoto } from "@tabler/icons-react";
 import { User } from "next-auth";
-import { ReportUser } from "@/client/features/report/ReportUser/ReportUser";
+import { ReportUserModal } from "@/client/features/report/ReportUserModal/ReportUserModal";
 import { useMemo } from "react";
 
 type Props = {
@@ -59,7 +59,7 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
           </AppMenuItem>
         </AppMenuDropdown>
       </AppMenu>
-      <ReportUser
+      <ReportUserModal
         isOpen={isReportModalOpen}
         onClose={closeReportModal}
         reportMeta={{

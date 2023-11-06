@@ -14,7 +14,7 @@ type Props = {
   reportMeta: ReportMeta<ReportDevMemoInput>;
 };
 
-export const ReportDevMemo: React.FC<Props> = ({
+export const ReportDevMemoModal: React.FC<Props> = ({
   isOpen,
   onClose,
   reportMeta,

@@ -10,7 +10,11 @@ type Props = {
   reportMeta: ReportMeta<ReportDevInput>;
 };
 
-export const ReportDev: React.FC<Props> = ({ isOpen, onClose, reportMeta }) => {
+export const ReportDevModal: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  reportMeta,
+}) => {
   const reportDevMutation = useMutationWithNotification(trpc.report.dev, {
     succsesNotification: {
       title: "開発情報の通報",

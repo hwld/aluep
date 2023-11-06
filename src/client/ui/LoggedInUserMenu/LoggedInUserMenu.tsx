@@ -2,6 +2,7 @@ import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
+import { User } from "@/models/user";
 import { Routes } from "@/share/routes";
 import { BadgeProps, Menu } from "@mantine/core";
 import {
@@ -10,15 +11,11 @@ import {
   IconUserCircle,
   IconUserHeart,
 } from "@tabler/icons-react";
-import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { ReactNode } from "react";
 import classes from "./LoggedInUserMenu.module.css";
 
-type Props = Omit<
-  { user: Session["user"]; trigger: ReactNode } & BadgeProps,
-  "children"
->;
+type Props = Omit<{ user: User; trigger: ReactNode } & BadgeProps, "children">;
 
 export const LoggedInUserMenu: React.FC<Props> = ({ user, trigger }) => {
   const handleLogOut = () => {

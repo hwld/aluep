@@ -13,7 +13,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconDots, IconEdit, IconFlag, IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import classes from "./IdeaOperationButton.module.css";
-import { ReportIdea } from "@/client/features/report/ReportIdea/ReportIdea";
+import { ReportIdeaModal } from "@/client/features/report/ReportIdeaModal/ReportIdeaModal";
 import { useMemo } from "react";
 
 type Props = { idea: Idea; isIdeaOwner: boolean };
@@ -106,7 +106,7 @@ export const IdeaOperationButton: React.FC<Props> = ({ idea, isIdeaOwner }) => {
         confirmIcon={IconTrash}
         confirmText="削除する"
       />
-      <ReportIdea
+      <ReportIdeaModal
         isOpen={isReportModalOpen}
         onClose={closeReportModal}
         reportMeta={{

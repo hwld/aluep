@@ -2,11 +2,11 @@ import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { AppTitle } from "@/client/ui/AppTitle/AppTitle";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
+import { User } from "@/models/user";
 import { Routes } from "@/share/routes";
 import { Center, Flex, Stack, Text } from "@mantine/core";
-import { Session } from "next-auth";
 
-type Props = { user: Session["user"] };
+type Props = { user: User };
 export const UserSummaryHeader: React.FC<Props> = ({ user }) => {
   return (
     <Flex gap="md" align="flex-start">

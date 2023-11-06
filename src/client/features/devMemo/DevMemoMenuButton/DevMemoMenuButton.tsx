@@ -7,7 +7,7 @@ import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { Routes } from "@/share/routes";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { IconFlag, IconLink, IconTrash } from "@tabler/icons-react";
-import { ReportDevMemo } from "@/client/features/report/ReportDevMemo/ReportDevMemo";
+import { ReportDevMemoModal } from "@/client/features/report/ReportDevMemoModal/ReportDevMemoModal";
 import { useMemo } from "react";
 
 type Props = {
@@ -94,7 +94,7 @@ export const DevMemoMenuButton: React.FC<Props> = ({
         confirmIcon={IconTrash}
         confirmText="削除する"
       />
-      <ReportDevMemo
+      <ReportDevMemoModal
         isOpen={isReportModalOpen}
         onClose={closeReportModal}
         reportMeta={{ targetMemoUrl: devMemoLink }}

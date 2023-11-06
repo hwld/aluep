@@ -1,6 +1,7 @@
 import { useLoggedInUserInfoQuery } from "@/client/features/session/useLoggedInUserInfoQuery";
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { IconCounter } from "@/client/ui/IconCounter/IconCounter";
+import { User } from "@/models/user";
 import { Flex, Stack, Text } from "@mantine/core";
 import {
   IconChevronDown,
@@ -8,9 +9,8 @@ import {
   IconFileText,
   IconHeart,
 } from "@tabler/icons-react";
-import { Session } from "next-auth";
 
-type Props = { user: Session["user"]; iconWidth: number };
+type Props = { user: User; iconWidth: number };
 
 export const LoggedInUserCard: React.FC<Props> = ({ user, iconWidth }) => {
   const { loggedInUserInfo } = useLoggedInUserInfoQuery();

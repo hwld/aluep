@@ -11,9 +11,6 @@ type WrapperLinkProps = { children?: ReactNode } & (
   | ({ noWrap?: false; target?: HTMLAttributeAnchorTarget } & LinkProps)
 );
 
-// TODO: リンクとそれ以外を一緒に扱いたいから生まれたコンポーネント？
-// propsでコンポーネント切り替えるために作ってそうだけど、複雑になるだけだから
-// コンポーネント分けたほうが良いかもしれない
 export const WrapperLink = forwardRef<HTMLElement, WrapperLinkProps>(
   ({ children, ...props }, ref) => {
     if (props.noWrap) {

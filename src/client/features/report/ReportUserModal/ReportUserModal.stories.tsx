@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { ReportIdeaComment } from "./ReportIdeaComment";
+import { ReportUserModal } from "./ReportUserModal";
 
 const meta = {
-  component: ReportIdeaComment,
-} satisfies Meta<typeof ReportIdeaComment>;
+  component: ReportUserModal,
+} satisfies Meta<typeof ReportUserModal>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
@@ -11,6 +11,6 @@ export const Default: Story = {
   args: {
     isOpen: true,
     onClose: () => {},
-    reportMeta: { targetCommentUrl: "" },
+    reportMeta: { targetUser: { url: "", name: "" } },
   },
 };

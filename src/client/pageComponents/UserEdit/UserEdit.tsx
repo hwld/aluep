@@ -1,80 +1,18 @@
-import { UserIconFormModal } from "@/client/features/user/UserIconFormModal/UserIconFormModal";
 import { UserProfileForm } from "@/client/features/user/UserProfileForm/UserProfileForm";
 import { trpc } from "@/client/lib/trpc";
-import {
-  showErrorNotification,
-  showLoadingNotification,
-  showSuccessNotification,
-  useMutationWithNotification,
-} from "@/client/lib/notification";
+import { useMutationWithNotification } from "@/client/lib/notification";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
-import { ProfileFormData } from "@/models/user";
+import { ProfileFormData, User } from "@/models/user";
 import { Routes } from "@/share/routes";
 import { Box, Card, Flex } from "@mantine/core";
 import { IconEdit } from "@tabler/icons-react";
-import { Session } from "next-auth";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { UserIconUploader } from "@/client/features/user/UserIconUploader/UserIconUploader";
 
-const uploadNotificationId = "upload-icon";
+type Props = { user: User };
 
-type Props = { user: Session["user"] };
-
-// TODO
-// アイコンアップロードとプロフィール更新を分割する
 export const UserEdit: React.FC<Props> = ({ user }) => {
   const router = useRouter();
-  const [uploading, setUploading] = useState(false);
-
-  const handleUploadIcon = async (iconFile: File) => {
-    const formData = new FormData();
-    formData.append("avatar", iconFile);
-
-    setUploading(true);
-    showLoadingNotification({
-      id: uploadNotificationId,
-      loading: true,
-      title: "ユーザーアイコンの更新",
-      message:
-        "ユーザーアイコンをアップロードしています。しばらくお待ちください...",
-      autoClose: false,
-    });
-    try {
-      const response = await fetch(Routes.api.uploadAvatar, {
-        method: "POST",
-        body: formData,
-      });
-      if (!response.ok) {
-        throw new Error();
-      }
-    } catch {
-      showErrorNotification(
-        {
-          title: "ユーザーアイコンの更新",
-          message: "ユーザーアイコンを更新できませんでした。",
-          loading: false,
-          autoClose: true,
-        },
-        { update: true, id: uploadNotificationId }
-      );
-      return;
-    } finally {
-      setUploading(false);
-    }
-
-    showSuccessNotification(
-      {
-        id: uploadNotificationId,
-        title: "ユーザーアイコンの更新",
-        message: "ユーザーアイコンを更新しました。",
-        loading: false,
-        autoClose: true,
-      },
-      { update: true, id: uploadNotificationId }
-    );
-    // 更新なしでアイコンを反映させたいが、方法がわからない
-    router.reload();
-  };
 
   const updateMutation = useMutationWithNotification(trpc.me.update, {
     succsesNotification: {
@@ -108,11 +46,7 @@ export const UserEdit: React.FC<Props> = ({ user }) => {
       <Box w="100%" maw={800} miw={400} m="auto">
         <Card mt="md">
           <Flex gap="md">
-            <UserIconFormModal
-              userIconUrl={user.image}
-              onSubmit={handleUploadIcon}
-              submitting={uploading}
-            />
+            <UserIconUploader user={user} />
             <Box style={{ flexGrow: 1 }}>
               <UserProfileForm
                 submitText="更新する"

@@ -5,6 +5,7 @@ import { LoggedInUserMenu } from "@/client/ui/LoggedInUserMenu/LoggedInUserMenu"
 import { SidebarAppTitle } from "@/client/ui/SidebarAppTitle/SidebarAppTitle";
 import { SidebarItem } from "@/client/ui/SidebarItem/SidebarItem";
 import { SidebarToggle } from "@/client/ui/SidebarToggle/SidebarToggle";
+import { User } from "@/models/user";
 import { setAppConfigCookie } from "@/share/cookie";
 import { Routes } from "@/share/routes";
 import { Box, Flex, Stack, UnstyledButton } from "@mantine/core";
@@ -18,13 +19,12 @@ import {
   IconSearch,
   IconUserSearch,
 } from "@tabler/icons-react";
-import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 import classes from "./AppSidebar.module.css";
 
-type Props = { loggedInUser?: Session["user"]; isOpen?: boolean | undefined };
+type Props = { loggedInUser?: User; isOpen?: boolean | undefined };
 
 const barMinWidth = 70;
 const barPadding = 12;

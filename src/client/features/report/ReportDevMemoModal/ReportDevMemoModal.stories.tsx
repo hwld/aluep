@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { ReportDevMemo } from "./ReportDevMemo";
+import { ReportDevMemoModal } from "./ReportDevMemoModal";
 
 const meta = {
-  component: ReportDevMemo,
-} satisfies Meta<typeof ReportDevMemo>;
+  component: ReportDevMemoModal,
+} satisfies Meta<typeof ReportDevMemoModal>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
