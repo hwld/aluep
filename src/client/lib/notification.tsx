@@ -1,15 +1,11 @@
+import { MutationOpt, Mutator } from "@/client/lib/trpc";
 import {
   NotificationData,
   showNotification,
   updateNotification,
 } from "@mantine/notifications";
-import { TRPCClientErrorLike } from "@trpc/client";
-import {
-  UseTRPCMutationOptions,
-  UseTRPCMutationResult,
-} from "@trpc/react-query/shared";
-import { AnyMutationProcedure, inferProcedureInput } from "@trpc/server";
-import { inferTransformedProcedureOutput } from "@trpc/server/shared";
+
+import { AnyMutationProcedure } from "@trpc/server";
 
 export const showLoadingNotification = (props: NotificationData) => {
   showNotification({
@@ -59,7 +55,10 @@ export const showErrorNotification = (
  */
 export const useMutationWithNotification = <T extends AnyMutationProcedure>(
   mutator: Mutator<T>,
-  opts?: MutationOpt<T>
+  opts?: MutationOpt<T> & {
+    succsesNotification?: NotificationData;
+    errorNotification?: NotificationData;
+  }
 ) => {
   return mutator.useMutation({
     ...opts,
@@ -82,28 +81,4 @@ export const useMutationWithNotification = <T extends AnyMutationProcedure>(
       }
     },
   });
-};
-
-// @trpc/react-queryの定義をそのまま持ってきてる
-type Mutator<T extends AnyMutationProcedure> = {
-  useMutation: <TContext = unknown>(
-    opts?: UseTRPCMutationOptions<
-      inferProcedureInput<T>,
-      TRPCClientErrorLike<T>,
-      inferTransformedProcedureOutput<T>,
-      TContext
-    >
-  ) => UseTRPCMutationResult<
-    inferTransformedProcedureOutput<T>,
-    TRPCClientErrorLike<T>,
-    inferProcedureInput<T>,
-    TContext
-  >;
-};
-
-type MutationOpt<T extends AnyMutationProcedure> = Parameters<
-  Mutator<T>["useMutation"]
->[0] & {
-  succsesNotification?: NotificationData;
-  errorNotification?: NotificationData;
 };

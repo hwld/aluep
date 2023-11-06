@@ -1,17 +1,14 @@
-import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { trpc } from "@/client/lib/trpc";
-import { useMutationWithNotification } from "@/client/lib/notification";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
-import { AppModal } from "@/client/ui/AppModal/AppModal";
-import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useClipboard, useDisclosure } from "@mantine/hooks";
 import { IconFlag, IconLink, IconTrash } from "@tabler/icons-react";
+import { ReportDevMemo } from "@/client/features/report/ReportDevMemo/ReportDevMemo";
+import { useMemo } from "react";
 
 type Props = {
   devId: string;
@@ -40,37 +37,20 @@ export const DevMemoMenuButton: React.FC<Props> = ({
     { close: closeReportModal, open: openReportModal },
   ] = useDisclosure(false);
 
+  const devMemoLink = useMemo(() => {
+    if (typeof window === "undefined") {
+      return "";
+    }
+
+    return `${window.location.origin}${Routes.dev(devId)}#${devMemoId}`;
+  }, [devId, devMemoId]);
+
   const handleDeleteMemo = () => {
     onDeleteMemo(devMemoId);
   };
 
-  const reportDevMemoMutation = useMutationWithNotification(
-    trpc.report.devMemo,
-    {
-      succsesNotification: {
-        title: "開発メモの通報",
-        message: "開発メモを通報しました。",
-      },
-      errorNotification: {
-        title: "開発メモの通報",
-        message: "開発メモを通報できませんでした。",
-      },
-    }
-  );
-
-  const buildLink = () => {
-    return `${window.location.origin}${Routes.dev(devId)}#${devMemoId}`;
-  };
-
-  const handleSubmitReportDevMemo = (data: ReportBaseForm) => {
-    reportDevMemoMutation.mutate({
-      reportDetail: data.reportDetail,
-      targetMemoUrl: buildLink(),
-    });
-  };
-
   const handleCopyLink = () => {
-    clipboard.copy(buildLink());
+    clipboard.copy(devMemoLink);
   };
 
   return (
@@ -114,18 +94,11 @@ export const DevMemoMenuButton: React.FC<Props> = ({
         confirmIcon={IconTrash}
         confirmText="削除する"
       />
-      <AppModal
-        opened={isReportModalOpen}
+      <ReportDevMemo
+        isOpen={isReportModalOpen}
         onClose={closeReportModal}
-        title="開発メモの通報"
-      >
-        <ReportForm
-          submitText="開発メモを通報する"
-          onSubmit={handleSubmitReportDevMemo}
-          onCancel={closeReportModal}
-          isLoading={false}
-        />
-      </AppModal>
+        reportMeta={{ targetMemoUrl: devMemoLink }}
+      />
     </>
   );
 };

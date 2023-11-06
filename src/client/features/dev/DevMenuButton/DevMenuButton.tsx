@@ -1,6 +1,4 @@
 import { useDevMutations } from "@/client/features/dev/useDevMutations";
-import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { trpc } from "@/client/lib/trpc";
 import { AppConfirmModal } from "@/client/ui/AppConfirmModal/AppConfirmModal";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
@@ -8,16 +6,17 @@ import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
-import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { Dev } from "@/models/dev";
-import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
 import { IconEdit, IconFlag, IconTrash } from "@tabler/icons-react";
 import router from "next/router";
-import { useMutationWithNotification } from "@/client/lib/notification";
+import { ReportDev } from "@/client/features/report/ReportDev/ReportDev";
+import { useMemo } from "react";
 
 type Props = { dev: Dev; isOwner: boolean };
+
+// TODO: delete関係をコンポーネントに分けたい
 export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
   const [
     isDeleteModalOpen,
@@ -29,8 +28,15 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
     { close: closeReportModal, open: openReportModal },
   ] = useDisclosure(false);
 
-  const { deleteDevMutation } = useDevMutations();
+  const devLink = useMemo(() => {
+    if (typeof window === "undefined") {
+      return "";
+    }
 
+    return `${window.location.origin}${Routes.dev(dev.id)}`;
+  }, [dev.id]);
+
+  const { deleteDevMutation } = useDevMutations();
   const handleDeleteDev = async () => {
     deleteDevMutation.mutate(
       { devId: dev.id },
@@ -46,27 +52,6 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
         },
       }
     );
-  };
-
-  const reportDevMutation = useMutationWithNotification(trpc.report.dev, {
-    succsesNotification: {
-      title: "開発情報の通報",
-      message: "開発情報を通報しました。",
-    },
-    errorNotification: {
-      title: "開発情報の通報",
-      message: "開発情報を通報できませんでした。",
-    },
-  });
-
-  const handleSubmitReportDev = (data: ReportBaseForm) => {
-    reportDevMutation.mutate({
-      reportDetail: data.reportDetail,
-      targetDeveloepr: {
-        url: `${window.location.origin}${Routes.dev(dev.id)}`,
-        name: dev.developer.name,
-      },
-    });
   };
 
   return (
@@ -114,18 +99,16 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
         confirmIcon={IconTrash}
         confirmText="削除する"
       />
-      <AppModal
-        opened={isReportModalOpen}
+      <ReportDev
+        isOpen={isReportModalOpen}
         onClose={closeReportModal}
-        title="開発情報の通報"
-      >
-        <ReportForm
-          submitText="開発情報を通報する"
-          onSubmit={handleSubmitReportDev}
-          onCancel={closeReportModal}
-          isLoading={reportDevMutation.isLoading}
-        />
-      </AppModal>
+        reportMeta={{
+          targetDeveloepr: {
+            url: devLink,
+            name: dev.developer.name,
+          },
+        }}
+      />
     </>
   );
 };

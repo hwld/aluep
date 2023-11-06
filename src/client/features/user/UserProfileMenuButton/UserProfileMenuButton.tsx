@@ -1,18 +1,15 @@
-import { ReportForm } from "@/client/features/report/ReportForm/ReportForm";
-import { trpc } from "@/client/lib/trpc";
-import { useMutationWithNotification } from "@/client/lib/notification";
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
 import { AppMenuLinkItem } from "@/client/ui/AppMenuLinkItem/AppMenuLinkItem";
-import { AppModal } from "@/client/ui/AppModal/AppModal";
-import { ReportBaseForm } from "@/models/report";
 import { Routes } from "@/share/routes";
 import { useDisclosure } from "@mantine/hooks";
 import { IconEdit, IconFlag, IconPhoto } from "@tabler/icons-react";
 import { User } from "next-auth";
+import { ReportUser } from "@/client/features/report/ReportUser/ReportUser";
+import { useMemo } from "react";
 
 type Props = {
   user: User;
@@ -25,29 +22,13 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
     { close: closeReportModal, open: openReportModal },
   ] = useDisclosure(false);
 
-  const reportUserMutation = useMutationWithNotification(trpc.report.user, {
-    succsesNotification: {
-      title: "ユーザーの通報",
-      message: "ユーザーを通報しました。",
-    },
-    errorNotification: {
-      title: "ユーザーの通報",
-      message: "ユーザーを通報できませんでした。",
-    },
-    onSuccess: () => {
-      closeReportModal();
-    },
-  });
+  const userLink = useMemo(() => {
+    if (typeof window === "undefined") {
+      return "";
+    }
 
-  const handleSubmitReportUser = (data: ReportBaseForm) => {
-    reportUserMutation.mutate({
-      reportDetail: data.reportDetail,
-      targetUser: {
-        url: `${window.location.origin}${Routes.user(user.id)}`,
-        name: user.name,
-      },
-    });
-  };
+    return `${window.location.origin}${Routes.user(user.id)}`;
+  }, [user.id]);
 
   return (
     <>
@@ -78,18 +59,16 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
           </AppMenuItem>
         </AppMenuDropdown>
       </AppMenu>
-      <AppModal
-        opened={isReportModalOpen}
+      <ReportUser
+        isOpen={isReportModalOpen}
         onClose={closeReportModal}
-        title="ユーザーの通報"
-      >
-        <ReportForm
-          submitText="ユーザーを通報する"
-          onSubmit={handleSubmitReportUser}
-          onCancel={closeReportModal}
-          isLoading={reportUserMutation.isLoading}
-        />
-      </AppModal>
+        reportMeta={{
+          targetUser: {
+            url: userLink,
+            name: user.name,
+          },
+        }}
+      />
     </>
   );
 };

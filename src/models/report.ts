@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export type ReportMeta<T> = Omit<T, "reportDetail">;
+
 export const reportBaseFormSchema = z.object({
   reportDetail: z
     .string()
