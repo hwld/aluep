@@ -3,9 +3,10 @@ import { FunctionCard } from "@/client/pageComponents/About/FunctionCard";
 import { FunctionIcon } from "@/client/pageComponents/About/FunctionIcon";
 import { SectionTitle } from "@/client/pageComponents/About/SectionTitle";
 import { UsecaseSection } from "@/client/pageComponents/About/UsecaseSection";
+import { AppImage } from "@/client/ui/AppImage/AppImage";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Routes } from "@/share/routes";
-import { Box, Center, Image, Stack, Text } from "@mantine/core";
+import { Box, Center, Stack, Text } from "@mantine/core";
 import {
   IconArrowBigLeftLine,
   IconArrowBigRightLine,
@@ -33,11 +34,12 @@ export const About: React.FC<Props> = () => {
 
         <Center className={classes["hero-card"]}>
           <Stack align="center" className={classes["hero-container"]}>
-            <Image
-              src="/app-logo.svg"
-              alt="app-logo"
+            <Box
+              style={{ position: "relative" }}
               className={classes["app-logo"]}
-            />
+            >
+              <AppImage src="/app-logo.svg" fill alt="app-logo" priority />
+            </Box>
             <Stack className={classes["hero-card-text-wrapper"]}>
               <Text className={classes["hero-card-title"]}>
                 作りたい

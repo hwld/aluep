@@ -7,6 +7,20 @@ let nextConfig = {
   // スクロールにwindow.scrollを使用しているっぽいので、例えば#__nextに
   // height:100dvh, overflow:autoとかを設定しても動かない。
   experimental: { scrollRestoration: true },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+      // 外部ストレージを変えたときに変更し忘れそう
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com/aluep-user-upload",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 if (process.env.ANALYZE === "true") {

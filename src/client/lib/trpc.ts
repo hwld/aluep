@@ -5,11 +5,7 @@ import {
   UseTRPCMutationOptions,
   UseTRPCMutationResult,
 } from "@trpc/react-query/shared";
-import {
-  AnyMutationProcedure,
-  inferProcedureInput,
-  inferRouterInputs,
-} from "@trpc/server";
+import { AnyMutationProcedure, inferProcedureInput } from "@trpc/server";
 import { inferTransformedProcedureOutput } from "@trpc/server/shared";
 import SuperJSON from "superjson";
 

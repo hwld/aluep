@@ -1,3 +1,4 @@
+import { AppImage } from "@/client/ui/AppImage/AppImage";
 import { Routes } from "@/share/routes";
 import {
   ActionIcon,
@@ -8,7 +9,6 @@ import {
   Text,
 } from "@mantine/core";
 import { IconArrowRight, IconX } from "@tabler/icons-react";
-import Image from "next/image";
 import Link from "next/link";
 import classes from "./WelcomeCard.module.css";
 
@@ -58,7 +58,7 @@ export const WelcomeCard: React.FC<Props> = ({ onClose, ...props }) => {
         </Button>
       </Stack>
       <Group>
-        <Image
+        <AppImage
           src="/app-logo.svg"
           style={{
             position: "absolute",
@@ -70,8 +70,9 @@ export const WelcomeCard: React.FC<Props> = ({ onClose, ...props }) => {
           width={150}
           height={150}
           alt="app logo"
+          priority
         />
-        <Image
+        <AppImage
           src="/app-logo.svg"
           style={{
             position: "absolute",
@@ -83,8 +84,9 @@ export const WelcomeCard: React.FC<Props> = ({ onClose, ...props }) => {
           width={350}
           height={350}
           alt="app logo"
+          priority
         />
-        <Image
+        <AppImage
           src="/app-logo.svg"
           style={{
             position: "absolute",
@@ -96,6 +98,7 @@ export const WelcomeCard: React.FC<Props> = ({ onClose, ...props }) => {
           width={200}
           height={200}
           alt="app logo"
+          priority
         />
       </Group>
     </Group>
