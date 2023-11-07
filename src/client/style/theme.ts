@@ -1,3 +1,4 @@
+import { font } from "@/pages/_app";
 import {
   Button,
   Card,
@@ -34,9 +35,9 @@ import titleClasses from "./components/title.module.css";
 import tooltipClasses from "./components/tooltip.module.css";
 
 export const theme = createTheme({
-  fontFamily: `'Noto Sans JP', sans-serif`,
+  fontFamily: `${font.style.fontFamily},sans-serif`,
   headings: {
-    fontFamily: `'Noto Sans JP', sans-serif`,
+    fontFamily: `${font.style.fontFamily},sans-serif`,
   },
   shadows: {
     sm: "0 1px 2px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.06)",

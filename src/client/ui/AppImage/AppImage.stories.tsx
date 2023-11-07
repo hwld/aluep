@@ -7,4 +7,6 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-export const Default: Story = { args: { src: "/", alt: "" } };
+export const Default: Story = {
+  args: { src: "/Alert.svg", alt: "", width: 100, height: 100 },
+};

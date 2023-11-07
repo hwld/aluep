@@ -17,6 +17,13 @@ import "@mantine/tiptap/styles.layer.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import { Noto_Sans_JP } from "next/font/google";
+
+export const font = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  display: "swap",
+});
 
 function App({
   Component,
@@ -48,7 +55,9 @@ function App({
             <Notifications />
             <AppLayout isSideBarOpen={isSideBarOpen}>
               <AppNavigationProgress />
-              <Component {...others} />
+              <div className={font.className}>
+                <Component {...others} />
+              </div>
             </AppLayout>
           </RequireLoginModalProvider>
         </ModalsProvider>
