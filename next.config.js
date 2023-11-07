@@ -16,8 +16,8 @@ let nextConfig = {
       // 外部ストレージを変えたときに変更し忘れそう
       {
         protocol: "https",
-        hostname: "storage.googleapis.com/aluep-user-upload",
-        pathname: "/**",
+        hostname: "storage.googleapis.com",
+        pathname: "/aluep-user-upload/**",
       },
     ],
   },

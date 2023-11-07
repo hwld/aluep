@@ -28,7 +28,7 @@ export const AppImage: React.FC<Props> = ({
     <Image
       {...props}
       onError={handleError}
-      src={error ? fallbackSrc ?? "/alert.svg" : src}
+      src={error ? fallbackSrc ?? "/Alert.svg" : src}
       style={{
         objectFit: "contain",
         ...style,
