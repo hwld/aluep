@@ -1,3 +1,4 @@
+import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
@@ -13,31 +14,37 @@ import { Controller, useForm } from "react-hook-form";
 import classes from "./DevMemoFormCard.module.css";
 
 type Props = {
-  onSubmit: (data: DevMemoFormData) => void;
-  isSubmitting?: boolean;
+  devId: string;
   loggedInUser: User;
 };
 export const DevMemoFormCard = forwardRef<HTMLDivElement, Props>(
-  function DevMemoFormCard(
-    { onSubmit, isSubmitting = false, loggedInUser },
-    ref
-  ) {
-    const memoRef = useRef<HTMLTextAreaElement | null>(null);
-
+  function DevMemoFormCard({ devId, loggedInUser }, ref) {
     const {
       control,
       formState: { errors },
       handleSubmit: innerHandleSubmit,
+      reset,
     } = useForm<DevMemoFormData>({
       defaultValues: { text: "" },
       resolver: zodResolver(devMemoFormSchema),
     });
 
+    const { createMemoMutation } = useDevMemos({ devId });
     const { debouncedSubmitting, handleSubmit } = useDebouncedSubmitting({
-      isSubmitting,
-      onSubmit: innerHandleSubmit(onSubmit),
+      isSubmitting: createMemoMutation.isLoading,
+      onSubmit: innerHandleSubmit((data) => {
+        createMemoMutation.mutate(
+          { ...data, devId },
+          {
+            onSuccess: () => {
+              reset();
+            },
+          }
+        );
+      }),
     });
 
+    const memoRef = useRef<HTMLTextAreaElement | null>(null);
     const handleFocusTextarea = () => {
       if (memoRef.current) {
         memoRef.current.focus();

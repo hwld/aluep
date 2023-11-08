@@ -7,8 +7,6 @@ import { useIdeaComments } from "@/client/features/ideaComment/useIdeaComments";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
-import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
-import { IdeaCommentFormData } from "@/models/ideaComment";
 import { Button, Card, Stack, Text, Title } from "@mantine/core";
 import { User } from "next-auth";
 import { useRef } from "react";
@@ -23,32 +21,13 @@ export const IdeaComments: React.FC<Props> = ({
 }) => {
   const { session } = useSessionQuery();
   const { openLoginModal } = useRequireLoginModal();
-  const commentFormRef = useRef<IdeaCommentFormRef | null>(null);
-
-  // お題のコメント操作
-  const { ideaComments, postCommentMutation } = useIdeaComments({ ideaId });
-
-  // コメント送信後にformを再マウントさせるために使用するkey
-  const [formKey, nextFormKey] = useCyclicRandom();
+  const { ideaComments } = useIdeaComments({ ideaId });
 
   const handleOpenLoginModal = () => {
     openLoginModal();
   };
 
-  const handleSubmitComment = (data: IdeaCommentFormData) => {
-    postCommentMutation.mutate(
-      { ...data, ideaId },
-      {
-        onSuccess: () => {
-          // Formのkeyを変更して再マウントさせる。
-          // これでFormのフィールドがリセットされ、submitボタンを一度も押していないことになる。
-          // handleSubmitCommentでフィールドをリセットするメソッドを受けとり、onSuccessで実行することも
-          // できるが、submitを一度押していることになるので、コメント欄に入力->入力をすべて削除でエラーメッセージが表示されてしまう
-          nextFormKey();
-        },
-      }
-    );
-  };
+  const commentFormRef = useRef<IdeaCommentFormRef | null>(null);
 
   const handleFocusCommentInput = () => {
     commentFormRef.current?.focusCommentInput();
@@ -84,11 +63,8 @@ export const IdeaComments: React.FC<Props> = ({
         <Card onClick={handleFocusCommentInput}>
           <IdeaCommentForm
             ref={commentFormRef}
-            key={formKey}
             loggedInUser={loggedInUser}
             ideaId={ideaId}
-            onSubmit={handleSubmitComment}
-            isSubmitting={postCommentMutation.isLoading}
           />
         </Card>
       ) : (

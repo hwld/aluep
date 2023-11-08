@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export type IdeaComment = {
+  // TODO: parentCommentのほうがわかりやすい気がする
   /** nullのときは返信元が削除されている
    *  undefinedのときは返信コメントではない
    */

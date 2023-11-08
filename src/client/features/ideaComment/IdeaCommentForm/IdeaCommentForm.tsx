@@ -1,3 +1,4 @@
+import { useIdeaComments } from "@/client/features/ideaComment/useIdeaComments";
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
 import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
@@ -17,8 +18,6 @@ import classes from "./IdeaCommentForm.module.css";
 type Props = {
   ideaId: string;
   loggedInUser: User;
-  onSubmit: (data: IdeaCommentFormData) => void;
-  isSubmitting?: boolean;
 };
 
 export type IdeaCommentFormRef = {
@@ -27,27 +26,34 @@ export type IdeaCommentFormRef = {
 };
 
 export const IdeaCommentForm = forwardRef<IdeaCommentFormRef, Props>(
-  function IdeaCommentForm(
-    { onSubmit, isSubmitting = false, loggedInUser },
-    ref
-  ) {
-    const formRef = useRef<HTMLFormElement | null>(null);
-    const commentRef = useRef<HTMLTextAreaElement | null>(null);
-
+  function IdeaCommentForm({ ideaId, loggedInUser }, ref) {
     const {
       control,
       handleSubmit: innerHandleSubmit,
       formState: { errors },
+      reset,
     } = useForm<IdeaCommentFormData>({
       defaultValues: { text: "" },
       resolver: zodResolver(ideaCommentFormSchema),
     });
 
+    const { postCommentMutation } = useIdeaComments({ ideaId });
     const { debouncedSubmitting, handleSubmit } = useDebouncedSubmitting({
-      isSubmitting,
-      onSubmit: innerHandleSubmit(onSubmit),
+      isSubmitting: postCommentMutation.isLoading,
+      onSubmit: innerHandleSubmit((data) => {
+        postCommentMutation.mutate(
+          { ...data, ideaId },
+          {
+            onSuccess: () => {
+              reset();
+            },
+          }
+        );
+      }),
     });
 
+    const formRef = useRef<HTMLFormElement | null>(null);
+    const commentRef = useRef<HTMLTextAreaElement | null>(null);
     useImperativeHandle(ref, (): IdeaCommentFormRef => {
       return {
         scrollIntoView: (arg?: boolean | ScrollIntoViewOptions) => {

@@ -1,3 +1,5 @@
+import { useMutationWithNotification } from "@/client/lib/notification";
+import { trpc } from "@/client/lib/trpc";
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
 import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
 import {
@@ -13,15 +15,15 @@ import { Controller, useForm } from "react-hook-form";
 import classes from "./IdeaCommentReplyFormCard.module.css";
 
 type Props = {
-  onSubmit: (data: IdeaCommentFormData) => void;
-  onCancel: () => void;
-  isSubmitting?: boolean;
+  ideaId: string;
+  parentCommentId: string;
+  onClose: () => void;
 };
 
 export const IdeaCommentReplyFormCard: React.FC<Props> = ({
-  onSubmit,
-  onCancel,
-  isSubmitting = false,
+  ideaId,
+  parentCommentId,
+  onClose,
 }) => {
   const innerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const {
@@ -33,11 +35,27 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
     resolver: zodResolver(ideaCommentFormSchema),
   });
 
+  const replyMutation = useMutationWithNotification(trpc.ideaComment.create, {
+    errorNotification: {
+      title: "お題への返信",
+      message: "お題に返信できませんでした。",
+    },
+    onSuccess: () => {
+      onClose();
+    },
+  });
+
   const { debouncedSubmitting, handleSubmit, handleCancel } =
     useDebouncedSubmitting({
-      isSubmitting,
-      onCancel,
-      onSubmit: innerHandleSubmit(onSubmit),
+      isSubmitting: replyMutation.isLoading,
+      onCancel: onClose,
+      onSubmit: innerHandleSubmit((data) => {
+        replyMutation.mutate({
+          ...data,
+          ideaId,
+          inReplyToCommentId: parentCommentId,
+        });
+      }),
     });
 
   const handleFocusTextarea = () => {

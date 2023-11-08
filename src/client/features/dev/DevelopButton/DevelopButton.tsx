@@ -1,3 +1,5 @@
+import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { AppTooltip } from "@/client/ui/AppTooltip";
 import { ComputerIcon } from "@/client/ui/ComputerIcon";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
@@ -6,32 +8,37 @@ import { ActionIcon, Anchor, Flex, Stack, Tooltip } from "@mantine/core";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { SyntheticEvent } from "react";
 import classes from "./DevelopButton.module.css";
 
 type Props = {
   devs: number;
   loggedInUserDevId?: string | undefined;
-  onDevelopIdea: (e: SyntheticEvent) => void;
   ideaId: string;
 };
 
 export const DevelopButton: React.FC<Props> = ({
   devs,
   loggedInUserDevId,
-  onDevelopIdea,
   ideaId,
 }) => {
+  const { session } = useSessionQuery();
+  const { openLoginModal } = useRequireLoginModal();
   const router = useRouter();
 
-  const handleClick = (e: SyntheticEvent) => {
+  const handleClick = () => {
+    // ログインしていなければログインモーダルを表示する
+    if (!session) {
+      openLoginModal(Routes.develop(ideaId));
+      return;
+    }
+
     // すでに開発している場合は自身の開発情報へ遷移させる
     if (loggedInUserDevId) {
       router.push(Routes.dev(loggedInUserDevId));
       return;
     }
 
-    onDevelopIdea(e);
+    router.push(Routes.develop(ideaId));
   };
 
   return (

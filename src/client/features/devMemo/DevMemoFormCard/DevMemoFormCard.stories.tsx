@@ -9,5 +9,5 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 export const Default: Story = {
-  args: { loggedInUser: UserHelper.create() },
+  args: { loggedInUser: UserHelper.create(), devId: "" },
 };

@@ -29,15 +29,10 @@ import classes from "./DevDetailCard.module.css";
 
 type Props = {
   dev: Dev;
-  onToggleDevLike: () => void;
   isDeveloper: boolean;
 };
 
-export const DevDetailCard: React.FC<Props> = ({
-  dev,
-  onToggleDevLike,
-  isDeveloper,
-}) => {
+export const DevDetailCard: React.FC<Props> = ({ dev, isDeveloper }) => {
   return (
     <Card w="100%" h="100%">
       <Grid>
@@ -51,13 +46,7 @@ export const DevDetailCard: React.FC<Props> = ({
             <Divider my="sm" />
             <Stack gap={0}>
               <Flex justify="space-between" align="center">
-                <DevLikeButton
-                  devId={dev.id}
-                  likes={dev.likes}
-                  likedByLoggedInUser={dev.likedByLoggedInUser}
-                  onToggleIdeaLike={onToggleDevLike}
-                  disabled={isDeveloper}
-                />
+                <DevLikeButton dev={dev} disabled={isDeveloper} />
                 <Flex gap="md">
                   <Button
                     component={"a"}

@@ -3,14 +3,12 @@ import { IdeaCommentReplyFormCard } from "@/client/features/ideaComment/IdeaComm
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
-import { useMutationWithNotification } from "@/client/lib/notification";
-import { trpc } from "@/client/lib/trpc";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
-import { IdeaComment, IdeaCommentFormData } from "@/models/ideaComment";
+import { IdeaComment } from "@/models/ideaComment";
 import { Box, Card, Flex, Stack, Text, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -45,26 +43,12 @@ export const IdeaCommentCard: React.FC<Props> = ({
   const [isReplyFormOpen, { close: closeReplyForm, open: openReplyForm }] =
     useDisclosure(false);
 
-  const replyMutation = useMutationWithNotification(trpc.ideaComment.create, {
-    errorNotification: {
-      title: "お題への返信",
-      message: "お題に返信できませんでした。",
-    },
-    onSuccess: () => {
-      closeReplyForm();
-    },
-  });
-
   const handleOpenReplyForm = () => {
     if (!session) {
       openLoginModal();
       return;
     }
     openReplyForm();
-  };
-
-  const handleSubmitReply = (data: IdeaCommentFormData) => {
-    replyMutation.mutate({ ...data, ideaId, inReplyToCommentId: comment.id });
   };
 
   // このコメントの返信元コメントにスクロールする
@@ -143,9 +127,9 @@ export const IdeaCommentCard: React.FC<Props> = ({
       </Card>
       {isReplyFormOpen && (
         <IdeaCommentReplyFormCard
-          onCancel={closeReplyForm}
-          onSubmit={handleSubmitReply}
-          isSubmitting={replyMutation.isLoading}
+          ideaId={ideaId}
+          parentCommentId={comment.id}
+          onClose={closeReplyForm}
         />
       )}
     </Stack>

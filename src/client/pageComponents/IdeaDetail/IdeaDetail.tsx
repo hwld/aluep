@@ -4,9 +4,7 @@ import { IdeaInfoCardItem } from "@/client/features/idea/IdeaInfoCardItem/IdeaIn
 import { IdeaLikeButton } from "@/client/features/idea/IdeaLikeButton/IdeaLikeButton";
 import { IdeaOperationButton } from "@/client/features/idea/IdeaOperationButton/IdeaOperationButton";
 import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";
-import { useIdeaLike } from "@/client/features/idea/useIdeaLike";
 import { IdeaComments } from "@/client/features/ideaComment/IdeaComments/IdeaComments";
-import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { formatDate } from "@/client/lib/utils";
@@ -22,41 +20,11 @@ import {
   IconRotateClockwise2,
   IconUser,
 } from "@tabler/icons-react";
-import { useRouter } from "next/router";
 
 type Props = { idea: Idea };
 
 export const IdeaDetail: React.FC<Props> = ({ idea }) => {
   const { session } = useSessionQuery();
-  const router = useRouter();
-  const { openLoginModal } = useRequireLoginModal();
-  const { likeIdeaMutation, unlikeIdeaMutation } = useIdeaLike({
-    ideaId: idea.id,
-  });
-
-  const handleLikeIdea = () => {
-    //ログインしていなければログインモーダルを表示する
-    if (!session) {
-      openLoginModal();
-      return;
-    }
-
-    if (idea.likedByLoggedInUser) {
-      unlikeIdeaMutation.mutate({ ideaId: idea.id });
-    } else {
-      likeIdeaMutation.mutate({ ideaId: idea.id });
-    }
-  };
-
-  const handleClickDevelop = () => {
-    // ログインしていなければログインモーダルを表示する
-    if (!session) {
-      openLoginModal(Routes.develop(idea.id));
-      return;
-    }
-
-    router.push(Routes.develop(idea.id));
-  };
 
   // 自分の投稿かどうか
   const isIdeaOwner = idea.user.id === session?.user.id;
@@ -82,13 +50,11 @@ export const IdeaDetail: React.FC<Props> = ({ idea }) => {
               ideaId={idea.id}
               devs={idea.devs}
               loggedInUserDevId={idea.loggedInUserDevId}
-              onDevelopIdea={handleClickDevelop}
             />
             <IdeaLikeButton
               ideaId={idea.id}
               likes={idea.likes}
               likedByLoggedInUser={idea.likedByLoggedInUser}
-              onLikeIdea={handleLikeIdea}
               disabled={isIdeaOwner}
             />
             <IdeaOperationButton idea={idea} isIdeaOwner={isIdeaOwner} />

@@ -1,81 +1,29 @@
 import { DevDetailCard } from "@/client/features/dev/DevDetailCard/DevDetailCard";
-import { useDevLikeOnDetail } from "@/client/features/dev/useDevLikeOnDetail";
 import { DevMemoFormCard } from "@/client/features/devMemo/DevMemoFormCard/DevMemoFormCard";
 import { DevMemoThreadCard } from "@/client/features/devMemo/DevMemoThreadCard/DevMemoThreadCard";
 import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
-import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { trpc } from "@/client/lib/trpc";
 import { useAutoScrollOnIncrease } from "@/client/lib/useAutoScrollOnIncrease";
-import { useCyclicRandom } from "@/client/lib/useCyclicRandom";
-import { useMutationWithNotification } from "@/client/lib/notification";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { Dev } from "@/models/dev";
-import { DevMemoFormData } from "@/models/devMemo";
-import { Card, Center, Flex, Stack, Switch, Title } from "@mantine/core";
+import { Card, Center, Flex, Stack, Title } from "@mantine/core";
 import { IconCode, IconNote } from "@tabler/icons-react";
 import React, { useRef } from "react";
+import { ToggleDevMemoPermission } from "@/client/features/devMemo/ToggleDevMemoPermission/ToggleDevMemoPermission";
 
 type Props = { dev: Dev };
 
 export const DevDetail: React.FC<Props> = ({ dev }) => {
-  const memoFormCardRef = useRef<HTMLDivElement | null>(null);
-
   const { session } = useSessionQuery();
   const loggedInUser = session?.user;
   const isDeveloper = dev.developer.id === loggedInUser?.id;
 
-  const { devMemoThreads, createMemoMutation } = useDevMemos({
+  const { devMemoThreads } = useDevMemos({
     devId: dev.id,
   });
 
-  const { likeDevMutation, unlikeDevMutation } = useDevLikeOnDetail(dev.id);
-
-  const toggleAllowOtherUserMemosMutation = useMutationWithNotification(
-    trpc.dev.updateAllowOtherUserMemos,
-    {
-      errorNotification: {
-        title: "開発メモの返信権限の更新",
-        message: "開発メモの返信権限を更新できませんでした。",
-      },
-    }
-  );
-
-  const { openLoginModal } = useRequireLoginModal();
-  const [formKey, nextFormKey] = useCyclicRandom();
-
-  const handleToggleDevLike = () => {
-    if (!session) {
-      openLoginModal();
-      return;
-    }
-
-    if (dev.likedByLoggedInUser) {
-      unlikeDevMutation.mutate({ devId: dev.id });
-    } else {
-      likeDevMutation.mutate({ devId: dev.id });
-    }
-  };
-
-  const handleSubmitMemo = (data: DevMemoFormData) => {
-    createMemoMutation.mutate(
-      { ...data, devId: dev.id },
-      {
-        onSuccess: () => {
-          nextFormKey();
-        },
-      }
-    );
-  };
-
-  const handleToggleAllowOtherUserMemos = () => {
-    toggleAllowOtherUserMemosMutation.mutate({
-      devId: dev.id,
-      allowOtherUserMemos: !dev.allowOtherUserMemos,
-    });
-  };
-
+  const memoFormCardRef = useRef<HTMLDivElement | null>(null);
   // メモスレッドが追加されたらスクロールさせる
   useAutoScrollOnIncrease({
     target: memoFormCardRef,
@@ -86,26 +34,16 @@ export const DevDetail: React.FC<Props> = ({ dev }) => {
     <>
       <PageHeader icon={IconCode} pageName="開発情報の詳細" />
       <Stack maw={1200} w="100%" m="auto" gap={40}>
-        <DevDetailCard
-          dev={dev}
-          onToggleDevLike={handleToggleDevLike}
-          isDeveloper={isDeveloper}
-        />
+        <DevDetailCard dev={dev} isDeveloper={isDeveloper} />
         <Stack gap="xl">
           <Flex align="center" justify="space-between" gap="xl">
             <Title order={4}>開発メモ</Title>
             {isDeveloper && (
-              <Card>
-                <Switch
-                  checked={dev.allowOtherUserMemos}
-                  onChange={handleToggleAllowOtherUserMemos}
-                  label="他のユーザーの返信を許可"
-                  styles={{
-                    track: { cursor: "pointer" },
-                    label: { cursor: "pointer", userSelect: "none" },
-                  }}
-                />
-              </Card>
+              <>
+                <Card>
+                  <ToggleDevMemoPermission dev={dev} />
+                </Card>
+              </>
             )}
           </Flex>
           {devMemoThreads.length === 0 ? (
@@ -146,11 +84,9 @@ export const DevDetail: React.FC<Props> = ({ dev }) => {
           )}
           {loggedInUser && isDeveloper && (
             <DevMemoFormCard
+              devId={dev.id}
               ref={memoFormCardRef}
-              key={formKey}
               loggedInUser={loggedInUser}
-              onSubmit={handleSubmitMemo}
-              isSubmitting={createMemoMutation.isLoading}
             />
           )}
         </Stack>

@@ -1,6 +1,4 @@
-import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
-import { useFavoriteUser } from "@/client/features/user/useFavoriteUser";
 import { useFavoriteUserCountQuery } from "@/client/features/user/useFavoriteUserCountQuery";
 import { UserFavoriteButton } from "@/client/features/user/UserFavoriteButton/UserFavoriteButton";
 import { UserIcon } from "@/client/features/user/UserIcon/UserIcon";
@@ -18,27 +16,9 @@ type Props = {
 };
 export const UserProfileCard: React.FC<Props> = ({ user, maxWidth }) => {
   const { session } = useSessionQuery();
-  const { openLoginModal } = useRequireLoginModal();
-
   const isLoggedInUserPage = session?.user.id === user.id;
 
-  const { createFavoriteMutation, deleteFavoriteMutation, favorited } =
-    useFavoriteUser({ userId: user.id });
-
   const { favoriteUserCount } = useFavoriteUserCountQuery({ userId: user.id });
-
-  const handleFavoriteUser = () => {
-    if (session?.user.id === undefined) {
-      openLoginModal();
-      return;
-    }
-
-    if (!favorited) {
-      createFavoriteMutation.mutate({ userId: user.id });
-    } else {
-      deleteFavoriteMutation.mutate({ userId: user.id });
-    }
-  };
 
   return (
     <Card
@@ -62,13 +42,7 @@ export const UserProfileCard: React.FC<Props> = ({ user, maxWidth }) => {
               {user.name}
             </AppTitle>
             <Flex gap="sm">
-              {!isLoggedInUserPage && (
-                <UserFavoriteButton
-                  onFavorite={handleFavoriteUser}
-                  favorited={favorited}
-                  userName={user.name}
-                />
-              )}
+              {!isLoggedInUserPage && <UserFavoriteButton userId={user.id} />}
               <TextLink href={Routes.userFavorites(user.id)}>
                 <Flex align="flex-end">
                   <Text size="md" fw="bold">

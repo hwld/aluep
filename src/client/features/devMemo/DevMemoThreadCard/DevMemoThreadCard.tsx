@@ -1,14 +1,13 @@
 import { DevMemoChildrenSection } from "@/client/features/devMemo/DevMemoChildrenSection/DevMemoChildrenSection";
 import { DevMemoMenuButton } from "@/client/features/devMemo/DevMemoMenuButton/DevMemoMenuButton";
 import { DevMemoReplyFormBox } from "@/client/features/devMemo/DevMemoReplyFormBox/DevMemoReplyFormBox";
-import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
 import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
-import { DevMemo, DevMemoFormData } from "@/models/devMemo";
+import { DevMemo } from "@/models/devMemo";
 import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
 import { IconMessageCircle2 } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
@@ -26,20 +25,11 @@ export const DevMemoThreadCard: React.FC<Props> = ({
   childrenMemos,
   loggedInUserId,
 }) => {
-  const { createMemoMutation } = useDevMemos({ devId });
-  const [isOpenReplyForm, setIsOpenReplyForm] = useState(false);
   const memoRef = useHashRemoverOnClickOutside({
     canRemove: (hash) => hash === memo.id,
   });
 
-  const replyTargetMemoId = useMemo(() => {
-    if (childrenMemos.length === 0) {
-      return memo.id;
-    }
-
-    return childrenMemos.at(-1)!.id;
-  }, [childrenMemos, memo.id]);
-
+  const [isOpenReplyForm, setIsOpenReplyForm] = useState(false);
   const handleOpenReplyForm = () => {
     setIsOpenReplyForm(true);
   };
@@ -48,13 +38,13 @@ export const DevMemoThreadCard: React.FC<Props> = ({
     setIsOpenReplyForm(false);
   };
 
-  const handleSubmitMemo = (data: DevMemoFormData) => {
-    createMemoMutation.mutate({
-      ...data,
-      devId,
-      parentMemoId: replyTargetMemoId,
-    });
-  };
+  const parentMemoId = useMemo(() => {
+    if (childrenMemos.length === 0) {
+      return memo.id;
+    }
+
+    return childrenMemos.at(-1)!.id;
+  }, [childrenMemos, memo.id]);
 
   return (
     <Card>
@@ -99,9 +89,9 @@ export const DevMemoThreadCard: React.FC<Props> = ({
         <>
           {childrenMemos.length === 0 && <Divider my="md" />}
           <DevMemoReplyFormBox
-            onSubmit={handleSubmitMemo}
+            devId={devId}
+            parentMemoId={parentMemoId}
             onCancel={handleCloseReplyForm}
-            isSubmitting={createMemoMutation.isLoading}
           />
         </>
       )}

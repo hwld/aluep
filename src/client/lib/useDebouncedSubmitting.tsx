@@ -11,7 +11,8 @@ type UseAppFormArgs = {
 /**
  *指定された秒数までフォームのSubmittingを遅延させるHook。
  *送信、キャンセルボタンのローディングを遅延させるために使用している。
- *Submittingがtrueであればローディングが表示されていなくてもキャンセル・送信はブロックする。
+ *Submittingがtrueであればローディングが表示されていなくてもキャンセル・送信はブロックするので、
+ *onSubmitとonCancelを受け取る
  */
 export const useDebouncedSubmitting = ({
   isSubmitting,

@@ -1,3 +1,4 @@
+import { useDevMemos } from "@/client/features/devMemo/useDevMemos";
 import { useDebouncedSubmitting } from "@/client/lib/useDebouncedSubmitting";
 import { PlainTextarea } from "@/client/ui/PlainTextarea/PlainTextarea";
 import { DevMemoFormData, devMemoFormSchema } from "@/models/devMemo";
@@ -10,18 +11,16 @@ import { Controller, useForm } from "react-hook-form";
 import classes from "./DevMemoReplyFormBox.module.css";
 
 type Props = {
-  onSubmit: (data: DevMemoFormData) => void;
+  devId: string;
+  parentMemoId: string;
   onCancel: () => void;
-  isSubmitting?: boolean;
 };
 
 export const DevMemoReplyFormBox: React.FC<Props> = ({
-  onSubmit,
+  devId,
+  parentMemoId,
   onCancel,
-  isSubmitting = false,
 }) => {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
   const {
     control,
     handleSubmit: innerHandleSubmit,
@@ -33,11 +32,16 @@ export const DevMemoReplyFormBox: React.FC<Props> = ({
     resolver: zodResolver(devMemoFormSchema),
   });
 
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const { createMemoMutation } = useDevMemos({ devId });
   const { debouncedSubmitting, handleSubmit, handleCancel } =
     useDebouncedSubmitting({
-      isSubmitting,
+      isSubmitting: createMemoMutation.isLoading,
       onCancel,
-      onSubmit: innerHandleSubmit(onSubmit),
+      onSubmit: innerHandleSubmit((data) => {
+        createMemoMutation.mutate({ ...data, devId, parentMemoId });
+      }),
     });
 
   const handleFocusTextarea = () => {
