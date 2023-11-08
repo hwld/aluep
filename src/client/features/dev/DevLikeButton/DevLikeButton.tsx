@@ -25,6 +25,10 @@ export const DevLikeButton: React.FC<Props> = ({ dev, disabled }) => {
       return;
     }
 
+    if (likeDevMutation.isLoading || unlikeDevMutation.isLoading) {
+      return;
+    }
+
     if (dev.likedByLoggedInUser) {
       unlikeDevMutation.mutate({ devId: dev.id });
     } else {

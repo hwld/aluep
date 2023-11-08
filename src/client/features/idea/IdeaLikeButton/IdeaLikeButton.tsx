@@ -31,6 +31,10 @@ export const IdeaLikeButton: React.FC<Props> = ({
       return;
     }
 
+    if (likeIdeaMutation.isLoading || unlikeIdeaMutation.isLoading) {
+      return;
+    }
+
     if (likedByLoggedInUser) {
       unlikeIdeaMutation.mutate({ ideaId });
     } else {
