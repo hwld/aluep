@@ -29,11 +29,11 @@ type MockData<T> = T extends Query<infer Route, infer Procedure>
 
 export const mockTrpcQuery = <T extends Query<unknown, never>>(
   route: T,
-  data: MockData<T> | (() => MockData<T>)
+  data: MockData<T> | (() => MockData<T>) | (() => Promise<MockData<T>>)
 ) => {
   const query = route.query;
-  return query((_, res, ctx) => {
-    const _data = typeof data === "function" ? data() : data;
+  return query(async (_, res, ctx) => {
+    const _data = typeof data === "function" ? await data() : data;
 
     return res(ctx.status(200), ctx.data(_data));
   });

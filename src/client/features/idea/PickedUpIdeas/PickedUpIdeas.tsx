@@ -1,8 +1,9 @@
-import { DummyIdeaCard } from "@/client/features/idea/DummyIdeaCard/DummyIdeaCard";
 import {
   IdeaCard,
+  ideaCardHeightPx,
   ideaCardMinWidthPx,
 } from "@/client/features/idea/IdeaCard/IdeaCard";
+import { AppSkeleton } from "@/client/ui/AppSkeleton/AppSkeleton";
 import { GridContainer } from "@/client/ui/GridContainer/GridContainer";
 import { Idea } from "@/models/idea";
 import { Button, Flex, Stack, Title } from "@mantine/core";
@@ -48,7 +49,13 @@ export const PickedUpIdeas: React.FC<Props> = ({
       <GridContainer minItemWidthPx={ideaCardMinWidthPx}>
         {dummyProps?.isDummy
           ? [...new Array(dummyProps.count ?? 6)].map((_, i) => {
-              return <DummyIdeaCard key={i} />;
+              return (
+                <AppSkeleton
+                  miw={ideaCardMinWidthPx}
+                  h={ideaCardHeightPx}
+                  key={i}
+                />
+              );
             })
           : ideas.map((idea) => <IdeaCard key={idea.id} idea={idea} />)}
       </GridContainer>

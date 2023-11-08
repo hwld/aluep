@@ -1,0 +1,39 @@
+.root {
+  position: relative;
+  --base-color: var(--mantine-color-gray-3);
+
+  /* color-gray-3をちょっと明るくした色 */
+  /* css relative color使いたい・・・ */
+  --line-color: #e0dedc;
+
+  background-color: var(--base-color);
+  border-radius: var(--mantine-radius-lg);
+  overflow: hidden;
+
+  &::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+      90deg,
+      var(--base-color) 30%,
+      var(--line-color),
+      var(--base-color) 90%
+    );
+    transform: translateX(-100%);
+
+    animation-name: skeleton;
+    animation-duration: 0.9s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+}
+
+@keyframes skeleton {
+  100% {
+    transform: translateX(100%);
+  }
+}

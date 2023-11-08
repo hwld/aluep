@@ -144,3 +144,37 @@ export const LargeFilled: Story = {
     },
   },
 };
+
+export const SkeletonScreen: Story = {
+  name: "スケルトンスクリーン",
+  parameters: {
+    msw: {
+      handlers: [
+        mockTrpcQuery(
+          trpcMsw.idea.getRecommendedIdeas,
+          async () => new Promise(() => {})
+        ),
+        mockTrpcQuery(
+          trpcMsw.aggregate.getPopularIdeaTags,
+          () => new Promise(() => {})
+        ),
+        mockTrpcQuery(
+          trpcMsw.aggregate.getPopularIdeas,
+          () => new Promise(() => {})
+        ),
+        mockTrpcQuery(
+          trpcMsw.aggregate.getPopularIdeaAuthors,
+          () => new Promise(() => {})
+        ),
+        mockTrpcQuery(
+          trpcMsw.aggregate.getPopularDevelopers,
+          () => new Promise(() => {})
+        ),
+        mockTrpcQuery(
+          trpcMsw.aggregate.getPickedIdeas,
+          () => new Promise(() => {})
+        ),
+      ],
+    },
+  },
+};

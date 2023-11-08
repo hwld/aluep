@@ -1,8 +1,8 @@
-import { DummyPopularIdeaCard } from "@/client/features/idea/DummyPopularIdeaCard/DummyPopularIdeaCard";
 import {
   PopularIdeaCard,
   popularIdeaCardWidthPx,
 } from "@/client/features/idea/PopularIdeaCard/PopularIdeaCard";
+import { AppSkeleton } from "@/client/ui/AppSkeleton/AppSkeleton";
 import { Idea } from "@/models/idea";
 import { Carousel } from "@mantine/carousel";
 import { Box, Flex } from "@mantine/core";
@@ -45,7 +45,7 @@ export const PopularIdeaCarousel: React.FC<Props> = ({
             <Carousel.Slide key={i}>
               <Flex h="100%" w={`${popularIdeaCardWidthPx}px`} align="center">
                 <Box w="100%" h="200px">
-                  <DummyPopularIdeaCard />
+                  <AppSkeleton h="100%" w="100%" />
                 </Box>
               </Flex>
             </Carousel.Slide>

@@ -1,8 +1,9 @@
 import { IdeaTagBadge } from "@/client/features/idea/IdeaTagBadge/IdeaTagBadge";
 import { trpc } from "@/client/lib/trpc";
+import { AppSkeleton } from "@/client/ui/AppSkeleton/AppSkeleton";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { Routes } from "@/share/routes";
-import { Box, Button, Card, Flex, Group, Stack, Text } from "@mantine/core";
+import { Button, Card, Flex, Group, Stack, Text } from "@mantine/core";
 import { IconArrowRight, IconTag } from "@tabler/icons-react";
 import Link from "next/link";
 import classes from "./IdeaSearchByTagCard.module.css";
@@ -47,7 +48,7 @@ export const IdeaSearchByTagCard: React.FC<Props> = () => {
           style={{ borderRadius: "var(--mantine-radius-md)" }}
         >
           {fetchingTags ? (
-            <Box className={classes["dummy-content"]}></Box>
+            <AppSkeleton w="100%" h="300px" />
           ) : (popularTags?.length ?? []) === 0 ? (
             <EmptyContentItem
               icon={

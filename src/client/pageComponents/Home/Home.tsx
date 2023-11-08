@@ -3,7 +3,6 @@ import { IdeaSearchByTagCard } from "@/client/features/idea/IdeaSearchByTagCard/
 import { PickedUpIdeas } from "@/client/features/idea/PickedUpIdeas/PickedUpIdeas";
 import { PopularIdeaCarousel } from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCarousel";
 import { usePickedUpIdeasQuery } from "@/client/features/idea/usePickedUpIdeasQuery";
-import { DummyUserLikeRankingItem } from "@/client/features/user/DummyUserLikeRankingItem/DummyUserLikeRankingItem";
 import {
   useTop10LikedDevelopers,
   useTop10LikedIdeaAuthors,
@@ -11,6 +10,7 @@ import {
 } from "@/client/features/user/useRankingQuery";
 import { UserLikeRankingItem } from "@/client/features/user/UserLikeRankingItem/UserLikeRankingItem";
 import { trpc } from "@/client/lib/trpc";
+import { AppSkeleton } from "@/client/ui/AppSkeleton/AppSkeleton";
 import { EmptyContentItem } from "@/client/ui/EmptyContentItem/EmptyContentItem";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { RankingCard } from "@/client/ui/RankingCard/RankingCard";
@@ -152,7 +152,13 @@ export const Home: React.FC<Props> = ({ welcomeMessageHidden }) => {
           <RankingCard title="いいねが多かった開発者">
             {fetchingTop10LikedDevelopers ? (
               [...new Array(10)].map((_, i) => {
-                return <DummyUserLikeRankingItem key={i} />;
+                return (
+                  <AppSkeleton
+                    h={38}
+                    key={i}
+                    style={{ borderRadius: "var(--mantine-radius-md)" }}
+                  />
+                );
               })
             ) : top10LikedDevelopers?.length === 0 ? (
               <Box mt={100}>
@@ -183,7 +189,13 @@ export const Home: React.FC<Props> = ({ welcomeMessageHidden }) => {
           <RankingCard title="いいねが多かった投稿者">
             {fetchingTop10LikedIdeaAuthors ? (
               [...new Array(10)].map((_, i) => {
-                return <DummyUserLikeRankingItem key={i} />;
+                return (
+                  <AppSkeleton
+                    h={38}
+                    key={i}
+                    style={{ borderRadius: "var(--mantine-radius-md)" }}
+                  />
+                );
               })
             ) : top10LikedIdeaAuthors?.length === 0 ? (
               <Box mt={100}>
