@@ -2,11 +2,11 @@ import { useDevLikeOnDetail } from "@/client/features/dev/useDevLikeOnDetail";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { stopPropagation } from "@/client/lib/utils";
+import { AnimationLikeIcon } from "@/client/ui/AnimationLikeIcon/AnimationLikeIcon";
 import { TextLink } from "@/client/ui/TextLink/TextLink";
 import { Dev } from "@/models/dev";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Flex, Text } from "@mantine/core";
-import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import clsx from "clsx";
 import classes from "./DevLikeButton.module.css";
 
@@ -42,14 +42,9 @@ export const DevLikeButton: React.FC<Props> = ({ dev, disabled }) => {
         className={clsx(classes.root, {
           [classes.liked]: dev.likedByLoggedInUser,
         })}
+        pt={4}
       >
-        {dev.likedByLoggedInUser ? (
-          <IconHeartFilled
-            className={clsx(classes["like-icon"], classes.liked)}
-          />
-        ) : (
-          <IconHeart className={clsx(classes["like-icon"])} />
-        )}
+        <AnimationLikeIcon liked={dev.likedByLoggedInUser} width="75%" />
       </ActionIcon>
       <TextLink href={Routes.devLikers(dev.id)} disabled={dev.likes === 0}>
         <Text size="xl" fw="bold">

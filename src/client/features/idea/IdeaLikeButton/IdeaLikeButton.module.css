@@ -1,19 +1,11 @@
 .like-button {
   border-radius: 50%;
   box-shadow: var(--mantine-shadow-md);
-  transition: all 200ms;
   background-color: var(--mantine-color-gray-1);
 
-  .liked {
+  &.liked {
     background-color: var(--mantine-color-pink-1);
-
-    &:hover {
-      background-color: var(--mantine-color-gray-2);
-    }
-  }
-
-  &:hover {
-    background-color: var(--mantine-color-pink-1);
+    border: 1px solid var(--mantine-color-pink-2);
   }
 
   &[data-disabled] {

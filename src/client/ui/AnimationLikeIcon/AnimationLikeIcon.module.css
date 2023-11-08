@@ -1,0 +1,9 @@
+.icon {
+  color: var(--mantine-color-gray-4);
+  stroke-width: 2px;
+}
+
+.icon.liked {
+  color: transparent;
+  fill: var(--mantine-color-pink-6);
+}

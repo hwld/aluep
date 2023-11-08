@@ -34,6 +34,7 @@ export const IdeaComments: React.FC<Props> = ({
   };
 
   // コメントの数が増えたら自動でスクロールする
+  // TODO: 画面遷移でスクロールしちゃうことがある
   useAutoScrollOnIncrease({
     target: commentFormRef,
     count: ideaComments?.length ?? 0,

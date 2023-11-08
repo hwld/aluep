@@ -55,7 +55,7 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
           userId={idea.user.id}
           title={
             <TextLink href={Routes.user(idea.user.id)}>
-              <Text size="xs" truncate>
+              <Text size="xs" truncate pb="1px">
                 {idea.user.name}
               </Text>
             </TextLink>

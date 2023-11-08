@@ -4,30 +4,9 @@
   border: solid 1px var(--mantine-color-gray-3);
   background-color: transparent;
 
-  &:hover {
-    background-color: var(--mantine-color-pink-1);
-  }
-
   &.liked {
     border: solid 1px var(--mantine-color-pink-2);
     background-color: var(--mantine-color-pink-0);
-
-    &:hover {
-      background-color: var(--mantine-color-gray-2);
-    }
-  }
-
-  & .like-icon {
-    margin-top: 4px;
-    height: 75%;
-    width: 75%;
-    color: var(--mantine-color-gray-5);
-    fill: transparent;
-    transition: all 200ms;
-
-    &.liked {
-      color: var(--mantine-color-pink-7);
-    }
   }
 
   &[data-disabled] {

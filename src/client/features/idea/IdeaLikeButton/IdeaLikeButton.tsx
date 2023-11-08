@@ -1,9 +1,9 @@
 import { useIdeaLike } from "@/client/features/idea/useIdeaLike";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { AnimationLikeIcon } from "@/client/ui/AnimationLikeIcon/AnimationLikeIcon";
 import { Routes } from "@/share/routes";
 import { ActionIcon, Anchor, Stack, Tooltip } from "@mantine/core";
-import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import clsx from "clsx";
 import Link from "next/link";
 import classes from "./IdeaLikeButton.module.css";
@@ -42,27 +42,18 @@ export const IdeaLikeButton: React.FC<Props> = ({
     <Stack align="center" gap={3}>
       <ActionIcon
         disabled={disabled}
-        color={likedByLoggedInUser ? "pink" : undefined}
         size={50}
         className={clsx(classes["like-button"], {
           [classes.liked]: likedByLoggedInUser,
         })}
         onClick={toggleLikeIdea}
+        pt={5}
       >
-        {likedByLoggedInUser ? (
-          <IconHeartFilled
-            width="75%"
-            height="75%"
-            style={{ marginTop: "5px", color: "var(--mantine-color-pink-7)" }}
-          />
-        ) : (
-          <IconHeart
-            width="75%"
-            height="75%"
-            color="var(--mantine-color-gray-5)"
-            style={{ marginTop: "5px" }}
-          />
-        )}
+        <AnimationLikeIcon
+          liked={likedByLoggedInUser}
+          width="80%"
+          height="80%"
+        />
       </ActionIcon>
       <Tooltip
         offset={10}
