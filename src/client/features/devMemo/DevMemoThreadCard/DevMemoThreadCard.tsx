@@ -5,7 +5,7 @@ import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
-import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
+import { CardActionButton } from "@/client/ui/CardActionButton/CardActionButton";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { DevMemo } from "@/models/devMemo";
 import { Card, Divider, Flex, Stack, Text } from "@mantine/core";
@@ -68,9 +68,14 @@ export const DevMemoThreadCard: React.FC<Props> = ({
         </AppLinkify>
         <Flex justify="space-between" align="center">
           <Flex align="center" gap={3}>
-            <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>
-              <IconMessageCircle2 width={20} height={20} />
-            </CardActionIcon>
+            <CardActionButton
+              icon={
+                <IconMessageCircle2
+                  style={{ stroke: "var(--mantine-color-gray-5)" }}
+                />
+              }
+              onClick={handleOpenReplyForm}
+            />
             {childrenMemos.length > 0 && (
               <MutedText>{childrenMemos.length}</MutedText>
             )}

@@ -1,5 +1,4 @@
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
-import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
@@ -10,6 +9,7 @@ import { IconEdit, IconFlag, IconPhoto } from "@tabler/icons-react";
 import { User } from "next-auth";
 import { ReportUserModal } from "@/client/features/report/ReportUserModal/ReportUserModal";
 import { useMemo } from "react";
+import { CardMenuButton } from "@/client/ui/CardMenuButton/CardMenuButton";
 
 type Props = {
   user: User;
@@ -33,7 +33,7 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
   return (
     <>
       <AppMenu>
-        <AppMenuButton />
+        <CardMenuButton />
 
         <AppMenuDropdown>
           {isOwner && (

@@ -6,7 +6,7 @@ import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";
 import { AppLinkify } from "@/client/ui/AppLinkify/AppLinkify";
-import { CardActionIcon } from "@/client/ui/CardActionIcon/CardActionIcon";
+import { CardActionButton } from "@/client/ui/CardActionButton/CardActionButton";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { IdeaComment } from "@/models/ideaComment";
 import { Box, Card, Flex, Stack, Text, UnstyledButton } from "@mantine/core";
@@ -117,9 +117,14 @@ export const IdeaCommentCard: React.FC<Props> = ({
           </AppLinkify>
           <Flex justify="space-between" align="center" gap="xs">
             <Flex align="center">
-              <CardActionIcon c="gray.5" onClick={handleOpenReplyForm}>
-                <IconMessageCircle width="70%" height="70%" />
-              </CardActionIcon>
+              <CardActionButton
+                onClick={handleOpenReplyForm}
+                icon={
+                  <IconMessageCircle
+                    style={{ stroke: "var(--mantine-color-gray-5)" }}
+                  />
+                }
+              />
             </Flex>
             <MutedText>{formatDate(comment.createdAt)}</MutedText>
           </Flex>

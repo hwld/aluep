@@ -1,5 +1,4 @@
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
-import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
@@ -11,10 +10,11 @@ import { IconEdit, IconFlag, IconTrash } from "@tabler/icons-react";
 import { ReportDevModal } from "@/client/features/report/ReportDevModal/ReportDevModal";
 import { useMemo } from "react";
 import { DeleteDevModal } from "@/client/features/dev/DeleteDevModal/DeleteDevModal";
+import { CardMenuButton } from "@/client/ui/CardMenuButton/CardMenuButton";
 
 type Props = { dev: Dev; isOwner: boolean };
 
-export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
+export const DevDetailMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
   const [
     isDeleteModalOpen,
     { close: closeDeleteModal, open: openDeleteModal },
@@ -36,7 +36,7 @@ export const DevMenuButton: React.FC<Props> = ({ dev, isOwner }) => {
   return (
     <>
       <AppMenu>
-        <AppMenuButton />
+        <CardMenuButton />
 
         <AppMenuDropdown>
           {isOwner && (

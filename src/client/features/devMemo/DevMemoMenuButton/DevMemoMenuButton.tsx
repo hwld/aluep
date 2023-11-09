@@ -1,5 +1,4 @@
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
-import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
@@ -9,6 +8,7 @@ import { IconFlag, IconLink, IconTrash } from "@tabler/icons-react";
 import { ReportDevMemoModal } from "@/client/features/report/ReportDevMemoModal/ReportDevMemoModal";
 import { useMemo } from "react";
 import { DeleteDevMemoModal } from "@/client/features/devMemo/DeleteDevMemoModal/DeleteDevMemoModal";
+import { CardMenuButton } from "@/client/ui/CardMenuButton/CardMenuButton";
 
 type Props = {
   devId: string;
@@ -48,7 +48,7 @@ export const DevMemoMenuButton: React.FC<Props> = ({
   return (
     <>
       <AppMenu>
-        <AppMenuButton />
+        <CardMenuButton />
 
         <AppMenuDropdown>
           {isOwner && (

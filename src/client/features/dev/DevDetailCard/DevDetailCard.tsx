@@ -1,6 +1,6 @@
 import { DevDetailCardTitle } from "@/client/features/dev/DevDetailCardTitle/DevDetailCardTitle";
 import { DevLikeButton } from "@/client/features/dev/DevLikeButton/DevLikeButton";
-import { DevMenuButton } from "@/client/features/dev/DevMenuButton/DevMenuButton";
+import { DevDetailMenuButton } from "@/client/features/dev/DevDetailMenuButton/DevDetailMenuButton";
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { convertToGithubDevUrl } from "@/client/lib/convertToGithubDevUrl";
@@ -64,7 +64,7 @@ export const DevDetailCard: React.FC<Props> = ({ dev, isDeveloper }) => {
                       leftSection={<IconLink width={20} height={20} />}
                       color="gray.5"
                     >
-                      リンクを開く
+                      成果物を見る
                     </Button>
                   )}
                 </Flex>
@@ -93,7 +93,7 @@ export const DevDetailCard: React.FC<Props> = ({ dev, isDeveloper }) => {
         <Grid.Col span={{ xs: 12, md: 5 }}>
           <Stack ml="sm" h="100%" pt="15px">
             <Box style={{ position: "absolute", top: "10px", right: "10px" }}>
-              <DevMenuButton dev={dev} isOwner={isDeveloper} />
+              <DevDetailMenuButton dev={dev} isOwner={isDeveloper} />
             </Box>
             <Flex mt="sm" gap="xs" align="center">
               <UserIconLink

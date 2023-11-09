@@ -1,8 +1,0 @@
-.button {
-  transition: all 150ms;
-  background-color: transparent;
-
-  &:hover {
-    background-color: var(--mantine-color-gray-2);
-  }
-}

@@ -1,5 +1,4 @@
 import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
-import { AppMenuButton } from "@/client/ui/AppMenuButton/AppMenuButton";
 import { AppMenuDivider } from "@/client/ui/AppMenuDivider/AppMenuDivider";
 import { AppMenuDropdown } from "@/client/ui/AppMenuDropdown";
 import { AppMenuItem } from "@/client/ui/AppMenuItem/AppMenuItem";
@@ -9,6 +8,7 @@ import { IconFlag, IconLink, IconTrash } from "@tabler/icons-react";
 import { ReportIdeaCommentModal } from "@/client/features/report/ReportIdeaCommentModal/ReportIdeaCommentModal";
 import { useMemo } from "react";
 import { DeleteIdeaCommentModal } from "@/client/features/ideaComment/DeleteIdeaCommentModal/DeleteIdeaCommentModal";
+import { CardMenuButton } from "@/client/ui/CardMenuButton/CardMenuButton";
 
 type Props = {
   ideaId: string;
@@ -47,7 +47,7 @@ export const IdeaCommentMenuButton: React.FC<Props> = ({
   return (
     <>
       <AppMenu>
-        <AppMenuButton />
+        <CardMenuButton />
 
         <AppMenuDropdown>
           {isOwner && (

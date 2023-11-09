@@ -122,7 +122,7 @@ export const DevForm: React.FC<Props> = ({
         render={({ field }) => {
           return (
             <TextInput
-              label="開発したモノのURL"
+              label="成果物のURL"
               error={getFieldState("developedItemUrl").error?.message}
               {...field}
             />
