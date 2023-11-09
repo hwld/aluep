@@ -8,8 +8,7 @@ export const paginate = <T extends PaginatedArgs, K>(
   // これどうすることもできない？
   finder: (input: T) => Promise<K>
 ) => {
-  // & {}をつけると補完してくれる気がする
-  return async <U extends Omit<T, "take" | "skip"> & {}>(args: {
+  return async <U extends Omit<T, "take" | "skip">>(args: {
     finderInput: U;
     counter: (args: U) => Promise<number>;
     pagingData: { page: number; limit: number };

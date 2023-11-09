@@ -13,7 +13,9 @@ export const Default: Story = {
   parameters: {
     msw: {
       handlers: [
-        mockTrpcQuery(trpcMsw.dev.getInProgresDevsByUser, [DevHelper.create()]),
+        mockTrpcQuery(trpcMsw.dev.getInProgresDevsByUser, [
+          ...[...new Array(100)].map(() => DevHelper.create()),
+        ]),
       ],
     },
   },

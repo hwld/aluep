@@ -17,6 +17,8 @@ export const allDevStatuses: DevStatus[] = [
   "ABORTED",
 ];
 
+// allDevStatusesを使ってliteralのunionを作りたいけどできなそう
+// https://github.com/colinhacks/zod/issues/831
 export const devStatusSchema = z.union([
   z.literal("IN_PROGRESS"),
   z.literal("ABORTED"),
