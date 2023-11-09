@@ -5,19 +5,45 @@ const repositoriesSchema = z.array(
   z.object({ name: z.string(), html_url: z.string() })
 );
 
+const perPage = 100;
+
 type Args = { accessToken: string };
 
 type GitHubRepository = { name: string; url: string };
 
-export const fetchGitHubRepositories = async ({
+export const fetchAllGitHubRepos = async ({
   accessToken,
 }: Args): Promise<GitHubRepository[]> => {
-  // TODO: いったんリポジトリ数100だけにするが、あとでページング実装してinfinite query使えるようにしたい
+  const result: GitHubRepository[] = [];
+
+  let page = 1;
+  while (true) {
+    const repos = await fetchReposPerPage({ page, accessToken });
+    result.push(...repos);
+
+    // 指定した数ではなければ終わりとみなす
+    if (repos.length < perPage) {
+      break;
+    }
+
+    page += 1;
+  }
+
+  return result;
+};
+
+const fetchReposPerPage = async ({
+  page,
+  accessToken,
+}: {
+  page: number;
+  accessToken: string;
+}): Promise<GitHubRepository[]> => {
   const apiUrl = new URL("https://api.github.com/user/repos");
   apiUrl.searchParams.append("visibility", "public");
   apiUrl.searchParams.append("sort", "updated");
-  apiUrl.searchParams.append("per_page", "100");
-  apiUrl.searchParams.append("page", "1");
+  apiUrl.searchParams.append("per_page", perPage.toString());
+  apiUrl.searchParams.append("page", page.toString());
 
   let response;
   try {

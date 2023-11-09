@@ -1,13 +1,13 @@
 export const PAGE_LIMIT = {
   favoritedUsers: 50,
-  devs: 20,
-  searchedIdeas: 24,
-  ideaLikers: 20,
-  devLikers: 20,
-  devsByUser: 18,
-  likedIdeas: 18,
-  likedDevs: 18,
-  postedIdeas: 18,
+  devs: 50,
+  searchedIdeas: 50,
+  ideaLikers: 50,
+  devLikers: 50,
+  devsByUser: 51,
+  likedIdeas: 51,
+  likedDevs: 51,
+  postedIdeas: 51,
 } as const;
 
 export const Bytes = {
