@@ -17,6 +17,7 @@ export const IdeaDescriptionEditor: React.FC<Props> = ({
         classNames={{
           root: clsx({ [classes.error]: error }),
           content: clsx(classes.content),
+          control: classes.control,
         }}
         withCodeHighlightStyles={false}
         withTypographyStyles={false}

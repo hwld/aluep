@@ -3,6 +3,15 @@
   border-width: 2px;
 }
 
+.control {
+  background-color: var(--mantine-color-gray-1);
+
+  &[data-active] {
+    background-color: var(--mantine-color-red-2);
+    color: var(--mantine-color-red-9);
+  }
+}
+
 .content {
   color: var(--mantine-color-gray-7);
   word-break: break-all;
