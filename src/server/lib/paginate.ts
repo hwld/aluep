@@ -2,11 +2,16 @@
 
 type PaginatedArgs = { take?: number; skip?: number };
 
+type Mapped<T> = { [P in keyof T]: T[P] };
+
 export const paginate = <T extends PaginatedArgs, K>(
   // extendsしてもPaginatedArgsのスーパータイプが入ってきちゃう可能性がある。
   // なので{} | {take: number} | {skip: number}みたいなのが入ってくるかも
   // これどうすることもできない？
-  finder: (input: T) => Promise<K>
+
+  // この書き方で、prisma.idea.findManyのような、prismaが提供するメソッドでも正しく補完が効くようになった。
+  // なんでMappedを通すと型がつくのかわからない・・・。
+  finder: <_D>(input: Mapped<T>) => Promise<K>
 ) => {
   return async <U extends Omit<T, "take" | "skip">>(args: {
     finderInput: U;
