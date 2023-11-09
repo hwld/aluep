@@ -51,7 +51,7 @@ export const Guest: Story = {
         mockTrpcQuery(trpcMsw.ideaComment.getAll, () => {
           const { create } = IdeaCommentHelper;
           return [
-            create({ inReplyToComment: undefined }),
+            create({ parentComment: undefined }),
             create({ text: "返信コメント1" }),
             create({ text: "返信コメント2" }),
           ];
@@ -73,7 +73,7 @@ export const SignedIn: Story = {
         mockTrpcQuery(trpcMsw.ideaComment.getAll, () => {
           const { create } = IdeaCommentHelper;
           return [
-            create({ inReplyToComment: undefined }),
+            create({ parentComment: undefined }),
             create({ text: "返信コメント1" }),
             create({ text: "返信コメント2" }),
           ];

@@ -29,12 +29,12 @@ describe("お題のコメントAPI", () => {
     await caller.ideaComment.create({
       ideaId: idea.id,
       text: "comment",
-      inReplyToCommentId: parentCommentId,
+      parentCommentId: parentCommentId,
     });
 
     const comments = await caller.ideaComment.getAll({ ideaId: idea.id });
     expect(comments.length).toBe(2);
-    expect(comments[1].inReplyToComment?.id).toBe(parentCommentId);
+    expect(comments[1].parentComment?.id).toBe(parentCommentId);
   });
 
   describe("バリデーションが失敗する入力", () => {

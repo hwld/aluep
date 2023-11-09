@@ -11,10 +11,10 @@ export const createIdeaComment = requireLoggedInProcedure
         text: input.text,
         fromUserId: ctx.session.user.id,
         // 返信元が指定されていればParentChildを作成する
-        ...(input.inReplyToCommentId
+        ...(input.parentCommentId
           ? {
               asChild: {
-                create: { parentCommentId: input.inReplyToCommentId },
+                create: { parentCommentId: input.parentCommentId },
               },
             }
           : {}),

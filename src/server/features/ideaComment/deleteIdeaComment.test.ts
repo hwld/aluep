@@ -50,13 +50,13 @@ describe("お題コメント削除API", () => {
     const { commentId } = await caller.ideaComment.create({
       ideaId: idea.id,
       text: "comment",
-      inReplyToCommentId: parentComment.id,
+      parentCommentId: parentComment.id,
     });
     await parentCaller.ideaComment.delete({ commentId: parentComment.id });
 
     const comments = await caller.ideaComment.getAll({ ideaId: idea.id });
     expect(comments.length).toBe(1);
     expect(comments[0].id).toBe(commentId);
-    expect(comments[0].inReplyToComment).toBeNull();
+    expect(comments[0].parentComment).toBeNull();
   });
 });

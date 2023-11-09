@@ -22,7 +22,7 @@ const ideaCommentArgs = {
 
 const buildInReplyToComment = (
   rawComment: Prisma.IdeaCommentGetPayload<typeof ideaCommentArgs>
-): IdeaComment["inReplyToComment"] => {
+): IdeaComment["parentComment"] => {
   if (rawComment.asChild === null) {
     // asChildがないということは、誰の子供でもないということなので、返信コメントではないとしてundefinedを返す
     return undefined;
@@ -50,7 +50,7 @@ const convertIdeaComment = (
       name: raw.fromUser.name,
       image: raw.fromUser.image,
     },
-    inReplyToComment: buildInReplyToComment(raw),
+    parentComment: buildInReplyToComment(raw),
     createdAt: raw.createdAt,
   };
   return comment;

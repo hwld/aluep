@@ -53,8 +53,8 @@ export const IdeaCommentCard: React.FC<Props> = ({
 
   // このコメントの返信元コメントにスクロールする
   const handleScrollReplySource = async () => {
-    if (comment.inReplyToComment) {
-      window.location.hash = comment.inReplyToComment.id;
+    if (comment.parentComment) {
+      window.location.hash = comment.parentComment.id;
     }
   };
 
@@ -94,13 +94,13 @@ export const IdeaCommentCard: React.FC<Props> = ({
             </Box>
           </Flex>
           {/* 返信コメントは返信元が削除されている場合はnullになる */}
-          {comment.inReplyToComment === null && (
+          {comment.parentComment === null && (
             <Box color="red.7" className={classes["deleted-message"]}>
               <IconChevronsRight width={20} height={20} />
               削除されたコメント
             </Box>
           )}
-          {comment.inReplyToComment && (
+          {comment.parentComment && (
             <Flex>
               <UnstyledButton
                 onClick={handleScrollReplySource}
@@ -108,7 +108,7 @@ export const IdeaCommentCard: React.FC<Props> = ({
                 className={classes["replay-message"]}
               >
                 <IconChevronsRight width={20} height={20} />
-                {comment.inReplyToComment.fromUserName ?? "不明なユーザー名"}
+                {comment.parentComment.fromUserName ?? "不明なユーザー名"}
               </UnstyledButton>
             </Flex>
           )}

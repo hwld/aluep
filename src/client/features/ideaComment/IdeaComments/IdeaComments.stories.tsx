@@ -18,7 +18,7 @@ export const Default: Story = {
         }),
         mockTrpcQuery(trpcMsw.ideaComment.getAll, () => {
           const { create } = IdeaCommentHelper;
-          return [create({ inReplyToComment: undefined }), create()];
+          return [create({ parentComment: undefined }), create()];
         }),
       ],
     },

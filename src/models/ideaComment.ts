@@ -1,11 +1,10 @@
 import { z } from "zod";
 
 export type IdeaComment = {
-  // TODO: parentCommentのほうがわかりやすい気がする
   /** nullのときは返信元が削除されている
    *  undefinedのときは返信コメントではない
    */
-  inReplyToComment?:
+  parentComment?:
     | {
         id: string;
         fromUserName: string | null;
@@ -43,6 +42,6 @@ export type IdeaCommentFormData = z.infer<typeof ideaCommentFormSchema>;
 export const createIdeaCommentInputSchema = ideaCommentFormSchema.and(
   z.object({
     ideaId: z.string().min(1),
-    inReplyToCommentId: z.string().min(1).optional(),
+    parentCommentId: z.string().min(1).optional(),
   })
 );

@@ -53,7 +53,7 @@ export const IdeaCommentReplyFormCard: React.FC<Props> = ({
         replyMutation.mutate({
           ...data,
           ideaId,
-          inReplyToCommentId: parentCommentId,
+          parentCommentId: parentCommentId,
         });
       }),
     });

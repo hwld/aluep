@@ -234,7 +234,7 @@ export const IdeaCommentHelper = {
       createdAt: new Date(),
       fromUser: UserHelper.create(),
       ideaId: faker.string.uuid(),
-      inReplyToComment: {
+      parentComment: {
         fromUserName: fakeString({ min: 1, max: 50 }),
         id: faker.string.uuid(),
       },
@@ -245,7 +245,7 @@ export const IdeaCommentHelper = {
     return {
       ...IdeaCommentHelper.create(),
       text: fakeString(2000),
-      inReplyToComment: {
+      parentComment: {
         fromUserName: fakeString(50),
         id: faker.string.uuid(),
       },

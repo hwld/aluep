@@ -31,7 +31,7 @@ export const Default: Story = {
   name: "返信ではない",
   args: {
     ...baseArgs,
-    comment: IdeaCommentHelper.create({ inReplyToComment: undefined }),
+    comment: IdeaCommentHelper.create({ parentComment: undefined }),
   },
 };
 
@@ -44,6 +44,6 @@ export const DeletedReply: Story = {
   name: "返信元が削除されている",
   args: {
     ...baseArgs,
-    comment: IdeaCommentHelper.create({ inReplyToComment: null }),
+    comment: IdeaCommentHelper.create({ parentComment: null }),
   },
 };
