@@ -5,6 +5,7 @@ describe("お題開発情報削除API", () => {
     const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { devId } = await caller.dev.create({
+      title: "開発",
       githubRepositoryUrl: "https://github.com/hwld/aluep",
       ideaId: idea.id,
       status: "IN_PROGRESS",

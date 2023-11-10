@@ -4,6 +4,7 @@ import { z } from "zod";
 
 export type Dev = {
   id: string;
+  title: string;
   // 開発しているお題が消された場合にnullになる
   idea: { id: string; title: string } | null;
   developer: { id: string; name: string | null; imageUrl: string | null };
@@ -18,12 +19,19 @@ export type Dev = {
   allowOtherUserMemos: boolean;
 };
 const DevFields = {
+  title: { maxLength: 60 },
   comment: { maxLength: 300 },
   repoUrl: { maxLength: 120 },
 };
-const { comment, repoUrl } = DevFields;
+const { title, comment, repoUrl } = DevFields;
 
 export const devFormSchema = z.object({
+  title: z
+    .string()
+    .max(
+      title.maxLength,
+      `プロジェクト名は${title.maxLength}文字以下で入力してください。`
+    ),
   comment: z
     .string()
     .max(

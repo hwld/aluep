@@ -8,6 +8,7 @@ export const createDev = requireLoggedInProcedure
     // 開発情報を登録する
     const dev = await db.development.create({
       data: {
+        title: input.title,
         idea: { connect: { id: input.ideaId } },
         user: { connect: { id: ctx.session.user.id } },
         githubUrl: input.githubRepositoryUrl,

@@ -20,6 +20,7 @@ export const updateDev = requireLoggedInProcedure
     await db.development.update({
       where: { id: dev.id },
       data: {
+        title: input.title,
         githubUrl: input.githubRepositoryUrl,
         comment: input.comment,
         developedItemUrl: input.developedItemUrl,

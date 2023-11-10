@@ -137,6 +137,7 @@ export const DevHelper = {
   create: (data?: Partial<Dev>): Dev => {
     return {
       id: faker.string.uuid(),
+      title: fakeString({ min: 1, max: 60 }),
       idea: {
         id: faker.string.uuid(),
         title: fakeString({ min: 1, max: 50 }),
@@ -161,6 +162,7 @@ export const DevHelper = {
   createFilled: (): Dev => {
     return {
       ...DevHelper.create(),
+      title: fakeString(60),
       githubUrl: "https://github.com/hwld/aluep",
       developedItemUrl: "https://example.com",
       comment: faker.string.sample(300),

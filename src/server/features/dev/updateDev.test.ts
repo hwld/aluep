@@ -9,6 +9,7 @@ describe("開発情報更新API", () => {
     });
 
     const promise = caller.dev.update({
+      title: "開発",
       githubRepositoryUrl: "https://github.com/hwld/me",
       status: "ABORTED",
       devId: dev.id,
@@ -26,6 +27,7 @@ describe("開発情報更新API", () => {
     });
 
     const promise = caller.dev.update({
+      title: "開発",
       devId: dev.id,
       status: "ABORTED",
       githubRepositoryUrl: "https://github.com/hwld/me",
@@ -39,6 +41,7 @@ describe("開発情報更新API", () => {
     const { caller } = await TestHelpers.createNewUserSessionCaller();
     const { idea } = await TestHelpers.createIdeaAndUser();
     const { devId } = await caller.dev.create({
+      title: "開発",
       ideaId: idea.id,
       status: "IN_PROGRESS",
       githubRepositoryUrl: "https://github.com/hwld/me",
@@ -48,6 +51,7 @@ describe("開発情報更新API", () => {
     const updatedComment = "new comment";
 
     await caller.dev.update({
+      title: "更新後の開発",
       devId: devId,
       status: "COMPLETED",
       githubRepositoryUrl: updatedRepoUrl,
@@ -55,6 +59,7 @@ describe("開発情報更新API", () => {
     });
 
     const updatedDevelop = await caller.dev.get({ devId: devId });
+    expect(updatedDevelop?.title).toBe("更新後の開発");
     expect(updatedDevelop?.status).toBe("COMPLETED");
     expect(updatedDevelop?.githubUrl).toBe(updatedRepoUrl);
     expect(updatedDevelop?.comment).toBe(updatedComment);

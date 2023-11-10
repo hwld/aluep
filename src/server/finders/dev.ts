@@ -18,6 +18,7 @@ const convertDev = (
   const idea = raw.idea ? { id: raw.idea.id, title: raw.idea.title } : null;
   const dev: Dev = {
     id: raw.id,
+    title: raw.title,
     idea,
     developer: {
       id: raw.user.id,

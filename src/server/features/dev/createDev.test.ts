@@ -6,6 +6,7 @@ describe("お題開発API", () => {
     const { idea } = await TestHelpers.createIdeaAndUser();
 
     const promise = caller.dev.create({
+      title: "開発",
       ideaId: idea.id,
       githubRepositoryUrl: "https://github.com/hwld/aluep",
       status: "IN_PROGRESS",
@@ -20,6 +21,7 @@ describe("お題開発API", () => {
     const repositoryUrl = "https://github.com/hwld/aluep";
 
     const { devId } = await caller.dev.create({
+      title: "開発",
       ideaId: idea.id,
       githubRepositoryUrl: repositoryUrl,
       status: "COMPLETED",

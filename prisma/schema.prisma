@@ -135,6 +135,7 @@ model IdeaLike {
 // アプリ開発のお題の開発情報
 model Development {
   id                  String            @id @default(cuid())
+  title               String            @default("")
   userId              String
   user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   ideaId              String?
