@@ -4,14 +4,20 @@ import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { AppSidebar } from "@/client/ui/AppSidebar/AppSidebar";
 import { Box } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import clsx from "clsx";
 import { ReactNode } from "react";
 import classes from "./AppLayout.module.css";
 
-type Props = { children: ReactNode; isSideBarOpen?: boolean | undefined };
+type Props = {
+  children: ReactNode;
+  isSideBarOpen?: boolean | undefined;
+  className?: string;
+};
 
 export const AppLayout: React.FC<Props> = ({
   children,
   isSideBarOpen = true,
+  className,
 }) => {
   const { session } = useSessionQuery();
   const unsupportedDisplay = useMediaQuery("(max-width: 600px)");
@@ -19,7 +25,7 @@ export const AppLayout: React.FC<Props> = ({
 
   return (
     <>
-      <Box className={classes.root}>
+      <Box className={clsx(classes.root, className)}>
         <AppSidebar loggedInUser={session?.user} isOpen={isSideBarOpen} />
         <Box component="main" p="sm" className={classes.content}>
           {children}

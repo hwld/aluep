@@ -12,7 +12,7 @@ export const ServerError: React.FC = () => {
         pos="relative"
         style={(theme) => ({
           overflow: "hidden",
-          margin: `-${theme.spacing.xl}px`,
+          margin: `calc(-1 * ${theme.spacing.sm})`,
         })}
       >
         <Flex

@@ -4,7 +4,6 @@ import "@/client/style/global.css";
 import { theme } from "@/client/style/theme";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { AppNavigationProgress } from "@/client/ui/AppNavigationProgress";
-import { AppErrorBoundary } from "@/client/ui/ErrorBoundary";
 import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import "@mantine/carousel/styles.layer.css";
 import { MantineProvider } from "@mantine/core";
@@ -19,6 +18,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { Noto_Sans_JP } from "next/font/google";
 import React from "react";
+import { AppErrorBoundary } from "@/client/ui/ErrorBoundary/ErrorBoundary";
 
 export const font = Noto_Sans_JP({
   subsets: ["latin"],
@@ -56,9 +56,7 @@ function App({
             <Notifications />
             <AppLayout isSideBarOpen={isSideBarOpen}>
               <AppNavigationProgress />
-              <div className={font.className}>
-                <Component {...others} />
-              </div>
+              <Component {...others} />
             </AppLayout>
           </RequireLoginModalProvider>
         </ModalsProvider>

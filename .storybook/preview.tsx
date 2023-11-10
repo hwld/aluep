@@ -42,7 +42,7 @@ const preview: Preview = {
   },
   decorators: [
     mswDecorator,
-    (Story) => {
+    (Story, ctx) => {
       const [queryClient] = useState(
         () =>
           new QueryClient({
@@ -52,6 +52,10 @@ const preview: Preview = {
           })
       );
       const [mockTrpcClient] = useState(() => mockTRPCClient);
+
+      if (ctx.parameters.context === "none") {
+        return <Story />;
+      }
 
       return (
         <mockTRPC.Provider client={mockTrpcClient} queryClient={queryClient}>
