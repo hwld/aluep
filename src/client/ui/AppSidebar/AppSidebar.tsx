@@ -1,4 +1,4 @@
-import { DevInProgresSidebarItem } from "@/client/features/dev/InProgresDevSidebarItem/InProgresDevSidebarItem";
+import { InProgresDevSidebarItem } from "@/client/features/dev/InProgresDevSidebarItem/InProgresDevSidebarItem";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { LoggedInUserCard } from "@/client/ui/LoggedInUserCard/LoggedInUserCard";
 import { LoggedInUserMenu } from "@/client/ui/LoggedInUserMenu/LoggedInUserMenu";
@@ -111,7 +111,7 @@ export const AppSidebar: React.FC<Props> = ({
               tooltip={!isMenuOpen}
             />
             {loggedInUser && (
-              <DevInProgresSidebarItem
+              <InProgresDevSidebarItem
                 tooltip={!isMenuOpen}
                 loggedInUserId={loggedInUser.id}
               />

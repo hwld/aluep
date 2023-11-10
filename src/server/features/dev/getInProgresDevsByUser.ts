@@ -2,7 +2,6 @@ import { findManyDevs } from "@/server/finders/dev";
 import { publicProcedure } from "@/server/lib/trpc";
 import { z } from "zod";
 
-// TODO: getDevsByUserに統一したい
 export const getInProgresDevsByUser = publicProcedure
   .input(z.object({ userId: z.string() }))
   .query(async ({ input: { userId }, ctx }) => {

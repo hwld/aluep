@@ -1,11 +1,11 @@
 import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { DevHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
-import { DevInProgresSidebarItem } from "./InProgresDevSidebarItem";
+import { InProgresDevSidebarItem } from "./InProgresDevSidebarItem";
 
 const meta = {
-  component: DevInProgresSidebarItem,
-} satisfies Meta<typeof DevInProgresSidebarItem>;
+  component: InProgresDevSidebarItem,
+} satisfies Meta<typeof InProgresDevSidebarItem>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;

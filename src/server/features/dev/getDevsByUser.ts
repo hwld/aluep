@@ -1,4 +1,3 @@
-import { devStatusSchema } from "@/models/devStatus";
 import { findManyDevs } from "@/server/finders/dev";
 import { paginate } from "@/server/lib/paginate";
 import { db } from "@/server/lib/prismadb";
@@ -12,13 +11,12 @@ export const getDevsByUser = publicProcedure
     z.object({
       userId: z.string(),
       page: pagingSchema,
-      status: devStatusSchema.optional(),
     })
   )
-  .query(async ({ input, input: { page, status }, ctx }) => {
+  .query(async ({ input, input: { page }, ctx }) => {
     const [devs, { allPages }] = await paginate(findManyDevs)({
       finderInput: {
-        where: { userId: input.userId, ...(status && { status }) },
+        where: { userId: input.userId },
         loggedInUserId: ctx.session?.user.id,
       },
       counter: ({ loggedInUserId: _, ...others }) => {
