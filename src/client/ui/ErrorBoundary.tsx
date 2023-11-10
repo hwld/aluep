@@ -1,37 +1,24 @@
-import React, { ErrorInfo, PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 
-type State = { hasError: boolean };
+const ErrorFallback: React.FC<FallbackProps> = ({ resetErrorBoundary }) => {
+  return (
+    <div>
+      <h1>error</h1>
+      <button onClick={resetErrorBoundary}>更新する</button>
+    </div>
+  );
+};
 
-export class ErrorBoundary extends React.Component<
-  PropsWithChildren,
-  { hasError: boolean }
-> {
-  public state: State = { hasError: false };
-
-  static getDerivedStateFromError(_: Error) {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div>
-          <h2 style={{ fontFamily: "sans-serif" }}>エラーが発生しました。</h2>
-          <button
-            type="button"
-            onClick={() => this.setState({ hasError: false })}
-          >
-            更新する
-          </button>
-        </div>
-      );
-    }
-
-    return this.props.children;
-  }
-}
+export const AppErrorBoundary: React.FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onError={(error, errorInfo) => {
+        console.error("Uncaught error:", error, errorInfo);
+      }}
+    >
+      {children}
+    </ErrorBoundary>
+  );
+};

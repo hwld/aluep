@@ -4,7 +4,7 @@ import "@/client/style/global.css";
 import { theme } from "@/client/style/theme";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { AppNavigationProgress } from "@/client/ui/AppNavigationProgress";
-import { ErrorBoundary } from "@/client/ui/ErrorBoundary";
+import { AppErrorBoundary } from "@/client/ui/ErrorBoundary";
 import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import "@mantine/carousel/styles.layer.css";
 import { MantineProvider } from "@mantine/core";
@@ -18,6 +18,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { Noto_Sans_JP } from "next/font/google";
+import React from "react";
 
 export const font = Noto_Sans_JP({
   subsets: ["latin"],
@@ -30,7 +31,7 @@ function App({
   pageProps: { isSideBarOpen, ...others },
 }: AppProps<PageProps>) {
   return (
-    <ErrorBoundary>
+    <AppErrorBoundary>
       <Head>
         <title>Aluep</title>
         <meta
@@ -62,7 +63,7 @@ function App({
           </RequireLoginModalProvider>
         </ModalsProvider>
       </MantineProvider>
-    </ErrorBoundary>
+    </AppErrorBoundary>
   );
 }
 
