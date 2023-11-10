@@ -1,8 +1,8 @@
-import { IdeaCommentCard } from "@/client/features/ideaComment/IdeaCommentCard/IdeaCommentCard";
+import { IdeaCommentCard } from "@/client/features/ideaComment/IdeaComments/IdeaCommentCard/IdeaCommentCard";
 import {
   IdeaCommentForm,
   IdeaCommentFormRef,
-} from "@/client/features/ideaComment/IdeaCommentForm/IdeaCommentForm";
+} from "@/client/features/ideaComment/IdeaComments/IdeaCommentForm/IdeaCommentForm";
 import { useIdeaComments } from "@/client/features/ideaComment/useIdeaComments";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";

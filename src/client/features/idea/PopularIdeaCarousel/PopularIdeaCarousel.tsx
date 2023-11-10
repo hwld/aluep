@@ -1,7 +1,7 @@
 import {
   PopularIdeaCard,
   popularIdeaCardWidthPx,
-} from "@/client/features/idea/PopularIdeaCard/PopularIdeaCard";
+} from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCard/PopularIdeaCard";
 import { AppSkeleton } from "@/client/ui/AppSkeleton/AppSkeleton";
 import { Idea } from "@/models/idea";
 import { Carousel } from "@mantine/carousel";

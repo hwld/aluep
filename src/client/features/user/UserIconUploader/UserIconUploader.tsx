@@ -1,4 +1,4 @@
-import { UserIconFormModal } from "@/client/features/user/UserIconFormModal/UserIconFormModal";
+import { UserIconFormModal } from "@/client/features/user/UserIconUploader/UserIconFormModal/UserIconFormModal";
 import {
   showErrorNotification,
   showLoadingNotification,

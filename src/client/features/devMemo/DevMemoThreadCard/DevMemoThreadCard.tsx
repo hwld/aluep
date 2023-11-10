@@ -1,6 +1,6 @@
-import { DevMemoChildrenSection } from "@/client/features/devMemo/DevMemoChildrenSection/DevMemoChildrenSection";
+import { DevMemoChildrenSection } from "@/client/features/devMemo/DevMemoThreadCard/DevMemoChildrenSection/DevMemoChildrenSection";
 import { DevMemoMenuButton } from "@/client/features/devMemo/DevMemoMenuButton/DevMemoMenuButton";
-import { DevMemoReplyFormBox } from "@/client/features/devMemo/DevMemoReplyFormBox/DevMemoReplyFormBox";
+import { DevMemoReplyFormBox } from "@/client/features/devMemo/DevMemoThreadCard/DevMemoReplyFormBox/DevMemoReplyFormBox";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { useHashRemoverOnClickOutside } from "@/client/lib/useHashRemoverOnClickOutside";
 import { formatDate } from "@/client/lib/utils";

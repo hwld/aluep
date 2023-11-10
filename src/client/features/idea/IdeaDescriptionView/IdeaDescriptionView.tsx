@@ -1,5 +1,5 @@
 import { Box } from "@mantine/core";
-import editorClasses from "../IdeaDescriptionEditor/IdeaDescriptionEditor.module.css";
+import editorClasses from "@/client/features/idea/IdeaForm/IdeaDescriptionEditor/IdeaDescriptionEditor.module.css";
 
 type Props = { descriptionHtml: string };
 export const IdeaDescriptionView: React.FC<Props> = ({ descriptionHtml }) => {

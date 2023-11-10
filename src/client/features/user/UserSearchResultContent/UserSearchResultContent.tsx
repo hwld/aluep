@@ -1,4 +1,4 @@
-import { EmptyUserSearchResult } from "@/client/features/user/EmptyUserSearchResult/EmptyUserSearchResult";
+import { EmptyUserSearchResult } from "@/client/features/user/UserSearchResultContent/EmptyUserSearchResult/EmptyUserSearchResult";
 import {
   UserCard,
   userCardMinWidthPx,

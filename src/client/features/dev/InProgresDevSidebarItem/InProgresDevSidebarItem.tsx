@@ -1,4 +1,4 @@
-import { InProgressDevModal } from "@/client/features/dev/InProgressDevModal/InProgressDevModal";
+import { InProgressDevModal } from "@/client/features/dev/InProgresDevSidebarItem/InProgressDevModal/InProgressDevModal";
 import { SidebarItem } from "@/client/ui/SidebarItem/SidebarItem";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCode } from "@tabler/icons-react";

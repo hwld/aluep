@@ -8,21 +8,21 @@ import {
   IdeaHelper,
   UserHelper,
 } from "@/models/tests/helpers";
-import { PopularIdeaCard } from "@/client/features/idea/PopularIdeaCard/PopularIdeaCard";
+import { PopularIdeaCard } from "@/client/features/idea/PopularIdeaCarousel/PopularIdeaCard/PopularIdeaCard";
 import { DevAuthorCard } from "@/client/features/dev/DevAuthorCard/DevAuthorCard";
 import { UserCard } from "@/client/features/user/UserCard/UserCard";
 import { DevCard } from "@/client/features/dev/DevCard/DevCard";
 import { IdeaLikerCard } from "@/client/features/user/IdeaLikerCard/IdeaLikerCard";
 import { DevTitleCard } from "@/client/features/dev/DevTitleCard/DevTitleCard";
 import React from "react";
-import { IdeaCommentCard } from "@/client/features/ideaComment/IdeaCommentCard/IdeaCommentCard";
+import { IdeaCommentCard } from "@/client/features/ideaComment/IdeaComments/IdeaCommentCard/IdeaCommentCard";
 import { DevMemoFormCard } from "@/client/features/devMemo/DevMemoFormCard/DevMemoFormCard";
 import { DevMemoThreadCard } from "@/client/features/devMemo/DevMemoThreadCard/DevMemoThreadCard";
-import { UserActivityCard } from "@/client/features/user/UserActivityCard/UserActivityCard";
-import { UserProfileCard } from "@/client/features/user/UserProfileCard/UserProfileCard";
+import { UserActivityCard } from "@/client/features/user/UserDashboard/UserActivityCard/UserActivityCard";
+import { UserProfileCard } from "@/client/features/user/UserDashboard/UserProfileCard/UserProfileCard";
 import { UploadedImageCard } from "@/client/ui/UploadedImageCard/UploadedImageCard";
-import { IdeaCommentReplyFormCard } from "@/client/features/ideaComment/IdeaCommentReplyFormCard/IdeaCommentReplyFormCard";
-import { UserReceivedLikeCard } from "@/client/features/user/UserReceivedLikeCard/UserReceivedLikeCard";
+import { IdeaCommentReplyFormCard } from "@/client/features/ideaComment/IdeaComments/IdeaCommentCard/IdeaCommentReplyFormCard/IdeaCommentReplyFormCard";
+import { UserReceivedLikeCard } from "@/client/features/user/UserDashboard/UserReceivedLikeCard/UserReceivedLikeCard";
 import { DevDetailCard } from "@/client/features/dev/DevDetailCard/DevDetailCard";
 
 const meta = {

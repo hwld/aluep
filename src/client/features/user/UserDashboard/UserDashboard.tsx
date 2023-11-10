@@ -1,7 +1,7 @@
-import { UserActivityCard } from "@/client/features/user/UserActivityCard/UserActivityCard";
+import { UserActivityCard } from "@/client/features/user/UserDashboard/UserActivityCard/UserActivityCard";
 import { ReceivedLikeCount } from "@/client/features/user/useReceivedLikeCountQuery";
-import { UserProfileCard } from "@/client/features/user/UserProfileCard/UserProfileCard";
-import { UserReceivedLikeCard } from "@/client/features/user/UserReceivedLikeCard/UserReceivedLikeCard";
+import { UserProfileCard } from "@/client/features/user/UserDashboard/UserProfileCard/UserProfileCard";
+import { UserReceivedLikeCard } from "@/client/features/user/UserDashboard/UserReceivedLikeCard/UserReceivedLikeCard";
 import { UserActivity } from "@/client/features/user/useUserActivityQuery";
 import { User } from "@/models/user";
 import { Flex } from "@mantine/core";

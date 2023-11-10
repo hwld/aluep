@@ -1,6 +1,6 @@
-import { DevDetailCardTitle } from "@/client/features/dev/DevDetailCardTitle/DevDetailCardTitle";
-import { DevLikeButton } from "@/client/features/dev/DevLikeButton/DevLikeButton";
-import { DevDetailMenuButton } from "@/client/features/dev/DevDetailMenuButton/DevDetailMenuButton";
+import { DevDetailCardTitle } from "@/client/features/dev/DevDetailCard/DevDetailCardTitle/DevDetailCardTitle";
+import { DevLikeButton } from "@/client/features/dev/DevDetailCard/DevLikeButton/DevLikeButton";
+import { DevDetailMenuButton } from "@/client/features/dev/DevDetailCard/DevDetailMenuButton/DevDetailMenuButton";
 import { DevStatusBadge } from "@/client/features/dev/DevStatusBadge/DevStatusBadge";
 import { UserIconLink } from "@/client/features/user/UserIconLink/UserIconLink";
 import { convertToGithubDevUrl } from "@/client/lib/convertToGithubDevUrl";
