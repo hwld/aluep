@@ -1,9 +1,9 @@
 import { useDevsByUser } from "@/client/features/dev/useDevsByUser";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
 import {
-  UserDevCard,
+  DevTitleCard,
   userDevCardMinWidthPx,
-} from "@/client/features/user/UserDevCard/UserDevCard";
+} from "@/client/features/dev/DevTitleCard/DevTitleCard";
 import { IconCode } from "@tabler/icons-react";
 import { User } from "next-auth";
 
@@ -42,7 +42,7 @@ export const UserDevs: React.FC<Props> = ({ user, page, onChangePage }) => {
       }}
     >
       {devsByUser?.list.map((dev) => (
-        <UserDevCard key={dev.id} dev={dev} />
+        <DevTitleCard key={dev.id} dev={dev} />
       ))}
     </UserContentContainer>
   );

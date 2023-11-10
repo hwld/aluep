@@ -1,7 +1,7 @@
 import {
-  DevCard,
+  DevAuthorCard,
   devCardMinWidthPx,
-} from "@/client/features/dev/DevCard/DevCard";
+} from "@/client/features/dev/DevAuthorCard/DevAuthorCard";
 import { useDevsByIdea } from "@/client/features/dev/useDevsByIdea";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { useURLParams } from "@/client/lib/useURLParams";
@@ -16,7 +16,7 @@ import { IconCode } from "@tabler/icons-react";
 
 type Props = { idea: Idea };
 
-export const Devs: React.FC<Props> = ({ idea }) => {
+export const DevsByIdea: React.FC<Props> = ({ idea }) => {
   const [{ page }, setURLParams] = useURLParams(paginatedPageSchema);
   const { devs } = useDevsByIdea({ ideaId: idea.id, page });
 
@@ -36,7 +36,7 @@ export const Devs: React.FC<Props> = ({ idea }) => {
           <MutedText>開発情報</MutedText>
           <GridContainer minItemWidthPx={devCardMinWidthPx}>
             {devs?.list.map((dev) => {
-              return <DevCard key={dev.id} dev={dev} />;
+              return <DevAuthorCard key={dev.id} dev={dev} />;
             })}
           </GridContainer>
         </Stack>

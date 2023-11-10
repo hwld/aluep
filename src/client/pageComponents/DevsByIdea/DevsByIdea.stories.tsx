@@ -1,4 +1,4 @@
-import { Devs } from "@/client/pageComponents/Devs/Devs";
+import { DevsByIdea } from "@/client/pageComponents/DevsByIdea/DevsByIdea";
 import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
 import { mockTrpcQuery, trpcMsw } from "@/client/__mocks__/trpc";
 import { DevHelper, IdeaHelper } from "@/models/tests/helpers";
@@ -6,7 +6,7 @@ import { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
   title: "Page/開発情報の一覧",
-  component: Devs,
+  component: DevsByIdea,
   parameters: {
     layout: "fullscreen",
   },
@@ -19,7 +19,7 @@ const meta = {
       );
     },
   ],
-} satisfies Meta<typeof Devs>;
+} satisfies Meta<typeof DevsByIdea>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 

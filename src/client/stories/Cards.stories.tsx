@@ -9,11 +9,11 @@ import {
   UserHelper,
 } from "@/models/tests/helpers";
 import { PopularIdeaCard } from "@/client/features/idea/PopularIdeaCard/PopularIdeaCard";
-import { DevCard } from "@/client/features/dev/DevCard/DevCard";
+import { DevAuthorCard } from "@/client/features/dev/DevAuthorCard/DevAuthorCard";
 import { UserCard } from "@/client/features/user/UserCard/UserCard";
-import { LikedDevCard } from "@/client/features/dev/LikedDevCard/LikedDevCard";
+import { DevCard } from "@/client/features/dev/DevCard/DevCard";
 import { IdeaLikerCard } from "@/client/features/user/IdeaLikerCard/IdeaLikerCard";
-import { UserDevCard } from "@/client/features/user/UserDevCard/UserDevCard";
+import { DevTitleCard } from "@/client/features/dev/DevTitleCard/DevTitleCard";
 import React from "react";
 import { IdeaCommentCard } from "@/client/features/ideaComment/IdeaCommentCard/IdeaCommentCard";
 import { DevMemoFormCard } from "@/client/features/devMemo/DevMemoFormCard/DevMemoFormCard";
@@ -44,9 +44,9 @@ export const Cards = {
         <IdeaLikerCard liker={{ ...user, likedDate: new Date() }} />
         <PopularIdeaCard idea={idea} />
         <UserCard user={user} />
+        <DevAuthorCard dev={dev} />
         <DevCard dev={dev} />
-        <LikedDevCard dev={dev} />
-        <UserDevCard dev={dev} />
+        <DevTitleCard dev={dev} />
         <IdeaCommentCard
           comment={IdeaCommentHelper.create({ text: "hello" })}
           ideaId=""

@@ -1,4 +1,4 @@
-import { LikedDevCard } from "@/client/features/dev/LikedDevCard/LikedDevCard";
+import { DevCard } from "@/client/features/dev/DevCard/DevCard";
 import { useLikedDevs } from "@/client/features/dev/useLikedDevs";
 import { UserContentContainer } from "@/client/features/user/UserContentContainer/UserContentContainer";
 import { IconHeartFilled } from "@tabler/icons-react";
@@ -44,7 +44,7 @@ export const UserLikedDevs: React.FC<Props> = ({
       }}
     >
       {likedDevs?.list.map((dev) => (
-        <LikedDevCard key={dev.id} dev={dev} />
+        <DevCard key={dev.id} dev={dev} />
       ))}
     </UserContentContainer>
   );

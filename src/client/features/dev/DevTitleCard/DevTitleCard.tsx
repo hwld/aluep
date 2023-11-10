@@ -11,7 +11,7 @@ import { Routes } from "@/share/routes";
 import { Flex, Text } from "@mantine/core";
 import { IconHeart } from "@tabler/icons-react";
 import { useRouter } from "next/router";
-import classes from "./UserDevCard.module.css";
+import classes from "./DevTitleCard.module.css";
 
 export const userDevCardMinWidthPx = 450;
 
@@ -20,9 +20,9 @@ type Props = {
 };
 
 /**
- * ユーザーが開発したお題と開発情報を表示するカード
+ * 開発情報のタイトルを表示するカード
  */
-export const UserDevCard: React.FC<Props> = ({ dev }) => {
+export const DevTitleCard: React.FC<Props> = ({ dev }) => {
   const router = useRouter();
 
   const handleGoDevDetail = () => {

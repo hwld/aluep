@@ -1,8 +1,8 @@
-import { UserDevCard } from "@/client/features/user/UserDevCard/UserDevCard";
+import { DevTitleCard } from "@/client/features/dev/DevTitleCard/DevTitleCard";
 import { DevHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 
-const meta = { component: UserDevCard } satisfies Meta<typeof UserDevCard>;
+const meta = { component: DevTitleCard } satisfies Meta<typeof DevTitleCard>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;

@@ -1,7 +1,6 @@
 .root {
-  position: static;
   cursor: pointer;
-  transition: all 100ms;
+  transition: outline 100ms;
   outline: transparent solid 0px;
 
   &:not(:has(a:not(.dev-link):hover, button:hover)):hover {
