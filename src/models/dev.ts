@@ -28,6 +28,7 @@ const { title, comment, repoUrl } = DevFields;
 export const devFormSchema = z.object({
   title: z
     .string()
+    .min(1, "プロジェクト名を入力してください。")
     .max(
       title.maxLength,
       `プロジェクト名は${title.maxLength}文字以下で入力してください。`

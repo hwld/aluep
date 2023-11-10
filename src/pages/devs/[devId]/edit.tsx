@@ -20,7 +20,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
     try {
       const dev = await trpcStore.dev.get.fetch({ devId });
       // 削除されてる可能性がある
-      ideaId = dev?.idea?.id;
+      ideaId = dev.idea?.id;
     } catch (e) {
       if (e instanceof TRPCError && e.code === "NOT_FOUND") {
         return { notFound: true };
@@ -39,14 +39,13 @@ const DevEditPage: NextPage = () => {
   const router = useRouter();
   const devId = assertString(router.query.devId);
 
-  const { dev, isLoading: devLoading } = useDevQuery({ devId });
-  const { idea, isFetching: ideaFetching } = useIdeaQuery({
+  const { dev, isInitialLoading: devLoading } = useDevQuery({ devId });
+  const { idea, isInitialLoading: ideaLoading } = useIdeaQuery({
     ideaId: dev?.idea?.id,
   });
 
-  // 開発情報が読み込み中、または、お題情報がフェッチ中の場合はローディングを出す。
-  // 開発情報にお題が含まれない可能性があるので、ideaはloadingではなくfetchingを使用する
-  if (devLoading || ideaFetching) {
+  // 開発情報が読み込み中、または、お題情報が読み込み中の場合はローディングを出す。
+  if (devLoading || ideaLoading) {
     return <></>;
   } else if (!dev) {
     return <NotFoundPage />;

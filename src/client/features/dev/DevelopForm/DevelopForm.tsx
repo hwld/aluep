@@ -28,7 +28,7 @@ type Props = {
   isLoading?: boolean;
 };
 
-export const DevForm: React.FC<Props> = ({
+export const DevelopForm: React.FC<Props> = ({
   defaultValues,
   onSubmit,
   onCancel,
@@ -65,6 +65,20 @@ export const DevForm: React.FC<Props> = ({
       submitText={submitText}
       isSubmitting={isLoading}
     >
+      <Controller
+        control={control}
+        name="title"
+        render={({ field }) => {
+          return (
+            <TextInput
+              label="プロジェクト名"
+              error={getFieldState("title").error?.message}
+              {...field}
+            />
+          );
+        }}
+      />
+
       <Group align="flex-end" gap="xs">
         <Box style={{ flexGrow: 1 }}>
           <Controller

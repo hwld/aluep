@@ -2,8 +2,9 @@
  * ダミーデータを生成
  */
 
+import { buildDefaultDevTitle } from "@/client/lib/utils";
 import { faker } from "@faker-js/faker/locale/ja";
-import { PrismaClient } from "@prisma/client";
+import { Idea, PrismaClient } from "@prisma/client";
 import { Presets, SingleBar } from "cli-progress";
 
 const prisma = new PrismaClient();
@@ -23,19 +24,19 @@ async function main() {
   const userIds = await createUsers(100);
 
   // お題の作成
-  const ideaIds = await createIdeas(userIds, 50);
+  const ideas = await createIdeas(userIds, 50);
 
-  const recommendedId = ideaIds[0];
+  const recommended = ideas[0];
   await prisma.recommendedIdea.upsert({
-    where: { ideaId: recommendedId },
-    create: { ideaId: recommendedId },
+    where: { ideaId: recommended.id },
+    create: { ideaId: recommended.id },
     update: {},
   });
 
   // お題へのいいねの追加
   await createIdeaLike({
     userIds,
-    ideaIds: ideaIds,
+    ideas: ideas,
     // いいねされるお題の数
     likedIdeaCounts: 25,
     // お題へのいいねの最大数 (自分の投稿にいいねができないので(ユーザー数 - お題の数) < いいねの最大数　の場合にはエラーが出る可能性がある
@@ -45,7 +46,7 @@ async function main() {
   // 開発情報の作成
   const devIds = await createDevs({
     userIds,
-    ideaIds: ideaIds,
+    ideas: ideas,
     // 開発されるお題の数
     developedIdeaCounts: 25,
     // 開発するユーザーの最大数
@@ -94,14 +95,11 @@ async function createUsers(counts: number): Promise<string[]> {
  * お題を作成する
  * @return 作成したお題のIDのリスト
  */
-async function createIdeas(
-  userIds: string[],
-  counts: number
-): Promise<string[]> {
+async function createIdeas(userIds: string[], counts: number): Promise<Idea[]> {
   console.log("お題の作成");
 
   bar.start(counts, 0);
-  const ideaIds = [];
+  const ideas = [];
 
   for (let i = 0; i < counts; i++) {
     const id = faker.string.uuid();
@@ -117,18 +115,18 @@ async function createIdeas(
       update: { createdAt: new Date() },
     });
 
-    ideaIds.push(idea.id);
+    ideas.push(idea);
     bar.increment();
   }
   bar.stop();
   console.log("");
 
-  return ideaIds;
+  return ideas;
 }
 
 type CreateIdeaLikeArgs = {
   userIds: string[];
-  ideaIds: string[];
+  ideas: Idea[];
   /** いいねされるお題の数 */
   likedIdeaCounts: number;
   /** 一つのお題の最大のいいね数  */
@@ -139,17 +137,17 @@ type CreateIdeaLikeArgs = {
  */
 async function createIdeaLike({
   userIds,
-  ideaIds,
+  ideas,
   likedIdeaCounts,
   maxIdeaLikeCounts,
 }: CreateIdeaLikeArgs) {
   console.log("お題にいいねを追加");
 
   // いいねされるお題をランダムで選択する
-  const likedIdeaIds = faker.helpers.arrayElements(ideaIds, likedIdeaCounts);
+  const likedIdeas = faker.helpers.arrayElements(ideas, likedIdeaCounts);
 
   // お題それぞれに何個いいねをつけるかを決めておく
-  const ideaLikeCountsList = [...new Array(likedIdeaIds.length)].map(() =>
+  const ideaLikeCountsList = [...new Array(likedIdeas.length)].map(() =>
     faker.number.int({
       min: 1,
       max: maxIdeaLikeCounts,
@@ -163,9 +161,9 @@ async function createIdeaLike({
   );
   bar.start(sumIdeaLikes, 0);
 
-  for (let i = 0; i < likedIdeaIds.length; i++) {
+  for (let i = 0; i < likedIdeas.length; i++) {
     // いいねをつけるお題のid
-    const ideaId = likedIdeaIds[i];
+    const ideaId = likedIdeas[i].id;
     // いいねを何個つけるか
     const likeCounts = ideaLikeCountsList[i];
 
@@ -189,7 +187,7 @@ async function createIdeaLike({
 }
 
 type CreateDevelopmentArgs = {
-  ideaIds: string[];
+  ideas: Idea[];
   userIds: string[];
   /** 開発されるお題の数 */
   developedIdeaCounts: number;
@@ -198,7 +196,7 @@ type CreateDevelopmentArgs = {
 };
 /** 開発情報を作成 */
 async function createDevs({
-  ideaIds,
+  ideas,
   userIds,
   developedIdeaCounts,
   maxDevelopmentCounts,
@@ -206,12 +204,12 @@ async function createDevs({
   console.log("開発者の作成");
 
   // 開発されるお題をランダムで選択する
-  const developedIdeaIds = faker.helpers.arrayElements(
-    ideaIds,
+  const developedIdeas = faker.helpers.arrayElements(
+    ideas,
     developedIdeaCounts
   );
   // お題それぞれに何人開発するかを決めておく
-  const devCountList = [...new Array(developedIdeaIds.length)].map(() =>
+  const devCountList = [...new Array(developedIdeas.length)].map(() =>
     faker.number.int({ min: 1, max: maxDevelopmentCounts })
   );
 
@@ -220,9 +218,9 @@ async function createDevs({
   bar.start(sumDevs, 0);
 
   const devIds = [];
-  for (let i = 0; i < developedIdeaIds.length; i++) {
-    // 開発されるお題のインデックス
-    const ideaId = developedIdeaIds[i];
+  for (let i = 0; i < developedIdeas.length; i++) {
+    // 開発されるお題
+    const idea = developedIdeas[i];
     // 何人開発するか
     const devCounts = devCountList[i];
 
@@ -233,10 +231,11 @@ async function createDevs({
         where: { id },
         create: {
           id,
+          title: buildDefaultDevTitle(idea.title),
           githubUrl: "",
           comment: faker.lorem.words(3),
           developedItemUrl: "",
-          ideaId,
+          ideaId: idea.id,
           userId: userIds[userIndex],
           status: faker.helpers.arrayElement([
             "IN_PROGRESS",

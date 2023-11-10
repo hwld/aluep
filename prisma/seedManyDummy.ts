@@ -12,6 +12,7 @@
  *   ・各お題の開発者一人に0~49のいいね
  */
 
+import { buildDefaultDevTitle } from "@/client/lib/utils";
 import { faker } from "@faker-js/faker/locale/ja";
 import { PrismaClient } from "@prisma/client";
 
@@ -37,7 +38,7 @@ async function main() {
   }
 
   // 各ユーザーがテーマを作成する
-  const ideaIds = [];
+  const ideas = [];
   for (let i = 0; i < userIds.length; i++) {
     const id = faker.string.uuid();
     const idea1 = await prisma.idea.upsert({
@@ -52,7 +53,7 @@ async function main() {
     });
     console.log(`お題を追加 ${i}`);
 
-    ideaIds.push(idea1.id);
+    ideas.push(idea1);
   }
 
   // お題に良いねする
@@ -64,7 +65,7 @@ async function main() {
         where: { id },
         create: {
           id,
-          ideaId: ideaIds[ideaIndex],
+          ideaId: ideas[ideaIndex].id,
           userId: userIds[userIndex],
         },
         update: { createdAt: new Date() },
@@ -80,7 +81,7 @@ async function main() {
     userIds.map((_, userIndex) => [userIndex, []])
   );
   const devMap = new Map<number, string[]>(
-    ideaIds.map((_, ideaIndex) => [ideaIndex, []])
+    ideas.map((_, ideaIndex) => [ideaIndex, []])
   );
 
   // お題を開発する
@@ -92,10 +93,11 @@ async function main() {
         where: { id },
         create: {
           id,
+          title: buildDefaultDevTitle(ideas[ideaIndex].title),
           githubUrl: "",
           comment: faker.lorem.words(3),
           developedItemUrl: "",
-          ideaId: ideaIds[ideaIndex],
+          ideaId: ideas[ideaIndex].id,
           userId: userIds[userIndex],
           status: faker.helpers.arrayElement([
             "IN_PROGRESS",

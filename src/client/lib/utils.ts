@@ -25,3 +25,7 @@ export const formatBytes = (bytes: number): string => {
     return `${bytes} B`;
   }
 };
+
+export const buildDefaultDevTitle = (title: string) => {
+  return `"${title}" の開発`;
+};

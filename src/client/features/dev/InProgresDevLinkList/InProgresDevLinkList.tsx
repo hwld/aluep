@@ -21,7 +21,7 @@ export const InProgresDevLinkList: React.FC<Props> = ({
             href={Routes.dev(dev.id)}
             key={dev.id}
             noWrap
-            label={dev?.idea?.title ?? "削除されたお題"}
+            label={dev.title ?? "削除されたお題"}
             leftSection={<IconFileText width={25} height={25} />}
             classNames={{ root: classes.link }}
             color="gray.7"

@@ -54,21 +54,11 @@ export const DevTitleCard: React.FC<Props> = ({ dev }) => {
         />
       }
     >
-      {dev.idea ? (
-        <TextLink href={Routes.dev(dev.id)} className={classes["dev-link"]}>
-          <Text c="red.7" fw="bold" size="lg">
-            {dev.idea.title}
-            <MutedText span>の開発情報</MutedText>
-          </Text>
-        </TextLink>
-      ) : (
-        <Text c="gray.6" size="lg">
-          削除されたお題
-          <MutedText ml="xs" span>
-            の開発情報
-          </MutedText>
+      <TextLink href={Routes.dev(dev.id)} className={classes["dev-link"]}>
+        <Text c="red.7" fw="bold" size="lg">
+          {dev.title}
         </Text>
-      )}
+      </TextLink>
     </ItemCard>
   );
 };

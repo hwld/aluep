@@ -1,6 +1,7 @@
-import { DevForm } from "@/client/features/dev/DevelopForm/DevelopForm";
+import { DevelopForm } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { useDevMutations } from "@/client/features/dev/useDevMutations";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
+import { buildDefaultDevTitle } from "@/client/lib/utils";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
 import { PageHeader } from "@/client/ui/PageHeader/PageHeader";
 import { DevFormData } from "@/models/dev";
@@ -40,12 +41,13 @@ export const DevelopIdea: React.FC<Props> = ({ idea }) => {
         <Stack gap="xs">
           <MutedText>開発情報</MutedText>
           <Card>
-            <DevForm
+            <DevelopForm
               onSubmit={handleDevelopIdea}
               onCancel={handleBack}
               submitText="開発する"
               isLoading={developMutation.isLoading || developMutation.isSuccess}
               defaultValues={{
+                title: buildDefaultDevTitle(idea.title),
                 comment: "",
                 status: "IN_PROGRESS",
                 githubRepositoryUrl: "",

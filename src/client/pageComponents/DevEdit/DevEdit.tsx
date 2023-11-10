@@ -1,4 +1,4 @@
-import { DevForm } from "@/client/features/dev/DevelopForm/DevelopForm";
+import { DevelopForm } from "@/client/features/dev/DevelopForm/DevelopForm";
 import { useDevMutations } from "@/client/features/dev/useDevMutations";
 import { IdeaSummaryHeader } from "@/client/features/idea/IdeaSummaryHeader/IdeaSummaryHeader";
 import { MutedText } from "@/client/ui/MutedText/MutedText";
@@ -45,10 +45,11 @@ export const DevEdit: React.FC<Props> = ({ idea, dev }) => {
         <Stack gap="xs">
           <MutedText>開発情報</MutedText>
           <Card>
-            <DevForm
+            <DevelopForm
               onSubmit={handleUpdateDev}
               onCancel={handleBack}
               defaultValues={{
+                title: dev.title,
                 comment: dev.comment,
                 developedItemUrl: dev.developedItemUrl,
                 status: dev.status,
