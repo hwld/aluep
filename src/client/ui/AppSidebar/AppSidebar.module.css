@@ -20,9 +20,3 @@
 .title-wrapper {
   overflow: hidden;
 }
-
-.user-menu {
-  display: flex;
-  border-bottom-left-radius: var(--mantine-radius-lg);
-  border-bottom-right-radius: var(--mantine-radiux-lg);
-}

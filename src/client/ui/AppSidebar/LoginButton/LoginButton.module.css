@@ -1,0 +1,7 @@
+.root {
+  transition: all 250ms;
+
+  &:hover {
+    background-color: var(--mantine-color-red-6);
+  }
+}

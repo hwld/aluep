@@ -1,39 +1,38 @@
 import { InProgresDevSidebarItem } from "@/client/features/dev/InProgresDevSidebarItem/InProgresDevSidebarItem";
 import { useRequireLoginModal } from "@/client/features/session/RequireLoginModalProvider";
-import { LoggedInUserCard } from "@/client/ui/LoggedInUserCard/LoggedInUserCard";
-import { LoggedInUserMenu } from "@/client/ui/LoggedInUserMenu/LoggedInUserMenu";
+import { useSessionQuery } from "@/client/features/session/useSessionQuery";
+import { LoggedInUserMenuButton } from "@/client/ui/AppSidebar/LoggedInUserMenuButton/LoggedInUserMenuButton";
+import { LoginButton } from "@/client/ui/AppSidebar/LoginButton/LoginButton";
+import { AppSkeleton } from "@/client/ui/AppSkeleton/AppSkeleton";
+import { AppTooltip } from "@/client/ui/AppTooltip";
 import { SidebarAppTitle } from "@/client/ui/SidebarAppTitle/SidebarAppTitle";
 import { SidebarItem } from "@/client/ui/SidebarItem/SidebarItem";
 import { SidebarToggle } from "@/client/ui/SidebarToggle/SidebarToggle";
-import { User } from "@/models/user";
 import { setAppConfigCookie } from "@/share/cookie";
 import { Routes } from "@/share/routes";
-import { Box, Flex, Stack, UnstyledButton } from "@mantine/core";
+import { Box, Divider, Flex, Stack } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import {
   IconFilePlus,
   IconHome,
   IconInfoCircle,
-  IconLogin2,
   IconMail,
   IconSearch,
   IconUserSearch,
 } from "@tabler/icons-react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { SyntheticEvent } from "react";
 import classes from "./AppSidebar.module.css";
 
-type Props = { loggedInUser?: User; isOpen?: boolean | undefined };
+type Props = { isOpen?: boolean | undefined };
 
 const barMinWidth = 70;
 const barPadding = 12;
 const iconWidth = barMinWidth - barPadding * 2;
 
-export const AppSidebar: React.FC<Props> = ({
-  loggedInUser,
-  isOpen = false,
-}) => {
+export const AppSidebar: React.FC<Props> = ({ isOpen = false }) => {
+  const { session, isInitialLoading: sessionLoading } = useSessionQuery();
+  const loggedInUser = session?.user;
   const router = useRouter();
   const [_isOpen, { toggle }] = useDisclosure(isOpen);
   const { openLoginModal } = useRequireLoginModal();
@@ -54,12 +53,8 @@ export const AppSidebar: React.FC<Props> = ({
     setAppConfigCookie({ isSideBarOpen: !_isOpen });
   };
 
-  const handleLogin = () => {
-    signIn("github");
-  };
-
   return (
-    <Box h="100dvh" p={3} className={classes.root}>
+    <Box h="100dvh" px={5} py="sm" className={classes.root}>
       <Box
         w={isMenuOpen ? 300 : barMinWidth}
         h="100%"
@@ -110,12 +105,6 @@ export const AppSidebar: React.FC<Props> = ({
               active={router.route === Routes.ideaSearch()}
               tooltip={!isMenuOpen}
             />
-            {loggedInUser && (
-              <InProgresDevSidebarItem
-                tooltip={!isMenuOpen}
-                loggedInUserId={loggedInUser.id}
-              />
-            )}
             <SidebarItem
               icon={IconUserSearch}
               label="ユーザーを検索"
@@ -141,28 +130,53 @@ export const AppSidebar: React.FC<Props> = ({
             />
           </Stack>
         </Stack>
-        {loggedInUser ? (
-          <LoggedInUserMenu
-            user={loggedInUser}
-            trigger={
-              <UnstyledButton
-                bg="red.8"
-                p={`20px ${barPadding}px 20px ${barPadding}px`}
-                m={`0 -${barPadding}px -${barPadding}px -${barPadding}px`}
-                className={classes["user-menu"]}
-              >
-                <LoggedInUserCard iconWidth={iconWidth} user={loggedInUser} />
-              </UnstyledButton>
-            }
-          />
-        ) : (
-          <SidebarItem
-            icon={IconLogin2}
-            label="ログイン"
-            onClick={handleLogin}
-            tooltip={!isMenuOpen}
-          />
-        )}
+        <Stack mt="md">
+          {loggedInUser && (
+            <>
+              <Divider style={{ borderColor: "var(--mantine-color-red-4)" }} />
+              <InProgresDevSidebarItem
+                tooltip={!isMenuOpen}
+                loggedInUserId={loggedInUser.id}
+              />
+            </>
+          )}
+          <Flex
+            bg="red.8"
+            h="90px"
+            m={`0 -${barPadding}px -${barPadding}px -${barPadding}px`}
+            align="center"
+            className={classes["user-section"]}
+          >
+            {sessionLoading ? (
+              <AppSkeleton
+                style={{
+                  ["--base-color"]: "var(--mantine-color-red-8)",
+                  ["--line-color"]: "#c32323",
+                  borderRadius: "0",
+                }}
+                w="100%"
+                h="100%"
+              />
+            ) : loggedInUser ? (
+              <LoggedInUserMenuButton
+                user={loggedInUser}
+                iconWidth={iconWidth}
+                h="100%"
+                w="100%"
+                px={`${barPadding}px`}
+              />
+            ) : (
+              <AppTooltip label="ログイン" position="right" hidden={isMenuOpen}>
+                <LoginButton
+                  h="100%"
+                  w="100%"
+                  pr={`${barPadding}px`}
+                  pl={`${barPadding - 2}px`}
+                />
+              </AppTooltip>
+            )}
+          </Flex>
+        </Stack>
       </Box>
     </Box>
   );

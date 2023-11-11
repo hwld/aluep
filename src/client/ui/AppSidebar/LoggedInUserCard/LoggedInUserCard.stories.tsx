@@ -1,4 +1,4 @@
-import { LoggedInUserCard } from "@/client/ui/LoggedInUserCard/LoggedInUserCard";
+import { LoggedInUserCard } from "@/client/ui/AppSidebar/LoggedInUserCard/LoggedInUserCard";
 import { UserHelper } from "@/models/tests/helpers";
 import { Meta, StoryObj } from "@storybook/react";
 

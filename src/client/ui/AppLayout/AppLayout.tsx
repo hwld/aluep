@@ -1,5 +1,4 @@
 import { RequireLoginModal } from "@/client/features/session/RequireLoginModal/RequireLoginModal";
-import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { AppModal } from "@/client/ui/AppModal/AppModal";
 import { AppSidebar } from "@/client/ui/AppSidebar/AppSidebar";
 import { Box } from "@mantine/core";
@@ -19,14 +18,13 @@ export const AppLayout: React.FC<Props> = ({
   isSideBarOpen = true,
   className,
 }) => {
-  const { session } = useSessionQuery();
   const unsupportedDisplay = useMediaQuery("(max-width: 600px)");
   const [isOpen, { close }] = useDisclosure(true);
 
   return (
     <>
       <Box className={clsx(classes.root, className)}>
-        <AppSidebar loggedInUser={session?.user} isOpen={isSideBarOpen} />
+        <AppSidebar isOpen={isSideBarOpen} />
         <Box component="main" p="sm" className={classes.content}>
           {children}
         </Box>

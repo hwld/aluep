@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { {{componentName name}} } from "./{{componentName name}}";
+import { LoginButton } from "./LoginButton";
 
 const meta = {
-  component: {{componentName name}},
-} satisfies Meta<typeof {{componentName name}}>;
+  component: LoginButton,
+} satisfies Meta<typeof LoginButton>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;

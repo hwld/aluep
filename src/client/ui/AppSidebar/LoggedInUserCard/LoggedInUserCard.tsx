@@ -23,7 +23,7 @@ export const LoggedInUserCard: React.FC<Props> = ({ user, iconWidth }) => {
       justify="space-between"
       style={{ overflow: "hidden" }}
     >
-      <Flex gap="xs" miw="0">
+      <Flex gap="sm" miw="0">
         <Stack style={{ flexShrink: 0 }}>
           <UserIcon size={iconWidth} iconSrc={user.image} withBorder={true} />
         </Stack>
