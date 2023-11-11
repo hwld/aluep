@@ -18,7 +18,6 @@ type Props = { dev: Dev };
 
 /**
  * 開発者を強調して開発情報を表示するカード
- * TODO: タイトルを表示する
  *
  */
 export const DevCard: React.FC<Props> = ({ dev }) => {

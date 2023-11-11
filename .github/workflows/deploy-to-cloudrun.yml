@@ -8,9 +8,6 @@ on:
 
 env:
   TZ: Asia/Tokyo
-  IMAGE_REPOSITORY_NAME: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/aluep/aluep
-  IMAGE_NAME: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/aluep/aluep:${{ github.sha }}
-  DATABASE_URL: ${{secrets.DATABASE_URL}}
   # workflow-conclusion-actionでセットされる
   WORKFLOW_CONCLUSION:
 
@@ -40,6 +37,10 @@ jobs:
 
   deploy:
     runs-on: "ubuntu-latest"
+    env:
+      IMAGE_REPOSITORY_NAME: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/aluep/aluep
+      IMAGE_NAME: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/aluep/aluep:${{ github.sha }}
+      DATABASE_URL: ${{secrets.DATABASE_URL}}
     needs: test
     permissions:
       id-token: "write"
