@@ -12,15 +12,16 @@ export const getLikedIdeasByUser = publicProcedure
   .query(async ({ input, input: { page }, ctx }) => {
     // 指定されたユーザーがいいねしたお題のidを取得する
     const [likedIdeaIdObjs, { allPages }] = await paginate(
-      db.ideaLike.findMany
-    )({
-      finderInput: {
-        select: { ideaId: true },
-        where: { userId: input.userId },
-      },
-      counter: ({ select: _, ...args }) => db.ideaLike.count(args),
-      pagingData: { page, limit: PAGE_LIMIT.likedIdeas },
-    });
+      db.ideaLike.findMany,
+      {
+        finderInput: {
+          select: { ideaId: true },
+          where: { userId: input.userId },
+        },
+        counter: ({ select: _, ...args }) => db.ideaLike.count(args),
+        pagingData: { page, limit: PAGE_LIMIT.likedIdeas },
+      }
+    );
     const likedIdeaIds = likedIdeaIdObjs.map((l) => l.ideaId);
 
     // いいねしたお題の情報を取得

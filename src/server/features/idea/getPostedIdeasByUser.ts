@@ -9,7 +9,7 @@ import { z } from "zod";
 export const getPostedIdeasByUser = publicProcedure
   .input(z.object({ userId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page }, ctx }) => {
-    const [postedIdeas, { allPages }] = await paginate(findManyIdeas)({
+    const [postedIdeas, { allPages }] = await paginate(findManyIdeas, {
       finderInput: {
         where: { userId: input.userId },
         loggedInUserId: ctx.session?.user.id,

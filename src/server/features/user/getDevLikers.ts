@@ -12,15 +12,16 @@ export const getDevLikers = publicProcedure
   .input(z.object({ devId: z.string(), page: pagingSchema }))
   .query(async ({ input, input: { page } }) => {
     const [devLikes, { allPages }] = await paginate(
-      db.developmentLike.findMany
-    )({
-      finderInput: {
-        where: { developmentId: input.devId },
-        orderBy: { createdAt: "desc" as const },
-      },
-      counter: db.developmentLike.count,
-      pagingData: { page, limit: PAGE_LIMIT.ideaLikers },
-    });
+      db.developmentLike.findMany,
+      {
+        finderInput: {
+          where: { developmentId: input.devId },
+          orderBy: { createdAt: "desc" as const },
+        },
+        counter: db.developmentLike.count,
+        pagingData: { page, limit: PAGE_LIMIT.ideaLikers },
+      }
+    );
 
     const likerId = devLikes.map(({ userId }) => userId);
 

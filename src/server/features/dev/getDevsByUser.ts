@@ -14,7 +14,7 @@ export const getDevsByUser = publicProcedure
     })
   )
   .query(async ({ input, input: { page }, ctx }) => {
-    const [devs, { allPages }] = await paginate(findManyDevs)({
+    const [devs, { allPages }] = await paginate(findManyDevs, {
       finderInput: {
         where: { userId: input.userId },
         loggedInUserId: ctx.session?.user.id,
