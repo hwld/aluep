@@ -41,7 +41,8 @@ export const getPopularIdeaTags = publicProcedure
             ideaCount: _tagIdAndIdeaCounts[i]._count.ideaId,
           })
         );
-      }
+      },
+      { timeout: 10000 }
     );
 
     return tagAndIdeaCounts;

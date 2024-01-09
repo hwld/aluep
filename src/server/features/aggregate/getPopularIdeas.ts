@@ -7,10 +7,11 @@ import { z } from "zod";
 export const getPopularIdeas = publicProcedure
   .input(z.object({ limit: z.number() }))
   .query(async ({ input: { limit }, ctx }) => {
-    const ideas = await db.$transaction(async (tx) => {
-      // お題のidのリストを取得する
-      type IdeaIdObjs = { ideaId: string }[];
-      const ideaIdObjs = await tx.$queryRaw<IdeaIdObjs>`
+    const ideas = await db.$transaction(
+      async (tx) => {
+        // お題のidのリストを取得する
+        type IdeaIdObjs = { ideaId: string }[];
+        const ideaIdObjs = await tx.$queryRaw<IdeaIdObjs>`
       SELECT
         ideas.id as "ideaId"
         , COUNT(idea_likes.id) as "likeCount"
@@ -27,23 +28,25 @@ export const getPopularIdeas = publicProcedure
       LIMIT
         ${limit}
     `;
-      const ideaIds = ideaIdObjs.map(({ ideaId }) => ideaId);
+        const ideaIds = ideaIdObjs.map(({ ideaId }) => ideaId);
 
-      const ideas = await findManyIdeas({
-        where: { id: { in: ideaIds } },
-        transactionClient: tx,
-        loggedInUserId: ctx.session?.user.id,
-      });
+        const ideas = await findManyIdeas({
+          where: { id: { in: ideaIds } },
+          transactionClient: tx,
+          loggedInUserId: ctx.session?.user.id,
+        });
 
-      // ideaIdsに並び順を合わせる
-      const sortedIdeas = sortedInSameOrder({
-        target: ideas,
-        base: ideaIds,
-        getKey: (t) => t.id,
-      });
+        // ideaIdsに並び順を合わせる
+        const sortedIdeas = sortedInSameOrder({
+          target: ideas,
+          base: ideaIds,
+          getKey: (t) => t.id,
+        });
 
-      return sortedIdeas;
-    });
+        return sortedIdeas;
+      },
+      { timeout: 10000 }
+    );
 
     return ideas;
   });

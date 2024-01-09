@@ -7,10 +7,15 @@ import { z } from "zod";
 export const getPopularDevelopers = publicProcedure
   .input(z.object({ limit: z.number() }))
   .query(async ({ input: { limit } }) => {
-    const devUsers: UserAndDevLikes[] = await db.$transaction(async (tx) => {
-      // ユーザーidのリストを取得する
-      type RawDevUser = { userId: string; likeCount: BigInt }[];
-      const rawDevUser = await tx.$queryRaw<RawDevUser>`
+    // TODO:
+    // 重たい処理をトランザクション内でやるべきじゃないかもしれない・・・。
+    // 他のaggregateでも集計処理は事前に計算しておいてここではreadだけで済ませたい
+    // 今はとりあえずタイムアウトの時間を伸ばす。
+    const devUsers: UserAndDevLikes[] = await db.$transaction(
+      async (tx) => {
+        // ユーザーidのリストを取得する
+        type RawDevUser = { userId: string; likeCount: BigInt }[];
+        const rawDevUser = await tx.$queryRaw<RawDevUser>`
       SELECT
         users.id as "userId"
         , COUNT(development_likes.id) as "likeCount"
@@ -29,29 +34,31 @@ export const getPopularDevelopers = publicProcedure
       LIMIT
         ${limit}
     `;
-      const devUserIds = rawDevUser.map(({ userId }) => userId);
+        const devUserIds = rawDevUser.map(({ userId }) => userId);
 
-      // ユーザーを取得する
-      const users = await tx.user.findMany({
-        where: { id: { in: devUserIds } },
-      });
+        // ユーザーを取得する
+        const users = await tx.user.findMany({
+          where: { id: { in: devUserIds } },
+        });
 
-      const sortedUsers = sortedInSameOrder({
-        target: users,
-        base: devUserIds,
-        getKey: (t) => t.id,
-      });
+        const sortedUsers = sortedInSameOrder({
+          target: users,
+          base: devUserIds,
+          getKey: (t) => t.id,
+        });
 
-      // sortedUsersにlikeCountをつける
-      const usersAndDevLikes = sortedUsers.map(
-        (user, i): UserAndDevLikes => ({
-          ...user,
-          devLikes: Number(rawDevUser[i]?.likeCount) ?? 0,
-        })
-      );
+        // sortedUsersにlikeCountをつける
+        const usersAndDevLikes = sortedUsers.map(
+          (user, i): UserAndDevLikes => ({
+            ...user,
+            devLikes: Number(rawDevUser[i]?.likeCount) ?? 0,
+          })
+        );
 
-      return usersAndDevLikes;
-    });
+        return usersAndDevLikes;
+      },
+      { timeout: 10000 }
+    );
 
     return devUsers;
   });
