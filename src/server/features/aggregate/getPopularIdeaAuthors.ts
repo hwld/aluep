@@ -57,7 +57,10 @@ export const getPopularIdeaAuthors = publicProcedure
 
         return usersAndIdeaLikes;
       },
-      { timeout: 10000 }
+      {
+        maxWait: 20000,
+        timeout: 60000,
+      }
     );
 
     return ideaAuthors;

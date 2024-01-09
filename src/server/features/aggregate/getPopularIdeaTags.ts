@@ -42,7 +42,10 @@ export const getPopularIdeaTags = publicProcedure
           })
         );
       },
-      { timeout: 10000 }
+      {
+        maxWait: 20000,
+        timeout: 60000,
+      }
     );
 
     return tagAndIdeaCounts;

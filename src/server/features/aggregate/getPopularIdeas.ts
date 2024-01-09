@@ -45,7 +45,10 @@ export const getPopularIdeas = publicProcedure
 
         return sortedIdeas;
       },
-      { timeout: 10000 }
+      {
+        maxWait: 20000,
+        timeout: 60000,
+      }
     );
 
     return ideas;
