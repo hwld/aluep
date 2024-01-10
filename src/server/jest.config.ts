@@ -16,4 +16,20 @@ const customJestConfig: Config = {
   setupFilesAfterEnv: ["<rootDir>/jest-server-setup.ts"],
 };
 
-module.exports = createJestConfig(customJestConfig);
+// transformIgnorePatternsをcustomJestConfigで上書きすることができないのでこの方法を使う。
+// https://github.com/vercel/next.js/discussions/34774#discussioncomment-2246460
+module.exports = async (...args: any[]) => {
+  const fn = createJestConfig(customJestConfig);
+  // @ts-ignore
+  const res = await fn(...args);
+  res.transformIgnorePatterns = res.transformIgnorePatterns?.map((pattern) => {
+    if (pattern === "/node_modules/") {
+      // デフォルトではnode_modules以下のファイルはCJSとみなして変換されないのだが、
+      // superjsonがv2からESM-onlyになったので、superjsonは変換されるように設定する。
+      return "/node_modules/(?!(superjson))";
+    }
+    return pattern;
+  });
+
+  return res;
+};
