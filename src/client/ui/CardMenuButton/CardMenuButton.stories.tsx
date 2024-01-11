@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { CardMenuButton } from "./CardMenuButton";
+import { AppMenu } from "@/client/ui/AppMenu/AppMenu";
 
 const meta = {
   component: CardMenuButton,
@@ -7,4 +8,12 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-export const Default: Story = {};
+export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <AppMenu>
+        <Story />
+      </AppMenu>
+    ),
+  ],
+};

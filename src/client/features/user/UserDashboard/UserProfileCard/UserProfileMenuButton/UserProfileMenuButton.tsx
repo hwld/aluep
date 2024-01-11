@@ -34,7 +34,6 @@ export const UserProfileMenuButton: React.FC<Props> = ({ user, isOwner }) => {
     <>
       <AppMenu>
         <CardMenuButton />
-
         <AppMenuDropdown>
           {isOwner && (
             <>
