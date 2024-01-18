@@ -1,10 +1,10 @@
+# vercelは無料枠だとFunctionsに10s以上かかるとタイムアウトでエラーになってしまう
+# tRPCを使用すると、コールドスタートで10sぎりぎりになってしまうのでやっぱりCloud Runのままにする
+
 name: "deploy-to-cloudrun"
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - "main"
 
 env:
   TZ: Asia/Tokyo
