@@ -1,0 +1,53 @@
+name: "deploy-to-cloudrun"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+
+env:
+  TZ: Asia/Tokyo
+  # workflow-conclusion-actionでセットされる
+  WORKFLOW_CONCLUSION:
+
+jobs:
+  deploy:
+    runs-on: "ubuntu-latest"
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    permissions:
+      id-token: "write"
+    steps:
+      - name: "Checkout the repository"
+        uses: "actions/checkout@v4"
+
+      - uses: "actions/setup-node@v4"
+        with:
+          node-version: "20.9.0"
+          cache: "npm"
+
+      - name: "Install Vercel CLI"
+        run: "npm install --global vercel@latest"
+
+      # DBのマイグレーションとseedingのためだけに全部インストールするの非効率な気がする。
+      # どうにかしたい
+      - name: "Install dependencies"
+        run: "npm ci"
+
+      - name: "Database migration"
+        run: "npx prisma migrate deploy"
+
+      - name: "Detabase seeding"
+        run: "npx prisma db seed"
+
+      - name: "Pull Vercel Environment Information"
+        run: "vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}"
+
+      - name: "Build Project Artifacts"
+        run: "vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}"
+
+      - name: "Deploy Project Artifacts to Vercel"
+        run: "vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}"
