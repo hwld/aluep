@@ -30,6 +30,14 @@ export const setAppConfigCookie = (config: AppConfigCookie) => {
   })}; path=/; expires=${addYears(new Date(), 1)}`;
 };
 
+export const parseCookieString = (cookieStr: string) => {
+  let cookie: Record<string, string> = Object.fromEntries(
+    cookieStr.split("; ").map((v) => v.split(/=(.*)/s).map(decodeURIComponent))
+  );
+
+  return cookie;
+};
+
 export const getAppConfigCookie = (
   cookies: Partial<{
     [key: string]: string;

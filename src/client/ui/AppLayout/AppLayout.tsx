@@ -15,7 +15,7 @@ type Props = {
 
 export const AppLayout: React.FC<Props> = ({
   children,
-  isSideBarOpen = true,
+  isSideBarOpen,
   className,
 }) => {
   const unsupportedDisplay = useMediaQuery("(max-width: 600px)");

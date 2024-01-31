@@ -8,7 +8,11 @@ import { AppTooltip } from "@/client/ui/AppTooltip";
 import { SidebarAppTitle } from "@/client/ui/SidebarAppTitle/SidebarAppTitle";
 import { SidebarItem } from "@/client/ui/SidebarItem/SidebarItem";
 import { SidebarToggle } from "@/client/ui/SidebarToggle/SidebarToggle";
-import { setAppConfigCookie } from "@/share/cookie";
+import {
+  getAppConfigCookie,
+  parseCookieString,
+  setAppConfigCookie,
+} from "@/share/cookie";
 import { Routes } from "@/share/routes";
 import { Box, Divider, Flex, Stack } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
@@ -21,7 +25,7 @@ import {
   IconUserSearch,
 } from "@tabler/icons-react";
 import { useRouter } from "next/router";
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useLayoutEffect } from "react";
 import classes from "./AppSidebar.module.css";
 
 type Props = { isOpen?: boolean | undefined };
@@ -30,11 +34,11 @@ const barMinWidth = 70;
 const barPadding = 12;
 const iconWidth = barMinWidth - barPadding * 2;
 
-export const AppSidebar: React.FC<Props> = ({ isOpen = false }) => {
+export const AppSidebar: React.FC<Props> = ({ isOpen }) => {
   const { session, isInitialLoading: sessionLoading } = useSessionQuery();
   const loggedInUser = session?.user;
   const router = useRouter();
-  const [_isOpen, { toggle }] = useDisclosure(isOpen);
+  const [_isOpen, { toggle, close, open }] = useDisclosure(isOpen);
   const { openLoginModal } = useRequireLoginModal();
 
   const isWideDisplay = useMediaQuery("(min-width: 1200px)", true);
@@ -52,6 +56,21 @@ export const AppSidebar: React.FC<Props> = ({ isOpen = false }) => {
     toggle();
     setAppConfigCookie({ isSideBarOpen: !_isOpen });
   };
+
+  // SSRをしない場合、isOpenが設定されていないので、cookieから読み取る
+  useLayoutEffect(() => {
+    if (isOpen !== undefined) {
+      return;
+    }
+
+    const cookie = parseCookieString(document.cookie);
+    const config = getAppConfigCookie(cookie);
+    if (config.isSideBarOpen) {
+      open();
+    } else {
+      close();
+    }
+  }, [close, isOpen, open]);
 
   return (
     <Box h="100dvh" px={5} py="sm" className={classes.root}>
