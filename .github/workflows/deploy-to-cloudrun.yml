@@ -112,7 +112,7 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - name: "Deploy to Cloud Run"
-        uses: "google-github-actions/deploy-cloudrun@v1"
+        uses: "google-github-actions/deploy-cloudrun@v2"
         with:
           service: "aluep"
           image: ${{ env.IMAGE_NAME }}
