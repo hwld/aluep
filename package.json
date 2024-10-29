@@ -64,7 +64,7 @@
     "@trpc/server": "^10.38.5",
     "cli-progress": "^3.11.2",
     "clsx": "^2.0.0",
-    "date-fns": "^2.29.3",
+    "date-fns": "^4.0.0",
     "discord.js": "14.11.0",
     "embla-carousel-react": "^7.0.5",
     "formidable": "^3.0.0",
