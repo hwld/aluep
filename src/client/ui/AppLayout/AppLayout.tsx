@@ -25,7 +25,14 @@ export const AppLayout: React.FC<Props> = ({
     <>
       <Box className={clsx(classes.root, className)}>
         <AppSidebar isOpen={isSideBarOpen} />
-        <Box component="main" p="sm" className={classes.content}>
+        <Box
+          component="main"
+          className={classes.content}
+          style={{
+            ["--layout-padding" as string]: "12px",
+            padding: "var(--layout-padding)",
+          }}
+        >
           {children}
         </Box>
         <RequireLoginModal />

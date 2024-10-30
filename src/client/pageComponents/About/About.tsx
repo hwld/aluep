@@ -161,67 +161,68 @@ export const About: React.FC<Props> = () => {
         </Stack>
 
         <Box h="300px" />
-        <Box
-          style={{
-            position: "fixed",
-            backgroundImage: "url(/black-wave.svg)",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "top",
-            height: "450px",
-            bottom: blackHeight,
-            left: -400,
-            right: -10,
-            zIndex: -100,
-          }}
-        />
-        <Box
-          style={{
-            position: "fixed",
-            backgroundColor: "var(--mantine-color-gray-8)",
-            height: `calc(${blackHeight}px + 30px)`,
-            left: -400,
-            // container-type: inline-sizeを指定すると、空白ができてしまう
-            bottom: -30,
-            right: -10,
-            zIndex: -100,
-          }}
-        />
-
-        <Stack className={clsx(classes.section, classes.content, classes.dark)}>
-          <SectionTitle
-            number={4}
-            title="動機 / 開発方針"
-            subTitle="Motivation / Policy"
+        <Box pos="relative">
+          <Box
+            style={{
+              position: "absolute",
+              backgroundImage: "url(/black-wave.svg)",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "top",
+              height: "450px",
+              bottom: blackHeight,
+              left: -400,
+              right: -10,
+              zIndex: -100,
+            }}
           />
-          <Text className={classes.text}>
-            Aluepは、僕がそこそこの規模のWebアプリケーションを開発してみたいという動機から作り始めたものです。
-            僕はこれまで小さなものはいくつか作ってきましたが、多機能で複雑なWebアプリは作ったことがありませんでした。
-            <br />
-            <br />
-            そこで、Aluepはできるだけ多くの機能を実装し、複雑なWebアプリを目指しています。
-            機能を実装する目的は、ユーザーのことを考えてというより、どういう機能を作ってみたいか、どういう機能の実装を経験したいかを重視しています。
-            そのため、操作が複雑になったり、必要な機能が存在しない事があると思います。
-            <br />
-            <br />
-            しかし、こういった機能がほしい、こういった機能はやめてほしいといった要望はどんどんお待ちしています。
-            想像のユーザーのための機能に対しては消極的ですが、実際のユーザーの声には応えていきたいです。
-            <br />
-            要望のある方は、ぜひ
-            <Text
-              component={Link}
-              href={Routes.contact()}
-              target="_blank"
-              span
-              className={clsx(classes.text, classes.link)}
-            >
-              お問い合わせフォーム
+          <Box
+            style={{
+              position: "absolute",
+              backgroundColor: "var(--mantine-color-gray-8)",
+              height: `calc(${blackHeight}px + var(--layout-padding))`,
+              left: -400,
+              bottom: `calc(-1 * var(--layout-padding))`,
+              right: -10,
+              zIndex: -100,
+            }}
+          />
+          <Stack
+            className={clsx(classes.section, classes.content, classes.dark)}
+          >
+            <SectionTitle
+              number={4}
+              title="動機 / 開発方針"
+              subTitle="Motivation / Policy"
+            />
+            <Text className={classes.text}>
+              Aluepは、僕がそこそこの規模のWebアプリケーションを開発してみたいという動機から作り始めたものです。
+              僕はこれまで小さなものはいくつか作ってきましたが、多機能で複雑なWebアプリは作ったことがありませんでした。
+              <br />
+              <br />
+              そこで、Aluepはできるだけ多くの機能を実装し、複雑なWebアプリを目指しています。
+              機能を実装する目的は、ユーザーのことを考えてというより、どういう機能を作ってみたいか、どういう機能の実装を経験したいかを重視しています。
+              そのため、操作が複雑になったり、必要な機能が存在しない事があると思います。
+              <br />
+              <br />
+              しかし、こういった機能がほしい、こういった機能はやめてほしいといった要望はどんどんお待ちしています。
+              想像のユーザーのための機能に対しては消極的ですが、実際のユーザーの声には応えていきたいです。
+              <br />
+              要望のある方は、ぜひ
+              <Text
+                component={Link}
+                href={Routes.contact()}
+                target="_blank"
+                span
+                className={clsx(classes.text, classes.link)}
+              >
+                お問い合わせフォーム
+              </Text>
+              からお願いします。
             </Text>
-            からお願いします。
-          </Text>
-        </Stack>
-
-        <Box h={100} />
+          </Stack>
+          <Box h={100} />
+        </Box>
       </Box>
     </Box>
   );
