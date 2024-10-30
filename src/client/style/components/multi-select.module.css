@@ -8,7 +8,7 @@
     outline-offset: 2px;
 
     /* フォーカスしたときに枠線の色が変わるのを防ぐ */
-    --_input-bd: unset;
+    --input-bd: unset;
   }
 }
 .label {
