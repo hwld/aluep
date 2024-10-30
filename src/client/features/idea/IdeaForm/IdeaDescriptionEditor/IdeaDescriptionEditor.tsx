@@ -15,7 +15,8 @@ export const IdeaDescriptionEditor: React.FC<Props> = ({
       <RichTextEditor
         editor={editor}
         classNames={{
-          root: clsx({ [classes.error]: error }),
+          root: clsx({ [classes.error]: error }, classes.root),
+          toolbar: classes.toolbar,
           content: clsx(classes.content),
           control: classes.control,
         }}

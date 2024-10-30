@@ -1,10 +1,34 @@
+.root {
+  border-radius: var(--mantine-radius-md);
+  outline: transparent solid 0px;
+
+  &:focus-within {
+    outline: var(--mantine-color-gray-4) solid 2px;
+    outline-offset: 2px;
+  }
+}
+
+.toolbar {
+  background-color: var(--mantine-color-gray-1);
+  border-color: var(--mantine-color-gray-3);
+  border-top-left-radius: var(--mantine-radius-md);
+  border-top-right-radius: var(--mantine-radius-md);
+}
+
 .error {
   border-color: var(--mantine-color-red-7);
   border-width: 2px;
 }
 
 .control {
+  border-color: var(--mantine-color-gray-3);
+  outline: transparent solid 0px;
   background-color: var(--mantine-color-gray-1);
+
+  &:focus {
+    outline: var(--mantine-color-gray-4) solid 2px;
+    outline-offset: 2px;
+  }
 
   &[data-active] {
     background-color: var(--mantine-color-red-2);
@@ -13,8 +37,14 @@
 }
 
 .content {
+  min-height: 332px;
+  background-color: transparent;
   color: var(--mantine-color-gray-7);
   word-break: break-all;
+
+  & div[class~="tiptap"] {
+    min-height: 300px;
+  }
 
   & *:first-child {
     margin-top: 0px;

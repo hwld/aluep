@@ -18,7 +18,6 @@ import {
   Title,
   Tooltip,
 } from "@mantine/core";
-import { RichTextEditor } from "@mantine/tiptap";
 import buttonClasses from "./components/button.module.css";
 import cardClasses from "./components/card.module.css";
 import inputWrapperClasses from "./components/input-wrapper.module.css";
@@ -27,7 +26,6 @@ import multiSelectClasses from "./components/multi-select.module.css";
 import notificationClasses from "./components/notification.module.css";
 import paperClasses from "./components/paper.module.css";
 import radioClasses from "./components/radio.module.css";
-import richTextEditorClasses from "./components/rich-text-editor.module.css";
 import selectClasses from "./components/select.module.css";
 import switchClasses from "./components/switch.module.css";
 import textClasses from "./components/text.module.css";
@@ -154,14 +152,6 @@ export const theme = createTheme({
       classNames: {
         root: notificationClasses.root,
         description: notificationClasses.description,
-      },
-    }),
-    RichTextEditor: RichTextEditor.extend({
-      classNames: {
-        root: richTextEditorClasses.root,
-        toolbar: richTextEditorClasses.toolbar,
-        control: richTextEditorClasses.control,
-        content: richTextEditorClasses.content,
       },
     }),
     Switch: Switch.extend({ classNames: { label: switchClasses.label } }),
