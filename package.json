@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "prisma generate",
     "gen": "scaffdog generate component",
     "dev:inspect": "cross-env NODE_OPTIONS='--inspect' next dev",
     "dev": "next dev",
