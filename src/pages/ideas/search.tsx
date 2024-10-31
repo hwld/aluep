@@ -1,4 +1,5 @@
 import { IdeaSearch } from "@/client/pageComponents/IdeaSearch/IdeaSearch";
+import { PageLayout } from "@/client/ui/PageLayout";
 import { searchIdeaPageSchema } from "@/models/idea";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { NextPage } from "next";
@@ -23,3 +24,7 @@ const IdeaSearchPage: NextPage = () => {
   return <IdeaSearch />;
 };
 export default IdeaSearchPage;
+
+IdeaSearchPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

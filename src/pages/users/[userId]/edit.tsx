@@ -1,5 +1,6 @@
 import { useSessionQuery } from "@/client/features/session/useSessionQuery";
 import { UserEdit } from "@/client/pageComponents/UserEdit/UserEdit";
+import { PageLayout } from "@/client/ui/PageLayout";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
@@ -26,3 +27,7 @@ const UserEditPage: NextPage = () => {
 };
 
 export default UserEditPage;
+
+UserEditPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

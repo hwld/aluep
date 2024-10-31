@@ -1,5 +1,6 @@
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { DevsByIdea } from "@/client/pageComponents/DevsByIdea/DevsByIdea";
+import { PageLayout } from "@/client/ui/PageLayout";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { paginatedPageSchema } from "@/share/paging";
@@ -45,3 +46,7 @@ const DevsPage: NextPage = () => {
   return <DevsByIdea idea={idea} />;
 };
 export default DevsPage;
+
+DevsPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

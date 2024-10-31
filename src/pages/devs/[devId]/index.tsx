@@ -5,6 +5,7 @@ import { assertString } from "@/share/utils";
 import { TRPCError } from "@trpc/server";
 import { useRouter } from "next/router";
 import NotFoundPage from "../../404";
+import { PageLayout } from "@/client/ui/PageLayout";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, trpcStore }) => {
@@ -27,7 +28,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const DevDetailPage = () => {
+const DevDetailPage: React.FC = () => {
   const router = useRouter();
   const devId = assertString(router.query.devId);
   const { dev, isLoading: loadingDev } = useDevQuery({ devId });
@@ -41,3 +42,7 @@ const DevDetailPage = () => {
   return <DevDetail dev={dev} />;
 };
 export default DevDetailPage;
+
+DevDetailPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

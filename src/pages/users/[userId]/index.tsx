@@ -6,6 +6,7 @@ import { assertNever, assertString } from "@/share/utils";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import NotFoundPage from "../../404";
+import { PageLayout } from "@/client/ui/PageLayout";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, trpcStore }) => {
@@ -88,3 +89,7 @@ const UserDetailPage: NextPage = () => {
   return <UserDetail user={user} />;
 };
 export default UserDetailPage;
+
+UserDetailPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

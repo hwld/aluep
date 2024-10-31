@@ -1,15 +1,8 @@
-import { RequireLoginModalProvider } from "@/client/features/session/RequireLoginModalProvider";
 import { trpc } from "@/client/lib/trpc";
 import "@/client/style/global.css";
-import { theme } from "@/client/style/theme";
-import { AppLayout } from "@/client/ui/AppLayout/AppLayout";
-import { AppNavigationProgress } from "@/client/ui/AppNavigationProgress";
 import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import "@mantine/carousel/styles.layer.css";
-import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.layer.css";
-import { ModalsProvider } from "@mantine/modals";
-import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.layer.css";
 import "@mantine/nprogress/styles.layer.css";
 import "@mantine/tiptap/styles.layer.css";
@@ -30,6 +23,9 @@ function App({
   Component,
   pageProps: { isSideBarOpen, ...others },
 }: AppProps<PageProps>) {
+  const getLayout: NonNullable<React.FC["getLayout"]> =
+    (Component as any).getLayout ?? ((page) => page);
+
   return (
     <AppErrorBoundary>
       <Head>
@@ -47,20 +43,10 @@ function App({
           content="G0JQ3h-VhmlLPCpmRn_9QWm60jiSIVy9F6UGjxnb_cc"
         />
       </Head>
-
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-
-      <MantineProvider theme={theme}>
-        <ModalsProvider>
-          <RequireLoginModalProvider>
-            <Notifications />
-            <AppLayout isSideBarOpen={isSideBarOpen}>
-              <AppNavigationProgress />
-              <Component {...others} />
-            </AppLayout>
-          </RequireLoginModalProvider>
-        </ModalsProvider>
-      </MantineProvider>
+      {getLayout(<Component {...others} />, {
+        isSideBarOpen,
+      })}
     </AppErrorBoundary>
   );
 }

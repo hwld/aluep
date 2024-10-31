@@ -7,6 +7,7 @@ import { TRPCError } from "@trpc/server";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import NotFoundPage from "../../404";
+import { PageLayout } from "@/client/ui/PageLayout";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, trpcStore }) => {
@@ -50,3 +51,7 @@ const DevLikersPage: NextPage = () => {
 };
 
 export default DevLikersPage;
+
+DevLikersPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

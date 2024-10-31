@@ -1,5 +1,6 @@
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { IdeaEdit } from "@/client/pageComponents/IdeaEdit/IdeaEdit";
+import { PageLayout } from "@/client/ui/PageLayout";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
@@ -47,3 +48,7 @@ const IdeaEditPage: NextPage = () => {
 };
 
 export default IdeaEditPage;
+
+IdeaEditPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

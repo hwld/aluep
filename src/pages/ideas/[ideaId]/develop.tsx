@@ -1,5 +1,6 @@
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { DevelopIdea } from "@/client/pageComponents/DevelopIdea/DevelopIdea";
+import { PageLayout } from "@/client/ui/PageLayout";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
@@ -44,3 +45,7 @@ const DevelopIdeaPage: NextPage = () => {
   return <DevelopIdea idea={idea} />;
 };
 export default DevelopIdeaPage;
+
+DevelopIdeaPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

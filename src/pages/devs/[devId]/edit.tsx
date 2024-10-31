@@ -1,6 +1,7 @@
 import { useDevQuery } from "@/client/features/dev/useDevQuery";
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { DevEdit } from "@/client/pageComponents/DevEdit/DevEdit";
+import { PageLayout } from "@/client/ui/PageLayout";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
@@ -54,3 +55,7 @@ const DevEditPage: NextPage = () => {
   return <DevEdit idea={idea} dev={dev} />;
 };
 export default DevEditPage;
+
+DevEditPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

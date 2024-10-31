@@ -1,5 +1,6 @@
 import { useIdeaQuery } from "@/client/features/idea/useIdeaQuery";
 import { IdeaDetail } from "@/client/pageComponents/IdeaDetail/IdeaDetail";
+import { PageLayout } from "@/client/ui/PageLayout";
 import NotFoundPage from "@/pages/404";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
@@ -31,7 +32,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const IdeaDetailPage = () => {
+const IdeaDetailPage: React.FC = () => {
   const router = useRouter();
   const ideaId = assertString(router.query.ideaId);
   const { idea, isLoading } = useIdeaQuery({ ideaId });
@@ -76,3 +77,7 @@ const IdeaDetailPage = () => {
   );
 };
 export default IdeaDetailPage;
+
+IdeaDetailPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

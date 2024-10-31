@@ -6,6 +6,7 @@ import { assertString } from "@/share/utils";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import NotFoundPage from "../../404";
+import { PageLayout } from "@/client/ui/PageLayout";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, trpcStore }) => {
@@ -57,3 +58,7 @@ const IdeaLikersPage: NextPage = () => {
   return <IdeaLikers idea={idea} />;
 };
 export default IdeaLikersPage;
+
+IdeaLikersPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

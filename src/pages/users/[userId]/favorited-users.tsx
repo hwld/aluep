@@ -6,6 +6,7 @@ import { assertString } from "@/share/utils";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import NotFoundPage from "../../404";
+import { PageLayout } from "@/client/ui/PageLayout";
 
 export const getServerSideProps = withReactQueryGetServerSideProps(
   async ({ gsspContext: { query }, trpcStore }) => {
@@ -33,7 +34,7 @@ export const getServerSideProps = withReactQueryGetServerSideProps(
   }
 );
 
-const UserDetailPage: NextPage = () => {
+const FavoritedUsersPage: NextPage = () => {
   const router = useRouter();
   const userId = assertString(router.query.userId);
   const { user, isLoading } = useUserQuery({ userId });
@@ -46,4 +47,8 @@ const UserDetailPage: NextPage = () => {
 
   return <FavoritedUsers user={user} />;
 };
-export default UserDetailPage;
+export default FavoritedUsersPage;
+
+FavoritedUsersPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};

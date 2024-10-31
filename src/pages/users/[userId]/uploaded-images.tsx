@@ -1,4 +1,5 @@
 import { UserUploadedImages } from "@/client/pageComponents/UserUploadedImages/UserUploadedImages";
+import { PageLayout } from "@/client/ui/PageLayout";
 import { withReactQueryGetServerSideProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { Routes } from "@/share/routes";
 import { NextPage } from "next";
@@ -18,3 +19,7 @@ const UserUploadedImagesPage: NextPage = () => {
 };
 
 export default UserUploadedImagesPage;
+
+UserUploadedImagesPage.getLayout = (page, { isSideBarOpen }) => {
+  return <PageLayout isSideBarOpen={isSideBarOpen}>{page}</PageLayout>;
+};
