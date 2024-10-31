@@ -6,7 +6,7 @@
     "gen": "scaffdog generate component",
     "dev:inspect": "cross-env NODE_OPTIONS='--inspect' next dev",
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "create:dummy": "tsx prisma/seedDummy.ts",
