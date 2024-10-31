@@ -22,9 +22,10 @@ export const PopularIdeaCard: React.FC<{ idea: Idea }> = ({ idea }) => {
   const { setLeftClickPosition, isSameLeftClickPosition, resetPosition } =
     useSamePositionLeftClick();
 
-  const handleMouseUp: MouseEventHandler = (e) => {
+  const handleMouseUp: MouseEventHandler = async (e) => {
     if (isSameLeftClickPosition(e)) {
       resetPosition();
+      await new Promise((r) => setTimeout(() => r(undefined), 1000));
       router.push(Routes.idea(idea.id));
     }
     resetPosition();

@@ -1,14 +1,18 @@
-import { Home } from "@/client/pageComponents/Home/Home";
 import { AppImage } from "@/client/ui/AppImage/AppImage";
 import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 
+const DynamicHomePage = dynamic(
+  () => import("../client/pageComponents/Home/Home").then((mod) => mod.Home),
+  { ssr: false }
+);
+
 // ユーザーランキングとピックアップされたお題の取得をアクセスが行われるたびに計算しているため、DBに負荷がかかりそう。
 // こういった集計はリアルタイム性を必要としないから、バッチ処理として集計用のテーブルに追加していった方が良い？
 // 負荷がかかってから対処する
 const HomePage: NextPage<PageProps> = ({ welcomeMessageHidden }) => {
-  return <Home welcomeMessageHidden={welcomeMessageHidden} />;
+  return <DynamicHomePage welcomeMessageHidden={welcomeMessageHidden} />;
 };
 export default HomePage;
 
@@ -54,7 +58,7 @@ const HomePageLoading = () => {
 const DynamicPageLayout = dynamic(
   () =>
     // 一瞬だけちらつくのを防ぐために待たせているんだけど、どっちが良いのかは分からない・・・
-    new Promise((res) => setTimeout(() => res(undefined), 250)).then(() =>
+    new Promise((res) => setTimeout(() => res(undefined), 500)).then(() =>
       import("../client/ui/PageLayout").then((mod) => mod.PageLayout)
     ),
   { ssr: false, loading: HomePageLoading }
