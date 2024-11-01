@@ -1,3 +1,6 @@
+# CDNなしでCloud Run単体で動かそうとすると、どれだけFirst Load JSを減らしてもコールドスタートで時間がかかってしまう。
+# そのため、Cloud RunではなくVercelにデプロイする。
+
 name: "deploy-to-cloudrun"
 
 on:

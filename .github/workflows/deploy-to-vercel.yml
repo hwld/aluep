@@ -1,5 +1,5 @@
 # vercelは無料枠だとFunctionsに10s以上かかるとタイムアウトでエラーになってしまう
-# tRPCを使用すると、コールドスタートで10sぎりぎりになってしまうのでやっぱりCloud Runのままにする
+# ただ、Cloud Runと比べるとCDNがあるのでSSRをしていない静的ページのレスポンスは速いのでVercelにデプロイする
 
 name: "deploy-to-cloudrun"
 
