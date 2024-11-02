@@ -1,0 +1,72 @@
+diff --git a/node_modules/next/dist/server/lib/router-server.js b/node_modules/next/dist/server/lib/router-server.js
+index 3bdad62..a513b75 100644
+--- a/node_modules/next/dist/server/lib/router-server.js
++++ b/node_modules/next/dist/server/lib/router-server.js
+@@ -165,16 +165,22 @@ async function initialize(opts) {
+             for(const key in additionalRequestMeta || {}){
+                 (0, _requestmeta.addRequestMeta)(req, key, additionalRequestMeta[key]);
+             }
++
++            const startResolve = performance.now();
++            console.log('start invokeRender');
+             debug("invokeRender", req.url, req.headers);
+             try {
+                 var _renderServer_instance;
++                const startInit = performance.now();
+                 const initResult = await (renderServer == null ? void 0 : (_renderServer_instance = renderServer.instance) == null ? void 0 : _renderServer_instance.initialize(renderServerOpts));
++                console.log(`renderServer.instance.initialize: ${performance.now() - startInit}ms`);
+                 try {
+                     await (initResult == null ? void 0 : initResult.requestHandler(req, res));
+                 } catch (err) {
+                     if (err instanceof _baseserver.NoFallbackError) {
+                         // eslint-disable-next-line
+                         await handleRequest(handleIndex + 1);
++                        console.log(`after invokeRender: ${performance.now() - startResolve}ms`);
+                         return;
+                     }
+                     throw err;
+diff --git a/node_modules/next/dist/server/load-components.js b/node_modules/next/dist/server/load-components.js
+index 24c36d8..174d1a7 100644
+--- a/node_modules/next/dist/server/load-components.js
++++ b/node_modules/next/dist/server/load-components.js
+@@ -95,10 +95,22 @@ async function loadComponentsImpl({ distDir, page, isAppPath }) {
+             })
+         });
+     }
++    const startGetCompo = performance.now();
+     const ComponentMod = await Promise.resolve().then(()=>(0, _require.requirePage)(page, distDir, isAppPath));
++    console.log(`require Component ${page}: ${performance.now() - startGetCompo}ms`);
++
++    const startLoadComp = performance.now();
+     const Component = (0, _interopdefault.interopDefault)(ComponentMod);
++    console.log(`load Component ${page}: ${performance.now() - startLoadComp}ms`);
++
++    const startLoadDoc = performance.now();
+     const Document = (0, _interopdefault.interopDefault)(DocumentMod);
++    console.log(`load Document: ${performance.now() - startLoadDoc}ms`);
++
++    const startLoadApp = performance.now();
+     const App = (0, _interopdefault.interopDefault)(AppMod);
++    console.log(`load App: ${performance.now() - startLoadApp}ms`);
++
+     const { getServerSideProps, getStaticProps, getStaticPaths, routeModule } = ComponentMod;
+     return {
+         App,
+diff --git a/node_modules/next/dist/server/next-server.js b/node_modules/next/dist/server/next-server.js
+index 44e1191..c9d62df 100644
+--- a/node_modules/next/dist/server/next-server.js
++++ b/node_modules/next/dist/server/next-server.js
+@@ -706,11 +706,13 @@ class NextNodeServer extends _baseserver.default {
+         }
+         for (const pagePath of pagePaths){
+             try {
++                const startLoad = performance.now();
+                 const components = await (0, _loadcomponents.loadComponents)({
+                     distDir: this.distDir,
+                     page: pagePath,
+                     isAppPath
+                 });
++                console.log(`loadComponents: ${performance.now() - startLoad}ms\npage: ${pagePath}`);
+                 if (query.__nextLocale && typeof components.Component === "string" && !pagePath.startsWith(`/${query.__nextLocale}`)) {
+                     continue;
+                 }
