@@ -5,7 +5,6 @@ export function register() {
   ) {
     require("@google-cloud/profiler").start({
       serviceContext: { service: "aluep" },
-      timeIntervalMicros: 0,
       logLevel: 4,
     });
   }
