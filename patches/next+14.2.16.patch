@@ -1,31 +1,124 @@
+diff --git a/node_modules/next/dist/server/base-server.js b/node_modules/next/dist/server/base-server.js
+index 9a62a53..f806de3 100644
+--- a/node_modules/next/dist/server/base-server.js
++++ b/node_modules/next/dist/server/base-server.js
+@@ -426,6 +426,7 @@ class Server {
+         _log.error(err);
+     }
+     async handleRequest(req, res, parsedUrl) {
++        console.log('start handleRequest');
+         await this.prepare();
+         const method = req.method.toUpperCase();
+         const rsc = isRSCRequestCheck(req) ? "RSC " : "";
+@@ -465,6 +466,7 @@ class Server {
+         });
+     }
+     async handleRequestImpl(req, res, parsedUrl) {
++        console.log('start handleRequestImpl');
+         try {
+             var _originalRequest_socket, _originalRequest_socket1, _this_i18nProvider, _this_i18nProvider1, _this_nextConfig_i18n;
+             // Wait for the matchers to be ready.
+@@ -962,6 +964,7 @@ class Server {
+         return (0, _tracer.getTracer)().trace(_constants1.BaseServerSpan.render, async ()=>this.renderImpl(req, res, pathname, query, parsedUrl, internalRender));
+     }
+     async renderImpl(req, res, pathname, query = {}, parsedUrl, internalRender = false) {
++        console.log('start renderImpl');
+         var _req_url;
+         if (!pathname.startsWith("/")) {
+             console.warn(`Cannot render page with path "${pathname}", did you mean "/${pathname}"?. See more info here: https://nextjs.org/docs/messages/render-no-starting-slash`);
+@@ -1882,6 +1885,7 @@ class Server {
+         return null;
+     }
+     async renderPageComponent(ctx, bubbleNoFallback) {
++        console.log('start renderPageComponent');
+         var _this_nextConfig_experimental_sri;
+         const { query, pathname } = ctx;
+         const appPaths = this.getOriginalAppPaths(pathname);
+@@ -1926,6 +1930,7 @@ class Server {
+         });
+     }
+     async renderToResponseImpl(ctx) {
++        console.log('start renderToResponseImpl');
+         var _this_i18nProvider;
+         const { res, query, pathname } = ctx;
+         let page = pathname;
+@@ -1951,6 +1956,7 @@ class Server {
+                         params: match.params
+                     }
+                 }, bubbleNoFallback);
++                console.log('end renderPageComponent');
+                 if (result !== false) return result;
+             }
+             // currently edge functions aren't receiving the x-matched-path
+diff --git a/node_modules/next/dist/server/lib/render-server.js b/node_modules/next/dist/server/lib/render-server.js
+index de033e8..7eea52b 100644
+--- a/node_modules/next/dist/server/lib/render-server.js
++++ b/node_modules/next/dist/server/lib/render-server.js
+@@ -79,12 +79,15 @@ async function propagateServerField(dir, field, value) {
+     }
+ }
+ async function initializeImpl(opts) {
++    const start = performance.now();
++    console.log('start render server initializeImpl');
+     const type = process.env.__NEXT_PRIVATE_RENDER_WORKER;
+     if (type) {
+         process.title = "next-render-worker-" + type;
+     }
+     let requestHandler;
+     let upgradeHandler;
++    console.log('start createNextServer');
+     const app = (0, _next.default)({
+         ...opts,
+         hostname: opts.hostname || "localhost",
+@@ -93,9 +96,24 @@ async function initializeImpl(opts) {
+         port: opts.port,
+         isNodeDebugging: opts.isNodeDebugging
+     });
++    console.log('end createNextServer');
++
++    const startGetRequestHandler = performance.now();
++    console.log('start getRequestHandler');
+     requestHandler = app.getRequestHandler();
++    console.log(`end getRequestHandler: ${performance.now() - startGetRequestHandler}ms`);
++
++    const startGetUpgradeHandler = performance.now();
++    console.log('start getUpgradeHandler');
+     upgradeHandler = app.getUpgradeHandler();
++    console.log(`end getUpgradeHandler: ${performance.now() - startGetUpgradeHandler}ms`);
++
++    const startPrepare = performance.now();
++    console.log("start NextServer prepare");
+     await app.prepare(opts.serverFields);
++    console.log(`end NextServer prepare: ${performance.now() - startPrepare}ms`);
++
++    console.log(`end render server initializeImpl: ${performance.now() - start}ms`);
+     return {
+         requestHandler,
+         upgradeHandler,
 diff --git a/node_modules/next/dist/server/lib/router-server.js b/node_modules/next/dist/server/lib/router-server.js
-index 3bdad62..cc3b6a3 100644
+index 3bdad62..ef72766 100644
 --- a/node_modules/next/dist/server/lib/router-server.js
 +++ b/node_modules/next/dist/server/lib/router-server.js
-@@ -165,16 +165,22 @@ async function initialize(opts) {
+@@ -165,12 +165,18 @@ async function initialize(opts) {
              for(const key in additionalRequestMeta || {}){
                  (0, _requestmeta.addRequestMeta)(req, key, additionalRequestMeta[key]);
              }
 -            debug("invokeRender", req.url, req.headers);
 +
 +            const startResolve = performance.now();
-+            console.error('start invokeRender');
++            console.log('start invokeRender');
 +            debug("patched invokeRender", req.url, req.headers);
              try {
                  var _renderServer_instance;
 +                const startInit = performance.now();
                  const initResult = await (renderServer == null ? void 0 : (_renderServer_instance = renderServer.instance) == null ? void 0 : _renderServer_instance.initialize(renderServerOpts));
-+                console.error(`renderServer.instance.initialize: ${performance.now() - startInit}ms`);
++                console.log(`renderServer.instance.initialize: ${performance.now() - startInit}ms`);
                  try {
                      await (initResult == null ? void 0 : initResult.requestHandler(req, res));
++                    console.log(`after invokeRender: ${performance.now() - startResolve}ms`);
                  } catch (err) {
                      if (err instanceof _baseserver.NoFallbackError) {
                          // eslint-disable-next-line
-                         await handleRequest(handleIndex + 1);
-+                        console.error(`after invokeRender: ${performance.now() - startResolve}ms`);
-                         return;
-                     }
-                     throw err;
 diff --git a/node_modules/next/dist/server/lib/start-server.js b/node_modules/next/dist/server/lib/start-server.js
 index 3b32df9..c4cf499 100644
 --- a/node_modules/next/dist/server/lib/start-server.js
@@ -66,10 +159,58 @@ index 24c36d8..573afd3 100644
      return {
          App,
 diff --git a/node_modules/next/dist/server/next-server.js b/node_modules/next/dist/server/next-server.js
-index 44e1191..8932391 100644
+index 44e1191..27cd082 100644
 --- a/node_modules/next/dist/server/next-server.js
 +++ b/node_modules/next/dist/server/next-server.js
-@@ -706,11 +706,13 @@ class NextNodeServer extends _baseserver.default {
+@@ -142,6 +142,7 @@ function getMiddlewareMatcher(info) {
+ }
+ class NextNodeServer extends _baseserver.default {
+     constructor(options){
++        console.log('start construct NextNodeServer');
+         // Initialize super class
+         super(options);
+         this.handleNextImageRequest = async (req, res, parsedUrl)=>{
+@@ -211,6 +212,7 @@ class NextNodeServer extends _baseserver.default {
+             }
+         };
+         this.handleCatchallRenderRequest = async (req, res, parsedUrl)=>{
++            console.log('start handleCatchallRenderRequest');
+             let { pathname, query } = parsedUrl;
+             if (!pathname) {
+                 throw new Error("Invariant: pathname is undefined");
+@@ -266,10 +268,15 @@ class NextNodeServer extends _baseserver.default {
+                         return true;
+                     }
+                     delete query._nextBubbleNoFallback;
++                    console.log('start handleApiRequest');
+                     const handled = await this.handleApiRequest(req, res, query, match);
++                    console.log('end handleApiRequest');
+                     if (handled) return true;
+                 }
++
++                console.log('start render');
+                 await this.render(req, res, pathname, query, parsedUrl, true);
++                console.log('end render');
+                 return true;
+             } catch (err) {
+                 if (err instanceof _baseserver.NoFallbackError) {
+@@ -435,6 +442,7 @@ class NextNodeServer extends _baseserver.default {
+                 console.error("Failed to prepare server", err);
+             });
+         }
++        console.log('end construct NextNodeServer');
+     }
+     async unstable_preloadEntries() {
+         const appPathsManifest = this.getAppPathsManifest();
+@@ -694,6 +702,7 @@ class NextNodeServer extends _baseserver.default {
+             }));
+     }
+     async findPageComponentsImpl({ page, query, params, isAppPath, url: _url }) {
++        console.log('start findPageComponentsImpl');
+         const pagePaths = [
+             page
+         ];
+@@ -706,11 +715,13 @@ class NextNodeServer extends _baseserver.default {
          }
          for (const pagePath of pagePaths){
              try {
@@ -79,7 +220,7 @@ index 44e1191..8932391 100644
                      page: pagePath,
                      isAppPath
                  });
-+                console.error(`loadComponents: ${performance.now() - startLoad}ms\npage: ${pagePath}`);
++                console.log(`loadComponents: ${performance.now() - startLoad}ms\npage: ${pagePath}`);
                  if (query.__nextLocale && typeof components.Component === "string" && !pagePath.startsWith(`/${query.__nextLocale}`)) {
                      continue;
                  }
