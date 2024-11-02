@@ -8,20 +8,20 @@ index 3bdad62..a513b75 100644
              }
 +
 +            const startResolve = performance.now();
-+            console.log('start invokeRender');
++            console.error('start invokeRender');
              debug("invokeRender", req.url, req.headers);
              try {
                  var _renderServer_instance;
 +                const startInit = performance.now();
                  const initResult = await (renderServer == null ? void 0 : (_renderServer_instance = renderServer.instance) == null ? void 0 : _renderServer_instance.initialize(renderServerOpts));
-+                console.log(`renderServer.instance.initialize: ${performance.now() - startInit}ms`);
++                console.error(`renderServer.instance.initialize: ${performance.now() - startInit}ms`);
                  try {
                      await (initResult == null ? void 0 : initResult.requestHandler(req, res));
                  } catch (err) {
                      if (err instanceof _baseserver.NoFallbackError) {
                          // eslint-disable-next-line
                          await handleRequest(handleIndex + 1);
-+                        console.log(`after invokeRender: ${performance.now() - startResolve}ms`);
++                        console.error(`after invokeRender: ${performance.now() - startResolve}ms`);
                          return;
                      }
                      throw err;
@@ -35,19 +35,19 @@ index 24c36d8..174d1a7 100644
      }
 +    const startGetCompo = performance.now();
      const ComponentMod = await Promise.resolve().then(()=>(0, _require.requirePage)(page, distDir, isAppPath));
-+    console.log(`require Component ${page}: ${performance.now() - startGetCompo}ms`);
++    console.error(`require Component ${page}: ${performance.now() - startGetCompo}ms`);
 +
 +    const startLoadComp = performance.now();
      const Component = (0, _interopdefault.interopDefault)(ComponentMod);
-+    console.log(`load Component ${page}: ${performance.now() - startLoadComp}ms`);
++    console.error(`load Component ${page}: ${performance.now() - startLoadComp}ms`);
 +
 +    const startLoadDoc = performance.now();
      const Document = (0, _interopdefault.interopDefault)(DocumentMod);
-+    console.log(`load Document: ${performance.now() - startLoadDoc}ms`);
++    console.error(`load Document: ${performance.now() - startLoadDoc}ms`);
 +
 +    const startLoadApp = performance.now();
      const App = (0, _interopdefault.interopDefault)(AppMod);
-+    console.log(`load App: ${performance.now() - startLoadApp}ms`);
++    console.error(`load App: ${performance.now() - startLoadApp}ms`);
 +
      const { getServerSideProps, getStaticProps, getStaticPaths, routeModule } = ComponentMod;
      return {
@@ -66,7 +66,7 @@ index 44e1191..c9d62df 100644
                      page: pagePath,
                      isAppPath
                  });
-+                console.log(`loadComponents: ${performance.now() - startLoad}ms\npage: ${pagePath}`);
++                console.error(`loadComponents: ${performance.now() - startLoad}ms\npage: ${pagePath}`);
                  if (query.__nextLocale && typeof components.Component === "string" && !pagePath.startsWith(`/${query.__nextLocale}`)) {
                      continue;
                  }
