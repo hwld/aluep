@@ -3,7 +3,8 @@
 FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat make gcc g++ python3
 WORKDIR /app
-COPY package.json package-lock.json patches ./
+COPY package.json package-lock.json ./
+COPY patches ./patches/
 COPY prisma ./prisma/
 
 RUN npm ci;
