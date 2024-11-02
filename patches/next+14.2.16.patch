@@ -132,34 +132,46 @@ index 3b32df9..c4cf499 100644
      let { port } = serverOptions;
      process.title = `next-server (v${"14.2.16"})`;
 diff --git a/node_modules/next/dist/server/load-components.js b/node_modules/next/dist/server/load-components.js
-index 24c36d8..573afd3 100644
+index 24c36d8..a3094f3 100644
 --- a/node_modules/next/dist/server/load-components.js
 +++ b/node_modules/next/dist/server/load-components.js
-@@ -95,10 +95,22 @@ async function loadComponentsImpl({ distDir, page, isAppPath }) {
+@@ -68,11 +68,16 @@ async function loadComponentsImpl({ distDir, page, isAppPath }) {
+     let DocumentMod = {};
+     let AppMod = {};
+     if (!isAppPath) {
++        console.log('start require _document and _app');
+         [DocumentMod, AppMod] = await Promise.all([
+             Promise.resolve().then(()=>(0, _require.requirePage)("/_document", distDir, false)),
+             Promise.resolve().then(()=>(0, _require.requirePage)("/_app", distDir, false))
+         ]);
++        console.log('end require _document and _app');
+     }
++
++    console.log('start other in loadComponentsImpl');
++
+     // Make sure to avoid loading the manifest for Route Handlers
+     const hasClientManifest = isAppPath && (page.endsWith("/page") || page === _constants.UNDERSCORE_NOT_FOUND_ROUTE);
+     // Load the manifest files first
+@@ -95,10 +100,17 @@ async function loadComponentsImpl({ distDir, page, isAppPath }) {
              })
          });
      }
-+    const startGetCompo = performance.now();
++
++    console.log('end other in loadComponentsImpl');
++    
++    console.log(`start require Component ${page}`);
      const ComponentMod = await Promise.resolve().then(()=>(0, _require.requirePage)(page, distDir, isAppPath));
-+    console.error(`require Component ${page}: ${performance.now() - startGetCompo}ms`);
++    console.log('end require Component');
 +
-+    const startLoadComp = performance.now();
      const Component = (0, _interopdefault.interopDefault)(ComponentMod);
-+    console.error(`load Component ${page}: ${performance.now() - startLoadComp}ms`);
-+
-+    const startLoadDoc = performance.now();
      const Document = (0, _interopdefault.interopDefault)(DocumentMod);
-+    console.error(`load Document: ${performance.now() - startLoadDoc}ms`);
-+
-+    const startLoadApp = performance.now();
      const App = (0, _interopdefault.interopDefault)(AppMod);
-+    console.error(`load App: ${performance.now() - startLoadApp}ms`);
 +
      const { getServerSideProps, getStaticProps, getStaticPaths, routeModule } = ComponentMod;
      return {
          App,
 diff --git a/node_modules/next/dist/server/next-server.js b/node_modules/next/dist/server/next-server.js
-index 44e1191..27cd082 100644
+index 44e1191..88f2419 100644
 --- a/node_modules/next/dist/server/next-server.js
 +++ b/node_modules/next/dist/server/next-server.js
 @@ -142,6 +142,7 @@ function getMiddlewareMatcher(info) {
@@ -213,14 +225,94 @@ index 44e1191..27cd082 100644
 @@ -706,11 +715,13 @@ class NextNodeServer extends _baseserver.default {
          }
          for (const pagePath of pagePaths){
-             try {
-+                const startLoad = performance.now();
+             try {                
++                console.log('start loadComponents');
                  const components = await (0, _loadcomponents.loadComponents)({
                      distDir: this.distDir,
                      page: pagePath,
                      isAppPath
                  });
-+                console.log(`loadComponents: ${performance.now() - startLoad}ms\npage: ${pagePath}`);
++                console.log(`end loadComponents`);
                  if (query.__nextLocale && typeof components.Component === "string" && !pagePath.startsWith(`/${query.__nextLocale}`)) {
                      continue;
                  }
+diff --git a/node_modules/next/dist/server/next.js b/node_modules/next/dist/server/next.js
+index f570f6d..1829e11 100644
+--- a/node_modules/next/dist/server/next.js
++++ b/node_modules/next/dist/server/next.js
+@@ -81,9 +81,11 @@ function _interop_require_wildcard(obj, nodeInterop) {
+ }
+ let ServerImpl;
+ const getServerImpl = async ()=>{
++    console.log('start getServerImpl');
+     if (ServerImpl === undefined) {
+         ServerImpl = (await Promise.resolve(require("./next-server"))).default;
+     }
++    console.log('end getServerImpl');
+     return ServerImpl;
+ };
+ const SYMBOL_LOAD_CONFIG = Symbol("next.load_config");
+@@ -166,6 +168,7 @@ class NextServer {
+         return server.close();
+     }
+     async createServer(options) {
++        console.log('start createServer');
+         let ServerImplementation;
+         if (options.dev) {
+             ServerImplementation = require("./dev/next-dev-server").default;
+@@ -173,6 +176,7 @@ class NextServer {
+             ServerImplementation = await getServerImpl();
+         }
+         const server = new ServerImplementation(options);
++        console.log('end createServer');
+         return server;
+     }
+     async [SYMBOL_LOAD_CONFIG]() {
+@@ -196,7 +200,9 @@ class NextServer {
+         return config;
+     }
+     async getServer() {
++        console.log('start getServer');
+         if (!this.serverPromise) {
++            console.log('getServer: !serverPromise');
+             this.serverPromise = this[SYMBOL_LOAD_CONFIG]().then(async (conf)=>{
+                 if (this.standaloneMode) {
+                     process.env.__NEXT_PRIVATE_STANDALONE_CONFIG = JSON.stringify(conf);
+@@ -220,6 +226,7 @@ class NextServer {
+                 return this.server;
+             });
+         }
++        console.log('end getServer');
+         return this.serverPromise;
+     }
+     async getServerRequestHandler() {
+diff --git a/node_modules/next/dist/server/require.js b/node_modules/next/dist/server/require.js
+index 6526039..317d378 100644
+--- a/node_modules/next/dist/server/require.js
++++ b/node_modules/next/dist/server/require.js
+@@ -96,8 +96,11 @@ function getPagePath(page, distDir, locales, isAppPath) {
+     return pagePath;
+ }
+ function requirePage(page, distDir, isAppPath) {
++    console.log(`start requirePage: ${page}`);
++
+     const pagePath = getPagePath(page, distDir, undefined, isAppPath);
+     if (pagePath.endsWith(".html")) {
++        console.log(`start readFile: ${pagePath}`);
+         return _fs.promises.readFile(pagePath, "utf8").catch((err)=>{
+             throw new _utils.MissingStaticPage(page, err.message);
+         });
+@@ -106,10 +109,13 @@ function requirePage(page, distDir, isAppPath) {
+     // we are requiring for the require-hook and then clear after
+     try {
+         process.env.__NEXT_PRIVATE_RUNTIME_TYPE = isAppPath ? "app" : "pages";
++        console.log(`start actual require: ${pagePath}`);
+         const mod = process.env.NEXT_MINIMAL ? __non_webpack_require__(pagePath) : require(pagePath);
++        console.log(`end actual require: ${pagePath}`);
+         return mod;
+     } finally{
+         process.env.__NEXT_PRIVATE_RUNTIME_TYPE = "";
++        console.log(`end requirePage: ${page}`);
+     }
+ }
+ function requireFontManifest(distDir) {
