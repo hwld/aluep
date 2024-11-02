@@ -5,6 +5,9 @@ name: "deploy-to-cloudrun"
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - "cloudrun-main"
 
 env:
   TZ: Asia/Tokyo

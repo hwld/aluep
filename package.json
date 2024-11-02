@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
+    "@google-cloud/profiler": "^6.0.2",
     "@google-cloud/recaptcha-enterprise": "^5.0.0",
     "@google-cloud/storage": "^7.0.0",
     "@hookform/resolvers": "^3.0.0",

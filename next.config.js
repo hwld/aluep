@@ -6,7 +6,7 @@ let nextConfig = {
   // ブラウザバックしたときに以前のスクロール位置を保持する
   // スクロールにwindow.scrollを使用しているっぽいので、例えば#__nextに
   // height:100dvh, overflow:autoとかを設定しても動かない。
-  experimental: { scrollRestoration: true },
+  experimental: { scrollRestoration: true, instrumentationHook: true },
   images: {
     remotePatterns: [
       {
