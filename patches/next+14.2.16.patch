@@ -132,22 +132,22 @@ index 3b32df9..c4cf499 100644
      let { port } = serverOptions;
      process.title = `next-server (v${"14.2.16"})`;
 diff --git a/node_modules/next/dist/server/load-components.js b/node_modules/next/dist/server/load-components.js
-index 24c36d8..a3094f3 100644
+index 24c36d8..80c063b 100644
 --- a/node_modules/next/dist/server/load-components.js
 +++ b/node_modules/next/dist/server/load-components.js
 @@ -68,11 +68,16 @@ async function loadComponentsImpl({ distDir, page, isAppPath }) {
      let DocumentMod = {};
      let AppMod = {};
      if (!isAppPath) {
-+        console.log('start require _document and _app');
++        console.trace('start require _document and _app');
          [DocumentMod, AppMod] = await Promise.all([
              Promise.resolve().then(()=>(0, _require.requirePage)("/_document", distDir, false)),
              Promise.resolve().then(()=>(0, _require.requirePage)("/_app", distDir, false))
          ]);
-+        console.log('end require _document and _app');
++        console.trace('end require _document and _app');
      }
 +
-+    console.log('start other in loadComponentsImpl');
++    console.trace('start other in loadComponentsImpl');
 +
      // Make sure to avoid loading the manifest for Route Handlers
      const hasClientManifest = isAppPath && (page.endsWith("/page") || page === _constants.UNDERSCORE_NOT_FOUND_ROUTE);
@@ -157,11 +157,11 @@ index 24c36d8..a3094f3 100644
          });
      }
 +
-+    console.log('end other in loadComponentsImpl');
++    console.trace('end other in loadComponentsImpl');
 +    
-+    console.log(`start require Component ${page}`);
++    console.trace(`start require Component ${page}`);
      const ComponentMod = await Promise.resolve().then(()=>(0, _require.requirePage)(page, distDir, isAppPath));
-+    console.log('end require Component');
++    console.trace('end require Component');
 +
      const Component = (0, _interopdefault.interopDefault)(ComponentMod);
      const Document = (0, _interopdefault.interopDefault)(DocumentMod);
