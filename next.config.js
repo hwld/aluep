@@ -21,10 +21,6 @@ let nextConfig = {
       },
     ],
   },
-  webpack: (config) => {
-    config.externals = [...(config.externals || []), "@google-cloud/profiler"];
-    return config;
-  },
 };
 
 if (process.env.ANALYZE === "true") {
