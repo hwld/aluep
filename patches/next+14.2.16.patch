@@ -1,15 +1,16 @@
 diff --git a/node_modules/next/dist/server/lib/router-server.js b/node_modules/next/dist/server/lib/router-server.js
-index 3bdad62..37aafdf 100644
+index 3bdad62..cc3b6a3 100644
 --- a/node_modules/next/dist/server/lib/router-server.js
 +++ b/node_modules/next/dist/server/lib/router-server.js
 @@ -165,16 +165,22 @@ async function initialize(opts) {
              for(const key in additionalRequestMeta || {}){
                  (0, _requestmeta.addRequestMeta)(req, key, additionalRequestMeta[key]);
              }
+-            debug("invokeRender", req.url, req.headers);
 +
 +            const startResolve = performance.now();
 +            console.error('start invokeRender');
-             debug("invokeRender", req.url, req.headers);
++            debug("patched invokeRender", req.url, req.headers);
              try {
                  var _renderServer_instance;
 +                const startInit = performance.now();
