@@ -48,3 +48,6 @@ gcs-key.json
 # bundle-analyzer
 /analyze
 
+
+# Sentry Config File
+.env.sentry-build-plugin
