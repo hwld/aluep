@@ -6,7 +6,6 @@ import "@mantine/core/styles.layer.css";
 import "@mantine/notifications/styles.layer.css";
 import "@mantine/nprogress/styles.layer.css";
 import "@mantine/tiptap/styles.layer.css";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { Noto_Sans_JP } from "next/font/google";
@@ -43,7 +42,6 @@ function App({
           content="G0JQ3h-VhmlLPCpmRn_9QWm60jiSIVy9F6UGjxnb_cc"
         />
       </Head>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       {getLayout(<Component {...others} />, {
         isSideBarOpen,
       })}
