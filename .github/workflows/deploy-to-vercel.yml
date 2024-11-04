@@ -1,13 +1,9 @@
 # vercelは無料枠だとFunctionsに10s以上かかるとタイムアウトでエラーになってしまう
-# ただ、Cloud Runと比べるとCDNがあるのでSSRをしていない静的ページのレスポンスは速いのでVercelにデプロイする
 
 name: "deploy-to-cloudrun"
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - "main"
 
 env:
   TZ: Asia/Tokyo
