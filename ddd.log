@@ -1,0 +1,41 @@
+  ▲ Next.js 14.2.16
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · scrollRestoration
+    · instrumentationHook
+
+ ✓ Starting...
+ ✓ Ready in 2.1s
+ ○ Compiling /404 ...
+ ✓ Compiled /404 in 1368ms (1676 modules)
+ GET / 200 in 1773ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at AppSidebar (webpack-internal:///./src/client/ui/AppSidebar/AppSidebar.tsx:53:23)
+    at div
+    at file:///Users/hwld/work/projects/aluep/node_modules/@mantine/core/esm/core/Box/Box.mjs:23:5
+    at AppLayout (webpack-internal:///./src/client/ui/AppLayout/AppLayout.tsx:26:22)
+    at RequireLoginModalProvider (webpack-internal:///./src/client/features/session/RequireLoginModalProvider.tsx:13:38)
+    at ModalsProvider (file:///Users/hwld/work/projects/aluep/node_modules/@mantine/modals/esm/ModalsProvider.mjs:47:27)
+    at MantineThemeProvider (file:///Users/hwld/work/projects/aluep/node_modules/@mantine/core/esm/core/MantineProvider/MantineThemeProvider/MantineThemeProvider.mjs:19:3)
+    at MantineProvider (file:///Users/hwld/work/projects/aluep/node_modules/@mantine/core/esm/core/MantineProvider/MantineProvider.mjs:16:3)
+    at PageLayout (webpack-internal:///./src/client/ui/PageLayout.tsx:28:23)
+    at ErrorBoundary (/Users/hwld/work/projects/aluep/node_modules/react-error-boundary/dist/react-error-boundary.cjs.js:16:5)
+    at AppErrorBoundary (webpack-internal:///./src/client/ui/ErrorBoundary/ErrorBoundary.tsx:91:29)
+    at App (webpack-internal:///./src/pages/_app.tsx:43:16)
+    at Hydrate (file:///Users/hwld/work/projects/aluep/node_modules/@tanstack/react-query/build/lib/Hydrate.mjs:23:3)
+    at QueryClientProvider (file:///Users/hwld/work/projects/aluep/node_modules/@tanstack/react-query/build/lib/QueryClientProvider.mjs:41:3)
+    at TRPCProvider (file:///Users/hwld/work/projects/aluep/node_modules/@trpc/react-query/dist/createHooksInternal-bdff7171.mjs:197:17)
+    at WithTRPC (file:///Users/hwld/work/projects/aluep/node_modules/@trpc/next/dist/index.mjs:31:36)
+    at StyleRegistry (/Users/hwld/work/projects/aluep/node_modules/styled-jsx/dist/index/index.js:449:36)
+    at eU (/Users/hwld/work/projects/aluep/node_modules/next/dist/compiled/next-server/pages.runtime.dev.js:8:20489)
+    at eH (/Users/hwld/work/projects/aluep/node_modules/next/dist/compiled/next-server/pages.runtime.dev.js:17:1788)
+    at eJ (/Users/hwld/work/projects/aluep/node_modules/next/dist/compiled/next-server/pages.runtime.dev.js:17:3091)
+    at div
+    at e9 (/Users/hwld/work/projects/aluep/node_modules/next/dist/compiled/next-server/pages.runtime.dev.js:26:761)
+ ○ Compiling /api/trpc/[trpc] ...
+ ✓ Compiled /api/trpc/[trpc] in 623ms (215 modules)
+ GET /api/trpc/session?batch=1&input=%7B%220%22%3A%7B%22json%22%3Anull%2C%22meta%22%3A%7B%22values%22%3A%5B%22undefined%22%5D%7D%7D%7D 200 in 2341ms
+ ✓ Compiled / in 302ms (1666 modules)
+ GET / 200 in 417ms
