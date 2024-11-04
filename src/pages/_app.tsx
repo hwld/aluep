@@ -1,6 +1,11 @@
 import { trpc } from "@/client/lib/trpc";
 import "@/client/style/global.css";
 import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
+import "@mantine/carousel/styles.layer.css";
+import "@mantine/core/styles.layer.css";
+import "@mantine/notifications/styles.layer.css";
+import "@mantine/nprogress/styles.layer.css";
+import "@mantine/tiptap/styles.layer.css";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { Noto_Sans_JP } from "next/font/google";
