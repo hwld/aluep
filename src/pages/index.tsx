@@ -2,6 +2,11 @@ import { AppImage } from "@/client/ui/AppImage/AppImage";
 import { PageProps } from "@/server/lib/GetServerSidePropsWithReactQuery";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
+import "@mantine/carousel/styles.layer.css";
+import "@mantine/core/styles.layer.css";
+import "@mantine/notifications/styles.layer.css";
+import "@mantine/nprogress/styles.layer.css";
+import "@mantine/tiptap/styles.layer.css";
 
 const DynamicHomePage = dynamic(
   () => import("../client/pageComponents/Home/Home").then((mod) => mod.Home),
