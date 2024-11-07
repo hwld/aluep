@@ -58,12 +58,9 @@ export const Home: React.FC<Props> = ({ welcomeMessageHidden }) => {
     usePickedUpIdeasQuery("devDesc");
 
   useEffect(() => {
-    const sampleId = recommendedIdeas?.[0].id;
-    if (sampleId) {
-      // Mantineを使っている適当なページをrefetchしてバックエンド側でMantine関連の大量のモジュールをキャッシュさせる
-      fetch(`${process.env.NEXT_PUBLIC_URL}${Routes.about}`);
-    }
-  }, [recommendedIdeas]);
+    // Mantineを使っている適当なページをrefetchしてバックエンド側でMantine関連の大量のモジュールをキャッシュさせる
+    fetch(`${process.env.NEXT_PUBLIC_URL}${Routes.about}`);
+  }, []);
 
   return (
     <>
