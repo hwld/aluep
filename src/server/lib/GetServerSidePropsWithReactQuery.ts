@@ -26,7 +26,6 @@ export const withReactQueryGetServerSideProps = <Props>(
   callback: Callback<Props>
 ): GetServerSideProps<PageProps> => {
   return async (args) => {
-    console.log("test...");
     const session = await getServerSession(args.req, args.res, authOptions);
 
     const trpcStore = createServerSideHelpers({
