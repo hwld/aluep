@@ -62,7 +62,7 @@ export const Home: React.FC<Props> = ({ welcomeMessageHidden }) => {
     if (sampleId) {
       // アイデア詳細ページをrefetchしてバックエンド側で必要なモジュールをキャッシュさせる
       // どのアイデア詳細ページでも効果はある？
-      fetch(`${process.env.NEXT_PUBLIC_URL}${Routes.idea(sampleId)}`);
+      fetch(`${process.env.NEXT_PUBLIC_URL}${Routes.about}`);
     }
   }, [recommendedIdeas]);
 
