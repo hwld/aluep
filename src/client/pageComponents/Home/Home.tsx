@@ -60,8 +60,7 @@ export const Home: React.FC<Props> = ({ welcomeMessageHidden }) => {
   useEffect(() => {
     const sampleId = recommendedIdeas?.[0].id;
     if (sampleId) {
-      // アイデア詳細ページをrefetchしてバックエンド側で必要なモジュールをキャッシュさせる
-      // どのアイデア詳細ページでも効果はある？
+      // Mantineを使っている適当なページをrefetchしてバックエンド側でMantine関連の大量のモジュールをキャッシュさせる
       fetch(`${process.env.NEXT_PUBLIC_URL}${Routes.about}`);
     }
   }, [recommendedIdeas]);
