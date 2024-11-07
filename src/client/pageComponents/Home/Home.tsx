@@ -26,6 +26,8 @@ import {
   IconThumbUp,
 } from "@tabler/icons-react";
 import classes from "./Home.module.css";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 type Props = {
   welcomeMessageHidden?: boolean;
@@ -55,6 +57,12 @@ export const Home: React.FC<Props> = ({ welcomeMessageHidden }) => {
     usePickedUpIdeasQuery("likeDesc");
   const { pickedUpIdeas: manyDevsIdeas, isInitialLoading: fetchingDevs } =
     usePickedUpIdeasQuery("devDesc");
+
+  const router = useRouter();
+  useEffect(() => {
+    // 適当なページをprefetchして、バックエンド側でMantineのモジュール解決をキャッシュさせる
+    router.prefetch(Routes.about);
+  }, [router]);
 
   return (
     <>
