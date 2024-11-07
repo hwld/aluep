@@ -125,7 +125,7 @@
     "next-bundle-analyzer": "^0.6.8",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-nesting": "^12.0.1",
-    "postcss-preset-env": "^9.1.4",
+    "postcss-preset-env": "^10.0.0",
     "scaffdog": "^3.0.0",
     "storybook": "^7.5.1",
     "tsx": "^4.0.0"
