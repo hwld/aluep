@@ -1,6 +1,5 @@
 .root {
   border-width: 1px;
-  width: min-content;
 
   &.completed {
     background-color: var(--mantine-color-green-0);
